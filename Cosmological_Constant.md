@@ -11,6 +11,8 @@
 > **What stands:** the `(R_H/L_P)²` reduction of the `10¹²²` catastrophe, which does not depend on the O(1)
 > prefactor. The observed `Ω_Λ = 0.685 ± 0.007` is still within 1.2σ of `log 2`. That is one way of fitting
 > today's value, not a derivation. The sections below are kept as written, for the record.
+> **2026-10-27:** Lombriser's global zero-action constraint, read as an average over what has closed so far,
+> gives `Ω_Λ = 0.52` at recombination and never accelerates, so it fails too (§5.9).
 
 QLF substrate primitives give:
 
@@ -361,6 +363,30 @@ history, reporting `Ω_Λ` at recombination (`z = 1100`) and today, and whether 
 it fails on the same data as readings A and B. Then a constant `Λ` from Lombriser's constraint needs the
 future-including average, and that has to be defended against the objection §5.7 raised to reading C.
 **Pass:** `Ω_Λ(z = 1100) < 0.06` with today's `Ω_Λ` within `3σ` of Planck's `0.685 ± 0.007`.
+
+**Result (2026-10-27): the closed-so-far reading fails the kill condition.** G1–G3 are proved, no new
+axioms, in [`lean/QLF_GlobalConstraint.lean`](lean/QLF_GlobalConstraint.lean): G1 `lombriser_relation`
+and `lombriser_relation_avg`, G2 `closedAvg_matter_era`, G3 `omegaLambda_matter_era` and
+`omegaLambda_exceeds_bound`. The statements are the ones frozen above. The numerical history
+([`global_constraint_epochs.py`](global_constraint_epochs.py)) agrees with the proofs:
+
+| `z` | `Ω_m` | `Ω_r` | `Ω_Λ` | `ρ_Λ/ρ_m` | `q` |
+|---|---|---|---|---|---|
+| `10⁵` | 0.032 | 0.928 | 0.040 | 1.26 | 0.96 |
+| `3400` | 0.299 | 0.293 | 0.408 | 1.37 | 0.64 |
+| `1100` | 0.364 | 0.116 | **0.520** | 1.43 | 0.55 |
+| `0` | 0.400 | 0.000 | **0.600** | 1.50 | 0.50 |
+
+`Ω_Λ(z = 1100) = 0.52`, nine times the bound, and today's `0.60` is 12σ below Planck. The ratio
+`ρ_Λ/ρ_m` runs from `5/4` (the radiation-era value, `a³ ∝ t^{3/2}`) to `3/2` (G2), so the term
+redshifts like matter: `q = +½`, and the expansion never accelerates. This is reading A's failure
+reached by a different road.
+
+**What survives.** G1 is bookkeeping and carries no evidence. The failure is specific to averaging over
+the past. Lombriser's own constant `Λ` uses the whole four-volume, so QLF can keep his mechanism only by
+saying what a not-yet-synthesized future contributes to a closure. That is the same open question as
+reading C, now sharper. Step 1 (free action = `R − 2Λ`) was not attempted, and after this result it
+matters only for the future-including reading.
 
 ---
 
