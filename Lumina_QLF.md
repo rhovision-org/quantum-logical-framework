@@ -448,7 +448,26 @@ sourcing `g_ext` from one evolving shell rather than a power spectrum (which QLF
 mine. A pass is evidence the external-field reading can carry the scale; a fail of this form leaves the
 principle open but removes the simplest construction.
 
-**Result (2026-10-27, run after the freezing commit).** _[pending]_
+**Result (2026-10-27, run after freezing commit `c6265e0`).** **This form fails too, and it barely moves
+the needle.** With `X_amb = 100 Mpc` the 50 Mpc lump turns around at `z = 25.0`, against §7's uniform-floor
+`z = 25.2` — a `0.1 %` change. K1 passes, K2 fails. `X_amb = 50` and `200 Mpc` give the same to three
+figures.
+
+**Why it fails — and why this ends the density-sourced line.** The ambient field `g_ext` is sourced by
+structure that grows under the same law, so while every `δ` is still `10⁻⁵`, `g_ext` is minuscule against
+`a₀ = cH/2π`, and `a₀²/(a₀+g_ext) ≈ a₀`. The field only reaches `a₀` when the ambient shell is itself near
+collapse — long after the target has turned around. So the brake engages too late, exactly as the
+local-density floor did in §8.
+
+The three failures (§7 phase change, §8 local density, §9 ambient field) share one root: **the overshoot
+is a linear-regime problem.** The `√δ` amplification acts from `δ = 10⁻⁵` onward, at the very start, while
+*any* density-sourced brake is `≈ 0` because every density is `≈ 0` then. A fix sourced by the density
+field therefore cannot arrive in time, on any scale. Whatever repairs QLF's structure growth has to be
+**non-zero as `δ → 0`** — it must change the low-acceleration law itself (how `a₀` or the `√δ`
+amplification behaves in the linear regime), not add a term that density switches on. That is a sharper
+statement of the open problem than §3 gave, and it is where any future attempt should start. Jim's
+principle survives as an ontology; what is ruled out is realizing it as a density-sourced correction to
+the existing balance.
 
 ---
 
