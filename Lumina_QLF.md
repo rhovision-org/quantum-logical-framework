@@ -333,6 +333,22 @@ of the pre-registration):
 - **QLF's `f = 1/t` clock**, coasting `a ∝ t`: weaker early expansion, so everything collapses earlier.
   `10¹⁰ M☉` collapses at `z = 908`, and 200 Mpc at `z = 553`.
 
+**A phase change does not rescue it (exploratory scan, post hoc).** Suppose the balance switches on only
+below some redshift `z_on`, with Newton before that. Then:
+
+| `z_on` | `10¹⁰ M☉` collapses at `z` | 50 Mpc turns around at `z` |
+|---|---|---|
+| 100 | 28.6 | 5.6 |
+| 30 | **9.8** | 1.9 |
+| 20 | 6.7 | 1.2 |
+| 10 | 3.3 | **0.07** |
+| 5 | 1.5 | never |
+
+For galaxies to collapse before `z = 10` the switch has to come at `z_on ≳ 30`. For 50 Mpc to stay
+unturned it has to come at `z_on ≲ 10`. No single epoch does both. The ratio between scales is fixed by
+the law, and a switch in time only slides the whole sequence along. A fix has to act on scale, not on
+time: an acceleration threshold such as the external-field effect.
+
 **What this changes.** The closure-balance law, applied to the peculiar pull of baryons after
 recombination, makes structure far too early and on scales far too large. The dark-matter law of §3 is
 untouched where it was tested (galaxy rotation curves, `a₀(z)` to `z = 1.3`, lensing). But it is not
