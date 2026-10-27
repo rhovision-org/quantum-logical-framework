@@ -1,5 +1,8 @@
 # Lombriser's Cosmology Read on the [QLF](README.md) Substrate
 
+> Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
+> opposite quantum logical action with zero free energy, the principle of QLF.
+
 Lucas Lombriser (University of Geneva) has two proposals about the cosmological constant. This doc
 records what QLF says about each one, whether QLF can derive it, and the pre-registered test of the
 one that could have changed a count. The test is in [`Cosmological_Constant.md`](Cosmological_Constant.md)
@@ -49,7 +52,7 @@ observation fixed. Holding `R_H` fixed while `l_P` shrinks (masses grow) and hol
 construction, only that observations are logical ratios
 ([`Philosophy.md`](Philosophy.md) §3d).
 
-It fails the method's rule 4. The equivalence holds for every history, because it is a change of
+It fails the method's rule 4, the count-of-ways test ([`Philosophy.md`](Philosophy.md) §3a). The equivalence holds for every history, because it is a change of
 units, so it supports neither QLF nor Lombriser. QLF reaches the same verdict for colour frames
 ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §35): no closure count distinguishes the
 frames, so the frame is a gauge choice.
@@ -77,22 +80,22 @@ the formation of bound structures gives `Ω_Λ ≈ 0.704`.
 constant `Λ` the data favor. Every horizon reading in [`Cosmological_Constant.md`](Cosmological_Constant.md)
 §5.7–§5.8 failed to give one.
 
-**Two steps, stated before any computation (§5.9).**
+**Two steps, stated before any computation ([`Cosmological_Constant.md`](Cosmological_Constant.md) §5.9).**
 
 1. *Identification:* QLF's free action is the Einstein–Hilbert density `R − 2Λ`. QLF has no
    gravitational action density, so this step was not attempted. Making it by definition would be
-   naming, not deriving (R6a).
-2. *Average:* closure is irrevocable (`closedAtHorizon_mono`) and the future is not yet synthesized,
+   naming, not deriving ([`ScientificApproach.md`](ScientificApproach.md) R6a).
+2. *Average:* closure is irrevocable (`closedAtHorizon_mono`, [`lean/QLF_HorizonClosure.lean`](lean/QLF_HorizonClosure.lean)) and the future is not yet synthesized,
    so the average QLF can use runs over what has closed so far:
    `⟨ρ_m⟩_t = ∫₀ᵗ ρ_m a³ dt′ / ∫₀ᵗ a³ dt′`. That makes `Λ` epoch-dependent.
 
-**Kill condition:** `Ω_Λ > 0.06` at recombination (Doran & Robbers 2006).
+**Kill condition:** `Ω_Λ > 0.06` at recombination (Doran & Robbers 2006, cited in [`Cosmological_Constant.md`](Cosmological_Constant.md) §5.7).
 
 **Result.** Proved in [`lean/QLF_GlobalConstraint.lean`](lean/QLF_GlobalConstraint.lean), no new
 axioms:
 
 - **G1** `lombriser_relation`, `lombriser_relation_avg`: the trace relation and the constraint give
-  `M²Λ = ½⟨T⟩`. This is algebra, the anchor of his relation, and bookkeeping by rule 4.
+  `M²Λ = ½⟨T⟩`. This is algebra, the anchor of his relation, and bookkeeping by rule 4 ([`Philosophy.md`](Philosophy.md) §3a).
 - **G2** `closedAvg_matter_era`: in a matter era, the closed-so-far average is exactly `3 ρ_m(t)`.
 - **G3** `omegaLambda_matter_era`, `omegaLambda_exceeds_bound`: so `ρ_Λ = (3/2) ρ_m` and
   `Ω_Λ = 3/5` at every matter-era epoch, above `0.06`.
@@ -108,7 +111,7 @@ The self-consistent history with radiation ([`global_constraint_epochs.py`](glob
 
 `Ω_Λ(z = 1100) = 0.52`, nine times the bound. Today's `0.60` is 12σ below Planck's `0.685 ± 0.007`. The
 term redshifts like matter (`ρ_Λ/ρ_m` runs from `5/4` in the radiation era to `3/2`), so `q = +½` and
-the expansion never accelerates. That is reading A's failure in §5.7, reached by a different route.
+the expansion never accelerates. That is reading A's failure in [`Cosmological_Constant.md`](Cosmological_Constant.md) §5.7, reached by a different route.
 
 <a id="3"></a>
 
@@ -116,8 +119,8 @@ the expansion never accelerates. That is reading A's failure in §5.7, reached b
 
 Lombriser's constant `Λ` comes from averaging over the whole four-volume, future included. QLF can
 keep his mechanism only by saying what a not-yet-synthesized future contributes to a closure. That is
-the objection §5.7 raised against the future-event-horizon reading C, now in sharper form. Step 1 (free
-action = `R − 2Λ`) matters only for that reading. The inhomogeneous sector of §1 is open on both sides.
+the objection [`Cosmological_Constant.md`](Cosmological_Constant.md) §5.7 raised against the future-event-horizon reading C, now in sharper form. Step 1 (free
+action = `R − 2Λ`) matters only for that reading. The inhomogeneous sector of [§1](#1) is open on both sides.
 
 ## 4. Side by side
 
@@ -127,7 +130,7 @@ action = `R − 2Λ`) matters only for that reading. The inhomogeneous sector of
 | Status of the frame choice | physically equivalent reformulation | gauge choice; changes no count |
 | Primitive | continuum metric plus a scalar field | closure counts; field and continuum are readings |
 | Why vacuum energy doesn't gravitate | global zero-action constraint | holographic surface counting, `(R_H/L_P)²` |
-| `Λ` over time | constant (future-including average) | not derived; the closed-so-far version is excluded (§2) |
+| `Λ` over time | constant (future-including average) | not derived; the closed-so-far version is excluded ([§2](#2)) |
 | Today's `Ω_Λ` | `≈ 0.704` (typicality argument) | `log 2 ≈ 0.693` (a fit, no longer derived) |
 | Dark matter | axion-like field fluctuations (proposed) | MOND-like `a₀ = cH₀/2π` ([`DarkMatter.md`](DarkMatter.md)) |
 | Testable signature | cluster redshift excess; lensing mass > dynamical mass | none computed for these observables |
