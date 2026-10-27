@@ -37,8 +37,10 @@ def radial_accel(g_bar, a0):
     return (g_bar + math.sqrt(g_bar * g_bar + 4 * g_bar * a0)) / 2
 
 
-def run(M=None, x_com=None, delta_i=1e-5, qlf=True, eta=2e-3, dens_p=0.0):
-    """Integrate one shell from z = 1100. Give the baryon mass M (Msun) or comoving radius x (kpc)."""
+def run(M=None, x_com=None, delta_i=1e-5, qlf=True, eta=2e-3, dens_p=0.0, gext=None, record=False):
+    """Integrate one shell from z = 1100. Give the baryon mass M (Msun) or comoving radius x (kpc).
+    §8 dens_p: a0_eff = a0/(1+delta)^dens_p.  §9 gext(a): a0_eff = a0^2/(a0 + gext(a)).
+    record=True returns a track [(a, g_ext_sourced)] for use as an ambient field."""
     if M is None:
         M = 4 * math.pi / 3 * RHO_B0 * x_com ** 3 * (1 + delta_i)
     x = (M / (4 * math.pi / 3 * RHO_B0 * (1 + delta_i))) ** (1 / 3)
@@ -47,6 +49,7 @@ def run(M=None, x_com=None, delta_i=1e-5, qlf=True, eta=2e-3, dens_p=0.0):
     V = H0 * E(a) * R
     z_ta = z_coll = None
     R_max = R
+    track = []
 
     def deriv(a, R, V):
         H = H0 * E(a)
@@ -56,12 +59,17 @@ def run(M=None, x_com=None, delta_i=1e-5, qlf=True, eta=2e-3, dens_p=0.0):
             if dens_p:                                    # §8: a0_eff = a0 / (1 + delta)^p
                 delta = (x * a / R) ** 3 * (1 + delta_i) - 1
                 a0 = a0 / (1 + max(delta, 0.0)) ** dens_p
+            if gext is not None:                          # §9: a0_eff = a0^2 / (a0 + g_ext(a))
+                a0 = a0 * a0 / (a0 + gext(a))
             g = math.copysign(radial_accel(abs(gN), a0), gN)
         else:
             g = gN
         return a * H, V, addot_over_a(a) * R - g
 
     while a < 1.0:
+        if record:                                        # ambient field this shell sources
+            delta = (x * a / R) ** 3 * (1 + delta_i) - 1
+            track.append((a, 4 * math.pi / 3 * G * (RHO_B0 / a ** 3) * max(delta, 0.0) * R))
         da, dR, dV = deriv(a, R, V)
         dt = eta * min(1 / (H0 * E(a)), abs(R / V) if V else 1e9, math.sqrt(R / max(abs(dV), 1e-300)))
         k1 = (da, dR, dV)
@@ -80,7 +88,35 @@ def run(M=None, x_com=None, delta_i=1e-5, qlf=True, eta=2e-3, dens_p=0.0):
             break
     # linear-theory overdensity at the end if never collapsed: delta = (x a / R)^3 (1+delta_i) - 1
     delta_end = (x * a / R) ** 3 * (1 + delta_i) - 1 if z_coll is None else float("inf")
-    return dict(M=M, x=x, z_ta=z_ta, z_coll=z_coll, delta_end=delta_end, a_end=a)
+    out = dict(M=M, x=x, z_ta=z_ta, z_coll=z_coll, delta_end=delta_end, a_end=a)
+    if record:
+        out["track"] = track
+    return out
+
+
+def ambient_field(x_amb_mpc=100.0, delta_i=1e-5):
+    """g_ext(a) sourced by an ambient shell of comoving radius x_amb, evolving under the §7 law.
+    Flat after the shell's own collapse (field frozen at its last value)."""
+    tr = run(x_com=x_amb_mpc * 1000, delta_i=delta_i, qlf=True, record=True)["track"]
+    xs = [p[0] for p in tr]
+    gs = [p[1] for p in tr]
+
+    def gext(a):
+        if a <= xs[0]:
+            return gs[0]
+        if a >= xs[-1]:
+            return gs[-1]
+        lo, hi = 0, len(xs) - 1
+        while hi - lo > 1:
+            mid = (lo + hi) // 2
+            if xs[mid] <= a:
+                lo = mid
+            else:
+                hi = mid
+        t = (a - xs[lo]) / (xs[hi] - xs[lo])
+        return gs[lo] + t * (gs[hi] - gs[lo])
+
+    return gext
 
 
 def fmt(r):
@@ -119,6 +155,19 @@ def main():
             print("  " + fmt(r))
         if p == 1.0:
             verdict_from(dres, f"sec 8 (p = {p:g})")
+
+    # sec 9: external-field effect, floor a0_eff = a0^2 / (a0 + g_ext(a))
+    for xamb in (100.0, 50.0, 200.0):
+        gext = ambient_field(xamb)
+        print(f"\nsec 9: external-field floor, ambient shell X_amb = {xamb:g} cMpc, delta_i = 1e-5")
+        print("  " + hdr)
+        eres = {}
+        for c in cases:
+            r = run(delta_i=1e-5, qlf=True, gext=gext, **c)
+            eres[(c.get("M"), c.get("x_com"))] = r
+            print("  " + fmt(r))
+        if xamb == 100.0:
+            verdict_from(eres, f"sec 9 (X_amb = {xamb:g} cMpc)")
 
 
 def verdict(results, label, p):
