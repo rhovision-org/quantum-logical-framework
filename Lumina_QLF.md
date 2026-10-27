@@ -358,6 +358,39 @@ growth. It is not adopted here after the fact. If it is tried, it gets its own p
 
 ---
 
+## 8. Relative space depends on density: the density-suppressed floor — *pre-registered 2026-10-27*
+
+§7 failed because the closure-balance floor `a₀` is the same everywhere, so the law has no scale and
+cannot tell a galaxy from a supercluster. The fix proposed here (Jim, 2026-10-27) adds the missing
+scale through density: **a region's own overdensity suppresses the relative space it synthesizes, so the
+de Sitter closure floor it feels is reduced.** Each ZFA event has a constructing (transverse, spatial
+handedness) face and a destroying (lateral, gauge/charge handedness) face, balanced at zero
+(`event_duality_balanced`, [`QLF_CosmicInflation`](lean/QLF_CosmicInflation.lean); charge is the gauge
+component of handedness, [`QLF_Handedness`](lean/QLF_Handedness.lean)). A denser region runs more lateral
+closures, so it constructs less space relative to the background and the background floor it feels drops.
+That returns dense, collapsing regions to the Newtonian regime (`g → g_bar`), where growth is linear
+rather than the `√δ` runaway, while underdense regions keep the full floor.
+
+**Model.** Exactly the §7 spherical collapse, same global `H(z)`, same peculiar pull `g_N`, with the one
+change
+
+`a₀_eff = a₀ / (1 + δ)`,  `a₀ = cH(t)/2π`,  `δ = (x a / R)³ (1 + δ_i) − 1`
+
+(`δ` the shell's instantaneous overdensity; `g = radialAccel(|g_N|, a₀_eff) · sign(g_N)`). The exponent
+`p = 1` is the primary; `p = 2` is reported, not judged.
+
+**Kill conditions.** The same two as §7, both required: K1 (`10¹⁰ M☉`, `δ_i = 10⁻⁵` collapses before
+`z = 10`) and K2 (`50 Mpc`, `δ_i = 10⁻⁵` does not turn around before `z = 0`).
+
+**What is a free choice.** The functional form `1/(1+δ)` and the exponent `p` are mine, not forced by any
+theorem; Jim's principle is only that relative space falls with density. So a pass is evidence the
+*principle* can carry the scale, with the form to be derived; a fail of this specific form does not kill
+the principle. The run and verdict follow in the commit after this one.
+
+**Result (2026-10-27, run after the freezing commit).** _[pending]_
+
+---
+
 ## Sources
 
 - O. Zier et al., *Introducing the Lumina project: large-volume radiation-hydrodynamic simulations of the
