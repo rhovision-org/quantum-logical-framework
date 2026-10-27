@@ -471,6 +471,53 @@ the existing balance.
 
 ---
 
+## 10. A new prediction: the expand/contract imbalance tracks ionization — *pre-registered 2026-10-27*
+
+§7–§9 were attempts to *fix* QLF to agree with ΛCDM structure growth, and all failed. This section does
+the opposite thing, which is the point of the exercise: it states a **new, falsifiable** QLF prediction
+that differs from ΛCDM and that Lumina can test — agreement not assumed.
+
+**The claim.** Expansion and contraction are set by **charge**, not species: a `+` charge contracts local
+space, a `−` charge expands it (so positron = proton, electron = antiproton). This is QLF's own
+structure — charge is the gauge component of handedness (`QLF_Handedness`), and the expand/contract
+duality is `event_duality_balanced` read on that component. The consequence: in a **neutral atom** the
+`+` and `−` are locked together and their expand/contract cancels locally, so neutral matter sources no
+net term. A net expand/contract term requires the charges **free to act apart — ionization**. Therefore
+
+> at fixed matter density, the local expansion / structure-growth residual **correlates with the
+> ionization fraction**, and vanishes in fully neutral gas.
+
+This is distinct from ΛCDM, where growth depends on the total matter density and is blind to the
+ionization state at fixed density. It is distinct from QLF's own §3 dark-matter law, which depends on
+acceleration, not ionization.
+
+**Why Lumina is the testbed.** Lumina resolves the ionization field (H and He), the gas density, and the
+peculiar velocities together across `z = 2–6`. The test is a partial correlation: **at fixed local
+density, is the growth-rate (or peculiar-velocity-divergence) residual correlated with the local
+ionized fraction?** ΛCDM predicts zero partial correlation; QLF predicts a nonzero one, of the sign that
+ionized regions expand faster (cluster less) than neutral regions of equal density.
+
+**Kill condition.** If the partial correlation between the growth residual and the ionized fraction, at
+fixed density, is consistent with zero in Lumina (or in real IGM data — Lyman-α tomography plus density
+reconstruction), the charge-based mechanism is dead.
+
+**The open piece, named.** The *sign and magnitude* of the term need the ZFA interaction **rate** for
+`−` versus `+` closures. It cannot be taken from Thomson cross-sections — that is legacy physics, and
+"positron = proton" already says the asymmetry is not mass. So what is pre-registered is the
+**existence and location** of the correlation (tied to ionization, zero in neutral gas), not its
+amplitude; the amplitude waits on a ZFA rate QLF has not derived.
+
+**What is a theorem here and what is not (method rule 4).** The identity "net expand − contract = net
+gauge charge, zero iff ZFA-closed" is provable, but it is **near-definitional** once expansion is
+assigned to `−` handedness and contraction to `+` — it holds for every input and so, by
+[`Philosophy.md`](Philosophy.md) §3a rule 4, carries no physical content on its own. The physics is the
+empirical claim above, which is a *prediction to test*, not a theorem to prove. The significant provable
+content of this whole thread is not a duality identity but the §7–§9 **no-go** — that no density-sourced
+correction to the `cH/2π` floor can repair structure growth — and the §3 `a₀(z)` prediction. Those change
+a count of ways; the duality identities do not.
+
+---
+
 ## Sources
 
 - O. Zier et al., *Introducing the Lumina project: large-volume radiation-hydrodynamic simulations of the
