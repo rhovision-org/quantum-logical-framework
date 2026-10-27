@@ -37,7 +37,7 @@ def radial_accel(g_bar, a0):
     return (g_bar + math.sqrt(g_bar * g_bar + 4 * g_bar * a0)) / 2
 
 
-def run(M=None, x_com=None, delta_i=1e-5, qlf=True, eta=2e-3):
+def run(M=None, x_com=None, delta_i=1e-5, qlf=True, eta=2e-3, dens_p=0.0):
     """Integrate one shell from z = 1100. Give the baryon mass M (Msun) or comoving radius x (kpc)."""
     if M is None:
         M = 4 * math.pi / 3 * RHO_B0 * x_com ** 3 * (1 + delta_i)
@@ -53,6 +53,9 @@ def run(M=None, x_com=None, delta_i=1e-5, qlf=True, eta=2e-3):
         gN = G * M / R ** 2 - 4 * math.pi * G / 3 * (RHO_B0 / a ** 3) * R
         if qlf:
             a0 = C * H / (2 * math.pi)
+            if dens_p:                                    # §8: a0_eff = a0 / (1 + delta)^p
+                delta = (x * a / R) ** 3 * (1 + delta_i) - 1
+                a0 = a0 / (1 + max(delta, 0.0)) ** dens_p
             g = math.copysign(radial_accel(abs(gN), a0), gN)
         else:
             g = gN
@@ -103,13 +106,38 @@ def main():
                 print("  " + fmt(r))
             print()
 
+    verdict(results, "sec 7 (uniform floor)", 0.0)
+
+    # sec 8: density-suppressed floor a0_eff = a0 / (1 + delta)^p
+    for p in (1.0, 2.0):
+        print(f"\nsec 8: density-suppressed floor a0/(1+delta)^{p:g}, delta_i = 1e-5")
+        print("  " + hdr)
+        dres = {}
+        for c in cases:
+            r = run(delta_i=1e-5, qlf=True, dens_p=p, **c)
+            dres[(c.get("M"), c.get("x_com"))] = r
+            print("  " + fmt(r))
+        if p == 1.0:
+            verdict_from(dres, f"sec 8 (p = {p:g})")
+
+
+def verdict(results, label, p):
     k1 = results[(1e-5, True, 1e10, None)]
     k2 = results[(1e-5, True, None, 50000.0)]
+    _say(label, k1, k2)
+
+
+def verdict_from(dres, label):
+    _say(label, dres[(1e10, None)], dres[(None, 50000.0)])
+
+
+def _say(label, k1, k2):
     p1 = k1["z_coll"] is not None and k1["z_coll"] > 10
     p2 = k2["z_ta"] is None
-    print("Pre-registered verdict")
+    print(f"\nPre-registered verdict — {label}")
     print(f"  K1 (1e10 Msun collapses before z = 10): z_coll = {k1['z_coll']}  ->  {'PASS' if p1 else 'FAIL'}")
     print(f"  K2 (50 cMpc does not turn around by z = 0): z_ta = {k2['z_ta']}  ->  {'PASS' if p2 else 'FAIL'}")
+    print(f"  BOTH -> {'PASS' if p1 and p2 else 'FAIL'}")
 
 
 if __name__ == "__main__":

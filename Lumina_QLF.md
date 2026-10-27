@@ -387,7 +387,31 @@ theorem; Jim's principle is only that relative space falls with density. So a pa
 *principle* can carry the scale, with the form to be derived; a fail of this specific form does not kill
 the principle. The run and verdict follow in the commit after this one.
 
-**Result (2026-10-27, run after the freezing commit).** _[pending]_
+**Result (2026-10-27, run after freezing commit `e9d2357`).** **This form fails: K1 passes, K2 still
+fails.** The 50 Mpc lump turns around at `z = 17.7` (`p = 1`) or `z = 11.1` (`p = 2`), against §7's
+`z = 25` — barely moved, and never prevented.
+
+| | `10¹⁰ M☉` collapses at | 50 Mpc turns around at |
+|---|---|---|
+| §7, uniform floor | 199 | 25.2 |
+| §8, `a₀/(1+δ)` | 160 | 17.7 |
+| §8, `a₀/(1+δ)²` | 128 | 11.1 |
+
+**Why it fails, and what it says about the principle.** In the amplified `√δ` regime the overdensity
+`δ` stays well below 1 through almost the whole growth and only reaches order 1 just before turnaround.
+So `1/(1+δ)` is close to 1 for most of the history and engages too late to stop the turnaround. Worse,
+`δ(z)` runs nearly the same on every scale during the linear phase, so a floor that depends on the
+region's *own* density is almost scale-free — the same defect as the §7 phase change, which slid every
+scale together. Raising `p` only sharpens the late suppression; it does not make the brake act earlier or
+pick out large scales.
+
+The diagnosis points past the specific form. A brake that separates a galaxy from a supercluster must
+depend on something that *already differs by scale early*, when `δ` is still tiny on every scale. The
+region's own density is not that quantity; the **ambient** field from larger scales is (it is larger for
+a region embedded in a bigger overdensity, from the start). So the surviving candidate is still the
+external-field effect — `a₀_eff` set by the *surrounding* density, not the local one — which needs a
+two-scale model, not a single top-hat, and its own pre-registration. Jim's principle (relative space
+falls with density) is not killed; the reading that the *local* density sets the floor is.
 
 ---
 
