@@ -324,6 +324,44 @@ to be exactly 1. This matches Li (2004): holographic dark energy reaches de Sitt
 above. So a constant `Λ` cannot get `log 2` from counting on its own horizon, and whether §3's `log 2` means
 anything now rests on the entropy residual ([`Gravity_From_Delay.md`](Gravity_From_Delay.md) §9a).
 
+### §5.9 Lombriser's global constraint as a zero-action closure — *pre-registered 2026-10-27*
+
+§5.7–§5.8 leave the data's preferred reading, a constant `Λ`, with no QLF derivation. Lombriser
+(*On the cosmological constant problem*, Phys. Lett. B 2019, arXiv:1901.08588) gets one from a **global
+zero-action condition**: varying the action with respect to the Planck mass as a global variable gives
+`∫√−g (R − 2Λ) d⁴x = 0`. With the trace of Einstein's equations, that is `M_p²Λ = ½⟨T⟩`, with `⟨·⟩` the
+four-volume average of the matter trace, so vacuum energy drops out of what gravitates. ZFA is also a
+zero-action condition (`Lagrangian_Formulation.md`), so the question is whether ZFA can supply it.
+
+**Two steps, stated before any computation.**
+
+1. *The identification.* QLF's free action of the cosmic history is the Einstein–Hilbert density
+   `R − 2Λ`. QLF has no gravitational action density, so this step is **not attempted here**. It is an
+   open bridge, and if it can only be made by definition it is naming (R6a), not a derivation.
+2. *The average.* Lombriser's `⟨T⟩` runs over the whole four-volume, future included. Closure is
+   irrevocable (`closedAtHorizon_mono`) and the future is not yet synthesized, so the reading QLF can use
+   is the average over **what has closed so far**: `⟨ρ_m⟩_t = ∫₀ᵗ ρ_m a³ dt′ / ∫₀ᵗ a³ dt′`. This makes `Λ`
+   epoch-dependent, and that is what this section tests. Step 2 is the test; step 1 matters only if it passes.
+
+Sign convention: Lombriser's (his eq. 4, and `⟨τ⟩ = ⟨ρ̄_m⟩` in his structure-formation section), in which `⟨T⟩ = ⟨ρ_m⟩` for dust and a positive matter density gives a
+positive `Λ`. `ρ_Λ = M_p²Λ`, so the closed-so-far reading is `ρ_Λ(t) = ½⟨ρ_m⟩_t`.
+
+**Pre-registered statements** (to be proved in `lean/QLF_GlobalConstraint.lean`, no new axioms):
+
+| | Statement |
+|---|---|
+| G1 | over finitely many cells with positive four-volumes `wᵢ`, the pointwise trace relation `Rᵢ = 4Λ − Tᵢ/M²` and the constraint `Σ wᵢ(Rᵢ − 2Λ) = 0` give `M²Λ = ½ Σwᵢ Tᵢ / Σwᵢ` (Lombriser's relation; algebra, bookkeeping by rule 4) |
+| G2 | in a matter era (`a³ = k t²`, comoving matter `ρ_m a³ = ρ₀`), the closed-so-far average is `⟨ρ_m⟩_t = 3 ρ_m(t)` |
+| G3 | so `ρ_Λ = (3/2) ρ_m` and `Ω_Λ = 3/5` at every matter-era epoch, which exceeds the early-dark-energy bound `0.06` |
+
+**Numerical check** (`global_constraint_epochs.py`): a self-consistent radiation + matter + `ρ_Λ(t) = ½⟨ρ_m⟩_t`
+history, reporting `Ω_Λ` at recombination (`z = 1100`) and today, and whether the expansion ever accelerates.
+
+**Kill condition:** if the closed-so-far reading gives `Ω_Λ > 0.06` at recombination (Doran & Robbers 2006),
+it fails on the same data as readings A and B. Then a constant `Λ` from Lombriser's constraint needs the
+future-including average, and that has to be defended against the objection §5.7 raised to reading C.
+**Pass:** `Ω_Λ(z = 1100) < 0.06` with today's `Ω_Λ` within `3σ` of Planck's `0.685 ± 0.007`.
+
 ---
 
 ## §6 Honest scoping (three-tier)
@@ -408,6 +446,7 @@ anything now rests on the entropy residual ([`Gravity_From_Delay.md`](Gravity_Fr
 - Bekenstein, J. D. (1973). *Black holes and entropy*. Phys. Rev. D 7, 2333.
 - Hsu, S. D. H. (2004). *Entropy bounds and dark energy*. Phys. Lett. B 594, 13 — Hubble-radius holographic dark energy gives no acceleration (§5.7 reading A).
 - Li, M. (2004). *A model of holographic dark energy*. Phys. Lett. B 603, 1 — future-event-horizon cutoff (§5.7 reading C).
+- Lombriser, L. (2019). *On the cosmological constant problem*. Phys. Lett. B, 134804 (doi:10.1016/j.physletb.2019.134804), arXiv:1901.08588 — the global constraint tested in §5.9.
 - Doran, M., & Robbers, G. (2006). *Early dark energy cosmologies*. JCAP 0606:026.
 - Li, T.-N., Li, Y.-H., Du, G.-H., Wu, P.-J., Feng, L., Zhang, J.-F., & Zhang, X. (2024). *Revisiting holographic dark energy after DESI 2024*. arXiv:2411.08639 (EPJC) — the fits that exclude reading C (§5.7).
 - Chen, L., Huang, Q.-G., & Wang, K. (2019). *Distance priors from Planck final release*. JCAP 02, 028 — the shift parameter `R = 1.7502 ± 0.0046` used in §5.7.
