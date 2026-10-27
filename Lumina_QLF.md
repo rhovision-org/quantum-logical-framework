@@ -415,6 +415,43 @@ falls with density) is not killed; the reading that the *local* density sets the
 
 ---
 
+## 9. The ambient field sets the floor: the external-field effect — *pre-registered 2026-10-27*
+
+§8 established that the suppressing density must be the **ambient** one, because only the ambient field
+already differs by scale while every region's own `δ` is still `10⁻⁵`. The physical reading of Jim's
+principle: the relative space a region synthesizes is set by the lateral-closure density of its
+**surroundings**, so a region embedded in a strong ambient field feels a reduced closure floor and
+reverts to Newtonian growth — while a dense, compact region whose own pull beats the ambient field keeps
+the full floor. This is the external-field effect, with the construct/destroy duality of §8 as its
+mechanism. It is the one candidate that engages where the object's own pull `g_bar` is *below* the
+ambient field — which is exactly the large, diffuse scales that overshot, and not the compact galaxies
+that must still form.
+
+**Model.** A single **ambient shell** of comoving radius `X_amb = 100 Mpc`, `δ_i = 10⁻⁵`, evolves by the
+§7 closure balance and sources a common ambient field
+
+`g_ext(z) = (4π/3) G ρ̄_b(z) δ_amb(z) R_amb(z)`.
+
+Every target shell (the §7 cases) evolves as in §7 but with the floor suppressed by that ambient field,
+
+`a₀_eff = a₀² / (a₀ + g_ext)`,  `a₀ = cH(t)/2π`
+
+(so `g_ext ≪ a₀ ⟹ a₀_eff ≈ a₀`, full amplification; `g_ext ≫ a₀ ⟹ a₀_eff → a₀²/g_ext → 0`, Newtonian).
+`g = radialAccel(|g_N|, a₀_eff) · sign(g_N)`.
+
+**Kill conditions.** The same two, both required: K1 (`10¹⁰ M☉` collapses before `z = 10`) and K2
+(`50 Mpc` does not turn around before `z = 0`). `X_amb = 50` and `200 Mpc` are reported for sensitivity,
+not judged.
+
+**Free choices, named before the run.** The ambient scale `X_amb`, the EFE form `a₀²/(a₀+g_ext)`, and
+sourcing `g_ext` from one evolving shell rather than a power spectrum (which QLF does not have) are all
+mine. A pass is evidence the external-field reading can carry the scale; a fail of this form leaves the
+principle open but removes the simplest construction.
+
+**Result (2026-10-27, run after the freezing commit).** _[pending]_
+
+---
+
 ## Sources
 
 - O. Zier et al., *Introducing the Lumina project: large-volume radiation-hydrodynamic simulations of the
