@@ -254,6 +254,55 @@ what QLF can compute.
 
 ---
 
+## 7. Critical contraction against global expansion: a growth test — *pre-registered 2026-10-27*
+
+§3 named the larger gap: baryons alone grow too slowly after recombination to make galaxies. Each
+ZFA event has two faces, local contraction and future expansion (`event_duality_balanced`,
+[`QLF_CosmicInflation`](lean/QLF_CosmicInflation.lean)). Read cosmologically, a lump contracts locally
+under the closure balance while the global expansion carries distant masses apart. Where contraction
+wins, the lump turns around and collapses into matter and black holes. Where expansion wins, the lump is
+isolated and stays linear. This section asks whether that split, with nothing added, gives galaxies
+in time and keeps the largest scales smooth. Model and kill conditions are fixed here, in a commit
+made before [`structure_growth_qlf.py`](structure_growth_qlf.py) is run.
+
+**Model.**
+
+- **Global expansion** is taken as measured: flat ΛCDM `H(z)` with Planck 2018 parameters
+  (`Ω_m = 0.315`, `H₀ = 67.4`, radiation as in [`omega_lambda_epochs.py`](omega_lambda_epochs.py)).
+  QLF does not derive `H(z)`, so it enters as data, not as a ΛCDM claim about what fills it.
+- **The lump** is a spherical shell of baryon mass `M` in a background of mean baryon density
+  `ρ̄_b = Ω_b ρ_crit,0 (1+z)³`, `Ω_b = 0.0493`. Its peculiar Newtonian pull is
+  `g_N = GM/R² − (4πG/3) ρ̄_b R`.
+- **Local contraction** is the closure balance applied to that peculiar pull:
+  `g = radialAccel(|g_N|, a₀) · sign(g_N)`, with `a₀ = cH(t)/2π` at each epoch (`radialAccel`,
+  [`QLF_DarkMatter`](lean/QLF_DarkMatter.lean)).
+- **The shell** obeys `R̈ = (ä/a) R − g`, starting at `z = 1100` on the Hubble flow
+  (`Ṙ = HR`, no peculiar velocity) with overdensity `δ_i`. Turnaround is `Ṙ = 0`. Collapse is `R → 0`.
+- **Control:** the same run with `a₀ = 0` (Newton, baryons only).
+
+**Kill conditions.** Both must pass.
+
+- **K1, enough growth.** A lump of `M = 10¹⁰ M☉` with `δ_i = 10⁻⁵` collapses before `z = 10`. If it
+  does not, the closure balance does not supply the missing growth.
+- **K2, no overshoot.** A lump of comoving radius `50 Mpc` with `δ_i = 10⁻⁵` does not turn around
+  before `z = 0`. If it does, the law makes the largest scales clump, against the observed homogeneity
+  above about 100 Mpc.
+
+Other masses (`10⁸`, `10¹²`, `10¹⁴ M☉`) and `δ_i = 10⁻⁴` are reported, not judged.
+
+**Assumptions named before the run.**
+
+- **A1.** Applying the balance to the *peculiar* pull, relative to the Hubble flow, is a modelling
+  choice. MOND-type laws are ambiguous here, and the external-field effect of neighbouring lumps is
+  ignored.
+- **A2.** `δ_i = 10⁻⁵` on galaxy scales assumes the seeds survive to recombination. In a universe with no
+  dark matter, photon diffusion (Silk damping) erases small-scale baryon fluctuations before then. So
+  passing K1 is necessary, not sufficient.
+- **A3.** Before recombination the baryons are held by photon pressure, so this test says nothing about
+  the CMB acoustic peaks.
+
+---
+
 ## Sources
 
 - O. Zier et al., *Introducing the Lumina project: large-volume radiation-hydrodynamic simulations of the
