@@ -328,6 +328,9 @@ anything now rests on the entropy residual ([`Gravity_From_Delay.md`](Gravity_Fr
 
 ### §5.9 Lombriser's global constraint as a zero-action closure — *pre-registered 2026-10-27*
 
+The full comparison with Lombriser's models, including his Minkowski-frame cosmology, is in
+[`Lombriser_QLF.md`](Lombriser_QLF.md).
+
 §5.7–§5.8 leave the data's preferred reading, a constant `Λ`, with no QLF derivation. Lombriser
 (*On the cosmological constant problem*, Phys. Lett. B 2019, arXiv:1901.08588) gets one from a **global
 zero-action condition**: varying the action with respect to the Planck mass as a global variable gives
@@ -459,6 +462,7 @@ matters only for the future-including reading.
 - [`lean/QLF_SubstrateLightSpeed.lean`](lean/QLF_SubstrateLightSpeed.lean) — `c = L_Planck/τ_Planck`.
 - [`lean/QLF_CosmologicalConstant.lean`](lean/QLF_CosmologicalConstant.lean) — Lean anchor for this module.
 - [`cosmological_constant_demo.py`](cosmological_constant_demo.py) — numerical companion.
+- [`Lombriser_QLF.md`](Lombriser_QLF.md), [`lean/QLF_GlobalConstraint.lean`](lean/QLF_GlobalConstraint.lean), [`global_constraint_epochs.py`](global_constraint_epochs.py) — §5.9.
 
 ### External
 
