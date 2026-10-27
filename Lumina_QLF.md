@@ -29,6 +29,7 @@ two of those statements make predictions that Lumina's epoch can test.
 | Thomson optical depth `τ = 0.055` | QLF's `1/α = 137.032` moves `σ_T` by `6 × 10⁻⁵`, so `τ` by `3 × 10⁻⁶` | [`QLF_FineStructureSubstrate`](lean/QLF_FineStructureSubstrate.lean) | **Predicted null**: invisible in reionization data (§4) |
 | Helium abundance, hence the helium electrons | `Y_p = 2r/(1+r)`, so `Y_p = 1/4` at `r = 1/7`; He III adds 1/14 of the final electrons | [`helium_fraction_one_seventh`](lean/QLF_Nucleosynthesis.lean) | **Proved funnel**, `r` imported (§4) |
 | AGN and the first supermassive black holes | Hadron horizons are Planck-scale Markov blankets; nothing on seeding | [`QLF_QuantumBlackHole`](lean/QLF_QuantumBlackHole.lean) | **Open**: no QLF result bears on it (§5) |
+| Growth of structure after recombination | Local closure-balance contraction against the global expansion | [`radialAccel`](lean/QLF_DarkMatter.lean), [`structure_growth_qlf.py`](structure_growth_qlf.py) | **Pre-registered test failed** (overshoot: 50 Mpc collapses at `z = 14`) (§7) |
 | Initial conditions (`n_s`, amplitude, transfer functions) | No inflaton; inflation and dark energy share the `w = −1` field; observables not derived | [`cosmic_inflation_in_progress`](lean/QLF_CosmicInflation.lean) | **Open** (§5) |
 
 ---
@@ -300,6 +301,44 @@ Other masses (`10⁸`, `10¹²`, `10¹⁴ M☉`) and `δ_i = 10⁻⁴` are repor
   passing K1 is necessary, not sufficient.
 - **A3.** Before recombination the baryons are held by photon pressure, so this test says nothing about
   the CMB acoustic peaks.
+
+**Result (2026-10-27, run after commit `78c236b`).** **K1 passes and K2 fails, so the test fails.**
+
+| Baryon mass | comoving radius | turnaround `z` | collapse `z` | control (Newton): `δ` at `z = 0` |
+|---|---|---|---|---|
+| `10⁸ M☉` | 0.16 Mpc | 491 | 332 | `5 × 10⁻⁵` |
+| `10¹⁰ M☉` | 0.73 Mpc | 313 | **199** | `5 × 10⁻⁵` |
+| `10¹² M☉` | 3.4 Mpc | 162 | 97 | `5 × 10⁻⁵` |
+| `10¹⁴ M☉` | 15.7 Mpc | 64 | 37 | `5 × 10⁻⁵` |
+| `3 × 10¹⁵ M☉` | **50 Mpc** | **25** | **14** | `5 × 10⁻⁵` |
+
+(`δ_i = 10⁻⁵`. With `δ_i = 10⁻⁴` every collapse moves only slightly earlier, for example `10¹⁰ M☉` at
+`z = 206`.)
+
+The control confirms the gap. With baryons alone and Newton, a `10⁻⁵` seed grows only fivefold by
+today. The closure balance more than closes it, though, and it overshoots. Galaxy-mass lumps collapse at
+`z ≈ 200`, long before the first stars JWST sees at `z ≈ 10–15`. A 50 Mpc lump turns around at `z = 25`
+and collapses at `z = 14`, where the universe is observed to be smooth.
+
+**Why.** Every growing lump starts deep in the low-acceleration regime, where the pull is `√(g_N a₀)`
+and so scales as `√δ`. Growth is then nearly independent of the seed, which is why a tenfold larger
+`δ_i` barely moves the collapse. Local contraction wins on every scale up to the largest tested, and
+global expansion isolates nothing below hundreds of Mpc.
+
+**Not an artefact of taking `H(z)` as data.** Exploratory runs with the background replaced (not part
+of the pre-registration):
+
+- **Einstein–de Sitter** (`H ∝ a^−3/2`): `10¹⁰ M☉` collapses at `z = 93`, and 50 Mpc turns around at
+  `z = 3.5`. K2 still fails. 200 Mpc reaches `δ = 4` by today.
+- **QLF's `f = 1/t` clock**, coasting `a ∝ t`: weaker early expansion, so everything collapses earlier.
+  `10¹⁰ M☉` collapses at `z = 908`, and 200 Mpc at `z = 553`.
+
+**What this changes.** The closure-balance law, applied to the peculiar pull of baryons after
+recombination, makes structure far too early and on scales far too large. The dark-matter law of §3 is
+untouched where it was tested (galaxy rotation curves, `a₀(z)` to `z = 1.3`, lensing). But it is not
+yet a cosmology, and its plain extension fails. The external-field effect (A1), in which the summed pull
+of neighbours lifts each region out of the low-acceleration regime, is the obvious candidate to slow the
+growth. It is not adopted here after the fact. If it is tried, it gets its own pre-registration.
 
 ---
 
