@@ -706,7 +706,14 @@ physical expand/contract energies are **thousands to millions of bits** and the 
 - **The many-bit regime is unmeasured.** The `k = 1…4` saturation is the atomic scale; over `10³–10⁶`
   closures sector weights move by enormous factors, so the small-`k` concavity is *not* established as
   the physical amplitude law. Reaching it needs the hitting function at large `k` (tractable — `h(k·e)`
-  is a 1-D marginal of the solved harmonic function) or a direct large-`k` asymptotic.
+  is a 1-D marginal of the solved harmonic function) or a direct large-`k` asymptotic. **The route is
+  the census-tail one:** the physical value is a *limit of ratios of integer counts* (the way the α
+  census band and the equal-weight closed form `135 + 8√62/31` arise in [`Alpha.md`](Alpha.md)), and such
+  a tail can be taken in closed form — [`QLF_AlphaBound`](lean/QLF_AlphaBound.lean)'s `censusTail_eq`
+  extracts exactly that kind of limit via the generalized binomial theorem. The constant `C` in
+  `M(k) ~ C/k²` is the analogous target. *(Flagged, not claimed: this amplitude and the α program read
+  the same gauge-axis closure census, so whether the per-charge amplitude connects to `α` is a natural
+  check — α itself is only shown *compatible*, not derived, so no link is asserted.)*
 - **Net charge vs free-charge count.** The seed `"−"×k` is *net* charge `k`; a locally-neutral ionized
   region carries many free charges at `~0` net, and its effect is the time-separated
   present-contraction / future-expansion backlog of §10, which this census does not model. So the sign
