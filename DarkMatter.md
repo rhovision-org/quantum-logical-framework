@@ -291,6 +291,10 @@ scaling to the paper's MOND framework, not a refit. The fitting form is McGaugh'
 (§7.5). The like-for-like test is a refit of the MUSE-DARK rotation curves in QLF's form, which needs the
 per-galaxy data.
 
+**Extension to `z ≈ 6`.** At reionization redshifts the expansion clock puts `a₀` about 10× today's
+value. A post hoc look at six JADES galaxies and a frozen test for new samples, with the Lumina
+simulation as the cold-dark-matter comparison, are in [`Lumina_QLF.md`](Lumina_QLF.md) §3.
+
 ### 5d. Lensing sees the same `a₀`: the KiDS-1000 weak-lensing test — *pre-registered 2026-09-30*
 
 **Why lensing tests the picture.** A denser vacuum near mass slows light along two paths, time and space,
