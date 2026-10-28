@@ -99,8 +99,8 @@ Three facts from the run answer the question that started this note.
    `φ = 1/2`, and `±(1 + √3)`, `±2`, `±(√3 − 1)` at `φ = 1/3`. Each is the limit of a ratio of integer
    counts: `M_{L+2}/M_L` is rational at every `L` and approaches the squared outer edge. At `φ = 1/3`
    it reads `6.45, 6.76, 6.95, 7.06` at `L = 10, 20, 30, 38`, heading for `(1 + √3)² = 4 + 2√3 ≈ 7.464`.
-   The convergence is slow, with `1/L` corrections. That is a matter of depth. `L = 40` is about 120
-   bits, while a physical closure carries thousands to millions, where the ratio sits within about `1/L`
+   The convergence is slow, with `2/L` corrections (the census grows like `λ^L/L`). That is a matter of depth. `L = 40` is about 120
+   bits, while a physical closure carries thousands to millions, where the ratio sits within about `2/L`
    of its limit. The irrational number is the name of where a
    sequence of rationals is going. No term of the sequence is irrational, and no closure has an irrational
    weight.
