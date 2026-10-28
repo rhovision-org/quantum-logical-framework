@@ -79,6 +79,71 @@ def census(seed: str, depth_cap: int = DEPTH_CAP):
     return W, exc, dmin
 
 
+def kraft_mass(seed: str, depth_cap: int):
+    """Kraft cylinder mass of a charged seed's first-closures: sum of 8^-depth over the
+    absorbing (prefix-free) closures reachable within `depth_cap`. This is the conditional
+    probability that a random continuation closes the seed -- depth-convergent (8^-depth
+    decays), unlike the raw count. twist_kraft (QLF_KraftMeasure) bounds it by 1."""
+    M = 0.0
+    for rec in search(seed, max_depth=depth_cap, limit=None, absorbing=True):
+        M += 8.0 ** (-rec["depth"])
+    return M
+
+
+def kraft_main():
+    print("Per-charge amplitude -- Kraft-corrected estimator (Lumina_QLF.md sec 12)")
+    print("M(k,D) = sum 8^-depth over first-closures of a k-charge seed; depth-independent.\n")
+
+    depths = [5, 6, 7]
+    print(f"Convergence of M(k,D) with depth cap D  (sign -):")
+    print(f"  {'k':>2}  " + "  ".join(f"D={d:<10}" for d in depths))
+    Mfinal = {}
+    for k in range(1, KMAX + 1):
+        row = [kraft_mass("-" * k, d) for d in depths]
+        Mfinal[k] = row[-1]
+        print(f"  {k:>2}  " + "  ".join(f"{m:<11.7f}" for m in row))
+
+    # symmetry check at D = 7
+    print(f"\n+/- symmetry of M at D={depths[-1]} (must match, by §11 K1):")
+    sym_ok = True
+    for k in range(1, KMAX + 1):
+        mp = kraft_mass("+" * k, depths[-1])
+        mm = Mfinal[k]
+        ok = abs(mp - mm) < 1e-12
+        sym_ok = sym_ok and ok
+        print(f"  k={k}: M(+)={mp:.7f}  M(-)={mm:.7f}  {'match' if ok else 'DIFFER'}")
+
+    print(f"\nPer-charge marginal surprisal  -ln[M(k+1)/M(k)]  (nats), vs ln 2 = {math.log(2):.5f}:")
+    margs = []
+    for k in range(1, KMAX):
+        r = Mfinal[k + 1] / Mfinal[k]
+        s = -math.log(r)
+        margs.append(s)
+        print(f"  -ln[M({k+1})/M({k})] = -ln({r:.5f}) = {s:.5f} nats")
+
+    # reference constants
+    LN2 = math.log(2)
+    P4 = 0.1932015             # prime-closure mass, Closure_Walk.md
+    print(f"\nReference QLF constants: ln 2 = {LN2:.5f},  p4 (prime-closure mass) = {P4:.5f},")
+    print(f"  -ln p4 = {-math.log(P4):.5f},  M(1,7) itself = {Mfinal[1]:.7f}")
+
+    print("\n" + "=" * 60)
+    print("PRE-REGISTERED VERDICT (sec 12)")
+    print("=" * 60)
+    conv = len(margs) >= 2 and abs(margs[-1] - margs[-2]) < 0.05
+    print(f"C1 (symmetry M(+)=M(-)): {'PASS' if sym_ok else 'FAIL'}")
+    print(f"C2 (marginal surprisal converges): {'PASS' if conv else 'FAIL -- not settled at depth 7'}"
+          f"  [last two: {[round(m,4) for m in margs[-2:]]}]")
+    if conv:
+        val = margs[-1]
+        hit_ln2 = abs(val - LN2) < 0.03
+        print(f"C3 (amplitude = ln 2 = Omega_Lambda): {'PASS' if hit_ln2 else 'FAIL'}"
+              f"  (measured {val:.5f} nats = ln {math.exp(val):.4f})")
+        if not hit_ln2:
+            print(f"   measured per-charge amplitude = {val:.5f} nats; reported as the substrate value.")
+    print()
+
+
 def main():
     print("Per-charge expand/contract amplitude -- pre-registered census test")
     print(f"(Lumina_QLF.md sec 11; depth cap {DEPTH_CAP}; first-closure / events census)\n")
@@ -139,4 +204,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--kraft" in sys.argv:
+        kraft_main()
+    else:
+        main()

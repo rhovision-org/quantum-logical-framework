@@ -588,6 +588,39 @@ estimator must factor out the depth-budget combinatorics; that is the next step,
 
 ---
 
+## 12. The amplitude, corrected estimator: Kraft cylinder mass — *pre-registered 2026-10-28*
+
+§11 identified *why* the raw multiplicity ratio failed — it is depth-budget-dominated. The fix is not a
+new idea but the repo's **own** depth-independent measure: the **Kraft cylinder mass**
+`M = Σ 8^{−ℓ}` over a seed's first-closures (`ℓ` = continuation length). This is the measure under which
+QLF's perturbation series converges absolutely (`twist_kraft`, [`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean),
+[`Perturbation_Theory_QLF.md`](Perturbation_Theory_QLF.md)); it weights a deep spatial detour by `8^{−ℓ}`,
+so the detour combinatorics that swamped the raw count are suppressed, and `M(k)` converges as the depth
+cap grows instead of tracking it. Physically `M(k)` is the **conditional probability that a random
+continuation closes a `k`-charge seed** — a clean per-charge rate, which is exactly the amplitude §10
+needs.
+
+**The reading.** If closing each free charge is one independent binary event, `M(k) ∝ p^k` and the
+**per-charge marginal surprisal** `−ln[M(k+1)/M(k)]` is a constant `−ln p`; `p = ½` (one bit per charge)
+gives that constant `= ln 2 = Ω_Λ`. So the same `log 2` target as §11, now measured with the correct
+depth-independent estimator.
+
+**Pre-registered kill conditions** (frozen in the commit that adds the `--kraft` mode of
+[`expansion_rate_qlf.py`](expansion_rate_qlf.py), before it was run):
+
+- **C1 — symmetry.** `M(+)` must equal `M(−)` at each `k` (inherited from §11 K1; a difference voids).
+- **C2 — convergence.** The marginal surprisal `−ln[M(k+1)/M(k)]` must settle (last two steps agree to
+  `< 0.05` nats) — otherwise the estimator is still depth-limited and the amplitude stays open.
+- **C3 — amplitude `= Ω_Λ`.** If C2 settles, the converged surprisal is the per-charge amplitude. **PASS**
+  if it is `ln 2 = 0.693` (within `0.03`), identifying the amplitude with the dark-energy quantum;
+  **FAIL** (reported as such) if it is a different value, which is then logged as the measured substrate
+  amplitude. The `0.1932` prime-closure mass of [`Closure_Walk.md`](Closure_Walk.md) is carried as a
+  second reference constant.
+
+**Result.** *(pending the first run; frozen at pre-registration, outcome appended in the next commit.)*
+
+---
+
 ## Sources
 
 - O. Zier et al., *Introducing the Lumina project: large-volume radiation-hydrodynamic simulations of the
