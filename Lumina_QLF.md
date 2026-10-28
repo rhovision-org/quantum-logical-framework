@@ -505,9 +505,9 @@ reconstruction), the charge-based mechanism is dead.
 `−` versus `+` closures. It cannot be taken from Thomson cross-sections — that is legacy physics, and
 "positron = proton" already says the asymmetry is not mass. So what is pre-registered is the
 **existence and location** of the correlation (tied to ionization, zero in neutral gas), not its
-amplitude; the amplitude waits on a ZFA rate QLF has not derived. *(Resolved in §13: the per-charge
-amplitude is the closure walk's Pólya return probability `p₄ = 0.1932`, saturating as `~1/k²` — so the
-dependence on ionization is predicted to be sublinear.)*
+amplitude; the amplitude waits on a ZFA rate QLF has not derived. *(§13: the atomic single-charge
+amplitude is the closure walk's Pólya return probability `p₄ = 0.1932`; the many-bit regime that fixes
+the dependence on ionization fraction is still incomplete.)*
 
 **What is a theorem here and what is not (method rule 4).** The identity "net expand − contract = net
 gauge charge, zero iff ZFA-closed" is provable, but it is **near-definitional** once expansion is
@@ -648,12 +648,13 @@ data point and unconverged `M`, that is a coincidence to note, not an identity t
 amplitude: the term's **location** ([`QLF_ExpansionCharge`](lean/QLF_ExpansionCharge.lean):
 `spatial_imbalance_sources_nothing` — it lives on the ionization field, zero for neutral matter) and its
 **sign** (`expansion_sign_not_a_count` — the `+`/`−` census is exactly symmetric, so the direction is the
-time arrow, not a count). The **magnitude** is open, and both counting routes to it are now documented
-negatives — the honest frontier.
+time arrow, not a count). The **magnitude** is not yet resolved here: both counting routes are
+depth-limited and so **incomplete** at reachable depth, not negative — §13 completes the atomic scale and
+names the many-bit regime that remains.
 
 ---
 
-## 13. The amplitude, converged: the Pólya return probability `p₄` — *2026-10-28*
+## 13. The atomic amplitude: the Pólya return probability `p₄` — *2026-10-28*
 
 §11 and §12 could not converge the amplitude because both were depth-limited. The resolution is not a
 third estimator but a **recognition of what the census is.** Since count balance already entails Pauli
@@ -686,24 +687,36 @@ independently computed there and here. That is the validation and the result at 
 > constant that says 80.7 % of possibility never closes. One ionization event contributes exactly the
 > substrate's universal return probability.
 
-**And it saturates.** For `k` charges `M(k) = h(k·e)` follows the 4D Green's function `~ C/k²` (`M(k)·k²`
-holds near `0.19` across the table), so the per-charge marginal surprisal `−ln[M(k+1)/M(k)]` runs
-`1.29 → 0.92 → 0.66 → 0` — **falling, not constant.** So:
+**The small-`k` behaviour.** For `k` charges `M(k) = h(k·e)` follows the 4D Green's function `~ C/k²`
+(`M(k)·k²` holds near `0.19` across the table), so the per-charge marginal surprisal `−ln[M(k+1)/M(k)]`
+runs `1.29 → 0.92 → 0.66 → 0` at `k = 1…4` — **falling, not constant.** At this atomic scale the simple
+"one bit per charge" reading (`amplitude = log 2 = Ω_Λ`) therefore does **not** hold: the gauge axis
+being binary does not make each stacked charge an independent bit, and the `k = 1…4` surplus falls
+instead of staying at `ln 2`. The §12 "superlinear" hint was likewise a depth-7 artifact — at small `k`
+the converged trend is the opposite, sublinear. **But small `k` is the atomic regime, not the physical
+one** (next paragraph), so this is a statement about the first few charges, not the amplitude law.
 
-- `amplitude = log 2 = Ω_Λ` (the §11/§12 target) is **definitively false** — refuted by a converged
-  census, not merely unsupported. The gauge axis being binary does *not* make each charge one bit.
-- the §12 "superlinear" hint is **refuted the other way** — the effect is **sublinear (saturating)**, not
-  superlinear; that reading was a depth-7 artifact.
-- **the expand/contract term is sublinear in the ionization fraction**, saturating toward the
-  single-charge value `p₄`. This is the sharp, falsifiable form the §10 test now takes: against Lumina,
-  look for a *saturating* (concave) dependence of the growth residual on ionized fraction, not a linear
-  or accelerating one.
+**What is solid, and what is incomplete — not negative.** One
+thing is pinned exactly: the **atomic amplitude** — a single free charge contributes `p₄ = 0.1932015`,
+the closure walk's Pólya return probability, cross-validated against [`Closure_Walk.md`](Closure_Walk.md)
+and tied to [`QLF_PolyaTransience`](lean/QLF_PolyaTransience.lean). Two things are **incomplete**, because
+physical expand/contract energies are **thousands to millions of bits** and the census here reaches only
+`k ≤ 4`:
 
-**Standing, updated.** All three pieces of the §10 term are now pinned: **location** on the ionization
-field (`QLF_ExpansionCharge`), **sign** from the time arrow (`expansion_sign_not_a_count`), and
-**magnitude** `= p₄ = 0.1932015` per charge, saturating as `h(k·e) ~ 1/k²` — tied to the already
-Lean-anchored Pólya transience of the closure walk. The amplitude is no longer open; what remains is the
-empirical test of the saturating ionization dependence.
+- **The many-bit regime is unmeasured.** The `k = 1…4` saturation is the atomic scale; over `10³–10⁶`
+  closures sector weights move by enormous factors, so the small-`k` concavity is *not* established as
+  the physical amplitude law. Reaching it needs the hitting function at large `k` (tractable — `h(k·e)`
+  is a 1-D marginal of the solved harmonic function) or a direct large-`k` asymptotic.
+- **Net charge vs free-charge count.** The seed `"−"×k` is *net* charge `k`; a locally-neutral ionized
+  region carries many free charges at `~0` net, and its effect is the time-separated
+  present-contraction / future-expansion backlog of §10, which this census does not model. So the sign
+  *and* the scaling of the dependence on ionization fraction (as opposed to net charge) are open.
+
+**Standing.** **Location** (`QLF_ExpansionCharge`) and **sign** (`expansion_sign_not_a_count`) are proved
+and CI-green; the **atomic magnitude** is `p₄`, derived and validated. The **amplitude law at physical
+(many-bit) scale** and its dependence on ionization-fraction-at-fixed-net-charge are **incomplete** — a
+well-posed next computation, not a dead end. The §10 test stands on location + sign; its quantitative
+shape waits on the many-bit regime.
 
 ---
 
