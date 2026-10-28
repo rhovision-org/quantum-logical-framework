@@ -505,7 +505,9 @@ reconstruction), the charge-based mechanism is dead.
 `−` versus `+` closures. It cannot be taken from Thomson cross-sections — that is legacy physics, and
 "positron = proton" already says the asymmetry is not mass. So what is pre-registered is the
 **existence and location** of the correlation (tied to ionization, zero in neutral gas), not its
-amplitude; the amplitude waits on a ZFA rate QLF has not derived.
+amplitude; the amplitude waits on a ZFA rate QLF has not derived. *(Resolved in §13: the per-charge
+amplitude is the closure walk's Pólya return probability `p₄ = 0.1932`, saturating as `~1/k²` — so the
+dependence on ionization is predicted to be sublinear.)*
 
 **What is a theorem here and what is not (method rule 4).** The identity "net expand − contract = net
 gauge charge, zero iff ZFA-closed" is provable, but it is **near-definitional** once expansion is
@@ -635,11 +637,10 @@ depth-independent estimator.
 **What the two attempts (§11 raw count, §12 Kraft mass) jointly establish, stated honestly.** The
 magnitude is genuinely open: neither depth-independent nor depth-weighted counting converges to a
 per-charge amplitude at reachable depth. One structural hint, *not* claimed as a result because the
-inputs are unconverged: the marginal surprisal is **increasing** with `k` (0.80 → 1.70 nats), which
-would mean the cost per charge is **superlinear** — charges do not close independently, so the
-expand/contract term would be **collective (superlinear in ionization fraction), not linear**. That
-sharpens the §10 test (look for a superlinear, not linear, ionization dependence) but needs a converged
-census to assert. A single ratio `M(3)/M(2) = 0.183` sits near the `0.1932` prime-closure mass; with one
+inputs are unconverged: the marginal surprisal appeared to be **increasing** with `k` (0.80 → 1.70
+nats). **This hint is refuted by §13:** the converged census shows the surprisal *decreasing* toward
+zero (the effect is sublinear, not superlinear) — the apparent rise was a depth-7 truncation artifact,
+exactly the sort of unconverged reading method rule warns against. It was right not to claim it. A single ratio `M(3)/M(2) = 0.183` sits near the `0.1932` prime-closure mass; with one
 data point and unconverged `M`, that is a coincidence to note, not an identity to claim
 ([review notes](CLAUDE.md): a fit is one way, never *the* route).
 
@@ -649,6 +650,60 @@ amplitude: the term's **location** ([`QLF_ExpansionCharge`](lean/QLF_ExpansionCh
 **sign** (`expansion_sign_not_a_count` — the `+`/`−` census is exactly symmetric, so the direction is the
 time arrow, not a count). The **magnitude** is open, and both counting routes to it are now documented
 negatives — the honest frontier.
+
+---
+
+## 13. The amplitude, converged: the Pólya return probability `p₄` — *2026-10-28*
+
+§11 and §12 could not converge the amplitude because both were depth-limited. The resolution is not a
+third estimator but a **recognition of what the census is.** Since count balance already entails Pauli
+closure (`count_balanced_pauli_closed`), a ZFA first-closure is exactly the **first return to the origin
+of the eight-twist walk on `ℤ⁴`** ([`Closure_Walk.md`](Closure_Walk.md)) — the twists are `±eₐ` on four
+axes. Each twist carries weight `⅛` and there are eight, so the Kraft weight `8^{−ℓ}` of a continuation
+*is* the probability of that path under the uniform random walk. The Kraft closure mass of a `k`-charge
+seed is therefore a **hitting probability** — no depth cap, no truncation:
+
+> `M(k) = P(` the `ℤ⁴` walk started `k` steps out along the gauge axis ever reaches `0` `) = h(k·e)`,
+
+the probability that `k` free charges of one sign ever close. `h` is the discrete-harmonic hitting
+function (`h(0)=1`; `h(x)=⅛ Σ h(x±eₐ)` for `x≠0`; `h→0` at infinity — the `ℤ⁴` walk is transient,
+[`QLF_PolyaTransience`](lean/QLF_PolyaTransience.lean)). [`closure_hitting_amplitude.py`](closure_hitting_amplitude.py)
+solves it by value iteration, with the walk's permutation + sign symmetry collapsing every point to its
+sorted `|coords|`, so the radius `R` reaches full convergence.
+
+| `R` | `M(1)=h(e)` | `M(2)=h(2e)` | `M(3)=h(3e)` | `M(4)=h(4e)` |
+|---|---|---|---|---|
+| 20 | 0.192273 | 0.052130 | 0.020088 | 0.009976 |
+| 30 | 0.192775 | 0.052719 | 0.020696 | 0.010587 |
+| 40 | 0.192957 | 0.052933 | 0.020917 | 0.010810 |
+| 50 | 0.193044 | 0.053034 | 0.021022 | 0.010916 |
+
+**The amplitude, derived.** `M(1)` climbs monotonically (finite `R` under-counts, as it must) to the
+**return probability `p₄ = 0.1932015`** — the prime-closure mass of [`Closure_Walk.md`](Closure_Walk.md),
+independently computed there and here. That is the validation and the result at once:
+
+> **the amplitude of a single free charge is `p₄` — the fraction of possibility that closes** — the same
+> constant that says 80.7 % of possibility never closes. One ionization event contributes exactly the
+> substrate's universal return probability.
+
+**And it saturates.** For `k` charges `M(k) = h(k·e)` follows the 4D Green's function `~ C/k²` (`M(k)·k²`
+holds near `0.19` across the table), so the per-charge marginal surprisal `−ln[M(k+1)/M(k)]` runs
+`1.29 → 0.92 → 0.66 → 0` — **falling, not constant.** So:
+
+- `amplitude = log 2 = Ω_Λ` (the §11/§12 target) is **definitively false** — refuted by a converged
+  census, not merely unsupported. The gauge axis being binary does *not* make each charge one bit.
+- the §12 "superlinear" hint is **refuted the other way** — the effect is **sublinear (saturating)**, not
+  superlinear; that reading was a depth-7 artifact.
+- **the expand/contract term is sublinear in the ionization fraction**, saturating toward the
+  single-charge value `p₄`. This is the sharp, falsifiable form the §10 test now takes: against Lumina,
+  look for a *saturating* (concave) dependence of the growth residual on ionized fraction, not a linear
+  or accelerating one.
+
+**Standing, updated.** All three pieces of the §10 term are now pinned: **location** on the ionization
+field (`QLF_ExpansionCharge`), **sign** from the time arrow (`expansion_sign_not_a_count`), and
+**magnitude** `= p₄ = 0.1932015` per charge, saturating as `h(k·e) ~ 1/k²` — tied to the already
+Lean-anchored Pólya transience of the closure walk. The amplitude is no longer open; what remains is the
+empirical test of the saturating ionization dependence.
 
 ---
 
