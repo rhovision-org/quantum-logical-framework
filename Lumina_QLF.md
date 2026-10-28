@@ -617,7 +617,38 @@ depth-independent estimator.
   amplitude. The `0.1932` prime-closure mass of [`Closure_Walk.md`](Closure_Walk.md) is carried as a
   second reference constant.
 
-**Result.** *(pending the first run; frozen at pre-registration, outcome appended in the next commit.)*
+**Result** *(run `fca0814 --kraft`, appended `2026-10-28`).*
+
+| k | `M(D=5)` | `M(D=6)` | `M(D=7)` |
+|---|---|---|---|
+| 1 | 0.055420 | 0.055420 | 0.063269 |
+| 2 | 0.023438 | 0.028400 | 0.028400 |
+| 3 | 0.003693 | 0.003693 | 0.005208 |
+
+- **C1 — PASS.** `M(+) = M(−)` exactly at every `k` (as §11 K1 guarantees).
+- **C2 — FAIL, reported as a fail.** The Kraft mass is **not converged at depth 7**: `M(1)` and `M(3)`
+  both jump on the last step (new closures still arriving at `ℓ=7`), and the marginal surprisal does not
+  settle — `−ln[M(2)/M(1)] = 0.80`, `−ln[M(3)/M(2)] = 1.70` nats, moving apart, not together. So C3 is
+  not even reached. **The per-charge amplitude is still open.** Converging this estimator needs depth
+  `≳ 9–10`, which is `8⁹–8¹⁰` continuations — out of reach for the pure-Python enumerator.
+
+**What the two attempts (§11 raw count, §12 Kraft mass) jointly establish, stated honestly.** The
+magnitude is genuinely open: neither depth-independent nor depth-weighted counting converges to a
+per-charge amplitude at reachable depth. One structural hint, *not* claimed as a result because the
+inputs are unconverged: the marginal surprisal is **increasing** with `k` (0.80 → 1.70 nats), which
+would mean the cost per charge is **superlinear** — charges do not close independently, so the
+expand/contract term would be **collective (superlinear in ionization fraction), not linear**. That
+sharpens the §10 test (look for a superlinear, not linear, ionization dependence) but needs a converged
+census to assert. A single ratio `M(3)/M(2) = 0.183` sits near the `0.1932` prime-closure mass; with one
+data point and unconverged `M`, that is a coincidence to note, not an identity to claim
+([review notes](CLAUDE.md): a fit is one way, never *the* route).
+
+**The firm standing of this whole thread.** Two things are proven and CI-green, independent of the open
+amplitude: the term's **location** ([`QLF_ExpansionCharge`](lean/QLF_ExpansionCharge.lean):
+`spatial_imbalance_sources_nothing` — it lives on the ionization field, zero for neutral matter) and its
+**sign** (`expansion_sign_not_a_count` — the `+`/`−` census is exactly symmetric, so the direction is the
+time arrow, not a count). The **magnitude** is open, and both counting routes to it are now documented
+negatives — the honest frontier.
 
 ---
 
