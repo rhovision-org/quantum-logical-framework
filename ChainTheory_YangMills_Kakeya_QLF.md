@@ -12,7 +12,7 @@ Three results reached a general audience in October 2026 (Turing Post, *Attentio
 
 This note asks what QLF has **machine-verified** that bears on each one. It sorts every statement into
 the status labels of [ScientificApproach.md](ScientificApproach.md): *proved* (Lean, no `sorry`),
-*conjecture*, *open bridge*, or *no connection*. The external results are reported as their authors state
+*conjecture*, *open bridge*, or *not yet connected*. The external results are reported as their authors state
 them. None of the three has finished independent review, and OpenAI has withheld the physics proofs.
 
 **Summary.**
@@ -21,7 +21,7 @@ them. None of the three has finished independent review, and OpenAI has withheld
 |---|---|---|
 | Chain Theory's α | Its value lies inside QLF's proven census band and respects QLF's screening bound. It is distinguishable from QLF's own `w = ½` prediction by more than `0.0038`. New module [`QLF_ChainTheory`](lean/QLF_ChainTheory.lean) | **Proved compatibility, not support.** The two derivations differ, and no rational weighting of QLF's census reaches Chain Theory's number (§1.4) |
 | Yang–Mills existence | Discrete colour structure: confinement as the singlet-closure obstruction, the `SL(2,3)` colour flux, su(3) closure. The gap side is one axiom, measured as definitional | **No overlap yet.** An existence proof would discharge part of what QLF's `yang_mills_gap` assumes, not the gap (§2) |
-| Kakeya / local smoothing | Nothing | **No connection.** The finite-field Kakeya theorem is a natural new target (§4.3) |
+| Kakeya / local smoothing | Nothing yet | **Not yet connected.** The finite-field Kakeya theorem is a natural new target (§4.3) |
 | ETH refuted | `QLF_PvsNP` makes no ETH claim | **Unaffected.** A false ETH is compatible with P ≠ NP (§3) |
 
 ---
@@ -175,10 +175,15 @@ All with no QLF axiom unless noted:
   as `log 2`. The repo has already **measured** it as definitional: `continuumGap_nonempty` builds a model
   by `rfl`. So in Lean it excludes nothing, and its content is the interpretation
   ([CLAUDE.md](CLAUDE.md) axiom inventory).
-- **The census does not show a spectral gap.** The unsigned closure walk returns like `8^L/L²` (massless).
-  The signed π-flux census has a continuous band edge. `log 2` is an *information* quantum per closure,
-  not an energy gap ([YangMills_MassGap_QLF.md](YangMills_MassGap_QLF.md) §7). This is a negative result
-  and it stands.
+- **The census computed so far shows no spectral gap. That result is incomplete, not negative.** Up to
+  `L = 32` twists (about a hundred bits), the unsigned closure walk returns like `8^L/L²` (massless), and
+  the signed π-flux census has a continuous band edge. `log 2` is an *information* quantum per closure,
+  not an energy gap ([YangMills_MassGap_QLF.md](YangMills_MassGap_QLF.md) §7). A hadron is a closure of
+  thousands to millions of bits, and over that range relative weights move by enormous factors. The signed
+  sector alone falls behind the unsigned one by `0.381` nats per step, which is `e^{−381}` after a thousand
+  steps. A census a hundred bits deep cannot decide the gap. What it lacks is a selection the present count
+  does not include, a gauge-fold or colour condition on long closures. That is the open target, not a
+  closed door.
 
 ### 2.4 How the two fit
 
@@ -269,7 +274,7 @@ proved π and 2π/3 fluxes are its `q = 2` and `q = 3` points. It is pre-registe
 - **Computed, exact:** the half-spin and colour closure censuses are the `φ = 1/2` and `φ = 1/3`
   Hofstadter fluxes ([Hofstadter_Butterfly_QLF.md](Hofstadter_Butterfly_QLF.md), pre-registered).
 - **Not claimed:** that QLF derives Chain Theory's formula or supports its mechanism. That QLF proves or
-  supports Yang–Mills existence or a mass gap. Any link to Kakeya, local smoothing or ETH.
+  supports Yang–Mills existence or a mass gap. Any link to Kakeya, local smoothing or ETH, today.
 - **External claims** are as reported on 26–28 October 2026 and are under review. OpenAI's physics proofs
   are not public.
 
