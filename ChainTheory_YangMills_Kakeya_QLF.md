@@ -244,6 +244,13 @@ theorem by theorem rather than in prose, as `QLF_ChainTheory` does. When OpenAI'
 released, the first check is whether their construction has a lattice stage, and if so whether it is
 reflection positive (§4.2).
 
+### 4.5 Rational processes, not irrational limits
+
+Irrational numbers are not in reality; they name the limits of rational processes. The test case is
+Hofstadter's butterfly, defined only at rational flux and built from phase-weighted closure counts. QLF's
+proved π and 2π/3 fluxes are its `q = 2` and `q = 3` points. It is pre-registered and run in
+[Hofstadter_Butterfly_QLF.md](Hofstadter_Butterfly_QLF.md).
+
 ---
 
 ## 5. Honest scope
