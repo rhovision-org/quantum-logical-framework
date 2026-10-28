@@ -207,6 +207,9 @@ inputs are not derived:
 So the honest status of §3 is: a positive quantum of action per closure is proved; a positive
 energy gap is not, and the census points to gaplessness unless a colour cap is derived.
 
+OpenAI's October 2026 claim of a four-dimensional Yang–Mills existence proof, and how it relates to
+the `yang_mills_gap` boundary, is assessed in [ChainTheory_YangMills_Kakeya_QLF.md](ChainTheory_YangMills_Kakeya_QLF.md) §2.
+
 ## References
 
 - C. N. Yang & R. L. Mills, *Conservation of isotopic spin and isotopic gauge invariance*, Phys. Rev. **96** (1954) 191–195 — non-abelian gauge theory.
