@@ -511,7 +511,7 @@ regardless: a Lean-verified combinatorial derivation, and a bounds theorem that 
 
 ## 7. Parallel derivation pathways
 
-QLF reaches α by more than one route; their agreement is a non-trivial internal consistency claim:
+QLF reaches α by more than one route; their agreement is a non-trivial internal consistency claim. An external route, Wissner-Gross's Chain Theory (`137.035999190` from a qutrit–qubit pair), is placed against QLF's proven bounds in [ChainTheory_YangMills_Kakeya_QLF.md](ChainTheory_YangMills_Kakeya_QLF.md) (`QLF_ChainTheory`): compatible, distinguishable, not derived here.
 
 | Pathway | What it derives | Status | Reference |
 |---|---|---|---|
