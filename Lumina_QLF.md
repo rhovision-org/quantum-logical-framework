@@ -518,6 +518,47 @@ a count of ways; the duality identities do not.
 
 ---
 
+## 11. The amplitude, derived: a per-charge census — *pre-registered 2026-10-28*
+
+§10 named the one open piece — the *amplitude* of the expand/contract term, the ZFA interaction **rate**
+per free charge. [`QLF_ExpansionCharge`](lean/QLF_ExpansionCharge.lean) (Lean, CI-green) then proved the
+term's **location** is forced: it lives on the gauge (charge) axis, is zero for neutral matter, and is
+switched on only by net charge. This section attacks the magnitude the same way the rest of QLF attacks
+a magnitude — as an **exact-integer census count**, not a fit, with the kill condition frozen in the
+commit that adds [`expansion_rate_qlf.py`](expansion_rate_qlf.py) *before the script was ever run*
+([`ScientificApproach.md`](ScientificApproach.md) R0). No legacy value enters — no cross-section, no
+`H₀`, no CODATA.
+
+**The model.** A free charge is one net unmatched gauge twist: `−` a free electron (expands future
+space), `+` a free proton/positron (contracts local space). A seed of `k` free charges of one sign is
+`"−"×k` or `"+"×k`. By `QLF_ExpansionCharge` every ZFA closure must balance the gauge axis, so each free
+charge recruits its opposite partner inside a full closure; the amplitude per charge is the free action
+that recruitment carries. **The motivated prediction:** the gauge axis is a *single binary* distinction
+(`+` vs `−`), one of the four axes — so one free charge is one binary choice = **one bit**, and
+[`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) proves every ZFA closure carries `ΔF = −log 2` (one bit,
+`binary_kl`). Hence the amplitude per free charge should be `log 2 = Ω_Λ` — the *same* `log 2` that fixes
+the cosmological constant ([`Cosmological_Constant.md`](Cosmological_Constant.md)) — **not** `log 8`: the
+three spatial axes carry extension, only the gauge axis carries charge.
+
+**Pre-registered kill conditions.**
+
+- **K1 — symmetry (framework check).** The first-closure multiplicity *and* the max-excursion histogram
+  from `"+"×k` must equal those from `"−"×k` exactly, for `k = 1,2,3`. Gauge conjugation is an alphabet
+  symmetry; a difference between `+` and `−` censuses breaks the charge-expansion picture at the root
+  (strong kill, test void). This also establishes that the **sign** of the term (`−` expands, `+`
+  contracts) is *not* carried by any count — it is the time arrow (`closedAtHorizon_mono`), since the
+  static counts are `+`/`−` symmetric. This section tests magnitude only.
+- **K2 — amplitude `= Ω_Λ`.** The per-charge gauge multiplicity factor `W(k+1)/W(k)` (first-closure
+  multiplicities as one free charge is added) must converge to **2** — one added bit per added charge —
+  so amplitude `= log 2 = Ω_Λ`. **PASS:** ratio `→ 2` in exact integers. **FAIL:** a different clean
+  constant `c` (amplitude `= log c`, reported as the real but un-anticipated number) or no convergence
+  (amplitude stays open). A FAIL is reported as a FAIL.
+
+**Result.** *(pending the first run; this subsection is frozen at pre-registration and the outcome is
+appended in the next commit, pass or fail.)*
+
+---
+
 ## Sources
 
 - O. Zier et al., *Introducing the Lumina project: large-volume radiation-hydrodynamic simulations of the
