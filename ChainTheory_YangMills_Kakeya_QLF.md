@@ -84,12 +84,18 @@ Both programs build α from the primes 2 and 3, but nothing here shows the same 
 
 ### 1.4 Where they differ (stated precisely)
 
-- **Number fields.** Every exact closed form QLF's census produces for α lies in `ℚ(√62)`. Chain Theory's
-  value is an irrational element of `ℚ(√2, √3)`. These fields meet only in `ℚ`, because `62 = 2·31` is
-  not a square times 1, 2, 3 or 6. So **no rational weighting of QLF's two census tails gives Chain
-  Theory's number exactly.** If QLF were to reach it, the route would need a census sector carrying
-  `√3`, a qutrit, which the present α census does not have. (This is standard field theory, checked by
-  hand. It is not yet in Lean.)
+- **Limits, not quantities.** In QLF irrational numbers are not in reality. `√62`, `√2` and `√3` name the
+  limits of rational processes, and the comparison that matters is between the processes. QLF's `√62` is
+  the limit of its α census: the partial sums at each closure order are rational, and the closed form is
+  where they go ([`QLF_AlphaBound`](lean/QLF_AlphaBound.lean) `censusTail_eq`). Chain Theory's `√2`, `√3`
+  and `√6` enter through amplitudes of maximally entangled qubits and qutrits. The limits sit in different
+  number fields: `ℚ(√62)` and `ℚ(√2, √3)` share only `ℚ`, because `62 = 2·31` is not a square times 1, 2,
+  3 or 6. So **no rational weighting of QLF's two α census tails converges to Chain Theory's number.**
+  (Standard field theory, checked by hand, not yet in Lean.) QLF does have rational processes that converge
+  to `√2` and `√3`: they are the band-edge rates of the half-spin and colour closure censuses, which are the
+  `φ = 1/2` and `φ = 1/3` points of Hofstadter's butterfly
+  ([Hofstadter_Butterfly_QLF.md](Hofstadter_Butterfly_QLF.md) §4). Whether a census that combines those with
+  the α census reaches Chain Theory's value is route §4.1.
 - **Precision.** QLF claims about 5 significant figures as a structural prediction. Chain Theory claims 10
   as a theorem of its axiom plus readings. The audit's census of alternatives (one hit in ~1.5 million) is
   the right test of how much those readings carry. QLF applies the same test to itself
@@ -260,6 +266,8 @@ proved π and 2π/3 fluxes are its `q = 2` and `q = 3` points. It is pre-registe
 - **Proved before, reused:** QLF's α band, the colour structure, confinement as singlet closure, and the
   `log 2` closure quantum.
 - **Checked by hand, not in Lean:** the number-field separation of §1.4.
+- **Computed, exact:** the half-spin and colour closure censuses are the `φ = 1/2` and `φ = 1/3`
+  Hofstadter fluxes ([Hofstadter_Butterfly_QLF.md](Hofstadter_Butterfly_QLF.md), pre-registered).
 - **Not claimed:** that QLF derives Chain Theory's formula or supports its mechanism. That QLF proves or
   supports Yang–Mills existence or a mass gap. Any link to Kakeya, local smoothing or ETH.
 - **External claims** are as reported on 26–28 October 2026 and are under review. OpenAI's physics proofs
