@@ -554,8 +554,37 @@ three spatial axes carry extension, only the gauge axis carries charge.
   constant `c` (amplitude `= log c`, reported as the real but un-anticipated number) or no convergence
   (amplitude stays open). A FAIL is reported as a FAIL.
 
-**Result.** *(pending the first run; this subsection is frozen at pre-registration and the outcome is
-appended in the next commit, pass or fail.)*
+**Result** *(run `56a578b`, depth cap 7; appended `2026-10-28`).*
+
+| k | seed | `W(+)` | `W(−)` | K1 |
+|---|---|---|---|---|
+| 1 | one charge | 16954 | 16954 | match |
+| 2 | two | 1334 | 1334 | match |
+| 3 | three | 3235 | 3235 | match |
+
+- **K1 — PASS, cleanly and completely.** The `+` and `−` first-closure censuses are **identical to the
+  last integer** — every multiplicity *and* every max-excursion bin (`k=1`: `{1:8, 2:3835, 3:10026,
+  4:3085}` for both signs; likewise `k=2,3`). This is a genuine, exact result over ~16k closures, and it
+  settles the sign question: **no count distinguishes expansion from contraction.** The universe's net
+  expansion (rather than contraction) therefore *cannot* come from a counting bias between `+` and `−`;
+  it is carried entirely by the irreversible time arrow (`closedAtHorizon_mono`), i.e. that `−` closes
+  into not-yet-synthesized future time while `+` closes within already-synthesized present time. The
+  magnitude and the sign come from different places, and this fixes which is which.
+- **K2 — FAIL, reported as a fail.** The per-charge multiplicity factor is `W(2)/W(1) = 0.079`,
+  `W(3)/W(2) = 2.43` — not `2`, and not converging. The ratio is **the wrong estimator**: at a fixed
+  depth cap `W(1)` counts every spatial detour by which a lone charge can close within 7 twists (a huge,
+  depth-budget-dominated number), while `W(2),W(3)` start deeper, so the ratio measures the truncation,
+  not a gauge amplitude ([`ScientificApproach.md`](ScientificApproach.md): transient ≠ asymptotic law).
+  **The motivated `amplitude = log 2` prediction is not supported by this census.**
+
+**Honest standing.** The amplitude stays **open**. The one reading that *does* give `log 2` — that each
+ZFA closure carries `ΔF = −log 2` ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)), so neutralizing one
+free charge costs one bit — is **not** claimed as the derivation, because `ΔF = −log 2` holds for *every*
+closure, charged or not; by method rule 4 it changes no count specific to charge and so carries no
+charge-specific content. What this section genuinely delivers is **K1**: the exact `+`/`−` census
+symmetry, which removes the amplitude's *sign* from the open problem (it is the arrow) and leaves only
+its *scale* — and shows the scale is not a naive closure-multiplicity ratio. A correct amplitude
+estimator must factor out the depth-budget combinatorics; that is the next step, now sharply posed.
 
 ---
 
