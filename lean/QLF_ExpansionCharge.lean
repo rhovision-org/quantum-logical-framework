@@ -88,4 +88,62 @@ theorem expansion_is_charge_not_spin :
   ⟨netExpansion_eq_charge, closed_no_net_expansion,
     (spatial_imbalance_sources_nothing).2, charge_sources_net_expansion⟩
 
+-- ==========================================
+-- The sign is the arrow, not a count (anchors Lumina_QLF.md §11 K1)
+-- ==========================================
+
+/-- Gauge conjugation (`reflect Axis.I`: swap `+ ↔ −`, leave the spatial twists) negates net expansion,
+    because handedness on the gauge axis is negated when its two twists are swapped. The spatial twists
+    the reflection also touches do not enter `netExpansion` at all. -/
+theorem handednessOn_I_map_reflect_I (ts : List Twist) :
+    handednessOn Axis.I (ts.map (reflect Axis.I)) = - handednessOn Axis.I ts := by
+  induction ts with
+  | nil => simp [handednessOn]
+  | cons t rest ih =>
+    rw [List.map_cons, handednessOn_cons, handednessOn_cons, ih, reflect_twistAxis]
+    by_cases h : twistAxis t = Axis.I
+    · rw [if_pos h, if_pos h]
+      have hr : reflect Axis.I t = Twist.conj t := by unfold reflect; rw [if_pos h]
+      rw [hr, handedness_conj]; ring
+    · rw [if_neg h, if_neg h]; ring
+
+/-- `reflect Axis.I` is an involution on twists: conjugating the gauge twists twice is the identity. -/
+theorem reflect_I_involutive (t : Twist) : reflect Axis.I (reflect Axis.I t) = t := by
+  cases t <;> decide
+
+/-- …and hence on histories. So gauge conjugation pairs each history with a unique partner. -/
+theorem map_reflect_I_involutive (ts : List Twist) :
+    (ts.map (reflect Axis.I)).map (reflect Axis.I) = ts := by
+  induction ts with
+  | nil => rfl
+  | cons t rest ih => rw [List.map_cons, List.map_cons, reflect_I_involutive, ih]
+
+/-- **Gauge conjugation sends closures to closures.** It negates the gauge handedness (which was zero)
+    and leaves every spatial handedness untouched, so count balance is preserved. -/
+theorem gauge_conjugate_closure (ts : List Twist) (h : countBalanced ts) :
+    countBalanced (ts.map (reflect Axis.I)) := by
+  rw [zfa_iff_handedness_balanced] at h ⊢
+  intro a
+  by_cases ha : a = Axis.I
+  · subst ha
+    have := h Axis.I
+    rw [handednessOn_I_map_reflect_I]
+    omega
+  · rw [handednessOn_map_reflect_other ha ts]
+    exact h a
+
+/-- **The sign of the expand/contract term is the arrow, not a count** (Lumina_QLF.md §11 K1, proved).
+    Gauge conjugation is an involution that sends every ZFA closure to a ZFA closure while *negating* net
+    expansion. So the closures carrying net expansion `+n` are in exact bijection with those carrying
+    `−n`: **no count distinguishes expansion from contraction.** The universe's net expansion therefore
+    cannot come from a multiplicity bias between `+` and `−`; it is carried entirely by the irreversible
+    time arrow (`QLF_ClosureDepthLaw.closedAtHorizon_mono` — `−` closes into not-yet-synthesized future
+    time, `+` within already-synthesized present time). The census (`expansion_rate_qlf.py`) confirms the
+    bijection numerically: the `+`-seed and `−`-seed first-closure multiplicities match to the integer. -/
+theorem expansion_sign_not_a_count :
+    (∀ ts : List Twist, countBalanced ts → countBalanced (ts.map (reflect Axis.I))) ∧
+      (∀ ts : List Twist, netExpansion (ts.map (reflect Axis.I)) = - netExpansion ts) ∧
+      (∀ ts : List Twist, (ts.map (reflect Axis.I)).map (reflect Axis.I) = ts) :=
+  ⟨gauge_conjugate_closure, handednessOn_I_map_reflect_I, map_reflect_I_involutive⟩
+
 end QLF
