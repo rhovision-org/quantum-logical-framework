@@ -264,5 +264,6 @@ lean_lib QLF where
     `QLF_NoTimeLoops,
     `QLF_ConstructionAdds,
     `QLF_LogicalPersistence,
-    `QLF_HandedLoops
+    `QLF_HandedLoops,
+    `QLF_ChainTheory
   ]
