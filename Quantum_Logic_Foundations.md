@@ -102,7 +102,10 @@ The logic of the universe is not classical Boolean logic over pre-existing facts
   (`not_distributive`: `x∧(z∨z⊥)=x` yet `(x∧z)∨(x∧z⊥)=⊥≠x`). The two atoms are the **x-spin and z-spin
   closures**, incompatible *because their Pauli operators do not commute* (`incompatibility_source` =
   `QLF_Spin.su2_comm_zx`, `σz σx − σx σz = 2i σy ≠ 0`) — so the non-distributivity traces directly to the
-  substrate's proven non-commutativity. The **general** representation (an *arbitrary* orthomodular ZFA
+  substrate's proven non-commutativity. (Worked example: the three-polarizer experiment *is* `MO2` —
+  0°/90° and 45°/135° are the `z` and `x` pairs — and the light that reappears when a 45° filter is
+  inserted is the gap between the two sides of the distributive law;
+  [`Three_Polarizer_Paradox.md`](Three_Polarizer_Paradox.md).) The **general** representation (an *arbitrary* orthomodular ZFA
   lattice ≅ a Hilbert projection lattice, Piron/Solèr, dim ≥ 3) is the **Gleason-hard reconstruction
   bridge** already located — the substrate dagger is a proper involution
   ([`QLF_ProperInvolution`](lean/QLF_ProperInvolution.lean)), finite measure-uniqueness is done
