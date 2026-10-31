@@ -8,7 +8,8 @@
 [`Born_Rule.md`](Born_Rule.md) §7 (the 50/50 split) ·
 [`lean/QLF_QuantumLogic.lean`](lean/QLF_QuantumLogic.lean) ·
 [`lean/QLF_ConstructionAdds.lean`](lean/QLF_ConstructionAdds.lean) ·
-[`lean/QLF_LogicalPersistence.lean`](lean/QLF_LogicalPersistence.lean)
+[`lean/QLF_LogicalPersistence.lean`](lean/QLF_LogicalPersistence.lean) ·
+[`lean/QLF_SpinorInformation.lean`](lean/QLF_SpinorInformation.lean)
 
 ---
 
@@ -44,7 +45,9 @@ On that picture the argument is airtight:
 3. Nothing is both vertical and horizontal.
 4. A sieve can only remove photons, never add them. So a third sieve can only make things darker.
 
-Every step uses ordinary Boolean logic: properties are fixed in advance, "passed A then passed B"
+Underneath it sits a quieter assumption: that each photon carries an orientation, an angle stored to
+as many digits as you like, which the filters merely inspect. Every step also uses ordinary Boolean
+logic: properties are fixed in advance, "passed A then passed B"
 means "has A **and** has B", and AND distributes over OR. The experiment says this argument is wrong.
 QLF says *which step* is wrong, and why, in three moves.
 
@@ -123,7 +126,40 @@ That is the third broken step: step 4's "a filter can only remove" is a statemen
 A filter in an incompatible basis does not take a subset of the photons' old answers; it asks a new
 question whose answers were not in the old list.
 
-## 4. Counting the ways
+## 4. The key: orientation is one bit
+
+All three moves come from one fact. **A photon's orientation is known to one bit of precision, and no
+more.** It does not carry an angle. It carries the answer to the last question it closed on: *along
+this axis, or the opposite one*. That is `log 2` of information, and it is the most a two-valued
+closure can hold:
+
+* **`two_valued_one_bit`** and **`spin_half_is_information_atom`**
+  ([`lean/QLF_SpinorInformation.lean`](lean/QLF_SpinorInformation.lean)): the two-outcome closure
+  carries exactly `log 2`, a single-valued one carries `0`, and nothing in between is a carrier. This
+  is the substrate form of Brukner and Zeilinger's principle that an elementary system carries one
+  bit (2003; see [`Information_Physics.md`](Information_Physics.md)).
+
+Read the paradox again with only one bit in the photon:
+
+* **Why the photon forgets (Move 2).** There is room for one answer. Writing the 45° answer leaves no
+  room for the vertical one. The many-to-one closure of `no_unclosing` is what a one-bit memory looks
+  like from outside: two different pasts, one stored bit.
+* **Why the questions are incompatible (Move 3).** A bit about vertical-or-horizontal says *nothing*
+  about 45°-or-135°. Relative to the stored bit, the 45° question is the one it is completely
+  uninformed about, so the answer is a fair coin, and each such closure gains a fresh `log 2`. That is
+  why the middle filter at 45° gives exactly ½: it asks the question the photon's bit is silent on.
+* **Why the sieve picture fails (§2).** The sieve picture needs a stored angle precise enough to
+  answer every filter in advance. That would be infinitely many bits in one photon, a continuum of
+  distinguishable states in a finite region, which QLF excludes (`no_continuum_in_finite_region`,
+  [`lean/QLF_Realizability.lean`](lean/QLF_Realizability.lean)). There is no hidden angle to reveal,
+  because there is nowhere to keep it.
+* **Where the angle lives.** The angles 0°, 45°, 90° belong to the **filters**, the apparatus, not to
+  the photon. The photon contributes one bit relative to its last filter; the angle is the relation
+  between that filter and the next. So the open problem in §7, deriving `cos²θ` at an arbitrary
+  angle, is a question about the geometry of the apparatus and how many finite closures render it,
+  not about a property hidden in the light.
+
+## 5. Counting the ways
 
 Now the numbers follow from one rule. At each filter the photon's history closes one of two ways,
 and when the filter sits at 45° to the photon's last closure, the two ways are **equally many**:
@@ -156,20 +192,23 @@ passes, and the light is steered around the corner with less and less loss:
 gentle closures can rotate light that one abrupt closure would destroy. Nothing in the sieve picture
 can do that.
 
-## 5. The whole thing in one paragraph
+## 6. The whole thing in one paragraph
 
-A polarizer does not sort photons by a property they already have; it makes them close, one way or
-the other, along its own axis. Closure is many-to-one, so the photon keeps only its latest answer,
+A photon's orientation is one bit: the answer to the last question it closed on. A polarizer does not
+sort photons by an angle they already have; it makes them close, one way or the other, along its own
+axis, and that overwrites the bit. Closure is many-to-one, so the photon keeps only its latest answer,
 while the record of earlier answers stays in history. The questions "vertical or horizontal?" and
 "45° or 135°?" are incompatible, so their propositions form the non-distributive lattice `MO2`, where
 a 45° closure exists that is neither vertical nor horizontal. The middle filter does not let through
 light that was secretly there; it asks a new question, and half the ways answer it yes.
 
-## 6. What is proven, what is standard, what is open
+## 7. What is proven, what is standard, what is open
 
 | Claim | Status | Where |
 |---|---|---|
 | The propositions form `MO2`: orthomodular, not distributive, from non-commuting axes | **Proved**, no axiom | `not_distributive`, `orthomodular`, `incompatibility_source` in [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
+| Orientation is one bit: a two-valued closure carries exactly `log 2`, a single-valued one `0` | **Proved**, no axiom | `two_valued_one_bit`, `spin_half_is_information_atom` in [`QLF_SpinorInformation`](lean/QLF_SpinorInformation.lean) |
+| No continuum of distinguishable states in a finite region (no stored angle) | **Proved** | `no_continuum_in_finite_region` in [`QLF_Realizability`](lean/QLF_Realizability.lean) |
 | Closure is many-to-one: no function un-closes | **Proved**, no axiom | `no_unclosing` in [`QLF_ConstructionAdds`](lean/QLF_ConstructionAdds.lean) |
 | Records persist; a closure stays closed | **Proved**, no axiom | `histories_are_a_model` in [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean), `closure_receipt_stable` |
 | The 45° step is an even split | **Symmetry-forced**: the two ways are mirror images, so ½ is bookkeeping, not evidence for the Born rule in general | [`Born_Rule.md`](Born_Rule.md) §7 |
@@ -182,10 +221,10 @@ contribution is not the moral of the story. It is that the lattice is **built fr
 machine-checked**, and that the photon's forgetting is a consequence of a general theorem about
 closure (`no_unclosing`) rather than an extra postulate about collapse.
 
-## 7. What not to conclude
+## 8. What not to conclude
 
-* **Not "the photon secretly had all three polarizations."** There is nothing stored to reveal; each
-  answer is made by its closure.
+* **Not "the photon secretly had all three polarizations."** It has room for one bit. There is
+  nothing more stored to reveal; each answer is made by its closure.
 * **Not "the middle filter adds light."** It removes three quarters of what reaches it, as every
   filter at 45° does. What it changes is the *question* the last filter is answering.
 * **Not "measurement is a separate collapse process."** In QLF the closure *is* the measurement event;
