@@ -39,9 +39,9 @@ reasoning says it must fail (the unreasonableness).
 |---|---|---|
 | **π in the Gaussian.** His opening story: a statistician shows a friend a population curve containing `π`, and the friend suspects a joke, since population has nothing to do with circles. | Both are counts of the same thing. The Gaussian is the large-`n` limit of binomial counts, and `C(2n,n) ~ 4ⁿ/√(πn)` puts `π` into the count of ways a walk returns to its start. The circle's `π` and the statistician's `π` are one closure census read two ways ([`Physical_Pi.md`](Physical_Pi.md), [`closure_census`](lean/QLF_PhysicalPi.lean)). | `π` as a completed infinite decimal stored somewhere. What exists is the rational sequence of counts (§5c). |
 | **Mathematics is invented for its own beauty**, as "the science of skillful operations with concepts and rules invented just for this purpose", so its fit to nature is a coincidence. | The concepts are not free inventions. Numbers, `+`, `×`, the unit group and su(2) arise from counting and composing closures ([`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §1). The mathematician explores the space of possible closures, which feels like invention, and finds the ones that close, which feels like discovery. | Concepts that no closure supports — the completed continuum, unrestricted Choice, ungrounded self-reference — are free inventions in exactly Wigner's sense. They are the ones that produce paradoxes (§4–§6). |
-| **Complex numbers.** Nothing in experience suggests them, yet quantum mechanics is written in them. | `i` is in the substrate from the first step. Every balanced closure folds to one of `{+1, −1, +i, −i}`, a group derived from the fold, not assumed ([`count_balanced_pauli_closed`](lean/QLF_TwistAlphabet.lean), [`QLF_Pauli`](lean/QLF_Pauli.lean); [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) rung 5). Complex numbers are suggested by experience at its finest grain. | The complex continuum `ℂ` as a set of points is the completion of `ℤ[i]`. It is a rendering, and it is right in the large-count limit (§7). |
+| **Complex numbers.** Nothing in experience suggests them, yet quantum mechanics is written in them. | `i` is in the substrate from the first step. Folding any twist history gives a Pauli scalar in `{±I, ±iI}`, the group `μ₄`, derived from the fold rather than assumed ([`QLF_Pauli`](lean/QLF_Pauli.lean); [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) rung 5). The `±i` belong to open histories: a completed, count-balanced closure always folds to `±I`, never `±iI` ([`balanced_phase_is_real`](lean/QLF_BalancedPhaseReal.lean), via [`count_balanced_pauli_closed`](lean/QLF_TwistAlphabet.lean)). So complex phases are suggested by experience at its finest grain, as the algebra of histories in progress. | The complex continuum `ℂ` as a set of points is the metric completion of `ℚ(i)`. It is a rendering, and it is right in the large-count limit (§7). |
 | **Accuracy beyond the evidence.** Newton's law, fitted to rough data, holds to far better precision; matrix mechanics, built for hydrogen, works for helium. | A law that describes how closures count keeps working as more closures are counted. The accuracy is that of counting, which gives exact answers ([`Mercury_Perihelion.md`](Mercury_Perihelion.md); the census results in [`Closure_Walk.md`](Closure_Walk.md)). | Where a continuum theory is pushed past any cutoff, precision turns into infinity: the ultraviolet and vacuum catastrophes, singularities (§5d). Wigner's examples are all successes. The failures were known in 1960 and do not appear in the essay. |
-| **The miracle of the existence of laws** at all, and of the mind's capacity to find them. | A world selected by one closure condition has regularities because it has one condition. The mind finding them is itself a set of closures in the same substrate, so the model and the thing modelled share a basis ([`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md)). Only logic is assumed for this, not that nature is QLF's construction (§2). | No finite law is exceptionless: every finite closure law has a genuine exception one level up ([`law_of_exceptions`](lean/QLF_LawOfExceptions.lean)). Laws hold as counts, not as decrees. |
+| **The miracle of the existence of laws** at all, and of the mind's capacity to find them. | A world selected by one closure condition has regularities because it has one condition. The mind finding them is itself a set of closures in the same substrate, so the model and the thing modelled share a basis ([`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md)). Only logic is assumed for this, not that nature is QLF's construction (§2). | No finite-capacity closure is exceptionless: each has a genuine exception one level up ([`law_of_exceptions`](lean/QLF_LawOfExceptions.lean)). Taking a physical law to be such a closure is a modelling assumption; on it, laws hold as counts, not as decrees. |
 | **His worry about false theories that work** (he names theories that agree with the data for a while and are later abandoned) and about two theories that cannot be reconciled. | A theory can be effective without being true when it renders the right counts in its domain. Effectiveness tracks realizability rather than truth of every axiom. | Relativity and quantum theory collide at points where both use the continuum: singularities and the vacuum energy. QLF locates the conflict at the continuum, not in either theory's realizable content (§5d). |
 
 **The contrast in one sentence.** Wigner treats mathematics as one thing whose fit to nature is either
@@ -66,20 +66,22 @@ construction ([`Philosophy.md`](Philosophy.md) §3d). The construction is one mo
 One further premise enters this page, and it is named rather than hidden: **a bounded region holds
 finitely many distinguishable states.** That is Bekenstein's bound. QLF did not invent it, and it is the
 `[Finite R]` hypothesis of
-[`no_continuum_in_finite_region`](lean/QLF_Realizability.lean). Everything in §5 and §6 below is that
-premise plus logic.
+[`no_continuum_in_finite_region`](lean/QLF_Realizability.lean). The physical-realizability argument of
+§5 is that premise plus logic. §6 does not depend on it: its critique of Choice is set-theoretic and
+constructive.
 
 **ZFA is the sufficient basis.** QLF's thesis is that one principle is enough to build physics on:
 **ZFA, equal and opposite logical action**. Every distinction is paired with its opposite, and the pair
 closes with zero free energy. Nothing else is posited. Numbers, the unit group `{±1, ±i}`, spin, the
 non-distributive logic of measurement and the census constants are derived from that one closure
-condition. So is the principle of least action: Hamilton's `δS = 0`, the law every fundamental theory
-shares, follows from ZFA rather than being postulated. The realized history is the one realized in the
-most ways, and because every twist has a conjugate of equal weight, the first variation of the
-multiplicity vanishes at balance ([`Stationary_Action.md`](Stationary_Action.md);
-[`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), and
+condition. Least action is approached the same way. The realized history is the one realized in the
+most ways, and because every twist has a conjugate of equal weight, the discrete multiplicity is
+stationary, and maximal, at balance. That is proved
+([`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), and
 [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) for the signed phase on all four axes, no
-axioms) ([`Philosophy.md`](Philosophy.md) §3a, [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md)
+axioms). Reading that multiplicity as Hamilton's action, `S ↔ −ħ log W`, is an identification, not yet
+derived, so the step from ZFA to `δS = 0` is an open bridge
+([`Stationary_Action.md`](Stationary_Action.md)) ([`Philosophy.md`](Philosophy.md) §3a, [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md)
 §1, [`Quantum_Logic_Foundations.md`](Quantum_Logic_Foundations.md)). Where a derivation still needs
 something more, the gap is named as an explicit bridge, not added as a second principle (the axiom
 inventory in [`Open_Problems.md`](Open_Problems.md)). This is what turns the rest of the page into
@@ -89,7 +91,9 @@ unconstructed choices are additions the basis does not need, and they are where 
 wrong answers turn up.
 
 **Natural laws derived from ZFA.** The table lists the laws QLF obtains from equal and opposite
-logical action, with the honest status of each. "Proved" means a Lean theorem with no QLF axiom.
+logical action, with the honest status of each. It is a summary: the status ledger of record is
+[`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) with [`Open_Problems.md`](Open_Problems.md), and
+where they differ, they win. "Proved" means a Lean theorem with no QLF axiom.
 "Derived" means a derivation whose steps are named in the linked document, with the step that is not
 yet Lean-checked or that is cited from standard physics stated there. "Leading value" means the number
 is reached but a residual remains open.
@@ -97,7 +101,7 @@ is reached but a residual remains open.
 | Law | What QLF shows | Status | Where |
 |---|---|---|---|
 | **Newton's third law** (action = reaction) | ZFA *is* equal and opposite action at every elementary event; *actio = reactio* is how it looks when the pairings blur together | The principle itself | [`Philosophy.md`](Philosophy.md), [`Introducing_QLF.md`](Introducing_QLF.md) |
-| **Least action** (`δS = 0`) | The most-ways history sits at balance, where the first variation of multiplicity vanishes | **Proved** | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean), [`Stationary_Action.md`](Stationary_Action.md) |
+| **Least action** (`δS = 0`) | The most-ways history sits at balance, where the first variation of multiplicity vanishes | **Proved:** discrete multiplicity is stationary at balance. **Open bridge:** multiplicity → physical action functional | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean), [`Stationary_Action.md`](Stationary_Action.md) |
 | **Newton's gravitation** (`F = GMm/r²`) | Holographic event count `4πR²` × `log 2` per event gives the area law; the entropy gradient gives the force; only 3-D space gives `1/r²` | **Derived**; area law and the `1/r²` exponent proved, the Bekenstein-gradient step structural | [`QLF_GravityFromDelay`](lean/QLF_GravityFromDelay.lean) (`holographic_entropy_eq`, `newton_exponent_only_3d_matches`), [`Gravity_From_Delay.md`](Gravity_From_Delay.md) |
 | **Newton's second law** (`F = ma`) | A rest mass is a closed light-speed circulation; acceleration shifts it, and the force is exactly proportional to the shift | **Proved** for the two-leg light clock (Route A); the counting version is open | [`QLF_Inertia`](lean/QLF_Inertia.lean), [`Inertia.md`](Inertia.md) |
 | **Special relativity** | The state is a 2×2 Hermitian matrix whose determinant is the Minkowski interval; `SL(2,ℂ)` acts as the Lorentz group | **Proved**; surjectivity onto `SO⁺(1,3)` rests on one named bridge | [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (`det_toMatrix_eq_interval`), [`QLF_LorentzCover`](lean/QLF_LorentzCover.lean) |
@@ -110,7 +114,7 @@ is reached but a residual remains open.
 | **Pauli exclusion** | The antisymmetric combination of two identical processes is zero | **Proved** | [`PauliExclusion`](lean/PauliExclusion.lean) (`pauli_exclusion`) |
 | **Heisenberg uncertainty** | The `ħ/2` quantum is the half-width of one count bin; the product form uses the proved non-commuting axes | **Proved** for the quantum; product form cites the entropic relation | [`QLF_Uncertainty`](lean/QLF_Uncertainty.lean), [`UncertaintyPrinciple.md`](UncertaintyPrinciple.md) |
 | **Quantum logic** | Measurement propositions form the orthomodular, non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
-| **Landauer's bound** | Each half-spin closure releases `ΔF = −log 2` | **Proved** | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`) |
+| **Landauer's bound** | Each half-spin closure releases `log 2` nats of variational free energy | **Proved** as a dimensionless information identity (binary KL); the physical energy `k_B T log 2` is an identification, not derived | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`) |
 | **Born rule** | Why the *square*: an event is a ket–bra pair, so its count is `a · a*` | **Half proved**; that the norm is the count of ways is open | [`QLF_BornCounting`](lean/QLF_BornCounting.lean), [`Born_Rule.md`](Born_Rule.md) |
 | **The arrow of time** | No time loops, from the law of weakening alone | **Proved** | [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean) |
 | **Horizon thermodynamics** (Unruh, Hawking, de Sitter) | All three are one Unruh relation `T = ℏa/2πck_B` at the right acceleration; the `2π` is the loop phase | **Derived** | [`QLF_HorizonTemperature`](lean/QLF_HorizonTemperature.lean) |
@@ -214,19 +218,22 @@ contradiction.
   cumulative hierarchy.
 * **Berry (via Russell 1906).** "The least number not definable in fewer than sixty letters" defines
   that number in fewer than sixty letters. The paradox is about the function *shortest description*,
-  which is not computable (Chaitin 1974). In QLF that function sits in the non-terminating tail that is
-  pruned, beside Chaitin's Ω ([`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md) §6).
-  **Status: reading.**
+  which is not computable (Chaitin 1974). QLF reads that function as belonging to the non-terminating
+  tail that never closes, beside Chaitin's Ω; that identification is a stance, not a theorem
+  ([`Information_Physics.md`](Information_Physics.md) §4,
+  [`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md) §6). **Status: reading.**
 * **"There is an exception to every rule, except this one."** Self-reference proves nothing here, and
   [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md) §1 shows why. What does prove it is capacity: every
-  finite closure law has an exception that genuinely closes one level up
+  finite-capacity closure has an exception that genuinely closes one level up
   ([`law_of_exceptions`](lean/QLF_LawOfExceptions.lean)). The witnesses are decidable, terminating
-  closures, which is why this is not Gödel (§6 there). **Status: proved.**
+  closures, which is why this is not Gödel (§6 there). **Status: proved** for finite-capacity
+  closures; reading every restrictive law as such a closure is a modelling assumption, stated in the
+  module's header.
 
 ### 4c. Paradoxes of time and motion
 
 * **Zeno.** Achilles needs infinitely many completed steps in a finite stretch. In QLF an intermediate
-  point is real only if a closure exists there, and the infinite-step sequence is a non-terminating
+  point is an event only if a closure exists there, and the infinite-step sequence is a non-terminating
   history, which never closes ([`TheContinuum.md`](TheContinuum.md) §5). **Status: reading.**
 * **The grandfather paradox and time loops.** Logic alone forbids loops: if weakening holds at every
   state, established facts persist, and no chain of events returns to its start
@@ -361,9 +368,12 @@ theory adds is the reading of that result as "there exist more reals than intege
 completed size". That reading then meets three classical results:
 
 1. **The size is not determined.** The continuum hypothesis is independent of ZFC (Gödel 1940, Cohen
-   1963). `2^ℵ₀` can be made almost anything the axioms allow, so "how many reals" has no answer.
+   1963). ZFC does not determine the value of `2^ℵ₀`: it is consistent with ZFC for it to be `ℵ₁`,
+   `ℵ₂`, and many other values. The axioms leave "how many reals" open.
 2. **The uncountable has a countable model** (Löwenheim–Skolem; Skolem's paradox). A countable model
-   satisfies "the reals are uncountable", so the sentence does not pin down a size from outside.
+   can satisfy "the reals are uncountable" internally, because the enumeration that counts them from
+   outside is not a function inside the model. This is not a contradiction; it shows the sentence does
+   not pin down a size from outside.
 3. **It adds no finitary theorem.** `WKL₀`, strong enough for much of classical analysis, proves
    no `Π⁰₂` statement that the computable base `RCA₀` does not already prove (Friedman, Harrington;
    Simpson, *SOSOA*).
@@ -405,11 +415,15 @@ This is the empirical side, collected in [`TheContinuum.md`](TheContinuum.md) an
 * **Navier–Stokes blow-up**, which needs unbounded vorticity, while discrete vorticity is quantized per
   cell ([`Navier_Stokes_Geometry.md`](Navier_Stokes_Geometry.md) §2–3).
 
-In each case the continuum answer is wrong, and the working fix restores a cutoff, which is to say a
-discreteness. The continuum's successes are the cases where that cutoff was already present without
-being named ([`TheContinuum.md`](TheContinuum.md), "every continuum *success* is smuggled-in
-discreteness"). This is the falsifiable edge that Wigner's miracle lacks: effectiveness should fail
-exactly where realizability does, and it does.
+In each case a continuum theory produces a divergence or is pushed beyond its domain of
+applicability. These failures are not all alike. For the ultraviolet catastrophe the accepted fix
+(quantization) is a discreteness; the vacuum energy and singularities have no accepted fix at all;
+and Navier–Stokes regularity is an open mathematical question, not a known failure. So together they
+**motivate** a discrete substrate; they do not prove one. QLF's thesis is that the continuum's
+successes are the cases where a cutoff was present without being named
+([`TheContinuum.md`](TheContinuum.md), "every continuum *success* is smuggled-in discreteness"). That
+gives the thesis a falsifiable edge that Wigner's miracle lacks: effectiveness should fail where
+realizability does, and the places it has failed so far are consistent with that.
 
 ---
 
@@ -431,16 +445,21 @@ Its strangest consequences all come from that one feature: selections that canno
   §1–4).
 * **A Hamel basis of `ℝ` over `ℚ`.** With choice there are additive functions `f(x + y) = f(x) + f(y)`
   that are not linear and whose graphs are dense in the plane. No such function can be written down.
-* **A well-ordering of `ℝ`.** Choice guarantees one exists, and none can be defined.
+* **A well-ordering of `ℝ`.** Choice guarantees one exists but supplies no canonical, constructive
+  one. Whether one can be defined depends on further set-theoretic assumptions: under `V = L` a
+  definable well-ordering exists, and in ZFC alone none is provably definable.
 * **The infinite hat puzzle.** Countably many people each see the hats in front of them and guess
   their own. With choice there is a strategy under which all but finitely many guess correctly
   (Hardin & Taylor 2013). Nobody can carry the strategy out: it requires a choice from each of
   continuum-many equivalence classes, and an infinite record of the hats seen.
 
-The diagnosis is classical and sharp. Solovay (1970) built a model of ZF with dependent choice in which
-every set of reals is Lebesgue measurable. In that model Vitali's set and Banach–Tarski's pieces do not
-exist, while the analysis physics uses is untouched. The pathologies come from full Choice and nothing
-else.
+The diagnosis is classical. Solovay (1970), assuming an inaccessible cardinal, built a model of ZF
+with dependent choice (DC) in which every set of reals is Lebesgue measurable. In that model Vitali's
+set and Banach–Tarski's pieces do not exist, while the analysis physics uses, which needs only
+countable or dependent choice, is untouched. So the pathologies need nonconstructive choice principles
+that the Solovay model lacks. These need not be full Choice: some non-measurability results follow from
+weaker principles, such as a choice of representatives for `ℝ/ℚ` or a non-principal ultrafilter on
+`ℕ`.
 
 QLF's replacement is a selection that is a construction. Of all the ways a position can close, the
 substrate takes the first-reached one by a deterministic rule that any caller can recompute
@@ -476,6 +495,10 @@ realize, so the two cannot drift apart.
 ---
 
 ## 8. In the end: consciousness and the manifestation of spirit
+
+> **Scope note.** This section is of a different kind from §§1–7. It extends the closure reading to
+> mind, social reality and spirit. Apart from the theorems it names, its content is **reading** or
+> **stance**, labelled as such, and nothing in §§1–7 depends on it.
 
 Wigner's two famous puzzles came a year apart. In 1960 he called the fit of mathematics to nature a
 miracle. In 1961, in *Remarks on the mind-body question*, he argued that consciousness completes a
@@ -517,8 +540,8 @@ and the ledger balances at zero free energy. Read this way, spirit is the possib
 closed, and manifestation is its closure. Three things then follow from results already in the repo:
 
 * **Only what balances manifests.** A contradiction never receives a receipt
-  ([`contradiction_no_receipt`](lean/QLF_ContradictionReceipt.lean)), so nothing self-contradictory is
-  ever made real, however vividly it is imagined.
+  ([`contradiction_no_receipt`](lean/QLF_ContradictionReceipt.lean)). It exists as possibility, like
+  every generable history, but it never closes as a persistent event, however vividly it is imagined.
 * **What manifests in common is a joint closure.** The meeting of minds in a room, the shared closure
   of entanglement, and the welfare-best outcome of a group (§4e) are all one kind of event: a closure
   no single party could complete alone. Collective intelligence is spirit manifesting jointly.
@@ -591,11 +614,13 @@ and what does not.
   ([`no_final_closure`](lean/QLF_LawOfExceptions.lean)), so the whole of possibility is never itself
   received by anyone. It is unknowable as a whole for the same reason a full hotel is full in a finite
   region (§5a): no finite capacity holds it.
-* **One part is genuinely unknowable.** Which non-terminating computations never close is the halting
-  question, and its information content is Chaitin's Ω, the boundary that `full_zeno_prune` draws
-  ([`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md) §6). Possibilism does
-  reintroduce this. It sits entirely on the side of what never manifests, so no physical record ever
-  depends on it.
+* **One part is genuinely unknowable.** Which computations never terminate is the halting question,
+  and its information content is Chaitin's Ω. Possibilism does reintroduce this. `full_zeno_prune`
+  itself is a terminating recursion on finite strings and decides no halting question; identifying the
+  boundary of what never closes with Ω is an ontological stance, not a theorem
+  ([`Information_Physics.md`](Information_Physics.md) §4,
+  [`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md) §6). On that stance it sits
+  entirely on the side of what never manifests, so no physical record depends on it.
 
 * **The Planck limit ends it in the world.** Below the Planck scale a closure would sit inside its own
   horizon and cannot close ([`planck_length_floor`](lean/QLF_PlanckScale.lean),
@@ -611,7 +636,8 @@ choice is metaphysical, and it is the founding commitment named above.
 **Is this reverse causality?** It looks like it. Whether an open strand becomes an event depends on
 steps that come after it: a step closes only when its conjugate arrives. The same appearance runs
 through physics. Least action selects a path by a condition on the whole path, which is why it seemed
-teleological from Maupertuis on (it is derived from ZFA in [`Stationary_Action.md`](Stationary_Action.md)).
+teleological from Maupertuis on ([`Stationary_Action.md`](Stationary_Action.md) proves the discrete
+multiplicity is stationary at balance; the bridge to the physical action is open).
 Wheeler and Feynman's absorber theory, Cramer's transactional interpretation and Mead's handshake photon
 ([`Collective_Electrodynamics.md`](Collective_Electrodynamics.md)) all have the future end take part.
 QLF's reading is that none of this is causation running backward. Before closure nothing has happened;
@@ -639,17 +665,17 @@ Wigner's "gift we neither understand nor deserve" can be understood as the logic
 | No un-closing; receipts persist | **Proved** | `no_unclosing`, `closure_receipt_stable` |
 | No time loops, from the law of weakening alone | **Proved** | [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean) |
 | A contradiction carries no realized information | **Proved** (given the definition) | [`QLF_ContradictionReceipt`](lean/QLF_ContradictionReceipt.lean) |
-| Every finite law has a real exception | **Proved** | [`QLF_LawOfExceptions`](lean/QLF_LawOfExceptions.lean) |
+| Every finite-capacity closure has an exception that closes one level up | **Proved** (extending it to every restrictive law is a modelling assumption) | [`QLF_LawOfExceptions`](lean/QLF_LawOfExceptions.lean) |
 | Measurement propositions are non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
 | `π`, `ζ(3)` as limits of finite rational counts | **Proved** counts; convergence cited | [`QLF_PhysicalPi`](lean/QLF_PhysicalPi.lean), [`QLF_AperyPeriod`](lean/QLF_AperyPeriod.lean) |
-| Least action (`δS = 0`) follows from ZFA | **Proved**, no axiom | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) |
+| Discrete multiplicity is stationary at balance | **Proved**, no axiom; the bridge to the physical action `δS = 0` is open | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) |
 | Manifestation = closure; only what balances manifests | **Follows** from possibilism (the founding commitment) + `contradiction_no_receipt` | §8 |
 | Consciousness as a frequency hierarchy of closures | **Formalized** (simple lemmas on periods); qualia remain a stance | [`QLF_Consciousness`](lean/QLF_Consciousness.lean), §8 |
 | The liar receives no receipt | **Reading** (prior art: Kripke 1975) | §4a |
 | Russell, Berry, Zeno, eraser, EPR, Schrödinger's cat, Wigner's friend | **Reading** | §4b–4d |
 | Improvement cycles ⟺ no free-action functional; Nash = closure; joint closure = welfare | **Proved** | [`QLF_PotentialGames`](lean/QLF_PotentialGames.lean), §4e |
 | The completed continuum is gratuitous | Three classical results + two proved | [`TheContinuum.md`](TheContinuum.md) |
-| Choice's pathologies are Choice's alone | **Classical** (Solovay 1970) | §6 |
+| Choice's pathologies need nonconstructive choice beyond ZF + DC | **Classical** (Solovay 1970, relative to an inaccessible) | §6 |
 | Effectiveness tracks realizability | **Thesis**; its failures are the evidence | §5d, [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §4 |
 
 The finite-information premise (Bekenstein) is the one physical input. If it failed, so that a bounded
