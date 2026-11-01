@@ -88,6 +88,34 @@ reasonable where it describes such closures and their large-count limits. Its co
 unconstructed choices are additions the basis does not need, and they are where the paradoxes and
 wrong answers turn up.
 
+**Natural laws derived from ZFA.** The table lists the laws QLF obtains from equal and opposite
+logical action, with the honest status of each. "Proved" means a Lean theorem with no QLF axiom.
+"Derived" means a derivation whose steps are named in the linked document, with the step that is not
+yet Lean-checked or that is cited from standard physics stated there. "Leading value" means the number
+is reached but a residual remains open.
+
+| Law | What QLF shows | Status | Where |
+|---|---|---|---|
+| **Newton's third law** (action = reaction) | ZFA *is* equal and opposite action at every elementary event; *actio = reactio* is how it looks when the pairings blur together | The principle itself | [`Philosophy.md`](Philosophy.md), [`Introducing_QLF.md`](Introducing_QLF.md) |
+| **Least action** (`δS = 0`) | The most-ways history sits at balance, where the first variation of multiplicity vanishes | **Proved** | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean), [`Stationary_Action.md`](Stationary_Action.md) |
+| **Newton's gravitation** (`F = GMm/r²`) | Holographic event count `4πR²` × `log 2` per event gives the area law; the entropy gradient gives the force; only 3-D space gives `1/r²` | **Derived**; area law and the `1/r²` exponent proved, the Bekenstein-gradient step structural | [`QLF_GravityFromDelay`](lean/QLF_GravityFromDelay.lean) (`holographic_entropy_eq`, `newton_exponent_only_3d_matches`), [`Gravity_From_Delay.md`](Gravity_From_Delay.md) |
+| **Newton's second law** (`F = ma`) | A rest mass is a closed light-speed circulation; acceleration shifts it, and the force is exactly proportional to the shift | **Proved** for the two-leg light clock (Route A); the counting version is open | [`QLF_Inertia`](lean/QLF_Inertia.lean), [`Inertia.md`](Inertia.md) |
+| **Special relativity** | The state is a 2×2 Hermitian matrix whose determinant is the Minkowski interval; `SL(2,ℂ)` acts as the Lorentz group | **Proved**; surjectivity onto `SO⁺(1,3)` rests on one named bridge | [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (`det_toMatrix_eq_interval`), [`QLF_LorentzCover`](lean/QLF_LorentzCover.lean) |
+| **`E = mc²`** | Mass is closure depth; `c` is one event length per event time | **Derived** | [`E_mc2_derivation.md`](E_mc2_derivation.md) |
+| **Einstein's field equations** | Jacobson's route: the equations are the equation of state of horizon thermodynamics, and QLF supplies both inputs (area law, Unruh temperature) from the substrate | **Derived** via a cited route | [`QLF_EinsteinEquations`](lean/QLF_EinsteinEquations.lean), [`Einstein_Equations.md`](Einstein_Equations.md) |
+| **Mercury's perihelion** (43″/century) | Newton's law composed with the weak-field Schwarzschild metric | **Derived**; the Schwarzschild components are not yet Lean-anchored individually | [`QLF_MercuryPerihelion`](lean/QLF_MercuryPerihelion.lean), [`Mercury_Perihelion.md`](Mercury_Perihelion.md) |
+| **Fine-structure constant** | `α⁻¹ = 128 + 3² = 137` from the 8-twist alphabet and 3-D space, with no observed input (0.026 % from measured) | **Leading value proved**; residual bracketed two-sided, `+0.036` open | [`QLF_FineStructureSubstrate`](lean/QLF_FineStructureSubstrate.lean) (`alpha_QLF_eq`), [`Alpha.md`](Alpha.md) |
+| **Maxwell** | No magnetic monopoles; Faraday's law as flux conservation over the event sequence | **Proved** (`∇·B = 0`, Faraday integral form) | [`ZFAEventDynamics`](lean/ZFAEventDynamics.lean) (`no_magnetic_monopoles`), [`QLF_MaxwellCurl`](lean/QLF_MaxwellCurl.lean), [`Maxwell.md`](Maxwell.md) |
+| **Spin-½** | The twists are spin; a genuine `SU(2) → SO(3)` double cover | **Proved** | [`QLF_Spin`](lean/QLF_Spin.lean), [`Spin_QLF.md`](Spin_QLF.md) |
+| **Pauli exclusion** | The antisymmetric combination of two identical processes is zero | **Proved** | [`PauliExclusion`](lean/PauliExclusion.lean) (`pauli_exclusion`) |
+| **Heisenberg uncertainty** | The `ħ/2` quantum is the half-width of one count bin; the product form uses the proved non-commuting axes | **Proved** for the quantum; product form cites the entropic relation | [`QLF_Uncertainty`](lean/QLF_Uncertainty.lean), [`UncertaintyPrinciple.md`](UncertaintyPrinciple.md) |
+| **Quantum logic** | Measurement propositions form the orthomodular, non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
+| **Landauer's bound** | Each half-spin closure releases `ΔF = −log 2` | **Proved** | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`) |
+| **Born rule** | Why the *square*: an event is a ket–bra pair, so its count is `a · a*` | **Half proved**; that the norm is the count of ways is open | [`QLF_BornCounting`](lean/QLF_BornCounting.lean), [`Born_Rule.md`](Born_Rule.md) |
+| **The arrow of time** | No time loops, from the law of weakening alone | **Proved** | [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean) |
+
+The open entries are listed with their owning documents in [`Open_Problems.md`](Open_Problems.md).
+
 **Why determinism sharpens the point.** In QLF every outcome is fixed by counting closures: what
 happens first is what closes first, and what happens most often is what closes in the most ways
 ([`Philosophy.md`](Philosophy.md) §3a, [`UniversalRelativity.md`](UniversalRelativity.md) §6a). QLF is
