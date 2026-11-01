@@ -20,7 +20,7 @@ them. None of the three has finished independent review, and OpenAI has withheld
 | Result | What QLF has proved that bears on it | Status of the connection |
 |---|---|---|
 | Chain Theory's α | Its value lies inside QLF's proven census band and respects QLF's screening bound. It is distinguishable from QLF's own `w = ½` prediction by more than `0.0038`. New module [`QLF_ChainTheory`](lean/QLF_ChainTheory.lean) | **Proved compatibility, not support.** The two derivations differ, and no rational weighting of QLF's census reaches Chain Theory's number (§1.4) |
-| Yang–Mills existence | Discrete colour structure: confinement as the singlet-closure obstruction, the `SL(2,3)` colour flux, su(3) closure. The gap side is one axiom, measured as definitional | **No overlap yet.** An existence proof could supply the continuum theory `yang_mills_gap` is meant to denote. It discharges no Lean field as the interface stands (§2.4) |
+| Yang–Mills existence | Discrete colour structure: confinement as the singlet-closure obstruction, the `SL(2,3)` colour flux, su(3) closure. The gap side is one axiom, measured as definitional | **Potentially direct, not yet formal.** In QLF existence is closure, so an existence construction bears on the missing continuum-closure step. The current interface does not encode a closure witness, so no Lean field is discharged yet (§2.4) |
 | Kakeya / local smoothing | Nothing yet | **Not yet connected.** The finite-field Kakeya theorem is a natural new target (§4.3) |
 | ETH refuted | `QLF_PvsNP` makes no ETH claim | **Unaffected.** A false ETH is compatible with P ≠ NP (§3) |
 
@@ -190,12 +190,24 @@ All with no QLF axiom unless noted:
 
 ### 2.4 How the two fit
 
-If the OpenAI construction holds up, it may supply the continuum theory that QLF's present gap symbol is
-intended to denote. The current Lean boundary does not encode that existence statement: `ContinuumGap` has
-only the fields `gap : ℝ` and `gap = gaugeMassGap`, and `continuumGap_nonempty` inhabits it by `rfl`. So no
-axiom is formally discharged without first refactoring the interface to contain a reconstructed
-Yang–Mills/QCD theory and its Osterwalder–Schrader/Wightman properties. Even then, the claim would not supply
-the gap or its identification with `log 2`. QLF's discrete results (confinement as singlet closure, the `SL(2,3)` colour structure) are
+In QLF, **physical existence is closure**. So a rigorous construction of four-dimensional Yang–Mills is
+not a separate question from QLF's own. It is a candidate for the missing continuum-closure step. If the
+OpenAI construction holds up, and if it can be represented as a ZFA closure that satisfies the
+Osterwalder–Schrader/Wightman reconstruction conditions, it could supply the existence witness that
+`yang_mills_gap` currently only names. The intended chain is
+
+```
+constructible relations → ZFA closure → physical existence → spectral analysis → mass gap
+```
+
+and the external result would cover its first three links in the continuum.
+
+The current Lean boundary does not yet encode that witness. `ContinuumGap` has only the fields `gap : ℝ` and
+`gap = gaugeMassGap`, which is why `continuumGap_nonempty` inhabits it by `rfl`. To let the bridge be
+discharged rather than merely named, the interface has to be strengthened to carry the closure witness
+explicitly: a reconstructed theory together with its reconstruction properties. That refactor is the formal
+next step, and it is open. Even with it done, the last two links remain: the external result as reported does
+not supply the gap, and nothing yet identifies a gap with `log 2`. QLF's discrete results (confinement as singlet closure, the `SL(2,3)` colour structure) are
 lattice-side and do not touch a continuum existence proof. **No QLF theorem supports or is supported by
 OpenAI's claim today.** Whether the construction passes through a lattice and a reflection-positive transfer
 matrix decides whether QLF's discrete side can connect. We will know when the proof is released.
