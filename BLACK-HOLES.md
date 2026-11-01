@@ -240,6 +240,18 @@ outcome, and the nested claim would fail exactly there. Four exact points — `�
 are falling toward `1` and are **not a law** ([`ScientificApproach.md`](ScientificApproach.md) R5);
 extending the enumeration is the way to settle it.
 
+**Settled: `R(L) → 1` from above** ([`lean/QLF_HorizonCrossing.lean`](lean/QLF_HorizonCrossing.lean),
+no axioms; pre-registered in [`horizon_crossing.py`](horizon_crossing.py)). On a balanced history the
+crossing multiplies the fold by a one-bit cocycle, `fold (H h) = (−1)^{crossCount h} • fold h`
+(`crossing_fold`), so the counted channels are exactly the fold-kept and fold-flipped histories. Their
+difference has a closed form, `D_{2n} = Σₖ C(n,k)·C(2k,k)²·C(2n−2k,n−k)²` (`dsum_eq`, by a
+sign-reversing involution), which reproduces the table above (`keep_flip_four/six/eight`). Two things
+follow: `W_flip < W_keep` at **every** even length (`flip_lt_keep`), so the "`R < 1` beyond some depth"
+answer is ruled out, and `D/W → 0` (`crossRatio_tendsto_zero`), so `R(L) → 1`
+(`keep_flip_tendsto_one`); numerically `D_L/W_L ≈ 2^{1−L/2}`. The rebasing channel is the most-way
+outcome at every depth, and its lead vanishes in the deep limit: a deep crossing carries neither spin
+character preferentially.
+
 **A correction to an earlier draft of this paragraph.** It reported sampled estimates at
 `L = 8, 10, 12` (`≈0.65, 0.61, 0.58` kept) with a caveat that the measure differed. Exact enumeration
 at `L = 8` gives `0.5799`, not `0.655` — so the sampler was biased toward the kept sector and those
