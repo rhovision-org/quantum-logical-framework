@@ -8,7 +8,7 @@ import Mathlib
 temperature is supplied (`QLF_HorizonFirstLaw.bh_entropy_first_law`). This module derives one in
 general from the census, using the definition of thermodynamic temperature, `1/T = dS/dE`.
 
-Statements L1–L4 were pre-registered in `Information_Physics.md` §5b before this proof was written.
+Statements L1–L4 (and later L5) were pre-registered in `Information_Physics.md` §5b before this proof was written.
 Units: `k_B = 1`, so a temperature is an energy. `ε` is the energy per substrate event, an input.
 
 * L1 `historyEntropy_hasDerivAt`: `S(E) = E · (log K / ε)` (that is, `n = E/ε` events, `Kⁿ` ways) has
@@ -20,6 +20,10 @@ Units: `k_B = 1`, so a temperature is an energy. `ε` is the energy per substrat
 * L4 `closureEntropy_hasDerivAt`, `closure_runs_hotter`: closed histories number `≈ C · 8^L / L²`
   (the `d = 4` Pólya factor, `Closure_Walk.md`), so `S_cl(E) = E · (log 8/ε) − 2 log E + 2 log ε` and
   `dS_cl/dE = log 8 / ε − 2/E`, strictly below `1/T`. Requiring closure raises the temperature.
+* L5 `zipf_rank_frequency`, `zipf_one_iff` (pre-registered after L1–L4): with Boltzmann weight
+  `e^{−ε/T}` per event, frequency against rank is `r^{−B}` with `B = ε/(T log K)`, and `B = 1` exactly
+  at the census temperature. A Zipf exponent is a thermometer for `ε/T` (Mandelbrot 1953), never for
+  `ε` alone.
 
 ## R6a, and what stays open
 
@@ -108,5 +112,26 @@ theorem closure_runs_hotter (ε : ℝ) {E : ℝ} (hE : 0 < E) :
   rw [inv_censusTemperature]
   have : 0 < 2 * E⁻¹ := by positivity
   linarith
+
+/-- The Zipf exponent of a `K`-letter census whose events carry Boltzmann weight `e^{−ε/T}`:
+    `B = ε / (T log K)`. -/
+noncomputable def zipfExponent (K ε T : ℝ) : ℝ := ε / (T * Real.log K)
+
+/-- **L5 — the rank–frequency law.** A word of `n` events has frequency `e^{−nε/T}` and rank
+    `r = Kⁿ = e^{n log K}`; then `f = r^{−B}`, written `e^{−B · log r}`. -/
+theorem zipf_rank_frequency {K ε T n : ℝ} (hT : T ≠ 0) (hK : Real.log K ≠ 0) :
+    Real.exp (-(n * ε / T))
+      = Real.exp (-(zipfExponent K ε T) * Real.log (Real.exp (n * Real.log K))) := by
+  rw [Real.log_exp]
+  unfold zipfExponent
+  congr 1
+  field_simp <;> ring
+
+/-- **L5 — Zipf's exponent is 1 exactly at the census temperature.** -/
+theorem zipf_one_iff {K ε T : ℝ} (hT : T ≠ 0) (hK : Real.log K ≠ 0) :
+    zipfExponent K ε T = 1 ↔ T = censusTemperature K ε := by
+  unfold zipfExponent censusTemperature
+  rw [div_eq_one_iff_eq (mul_ne_zero hT hK), eq_div_iff hK]
+  exact eq_comm
 
 end QLF.CensusTemperature
