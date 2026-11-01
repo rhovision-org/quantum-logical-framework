@@ -509,6 +509,7 @@ be unaffected.
 
 * Bar-Hillel, Y. & Carnap, R. (1952). *An Outline of a Theory of Semantic Information.* MIT RLE Tech.
   Rep. 247.
+* Arrow, K. J. (1951). *Social Choice and Individual Values.* Wiley.
 * Banach, S. & Tarski, A. (1924). Sur la décomposition des ensembles de points en parties respectivement
   congruentes. *Fund. Math.* 6, 244–277.
 * Bekenstein, J. D. (1981). Universal upper bound on the entropy-to-energy ratio for bounded systems.
@@ -517,6 +518,7 @@ be unaffected.
 * Cantor, G. (1891). Über eine elementare Frage der Mannigfaltigkeitslehre. *Jahresber. DMV* 1, 75–78.
 * Chaitin, G. J. (1974). Information-theoretic limitations of formal systems. *J. ACM* 21, 403–424.
 * Cohen, P. J. (1963). The independence of the continuum hypothesis. *PNAS* 50, 1143–1148.
+* Condorcet, Marquis de (1785). *Essai sur l'application de l'analyse à la probabilité des décisions rendues à la pluralité des voix.* Paris.
 * Galilei, G. (1638). *Discorsi e dimostrazioni matematiche intorno a due nuove scienze.*
 * Gödel, K. (1940). *The Consistency of the Continuum Hypothesis.* Princeton.
 * Gupta, A. & Belnap, N. (1993). *The Revision Theory of Truth.* MIT Press.
