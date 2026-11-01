@@ -73,7 +73,13 @@ premise plus logic.
 **ZFA, equal and opposite logical action**. Every distinction is paired with its opposite, and the pair
 closes with zero free energy. Nothing else is posited. Numbers, the unit group `{±1, ±i}`, spin, the
 non-distributive logic of measurement and the census constants are derived from that one closure
-condition ([`Philosophy.md`](Philosophy.md) §3a, [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md)
+condition. So is the principle of least action: Hamilton's `δS = 0`, the law every fundamental theory
+shares, follows from ZFA rather than being postulated. The realized history is the one realized in the
+most ways, and because every twist has a conjugate of equal weight, the first variation of the
+multiplicity vanishes at balance ([`Stationary_Action.md`](Stationary_Action.md);
+[`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), and
+[`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) for the signed phase on all four axes, no
+axioms) ([`Philosophy.md`](Philosophy.md) §3a, [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md)
 §1, [`Quantum_Logic_Foundations.md`](Quantum_Logic_Foundations.md)). Where a derivation still needs
 something more, the gap is named as an explicit bridge, not added as a second principle (the axiom
 inventory in [`Open_Problems.md`](Open_Problems.md)). This is what turns the rest of the page into
@@ -366,6 +372,7 @@ realize, so the two cannot drift apart.
 | Every finite law has a real exception | **Proved** | [`QLF_LawOfExceptions`](lean/QLF_LawOfExceptions.lean) |
 | Measurement propositions are non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
 | `π`, `ζ(3)` as limits of finite rational counts | **Proved** counts; convergence cited | [`QLF_PhysicalPi`](lean/QLF_PhysicalPi.lean), [`QLF_AperyPeriod`](lean/QLF_AperyPeriod.lean) |
+| Least action (`δS = 0`) follows from ZFA | **Proved**, no axiom | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) |
 | The liar receives no receipt | **Reading** (prior art: Kripke 1975) | §4a |
 | Russell, Berry, Zeno, eraser, EPR | **Reading** | §4b–4d |
 | The completed continuum is gratuitous | Three classical results + two proved | [`TheContinuum.md`](TheContinuum.md) |
