@@ -254,6 +254,30 @@ These are paradoxes of classical (Boolean) logic applied to quantum events.
 * **EPR.** The correlation is a shared past, not a signal, and there are no pre-assigned values on
   non-commuting axes ([`Entanglement.md`](Entanglement.md) §5–6, [`ER_EPR_QLF.md`](ER_EPR_QLF.md)).
   **Status: reading**, with the non-commutativity proved.
+* **Schrödinger's cat (1935).** On the textbook account, the cat in the sealed box is in a
+  superposition of alive and dead until someone looks. In QLF, measurement is closure, and an
+  apparatus is a closure inventory, not a mind ([`ScientificApproach.md`](ScientificApproach.md) §1b).
+  The atom's decay closes with the Geiger counter, and the counter's state closes with the cat, long
+  before the box is opened. Opening the box closes the observer's record with an outcome that has
+  already been closed; it adds a receipt and changes nothing that happened. There is no stage at
+  which a large, warm object waits for an observer, because observers have no special power to
+  close anything ([`Measurement_Problem.md`](Measurement_Problem.md),
+  [`Decoherence.md`](Decoherence.md)). **Status: reading**; prior art decoherence (Zurek 2003) and
+  relational quantum mechanics (Rovelli 1996).
+* **Wigner's friend (1961).** It is the same Wigner. A friend measures a system inside a sealed lab
+  and sees a definite result. Wigner, outside, describes the whole lab, friend included, as a
+  superposition. Who is right? In QLF the friend's measurement is a closure, and a closure stays
+  closed for every observer at every wider horizon
+  ([`closure_receipt_stable`](lean/QLF_ConstructionAdds.lean)). Wigner lacks the friend's receipt,
+  which is a limit of his perspective and does not put the friend into a superposition. "Many worlds"
+  are many observers, each holding a consistent record of what it has received
+  ([`Interpretations.md`](Interpretations.md) §2). The extended versions, such as Frauchiger and Renner
+  (2018), derive a contradiction from three assumptions together: quantum theory applies to agents
+  who have measured, agents' reasoning is consistent, and each measurement has one outcome. QLF denies
+  the first in one specific respect: an outside agent cannot treat a closed measurement as reversible,
+  because closure is many-to-one and no operation un-closes it
+  ([`no_unclosing`](lean/QLF_ConstructionAdds.lean)). **Status: reading**, resting on the two proved
+  facts named.
 
 ### 4e. Paradoxes of collective choice, and how conflict resolves
 
@@ -465,7 +489,7 @@ realize, so the two cannot drift apart.
 | `π`, `ζ(3)` as limits of finite rational counts | **Proved** counts; convergence cited | [`QLF_PhysicalPi`](lean/QLF_PhysicalPi.lean), [`QLF_AperyPeriod`](lean/QLF_AperyPeriod.lean) |
 | Least action (`δS = 0`) follows from ZFA | **Proved**, no axiom | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) |
 | The liar receives no receipt | **Reading** (prior art: Kripke 1975) | §4a |
-| Russell, Berry, Zeno, eraser, EPR | **Reading** | §4b–4d |
+| Russell, Berry, Zeno, eraser, EPR, Schrödinger's cat, Wigner's friend | **Reading** | §4b–4d |
 | Improvement cycles ⟺ no free-action functional; Nash = closure; joint closure = welfare | **Proved** | [`QLF_PotentialGames`](lean/QLF_PotentialGames.lean), §4e |
 | The completed continuum is gratuitous | Three classical results + two proved | [`TheContinuum.md`](TheContinuum.md) |
 | Choice's pathologies are Choice's alone | **Classical** (Solovay 1970) | §6 |
@@ -519,13 +543,16 @@ be unaffected.
 * Chaitin, G. J. (1974). Information-theoretic limitations of formal systems. *J. ACM* 21, 403–424.
 * Cohen, P. J. (1963). The independence of the continuum hypothesis. *PNAS* 50, 1143–1148.
 * Condorcet, Marquis de (1785). *Essai sur l'application de l'analyse à la probabilité des décisions rendues à la pluralité des voix.* Paris.
+* Frauchiger, D. & Renner, R. (2018). Quantum theory cannot consistently describe the use of itself. *Nat. Commun.* 9, 3711.
 * Galilei, G. (1638). *Discorsi e dimostrazioni matematiche intorno a due nuove scienze.*
 * Gödel, K. (1940). *The Consistency of the Continuum Hypothesis.* Princeton.
 * Gupta, A. & Belnap, N. (1993). *The Revision Theory of Truth.* MIT Press.
 * Hamming, R. W. (1980). The unreasonable effectiveness of mathematics. *Amer. Math. Monthly* 87, 81–90.
 * Hardin, C. S. & Taylor, A. D. (2013). *The Mathematics of Coordinated Inference.* Springer.
 * Kripke, S. (1975). Outline of a theory of truth. *J. Philosophy* 72, 690–716.
+* Rovelli, C. (1996). Relational quantum mechanics. *Int. J. Theor. Phys.* 35, 1637–1678.
 * Russell, B. (1906). Les paradoxes de la logique. *Revue de Métaphysique et de Morale* 14, 627–650.
+* Schrödinger, E. (1935). Die gegenwärtige Situation in der Quantenmechanik. *Naturwissenschaften* 23, 807–812.
 * Simpson, S. G. (2009). *Subsystems of Second Order Arithmetic*, 2nd ed. Cambridge.
 * Solovay, R. M. (1970). A model of set-theory in which every set of reals is Lebesgue measurable.
   *Ann. of Math.* 92, 1–56.
@@ -535,3 +562,5 @@ be unaffected.
 * Vitali, G. (1905). *Sul problema della misura dei gruppi di punti di una retta.* Bologna.
 * Wigner, E. P. (1960). The unreasonable effectiveness of mathematics in the natural sciences. *Comm.
   Pure Appl. Math.* 13, 1–14.
+* Wigner, E. P. (1961). Remarks on the mind-body question. In I. J. Good (ed.), *The Scientist Speculates.* Heinemann.
+* Zurek, W. H. (2003). Decoherence, einselection, and the quantum origins of the classical. *Rev. Mod. Phys.* 75, 715–775.
