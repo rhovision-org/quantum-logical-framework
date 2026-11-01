@@ -218,6 +218,16 @@ distribution, a binomial count.
   never closes" (`at_least_quarter_never_closes`) is now a theorem about the twist census**, not a numerical
   observation. The exact constant `p₄` is not a target (no closed form); the rigorous interval from exact
   partial sums + the tail bound is.
+- **Transience read thermodynamically** — [`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean), no
+  axioms. The uniform weight `8^{−L}` is the Boltzmann weight `e^{−Lε/T}` at the census temperature
+  `T_c = ε/log 8` (`ε` the energy per twist step, an input). At `T_c` every length shell of the free census
+  weighs exactly 1 (`free_shell_weight_one`), so the free census is critical and its partition function
+  diverges (`free_census_not_normalizable`); the closed census weighs `W_L/8^L ≈ (8/π²)/L²` per shell and is
+  summable (`closed_census_normalizable`, which is `returnWeight_summable`). So the `L^{−2}` of result 4,
+  which comes from `d = 4`, is what makes the closed ensemble normalizable at its own temperature; a
+  recurrent `d ≤ 2` alphabet would not supply it. The temperature reading is
+  [`Information_Physics.md`](Information_Physics.md) §5b; identifying `T_c` with a thermometer's
+  temperature is a bridge, not shown.
 
 ## 6. Provenance
 
