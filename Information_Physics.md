@@ -512,6 +512,17 @@ energy per event `ε`, an input (the Planck reading `ε = E_P` gives `T = T_P / 
 identification of this census temperature with a thermometer's. **Kill condition:** if `dS/dE` of the
 stated `S` is not `log K / ε`, or L3's `1/3` fails, the route is wrong as stated.
 
+**Added after the proof: which `ε`.** The Planck reading gives `T ≈ 10³¹ K`, the temperature of the
+logical bang, not of anything today. Landauer's bound is measured at room temperature (Bérut et al.
+2012), where `k_B T ln 2 ≈ 3 × 10⁻²¹ J`. So `ε` is not one universal constant. It is the energy per
+elementary distinction of whichever ensemble is doing the counting: the Planck event for the
+unconstrained substrate at the start, and for a bath today the energy of its own excitations
+(`ε = 3 ln 2 · k_B T ≈ 54 meV` at 300 K). Read this way, L2–L3 do not predict today's temperature; they
+say that whatever the bath's temperature, one bit costs a third of the energy of one of its
+eight-way events. Getting from the Planck value to today's is the cosmic cooling of the energy per
+event, which QLF's horizon count ties to the horizon temperature (`T_dS/4` per event,
+[`lean/QLF_DeSitterCount.lean`](lean/QLF_DeSitterCount.lean)) but does not derive in general.
+
 ## 6. Quantum information — the load-bearing floor (a reading, not a rival)
 
 **Classical.** Von Neumann entropy `S(ρ) = −Tr(ρ log ρ)`; qubits; the stabilizer/Clifford
@@ -785,6 +796,7 @@ observed; both are sharp, standing targets.
 
 **Physical / finite information.**
 - R. Landauer, *Irreversibility and heat generation in the computing process*, IBM J. Res. Dev. **5** (1961) 183 — information is physical; `k_B T ln 2` per erasure.
+- A. Bérut, A. Arakelyan, A. Petrosyan, S. Ciliberto, R. Dillenschneider & E. Lutz, *Experimental verification of Landauer's principle linking information and thermodynamics*, Nature **483** (2012) 187–189 — the bound measured at room temperature.
 - N. Margolus & L. B. Levitin, *The maximum speed of dynamical evolution*, Physica D **120** (1998) 188 — `ℏ` per operation.
 - J. D. Bekenstein, *Universal upper bound on the entropy-to-energy ratio*, Phys. Rev. D **23** (1981) 287.
 - N. Gisin, *Indeterminism in physics… are real numbers really real?*, Erkenntnis (2019/2021) — reals carry unphysical infinite information.

@@ -26,8 +26,12 @@ Units: `k_B = 1`, so a temperature is an energy. `ε` is the energy per substrat
 L2 holds for every uniform alphabet, so the saturation is bookkeeping, not evidence. What is QLF's is
 the input `K = 8` (`QLF_AlphabetNecessity`) and the closure correction of L4. L4 takes the asymptotic
 form of `W_L` as its model; the exact count is computed in `Closure_Walk.md`, and Lean has the upper
-bound (`QLF_PolyaTransience`). Open: the energy per event `ε` (the Planck reading `ε = E_P` gives
-`T = T_P/(3 log 2)`), and the identification of this census temperature with a thermometer's.
+bound (`QLF_PolyaTransience`). Open: the energy per event `ε`, and the identification of this census
+temperature with a thermometer's. `ε` is the energy per elementary distinction of whichever ensemble
+is counting, not one constant: the Planck reading `ε = E_P` gives `T = T_P/(3 log 2) ≈ 10³¹ K`, the
+logical bang, while a room-temperature bath has `ε = 3 log 2 · k_B T`. So the result does not predict
+today's temperature; it says one bit costs a third of the energy of one eight-way event at any
+temperature.
 No axioms.
 -/
 
