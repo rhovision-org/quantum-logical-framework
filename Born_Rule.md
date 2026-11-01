@@ -241,6 +241,18 @@ QLF reading: the path-integral sum gives $\cos(\theta/2)$ as the constructively-
     [`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean) `merge_le_sum`,
     `no_constructive_interference`, `merge_eq_sum_iff`. The very inequality that made the weight
     summable is what forbids the enhancement.
+    **This failure is general, not particular to that weight**
+    ([`Interference_NoGo.md`](Interference_NoGo.md), [`QLF_InterferenceNoGo`](lean/QLF_InterferenceNoGo.lean),
+    pre-registered). For any weight read out from an additive tally of the ways, `μ(E) = Φ(Σ_{h∈E} v(h))`,
+    a homogeneous readout of degree `k` gives a matched pair `2^(k−1)` times the sum of its parts, so the
+    quantum factor `2` holds iff `k = 2` (`quantum_factor_iff_degree_two`); every convex degree-1 readout
+    is sub-additive (`sublinear_no_constructive_interference`); and unsigned tallies cannot cancel
+    (`unsigned_no_dark_fringe`). The normalized-event weight is degree 1, so its matched pair adds
+    exactly as measured. Conversely (Sorkin's characterization, machine-checked there): a weight with no
+    third-order interference and a positive semidefinite decoherence matrix is **exactly** the squared
+    length of a summed vector amplitude (`vector_amplitude_iff`), complex Born being the 2-dimensional
+    case. So amplitude must exist before squaring; what stays open is why the census weight has
+    `I₃ = 0`, why the amplitude space is two-dimensional, and which census quantity the amplitude is.
   * **The second horn of that dichotomy is not universal — some geometries carry a convergent
     amplitude with no normalisation at all.** *Don't normalise* fails only when the signed census
     outgrows the measure, which is a statement about growth and so is checkable case by case. It
@@ -395,6 +407,7 @@ QLF reading: the path-integral sum gives $\cos(\theta/2)$ as the constructively-
 
 ### Internal
 
+- [`Interference_NoGo.md`](Interference_NoGo.md) — the general interference no-go and the Born construction ([`QLF_InterferenceNoGo`](lean/QLF_InterferenceNoGo.lean))
 - [MRE.md](MRE.md) — per-event $\log 2$ binary-partition optimum, information-theoretic foundation
 - [BayesianMechanics.md](BayesianMechanics.md) — multiplicity principle: "the thing that can happen in the most ways happens most often"
 - [Measurement_Problem.md](Measurement_Problem.md) — §4a measurement = ZFA closure = log 2 per atom; this doc develops the probability assignment behind that information gain

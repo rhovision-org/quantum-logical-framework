@@ -231,6 +231,7 @@ lean_lib QLF where
     `QLF_Mpemba,
     `QLF_LatticeCalculus,
     `QLF_KraftMeasure,
+    `QLF_InterferenceNoGo,
     `QLF_AxiomAudit,
     `QLF_Fredkin,
     `QLF_HorizonBasis,
