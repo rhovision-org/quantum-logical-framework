@@ -245,6 +245,7 @@ lean_lib QLF where
     `QLF_EvolutionaryGames,
     `QLF_NPlayerPotential,
     `QLF_EdgeSign,
+    `QLF_GlobalHolonomy,
     `QLF_PolyaTransience,
     `QLF_ProductWalk,
     `QLF_FirstReturn,
@@ -266,6 +267,5 @@ lean_lib QLF where
     `QLF_ConstructionAdds,
     `QLF_LogicalPersistence,
     `QLF_HandedLoops,
-    `QLF_CensusTemperature,
-    `QLF_GlobalHolonomy
+    `QLF_CensusTemperature
   ]
