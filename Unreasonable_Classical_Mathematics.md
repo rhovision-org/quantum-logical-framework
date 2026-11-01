@@ -461,6 +461,18 @@ that the Solovay model lacks. These need not be full Choice: some non-measurabil
 weaker principles, such as a choice of representatives for `ℝ/ℚ` or a non-principal ultrafilter on
 `ℕ`.
 
+Two limits leave a physical selection nothing for full Choice to do. **The Planck limit** bounds the
+options. No region is divided below the Planck length
+([`planck_length_floor`](lean/QLF_PlanckScale.lean)), and a bounded region holds finitely many
+distinguishable states (§2). So every choice a physical process makes is among finitely many options,
+and choice from finitely many non-empty finite sets is a theorem of ZF, proved by induction with no
+Axiom of Choice. The continuum-many classes that Vitali's set and the hat strategy need are never on
+offer. **Impossibility** bounds them further. Only what closes can be selected: a contradiction
+receives no receipt ([`contradiction_no_receipt`](lean/QLF_ContradictionReceipt.lean)), so an
+inconsistent option is never among the choices. Together the two leave only finite selections among
+consistent options, and those are exactly the ones an algorithm can make. **Status: reading**, resting
+on the named theorems and the finite-information premise.
+
 QLF's replacement is a selection that is a construction. Of all the ways a position can close, the
 substrate takes the first-reached one by a deterministic rule that any caller can recompute
 ([`QucalcSearch.md`](QucalcSearch.md), `/solve`). That is a choice function, and it can be exhibited
