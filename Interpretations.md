@@ -181,6 +181,7 @@ substrate that runs everything, where QLF adds the selection principle that deci
 
 ## See also
 
+* [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) — what closure-count determinism does to the paradoxes and infinities of classical mathematics.
 * [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md) §2, §4, §4a — the capacity formulation, "rare and
   certain", and the proton ladder this reading rests on.
 * [`possibilist-ontology.md`](possibilist-ontology.md) §3 — the ontology-level comparison this document

@@ -291,6 +291,7 @@ biology happened to inherit; it is the same fact that keeps the universe consist
 - [`Millennium.md`](Millennium.md) — the *ex falso*/false-in-the-model framing and the 1924 citation.
 - [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) — realizable math vs the gratuitous (Banach–Tarski)
   tail; QLF vs Tegmark.
+- [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) — Banach–Tarski beside the other failures of Choice, the continuum and self-reference.
 - [`SEX.md`](SEX.md) · [`Fusion.md`](Fusion.md) — the nucleonic "one becomes two needs distinguishability."
 - [`Conservation.md`](Conservation.md) · [`Reversibility.md`](Reversibility.md) — the `−log 2` ledger,
   Landauer, synthesized time.

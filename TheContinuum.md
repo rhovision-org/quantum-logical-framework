@@ -294,6 +294,8 @@ always break a finite closure, so every restrictive law has a real exception and
 final — [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md), machine-verified in
 [`lean/QLF_LawOfExceptions.lean`](lean/QLF_LawOfExceptions.lean).
 
+The paradoxes of the continuum, of Choice and of self-reference are collected in one place, against Wigner's "unreasonable effectiveness", in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md).
+
 ## Summary
 
 | Classical assumption | QLF replacement |

@@ -299,7 +299,7 @@ boundary. The sharpest form is not "the continuum is false" (`ℝ` is consistent
 continuum is consistent yet physically unrealizable** (no injection of an infinite state
 space into a finite-information region — machine-checked), so it *gives wrong answers*
 wherever forced onto reality, and is right only where a cutoff (= discreteness) is quietly
-restored ([TheContinuum.md](TheContinuum.md)).
+restored ([TheContinuum.md](TheContinuum.md)). The failures are collected, with the paradoxes QLF resolves and a point-by-point reading of Wigner (1960), in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md).
 
 ## References
 

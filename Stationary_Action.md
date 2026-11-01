@@ -204,6 +204,8 @@ reached by a single path has coherence exactly `1`. It is recorded as a failure 
 * `S ↔ −ħ log W` is an identification (Boltzmann/Jaynes: log-count is entropy; the Euclidean action
   is the log-weight). It is not derived here.
 
+Least action appears with the other laws derived from ZFA, each with its status, in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §2.
+
 ## References
 
 * Maupertuis, P.-L. M. de (1744). *Accord de différentes loix de la nature qui avoient jusqu'ici paru incompatibles.* Mém. Acad. Sci. Paris — least action as the universal principle.
