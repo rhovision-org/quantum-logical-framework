@@ -518,6 +518,21 @@ closed, and manifestation is its closure. Three things then follow from results 
   receiver regime of §4 there. That is a stance, a dual-aspect hypothesis, and the document states the
   observations that would count against it (§7 there).
 
+**Social reality: closure in minds, effects in the world.** A brain can reach a closure that the
+universe does not. A consistent story balances inside a self-model even when the event it describes
+never closes physically: no sleigh is ever recorded crossing the sky. When many minds share that
+story, it becomes a joint closure among them, a social reality, and a joint closure has real effects.
+Santa Claus exists in spirit, and presents are bought, children wait, and families gather because of
+him. The effects are physical closures (the gift is really given); the cause is a closure held in
+minds. Searle (1995) described the same layer as institutional facts, such as money, marriage and
+property, which exist because they are collectively held and are no less effective for that. The
+memetic side of the same idea is in [`Memetics_QLF.md`](Memetics_QLF.md): a closure is a meme to the
+degree its record is held redundantly by others. The no-receipt theorem limits even this layer. A
+story can close in minds only if it is consistent. A self-contradictory belief can be repeated widely,
+but what spreads is the wording; it never closes as a shared record, which is why such beliefs need
+constant restating. Spirit, in this sense, is not opposed to the
+physical. It is possibility that closes in minds first and then acts in the world through them.
+
 **What possibilism proves, and what it doesn't.** Given possibilism, the reading of spirit is not an
 extra assumption. QLF's floor is that every generable history is a real way, and that ZFA decides which
 ways persist as events, not which exist ([`ScientificApproach.md`](ScientificApproach.md) §1b). From that
@@ -616,6 +631,7 @@ be unaffected.
 * Rovelli, C. (1996). Relational quantum mechanics. *Int. J. Theor. Phys.* 35, 1637–1678.
 * Russell, B. (1906). Les paradoxes de la logique. *Revue de Métaphysique et de Morale* 14, 627–650.
 * Schrödinger, E. (1935). Die gegenwärtige Situation in der Quantenmechanik. *Naturwissenschaften* 23, 807–812.
+* Searle, J. R. (1995). *The Construction of Social Reality.* Free Press.
 * Simpson, S. G. (2009). *Subsystems of Second Order Arithmetic*, 2nd ed. Cambridge.
 * Solovay, R. M. (1970). A model of set-theory in which every set of reals is Lebesgue measurable.
   *Ann. of Math.* 92, 1–56.
