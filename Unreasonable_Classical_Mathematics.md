@@ -113,8 +113,18 @@ is reached but a residual remains open.
 | **Landauer's bound** | Each half-spin closure releases `ΔF = −log 2` | **Proved** | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`) |
 | **Born rule** | Why the *square*: an event is a ket–bra pair, so its count is `a · a*` | **Half proved**; that the norm is the count of ways is open | [`QLF_BornCounting`](lean/QLF_BornCounting.lean), [`Born_Rule.md`](Born_Rule.md) |
 | **The arrow of time** | No time loops, from the law of weakening alone | **Proved** | [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean) |
+| **Horizon thermodynamics** (Unruh, Hawking, de Sitter) | All three are one Unruh relation `T = ℏa/2πck_B` at the right acceleration; the `2π` is the loop phase | **Derived** | [`QLF_HorizonTemperature`](lean/QLF_HorizonTemperature.lean) |
+| **Entanglement** (ER = EPR) | Entanglement is a shared closure of two histories, a shared past rather than a signal | **Proved** that a shared closure does not factorize; ER = EPR is a reading | [`QLF_IndexedFactors`](lean/QLF_IndexedFactors.lean) (`shared_closure_not_factorizable`), [`ER_EPR_QLF`](lean/ER_EPR_QLF.lean), [`Entanglement.md`](Entanglement.md) |
+| **Three spatial dimensions** | 3 is the least dimension in which every finite relational graph renders without crossings | **Proved** | [`QLF_Generations`](lean/QLF_Generations.lean), [`SpaceTime.md`](SpaceTime.md) §3a |
+| **Galactic dynamics** (the radial acceleration relation) | Derived with `a₀ = cH₀/2π`, no particle and no free parameter; blind-tested on 147 SPARC galaxies | **Derived and benchmarked** | [`QLF_DarkMatter`](lean/QLF_DarkMatter.lean), [`DarkMatter.md`](DarkMatter.md), [`SPARC.md`](SPARC.md) |
+| **Primordial helium** | Every surviving neutron ends in ⁴He, so `Y_p = 1/4` at freeze-out `n/p = 1/7` (measured 0.247) | **Derived** | [`QLF_Nucleosynthesis`](lean/QLF_Nucleosynthesis.lean) |
+| **Strong CP** (`θ̄ = 0`) | Every CP-odd winding vanishes on every closure, so no axion is needed | **Mechanism proved**; field-theoretic reading open | [`QLF_StrongCP`](lean/QLF_StrongCP.lean) |
+| **Proton stability** | Baryon number is a winding that no gauge twist changes | **Proved** | [`QLF_BaryonWinding`](lean/QLF_BaryonWinding.lean) |
+| **Weak mixing angle** | `sin²θ_W = 3/8` at unification, from the same 6+2 split as α | **Unification value**; running to 0.231 open | [`QLF_WeinbergAngle`](lean/QLF_WeinbergAngle.lean), [`Weak_Force.md`](Weak_Force.md) |
+| **Proton–electron mass ratio** | `m_p/m_e = 6π⁵` | **Leading value**; residual open | [`QLF_LenzMassRatio`](lean/QLF_LenzMassRatio.lean), [`Proton_Resonance_R_e.md`](Proton_Resonance_R_e.md) |
+| **The hierarchy of scales** | `ln(M_P/m_p) = 2π·b₀ = 14π`, 0.07 % from measured | **Derived** from one posit (`α_s` at the Planck scale) | [`QLF_AlphaS`](lean/QLF_AlphaS.lean) |
 
-The open entries are listed with their owning documents in [`Open_Problems.md`](Open_Problems.md).
+The full survey, mystery by mystery and including the particles QLF predicts are absent (supersymmetric partners, the axion, a dark-matter particle, monopoles, proton decay), is [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md). The open entries are listed with their owning documents in [`Open_Problems.md`](Open_Problems.md).
 
 **Why determinism sharpens the point.** In QLF every outcome is fixed by counting closures: what
 happens first is what closes first, and what happens most often is what closes in the most ways
@@ -438,6 +448,7 @@ be unaffected.
 * [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md): self-reference, capacity, and why it is not Gödel.
 * [`ReverseMathematics.md`](ReverseMathematics.md): where QLF sits in the subsystem hierarchy.
 * [`Interpretations.md`](Interpretations.md) §5: QLF and superdeterminism.
+* [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md): the open questions of physics and what QLF says about each.
 * [`Open_Problems.md`](Open_Problems.md): the gap registry.
 
 ## References
