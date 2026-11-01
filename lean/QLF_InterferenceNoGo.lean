@@ -273,4 +273,186 @@ theorem born_I₃ (v : ι → ℂ) {A B C : Finset ι} (hAB : Disjoint A B) (hAC
   simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im]
   ring
 
+/-! ## The Born construction — B1–B3 (pre-registered in `Interference_NoGo.md` §5)
+
+The other direction: from a weight's own interference data to an amplitude. A weight with no
+third-order interference is quadratic in its pairwise data (B1, Sorkin 1994); if that pairwise data is
+a positive semidefinite matrix it is a Gram matrix, so the weight is the squared length of a summed
+vector amplitude (B2); and every such weight has those two properties (B3). -/
+
+section Construction
+
+open scoped MatrixOrder ComplexOrder
+
+/-- No third-order interference on any pairwise-disjoint triple. -/
+abbrev ThirdOrderFree (μ : Finset ι → ℝ) : Prop :=
+  ∀ A B C : Finset ι, Disjoint A B → Disjoint A C → Disjoint B C → I₃ μ A B C = 0
+
+/-- The decoherence matrix: single-way weights on the diagonal, half the pairwise interference off
+it. -/
+noncomputable def decoh (μ : Finset ι → ℝ) (x y : ι) : ℝ :=
+  if x = y then μ {x} else (μ {x, y} - μ {x} - μ {y}) / 2
+
+/-- The quadratic form of the decoherence matrix over an event. -/
+noncomputable def decohSum (μ : Finset ι → ℝ) (E : Finset ι) : ℝ :=
+  ∑ x ∈ E, ∑ y ∈ E, decoh μ x y
+
+theorem decoh_symm (μ : Finset ι → ℝ) (x y : ι) : decoh μ x y = decoh μ y x := by
+  unfold decoh
+  by_cases h : x = y
+  · subst h
+    rfl
+  · rw [if_neg h, if_neg (Ne.symm h), Finset.pair_comm]
+    ring
+
+theorem I₂_empty_right (μ : Finset ι → ℝ) (h0 : μ ∅ = 0) (A : Finset ι) : I₂ μ A ∅ = 0 := by
+  unfold I₂
+  rw [Finset.union_empty, h0]
+  ring
+
+/-- `I₃ = 0` is exactly additivity of `I₂` in its second argument. -/
+theorem I₂_union_right (μ : Finset ι → ℝ) (hI3 : ThirdOrderFree μ) {A B C : Finset ι}
+    (hAB : Disjoint A B) (hAC : Disjoint A C) (hBC : Disjoint B C) :
+    I₂ μ A (B ∪ C) = I₂ μ A B + I₂ μ A C := by
+  have h := hI3 A B C hAB hAC hBC
+  unfold I₃ at h
+  unfold I₂
+  rw [← Finset.union_assoc]
+  linarith
+
+theorem I₂_pair (μ : Finset ι → ℝ) {a b : ι} (hab : a ≠ b) : I₂ μ {a} {b} = 2 * decoh μ a b := by
+  unfold I₂ decoh
+  rw [if_neg hab, ← Finset.insert_eq]
+  ring
+
+theorem I₂_singleton_eq_sum (μ : Finset ι → ℝ) (h0 : μ ∅ = 0) (hI3 : ThirdOrderFree μ) (a : ι)
+    (E : Finset ι) : a ∉ E → I₂ μ {a} E = ∑ y ∈ E, 2 * decoh μ a y := by
+  induction E using Finset.induction_on
+  · intro _
+    rw [I₂_empty_right μ h0, Finset.sum_empty]
+  · rename_i b E hb ih
+    intro ha
+    have hab : a ≠ b := by
+      rintro rfl
+      exact ha (Finset.mem_insert_self a E)
+    have haE : a ∉ E := fun h => ha (Finset.mem_insert_of_mem h)
+    rw [Finset.sum_insert hb, Finset.insert_eq,
+      I₂_union_right μ hI3 (Finset.disjoint_singleton.mpr hab)
+        (Finset.disjoint_singleton_left.mpr haE) (Finset.disjoint_singleton_left.mpr hb),
+      ih haE, I₂_pair μ hab]
+
+/-- **B1.** With `μ(∅) = 0` and no third-order interference, the weight is the quadratic form of its
+decoherence matrix. No positivity is assumed: this holds for signed weights too. -/
+theorem quadratic_of_third_order_free (μ : Finset ι → ℝ) (h0 : μ ∅ = 0)
+    (hI3 : ThirdOrderFree μ) (E : Finset ι) : μ E = decohSum μ E := by
+  induction E using Finset.induction_on
+  · simp [decohSum, h0]
+  · rename_i b E hb ih
+    have hsplit : μ (insert b E) = μ {b} + μ E + I₂ μ {b} E := by
+      unfold I₂
+      rw [← Finset.insert_eq]
+      ring
+    rw [hsplit, ih, I₂_singleton_eq_sum μ h0 hI3 b E hb]
+    unfold decohSum
+    simp only [Finset.sum_insert hb, Finset.sum_add_distrib]
+    have hbb : decoh μ b b = μ {b} := by simp [decoh]
+    have hsym : ∑ x ∈ E, decoh μ x b = ∑ x ∈ E, decoh μ b x :=
+      Finset.sum_congr rfl (fun x _ => decoh_symm μ x b)
+    rw [hbb, hsym, ← Finset.mul_sum]
+    ring
+
+/-- The vector-amplitude weight: the squared Euclidean length of the summed amplitudes
+`ψ_x ∈ ℝ^κ`. -/
+noncomputable def vecWeight {κ : Type} [Fintype κ] (ψ : ι → κ → ℝ) (E : Finset ι) : ℝ :=
+  ∑ k, (∑ x ∈ E, ψ x k) ^ 2
+
+/-- **B2.** No third-order interference plus a positive semidefinite decoherence matrix gives vector
+amplitudes: `μ(E) = ‖Σ_{x∈E} ψ_x‖²`. -/
+theorem vector_amplitude_of_psd [Fintype ι] (μ : Finset ι → ℝ) (h0 : μ ∅ = 0)
+    (hI3 : ThirdOrderFree μ) (hpsd : (Matrix.of fun x y => decoh μ x y).PosSemidef) :
+    ∃ ψ : ι → ι → ℝ, ∀ E, μ E = vecWeight ψ E := by
+  obtain ⟨B, hB⟩ := CStarAlgebra.nonneg_iff_eq_star_mul_self.mp hpsd.nonneg
+  have hD : ∀ x y, decoh μ x y = ∑ k, B k x * B k y := by
+    intro x y
+    have h : (Matrix.of fun x y => decoh μ x y) x y = (star B * B) x y := by rw [hB]
+    simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.star_apply, star_trivial] at h
+    exact h
+  refine ⟨fun x k => B k x, fun E => ?_⟩
+  rw [quadratic_of_third_order_free μ h0 hI3 E]
+  unfold decohSum vecWeight
+  simp only [hD]
+  calc ∑ x ∈ E, ∑ y ∈ E, ∑ k, B k x * B k y
+      = ∑ x ∈ E, ∑ k, ∑ y ∈ E, B k x * B k y :=
+        Finset.sum_congr rfl (fun x _ => Finset.sum_comm)
+    _ = ∑ k, ∑ x ∈ E, ∑ y ∈ E, B k x * B k y := Finset.sum_comm
+    _ = ∑ k, (∑ x ∈ E, B k x) ^ 2 := by
+        refine Finset.sum_congr rfl (fun k _ => ?_)
+        rw [sq, Finset.sum_mul_sum]
+
+section Converse
+
+variable {κ : Type} [Fintype κ]
+
+theorem vecWeight_empty (ψ : ι → κ → ℝ) : vecWeight ψ ∅ = 0 := by
+  simp [vecWeight]
+
+/-- **B3.** A vector-amplitude weight has no third-order interference. -/
+theorem vecWeight_third_order_free (ψ : ι → κ → ℝ) : ThirdOrderFree (vecWeight ψ) := by
+  intro A B C hAB hAC hBC
+  unfold I₃ vecWeight
+  simp only [Finset.sum_union (Finset.disjoint_union_left.mpr ⟨hAC, hBC⟩), Finset.sum_union hAB,
+    Finset.sum_union hAC, Finset.sum_union hBC]
+  rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib,
+    ← Finset.sum_add_distrib, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
+  exact Finset.sum_eq_zero (fun k _ => by ring)
+
+/-- The decoherence matrix of a vector-amplitude weight is the Gram matrix of the amplitudes. -/
+theorem vecWeight_decoh (ψ : ι → κ → ℝ) (x y : ι) :
+    decoh (vecWeight ψ) x y = ∑ k, ψ x k * ψ y k := by
+  unfold decoh vecWeight
+  by_cases h : x = y
+  · subst h
+    rw [if_pos rfl]
+    simp only [Finset.sum_singleton]
+    exact Finset.sum_congr rfl (fun k _ => by ring)
+  · rw [if_neg h]
+    simp only [Finset.sum_singleton, Finset.sum_pair h]
+    rw [← Finset.sum_sub_distrib, ← Finset.sum_sub_distrib, Finset.sum_div]
+    exact Finset.sum_congr rfl (fun k _ => by ring)
+
+/-- **B3.** ... and a positive semidefinite decoherence matrix. -/
+theorem vecWeight_psd [Fintype ι] (ψ : ι → κ → ℝ) :
+    (Matrix.of fun x y => decoh (vecWeight ψ) x y).PosSemidef := by
+  have h : (Matrix.of fun x y => decoh (vecWeight ψ) x y)
+      = (Matrix.of fun k x => ψ x k)ᴴ * (Matrix.of fun k x => ψ x k) := by
+    ext x y
+    simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, star_trivial,
+      vecWeight_decoh]
+  rw [h]
+  exact Matrix.posSemidef_conjTranspose_mul_self _
+
+end Converse
+
+/-- **B1–B3 together: the characterization.** A weight on a finite set of ways has `μ(∅) = 0`, no
+third-order interference and a positive semidefinite decoherence matrix **iff** it is the squared
+length of a summed vector amplitude. -/
+theorem vector_amplitude_iff [Fintype ι] (μ : Finset ι → ℝ) :
+    (μ ∅ = 0 ∧ ThirdOrderFree μ ∧ (Matrix.of fun x y => decoh μ x y).PosSemidef) ↔
+      ∃ ψ : ι → ι → ℝ, μ = vecWeight ψ := by
+  constructor
+  · rintro ⟨h0, hI3, hpsd⟩
+    obtain ⟨ψ, hψ⟩ := vector_amplitude_of_psd μ h0 hI3 hpsd
+    exact ⟨ψ, funext hψ⟩
+  · rintro ⟨ψ, rfl⟩
+    exact ⟨vecWeight_empty ψ, vecWeight_third_order_free ψ, vecWeight_psd ψ⟩
+
+/-- The complex Born weight of N5 is the two-dimensional case: `ψ_x = (Re v_x, Im v_x)`. -/
+theorem born_eq_vecWeight (v : ι → ℂ) (E : Finset ι) :
+    born v E = vecWeight (fun x => ![(v x).re, (v x).im]) E := by
+  unfold born readout normSqΦ vecWeight tally
+  rw [Fin.sum_univ_two, Complex.normSq_apply, Complex.re_sum, Complex.im_sum]
+  simp [sq]
+
+end Construction
+
 end QLF.InterferenceNoGo
