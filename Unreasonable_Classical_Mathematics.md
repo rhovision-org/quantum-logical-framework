@@ -577,6 +577,46 @@ derivations it supports (§2). And possibilism says what exists and what manifes
 a closure is felt from the inside. That third point, experience, remains the qualia hypothesis, a stance
 with stated tests.
 
+**Does possibilism bring the infinity back?** It seems to. If every admissible history exists a priori,
+the totality of possibility is infinite, and nobody can survey it. Three distinctions show what returns
+and what does not.
+
+* **Countable, finite parts.** The possibility space is the free monoid on eight twists: countably
+  many histories, each finite and finitely described. Nothing in it is a completed continuum, and no
+  finite region holds more than finitely many of them, so it does not conflict with
+  [`no_continuum_in_finite_region`](lean/QLF_Realizability.lean). Every proof in the Lean core uses it
+  in the potential form, one finite generation at a time
+  ([`expand_generation_length`](lean/QLF_ConstructionAdds.lean)).
+* **The totality is never an event.** There is no last generation and no final closure
+  ([`no_final_closure`](lean/QLF_LawOfExceptions.lean)), so the whole of possibility is never itself
+  received by anyone. It is unknowable as a whole for the same reason a full hotel is full in a finite
+  region (§5a): no finite capacity holds it.
+* **One part is genuinely unknowable.** Which non-terminating computations never close is the halting
+  question, and its information content is Chaitin's Ω, the boundary that `full_zeno_prune` draws
+  ([`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md) §6). Possibilism does
+  reintroduce this. It sits entirely on the side of what never manifests, so no physical record ever
+  depends on it.
+
+So the infinity returns as possibility and never as event. There is one honest tension. Saying the
+totality "exists" a priori is a completed-totality claim of the kind Brouwer rejected, and QLF could
+take the weaker potential reading (every history *can* be generated) without losing any theorem. That
+choice is metaphysical, and it is the founding commitment named above.
+
+**Is this reverse causality?** It looks like it. Whether an open strand becomes an event depends on
+steps that come after it: a step closes only when its conjugate arrives. The same appearance runs
+through physics. Least action selects a path by a condition on the whole path, which is why it seemed
+teleological from Maupertuis on (it is derived from ZFA in [`Stationary_Action.md`](Stationary_Action.md)).
+Wheeler and Feynman's absorber theory, Cramer's transactional interpretation and Mead's handshake photon
+([`Collective_Electrodynamics.md`](Collective_Electrodynamics.md)) all have the future end take part.
+QLF's reading is that none of this is causation running backward. Before closure nothing has happened;
+an open strand is possibility, not an event later rewritten. The closure is a single event with two
+ends, and neither end causes the other. Once it closes, nothing can reach back to change it
+([`no_unclosing`](lean/QLF_ConstructionAdds.lean)), and no chain of events returns to its start
+([`no_time_loops_from_logic`](lean/QLF_LogicalPersistence.lean)). The selection is atemporal, a
+condition on whole histories, and time is the record of what has closed. The delayed-choice eraser is
+the laboratory case ([`Delayed_Choice_Eraser.md`](Delayed_Choice_Eraser.md)). **Status: reading**,
+resting on the named theorems.
+
 This is where the page's argument ends up. Classical mathematics can describe the
 world only from outside, and it becomes unreasonable exactly where it asserts what cannot close. A
 logic of closure describes the world, the mind, and their meeting in the same terms. In that logic,
