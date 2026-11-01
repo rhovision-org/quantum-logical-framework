@@ -1,6 +1,7 @@
 import QLF_EdgeSign
 import QLF_ColourFlux
 import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FinCases
 
 /-!
 # Global planar holonomy
@@ -78,6 +79,11 @@ theorem spin_stokes_from (ts : List Step) (x y : ℤ) :
 
 theorem spin_stokes (ts : List Step) :
     holonomy (ts.map twist) = (signedArea ts : ZMod 2) := by
+  have hzero : xyPos 0 0 = (fun _ : Axis => 0) := by
+    funext a
+    cases a <;> rfl
+  unfold holonomy signedArea
+  rw [← hzero]
   exact spin_stokes_from ts 0 0
 
 /-- The full edge product, including the sign of negative steps. -/
@@ -85,7 +91,9 @@ theorem spin_connection_area (ts : List Step) :
     connectionPhase (ts.map twist) =
       (-1 : ℤ) ^ negCount (ts.map twist) * sgn (signedArea ts : ZMod 2) := by
   unfold connectionPhase
-  rw [connAux_eq, ← holonomy, spin_stokes]
+  rw [connAux_eq]
+  change (-1 : ℤ) ^ negCount (ts.map twist) * sgn (holonomy (ts.map twist)) = _
+  rw [spin_stokes]
 
 /-- For any balanced planar word its Pauli fold has the area phase. -/
 theorem spin_fold_area (ts : List Step)
@@ -98,14 +106,31 @@ theorem spin_fold_area (ts : List Step)
 -- A second, independent check: the colour line is transported by the
 -- finite Heisenberg group. Its centre records the symplectic cocycle.
 
+def dx3 : Step → F3
+  | .east => 1
+  | .west => -1
+  | _ => 0
+
+def dy3 : Step → F3
+  | .north => 1
+  | .south => -1
+  | _ => 0
+
+/-- The same signed edge integral, now computed in the colour field. -/
+def area3Aux (x y : F3) : List Step → F3
+  | [] => 0
+  | t :: ts => y * dx3 t + area3Aux (x + dx3 t) (y + dy3 t) ts
+
+def signedArea3 (ts : List Step) : F3 := area3Aux 0 0 ts
+
 structure Trace where
-  x : ℤ
-  y : ℤ
-  area : ℤ
+  x : F3
+  y : F3
+  area : F3
   deriving Repr
 
 def advance (s : Trace) (t : Step) : Trace :=
-  ⟨s.x + dx t, s.y + dy t, s.area + s.y * dx t⟩
+  ⟨s.x + dx3 t, s.y + dy3 t, s.area + s.y * dx3 t⟩
 
 def trace (ts : List Step) : Trace := ts.foldl advance ⟨0, 0, 0⟩
 
@@ -117,17 +142,15 @@ def colourWord (ts : List Step) : Heis :=
 
 /-- A Heisenberg state encoding displacement and oriented area. -/
 def model (s : Trace) : Heis :=
-  ⟨((s.y : F3) * (colVec Twist.up).1 + (s.x : F3) * (colVec Twist.right).1,
-    (s.y : F3) * (colVec Twist.up).2 + (s.x : F3) * (colVec Twist.right).2),
-    (s.x : F3) * (s.y : F3) + (s.area : F3)⟩
+  ⟨(s.y * (colVec Twist.up).1 + s.x * (colVec Twist.right).1,
+    s.y * (colVec Twist.up).2 + s.x * (colVec Twist.right).2),
+    s.x * s.y + s.area⟩
 
 theorem colour_step (s : Trace) (t : Step) :
     colourAdvance (model s) t = model (advance s t) := by
-  cases t <;>
-    simp [colourAdvance, model, advance, Heis.mul, disp, symp,
-      colVec, qMat, MatF3.act, twist, dx, dy, Int.cast_add,
-      Int.cast_mul, Int.cast_sub, Int.cast_neg] <;>
-    ring
+  rcases s with ⟨x, y, a⟩
+  fin_cases x <;> fin_cases y <;> fin_cases a <;>
+    cases t <;> decide
 
 /-- Global Heisenberg transport normal form for every planar word. -/
 theorem colour_normal_form_from (ts : List Step) (s : Trace) :
@@ -146,24 +169,24 @@ theorem colour_normal_form (ts : List Step) :
 
 /-- The transport trace and the edge integral use the same signed area. -/
 theorem trace_area_from (ts : List Step) (s : Trace) :
-    (ts.foldl advance s).area = s.area + areaAux s.x s.y ts := by
+    (ts.foldl advance s).area = s.area + area3Aux s.x s.y ts := by
   induction ts generalizing s with
-  | nil => simp [areaAux]
+  | nil => simp [area3Aux]
   | cons t ts ih =>
-      simp only [List.foldl_cons, areaAux]
+      simp only [List.foldl_cons, area3Aux]
       rw [ih]
       simp [advance]
       ring
 
 theorem area_trace (ts : List Step) :
-    (trace ts).area = signedArea ts := by
-  unfold trace signedArea
+    (trace ts).area = signedArea3 ts := by
+  unfold trace signedArea3
   simpa using trace_area_from ts ⟨0, 0, 0⟩
 
 /-- Discrete Stokes for colour on any closed planar walk, at any length. -/
 theorem colour_stokes (ts : List Step)
     (hx : (trace ts).x = 0) (hy : (trace ts).y = 0) :
-    colourWord ts = ⟨(0, 0), (signedArea ts : F3)⟩ := by
+    colourWord ts = ⟨(0, 0), signedArea3 ts⟩ := by
   rw [colour_normal_form]
   simp [model, hx, hy, area_trace]
 
