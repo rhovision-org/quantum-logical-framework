@@ -223,7 +223,9 @@ distribution, a binomial count.
   `T_c = ε/log 8` (`ε` the energy per twist step, an input). At `T_c` every length shell of the free census
   weighs exactly 1 (`free_shell_weight_one`), so the free census is critical and its partition function
   diverges (`free_census_not_normalizable`); the closed census weighs `W_L/8^L ≈ (8/π²)/L²` per shell and is
-  summable (`closed_census_normalizable`, which is `returnWeight_summable`). So the `L^{−2}` of result 4,
+  summable (`closed_census_normalizable`, which is `returnWeight_summable`), with `Z ≤ 4`; counting
+  first closures only, the event partition function at `T_c` is the prime Kraft mass, `< 1`
+  (`event_partition_lt_one`, from `QLF_FirstReturn`). All collected as `zfa_regularizes_critical_census`. So the `L^{−2}` of result 4,
   which comes from `d = 4`, is what makes the closed ensemble normalizable at its own temperature; a
   recurrent `d ≤ 2` alphabet would not supply it. The temperature reading is
   [`Information_Physics.md`](Information_Physics.md) §5b; identifying `T_c` with a thermometer's

@@ -561,6 +561,14 @@ event, which QLF's horizon count ties to the horizon temperature (`T_dS/4` per e
   closure makes it normalizable.** Unlike L2 this is not generic bookkeeping: it rests on the
   four-dimensional walk's `L⁻²` return suppression, which a recurrent (`d ≤ 2`) alphabet would not
   give.
+* **L7 (added, not pre-registered): the bounds.** The closed critical partition function is at most
+  `4` (`closed_partition_le_four`), and the **event** census, counting first closures (prime
+  histories) only, has partition function at `T_c` equal to the prime Kraft mass, at most `3/4` and
+  below `1` (`event_partition_le_three_quarters`, `event_partition_lt_one`, from
+  [`lean/QLF_FirstReturn.lean`](lean/QLF_FirstReturn.lean)). Collected as
+  `zfa_regularizes_critical_census`. At `T_c` the Boltzmann weight is exactly the uniform cylinder
+  weight `8^{−L}`, so L6–L7 reuse Pólya transience and the first-return bound; what is new is reading
+  them as one statement linking thermodynamic criticality, the Kraft event measure and transience.
 * **Physical domain:** `K > 1`, `ε > 0`, `T > 0`. Lean's totalized division makes some identities
   hold at degenerate values too, where they mean nothing.
 

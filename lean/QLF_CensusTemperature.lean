@@ -1,5 +1,6 @@
 import Mathlib
 import QLF_PolyaTransience
+import QLF_FirstReturn
 
 /-!
 # QLF_CensusTemperature — the census temperature, and why closure makes it normalizable
@@ -35,6 +36,12 @@ hold at degenerate values too; those have no thermodynamic meaning.
   ensemble normalizable at its own census temperature.** Unlike L2, this is not generic bookkeeping:
   it rests on the `L^{−2}` suppression of the four-dimensional closure walk, which a recurrent
   (`d ≤ 2`) walk would not supply.
+* L7 `closed_partition_le_four`, `event_partition_le_three_quarters`, `event_partition_lt_one`,
+  `zfa_regularizes_critical_census`: the closed critical partition function is at most `4`, and the
+  event (first-closure) partition function at `T_c` is the prime Kraft mass, at most `3/4` and below
+  `1`. At `T_c` the Boltzmann weight is exactly the uniform cylinder weight `8^{−L}`, so L6–L7 are
+  Pólya transience and the first-return bound (`QLF_PolyaTransience`, `QLF_FirstReturn`) read as
+  statements about partition functions: the mathematics is reused, the thermodynamic reading is new.
 
 ## R6a, and what stays open
 
@@ -181,19 +188,67 @@ theorem free_census_not_normalizable {K : ℝ} (hK : 0 < K) :
   rw [tendsto_const_nhds_iff] at h2
   exact one_ne_zero h2
 
+/-- At `T_c` the closed census weighs `W_L / 8^L` per shell, the `ℤ⁴` return weight. -/
+theorem closedWeight_eq_returnWeight :
+    (fun L : ℕ =>
+      (QLF.PolyaTransience.walkCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8)))
+      = QLF.PolyaTransience.returnWeight := by
+  funext L
+  unfold QLF.PolyaTransience.returnWeight
+  rw [Real.exp_neg, ← Real.log_pow, Real.exp_log (by positivity), div_eq_mul_inv]
+
 /-- **L6 — ZFA closure makes the census normalizable at the same temperature.** The closed census
     weighs `W_L · e^{−L log 8} = W_L / 8^L` per shell, which is summable by Pólya transience in `d = 4`
     (`QLF_PolyaTransience.returnWeight_summable`). -/
 theorem closed_census_normalizable :
     Summable (fun L : ℕ =>
       (QLF.PolyaTransience.walkCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8))) := by
-  have h : (fun L : ℕ =>
-      (QLF.PolyaTransience.walkCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8)))
-      = QLF.PolyaTransience.returnWeight := by
-    funext L
-    unfold QLF.PolyaTransience.returnWeight
-    rw [Real.exp_neg, ← Real.log_pow, Real.exp_log (by positivity), div_eq_mul_inv]
-  rw [h]
-  exact QLF.PolyaTransience.returnWeight_summable
+  have h := QLF.PolyaTransience.returnWeight_summable
+  rw [← closedWeight_eq_returnWeight] at h
+  exact h
+
+/-- **L7 — the closed critical partition function is bounded:** `Z_ZFA(T_c) ≤ 4`. -/
+theorem closed_partition_le_four :
+    ∑' L : ℕ, (QLF.PolyaTransience.walkCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8)) ≤ 4 := by
+  have h := QLF.PolyaTransience.returnWeight_tsum_le_four
+  rw [← closedWeight_eq_returnWeight] at h
+  exact h
+
+/-- At `T_c` an event (a first closure, a prime history) of length `L` weighs `I_L / 8^L`, the prime
+    Kraft weight. -/
+theorem eventWeight_eq_primeKraft :
+    (fun L : ℕ =>
+      (QLF.FirstReturn.primeCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8)))
+      = QLF.FirstReturn.a := by
+  funext L
+  unfold QLF.FirstReturn.a
+  rw [Real.exp_neg, ← Real.log_pow, Real.exp_log (by positivity), div_eq_mul_inv]
+
+/-- **L7 — the event partition function at `T_c` is the Kraft event mass, at most `3/4`.** -/
+theorem event_partition_le_three_quarters :
+    ∑' L : ℕ, (QLF.FirstReturn.primeCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8)) ≤ 3 / 4 := by
+  have h := QLF.FirstReturn.at_least_quarter_never_closes
+  rw [← eventWeight_eq_primeKraft] at h
+  exact h
+
+/-- **L7 — and strictly below one.** -/
+theorem event_partition_lt_one :
+    ∑' L : ℕ, (QLF.FirstReturn.primeCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8)) < 1 := by
+  have h := QLF.PolyaTransience.polya_transience_lt_one QLF.FirstReturn.a_zero
+    QLF.FirstReturn.a_nonneg QLF.FirstReturn.renewal_relation
+  rw [← eventWeight_eq_primeKraft] at h
+  exact h
+
+/-- **L7 — ZFA closure regularizes the census at its own critical temperature.** At `T_c` the free
+    census does not normalize, the closed census does with `Z ≤ 4`, and the event (first-closure)
+    census has `Z < 1`, the Kraft event mass. -/
+theorem zfa_regularizes_critical_census :
+    ¬ Summable (fun n : ℕ => (8 : ℝ) ^ n * Real.exp (-((n : ℝ) * Real.log 8))) ∧
+    Summable (fun L : ℕ =>
+      (QLF.PolyaTransience.walkCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8))) ∧
+    ∑' L : ℕ, (QLF.PolyaTransience.walkCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8)) ≤ 4 ∧
+    ∑' L : ℕ, (QLF.FirstReturn.primeCount L : ℝ) * Real.exp (-((L : ℝ) * Real.log 8)) < 1 :=
+  ⟨free_census_not_normalizable (by norm_num), closed_census_normalizable,
+    closed_partition_le_four, event_partition_lt_one⟩
 
 end QLF.CensusTemperature
