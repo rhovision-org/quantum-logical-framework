@@ -475,7 +475,59 @@ realize, so the two cannot drift apart.
 
 ---
 
-## 8. Status at a glance
+## 8. In the end: consciousness and the manifestation of spirit
+
+Wigner's two famous puzzles came a year apart. In 1960 he called the fit of mathematics to nature a
+miracle. In 1961, in *Remarks on the mind-body question*, he argued that consciousness completes a
+quantum measurement, so that his friend's result became definite only when a mind took it in. He later
+moved away from that view. Classical foundations leave both puzzles where he left them, because they
+separate the mathematics, the world and the mind as three kinds of thing, and offer nothing to say why
+any of them should fit the others.
+
+QLF answers both puzzles with one move, and the move works in two directions.
+
+**Consciousness does not cause closure.** Nothing in QLF has the power to make an outcome happen by
+attending to it. An observer is a perspective, an apparatus is a closure inventory, and Schrödinger's
+cat and Wigner's friend (§4d) close without anyone looking. That rules out the 1961 proposal.
+
+**Consciousness is a closure.** It is not outside the substrate either. A self-aware system is a
+Markov blanket that models itself and terminates, and conscious thought is the highest-frequency
+closure the system binds ([`Consciousness.md`](Consciousness.md) §1–§3). The frequency ordering of
+that architecture is formalized in Lean ([`QLF_Consciousness`](lean/QLF_Consciousness.lean)): binding
+raises frequency, and quieting the internal closures shifts awareness to an external one. These are
+simple lemmas about periods, not a proof about minds. The mind that finds mathematics
+effective is made of the same closures as the world it describes. That is the deepest reason the fit is
+reasonable where it is: the model and the modelled share one basis, and the mathematician's sense of
+discovery is a closure recognizing closures ([`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §4).
+
+**Spirit, read through closure.** QLF's ontology gives a precise sense to *manifestation*. Every
+logically admissible history exists as possibility, in no place and at no time
+([`Philosophy.md`](Philosophy.md) §3; [`Open_Eternal_Mind.md`](Open_Eternal_Mind.md) §2). A possibility
+becomes manifest, an event with a record, when it closes: when an action meets its equal and opposite
+and the ledger balances at zero free energy. Read this way, spirit is the possibility that has not yet
+closed, and manifestation is its closure. Three things then follow from results already in the repo:
+
+* **Only what balances manifests.** A contradiction never receives a receipt
+  ([`contradiction_no_receipt`](lean/QLF_ContradictionReceipt.lean)), so nothing self-contradictory is
+  ever made real, however vividly it is imagined.
+* **What manifests in common is a joint closure.** The meeting of minds in a room, the shared closure
+  of entanglement, and the welfare-best outcome of a group (§4e) are all one kind of event: a closure
+  no single party could complete alone. Collective intelligence is spirit manifesting jointly.
+* **Experience may be the inside of that.** [`Consciousness.md`](Consciousness.md) §6 proposes that a
+  quality felt from within is a self-model coupled to a shared closure larger than itself, the
+  receiver regime of §4 there. That is a stance, a dual-aspect hypothesis, and the document states the
+  observations that would count against it (§7 there).
+
+This section is interpretation. The no-receipt theorem is proved and the frequency architecture is
+formalized, and the reading of spirit as unclosed possibility rests on them without being a theorem itself.
+It is offered as the place where the page's argument ends up. Classical mathematics can describe the
+world only from outside, and it becomes unreasonable exactly where it asserts what cannot close. A
+logic of closure describes the world, the mind, and their meeting in the same terms. In that logic,
+Wigner's "gift we neither understand nor deserve" can be understood as the logic itself, manifesting.
+
+---
+
+## 9. Status at a glance
 
 | Claim | Status | Where |
 |---|---|---|
@@ -488,6 +540,7 @@ realize, so the two cannot drift apart.
 | Measurement propositions are non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
 | `π`, `ζ(3)` as limits of finite rational counts | **Proved** counts; convergence cited | [`QLF_PhysicalPi`](lean/QLF_PhysicalPi.lean), [`QLF_AperyPeriod`](lean/QLF_AperyPeriod.lean) |
 | Least action (`δS = 0`) follows from ZFA | **Proved**, no axiom | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) |
+| Consciousness as a frequency hierarchy of closures | **Formalized** (simple lemmas on periods); qualia and the reading of spirit are stances | [`QLF_Consciousness`](lean/QLF_Consciousness.lean), §8 |
 | The liar receives no receipt | **Reading** (prior art: Kripke 1975) | §4a |
 | Russell, Berry, Zeno, eraser, EPR, Schrödinger's cat, Wigner's friend | **Reading** | §4b–4d |
 | Improvement cycles ⟺ no free-action functional; Nash = closure; joint closure = welfare | **Proved** | [`QLF_PotentialGames`](lean/QLF_PotentialGames.lean), §4e |
@@ -501,7 +554,7 @@ be unaffected.
 
 ---
 
-## 9. What not to say
+## 10. What not to say
 
 * **Not "ZFC is inconsistent" or "the reals are false."** They are consistent. The claim is that they
   are unrealizable and that they mislead when they are applied to the world.
