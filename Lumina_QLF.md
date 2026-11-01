@@ -700,8 +700,11 @@ one** (next paragraph), so this is a statement about the first few charges, not 
 thing is pinned exactly: the **atomic amplitude** — a single free charge contributes `p₄ = 0.1932015`,
 the closure walk's Pólya return probability, cross-validated against [`Closure_Walk.md`](Closure_Walk.md)
 and tied to [`QLF_PolyaTransience`](lean/QLF_PolyaTransience.lean). Two things are **incomplete**, because
-physical expand/contract energies are **thousands to millions of bits** and the census here reaches only
-`k ≤ 4`:
+physical expand/contract energies are **thousands to millions of bits** — each bit an energy `ε/3` on the
+8-twist alphabet, by the census temperature `T·log 2 = ε/3` of
+[`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean), which also shows requiring closure makes the
+ensemble normalizable through the same `d = 4` `L⁻²` return suppression that gives `p₄` — and the census
+here reaches only `k ≤ 4`:
 
 - **The many-bit regime is unmeasured.** The `k = 1…4` saturation is the atomic scale; over `10³–10⁶`
   closures sector weights move by enormous factors, so the small-`k` concavity is *not* established as
