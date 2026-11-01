@@ -96,7 +96,7 @@ neutron's `log 2` β-decay choice triggers a whole nuclear cascade). Shannon sta
 the channel, and QLF's finiteness claim is about *transmission and synthesis*, never a claim that a
 closure can only select something small.
 
-## 2. One false axiom proves everything — and continuum and choice are false
+## 2. One false axiom proves everything — and continuum and choice are false in the intended model
 
 There is a sharper way to say what is wrong, and it is the oldest result in logic:
 **ex falso quodlibet** — from a falsehood, anything follows. The **principle of
@@ -115,9 +115,9 @@ gives demonstrably wrong answers wherever forced onto reality
 realizability are three distinct tests; ZFC passes the first and fails the latter two.
 
 QLF's claim is that the two extra commitments of classical set theory are not harmless
-idealizations — they are **false statements**:
+idealizations — they are **false in the intended model**, the physical one:
 
-- **The Axiom of Choice is false.** It asserts a selection function over arbitrarily many
+- **The Axiom of Choice is false in the intended model.** It asserts a selection function over arbitrarily many
   sets *with no construction* — it posits objects that can never be exhibited. In a
   constructive, possibilist ontology where *to exist is to be constructible*, an object
   with no finite construction does not exist; to assert it does is to assert a falsehood.
@@ -168,6 +168,8 @@ constructive proof is the *sound* one. (See also [Philosophy.md §25](Philosophy
 > One false statement proves everything. Continuum and choice are false. A logic that
 > admits them can prove anything — so it certifies nothing. QLF keeps its axioms true and
 > its proofs sound.
+
+**One lens for every failure.** Each failure collected here asks the world for one of three things no closure delivers: a closure that contains itself (ungrounded self-reference, time loops), infinitely many distinguishable states in a finite place (the completed continuum), or a selection no construction makes (unrestricted Choice). The three are laid out, with every case sorted under them, in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §3.
 
 ## 3. The cure is the same: discreteness + a computable selection
 

@@ -438,6 +438,15 @@ was where it slipped. Apply these to new work:
    them (`Alpha_Residual.md` §9j–§9k).
 7. **Intro prose intrigues; technical prose is rigorous.** `Introducing_QLF.md` should open with
    questions and hooks, not advocacy or overreach ("the unique algebra", "only in three dimensions").
+8. **Credit the classical resolution, then give the substrate reason.** When QLF "resolves" a
+   paradox, check who resolved it first and say so: the liar is Kripke's (1975) groundedness, social
+   facts are Searle's (1995), the cat and the friend lean on Zurek's decoherence and Rovelli's
+   relational QM, voting cycles are Condorcet's and Arrow's. QLF's contribution is the reason the
+   physical world contains no such event (no closure contains itself; no un-closing; no receipt for a
+   contradiction), stated as a *reading* resting on named theorems. Worked example:
+   [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §4. Also keep three
+   layers apart: what *follows* from possibilism, the possibilist *premise* (a founding commitment), and
+   *experience* (a stance) — §8 there.
 
 ---
 

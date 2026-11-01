@@ -131,6 +131,17 @@ line between them is where a question's conflict content lives. Whether the cens
 interference machinery ([`Born_Rule.md`](Born_Rule.md)) has anything to say about mixed equilibria
 as distributions over ways is open, and flagged as speculative.
 
+**The voting form of the same boundary.** Social choice has met this cycle before. Condorcet (1785)
+found that pairwise majority can cycle (A beats B beats C beats A), and Arrow (1951) proved that with
+three or more options no ranking-aggregation rule accepts all rankings, respects unanimity, keeps each
+pairwise choice independent of other options, and avoids dictatorship. A Condorcet cycle is matching
+pennies spread across a group: no outcome closes. The theorems here do not remove Arrow's result; they
+say where the way out lies, in changing the objective so the group scores the shared outcome
+(`welfare_game_potential`, §4). Liquid democracy in quantum-os and rhogov handles the other cycle, a
+delegation loop, the way Kripke handles the liar: an ungrounded vote abstains. Both are read side by
+side with the liar paradox in
+[`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §4e.
+
 ## 6. The five theorems
 
 | # | statement | anchor |

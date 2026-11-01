@@ -251,6 +251,10 @@ A cell could not perform Banach–Tarski if it tried: the substrate has no free 
 What it can do — and does, every division — is pay the bill. That it must pay is not a limitation
 biology happened to inherit; it is the same fact that keeps the universe consistent with itself.
 
+Banach–Tarski is the third of three ways to ask for something no closure delivers — a selection no
+construction makes — beside self-containing closures and infinitely many states in a finite place;
+the three are compared in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §3.
+
 ---
 
 ## Honest scope

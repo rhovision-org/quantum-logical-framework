@@ -9,7 +9,8 @@ new idea is the organizing one: **consciousness is which closure-frequency you a
 to**, and that single lever unifies ordinary thought, the bound conscious moment, and cosmic/meditative
 states.
 
-The structural skeleton is machine-verified in [`lean/QLF_Consciousness.lean`](lean/QLF_Consciousness.lean).
+The structural skeleton is formalized in [`lean/QLF_Consciousness.lean`](lean/QLF_Consciousness.lean): simple lemmas about
+closure periods (`f = 1/R`, binding takes the shorter period), not a proof about minds.
 
 **The one-realm thesis (the interpretive frame).** QLF is not dualist: physical and mental are not two
 substances but the **outside and inside views of the same ZFA closures** — the very *realized
@@ -18,7 +19,7 @@ distinctions* that are the atom of information everywhere else in the framework 
 a particle, a firing, a frequency; *inside*, the same closure reads as experience — a resonant, bound
 moment. Consciousness is then not an extra ingredient added to matter; it is what certain closures *are*,
 from within. This dual-aspect identity is the **interpretive stance** of this document (labeled as such
-throughout, §6–§7): the frequency/binding *architecture* below is machine-verified; the *felt quality* is
+throughout, §6–§7): the frequency/binding *architecture* below is formalized as lemmas on periods; the *felt quality* is
 the named hypothesis, not a theorem.
 
 ---
@@ -144,6 +145,18 @@ and slowest included.
 
 ---
 
+**One spectrum, from mind to spirit.** Because `f = 1/R`, a closure held jointly across many minds,
+or across a community and its world, is deep and therefore slow: its period is the year, the
+generation or the age of a tradition. Mind frequencies and these shared, long-period "spirit"
+frequencies are one spectrum, and the receiver regime is a mind tuning down that spectrum. Two
+boundaries keep this honest. Observing does not decide an outcome: no closure in this document has
+observer potency ([`ScientificApproach.md`](ScientificApproach.md) §1b). But mind frequencies are
+physical and, like every biological rhythm, have physical effects: brain oscillations produce fields
+measured outside the skull (EEG/MEG) that act back on the neurons producing them (ephaptic coupling,
+Anastassiou et al. 2011, *Nat. Neurosci.* 14, 217). The fuller treatment, including social reality
+and the reading of spirit as possibility that closes in minds, is
+[`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §8.
+
 ## 5. Quantum biology is the substrate — and evolution exploits it
 
 If cognition is **resonant access** to pre-existing closures (the possibilist ontology — the landscape
@@ -220,8 +233,8 @@ It earns its keep by making **falsifiable leanings**, not just words: decoupled 
 computation should be zombie-like (functional, unfelt); self-dissolution with preserved field-coupling
 (deep meditation, anesthesia gradients, psychedelic ego-loss) should *alter and expand* qualia toward
 the cosmic rather than extinguish them; pure field with no self-model should be experience-less; and (§5)
-conscious access should track narrow-linewidth, isolated oscillatory modes. The **architecture** (§1–§5)
-is machine-verified in [`lean/QLF_Consciousness.lean`](lean/QLF_Consciousness.lean); the **qualia
+conscious access should track narrow-linewidth, isolated oscillatory modes. The frequency ordering of the **architecture** (§1–§5)
+is formalized in [`lean/QLF_Consciousness.lean`](lean/QLF_Consciousness.lean), with the identifications as readings; the **qualia
 hypothesis** (§6) is QLF's proposed — and testable — stance on the felt quality.
 
 ---
