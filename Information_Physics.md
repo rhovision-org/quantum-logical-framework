@@ -481,6 +481,37 @@ The mathematical face of the same fact — the gate is an *automorphism of the a
 space* — is [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) Rung 5b. Watch it run:
 [`fredkin_machine.html`](fredkin_machine.html).
 
+### 5b. Landauer at the census temperature — *pre-registered 2026-11-01*
+
+**The gap.** `QLF_FreeEnergy` proves `log 2` nats per closure, a dimensionless quantity. Landauer's
+`k_B T ln 2` is an energy, and the conversion needs a temperature the substrate has not supplied.
+At a horizon the temperature is supplied (`bh_entropy_first_law`,
+[`lean/QLF_HorizonFirstLaw.lean`](lean/QLF_HorizonFirstLaw.lean)). This section takes the general case.
+
+**The route.** Thermodynamic temperature is defined by `1/T = dS/dE`, so a temperature is derived, not
+assumed, once a count of ways `W(E)` is known. The substrate's histories are words over the 8-twist
+alphabet, so with energy `ε` per event a history of energy `E` has `n = E/ε` events, and `8ⁿ` ways.
+The statements, fixed before the proof (`k_B = 1`, so `T` is in energy units):
+
+* **L1** `S(E) = (E/ε) log K` has `dS/dE = log K / ε`, so the census temperature is `T = ε / log K`.
+* **L2** (any alphabet) `T · log 2 = ε / log₂ K`: at that temperature Landauer's bound is met with
+  equality, and a bit costs exactly the event energy divided by the bits per event.
+* **L3** (the substrate, `K = 8`) `log 8 = 3 log 2`, so `T = ε / (3 log 2)` and `T · log 2 = ε / 3`. A
+  bit costs one third of an event quantum, and its mass is `ε / (3c²)`.
+* **L4** (closures) Closed histories number `W_L ≈ C · 8^L / L²` ([`Closure_Walk.md`](Closure_Walk.md),
+  the `d = 4` Pólya factor). With `S_cl(E) = (E/ε) log 8 − 2 log(E/ε)`, `dS_cl/dE = log 8 / ε − 2/E`,
+  which is smaller than `1/T`. Requiring closure raises the temperature, and the excess vanishes as
+  `E → ∞`.
+
+**R6a, stated first.** L2 holds for *every* uniform alphabet, so Landauer saturation is bookkeeping,
+not evidence: it would hold for any system of `n` independent `K`-way choices with energy `ε` each.
+What is QLF's is the input `K = 8` (three bits per event,
+[`lean/QLF_AlphabetNecessity.lean`](lean/QLF_AlphabetNecessity.lean)) and the closure correction L4,
+whose `2` is half the walk's dimension and would be `d/2` on another alphabet. **What stays open:** the
+energy per event `ε`, an input (the Planck reading `ε = E_P` gives `T = T_P / (3 log 2)`), and the
+identification of this census temperature with a thermometer's. **Kill condition:** if `dS/dE` of the
+stated `S` is not `log K / ε`, or L3's `1/3` fails, the route is wrong as stated.
+
 ## 6. Quantum information — the load-bearing floor (a reading, not a rival)
 
 **Classical.** Von Neumann entropy `S(ρ) = −Tr(ρ log ρ)`; qubits; the stabilizer/Clifford
