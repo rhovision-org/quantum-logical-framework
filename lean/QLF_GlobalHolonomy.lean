@@ -175,7 +175,7 @@ theorem trace_area_from (ts : List Step) (s : Trace) :
   | cons t ts ih =>
       simp only [List.foldl_cons, area3Aux]
       rw [ih]
-      simp [advance] <;> ring
+      simp only [advance, add_assoc]
 
 theorem area_trace (ts : List Step) :
     (trace ts).area = signedArea3 ts := by
