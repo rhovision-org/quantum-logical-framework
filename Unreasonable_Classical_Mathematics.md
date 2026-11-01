@@ -532,6 +532,20 @@ story can close in minds only if it is consistent. A self-contradictory belief c
 but what spreads is the wording; it never closes as a shared record. Spirit, in this sense, is not opposed to the
 physical. It is possibility that closes in minds first and then acts in the world through them.
 
+**Truth gives a belief its power.** A belief held only socially acts through the people who hold it. A
+belief that also matches a closure in the world acts twice: through the minds that share it, and
+through the world that confirms it each time it is tested. The connectedness of all things is an
+example of the second kind. In QLF it is literal, in three proved senses. Every history descends,
+step by step, from the same first distinction
+([`expand_generation_has_parent`](lean/QLF_ConstructionAdds.lean)), so everything shares an origin.
+Entanglement is a shared closure that does not split into separate parts
+([`shared_closure_not_factorizable`](lean/QLF_IndexedFactors.lean)), so connected systems are one
+event, not two linked ones. And the cosmic horizon is a joint closure that every smaller system sits
+inside ([`Consciousness.md`](Consciousness.md) §4). The connectedness is a shared past and a shared
+closure. It is not a channel: nothing is signalled through it, which is why it never contradicts
+relativity ([`Entanglement.md`](Entanglement.md) §5–6). A belief in that connectedness is powerful in
+the way true beliefs are, because the world keeps answering it.
+
 **What possibilism proves, and what it doesn't.** Given possibilism, the reading of spirit is not an
 extra assumption. QLF's floor is that every generable history is a real way, and that ZFA decides which
 ways persist as events, not which exist ([`ScientificApproach.md`](ScientificApproach.md) §1b). From that
