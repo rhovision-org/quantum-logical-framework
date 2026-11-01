@@ -73,6 +73,7 @@ From [Alpha.md](Alpha.md) and [Alpha_Residual.md](Alpha_Residual.md):
 | `ct_above_leading` | `α⁻¹_CT > 137`: Chain Theory's value respects QLF's screening bound |
 | `ct_in_census_band` | `137 + 1/64 < α⁻¹_CT < (217 + 512√62)/31`: it lies inside QLF's census band |
 | `equalWeight_closed_form` | QLF's `w = ½` prediction is exactly `135 + 8√62/31` (≈ 137.032002) |
+| `equalWeight_bounds` | `137.032 < 135 + 8√62/31 < 137.0321`, the bound the separation below rests on |
 | `ct_separated_from_equalWeight` | `α⁻¹_CT − (135 + 8√62/31) > 0.0038` |
 | `ct_denominator_factor`, `qlf_leading_factor` | `31104 = 2⁷·3⁵` and `137 = 2⁷ + 3²` |
 
