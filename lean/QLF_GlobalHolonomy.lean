@@ -12,7 +12,7 @@ theorems quantify over lists of arbitrary length.
 
 namespace QLF.GlobalHolonomy
 
-open QLF QLF.EdgeSign QLF.ColourFlux
+open QLF QLF.PhaseRule QLF.EdgeSign QLF.ColourFlux
 
 inductive Step where
   | east | west | north | south
@@ -144,11 +144,27 @@ theorem colour_normal_form (ts : List Step) :
   have h := colour_normal_form_from ts ⟨0, 0, 0⟩
   simpa [model, colVec, qMat, MatF3.act] using h
 
+/-- The transport trace and the edge integral use the same signed area. -/
+theorem trace_area_from (ts : List Step) (s : Trace) :
+    (ts.foldl advance s).area = s.area + areaAux s.x s.y ts := by
+  induction ts generalizing s with
+  | nil => simp [areaAux]
+  | cons t ts ih =>
+      simp only [List.foldl_cons, areaAux]
+      rw [ih]
+      simp [advance]
+      ring
+
+theorem area_trace (ts : List Step) :
+    (trace ts).area = signedArea ts := by
+  unfold trace signedArea
+  simpa using trace_area_from ts ⟨0, 0, 0⟩
+
 /-- Discrete Stokes for colour on any closed planar walk, at any length. -/
 theorem colour_stokes (ts : List Step)
     (hx : (trace ts).x = 0) (hy : (trace ts).y = 0) :
-    colourWord ts = ⟨(0, 0), ((trace ts).area : F3)⟩ := by
+    colourWord ts = ⟨(0, 0), (signedArea ts : F3)⟩ := by
   rw [colour_normal_form]
-  simp [model, hx, hy]
+  simp [model, hx, hy, area_trace]
 
 end QLF.GlobalHolonomy
