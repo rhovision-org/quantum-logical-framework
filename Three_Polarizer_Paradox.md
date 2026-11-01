@@ -231,3 +231,5 @@ closure (`no_unclosing`) rather than an extra postulate about collapse.
   there is nothing else that collapses.
 * **Not "the order of events is arbitrary."** Order matters because the questions do not commute, and
   that non-commutation is a proved property of the twist algebra, not an observer effect.
+
+**See also:** [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md), where this paradox sits beside the others QLF resolves (the liar, Zeno, time loops) and the failures of the continuum and of Choice.

@@ -159,7 +159,7 @@ multiplicities can be written down, rather than freezing water.
 
 | Mystery | QLF's account | Status | Where |
 |---|---|---|---|
-| **The unreasonable effectiveness of mathematics** | Dissolved: the *realizable* part of mathematics and physics are the same substrate; effectiveness tracks realizability — which also explains where mathematics *fails* (the continuum forced onto reality) | ✅ dissolution | [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §4 |
+| **The unreasonable effectiveness of mathematics** | Dissolved: the *realizable* part of mathematics and physics are the same substrate; effectiveness tracks realizability — which also explains where mathematics *fails* (the continuum forced onto reality) | ✅ dissolution | [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §4, [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) |
 | **The continuum & the infinities of physics** | The continuum is consistent but *gratuitous* (undetermined, conservative, unrealizable, unneeded) — a *rendering* of the finite computable substrate; the infinities are where it is forced onto reality | ✅ | [`TheContinuum.md`](TheContinuum.md) |
 | **Fine-tuning / why these laws** | ZFA balance is the selection principle: physical reality is the self-selecting subset of possibility that closes; the constants are forced, not tuned | ✅ ontology | [`Philosophy.md`](Philosophy.md) |
 | **Why is the universe comprehensible** | Because the observer is a Markov blanket doing active inference *inside* the same closure process it models — comprehension is a self-model | ✅ ontology | [`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md) |
@@ -216,4 +216,5 @@ This is the whole point of the [continuum-is-gratuitous](TheContinuum.md) case: 
 - [`Millennium.md`](Millennium.md) — the six Clay problems on the substrate.
 - [`TheContinuum.md`](TheContinuum.md) — why the continuum (and its infinities) is a rendering.
 - [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) — how mathematics emerges; Wigner dissolved.
+- [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) — the other side of Wigner: where classical mathematics fails, and the table of laws derived from ZFA.
 - [`Philosophy.md`](Philosophy.md) — the possibilist ontology and the single ZFA premise.

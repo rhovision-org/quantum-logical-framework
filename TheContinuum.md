@@ -294,6 +294,10 @@ always break a finite closure, so every restrictive law has a real exception and
 final — [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md), machine-verified in
 [`lean/QLF_LawOfExceptions.lean`](lean/QLF_LawOfExceptions.lean).
 
+The paradoxes of the continuum, of Choice and of self-reference are collected in one place, against Wigner's "unreasonable effectiveness", in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md).
+
+**One lens for every failure.** Each failure collected here asks the world for one of three things no closure delivers: a closure that contains itself (ungrounded self-reference, time loops), infinitely many distinguishable states in a finite place (the completed continuum), or a selection no construction makes (unrestricted Choice). The three are laid out, with every case sorted under them, in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §3.
+
 ## Summary
 
 | Classical assumption | QLF replacement |

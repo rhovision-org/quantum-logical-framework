@@ -251,6 +251,10 @@ A cell could not perform Banach–Tarski if it tried: the substrate has no free 
 What it can do — and does, every division — is pay the bill. That it must pay is not a limitation
 biology happened to inherit; it is the same fact that keeps the universe consistent with itself.
 
+Banach–Tarski is the third of three ways to ask for something no closure delivers — a selection no
+construction makes — beside self-containing closures and infinitely many states in a finite place;
+the three are compared in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §3.
+
 ---
 
 ## Honest scope
@@ -291,6 +295,7 @@ biology happened to inherit; it is the same fact that keeps the universe consist
 - [`Millennium.md`](Millennium.md) — the *ex falso*/false-in-the-model framing and the 1924 citation.
 - [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) — realizable math vs the gratuitous (Banach–Tarski)
   tail; QLF vs Tegmark.
+- [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) — Banach–Tarski beside the other failures of Choice, the continuum and self-reference.
 - [`SEX.md`](SEX.md) · [`Fusion.md`](Fusion.md) — the nucleonic "one becomes two needs distinguishability."
 - [`Conservation.md`](Conservation.md) · [`Reversibility.md`](Reversibility.md) — the `−log 2` ledger,
   Landauer, synthesized time.

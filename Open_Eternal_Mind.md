@@ -188,3 +188,5 @@ modulo 5 keeps the phases but loses the sizes `a² + b²` that Born probabilitie
 | Synchronicity? | Only as common-cause correlation, by QLF's shared-past restriction (not by no-signalling) | QLF model restriction; falsifiable |
 | Can they be typed? | Yes: ZFA balance is the type system, and every closure is a term | Proved |
 | In what field? | Closure records over `𝔽₂`; amplitudes in the ring `ℤ[i]`; probabilities in `ℚ` | Proved |
+
+The "Interpretation" labels above split further: what follows from the possibilist premise, the premise itself (a founding commitment), and experience (a stance). That split, and the long-period "spirit" frequencies of shared closures, are in [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §8.

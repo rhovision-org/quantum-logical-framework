@@ -300,7 +300,8 @@ as zero-setup Python demos in the repo.
 **See also:** [Continuum_Choice_Fallacy.md](Continuum_Choice_Fallacy.md) (the negative
 companion) · [Philosophy.md](Philosophy.md) · [Active_Inference_Mathematics.md](Active_Inference_Mathematics.md)
 · [TheContinuum.md](TheContinuum.md) · [ReverseMathematics.md](ReverseMathematics.md) ·
-[Intuitionistic_Logic.md](Intuitionistic_Logic.md) · [Millennium.md](Millennium.md)
+[Intuitionistic_Logic.md](Intuitionistic_Logic.md) · [Millennium.md](Millennium.md) ·
+[Unreasonable_Classical_Mathematics.md](Unreasonable_Classical_Mathematics.md) (where classical mathematics fails, Wigner read both ways)
 
 ## References
 

@@ -165,6 +165,7 @@ QLF is the mathematics that has **active inference built into its foundation**. 
 
 - [**Quantum_Logic_Foundations.md**](Quantum_Logic_Foundations.md) — the positive thesis: quantum logic (propositions = phase-string distinctions, truth = ZFA closure = measurement, algebra = Hermitian) is the **correct** foundation of mathematics, built bottom-up from one finite distinction; the universe's logic is *not* incomplete because incompleteness is exactly the non-physical tail `full_zeno_prune` removes. Positive companion to the continuum/choice critique
 - [**Continuum_Choice_Fallacy.md**](Continuum_Choice_Fallacy.md) — the negative thesis: the unrestricted continuum + Axiom of Choice are mathematics' ultraviolet catastrophe (Gödel/Turing/Busy Beaver its shadows); the organizing frame for the Millennium-prize program
+- [**Unreasonable_Classical_Mathematics.md**](Unreasonable_Classical_Mathematics.md) — the uncanny unreasonableness of classical mathematics: Wigner (1960) read both ways (effective where realizable, paradoxical or wrong where not), the paradoxes QLF resolves, the failures of the continuum and of Choice, and the table of natural laws derived from ZFA, equal and opposite logical action, with the status of each.
 - [**Active_Inference_Mathematics.md**](Active_Inference_Mathematics.md) — meta-doc framing the QLF program as active-inference mathematics: primitives, single rule, classical/constructive/active-inference comparison table, honest derived/partial/open scoreboard. Names the system as a candidate TOE and ZFC-replacement for the part of mathematics that is not mathematical fantasy (with the Gödel + Busy Beaver scope marker)
 - [**Category_Theory_QLF.md**](Category_Theory_QLF.md) — the category-theoretic structure collected: the causal-set base category, ZFA as an equalizer, the capacity-horizon **bifibration** (whose free prime-factorisation *forces* self-similarity and closes the log-periodic channel — the reason the α-residual weight `w = 1/2` is structural), the Tannakian/anabelian layer, RhoQuCalc as a dagger SMC, `MO2` as the internal logic. A description, not an axiom (method rule 4)
 - [**Hierarchical_Control.md**](Hierarchical_Control.md) — the bottom-up/top-down architecture; §3 derives Friston's free energy principle from ZFA
@@ -521,7 +522,7 @@ lake build
 
 ### If you care most about the substrate vs the continuum (impossible vs possible mathematics)
 
-[TheContinuum.md](TheContinuum.md) → [Continuum_Choice_Fallacy.md](Continuum_Choice_Fallacy.md) → [Banach_Tarski_QLF.md](Banach_Tarski_QLF.md) → [Mathematics_From_QLF.md](Mathematics_From_QLF.md)
+[TheContinuum.md](TheContinuum.md) → [Continuum_Choice_Fallacy.md](Continuum_Choice_Fallacy.md) → [Banach_Tarski_QLF.md](Banach_Tarski_QLF.md) → [Mathematics_From_QLF.md](Mathematics_From_QLF.md) → [Unreasonable_Classical_Mathematics.md](Unreasonable_Classical_Mathematics.md)
 
 ### If you care most about the variational / Lagrangian formulation
 
