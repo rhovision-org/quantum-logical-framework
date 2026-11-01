@@ -644,6 +644,7 @@ theorem signedCount_le (n : ℕ) : signedCount n ≤ 32 ^ n := by
           _ = 16 ^ n := by rw [← pow_add, Nat.add_sub_cancel' hk']
     _ = 32 ^ n := by
         rw [← Finset.sum_mul, Nat.sum_range_choose, ← mul_pow]
+        norm_num
 
 /-- `64ⁿ ≤ W_{2n} · (n+1)² (2n+1)⁴`: one term of the planar split already carries almost all of
     `8^{2n}`. -/
@@ -658,7 +659,7 @@ theorem walkCount_lower (n : ℕ) :
   have hF1 : n.choose (n / 2) ^ 2 ≤ (2 * n).choose (2 * (n / 2)) := by
     rw [two_mul, two_mul, Nat.add_choose_eq, sq]
     exact Finset.single_le_sum (f := fun ij : ℕ × ℕ => n.choose ij.1 * n.choose ij.2)
-      (fun _ _ => Nat.zero_le _) (Finset.mem_antidiagonal.mpr rfl)
+      (fun _ _ => Nat.zero_le _) (a := (n / 2, n / 2)) (by simp)
   have hF3 : ∀ i ≤ n, 16 ^ i ≤ (2 * n + 1) ^ 2 * Nat.centralBinom i ^ 2 := by
     intro i hi
     have h4 : 4 ^ i ≤ (2 * n + 1) * Nat.centralBinom i := by
@@ -761,8 +762,8 @@ theorem keep_flip_tendsto_one :
   have hF : (2 : ℝ) * Wflip (2 * n) = walkCount (2 * n) - signedCount n := by
     have : (2 : ℤ) * Wflip (2 * n) = (walkCount (2 * n) : ℤ) - signedCount n := by omega
     exact_mod_cast this
-  set W : ℝ := walkCount (2 * n)
-  set D : ℝ := signedCount n
+  set W : ℝ := ((walkCount (2 * n) : ℕ) : ℝ)
+  set D : ℝ := ((signedCount n : ℕ) : ℝ)
   calc (1 + D / W) / (1 - D / W) = (W * (1 + D / W)) / (W * (1 - D / W)) :=
         (mul_div_mul_left _ _ hW).symm
     _ = (W + D) / (W - D) := by
