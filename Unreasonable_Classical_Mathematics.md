@@ -114,7 +114,7 @@ is reached but a residual remains open.
 | **Pauli exclusion** | The antisymmetric combination of two identical processes is zero | **Proved** | [`PauliExclusion`](lean/PauliExclusion.lean) (`pauli_exclusion`) |
 | **Heisenberg uncertainty** | The `ħ/2` quantum is the half-width of one count bin; the product form uses the proved non-commuting axes | **Proved** for the quantum; product form cites the entropic relation | [`QLF_Uncertainty`](lean/QLF_Uncertainty.lean), [`UncertaintyPrinciple.md`](UncertaintyPrinciple.md) |
 | **Quantum logic** | Measurement propositions form the orthomodular, non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
-| **Landauer's bound** | Each half-spin closure releases `log 2` nats of variational free energy | **Proved** as a dimensionless information identity (binary KL); the physical energy `k_B T log 2` is an identification, not derived | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`) |
+| **Landauer's bound** | Each half-spin closure releases `log 2` nats of variational free energy | **Proved** as a dimensionless information identity (binary KL); the physical energy `k_B T log 2` is an identification, not derived | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`); at a horizon, [`QLF_HorizonFirstLaw`](lean/QLF_HorizonFirstLaw.lean) (`bh_entropy_first_law`) |
 | **Born rule** | Why the *square*: an event is a ket–bra pair, so its count is `a · a*` | **Half proved**; that the norm is the count of ways is open | [`QLF_BornCounting`](lean/QLF_BornCounting.lean), [`Born_Rule.md`](Born_Rule.md) |
 | **The arrow of time** | No time loops, from the law of weakening alone | **Proved** | [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean) |
 | **Horizon thermodynamics** (Unruh, Hawking, de Sitter) | All three are one Unruh relation `T = ℏa/2πck_B` at the right acceleration; the `2π` is the loop phase | **Derived** | [`QLF_HorizonTemperature`](lean/QLF_HorizonTemperature.lean) |
@@ -127,6 +127,21 @@ is reached but a residual remains open.
 | **Weak mixing angle** | `sin²θ_W = 3/8` at unification, from the same 6+2 split as α | **Unification value**; running to 0.231 open | [`QLF_WeinbergAngle`](lean/QLF_WeinbergAngle.lean), [`Weak_Force.md`](Weak_Force.md) |
 | **Proton–electron mass ratio** | `m_p/m_e = 6π⁵` | **Leading value**; residual open | [`QLF_LenzMassRatio`](lean/QLF_LenzMassRatio.lean), [`Proton_Resonance_R_e.md`](Proton_Resonance_R_e.md) |
 | **The hierarchy of scales** | `ln(M_P/m_p) = 2π·b₀ = 14π`, 0.07 % from measured | **Derived** from one posit (`α_s` at the Planck scale) | [`QLF_AlphaS`](lean/QLF_AlphaS.lean) |
+
+**Mass, energy and bits.** Mass and energy convert at a fixed rate, `c²`. Bits convert to energy only
+at a temperature or a size: Landauer's bound puts the cost of a bit at `k_B T ln 2`, and Bekenstein's
+bound lets energy `E` within radius `R` hold at most `2πER/(ħc ln 2)` bits. So the three are
+interconvertible, with temperature or size as the second exchange rate. They are not equivalent at a
+fixed rate the way mass and energy are, and a fixed mass per bit (Vopson 2019) is an untested
+proposal. QLF proves one exact instance. At a Schwarzschild horizon, with QLF's Hawking temperature,
+the first law `T_H dS = d(Mc²)` holds for the Bekenstein–Hawking entropy
+([`bh_entropy_first_law`](lean/QLF_HorizonFirstLaw.lean)). So one bit added to a horizon
+(`dS = k_B ln 2`) adds mass `k_B T_H ln 2 / c²`: mass, energy and a bit, related exactly, with the
+horizon supplying the temperature. The same module shows that the naive count of one bit per Planck
+patch breaks that law (`naive_count_breaks_first_law`), so a horizon bit occupies `4 log 2` Planck
+areas, not one. The inputs are named there: the Unruh relation, `E = Mc²` with `R = 2GM/c²`, and the
+first law holding in the mean. Away from a horizon, QLF proves the `log 2` per closure but does not
+fix the temperature, so the general Landauer identification stays open.
 
 The full survey, mystery by mystery and including the particles QLF predicts are absent (supersymmetric partners, the axion, a dark-matter particle, monopoles, proton decay), is [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md). The open entries are listed with their owning documents in [`Open_Problems.md`](Open_Problems.md).
 
@@ -746,6 +761,7 @@ be unaffected.
 * Hamming, R. W. (1980). The unreasonable effectiveness of mathematics. *Amer. Math. Monthly* 87, 81–90.
 * Hardin, C. S. & Taylor, A. D. (2013). *The Mathematics of Coordinated Inference.* Springer.
 * Kripke, S. (1975). Outline of a theory of truth. *J. Philosophy* 72, 690–716.
+* Landauer, R. (1961). Irreversibility and heat generation in the computing process. *IBM J. Res. Dev.* 5, 183–191.
 * Rovelli, C. (1996). Relational quantum mechanics. *Int. J. Theor. Phys.* 35, 1637–1678.
 * Russell, B. (1906). Les paradoxes de la logique. *Revue de Métaphysique et de Morale* 14, 627–650.
 * Schrödinger, E. (1935). Die gegenwärtige Situation in der Quantenmechanik. *Naturwissenschaften* 23, 807–812.
@@ -757,6 +773,7 @@ be unaffected.
 * Tarski, A. (1936). Der Wahrheitsbegriff in den formalisierten Sprachen. *Studia Philosophica* 1,
   261–405.
 * Vitali, G. (1905). *Sul problema della misura dei gruppi di punti di una retta.* Bologna.
+* Vopson, M. M. (2019). The mass-energy-information equivalence principle. *AIP Advances* 9, 095206.
 * Wigner, E. P. (1960). The unreasonable effectiveness of mathematics in the natural sciences. *Comm.
   Pure Appl. Math.* 13, 1–14.
 * Wigner, E. P. (1961). Remarks on the mind-body question. In I. J. Good (ed.), *The Scientist Speculates.* Heinemann.
