@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """
-closure_hitting_amplitude.py -- the per-charge expand/contract amplitude, converged
-exactly as a ZFA closure-walk hitting probability (Lumina_QLF.md sec 13).
+closure_hitting_amplitude.py -- the per-charge closure probability (hitting mass),
+identified in the R->infinity limit as a ZFA closure-walk hitting probability
+(Lumina_QLF.md sec 13). NOTE: this is a closure probability, not (yet) a physical
+"amplitude" -- cylinder-measure -> physical-event-probability is still an open bridge
+(the filename is kept only to preserve existing doc links).
 
 sec 11 (raw count) and sec 12 (Kraft mass, depth cap 7) could not converge a per-charge
-amplitude -- both were depth-limited. This resolves it with no depth cap at all, by
-recognizing what the census IS.
+number -- both were DEPTH-limited. This removes the depth limit by recognizing what the
+census IS; what remains is a SPATIAL truncation (a finite radius-R ball), handled by
+pushing R and reading off the R->infinity limit.
 
                         ---- THE RECOGNITION ----
 
@@ -25,19 +29,26 @@ neutralize). h is the discrete-harmonic hitting probability of {0}:
     h(0) = 1,   h(x) = (1/8) * sum over the 8 neighbors h(x +- e_a)   for x != 0,
     h(x) -> 0   as |x| -> infinity   (the Z^4 walk is transient, QLF_PolyaTransience).
 
-h is computed by value iteration -- no depth cap, converges to the true infinite-depth
-value. The walk's full symmetry (coordinate permutations + sign flips) collapses every
-state x to the sorted tuple of |coords|, so the state space is tiny and R can be pushed
-far enough for 7-digit precision.
+h is computed by value iteration on the finite l1-ball of radius R with h=0 outside --
+a SPATIAL truncation (the Dirichlet problem on the ball), so the R sequence approaches
+the true infinite-depth value from BELOW; it is a numerical identification of the
+R->infinity limit, not an exact evaluation. The walk's full symmetry (coordinate
+permutations + sign flips) collapses every state x to the sorted tuple of |coords|, so
+the state space is tiny and R can be pushed far (a certified finite-R error bound
+0 <= p4 - h_R(e) <= eps(R) would upgrade this from "numerically convergent" to "proved";
+it is not yet added).
 
                         ---- WHAT THIS DELIVERS ----
 
-M(1) = h(one step out) = the walk's RETURN PROBABILITY = p4 = 0.1932015, the prime-closure
-mass of Closure_Walk.md (VALIDATION: the iteration must reproduce that established number).
-So the single-free-charge amplitude is p4 exactly -- the fraction of possibility that
-closes. For k charges M(k) = h(k*e) falls as the 4D Green's function ~ 1/k^2, so the
-per-charge marginal surprisal -ln[M(k+1)/M(k)] -> 0: the effect SATURATES (sublinear in
-ionization), it is not a fixed per-charge bit and not superlinear.
+M(1) = h(one step out) = the walk's RETURN PROBABILITY -> p4 = 0.1932015 (itself a numerical
+value for the 4D Polya return probability, not a constant proved exactly by QLF_PolyaTransience,
+which proves transience/summability bounds), the prime-closure mass of Closure_Walk.md
+(VALIDATION: the iteration must reproduce that established number in the R->infinity limit; at
+R=50 it is 0.193044, ~1.6e-4 below, approaching from below). So the single-free-charge CLOSURE
+PROBABILITY is identified as p4 in the limit -- the fraction of possibility that closes. For k
+charges M(k) = h(k*e) falls as the 4D Green's function ~ 1/k^2, so the per-charge marginal
+surprisal -ln[M(k+1)/M(k)] -> 0 at small k: the effect SATURATES (sublinear), it is not a fixed
+per-charge bit and not superlinear.
 
 Pure Python, exact value iteration, a few seconds.
 """

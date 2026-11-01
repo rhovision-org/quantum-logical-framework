@@ -3,9 +3,10 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
 
-**Lumina** (October 2026) is the largest cosmological radiation-hydrodynamics simulation yet run: the
-first ~2 billion years of cosmic history in a box 500 comoving Mpc (about 1.5 billion light-years) on a
-side, with hydrogen and helium reionization followed together for the first time. This doc asks what
+**Lumina** (Zier et al., arXiv:2605.15310, posted May 2026; widely covered in the October 2026 press
+cycle) is the largest cosmological radiation-hydrodynamics simulation yet run: the first ~2 billion years
+of cosmic history in a box 500 comoving Mpc (about 1.5 billion light-years) on a side, with hydrogen and
+helium reionization followed together for the first time. This doc asks what
 QLF's proved results say about what Lumina simulates, and keeps the two apart: what is a theorem, what is
 bookkeeping, what is a prediction, and what QLF cannot yet say. Every number below is computed by
 [`lumina_qlf.py`](lumina_qlf.py) (pure Python, no fitted parameter, under a second).
@@ -95,9 +96,13 @@ proves that with `ρ_Λ ∝ H²` ([`rhoLambda_prop_Hsq`](lean/QLF_DynamicalDarkE
 | 8.0 (`τ` excess peaks) | 0.64 | 0.36 | 1.78 |
 
 Lumina's "first two billion years" ends at `z ≈ 3` in ΛCDM. Under reading A the same redshift arrives
-at 1.2 Gyr, and the stars have about 56 % of the time to ionize the same gas. Reading A was already
-rejected ([`Cosmological_Constant.md`](Cosmological_Constant.md) §5.7: no acceleration, and BBN fails);
-this is a further, independent conflict.
+at 1.2 Gyr, with about 56 % of the elapsed time at fixed `z`. This is a warning about the size of the
+clock shift, **not** an independent falsification from Lumina: Lumina was evolved in ΛCDM, and changing
+`H(z)` changes halo formation, star formation, source abundance and escape histories, not merely the
+elapsed time at a fixed redshift. Reading A would substantially alter the reionization clock and
+therefore cannot inherit Lumina's ΛCDM reionization history unchanged; testing it would require a rerun
+with the alternate expansion history. Reading A is in any case already rejected for other reasons
+([`Cosmological_Constant.md`](Cosmological_Constant.md) §5.7: no acceleration, and BBN fails).
 
 **Closed-so-far global constraint.** [`omegaLambda_matter_era`](lean/QLF_GlobalConstraint.lean) proves
 `Ω_Λ = 3/5` at every matter-era epoch, so the whole reionization window is covered too. Already rejected
@@ -461,34 +466,65 @@ local-density floor did in §8.
 
 The three failures (§7 phase change, §8 local density, §9 ambient field) share one root: **the overshoot
 is a linear-regime problem.** The `√δ` amplification acts from `δ = 10⁻⁵` onward, at the very start, while
-*any* density-sourced brake is `≈ 0` because every density is `≈ 0` then. A fix sourced by the density
-field therefore cannot arrive in time, on any scale. Whatever repairs QLF's structure growth has to be
-**non-zero as `δ → 0`** — it must change the low-acceleration law itself (how `a₀` or the `√δ`
-amplification behaves in the linear regime), not add a term that density switches on. That is a sharper
-statement of the open problem than §3 gave, and it is where any future attempt should start. Jim's
-principle survives as an ontology; what is ruled out is realizing it as a density-sourced correction to
-the existing balance.
+each of the three brakes tested has a suppressing term that *vanishes with the growing overdensity* (the
+region's own `δ`, or the ambient `δ_amb`), so it is `≈ 0` exactly when it is needed. What these three
+experiments establish, stated at the width they actually support:
+
+> **Corrections whose suppressing term vanishes with the growing overdensity or ambient perturbation
+> engage too late to cure the linear-regime overshoot in the tested top-hat models.**
+
+That is a defensible no-go for a *class* of mechanisms, and it points future attempts at the
+low-acceleration law itself (how `a₀` or the `√δ` amplification behaves in the linear regime). It does
+**not** rule out every density-dependent fix: a correction depending on absolute density, on gradients,
+on a nonlocal scale, on environment or history — anything that stays nonzero as the *perturbation*
+`δ → 0` — is untested here and remains open. Jim's principle survives as an ontology; what is ruled out
+is the specific family of perturbation-sourced brakes above.
 
 ---
 
-## 10. A new prediction: the expand/contract imbalance tracks ionization — *pre-registered 2026-10-27*
+## 10. A proposed test: does the expand/contract imbalance track ionization? — *pre-registered 2026-10-27*
 
 §7–§9 were attempts to *fix* QLF to agree with ΛCDM structure growth, and all failed. This section does
-the opposite thing, which is the point of the exercise: it states a **new, falsifiable** QLF prediction
-that differs from ΛCDM and that Lumina can test — agreement not assumed.
+the opposite thing, which is the point of the exercise: it states a **falsifiable** QLF bridge that
+differs from ΛCDM and that Lumina can test — agreement not assumed. It is a *proposed test of a
+mechanism*, not a prediction derived from a theorem; the distinction is drawn sharply below.
 
-**The claim.** Expansion and contraction are set by **charge**, not species: a `+` charge contracts local
-space, a `−` charge expands it (so positron = proton, electron = antiproton). This is QLF's own
+**Status: proposed test of a bridge, not a consequence of a theorem — but the observable it needs now
+exists.** The step to a correlation with ionization fraction is not *derived*, so §10 stays pre-registered
+as a test. But an earlier worry — that global charge neutrality defeats the prediction outright — is
+**wrong**, and the reason is QLF's own handedness ontology.
+
+**The idea.** Expansion and contraction are read off **charge**, not species: a `+` charge contracts
+local space, a `−` charge expands it (so positron = proton, electron = antiproton). This is QLF's own
 structure — charge is the gauge component of handedness (`QLF_Handedness`), and the expand/contract
-duality is `event_duality_balanced` read on that component. The consequence: in a **neutral atom** the
-`+` and `−` are locked together and their expand/contract cancels locally, so neutral matter sources no
-net term. A net expand/contract term requires the charges **free to act apart — ionization**. Therefore
+duality is `event_duality_balanced` read on that component. In a **neutral atom** the `+` and `−` are
+bound together inside one completed closure. The idea under test is that the *separation* of charge in
+an ionized region leaves a residual expand/contract backlog even while the region stays macroscopically
+neutral.
+
+**Why neutrality does *not* kill it — handedness-balanced is not handedness-free.** The naive objection
+is that an ionized plasma can carry a huge free-charge density while remaining macroscopically
+charge-neutral (`Σ chiralCharge = N₊ − N₋ ≈ 0`), so a net-charge quantity sees nothing. True — but net
+charge is the *wrong* quantity. In QLF, neutrality means the signed ledger balances, **not** that there
+is no gauge handedness: an ionized plasma still carries large *separated* mixed handedness `N₊ + N₋ ≫ 0`,
+free `+` and `−` acting apart, where a bound atom pairs them locally. The quantity that sees this is the
+**unsigned separated handedness** `F_G = Σ_C |chiralCharge(C)|` over a decomposition into open
+components — not the signed `netCharge`. [`QLF_ExpansionCharge`](lean/QLF_ExpansionCharge.lean) now makes
+the distinction explicit as a **witness pair** (`neutrality_does_not_erase_separated_handedness`,
+CI-green, no axiom): a bound atom and an ionized plasma *both* have `netCharge = 0`, but `F_G = 0` for the
+atom and `F_G = 2 > 0` for the plasma. So neutrality does not erase mixed handedness; local binding does.
+
+**The proposal (to test the bridge), and the genuine open piece.** With the observable identified, the
+test is:
 
 > at fixed matter density, the local expansion / structure-growth residual **correlates with the
-> ionization fraction**, and vanishes in fully neutral gas.
+> separated gauge handedness `F_G`** (which tracks ionization fraction, not net charge) and vanishes in
+> fully neutral, locally-bound gas — with zero net charge throughout.
 
-This is distinct from ΛCDM, where growth depends on the total matter density and is blind to the
-ionization state at fixed density. It is distinct from QLF's own §3 dark-matter law, which depends on
+What remains genuinely open is **quantitative**: the link from `F_G` to an expansion/growth rate (the ZFA
+interaction rate of §11–§13), and whether Lumina's measurable ionized fraction is a good proxy for `F_G`.
+This would be distinct from ΛCDM, where growth depends on the total matter density and is blind to the
+ionization state at fixed density, and distinct from QLF's own §3 dark-matter law, which depends on
 acceleration, not ionization.
 
 **Why Lumina is the testbed.** Lumina resolves the ionization field (H and He), the gas density, and the
@@ -501,26 +537,31 @@ ionized regions expand faster (cluster less) than neutral regions of equal densi
 fixed density, is consistent with zero in Lumina (or in real IGM data — Lyman-α tomography plus density
 reconstruction), the charge-based mechanism is dead.
 
-**The open piece, named.** The *sign and magnitude* of the term need the ZFA interaction **rate** for
-`−` versus `+` closures. It cannot be taken from Thomson cross-sections — that is legacy physics, and
-"positron = proton" already says the asymmetry is not mass. So what is pre-registered is the
-**existence and location** of the correlation (tied to ionization, zero in neutral gas), not its
-amplitude; the amplitude waits on a ZFA rate QLF has not derived. *(§13: the atomic single-charge
-amplitude is the closure walk's Pólya return probability `p₄ = 0.1932`; the many-bit regime that fixes
-the dependence on ionization fraction is still incomplete.)*
+**The open pieces, named.** The right *observable* is now identified — `F_G` (separated gauge handedness),
+with the witness pair proved — so what stays open is quantitative. (i) The *sign and magnitude* of the
+term need the ZFA interaction **rate** for `−` versus `+` closures. It cannot be taken from Thomson
+cross-sections — that is legacy physics, and "positron = proton" already says the asymmetry is not mass.
+(ii) The *quantitative link* from `F_G` to an expansion/growth rate, and whether Lumina's measurable
+ionized fraction is a faithful proxy for `F_G`. So what is pre-registered is the **existence of a
+correlation** (with `F_G`, which neutrality does not erase) plus the location of the net-residue term on
+the gauge axis (`QLF_ExpansionCharge`); the amplitude waits on a ZFA rate QLF has not derived.
+*(§13: the single-charge closure mass is the closure walk's `ℤ⁴` return probability `p₄ ≈ 0.1932`,
+identified in the `R→∞` limit; its reading as an expansion coupling, and the many-bit regime that would
+fix the dependence on ionization fraction, are both still open.)*
 
 **What is a theorem here and what is not (method rule 4).** The identity "net expand − contract = net
 gauge charge, zero iff ZFA-closed" is provable, but it is **near-definitional** once expansion is
 assigned to `−` handedness and contraction to `+` — it holds for every input and so, by
 [`Philosophy.md`](Philosophy.md) §3a rule 4, carries no physical content on its own. The physics is the
-empirical claim above, which is a *prediction to test*, not a theorem to prove. The significant provable
-content of this whole thread is not a duality identity but the §7–§9 **no-go** — that no density-sourced
-correction to the `cH/2π` floor can repair structure growth — and the §3 `a₀(z)` prediction. Those change
-a count of ways; the duality identities do not.
+empirical claim above, which is a *bridge to test*, not a theorem to prove. The significant provable
+content of this whole thread is not a duality identity but the §7–§9 **no-go** — that a correction whose
+suppressing term vanishes with the growing overdensity (local or ambient) engages too late to cure the
+linear-regime overshoot in the tested top-hat models — and the §3 `a₀(z)` prediction. Those change a
+count of ways; the duality identities do not.
 
 ---
 
-## 11. The amplitude, derived: a per-charge census — *pre-registered 2026-10-28*
+## 11. The amplitude attempt: a per-charge census — *pre-registered 2026-10-28*
 
 §10 named the one open piece — the *amplitude* of the expand/contract term, the ZFA interaction **rate**
 per free charge. [`QLF_ExpansionCharge`](lean/QLF_ExpansionCharge.lean) (Lean, CI-green) then proved the
@@ -567,11 +608,14 @@ three spatial axes carry extension, only the gauge axis carries charge.
 - **K1 — PASS, cleanly and completely.** The `+` and `−` first-closure censuses are **identical to the
   last integer** — every multiplicity *and* every max-excursion bin (`k=1`: `{1:8, 2:3835, 3:10026,
   4:3085}` for both signs; likewise `k=2,3`). This is a genuine, exact result over ~16k closures, and it
-  settles the sign question: **no count distinguishes expansion from contraction.** The universe's net
-  expansion (rather than contraction) therefore *cannot* come from a counting bias between `+` and `−`;
-  it is carried entirely by the irreversible time arrow (`closedAtHorizon_mono`), i.e. that `−` closes
-  into not-yet-synthesized future time while `+` closes within already-synthesized present time. The
-  magnitude and the sign come from different places, and this fixes which is which.
+  settles the sign question in the negative: **no count distinguishes expansion from contraction.** The
+  universe's net expansion (rather than contraction) therefore *cannot* come from a counting bias between
+  `+` and `−`. The theorem excludes a multiplicity bias; it does **not** by itself identify the mechanism
+  that picks the physical sign. **The sign is not determined by multiplicity; its proposed identification
+  with the irreversible time arrow** (`closedAtHorizon_mono` — that `−` closes into not-yet-synthesized
+  future time while `+` closes within already-synthesized present time) **remains a physical bridge, not
+  a derivation.** The magnitude and the sign are separate questions, and this fixes that the sign is not
+  a count.
 - **K2 — FAIL, reported as a fail.** The per-charge multiplicity factor is `W(2)/W(1) = 0.079`,
   `W(3)/W(2) = 2.43` — not `2`, and not converging. The ratio is **the wrong estimator**: at a fixed
   depth cap `W(1)` counts every spatial detour by which a lone charge can close within 7 twists (a huge,
@@ -645,32 +689,36 @@ data point and unconverged `M`, that is a coincidence to note, not an identity t
 ([review notes](CLAUDE.md): a fit is one way, never *the* route).
 
 **The firm standing of this whole thread.** Two things are proven and CI-green, independent of the open
-amplitude: the term's **location** ([`QLF_ExpansionCharge`](lean/QLF_ExpansionCharge.lean):
-`spatial_imbalance_sources_nothing` — it lives on the ionization field, zero for neutral matter) and its
-**sign** (`expansion_sign_not_a_count` — the `+`/`−` census is exactly symmetric, so the direction is the
-time arrow, not a count). The **magnitude** is not yet resolved here: both counting routes are
-depth-limited and so **incomplete** at reachable depth, not negative — §13 completes the atomic scale and
-names the many-bit regime that remains.
+amplitude: the net-residue term's **location** ([`QLF_ExpansionCharge`](lean/QLF_ExpansionCharge.lean):
+`spatial_imbalance_sources_nothing` — it lives on the gauge (net-charge) axis, zero for neutral *net*
+charge) and that its **sign is not a count** (`expansion_sign_not_a_count` — the `+`/`−` census is exactly
+symmetric, so no multiplicity bias selects it; its identification with the time arrow is a separate
+physical bridge). The **magnitude**, and the link from net charge to ionization fraction (§10), are not
+resolved here: both counting routes are depth-limited and so **incomplete** at reachable depth, not
+negative — §13 identifies the single-charge closure mass and names the many-bit regime that remains.
 
 ---
 
-## 13. The atomic amplitude: the Pólya return probability `p₄` — *2026-10-28*
+## 13. The single-charge closure mass: the `ℤ⁴` return probability `p₄` — *2026-10-28*
 
-§11 and §12 could not converge the amplitude because both were depth-limited. The resolution is not a
-third estimator but a **recognition of what the census is.** Since count balance already entails Pauli
+§11 and §12 could not converge a per-charge number because both were depth-limited. The resolution is not
+a third estimator but a **recognition of what the census is.** Since count balance already entails Pauli
 closure (`count_balanced_pauli_closed`), a ZFA first-closure is exactly the **first return to the origin
 of the eight-twist walk on `ℤ⁴`** ([`Closure_Walk.md`](Closure_Walk.md)) — the twists are `±eₐ` on four
 axes. Each twist carries weight `⅛` and there are eight, so the Kraft weight `8^{−ℓ}` of a continuation
 *is* the probability of that path under the uniform random walk. The Kraft closure mass of a `k`-charge
-seed is therefore a **hitting probability** — no depth cap, no truncation:
+seed is therefore a **hitting probability** (an infinite-depth quantity — no depth cap in the limit):
 
 > `M(k) = P(` the `ℤ⁴` walk started `k` steps out along the gauge axis ever reaches `0` `) = h(k·e)`,
 
 the probability that `k` free charges of one sign ever close. `h` is the discrete-harmonic hitting
 function (`h(0)=1`; `h(x)=⅛ Σ h(x±eₐ)` for `x≠0`; `h→0` at infinity — the `ℤ⁴` walk is transient,
-[`QLF_PolyaTransience`](lean/QLF_PolyaTransience.lean)). [`closure_hitting_amplitude.py`](closure_hitting_amplitude.py)
-solves it by value iteration, with the walk's permutation + sign symmetry collapsing every point to its
-sorted `|coords|`, so the radius `R` reaches full convergence.
+[`QLF_PolyaTransience`](lean/QLF_PolyaTransience.lean) proves the transience and the summability bounds,
+*not* the exact constant). [`closure_hitting_amplitude.py`](closure_hitting_amplitude.py) solves it by
+value iteration on the finite `ℓ¹`-ball of radius `R` with `h = 0` outside — a **spatial** truncation, so
+the `R = 20,30,40,50` sequence is a monotone approximation *from below*, not an exact evaluation. The
+walk's permutation + sign symmetry collapses every point to its sorted `|coords|`, so `R` can be pushed
+far enough to identify the `R→∞` limit numerically.
 
 | `R` | `M(1)=h(e)` | `M(2)=h(2e)` | `M(3)=h(3e)` | `M(4)=h(4e)` |
 |---|---|---|---|---|
@@ -679,28 +727,43 @@ sorted `|coords|`, so the radius `R` reaches full convergence.
 | 40 | 0.192957 | 0.052933 | 0.020917 | 0.010810 |
 | 50 | 0.193044 | 0.053034 | 0.021022 | 0.010916 |
 
-**The amplitude, derived.** `M(1)` climbs monotonically (finite `R` under-counts, as it must) to the
-**return probability `p₄ = 0.1932015`** — the prime-closure mass of [`Closure_Walk.md`](Closure_Walk.md),
-independently computed there and here. That is the validation and the result at once:
+**The single-charge closure mass, identified in the limit.** `M(1)` climbs monotonically (finite `R`
+under-counts, as it must) toward the `ℤ⁴` **return probability `p₄ = 0.1932015`** — the prime-closure
+mass of [`Closure_Walk.md`](Closure_Walk.md), computed independently there and here (that number is itself
+a numerical value for the 4-D Pólya return probability, not a constant any Lean module proves exactly).
+At `R = 50` the iterate is `M(1) = 0.193044`, still about `1.6 × 10⁻⁴` below `p₄`, so the match is a
+**numerical identification in the `R→∞` limit**, not an exact evaluation. That is both the validation and
+the result:
 
-> **the amplitude of a single free charge is `p₄` — the fraction of possibility that closes** — the same
-> constant that says 80.7 % of possibility never closes. One ionization event contributes exactly the
-> substrate's universal return probability.
+> **the uniform-random-continuation closure probability of a one-step gauge seed is the `ℤ⁴` return
+> probability `p₄`** — the fraction of possibility that closes, the same constant that says 80.7 % of
+> possibility never closes. One net-charge seed contributes exactly the substrate's universal return
+> probability. **Whether that closure probability is an expansion coupling, rate, or amplitude is a
+> separate open bridge** — the repo's assumption budget still lists cylinder measure → physical event
+> probability as open, and the Born work keeps unsigned measure distinct from a quantum amplitude.
+
+**A next theorem that would upgrade this.** A finite-`R` error bound `0 ≤ p₄ − h_R(e) ≤ ε(R)`, or an
+exact Green-function evaluation, would turn the numerical identification into a certified interval. Until
+one is added, the identification is numerically convergent, not proved.
 
 **The small-`k` behaviour.** For `k` charges `M(k) = h(k·e)` follows the 4D Green's function `~ C/k²`
 (`M(k)·k²` holds near `0.19` across the table), so the per-charge marginal surprisal `−ln[M(k+1)/M(k)]`
-runs `1.29 → 0.92 → 0.66 → 0` at `k = 1…4` — **falling, not constant.** At this atomic scale the simple
-"one bit per charge" reading (`amplitude = log 2 = Ω_Λ`) therefore does **not** hold: the gauge axis
-being binary does not make each stacked charge an independent bit, and the `k = 1…4` surplus falls
-instead of staying at `ln 2`. The §12 "superlinear" hint was likewise a depth-7 artifact — at small `k`
-the converged trend is the opposite, sublinear. **But small `k` is the atomic regime, not the physical
-one** (next paragraph), so this is a statement about the first few charges, not the amplitude law.
+runs `1.29 → 0.92 → 0.66 → 0` at `k = 1…4` — **falling, not constant.** At this small-`k` scale the simple
+"one bit per charge" reading (closure probability `= ½`, giving `log 2 = Ω_Λ`) therefore does **not**
+hold: the gauge axis being binary does not make each stacked charge an independent bit, and the
+`k = 1…4` surplus falls instead of staying at `ln 2`. The §12 "superlinear" hint was likewise a depth-7
+artifact — at small `k` the converged trend is the opposite, sublinear. **But small `k` is a few net
+charges, not the physical regime** (next paragraph), so this is a statement about the first few charges,
+not a closure-probability law.
 
 **What is solid, and what is incomplete — not negative.** One
-thing is pinned exactly: the **atomic amplitude** — a single free charge contributes `p₄ = 0.1932015`,
-the closure walk's Pólya return probability, cross-validated against [`Closure_Walk.md`](Closure_Walk.md)
-and tied to [`QLF_PolyaTransience`](lean/QLF_PolyaTransience.lean). Two things are **incomplete**, because
-physical expand/contract energies are **thousands to millions of bits** — each bit an energy `ε/3` on the
+thing is numerically settled: the **single-charge closure mass** — a one-step gauge seed closes with
+probability `p₄ = 0.1932015`, the closure walk's `ℤ⁴` return probability, cross-validated against
+[`Closure_Walk.md`](Closure_Walk.md) and consistent with the transience
+[`QLF_PolyaTransience`](lean/QLF_PolyaTransience.lean) proves (identified in the `R→∞` limit, not yet
+error-bounded). Three things are **incomplete** — whether that closure probability is a physical
+expansion coupling at all (the open bridge above), and two more because physical expand/contract energies
+are **thousands to millions of bits** — each bit an energy `ε/3` on the
 8-twist alphabet, by the census temperature `T·log 2 = ε/3` of
 [`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean), which also shows requiring closure makes the
 ensemble normalizable through the same `d = 4` `L⁻²` return suppression that gives `p₄` — and the census
@@ -722,11 +785,13 @@ here reaches only `k ≤ 4`:
   present-contraction / future-expansion backlog of §10, which this census does not model. So the sign
   *and* the scaling of the dependence on ionization fraction (as opposed to net charge) are open.
 
-**Standing.** **Location** (`QLF_ExpansionCharge`) and **sign** (`expansion_sign_not_a_count`) are proved
-and CI-green; the **atomic magnitude** is `p₄`, derived and validated. The **amplitude law at physical
-(many-bit) scale** and its dependence on ionization-fraction-at-fixed-net-charge are **incomplete** — a
-well-posed next computation, not a dead end. The §10 test stands on location + sign; its quantitative
-shape waits on the many-bit regime.
+**Standing.** The net-residue term's **location** (`QLF_ExpansionCharge`, on the gauge axis) and that its
+**sign is not a count** (`expansion_sign_not_a_count`) are proved and CI-green; the **single-charge
+closure mass** is `p₄`, numerically identified in the `R→∞` limit. Still open: whether that closure
+probability is a physical expansion coupling (a bridge), the **closure-mass law at physical (many-bit)
+scale**, and its dependence on ionization-fraction-at-fixed-net-charge. These are well-posed next
+computations, not dead ends. The §10 proposal rests on the proved location + sign; its quantitative shape,
+and its very identification with ionization fraction, wait on those bridges.
 
 ---
 

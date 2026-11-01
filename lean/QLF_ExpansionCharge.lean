@@ -2,11 +2,22 @@ import QLF_Handedness
 /-!
 # QLF_ExpansionCharge — a net expand/contract is a charge effect, and charge alone
 
-`Lumina_QLF.md` §10 pre-registers a prediction: the cosmic expand/contract imbalance tracks the
-**ionization** (charge-separation) field, not the neutral-matter density. This module anchors the one
-part of that claim ZFA actually forces — that the net expand/contract of a history lives on the **gauge
-(charge) axis and nowhere else** — so the prediction is not a free choice but the only handedness-covariant
-possibility.
+`Lumina_QLF.md` §10 proposes a *test*: that the cosmic expand/contract imbalance tracks charge rather than
+neutral-matter density. This module anchors the one part ZFA actually forces — that the **net** (unmatched)
+expand/contract of a history lives on the **gauge (charge) axis and nowhere else**. That is a statement
+about *net* gauge charge, and it is all that is proved here.
+
+**Net charge is not the whole story — neutrality is handedness-*balanced*, not handedness-*free*.** A
+globally neutral ionized plasma has `Σ` charge `= N₊ − N₋ ≈ 0`, yet it carries substantial *separated*
+gauge-handed activity `N₊ + N₋ ≫ 0` — free `+` and `−` acting apart — which the signed net `chiralCharge`
+cannot see. A bound neutral atom is different: its `+` and `−` are paired inside one completed closure. So
+the physically relevant distinction for §10 is not neutral-vs-charged but **locally-paired vs
+separated** gauge handedness. The quantity that sees it is the *unsigned* `separatedHandedness`
+(`F_G = Σ_C |chiralCharge C|` over a decomposition into open components), **not** `netCharge`. The
+witness pair `neutrality_does_not_erase_separated_handedness` below makes the distinction explicit: two
+configurations with `netCharge = 0`, one with `F_G = 0` (bound atom) and one with `F_G > 0` (ionized
+plasma). That formalizes what the §10 ionization test rests on; its *quantitative* link from `F_G` to
+expansion/growth remains the open bridge.
 
 **The physical identification is established elsewhere, not here.** That *expansion/contraction is
 temporal* (the future/present faces of an event, `event_duality_balanced`, `QLF_CosmicInflation`) and that
@@ -25,11 +36,13 @@ consequences that complete the chain:
   handedness in general. Had expansion read the spatial components too, the §10 prediction would attach to
   the density/spin field, not the ionization field — so this lemma is the one that could have come out
   otherwise, and does not (method rule 4).
-* **`charge_sources_net_expansion`** — a charged (ionized) configuration sources a nonzero net expansion.
+* **`charge_sources_net_expansion`** — a configuration with nonzero *net* gauge charge sources a nonzero
+  net expansion. (This is net charge, not ionization: it does not say ionized-but-neutral gas does.)
 
-So the gap in the §10 prediction is exactly its *amplitude* (the ZFA `+`/`−` interaction rate, still
-underived); its *location* — on the charge axis, zero for neutral matter — is forced. No new axiom; all
-over `QLF_Handedness`.
+So what is forced is the *location* of the net-residue term — on the gauge axis, zero for neutral *net*
+charge. Two things remain bridges, not consequences: the term's *amplitude* (the ZFA `+`/`−` interaction
+rate, still underived) and the link from net charge to *ionization fraction* (needs the time-separated
+observable above). No new axiom; all over `QLF_Handedness`.
 -/
 namespace QLF
 
@@ -71,8 +84,9 @@ theorem spatial_imbalance_sources_nothing :
     handednessOn Axis.X [rightTwist Axis.X] = 1 ∧ netExpansion [rightTwist Axis.X] = 0 := by
   decide
 
-/-- **A charged (ionized) configuration sources a nonzero net expansion.** The lone gauge twist `+` has
-    `netExpansion = 1`: break a neutral closure — ionize — and the expand/contract term switches on. -/
+/-- **A configuration with nonzero net gauge charge sources a nonzero net expansion.** The lone gauge
+    twist `+` has `netExpansion = 1`. This is *net* charge: it switches the net-residue term on, but says
+    nothing about ionized-but-neutral gas (net charge `0`), which §10's ionization bridge is about. -/
 theorem charge_sources_net_expansion :
     netExpansion [rightTwist Axis.I] = 1 := by
   decide
@@ -89,7 +103,7 @@ theorem expansion_is_charge_not_spin :
     (spatial_imbalance_sources_nothing).2, charge_sources_net_expansion⟩
 
 -- ==========================================
--- The sign is the arrow, not a count (anchors Lumina_QLF.md §11 K1)
+-- The sign is not a count (its identification with the arrow is a bridge; anchors Lumina_QLF.md §11 K1)
 -- ==========================================
 
 /-- Gauge conjugation (`reflect Axis.I`: swap `+ ↔ −`, leave the spatial twists) negates net expansion,
@@ -132,18 +146,59 @@ theorem gauge_conjugate_closure (ts : List Twist) (h : countBalanced ts) :
   · rw [handednessOn_map_reflect_other ha ts]
     exact h a
 
-/-- **The sign of the expand/contract term is the arrow, not a count** (Lumina_QLF.md §11 K1, proved).
+/-- **The sign of the expand/contract term is not a count** (Lumina_QLF.md §11 K1, proved).
     Gauge conjugation is an involution that sends every ZFA closure to a ZFA closure while *negating* net
     expansion. So the closures carrying net expansion `+n` are in exact bijection with those carrying
     `−n`: **no count distinguishes expansion from contraction.** The universe's net expansion therefore
-    cannot come from a multiplicity bias between `+` and `−`; it is carried entirely by the irreversible
-    time arrow (`QLF_ClosureDepthLaw.closedAtHorizon_mono` — `−` closes into not-yet-synthesized future
-    time, `+` within already-synthesized present time). The census (`expansion_rate_qlf.py`) confirms the
-    bijection numerically: the `+`-seed and `−`-seed first-closure multiplicities match to the integer. -/
+    cannot come from a multiplicity bias between `+` and `−`. This is an *exclusion* result; it does not
+    by itself identify the mechanism that selects the physical sign. The proposed identification with the
+    irreversible time arrow (`QLF_ClosureDepthLaw.closedAtHorizon_mono` — `−` closing into
+    not-yet-synthesized future time, `+` within already-synthesized present time) **remains a physical
+    bridge**, not something proved here. The census (`expansion_rate_qlf.py`) confirms the bijection
+    numerically: the `+`-seed and `−`-seed first-closure multiplicities match to the integer. -/
 theorem expansion_sign_not_a_count :
     (∀ ts : List Twist, countBalanced ts → countBalanced (ts.map (reflect Axis.I))) ∧
       (∀ ts : List Twist, netExpansion (ts.map (reflect Axis.I)) = - netExpansion ts) ∧
       (∀ ts : List Twist, (ts.map (reflect Axis.I)).map (reflect Axis.I) = ts) :=
   ⟨gauge_conjugate_closure, handednessOn_I_map_reflect_I, map_reflect_I_involutive⟩
+
+-- ==========================================
+-- Separated gauge handedness: neutrality is handedness-balanced, not handedness-free
+-- (the §10 bridge object — Lumina_QLF.md §10, from the Grok review correction 2026-11-01)
+-- ==========================================
+
+/-- A **decomposition** of a configuration into locally-acting / open components, each a twist history.
+    A bound neutral atom is one component (its `+ −` paired inside a single closure); an ionized plasma
+    is several components (a free `+` here, a free `−` there). -/
+abbrev Decomposition := List (List Twist)
+
+/-- **Net gauge charge** of a decomposition: the signed ledger `Q = N₊ − N₋`, summed over components —
+    exactly what `netExpansion`/`chiralCharge` sees. Opposite free charges in different components cancel. -/
+def netCharge (comps : Decomposition) : Int := (comps.map chiralCharge).sum
+
+/-- **Separated gauge handedness** `F_G = Σ_C |chiralCharge C|`: the *unsigned* total of gauge-handed
+    activity across the open components. A free `+` in one component and a free `−` in another do **not**
+    cancel here — neutrality balances the ledger (`netCharge`), it does not erase the separated handedness. -/
+def separatedHandedness (comps : Decomposition) : Nat :=
+  (comps.map (fun c => (chiralCharge c).natAbs)).sum
+
+/-- A locally-bound neutral atom: one component carrying a `+ −` pair bound into a single closure. -/
+def boundNeutralAtom : Decomposition := [[Twist.plus, Twist.minus]]
+
+/-- An ionized but globally-neutral plasma: a free `+` and a free `−` as *separate* open components. -/
+def ionizedNeutralPlasma : Decomposition := [[Twist.plus], [Twist.minus]]
+
+/-- **Neutrality does not erase mixed handedness; local binding does** (Lumina_QLF.md §10; the §10 bridge
+    object). Both configurations are globally charge-neutral — `netCharge = 0` — yet `separatedHandedness`
+    tells them apart: the bound atom carries `F_G = 0` (its gauge handedness is locally paired), while the
+    ionized plasma carries `F_G = 2 > 0` (its `+` and `−` act apart). So the quantity the §10 ionization
+    test needs is `separatedHandedness`, not the signed `netCharge` — and global neutrality does **not**
+    kill the prediction, as a net-charge-only reading would wrongly conclude. This formalizes the
+    distinction §10 rests on; the *quantitative* link from `F_G` to expansion/growth remains the open
+    bridge. No new axiom. -/
+theorem neutrality_does_not_erase_separated_handedness :
+    netCharge boundNeutralAtom = 0 ∧ separatedHandedness boundNeutralAtom = 0 ∧
+      netCharge ionizedNeutralPlasma = 0 ∧ 0 < separatedHandedness ionizedNeutralPlasma := by
+  decide
 
 end QLF
