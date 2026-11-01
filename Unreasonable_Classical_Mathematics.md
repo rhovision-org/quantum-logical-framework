@@ -529,8 +529,7 @@ property, which exist because they are collectively held and are no less effecti
 memetic side of the same idea is in [`Memetics_QLF.md`](Memetics_QLF.md): a closure is a meme to the
 degree its record is held redundantly by others. The no-receipt theorem limits even this layer. A
 story can close in minds only if it is consistent. A self-contradictory belief can be repeated widely,
-but what spreads is the wording; it never closes as a shared record, which is why such beliefs need
-constant restating. Spirit, in this sense, is not opposed to the
+but what spreads is the wording; it never closes as a shared record. Spirit, in this sense, is not opposed to the
 physical. It is possibility that closes in minds first and then acts in the world through them.
 
 **What possibilism proves, and what it doesn't.** Given possibilism, the reading of spirit is not an
