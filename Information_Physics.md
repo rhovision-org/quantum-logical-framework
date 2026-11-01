@@ -512,6 +512,16 @@ energy per event `ε`, an input (the Planck reading `ε = E_P` gives `T = T_P / 
 identification of this census temperature with a thermometer's. **Kill condition:** if `dS/dE` of the
 stated `S` is not `log K / ε`, or L3's `1/3` fails, the route is wrong as stated.
 
+**L5 — Zipf as a thermometer (pre-registered 2026-11-01, after L1–L4).** Weight each event by
+`e^{−ε/T}` in place of the uniform `1/K`. A word of `n` events then has frequency `f = e^{−nε/T}` and,
+with `Kⁿ` words of that length, rank `r ≈ Kⁿ`, so `f = r^{−B}` with **`B = ε / (T log K)`**
+([`Turbulence.md`](Turbulence.md) §7 is the `B = 1` case). Statement: `B = 1` exactly when `T` is the
+census temperature `ε / log K`. So a measured Zipf exponent reads off `ε/T`, and an exponent of 1 says
+the system sits where a bit costs a third of an event. The reading of a Zipf exponent as an inverse
+temperature is Mandelbrot's (1953); QLF supplies `K = 8` and the closure condition. R6a: it fixes only
+the ratio `ε/T`, never `ε` alone. Kill condition: if the rank–frequency exponent is not
+`ε/(T log K)`, or `B = 1` does not pick out `T = ε/log K`, the reading fails.
+
 **Added after the proof: which `ε`.** The Planck reading gives `T ≈ 10³¹ K`, the temperature of the
 logical bang, not of anything today. Landauer's bound is measured at room temperature (Bérut et al.
 2012), where `k_B T ln 2 ≈ 3 × 10⁻²¹ J`. So `ε` is not one universal constant. It is the energy per
@@ -797,6 +807,7 @@ observed; both are sharp, standing targets.
 **Physical / finite information.**
 - R. Landauer, *Irreversibility and heat generation in the computing process*, IBM J. Res. Dev. **5** (1961) 183 — information is physical; `k_B T ln 2` per erasure.
 - A. Bérut, A. Arakelyan, A. Petrosyan, S. Ciliberto, R. Dillenschneider & E. Lutz, *Experimental verification of Landauer's principle linking information and thermodynamics*, Nature **483** (2012) 187–189 — the bound measured at room temperature.
+- B. Mandelbrot, *An informational theory of the statistical structure of language*, in W. Jackson (ed.), *Communication Theory*, Butterworths (1953) 486–502 — the Zipf exponent as an inverse temperature.
 - N. Margolus & L. B. Levitin, *The maximum speed of dynamical evolution*, Physica D **120** (1998) 188 — `ℏ` per operation.
 - J. D. Bekenstein, *Universal upper bound on the entropy-to-energy ratio*, Phys. Rev. D **23** (1981) 287.
 - N. Gisin, *Indeterminism in physics… are real numbers really real?*, Erkenntnis (2019/2021) — reals carry unphysical infinite information.
