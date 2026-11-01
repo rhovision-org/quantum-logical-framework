@@ -490,6 +490,15 @@ QLF answers both puzzles with one move, and the move works in two directions.
 attending to it. An observer is a perspective, an apparatus is a closure inventory, and Schrödinger's
 cat and Wigner's friend (§4d) close without anyone looking. That rules out the 1961 proposal.
 
+This does not make the mind inert. A mind's frequencies are physical, and like every biological
+rhythm, from the heartbeat to circadian clocks, they have physical effects. Brain oscillations produce
+electric and magnetic fields measured outside the skull (EEG and MEG), those fields feed back on the
+neurons that produce them (ephaptic coupling, Anastassiou et al. 2011), and through the body a mind
+acts on everything it touches. In QLF terms the mind's closures are closures among others, with their
+own frequencies ([`Consciousness.md`](Consciousness.md) §2), and they couple to the world the way any
+closures do. What QLF rules out is narrower: a mind deciding an outcome by observing it, with no
+physical coupling in between.
+
 **Consciousness is a closure.** It is not outside the substrate either. A self-aware system is a
 Markov blanket that models itself and terminates, and conscious thought is the highest-frequency
 closure the system binds ([`Consciousness.md`](Consciousness.md) §1–§3). The frequency ordering of
@@ -624,6 +633,7 @@ be unaffected.
 
 * Bar-Hillel, Y. & Carnap, R. (1952). *An Outline of a Theory of Semantic Information.* MIT RLE Tech.
   Rep. 247.
+* Anastassiou, C. A., Perin, R., Markram, H. & Koch, C. (2011). Ephaptic coupling of cortical neurons. *Nat. Neurosci.* 14, 217–223.
 * Arrow, K. J. (1951). *Social Choice and Individual Values.* Wiley.
 * Banach, S. & Tarski, A. (1924). Sur la décomposition des ensembles de points en parties respectivement
   congruentes. *Fund. Math.* 6, 244–277.
