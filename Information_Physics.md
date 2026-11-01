@@ -420,7 +420,9 @@ With that bridge, QLF's per-event `ΔF = −log 2` (`zfa_closure_minimizes_free_
 Landauer's `k_B T ln 2` — the cost of fixing one bit. The identification becomes dimensional once
 the free-energy unit is fixed by the **local temperature of the observer's Markov blanket**: the
 abstract `−log 2` (nats) is then the Landauer cost `k_B T ln 2` in those units — so QLF does not
-have "only a dimensionless log," it has the log *plus* the local clock that scales it. And
+have "only a dimensionless log," it has the log *plus* the local clock that scales it. §5b now derives
+a temperature from the census, `T_c = ε/log 8` from `1/T = dS/dE`, given the energy per twist step `ε`
+([`lean/QLF_CensusTemperature.lean`](lean/QLF_CensusTemperature.lean)). And
 **`ℏω = 1 bit at frequency ω`** is derived from the per-event `log 2` plus the per-event `ℏω`,
 recovering **Margolus–Levitin** (`ℏ` per bit-flip) and Landauer (`k_B T ln 2` per erasure) as
 consequences ([`Information_Energy_Equivalence.md`](Information_Energy_Equivalence.md)). This is the
@@ -480,6 +482,95 @@ deferred, and the deferral is visible in the ledger.
 The mathematical face of the same fact — the gate is an *automorphism of the admissible closure
 space* — is [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) Rung 5b. Watch it run:
 [`fredkin_machine.html`](fredkin_machine.html).
+
+### 5b. Landauer at the census temperature — *pre-registered 2026-11-01*
+
+**The gap.** `QLF_FreeEnergy` proves `log 2` nats per closure, a dimensionless quantity. Landauer's
+`k_B T ln 2` is an energy, and the conversion needs a temperature the substrate has not supplied.
+At a horizon the temperature is supplied (`bh_entropy_first_law`,
+[`lean/QLF_HorizonFirstLaw.lean`](lean/QLF_HorizonFirstLaw.lean)). This section takes the general case.
+
+**The route.** Thermodynamic temperature is defined by `1/T = dS/dE`, so a temperature is derived, not
+assumed, once a count of ways `W(E)` is known. The substrate's histories are words over the 8-twist
+alphabet, so with energy `ε` per event a history of energy `E` has `n = E/ε` events, and `8ⁿ` ways.
+The statements, fixed before the proof (`k_B = 1`, so `T` is in energy units):
+
+* **L1** `S(E) = (E/ε) log K` has `dS/dE = log K / ε`, so the census temperature is `T = ε / log K`.
+* **L2** (any alphabet) `T · log 2 = ε / log₂ K`: at that temperature Landauer's bound is met with
+  equality, and a bit costs exactly the event energy divided by the bits per event.
+* **L3** (the substrate, `K = 8`) `log 8 = 3 log 2`, so `T = ε / (3 log 2)` and `T · log 2 = ε / 3`. A
+  bit costs one third of an event quantum, and its mass is `ε / (3c²)`.
+* **L4** (closures) Closed histories number `W_L ≈ C · 8^L / L²` ([`Closure_Walk.md`](Closure_Walk.md),
+  the `d = 4` Pólya factor). With `S_cl(E) = (E/ε) log 8 − 2 log(E/ε)`, `dS_cl/dE = log 8 / ε − 2/E`,
+  which is smaller than `1/T`. Requiring closure raises the temperature, and the excess vanishes as
+  `E → ∞`.
+
+**R6a, stated first.** L2 holds for *every* uniform alphabet, so Landauer saturation is bookkeeping,
+not evidence: it would hold for any system of `n` independent `K`-way choices with energy `ε` each.
+What is QLF's is the input `K = 8` (three bits per event,
+[`lean/QLF_AlphabetNecessity.lean`](lean/QLF_AlphabetNecessity.lean)) and the closure correction L4,
+whose `2` is half the walk's dimension and would be `d/2` on another alphabet. **What stays open:** the
+energy per event `ε`, an input (the Planck reading `ε = E_P` gives `T = T_P / (3 log 2)`), and the
+identification of this census temperature with a thermometer's. **Kill condition:** if `dS/dE` of the
+stated `S` is not `log K / ε`, or L3's `1/3` fails, the route is wrong as stated.
+
+**L5 — Zipf as a thermometer (pre-registered 2026-11-01, after L1–L4).** Weight each event by
+`e^{−ε/T}` in place of the uniform `1/K`. A word of `n` events then has frequency `f = e^{−nε/T}` and,
+with `Kⁿ` words of that length, rank `r ≈ Kⁿ`, so `f = r^{−B}` with **`B = ε / (T log K)`**
+([`Turbulence.md`](Turbulence.md) §7 is the `B = 1` case). Statement: `B = 1` exactly when `T` is the
+census temperature `ε / log K`. So a measured Zipf exponent reads off `ε/T`, and an exponent of 1 says
+the system sits where a bit costs a third of an event. The reading of a Zipf exponent as an inverse
+temperature is Mandelbrot's (1953); QLF supplies `K = 8` and the closure condition. R6a: it fixes only
+the ratio `ε/T`, never `ε` alone. Kill condition: if the rank–frequency exponent is not
+`ε/(T log K)`, or `B = 1` does not pick out `T = ε/log K`, the reading fails.
+
+**Added after the proof: which `ε`.** The Planck reading gives `T ≈ 10³¹ K`, the temperature of the
+logical bang, not of anything today. Landauer's bound is measured at room temperature (Bérut et al.
+2012), where `k_B T ln 2 ≈ 3 × 10⁻²¹ J`. So `ε` is not one universal constant. It is the energy per
+elementary distinction of whichever ensemble is doing the counting: the Planck event for the
+unconstrained substrate at the start, and for a bath today the energy of its own excitations
+(`ε = 3 ln 2 · k_B T ≈ 54 meV` at 300 K). Read this way, L2–L3 do not predict today's temperature; they
+say that whatever the bath's temperature, one bit costs a third of the energy of one of its
+eight-way events. Getting from the Planck value to today's is the cosmic cooling of the energy per
+event, which QLF's horizon count ties to the horizon temperature (`T_dS/4` per event,
+[`lean/QLF_DeSitterCount.lean`](lean/QLF_DeSitterCount.lean)) but does not derive in general.
+
+**Amended after review (PR #199); the statements above are kept as registered.**
+
+* **What is counted.** L1–L3 count words over the alphabet, so the elementary object is one **twist
+  step** (a distinction), and `ε` is the energy per step. A physical QLF event is a closure, which may
+  contain many steps; read "event" above as "step". A step carries 3 bits of **symbol-choice
+  entropy**, which is not the same thing as three closure-bits.
+* **L2 is an energy-scale identity.** At `T_c` the Landauer energy scale equals the census energy per
+  bit (`landauer_scale_eq_energyPerBit`). It does not show that any erasure protocol dissipates that
+  amount; Landauer equality needs a modelled quasistatic erasure, which this does not supply. The R6a
+  verdict (bookkeeping) stands.
+* **L3:** `ε/(3c²)` is a **mass-equivalent** per bit.
+* **L4** proves an inverse-temperature inequality, `β_cl < β_c` (`closure_inverseTemperature_lower`).
+  The temperature inequality `T_c < T_cl` needs both inverse temperatures positive, `E > 0` and
+  `β_cl > 0` (i.e. `E log 8 > 2ε`), and is proved under exactly those hypotheses
+  (`closure_runs_hotter`).
+* **L5 needs a normalization.** At `T_c` every length shell of the free census has total weight
+  `Kⁿ e^{−n log K} = 1`, so the free partition function diverges (`free_census_not_normalizable`).
+  A pure Zipf law with exponent 1 is not normalizable, so "exponent 1 marks the census temperature"
+  holds only with a finite cutoff or an extra suppression.
+* **L6 (added, not pre-registered): closure supplies that suppression.** The closed census weighs
+  `W_L · 8^{−L} ≈ C/L²` per shell, which is summable (`closed_census_normalizable`, from
+  [`lean/QLF_PolyaTransience.lean`](lean/QLF_PolyaTransience.lean) `returnWeight_summable`). So **the
+  free eight-way census is critical and not normalizable at its own census temperature, and ZFA
+  closure makes it normalizable.** Unlike L2 this is not generic bookkeeping: it rests on the
+  four-dimensional walk's `L⁻²` return suppression, which a recurrent (`d ≤ 2`) alphabet would not
+  give.
+* **L7 (added, not pre-registered): the bounds.** The closed critical partition function is at most
+  `4` (`closed_partition_le_four`), and the **event** census, counting first closures (prime
+  histories) only, has partition function at `T_c` equal to the prime Kraft mass, at most `3/4` and
+  below `1` (`event_partition_le_three_quarters`, `event_partition_lt_one`, from
+  [`lean/QLF_FirstReturn.lean`](lean/QLF_FirstReturn.lean)). Collected as
+  `zfa_regularizes_critical_census`. At `T_c` the Boltzmann weight is exactly the uniform cylinder
+  weight `8^{−L}`, so L6–L7 reuse Pólya transience and the first-return bound; what is new is reading
+  them as one statement linking thermodynamic criticality, the Kraft event measure and transience.
+* **Physical domain:** `K > 1`, `ε > 0`, `T > 0`. Lean's totalized division makes some identities
+  hold at degenerate values too, where they mean nothing.
 
 ## 6. Quantum information — the load-bearing floor (a reading, not a rival)
 
@@ -632,7 +723,7 @@ information.
 | Shannon entropy (count) | Shannon 1948 | **inherited** — the census IS Shannon counting; `log` forced on the *binary uniform* census only | ✅ machine-checked (uniform wing); general uniqueness open, and its **necessity** unproven (§2) | `QLF_CensusShannon`, `QLF_EntropyUniqueness` |
 | Phase (beyond count) | — | **derived** — count ≠ phase; order is independent information | ✅ machine-checked | `QLF_PhaseInformation` |
 | Algorithmic (AIT) | Kolmogorov; Chaitin | **boundary** — `Ω` = the pruning boundary; RCA₀ floor | 🧱 principled boundary (Ω uncomputable) | `QLF_ShannonOverfit`, `full_zeno_prune` |
-| Physical/finite | Landauer; Bekenstein; Gisin | **derived** — no continuum in a finite region; `ΔF = −log 2` | ✅ machine-checked | `QLF_Realizability`, `QLF_FreeEnergy` |
+| Physical/finite | Landauer; Bekenstein; Gisin | **derived** — no continuum in a finite region; `ΔF = −log 2` (dimensionless); at the census temperature `T_c = ε/log 8` the Landauer scale is `ε/3` per bit, given the energy per twist step `ε` (§5b; a scale identity, not an erasure model) | ✅ machine-checked; `ε` an input | `QLF_Realizability`, `QLF_FreeEnergy`, `QLF_CensusTemperature` |
 | Quantum (von Neumann) | von Neumann; Gottesman | **reading** — `ℤ[i]` skeleton; a consistent integer count-measure; `ħ/2` | ✅ measure machine-checked; Born-*rule* uniqueness + the multiplicity↔norm² bridge open (§6) | `QLF_BornProbability`, `QLF_Uncertainty` |
 | Fisher / geometry | Fisher; Amari | **rendering** — the census carries the dually-flat geometry (KL = canonical divergence); metric = census-KL curvature | 🟡 metric + dually-flat structure shown ([`fisher_from_census.py`](fisher_from_census.py)); continuum `n→∞` manifold open (#142) | `QLF_CensusBrownian`, `QLF_FreeEnergy` |
 | Semantic | Carnap–Bar-Hillel; Floridi | **contributes** — closure-as-receipt; contradiction carries 0 | ✅ machine-checked | `QLF_ContradictionReceipt`, `QLF_InfoSynthesis` |
@@ -754,6 +845,8 @@ observed; both are sharp, standing targets.
 
 **Physical / finite information.**
 - R. Landauer, *Irreversibility and heat generation in the computing process*, IBM J. Res. Dev. **5** (1961) 183 — information is physical; `k_B T ln 2` per erasure.
+- A. Bérut, A. Arakelyan, A. Petrosyan, S. Ciliberto, R. Dillenschneider & E. Lutz, *Experimental verification of Landauer's principle linking information and thermodynamics*, Nature **483** (2012) 187–189 — the bound measured at room temperature.
+- B. Mandelbrot, *An informational theory of the statistical structure of language*, in W. Jackson (ed.), *Communication Theory*, Butterworths (1953) 486–502 — the Zipf exponent as an inverse temperature.
 - N. Margolus & L. B. Levitin, *The maximum speed of dynamical evolution*, Physica D **120** (1998) 188 — `ℏ` per operation.
 - J. D. Bekenstein, *Universal upper bound on the entropy-to-energy ratio*, Phys. Rev. D **23** (1981) 287.
 - N. Gisin, *Indeterminism in physics… are real numbers really real?*, Erkenntnis (2019/2021) — reals carry unphysical infinite information.

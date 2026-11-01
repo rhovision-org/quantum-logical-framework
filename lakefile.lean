@@ -77,6 +77,7 @@ lean_lib QLF where
     `QLF_Spin,
     `QLF_ElectronClosure,
     `QLF_Handedness,
+    `QLF_ExpansionCharge,
     `QLF_PionMassRatio,
     `QLF_QuantumBlackHole,
     `QLF_DarkMatter,
@@ -265,5 +266,7 @@ lean_lib QLF where
     `QLF_ConstructionAdds,
     `QLF_LogicalPersistence,
     `QLF_HandedLoops,
+    `QLF_CensusTemperature,
+    `QLF_ChainTheory,
     `QLF_HorizonCrossing
   ]

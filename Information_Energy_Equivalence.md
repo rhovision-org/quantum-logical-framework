@@ -134,6 +134,21 @@ In the quantum limit (`kT → ℏω`), this becomes `E ≥ ℏω log 2` per bit.
 
 Both bounds are recovered as natural consequences of the QLF per-event accounting.
 
+### Reconciling with the census temperature
+
+[`lean/QLF_CensusTemperature.lean`](lean/QLF_CensusTemperature.lean)
+([`Information_Physics.md`](Information_Physics.md) §5b) counts a different object. Its elementary
+object is one **twist step**, a choice among eight, which carries `log 8 = 3` bits of symbol-choice
+entropy. With energy `ε` per step, the definition `1/T = dS/dE` gives the census temperature
+`T_c = ε/log 8`, and at that temperature the Landauer energy scale `k_B T_c ln 2` equals `ε/3`
+(`landauer_eight`). That is an energy-scale identity, not a model of erasure. This page's object is
+one **closure**, a physical event carrying one bit at energy `ℏω`. The two scales coincide if an
+independent bridge establishes `ε = 3ℏω`; that PR does not establish it, and symbol-choice entropy
+of a step has not been identified with half-spin closure bits. The open pieces are the same in both:
+the energy scale (`ε`, or `ω`) is an input, and identifying `T_c` with a thermometer's temperature is
+a bridge. What the module does establish beyond bookkeeping is that the free census is not
+normalizable at `T_c` while the closed census is (`closed_census_normalizable`).
+
 ---
 
 ## §5 Lean theorem candidate
@@ -179,7 +194,7 @@ The information side is already Lean-anchored as `binary_kl_delta_uniform = Real
 ## §7 Open work
 
 - **Lean theorem `qubit_mass_is_hbar_omega`** in `lean/QLF_FreeEnergy.lean` or a new module: formalise the per-qubit/per-event ℏω contribution from the Hermitian-pair half-spin atom structure.
-- **Lean theorem `hbar_omega_per_bit`** as the corollary: information per event × energy per event / event-count.
+- **Lean theorem `hbar_omega_per_bit`** as the corollary: information per event × energy per event / event-count. *Partly delivered* by [`lean/QLF_CensusTemperature.lean`](lean/QLF_CensusTemperature.lean): `landauer_scale_eq_energyPerBit` (at the census temperature the Landauer scale equals `ε / log₂ K` per bit of symbol-choice entropy) and `landauer_eight` (`ε/3` on the 8-twist alphabet). These are energy-scale identities per twist step, not `ℏω` per closure; the bridge between the two is not established.
 - **Quantitative connection to Bekenstein bound**: the maximum information storage in a region of size `R` with energy `E` is `S_max ≤ 2π R E / (ℏ c)` bits. QLF derivation from joint-closure topology is open.
 - **Connection to holographic principle**: every bit corresponds to a Planck area on the horizon (`Holographic.md`, `QLF_Holographic_Computational_Universe.md`). The ℏω-per-bit at the Planck frequency gives `E_Planck` per bit, matching the holographic accounting.
 - **Zeta-bridge reading**: the ℏω-per-bit equivalence deepens the MRE-bridge motivation of [`ReverseMathematics.md`](ReverseMathematics.md) §4. See §4.8 there — `Re(s) = 1/2` becomes the joint information-energy saturation locus, a third reinforcing reading on top of the MRE binary-partition argument and the half-spin closure fixed-point argument. The bridge axiom `spectral_hilbert_polya` remains a WKL₀ axiom; its content gains a physical interpretation of the Mellin variable `s` as an energy/frequency variable.
