@@ -114,7 +114,7 @@ is reached but a residual remains open.
 | **Pauli exclusion** | The antisymmetric combination of two identical processes is zero | **Proved** | [`PauliExclusion`](lean/PauliExclusion.lean) (`pauli_exclusion`) |
 | **Heisenberg uncertainty** | The `ħ/2` quantum is the half-width of one count bin; the product form uses the proved non-commuting axes | **Proved** for the quantum; product form cites the entropic relation | [`QLF_Uncertainty`](lean/QLF_Uncertainty.lean), [`UncertaintyPrinciple.md`](UncertaintyPrinciple.md) |
 | **Quantum logic** | Measurement propositions form the orthomodular, non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
-| **Landauer's bound** | Each half-spin closure releases `log 2` nats of variational free energy | **Proved** as a dimensionless information identity (binary KL); at the census temperature `T = ε/log 8` the bound is met exactly, a bit costing `ε/3`; the energy per event `ε` is an input | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`); [`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean) (`landauer_eight`); at a horizon, [`QLF_HorizonFirstLaw`](lean/QLF_HorizonFirstLaw.lean) (`bh_entropy_first_law`) |
+| **Landauer's bound** | Each half-spin closure releases `log 2` nats of variational free energy | **Proved** as a dimensionless information identity (binary KL); at the census temperature `T_c = ε/log 8` the Landauer scale equals `ε/3` per bit (an energy-scale identity, not an erasure model); the energy per twist step `ε` is an input | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`); [`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean) (`landauer_eight`); at a horizon, [`QLF_HorizonFirstLaw`](lean/QLF_HorizonFirstLaw.lean) (`bh_entropy_first_law`) |
 | **Born rule** | Why the *square*: an event is a ket–bra pair, so its count is `a · a*` | **Half proved**; that the norm is the count of ways is open | [`QLF_BornCounting`](lean/QLF_BornCounting.lean), [`Born_Rule.md`](Born_Rule.md) |
 | **The arrow of time** | No time loops, from the law of weakening alone | **Proved** | [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean) |
 | **Horizon thermodynamics** (Unruh, Hawking, de Sitter) | All three are one Unruh relation `T = ℏa/2πck_B` at the right acceleration; the `2π` is the loop phase | **Derived** | [`QLF_HorizonTemperature`](lean/QLF_HorizonTemperature.lean) |
@@ -140,14 +140,17 @@ the first law `T_H dS = d(Mc²)` holds for the Bekenstein–Hawking entropy
 horizon supplying the temperature. The same module shows that the naive count of one bit per Planck
 patch breaks that law (`naive_count_breaks_first_law`), so a horizon bit occupies `4 log 2` Planck
 areas, not one. The inputs are named there: the Unruh relation, `E = Mc²` with `R = 2GM/c²`, and the
-first law holding in the mean. Away from a horizon, the census supplies the temperature: with
-energy `ε` per event and eight ways per event, `1/T = dS/dE` gives `T = ε / log 8`, at which a bit
-costs exactly `ε/3` ([`landauer_eight`](lean/QLF_CensusTemperature.lean),
-[`Information_Physics.md`](Information_Physics.md) §5b). Two things stay open: `ε` itself, which is
-the energy per event of whichever ensemble is counting (Planck only at the logical bang), and the
-identification of this census temperature with a thermometer's. A Zipf exponent of 1 is the
-observable signature of a system at the census temperature
-([`zipf_one_iff`](lean/QLF_CensusTemperature.lean)).
+first law holding in the mean. Away from a horizon, the census supplies a temperature: with energy
+`ε` per twist step and eight choices per step, `1/T = dS/dE` gives `T_c = ε / log 8`, at which the
+Landauer energy scale `k_B T_c ln 2` equals `ε/3`, the energy per bit of symbol-choice entropy
+([`landauer_eight`](lean/QLF_CensusTemperature.lean),
+[`Information_Physics.md`](Information_Physics.md) §5b). That is an energy-scale identity, not a
+model of erasure. The sharper result is about normalization: at `T_c` the free census is critical
+and cannot be normalized, while the closed census can, because of the `L⁻²` suppression of the
+four-dimensional closure walk ([`closed_census_normalizable`](lean/QLF_CensusTemperature.lean)). So
+ZFA closure is what makes the ensemble well defined at its own temperature. Open: `ε` itself, which
+is the energy per step of whichever ensemble is counting (Planck only at the logical bang), and the
+identification of `T_c` with a thermometer's temperature.
 
 The full survey, mystery by mystery and including the particles QLF predicts are absent (supersymmetric partners, the axion, a dark-matter particle, monopoles, proton decay), is [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md). The open entries are listed with their owning documents in [`Open_Problems.md`](Open_Problems.md).
 

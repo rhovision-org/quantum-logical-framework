@@ -421,7 +421,7 @@ Landauer's `k_B T ln 2` — the cost of fixing one bit. The identification becom
 the free-energy unit is fixed by the **local temperature of the observer's Markov blanket**: the
 abstract `−log 2` (nats) is then the Landauer cost `k_B T ln 2` in those units — so QLF does not
 have "only a dimensionless log," it has the log *plus* the local clock that scales it. §5b now derives
-that temperature from the census, `T = ε/log 8` from `1/T = dS/dE`, given the energy per event `ε`
+a temperature from the census, `T_c = ε/log 8` from `1/T = dS/dE`, given the energy per twist step `ε`
 ([`lean/QLF_CensusTemperature.lean`](lean/QLF_CensusTemperature.lean)). And
 **`ℏω = 1 bit at frequency ω`** is derived from the per-event `log 2` plus the per-event `ℏω`,
 recovering **Margolus–Levitin** (`ℏ` per bit-flip) and Landauer (`k_B T ln 2` per erasure) as
@@ -534,6 +534,35 @@ say that whatever the bath's temperature, one bit costs a third of the energy of
 eight-way events. Getting from the Planck value to today's is the cosmic cooling of the energy per
 event, which QLF's horizon count ties to the horizon temperature (`T_dS/4` per event,
 [`lean/QLF_DeSitterCount.lean`](lean/QLF_DeSitterCount.lean)) but does not derive in general.
+
+**Amended after review (PR #199); the statements above are kept as registered.**
+
+* **What is counted.** L1–L3 count words over the alphabet, so the elementary object is one **twist
+  step** (a distinction), and `ε` is the energy per step. A physical QLF event is a closure, which may
+  contain many steps; read "event" above as "step". A step carries 3 bits of **symbol-choice
+  entropy**, which is not the same thing as three closure-bits.
+* **L2 is an energy-scale identity.** At `T_c` the Landauer energy scale equals the census energy per
+  bit (`landauer_scale_eq_energyPerBit`). It does not show that any erasure protocol dissipates that
+  amount; Landauer equality needs a modelled quasistatic erasure, which this does not supply. The R6a
+  verdict (bookkeeping) stands.
+* **L3:** `ε/(3c²)` is a **mass-equivalent** per bit.
+* **L4** proves an inverse-temperature inequality, `β_cl < β_c` (`closure_inverseTemperature_lower`).
+  The temperature inequality `T_c < T_cl` needs both inverse temperatures positive, `E > 0` and
+  `β_cl > 0` (i.e. `E log 8 > 2ε`), and is proved under exactly those hypotheses
+  (`closure_runs_hotter`).
+* **L5 needs a normalization.** At `T_c` every length shell of the free census has total weight
+  `Kⁿ e^{−n log K} = 1`, so the free partition function diverges (`free_census_not_normalizable`).
+  A pure Zipf law with exponent 1 is not normalizable, so "exponent 1 marks the census temperature"
+  holds only with a finite cutoff or an extra suppression.
+* **L6 (added, not pre-registered): closure supplies that suppression.** The closed census weighs
+  `W_L · 8^{−L} ≈ C/L²` per shell, which is summable (`closed_census_normalizable`, from
+  [`lean/QLF_PolyaTransience.lean`](lean/QLF_PolyaTransience.lean) `returnWeight_summable`). So **the
+  free eight-way census is critical and not normalizable at its own census temperature, and ZFA
+  closure makes it normalizable.** Unlike L2 this is not generic bookkeeping: it rests on the
+  four-dimensional walk's `L⁻²` return suppression, which a recurrent (`d ≤ 2`) alphabet would not
+  give.
+* **Physical domain:** `K > 1`, `ε > 0`, `T > 0`. Lean's totalized division makes some identities
+  hold at degenerate values too, where they mean nothing.
 
 ## 6. Quantum information — the load-bearing floor (a reading, not a rival)
 
@@ -686,7 +715,7 @@ information.
 | Shannon entropy (count) | Shannon 1948 | **inherited** — the census IS Shannon counting; `log` forced on the *binary uniform* census only | ✅ machine-checked (uniform wing); general uniqueness open, and its **necessity** unproven (§2) | `QLF_CensusShannon`, `QLF_EntropyUniqueness` |
 | Phase (beyond count) | — | **derived** — count ≠ phase; order is independent information | ✅ machine-checked | `QLF_PhaseInformation` |
 | Algorithmic (AIT) | Kolmogorov; Chaitin | **boundary** — `Ω` = the pruning boundary; RCA₀ floor | 🧱 principled boundary (Ω uncomputable) | `QLF_ShannonOverfit`, `full_zeno_prune` |
-| Physical/finite | Landauer; Bekenstein; Gisin | **derived** — no continuum in a finite region; `ΔF = −log 2` (dimensionless); the census temperature `T = ε/log 8` makes it `ε/3` per bit, given the energy per event `ε` (§5b) | ✅ machine-checked; `ε` an input | `QLF_Realizability`, `QLF_FreeEnergy`, `QLF_CensusTemperature` |
+| Physical/finite | Landauer; Bekenstein; Gisin | **derived** — no continuum in a finite region; `ΔF = −log 2` (dimensionless); at the census temperature `T_c = ε/log 8` the Landauer scale is `ε/3` per bit, given the energy per twist step `ε` (§5b; a scale identity, not an erasure model) | ✅ machine-checked; `ε` an input | `QLF_Realizability`, `QLF_FreeEnergy`, `QLF_CensusTemperature` |
 | Quantum (von Neumann) | von Neumann; Gottesman | **reading** — `ℤ[i]` skeleton; a consistent integer count-measure; `ħ/2` | ✅ measure machine-checked; Born-*rule* uniqueness + the multiplicity↔norm² bridge open (§6) | `QLF_BornProbability`, `QLF_Uncertainty` |
 | Fisher / geometry | Fisher; Amari | **rendering** — the census carries the dually-flat geometry (KL = canonical divergence); metric = census-KL curvature | 🟡 metric + dually-flat structure shown ([`fisher_from_census.py`](fisher_from_census.py)); continuum `n→∞` manifold open (#142) | `QLF_CensusBrownian`, `QLF_FreeEnergy` |
 | Semantic | Carnap–Bar-Hillel; Floridi | **contributes** — closure-as-receipt; contradiction carries 0 | ✅ machine-checked | `QLF_ContradictionReceipt`, `QLF_InfoSynthesis` |
