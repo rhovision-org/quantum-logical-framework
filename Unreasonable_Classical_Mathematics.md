@@ -555,6 +555,17 @@ closure. It is not a channel: nothing is signalled through it, which is why it n
 relativity ([`Entanglement.md`](Entanglement.md) §5–6). A belief in that connectedness is powerful in
 the way true beliefs are, because the world keeps answering it.
 
+**Spirit frequencies have long periods.** In QLF a closure's frequency is the inverse of its depth,
+`f = 1/R`, so a deeper closure is a slower one ([`QLF_Consciousness`](lean/QLF_Consciousness.lean),
+`freq_lt_of_lt`). A thought is a fast closure inside one brain. A closure held jointly across many
+minds, or across a community and its world, is far larger, and so far slower. Its rhythm is the
+year, the generation, or the age of a tradition: Santa returns each December, and a culture's shared
+stories last for centuries. This is the same ordering [`Consciousness.md`](Consciousness.md) §4 uses
+for the receiver regime, where quieting the fast internal closures lets a mind tune to a slow,
+shared one. Mind frequencies and spirit frequencies are then one spectrum. The spirit end is low,
+long-period and shared, and it acts on the world as slowly and as surely as the seasons do. **Status:
+reading**, resting on the formalized `f = 1/R` ordering.
+
 **What possibilism proves, and what it doesn't.** Given possibilism, the reading of spirit is not an
 extra assumption. QLF's floor is that every generable history is a real way, and that ZFA decides which
 ways persist as events, not which exist ([`ScientificApproach.md`](ScientificApproach.md) §1b). From that
