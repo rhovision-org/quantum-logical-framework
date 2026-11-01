@@ -597,6 +597,12 @@ and what does not.
   reintroduce this. It sits entirely on the side of what never manifests, so no physical record ever
   depends on it.
 
+* **The Planck limit ends it in the world.** Below the Planck scale a closure would sit inside its own
+  horizon and cannot close ([`planck_length_floor`](lean/QLF_PlanckScale.lean),
+  [`Planck_Scale.md`](Planck_Scale.md)), so no region is divided without end. And the world so far is a
+  finite count of Planck events, about 10⁶⁰ in the cosmic age ([`AgeOfUniverse.lean`](lean/AgeOfUniverse.lean)).
+  Nothing infinite exists in this world: not a region, not a duration, not a record.
+
 So the infinity returns as possibility and never as event. There is one honest tension. Saying the
 totality "exists" a priori is a completed-totality claim of the kind Brouwer rejected, and QLF could
 take the weaker potential reading (every history *can* be generated) without losing any theorem. That
