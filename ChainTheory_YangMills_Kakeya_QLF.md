@@ -20,7 +20,7 @@ them. None of the three has finished independent review, and OpenAI has withheld
 | Result | What QLF has proved that bears on it | Status of the connection |
 |---|---|---|
 | Chain Theory's α | Its value lies inside QLF's proven census band and respects QLF's screening bound. It is distinguishable from QLF's own `w = ½` prediction by more than `0.0038`. New module [`QLF_ChainTheory`](lean/QLF_ChainTheory.lean) | **Proved compatibility, not support.** The two derivations differ, and no rational weighting of QLF's census reaches Chain Theory's number (§1.4) |
-| Yang–Mills existence | Discrete colour structure: confinement as the singlet-closure obstruction, the `SL(2,3)` colour flux, su(3) closure. The gap side is one axiom, measured as definitional | **No overlap yet.** An existence proof would discharge part of what QLF's `yang_mills_gap` assumes, not the gap (§2) |
+| Yang–Mills existence | Discrete colour structure: confinement as the singlet-closure obstruction, the `SL(2,3)` colour flux, su(3) closure. The gap side is one axiom, measured as definitional | **No overlap yet.** An existence proof could supply the continuum theory `yang_mills_gap` is meant to denote. It discharges no Lean field as the interface stands (§2.4) |
 | Kakeya / local smoothing | Nothing yet | **Not yet connected.** The finite-field Kakeya theorem is a natural new target (§4.3) |
 | ETH refuted | `QLF_PvsNP` makes no ETH claim | **Unaffected.** A false ETH is compatible with P ≠ NP (§3) |
 
@@ -77,8 +77,9 @@ From [Alpha.md](Alpha.md) and [Alpha_Residual.md](Alpha_Residual.md):
 | `ct_separated_from_equalWeight` | `α⁻¹_CT − (135 + 8√62/31) > 0.0038` |
 | `ct_denominator_factor`, `qlf_leading_factor` | `31104 = 2⁷·3⁵` and `137 = 2⁷ + 3²` |
 
-What this proves: the two programs **do not contradict each other**. Chain Theory's number is inside every
-bound QLF has proved. What it does not prove: that QLF supports Chain Theory's derivation. A band
+What this proves: **Chain Theory's value satisfies QLF's broad proven bounds but is not equal to QLF's
+current equal-weight candidate.** It is inside every bound QLF has proved, and `ct_separated_from_equalWeight`
+keeps it apart from the specific `w = ½` value. What it does not prove: that QLF supports Chain Theory's derivation. A band
 `0.032` wide contains many numbers, and passing it is weak evidence (rule 4 of the working method in
 [CLAUDE.md](CLAUDE.md): the claim changes no count of ways). The `2⁷`/`3` factorisations are arithmetic.
 Both programs build α from the primes 2 and 3, but nothing here shows the same mechanism.
@@ -93,8 +94,8 @@ Both programs build α from the primes 2 and 3, but nothing here shows the same 
   number fields: `ℚ(√62)` and `ℚ(√2, √3)` share only `ℚ`, because `62 = 2·31` is not a square times 1, 2,
   3 or 6. So **no rational weighting of QLF's two α census tails converges to Chain Theory's number.**
   (Standard field theory, checked by hand, not yet in Lean.) QLF does have rational processes that converge
-  to `√2` and `√3`: they are the band-edge rates of the half-spin and colour closure censuses, which are the
-  `φ = 1/2` and `φ = 1/3` points of Hofstadter's butterfly
+  to `√2` and `√3`: they are the band-edge rates of the half-spin and colour closure censuses, which match the
+  `φ = 1/2` and `φ = 1/3` points of Hofstadter's butterfly exactly through `L = 20`
   ([Hofstadter_Butterfly_QLF.md](Hofstadter_Butterfly_QLF.md) §4). Whether a census that combines those with
   the α census reaches Chain Theory's value is route §4.1.
 - **Precision.** QLF claims about 5 significant figures as a structural prediction. Chain Theory claims 10
@@ -132,8 +133,9 @@ formula.
 ### 2.1 What OpenAI claims
 
 On 26 October 2026 OpenAI said its models produced a rigorous proof that certain four-dimensional quantum
-field theories exist, including pure Yang–Mills and QCD
-([The Next Web](https://thenextweb.com/news/openai-exponential-time-hypothesis-false-kakeya-yang-mills),
+field theories exist, including QCD, with pure Yang–Mills as a subproblem
+([OpenAI](https://openai.com/index/building-scientific-understanding-with-academic-communities/); secondary coverage:
+[The Next Web](https://thenextweb.com/news/openai-exponential-time-hypothesis-false-kakeya-yang-mills),
 [Unite.AI](https://www.unite.ai/openai-says-its-models-produced-three-proofs-in-math-cs-and-physics/),
 [Xenospectrum](https://xenospectrum.com/en/openai-yang-mills-kakeya-eth-release/)). David Gross leads a
 group with Douglas, Jaffe, Klebanov and Nekrasov that will write it up. **The physics proofs are withheld**
@@ -188,9 +190,12 @@ All with no QLF axiom unless noted:
 
 ### 2.4 How the two fit
 
-If OpenAI's existence proof holds up, it supplies the continuum object that `yang_mills_gap` presupposes.
-That would discharge part of what the axiom assumes. It would not supply the gap or its identification
-with `log 2`. QLF's discrete results (confinement as singlet closure, the `SL(2,3)` colour structure) are
+If the OpenAI construction holds up, it may supply the continuum theory that QLF's present gap symbol is
+intended to denote. The current Lean boundary does not encode that existence statement: `ContinuumGap` has
+only the fields `gap : ℝ` and `gap = gaugeMassGap`, and `continuumGap_nonempty` inhabits it by `rfl`. So no
+axiom is formally discharged without first refactoring the interface to contain a reconstructed
+Yang–Mills/QCD theory and its Osterwalder–Schrader/Wightman properties. Even then, the claim would not supply
+the gap or its identification with `log 2`. QLF's discrete results (confinement as singlet closure, the `SL(2,3)` colour structure) are
 lattice-side and do not touch a continuum existence proof. **No QLF theorem supports or is supported by
 OpenAI's claim today.** Whether the construction passes through a lattice and a reflection-positive transfer
 matrix decides whether QLF's discrete side can connect. We will know when the proof is released.
@@ -259,8 +264,9 @@ reflection positive (§4.2).
 ### 4.5 Rational processes, not irrational limits
 
 Irrational numbers are not in reality; they name the limits of rational processes. The test case is
-Hofstadter's butterfly, defined only at rational flux and built from phase-weighted closure counts. QLF's
-proved π and 2π/3 fluxes are its `q = 2` and `q = 3` points. It is pre-registered and run in
+Hofstadter's butterfly. At rational flux it reduces to a finite Bloch problem whose moments are
+phase-weighted closure counts. QLF's proved π and 2π/3 fluxes match its `q = 2` and `q = 3` censuses,
+checked exactly through `L = 20`. It is pre-registered and run in
 [Hofstadter_Butterfly_QLF.md](Hofstadter_Butterfly_QLF.md).
 
 ---
@@ -272,8 +278,9 @@ proved π and 2π/3 fluxes are its `q = 2` and `q = 3` points. It is pre-registe
 - **Proved before, reused:** QLF's α band, the colour structure, confinement as singlet closure, and the
   `log 2` closure quantum.
 - **Checked by hand, not in Lean:** the number-field separation of §1.4.
-- **Computed, exact:** the half-spin and colour closure censuses are the `φ = 1/2` and `φ = 1/3`
-  Hofstadter fluxes ([Hofstadter_Butterfly_QLF.md](Hofstadter_Butterfly_QLF.md), pre-registered).
+- **Computed, exact through `L = 20`:** the half-spin and colour closure censuses equal the `φ = 1/2`
+  and `φ = 1/3` Hofstadter censuses. The all-length statement has a structural reason (uniform plaquette
+  flux plus discrete Stokes) but is not yet proved ([Hofstadter_Butterfly_QLF.md](Hofstadter_Butterfly_QLF.md), pre-registered).
 - **Not claimed:** that QLF derives Chain Theory's formula or supports its mechanism. That QLF proves or
   supports Yang–Mills existence or a mass gap. Any link to Kakeya, local smoothing or ETH, today.
 - **External claims** are as reported on 26–28 October 2026 and are under review. OpenAI's physics proofs
@@ -285,7 +292,9 @@ proved π and 2π/3 fluxes are its `q = 2` and `q = 3` points. It is pre-registe
   [compendium](https://alexwg.org/publications/ChainTheoryCompendium.pdf),
   [talk](https://alexwg.org/publications/ChainTheoryTalk.pdf).
 - SproutSeeds, *chain-theory-audit* (2026): [GitHub](https://github.com/SproutSeeds/chain-theory-audit).
-- OpenAI announcement of Yang–Mills/QCD existence, local smoothing and ETH (26 Oct 2026), as reported by
+- OpenAI, *Working with academic communities to build scientific understanding* (26 Oct 2026):
+  [openai.com](https://openai.com/index/building-scientific-understanding-with-academic-communities/), the
+  primary announcement of the Yang–Mills/QCD existence, local smoothing and ETH results. Secondary coverage:
   [The Next Web](https://thenextweb.com/news/openai-exponential-time-hypothesis-false-kakeya-yang-mills) and
   [Unite.AI](https://www.unite.ai/openai-says-its-models-produced-three-proofs-in-math-cs-and-physics/).
 - H. Wang & J. Zahl, *Volume estimates for unions of convex sets, and the Kakeya set conjecture in three

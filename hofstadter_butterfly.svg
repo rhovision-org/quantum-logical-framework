@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
 <rect width="900" height="700" fill="#ffffff"/>
-<text x="40" y="24" font-family="sans-serif" font-size="15" fill="#222">Hofstadter butterfly from closure counts, all p/q with q &lt;= 30</text>
+<text x="40" y="24" font-family="sans-serif" font-size="15" fill="#222">Hofstadter butterfly (Harper Bloch matrix), all p/q with q &lt;= 30</text>
 <line x1="40.0" y1="660.0" x2="40.0" y2="40.0" stroke="#2b59c3" stroke-width="0.9"/>
 <line x1="860.0" y1="660.0" x2="860.0" y2="40.0" stroke="#2b59c3" stroke-width="0.9"/>
 <line x1="450.0" y1="569.2" x2="450.0" y2="350.0" stroke="#d1495b" stroke-width="2.5"/>
@@ -5605,5 +5605,5 @@
 <line x1="832.7" y1="55.8" x2="832.7" y2="55.8" stroke="#2b59c3" stroke-width="0.9"/>
 <line x1="40" y1="660" x2="860" y2="660" stroke="#555"/>
 <text x="390.0" y="688" font-family="sans-serif" font-size="13" fill="#222">flux per plaquette p/q (0 to 1)</text>
-<text x="530" y="24" font-family="sans-serif" font-size="13" fill="#d1495b">red: q = 2 (fold sign) and q = 3 (colour)</text>
+<text x="530" y="24" font-family="sans-serif" font-size="13" fill="#d1495b">red: q = 2 (fold sign), q = 3 (colour): closure-tested</text>
 </svg>

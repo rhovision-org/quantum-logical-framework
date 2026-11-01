@@ -1,4 +1,4 @@
-# Hofstadter's butterfly from closure counts
+# Hofstadter's butterfly and QLF's closure counts
 
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
@@ -8,10 +8,12 @@ What is real is the quantum logical process whose finite outputs the continuum a
 butterfly, the energy spectrum of an electron on a lattice in a magnetic field, should therefore emerge
 from that process, not from a continuum Hamiltonian.
 
-The butterfly is a good test case because it is defined only at **rational** flux. At flux `φ = p/q` per
-plaquette, the spectrum has `q` bands. Irrational flux is the limit of that construction, a Cantor set
-nobody computes directly (Hofstadter 1976). So the question is whether QLF's closures produce it, and
-which parts of it are a count and which are a rendering.
+The butterfly is a good test case because of how rational flux behaves. At flux `φ = p/q` per
+plaquette, the Hofstadter problem reduces to a finite `q×q` Bloch problem with `q` bands. The operator is
+also well defined at irrational flux, where at this coupling its spectrum is a Cantor set (Hofstadter 1976),
+but no finite magnetic unit cell describes it: irrational flux is reached as the infinite, quasiperiodic
+limit. So the question is which parts of the butterfly QLF's closures produce as counts, and which parts
+are a rendering.
 
 ## 1. The process
 
@@ -58,24 +60,39 @@ appear to be, and the identification in §1 is withdrawn. A failure of H1 means 
 
 ## 3. Results
 
-Run: `python3 hofstadter_closure.py --svg hofstadter_butterfly.svg` (about 3 s; exits 0 only if all five
-pass). **All five pass.**
+Run: `python3 hofstadter_closure.py --svg hofstadter_butterfly.svg` (about 5 s). It exits 0 only if
+H1–H4 and H5's band and symmetry clauses pass. **H1–H4 pass. H5 passes on bands and symmetry and fails
+on its width clause as registered** (below). H5 was registered as a rendering check that adds no
+evidence, so the width failure does not touch the H2/H3 result. It is recorded because the registration
+said it would hold, and it does not.
 
 | Test | Result |
 |---|---|
 | **H1** (code check) | Census equals the Harper moments for every `p/q`, `q ≤ 8`, `L ≤ 16`. Largest relative difference `5×10⁻¹⁴` |
-| **H2** (tests `QLF_EdgeSign`) | **Pass, exact, every `L ≤ 20`.** QLF's fold-sign census on one spatial plane is `1, −4, 20, −112, 676, …, 68 906 320`, which is `(−1)^{L/2}` times the π-flux Hofstadter census. The proved half-spin phase *is* the `φ = 1/2` point of the butterfly. The `(−1)^{L/2}` is the twists' own sign: a closure has `L/2` negative steps |
-| **H3** (tests `QLF_ColourFlux`) | **Pass, exact, every `L ≤ 20`.** Transporting a colour line with the explicit Weyl matrices gives counts `(n₀, n₁, n₂)` of closures with holonomy `ω⁰, ω¹, ω²`. Always `n₁ = n₂`, and `n₀ − n₁ = 1, 4, 24, 148, 928, …, 72 908 224`, which is the `φ = 1/3` Hofstadter census. The proved colour transport *is* the `φ = 1/3` point |
+| **H2** (tests `QLF_EdgeSign`) | **Pass, exact, every even `L ≤ 20`.** QLF's fold-sign census on one spatial plane is `1, −4, 20, −112, 676, …, 68 906 320`, which is `(−1)^{L/2}` times the π-flux Hofstadter census at each checked length. The `(−1)^{L/2}` is the twists' own sign: a closure has `L/2` negative steps |
+| **H3** (tests `QLF_ColourFlux`) | **Pass, exact, every even `L ≤ 20`.** Transporting a colour line with the explicit Weyl matrices gives counts `(n₀, n₁, n₂)` of closures with holonomy `ω⁰, ω¹, ω²`. Always `n₁ = n₂`, and `n₀ − n₁ = 1, 4, 24, 148, 928, …, 72 908 224`, which is the `φ = 1/3` Hofstadter census at each checked length |
 | **H4** (bookkeeping) | Census is an ordinary integer at every `L` for `q ∈ {1, 2, 3, 4, 6}`. For `q ∈ {5, 7, 8}` it is irrational from `L = 4`, the first length with an enclosed plaquette |
-| **H5** (rendering) | `q` bands at every `p/q`. Symmetric under `φ → 1 − φ` and `E → −E`. Total band width falls with `q` (5.66, 2.93, 2.60, 1.79, … at `q = 2, 3, 4, 5, …`). For even `q` the two central bands touch at `E = 0`, so there are `q − 1` connected pieces. That is the known Dirac point, not a failure |
+| **H5** (rendering) | Checked at **every** coprime `p/q` with `q ≤ 40` (`--h5-qmax`). **Bands and symmetry pass:** at every `p/q` the `q` eigenvalue bands are `q` intervals that never overlap, and the spectrum is symmetric under `φ → 1 − φ` and `E → −E`. For even `q` the two central bands touch at `E = 0` (the known Dirac point). At 44 of the `p/q` with `q ≥ 17` some gaps are below `10⁻⁶` and are not resolved as separate pieces in double precision; non-overlap still holds there. **Width, as registered, fails.** The total width does not fall for every pair: `13/14` has width `0.7020`, more than `12/13` at `0.6983`, and the largest width at `q = 26` (`0.3735`) exceeds the largest at `q = 25` (`0.3730`). The trend holds (the smallest width at each `q` falls at every step to `q = 40`, from `5.66` at `q = 2` to `0.233`), but that reading was chosen after seeing the data and is not counted |
 
-The butterfly, drawn from the census's one-step transfer operator for every `p/q` with `q ≤ 30`:
-[hofstadter_butterfly.svg](hofstadter_butterfly.svg). The `q = 2` and `q = 3` lines, QLF's two proved
-fluxes, are drawn in red.
+[hofstadter_butterfly.svg](hofstadter_butterfly.svg) is the **standard Harper butterfly**, drawn by
+diagonalizing the `q×q` Harper Bloch matrix for every `p/q` with `q ≤ 30`. The `q = 2` and `q = 3` lines,
+the two fluxes the closure-count tests H2 and H3 identify with QLF's proved phases, are drawn in red. The
+closure census enters the picture only through H1: its moments equal the Harper moments, which is the trace
+formula. The spectrum is not rebuilt from the census or from a separately constructed QLF transfer
+operator. (§2's H5 row calls it "drawn from the census's transfer operator". That wording was inaccurate,
+and the pre-registration is left as frozen.) Building the magnetic-translation operator from the QLF phase
+rule and showing it is gauge-equivalent to Harper is an open step.
 
 **What this establishes.** The two phases QLF proved for its own reasons, the half-spin fold sign and the
-colour transport, are exactly the `φ = 1/2` and `φ = 1/3` fluxes of Hofstadter's model on every spatial
-plane. So the butterfly's two simplest points are already in the substrate, as counts. The rest of the
+colour transport, give exactly the `φ = 1/2` and `φ = 1/3` Hofstadter censuses on a spatial plane, **checked
+exactly through `L = 20`**. The local plaquette theorems give the structural reason to expect this at every
+length: `QLF_EdgeSign` decides a uniform `−1` flux per mixed spatial plaquette, and `colour_plaquette` gives a
+uniform `ω^{−1}`. On `ℤ²`, a closed walk's holonomy under a connection with uniform plaquette flux is that
+flux raised to the walk's signed area (discrete Stokes). The global statements
+`holonomy(h) = (−1)^{L/2}·(−1)^{A(h)}` and `colourPhase(h) = ω^{±A(h)}` for every closed plane walk `h` are
+**not yet proved** in Lean or algebraically in Python. Until they are, the identification is a finite exact
+check with a structural reason behind it, not an all-length theorem. If it holds, the butterfly's two
+simplest points are already in the substrate, as counts. The rest of the
 butterfly (every other `p/q`) is not reached yet: it needs phases QLF has not yet derived. The result is
 incomplete, not negative. The identification could have failed: a
 non-uniform sign, or a colour holonomy other than `ω^{±A}`, would have broken H2 or H3.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hofstadter's butterfly from closure counts — the pre-registered test of
+"""Hofstadter's butterfly and QLF's closure counts — the pre-registered test of
 Hofstadter_Butterfly_QLF.md §2 (H1-H5).
 
 A closure on one spatial plane (twists > < ^ v) is a closed walk on Z^2. With a phase
@@ -15,9 +15,11 @@ dynamic programming over (x, y, A mod q), with integers only, and compares it wi
   H2  QLF's proved fold-sign connection, closure_walk.edge_sign    -- tests QLF_EdgeSign
   H3  QLF's colour transport through colour_flux.cocycle()         -- tests QLF_ColourFlux
   H4  integrality of M_L by Galois conjugates                      -- bookkeeping (Niven)
-  H5  the butterfly rendered from the census's transfer operator   -- rendering check
+  H5  the standard Harper butterfly: band count and symmetries     -- rendering check
+      (the SVG and H5 diagonalize the Harper Bloch matrix; the census enters
+       only through H1's moment identity, not through the rendered spectrum)
 
-Usage:  python3 hofstadter_closure.py [--svg hofstadter_butterfly.svg] [--qmax 30]
+Usage:  python3 hofstadter_closure.py [--svg hofstadter_butterfly.svg] [--qmax 30] [--h5-qmax 40]
 """
 import argparse
 import cmath
@@ -181,7 +183,7 @@ def write_svg(path: str, qmax: int) -> None:
     lines = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}">',
              f'<rect width="{W}" height="{H}" fill="#ffffff"/>',
              f'<text x="{pad}" y="24" font-family="sans-serif" font-size="15" fill="#222">'
-             f'Hofstadter butterfly from closure counts, all p/q with q &lt;= {qmax}</text>']
+             f'Hofstadter butterfly (Harper Bloch matrix), all p/q with q &lt;= {qmax}</text>']
     for q in range(1, qmax + 1):
         for p in range(0, q + 1):
             if gcd(p, q) != 1:
@@ -196,7 +198,7 @@ def write_svg(path: str, qmax: int) -> None:
     lines.append(f'<text x="{W/2-60}" y="{H-12}" font-family="sans-serif" font-size="13" fill="#222">'
                  f'flux per plaquette p/q (0 to 1)</text>')
     lines.append(f'<text x="{W-pad-330}" y="24" font-family="sans-serif" font-size="13" fill="#d1495b">'
-                 f'red: q = 2 (fold sign) and q = 3 (colour)</text>')
+                 f'red: q = 2 (fold sign), q = 3 (colour): closure-tested</text>')
     lines.append('</svg>')
     with open(path, 'w') as f:
         f.write('\n'.join(lines) + '\n')
@@ -206,7 +208,8 @@ def write_svg(path: str, qmax: int) -> None:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument('--svg', default=None)
-    ap.add_argument('--qmax', type=int, default=30)
+    ap.add_argument('--qmax', type=int, default=30, help='largest q drawn in the SVG')
+    ap.add_argument('--h5-qmax', type=int, default=40, help='largest q checked by H5')
     args = ap.parse_args(argv)
     ok = True
 
@@ -270,20 +273,51 @@ def main(argv=None) -> int:
     print(f'    -> {"PASS" if h4 else "FAIL"}')
     ok &= h4
 
-    print(f'H5  butterfly, q <= {args.qmax}')
+    # H5 as pre-registered: every p/q with q <= --h5-qmax (default 40), all coprime p.
+    #  (a) q bands: the q eigenvalue bands are q intervals that never overlap (they may touch:
+    #      the even-q Dirac point at E = 0, or gaps too small to resolve in double precision);
+    #  (b) phi -> 1 - phi and (c) E -> -E symmetry;
+    #  (d) total band width falling as q grows, read literally: every p/q at q has smaller total
+    #      width than every p'/q' at q - 1. Reported, not asserted: see Hofstadter_Butterfly_QLF.md §3.
+    print(f'H5  butterfly, every p/q with q <= {args.h5_qmax}')
     h5 = True
-    for q in (2, 3, 4, 5, 6, 7, 8, 9, 10):
-        p = 1
-        b = bands(p, q)
-        comp = components(b)
-        bm = bands(q - p, q)
-        sym_phi = all(abs(a[0] - c[0]) < 1e-6 and abs(a[1] - c[1]) < 1e-6 for a, c in zip(b, bm))
-        sym_e = all(abs(a[0] + c[1]) < 1e-6 for a, c in zip(b, reversed(b)))
-        width = sum(hi - lo for lo, hi in b)
-        print(f'    q={q:2d}: {len(b)} bands, {comp} connected pieces, total width {width:.4f}, '
-              f'phi->1-phi {"ok" if sym_phi else "NO"}, E->-E {"ok" if sym_e else "NO"}')
-        h5 &= len(b) == q and sym_phi and sym_e
-    print(f'    -> {"PASS" if h5 else "FAIL"}')
+    prev_widths = None
+    width_literal = True
+    min_falls = max_falls = True
+    prev_min = prev_max = None
+    unresolved = []
+    for q in range(1, args.h5_qmax + 1):
+        widths = []
+        for p in (range(1, q) if q > 1 else [0]):
+            if q > 1 and gcd(p, q) != 1:
+                continue
+            b = bands(p, q)
+            no_overlap = len(b) == q and all(b[i][1] <= b[i + 1][0] + 1e-9 for i in range(q - 1))
+            bm = bands((q - p) % q, q)
+            sym_phi = all(abs(a[0] - c[0]) < 1e-6 and abs(a[1] - c[1]) < 1e-6 for a, c in zip(b, bm))
+            sym_e = all(abs(a[0] + c[1]) < 1e-6 for a, c in zip(b, reversed(b)))
+            h5 &= no_overlap and sym_phi and sym_e
+            expected = q - 1 if q % 2 == 0 else q
+            if components(b) != expected:
+                unresolved.append(f'{p}/{q}')
+            widths.append(sum(hi - lo for lo, hi in b))
+        if prev_widths is not None:
+            width_literal &= max(widths) < min(prev_widths)
+            min_falls &= min(widths) < prev_min
+            max_falls &= max(widths) < prev_max
+        prev_widths, prev_min, prev_max = widths, min(widths), max(widths)
+        if q <= 10 or q % 10 == 0:
+            print(f'    q={q:2d}: total width {min(widths):.4f} .. {max(widths):.4f} over {len(widths)} p')
+    print(f'    (a) q non-overlapping bands, (b) phi->1-phi, (c) E->-E at every p/q: '
+          f'{"ok" if h5 else "FAIL"}')
+    print(f'        gaps below 1e-6 (not resolved as separate pieces) at {len(unresolved)} p/q, '
+          f'first {unresolved[:3]}')
+    print(f'    (d) width falls with q, literal (every p/q below every p\'/(q-1)): '
+          f'{"holds" if width_literal else "DOES NOT HOLD"}; '
+          f'per-q max falls: {"yes" if max_falls else "no"}; per-q min falls: {"yes" if min_falls else "no"}'
+          f'  [reported, not asserted]')
+    print(f'    -> (a)-(c) {"PASS" if h5 else "FAIL"}; (d) as registered '
+          f'{"PASS" if width_literal else "FAIL"}')
     ok &= h5
 
     if args.svg:
