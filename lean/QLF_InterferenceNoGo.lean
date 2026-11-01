@@ -424,7 +424,7 @@ theorem vecWeight_decoh (ψ : ι → κ → ℝ) (x y : ι) :
 theorem vecWeight_psd [Fintype ι] (ψ : ι → κ → ℝ) :
     (Matrix.of fun x y => decoh (vecWeight ψ) x y).PosSemidef := by
   have h : (Matrix.of fun x y => decoh (vecWeight ψ) x y)
-      = (Matrix.of fun k x => ψ x k)ᴴ * (Matrix.of fun k x => ψ x k) := by
+      = (Matrix.of fun k x => ψ x k).conjTranspose * (Matrix.of fun k x => ψ x k) := by
     ext x y
     simp only [Matrix.of_apply, Matrix.mul_apply, Matrix.conjTranspose_apply, star_trivial,
       vecWeight_decoh]
