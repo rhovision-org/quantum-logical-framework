@@ -372,6 +372,8 @@ So QLF does not merely say "mathematics is effective because reality is mathemat
 
 *Honest scope:* this is QLF's **dissolution** of the puzzle, resting on the substrate ontology plus the worked, verified emergence of mathematics' core (§1) and the equally verified emergence of the physics elsewhere in the framework — a philosophical payoff, not a single Lean theorem. Lineage: Wigner (1960), Hamming (1980), Tegmark (Mathematical Universe). QLF's distinctive contribution is the *selective* realizability — and the matching account of where mathematics *fails*.
 
+**The other side:** [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) collects those failures (paradoxes, the continuum, Choice) and reads Wigner's 1960 paper point by point for both the reasonableness and the unreasonableness.
+
 ---
 
 ## See also
