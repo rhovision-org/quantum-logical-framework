@@ -37,7 +37,13 @@ additive measures, the KraftMeasure weight and the Born weight are all of this s
 
 So an event weight that interferes both ways is not a classical quantity on closures: the additive
 object scales as the square root of the weight (N2b) and carries a sign or phase (N4), and the weight
-is its square (N5). These are theorems about the **shape** of a weight; they do not identify the
+is its square (N5). The converse is the **Born construction** (B1–B3, pre-registered in §5 of the same doc):
+`quadratic_of_third_order_free` (no third-order interference ⟹ the weight is the quadratic form of
+its decoherence matrix), `vector_amplitude_of_psd` (positive pairwise data ⟹ vector amplitudes,
+`μ(E) = ‖Σ ψ_x‖²`), and `vector_amplitude_iff` (that is exactly the class), with complex Born the
+`ℝ²` case (`born_eq_vecWeight`).
+
+These are theorems about the **shape** of a weight; they do not identify the
 amplitude with a census quantity and do not derive the Born rule. No axioms.
 -/
 

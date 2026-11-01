@@ -3,7 +3,7 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
 
-**Status: §2 proved (§4); §5 pre-registered.** The statements in §2 were committed before any proof of them was written.
+**Status: §2 proved (§4); §5 proved (§6).** The statements in §2 were committed before any proof of them was written.
 The Lean module that is to prove them is [`lean/QLF_InterferenceNoGo.lean`](lean/QLF_InterferenceNoGo.lean).
 Results are recorded in §4 after the proofs land, and nothing in §1–§3 is to be edited afterwards
 except to mark each item passed or failed.
@@ -155,4 +155,27 @@ Predictions and kill conditions:
 
 ## 6. Results of the Born construction
 
-*To be filled in after the proofs land.*
+All three statements were proved as registered, in the same module (CI run 1055, commit `3099542`;
+the run before it failed on a notation error, `ᴴ` not being in scope, not on any proof).
+
+| Item | Verdict | Lean |
+|---|---|---|
+| B1 | **passed** | `I₂_union_right` (the step: `I₃ = 0` ⟺ `I₂` additive), `I₂_singleton_eq_sum`, `quadratic_of_third_order_free` |
+| B2 | **passed** | `vector_amplitude_of_psd`: amplitudes `ψ_x ∈ ℝ^ι`, `μ(E) = Σ_k (Σ_{x∈E} ψ_x(k))²` |
+| B3 | **passed** | `vecWeight_empty`, `vecWeight_third_order_free`, `vecWeight_decoh` (the decoherence matrix is the Gram matrix), `vecWeight_psd`; together `vector_amplitude_iff`; the complex Born weight is the `ℝ²` case, `born_eq_vecWeight` |
+
+* **P4 passed.** No axiom. The Gram factorization came from Mathlib's
+  `CStarAlgebra.nonneg_iff_eq_star_mul_self` on the matrix order, so no Mathlib gap had to be recorded.
+* **P5 passed.** `quadratic_of_third_order_free` takes only `μ(∅) = 0` and `I₃ = 0`. It holds for
+  signed weights.
+
+What this establishes. On any finite set of ways, **a weight has no third-order interference and
+positive pairwise data exactly when it is the squared length of a summed vector amplitude**
+(`vector_amplitude_iff`). Together with §4: a weight that interferes in both directions cannot be a
+classical tally (§4), and a weight that interferes only pairwise and positively *is* an amplitude
+square (§6). The amplitude is read off the weight's own interference data, `ψ` from the decoherence
+matrix, so it is an output, not a postulate.
+
+What stays open, as registered. Why nature's weight has `I₃ = 0` (an empirical input; in QLF, the bridge
+a census weight would have to cross). Why the amplitude space is two-dimensional, which is what makes
+it complex. And which census quantity `ψ_x` is.
