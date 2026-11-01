@@ -177,9 +177,10 @@ section Sublinear
 
 variable {V : Type} [AddCommGroup V] [Module ℝ V]
 
-/-- **N3.** A readout that is convex on `C` and doubles under doubling there is sub-additive on `C`. -/
+/-- **N3.** A readout that is convex on `C` and doubles under doubling there is sub-additive on `C`.
+(Closure of `C` under doubling, registered as a hypothesis, turned out to be unnecessary.) -/
 theorem sublinear_subadditive {C : Set V} {Φ : V → ℝ} (hconv : ConvexOn ℝ C Φ)
-    (h2 : ∀ x ∈ C, (2 : ℝ) • x ∈ C) (hhom : ∀ x ∈ C, Φ ((2 : ℝ) • x) = 2 * Φ x)
+    (hhom : ∀ x ∈ C, Φ ((2 : ℝ) • x) = 2 * Φ x)
     {x y : V} (hx : x ∈ C) (hy : y ∈ C) : Φ (x + y) ≤ Φ x + Φ y := by
   have hm : (1 / 2 : ℝ) • x + (1 / 2 : ℝ) • y ∈ C :=
     hconv.1 hx hy (by norm_num) (by norm_num) (by norm_num)
@@ -195,14 +196,14 @@ theorem sublinear_subadditive {C : Set V} {Φ : V → ℝ} (hconv : ConvexOn ℝ
 /-- **N3, for events.** Under a convex degree-1 readout, two disjoint events whose tallies lie in
 `C` never interfere constructively: `I₂ ≤ 0`. -/
 theorem sublinear_no_constructive_interference {C : Set V} {Φ : V → ℝ}
-    (hconv : ConvexOn ℝ C Φ) (h2 : ∀ x ∈ C, (2 : ℝ) • x ∈ C)
+    (hconv : ConvexOn ℝ C Φ)
     (hhom : ∀ x ∈ C, Φ ((2 : ℝ) • x) = 2 * Φ x)
     (v : ι → V) {A B : Finset ι} (hd : Disjoint A B)
     (hA : tally v A ∈ C) (hB : tally v B ∈ C) :
     I₂ (readout Φ v) A B ≤ 0 := by
   unfold I₂ readout
   rw [tally_union v hd]
-  linarith [sublinear_subadditive hconv h2 hhom hA hB]
+  linarith [sublinear_subadditive hconv hhom hA hB]
 
 end Sublinear
 

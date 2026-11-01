@@ -105,12 +105,13 @@ All five statements were proved as registered, in
   same 13 declared axioms.
 * **P2 passed.** `kraft_matched_agrees` reads the matched-pair case straight off `merge_eq_sum_iff`
   with no extra hypothesis, so the two modules agree.
-* **P3 passed.** N3 used only the registered hypotheses, and in a weaker form: homogeneity is needed
-  only under doubling (`Φ(2x) = 2Φ(x)`), not for every positive scalar.
+* **P3 passed.** N3 used only the registered hypotheses, and fewer of them: homogeneity is needed
+  only under doubling (`Φ(2x) = 2Φ(x)`), not for every positive scalar, and the registered closure
+  of `C` under doubling is not needed at all (found in review and dropped from the Lean statement).
 
 What this establishes, and what it does not. It is a theorem about the **shape** of an event weight.
-A weight read out from a classical additive tally interferes both ways only if the readout has
-degree two and the tallies carry a sign or phase. So every candidate in
+For a homogeneous readout of an additive tally, interfering both ways needs degree two (N2b) and
+tallies that carry a sign or phase (N4). A readout that is not homogeneous is not covered by N2. So every candidate in
 [`Born_Rule.md`](Born_Rule.md) §8 that was degree one, or summed unsigned counts, could not have
 worked, and no reweighting of the same tallies would have helped. It does not say which census
 quantity the amplitude is, and it does not derive the Born rule.
@@ -169,7 +170,9 @@ the run before it failed on a notation error, `ᴴ` not being in scope, not on a
 * **P5 passed.** `quadratic_of_third_order_free` takes only `μ(∅) = 0` and `I₃ = 0`. It holds for
   signed weights.
 
-What this establishes. On any finite set of ways, **a weight has no third-order interference and
+What this establishes. The characterization itself is classical (Sorkin's quantum measure theory,
+with the Gram step standard linear algebra); what is new here is that it is machine-checked on QLF's
+own finite event sets, so the census can be tested against it. On any finite set of ways, **a weight has no third-order interference and
 positive pairwise data exactly when it is the squared length of a summed vector amplitude**
 (`vector_amplitude_iff`). Together with §4: a weight that interferes in both directions cannot be a
 classical tally (§4), and a weight that interferes only pairwise and positively *is* an amplitude
