@@ -266,5 +266,6 @@ lean_lib QLF where
     `QLF_ConstructionAdds,
     `QLF_LogicalPersistence,
     `QLF_HandedLoops,
-    `QLF_CensusTemperature
+    `QLF_CensusTemperature,
+    `QLF_GlobalHolonomy
   ]
