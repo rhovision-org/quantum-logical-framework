@@ -518,9 +518,18 @@ closed, and manifestation is its closure. Three things then follow from results 
   receiver regime of §4 there. That is a stance, a dual-aspect hypothesis, and the document states the
   observations that would count against it (§7 there).
 
-This section is interpretation. The no-receipt theorem is proved and the frequency architecture is
-formalized, and the reading of spirit as unclosed possibility rests on them without being a theorem itself.
-It is offered as the place where the page's argument ends up. Classical mathematics can describe the
+**What possibilism proves, and what it doesn't.** Given possibilism, the reading of spirit is not an
+extra assumption. QLF's floor is that every generable history is a real way, and that ZFA decides which
+ways persist as events, not which exist ([`ScientificApproach.md`](ScientificApproach.md) §1b). From that
+premise it follows directly that all admissible possibilities are real, that manifestation is closure,
+and, with the proved no-receipt theorem, that only what balances manifests. So the first two points
+above are consequences of the premise, not a separate reading. Two things stay outside the proof.
+Possibilism itself is QLF's founding commitment: it is not tested in isolation, and its warrant is the
+derivations it supports (§2). And possibilism says what exists and what manifests; it does not say that
+a closure is felt from the inside. That third point, experience, remains the qualia hypothesis, a stance
+with stated tests.
+
+This is where the page's argument ends up. Classical mathematics can describe the
 world only from outside, and it becomes unreasonable exactly where it asserts what cannot close. A
 logic of closure describes the world, the mind, and their meeting in the same terms. In that logic,
 Wigner's "gift we neither understand nor deserve" can be understood as the logic itself, manifesting.
@@ -540,7 +549,8 @@ Wigner's "gift we neither understand nor deserve" can be understood as the logic
 | Measurement propositions are non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
 | `π`, `ζ(3)` as limits of finite rational counts | **Proved** counts; convergence cited | [`QLF_PhysicalPi`](lean/QLF_PhysicalPi.lean), [`QLF_AperyPeriod`](lean/QLF_AperyPeriod.lean) |
 | Least action (`δS = 0`) follows from ZFA | **Proved**, no axiom | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) |
-| Consciousness as a frequency hierarchy of closures | **Formalized** (simple lemmas on periods); qualia and the reading of spirit are stances | [`QLF_Consciousness`](lean/QLF_Consciousness.lean), §8 |
+| Manifestation = closure; only what balances manifests | **Follows** from possibilism (the founding commitment) + `contradiction_no_receipt` | §8 |
+| Consciousness as a frequency hierarchy of closures | **Formalized** (simple lemmas on periods); qualia remain a stance | [`QLF_Consciousness`](lean/QLF_Consciousness.lean), §8 |
 | The liar receives no receipt | **Reading** (prior art: Kripke 1975) | §4a |
 | Russell, Berry, Zeno, eraser, EPR, Schrödinger's cat, Wigner's friend | **Reading** | §4b–4d |
 | Improvement cycles ⟺ no free-action functional; Nash = closure; joint closure = welfare | **Proved** | [`QLF_PotentialGames`](lean/QLF_PotentialGames.lean), §4e |
