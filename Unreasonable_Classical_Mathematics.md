@@ -13,7 +13,8 @@ answers that are wrong when applied to the world. That is the *uncanny unreasona
 mathematics that is uncannily right inside the realizable is uncannily wrong just outside it, and the
 boundary is the same in every case.
 
-So QLF has to account for two things, and one account covers both. Mathematics is reasonable where it
+So QLF has to account for two things, and one account covers both. The account starts from ZFA, equal
+and opposite logical action, which QLF takes as the sufficient basis of physics (§2). Mathematics is reasonable where it
 describes finite closures and their large-count limits. It becomes unreasonable where it asserts
 objects that no finite closure realizes. §1 sets this against Wigner's original paper point by point.
 The rest of the page collects the failures, with a link for each to the document and Lean module where
@@ -67,6 +68,19 @@ finitely many distinguishable states.** That is Bekenstein's bound. QLF did not 
 `[Finite R]` hypothesis of
 [`no_continuum_in_finite_region`](lean/QLF_Realizability.lean). Everything in §5 and §6 below is that
 premise plus logic.
+
+**ZFA is the sufficient basis.** QLF's thesis is that one principle is enough to build physics on:
+**ZFA, equal and opposite logical action**. Every distinction is paired with its opposite, and the pair
+closes with zero free energy. Nothing else is posited. Numbers, the unit group `{±1, ±i}`, spin, the
+non-distributive logic of measurement and the census constants are derived from that one closure
+condition ([`Philosophy.md`](Philosophy.md) §3a, [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md)
+§1, [`Quantum_Logic_Foundations.md`](Quantum_Logic_Foundations.md)). Where a derivation still needs
+something more, the gap is named as an explicit bridge, not added as a second principle (the axiom
+inventory in [`Open_Problems.md`](Open_Problems.md)). This is what turns the rest of the page into
+predictions. If equal and opposite logical action is sufficient, classical mathematics can only be
+reasonable where it describes such closures and their large-count limits. Its completed infinities and
+unconstructed choices are additions the basis does not need, and they are where the paradoxes and
+wrong answers turn up.
 
 **Why determinism sharpens the point.** In QLF every outcome is fixed by counting closures: what
 happens first is what closes first, and what happens most often is what closes in the most ways
