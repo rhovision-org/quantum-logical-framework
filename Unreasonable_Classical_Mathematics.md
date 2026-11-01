@@ -255,6 +255,59 @@ These are paradoxes of classical (Boolean) logic applied to quantum events.
   non-commuting axes ([`Entanglement.md`](Entanglement.md) §5–6, [`ER_EPR_QLF.md`](ER_EPR_QLF.md)).
   **Status: reading**, with the non-commutativity proved.
 
+### 4e. Paradoxes of collective choice, and how conflict resolves
+
+Collective choice has its own liar. Condorcet (1785) noticed that majority preference can go round in
+a circle: a majority prefers A to B, another prefers B to C, and a third prefers C to A. Arrow (1951)
+showed this is no accident. With three or more options, no rule for turning individual rankings into
+a group ranking satisfies all of the following at once: it accepts any rankings, respects unanimity,
+lets the choice between two options depend only on how people rank those two, and is not a
+dictatorship. Both results are finite and correct. In the terms of §3 they are failures of the first
+kind: a cycle is a group decision that would have to precede itself, so it never closes.
+
+QLF has the corresponding results for games, proved with no axioms:
+
+* **A game has a free-action functional exactly when it has no improvement cycle**
+  ([`free_action_iff_four_cycle`](lean/QLF_PotentialGames.lean), and for any number of players
+  [`QLF_NPlayerPotential`](lean/QLF_NPlayerPotential.lean)). Matching pennies is the liar of game
+  theory: each player's best reply undoes the other's, and the play cycles with no closure.
+* **Where a functional exists, a Nash equilibrium is a ZFA closure** (zero regret is zero free
+  action, [`nash_iff_closure`](lean/QLF_PotentialGames.lean)), so relaxation reaches one and cannot
+  cycle.
+* **Conflict resolves by making the closure joint.** Pay every player the shared total and the game
+  becomes one whose functional *is* welfare ([`welfare_game_potential`](lean/QLF_PotentialGames.lean)).
+  In the runs this took the welfare-best convention from 0 % to 100 %, and turned a Prisoner's
+  Dilemma into full cooperation ([`Game_Theory_QLF.md`](Game_Theory_QLF.md)).
+
+The same reading is built into the group tools. A cycle is handled the way §4a handles the liar: it
+receives no receipt. Every peer computes the result and gets the same answer.
+
+* **quantum-os.** In liquid democracy a vote follows its delegation chain to the first person who
+  voted directly, and a chain that loops or reaches no direct voter **abstains**
+  ([Governance.md](https://github.com/rhovision-org/quantum-os/blob/main/Governance.md)). That is
+  Kripke's treatment of the liar applied to votes: an ungrounded vote is assigned nothing. In
+  collective optimization a cycling loop "is the substrate reporting that the problem was posed as
+  conflict", and the cure is to score candidates on the shared objective
+  ([Collective_Optimization.md](https://github.com/rhovision-org/quantum-os/blob/main/Collective_Optimization.md)).
+  `/solve` on a room's joint position is deterministic, so every peer reaches the same closure
+  without negotiating ([`QLF_as_Intelligence.md`](QLF_as_Intelligence.md) §8,
+  [`QucalcSearch.md`](QucalcSearch.md)).
+* **rhogov.** The on-chain governance app applies the same rules
+  ([README](https://github.com/rhovision-org/rhogov/blob/main/README.md)). Delegation loops abstain.
+  Trust is well-founded: a rating can confer at most one level below the rater's own, so two strangers
+  cannot vouch each other up, which is the governance form of "no closure contains itself". Every
+  figure about standing or outcome comes from one read-only query that anyone can re-run and must get
+  the same answer. A council's stakeholder weights are the median of participants' estimates, so a
+  few extreme estimates cannot swing them.
+
+One caution, which Arrow's theorem forces. rhogov's ranked-choice votes use instant runoff, which
+always produces a winner, so by Arrow it must give up one of his conditions; instant runoff gives up
+the independence condition and can miss an option that beats every other head to head. QLF does not
+remove Arrow's theorem. It explains where the cycle comes from and offers a way out that changes the
+question: score the shared outcome, and the cycle has nothing to run on. **Status:** Condorcet and
+Arrow classical; the game theorems proved; the governance rules are design choices consistent with
+this reading, and the group testing in quantum-os is where they meet human data.
+
 ---
 
 ## 5. Failures of the continuum
@@ -413,6 +466,7 @@ realize, so the two cannot drift apart.
 | Least action (`δS = 0`) follows from ZFA | **Proved**, no axiom | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) |
 | The liar receives no receipt | **Reading** (prior art: Kripke 1975) | §4a |
 | Russell, Berry, Zeno, eraser, EPR | **Reading** | §4b–4d |
+| Improvement cycles ⟺ no free-action functional; Nash = closure; joint closure = welfare | **Proved** | [`QLF_PotentialGames`](lean/QLF_PotentialGames.lean), §4e |
 | The completed continuum is gratuitous | Three classical results + two proved | [`TheContinuum.md`](TheContinuum.md) |
 | Choice's pathologies are Choice's alone | **Classical** (Solovay 1970) | §6 |
 | Effectiveness tracks realizability | **Thesis**; its failures are the evidence | §5d, [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §4 |
