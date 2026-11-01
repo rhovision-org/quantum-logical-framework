@@ -420,7 +420,9 @@ With that bridge, QLF's per-event `ΔF = −log 2` (`zfa_closure_minimizes_free_
 Landauer's `k_B T ln 2` — the cost of fixing one bit. The identification becomes dimensional once
 the free-energy unit is fixed by the **local temperature of the observer's Markov blanket**: the
 abstract `−log 2` (nats) is then the Landauer cost `k_B T ln 2` in those units — so QLF does not
-have "only a dimensionless log," it has the log *plus* the local clock that scales it. And
+have "only a dimensionless log," it has the log *plus* the local clock that scales it. §5b now derives
+that temperature from the census, `T = ε/log 8` from `1/T = dS/dE`, given the energy per event `ε`
+([`lean/QLF_CensusTemperature.lean`](lean/QLF_CensusTemperature.lean)). And
 **`ℏω = 1 bit at frequency ω`** is derived from the per-event `log 2` plus the per-event `ℏω`,
 recovering **Margolus–Levitin** (`ℏ` per bit-flip) and Landauer (`k_B T ln 2` per erasure) as
 consequences ([`Information_Energy_Equivalence.md`](Information_Energy_Equivalence.md)). This is the
@@ -684,7 +686,7 @@ information.
 | Shannon entropy (count) | Shannon 1948 | **inherited** — the census IS Shannon counting; `log` forced on the *binary uniform* census only | ✅ machine-checked (uniform wing); general uniqueness open, and its **necessity** unproven (§2) | `QLF_CensusShannon`, `QLF_EntropyUniqueness` |
 | Phase (beyond count) | — | **derived** — count ≠ phase; order is independent information | ✅ machine-checked | `QLF_PhaseInformation` |
 | Algorithmic (AIT) | Kolmogorov; Chaitin | **boundary** — `Ω` = the pruning boundary; RCA₀ floor | 🧱 principled boundary (Ω uncomputable) | `QLF_ShannonOverfit`, `full_zeno_prune` |
-| Physical/finite | Landauer; Bekenstein; Gisin | **derived** — no continuum in a finite region; `ΔF = −log 2` | ✅ machine-checked | `QLF_Realizability`, `QLF_FreeEnergy` |
+| Physical/finite | Landauer; Bekenstein; Gisin | **derived** — no continuum in a finite region; `ΔF = −log 2` (dimensionless); the census temperature `T = ε/log 8` makes it `ε/3` per bit, given the energy per event `ε` (§5b) | ✅ machine-checked; `ε` an input | `QLF_Realizability`, `QLF_FreeEnergy`, `QLF_CensusTemperature` |
 | Quantum (von Neumann) | von Neumann; Gottesman | **reading** — `ℤ[i]` skeleton; a consistent integer count-measure; `ħ/2` | ✅ measure machine-checked; Born-*rule* uniqueness + the multiplicity↔norm² bridge open (§6) | `QLF_BornProbability`, `QLF_Uncertainty` |
 | Fisher / geometry | Fisher; Amari | **rendering** — the census carries the dually-flat geometry (KL = canonical divergence); metric = census-KL curvature | 🟡 metric + dually-flat structure shown ([`fisher_from_census.py`](fisher_from_census.py)); continuum `n→∞` manifold open (#142) | `QLF_CensusBrownian`, `QLF_FreeEnergy` |
 | Semantic | Carnap–Bar-Hillel; Floridi | **contributes** — closure-as-receipt; contradiction carries 0 | ✅ machine-checked | `QLF_ContradictionReceipt`, `QLF_InfoSynthesis` |
