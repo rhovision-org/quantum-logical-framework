@@ -228,6 +228,54 @@ straight drift with diffusive spread; average with independent phases and you ge
 which large amplitudes are exceptional. Each average erases what a single way has: the loop in §3 and
 the phase correlation here. NC3 says that physics lives in what the averages erase.
 
+### 4a. A straight-line bound for waves, falsified: Mizohata–Takeuchi
+
+The cleanest independent instance of "straight lines fail, coherence wins" comes from harmonic
+analysis, and it was settled in 2025.
+
+**The conjecture.** For a `C²` hypersurface `Σ ⊂ ℝ^d`, the extension operator `E` turns a function
+`f` on `Σ` into a wave `Ef` on `ℝ^d` (a superposition of plane waves with frequencies on `Σ`). The
+Mizohata–Takeuchi conjecture, which arose from well-posedness questions for dispersive equations,
+says the energy a wave deposits on any nonnegative weight `w` is controlled by straight lines:
+
+```
+∫ |Ef|² w  ≲  ‖f‖²_{L²(Σ)} · sup over lines ℓ of ∫_ℓ w      (the X-ray transform of w)
+```
+
+So no arrangement of mass can absorb more of a wave's energy than the heaviest single line through it
+allows. It is a straight-line law for waves.
+
+**The counterexample.** Hannah Cairo, aged 17, disproved it (arXiv:2502.06137, 2025), with a loss of
+`log R` at scale `R`, for every `C²` hypersurface that does not lie in a hyperplane. In her
+construction, `N ≈ log R` separated frequencies `ξ_1, …, ξ_N` on `Σ` generate the set
+`Q = { Σ c_i ξ_i : c ∈ {0,1}^N, Σ c_i = ⌊N/2⌋ }`: the sums that use exactly half of the frequencies,
+`|Q| ≈ N^{−1/2} 2^N` of them. The weight is built from `Q`. On the energy side, translating `Q` by any
+`ξ_i` lands about half of its points back in a set of the same kind, so wave packets add
+constructively there. On the line side, an incidence lemma shows that no hyperplane meets more than
+`2^{d−1}` of the balls around `Q`, so every line carries little weight. The ratio between the two sides
+is about `N ≈ log R`, and it grows without bound.
+
+**Why it belongs here.** Cairo's result is exactly the pattern of §3–§4 in classical mathematics, with
+no QLF input:
+
+- the bound that failed is a **straight-line** bound (the X-ray transform);
+- it failed because of **constructive interference** on a combinatorial set, which is a rogue-wave
+  mechanism; and
+- the failure **grows with scale** (`log R`), as the census coherence `κ_L` grows with `L`.
+
+There is one more resemblance. Cairo's interference set is the set of **half-balanced** sums: choose
+exactly half of `N` frequencies, a central-binomial family of size about `2^N/√N`. QLF's one-axis
+closure census is the same count, `C(2n, n)` balanced words. We note this as a structural resemblance
+only. Nothing here derives Cairo's construction from closures, and her theorem stands on its own.
+
+**What it does for NC.** It shows that NC3's kinematic claim has a precise analogue in the continuum
+itself: even inside classical harmonic analysis, straight-line bounds on wave energy are false at
+large scale, and they fail because of coherence that a straight line cannot see. In the continuum the
+failure is a slowly growing `log R`. In the census it is the exponential `κ_L ≈ 1.93^L`. A test that
+would connect them is to ask whether the census itself violates a discrete Mizohata–Takeuchi
+inequality: bound the signed closure amplitude deposited on a weight on `ℤ⁴` by the weight's heaviest
+lattice line, and measure the ratio as `L` grows. It is not done here.
+
 ---
 
 ## 5. Electron interaction as a joint rogue (conjecture, test registered)
@@ -317,6 +365,7 @@ electrons, whose closures are thousands of bits deep.
   classical statistics would call them rogue.
 - Not "most ways are in phase". `|A_L|/W_L → 0`; the claim is coherence relative to random phase.
 - Not "electrons interact by rogue waves" as a finding. It is NC-E, a conjecture with a registered test.
+- Not "QLF predicted" or "explains" Cairo's counterexample. It is an independent classical result with the same shape (§4a).
 - Not "nature is QLF's construction". The construction is one model of a logical nature.
 
 ---
@@ -350,3 +399,4 @@ electrons, whose closures are thousands of bits deep.
 - H. Weyl, *Das Kontinuum* (Veit, Leipzig, 1918).
 - H. S. Snyder, *Quantized space-time*, Phys. Rev. **71** (1947) 38–41.
 - L. Bombelli, J. Lee, D. Meyer and R. D. Sorkin, *Space-time as a causal set*, Phys. Rev. Lett. **59** (1987) 521–524.
+- H. Cairo, *A counterexample to the Mizohata–Takeuchi conjecture*, arXiv:2502.06137 (2025).
