@@ -1,0 +1,352 @@
+# The No-Continuum Conjecture: straight lines fail, rogue waves are the rule
+
+> Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
+> opposite quantum logical action with zero free energy, the principle of QLF.
+
+**The question (Jim, 2026-11-02).** *"Is it worthwhile to relate electron interaction to rogue waves
+that are the rule rather than the exception in QLF? Perhaps the failure of the straight line law is the
+story. Can we resurrect a version of the conjecture that denies a continuum?"*
+
+**Short answer.** Yes, with one qualification. The repository has denied the continuum for a long time,
+but in pieces: the realizability theorem `no_continuum_in_finite_region`
+([`QLF_Realizability`](lean/QLF_Realizability.lean)), the catalogue of wrong continuum answers in
+[`TheContinuum.md`](TheContinuum.md), the discrete-frequency correction to Mead in
+[`Collective_Electrodynamics.md`](Collective_Electrodynamics.md) §5, and the rule that irrationals are
+limits of rational processes ([`Hofstadter_Butterfly_QLF.md`](Hofstadter_Butterfly_QLF.md),
+[`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §5c). There was no
+single statement that could fail. This page supplies one, built on two new exact facts:
+
+1. **No closure is a straight line.** A straight-line history never balances, and the straight-line
+   histories are an exponentially vanishing fraction of all histories (at most `16·2^{−L}` at length
+   `L`). The classical straight trajectory is a *mean over ways*, and no single way follows it (§3).
+2. **The census amplitude is a rogue wave at every length from 4 on.** Measured against the
+   random-phase baseline that classical wave statistics uses, the signed closure census sits
+   `κ_L = |A_L|/√W_L` standard deviations out: `9.3` at `L = 4`, `1.2·10⁵` at `L = 20`, `2.8·10¹⁰` at
+   `L = 40` (exact integers, [`rogue_census.py`](rogue_census.py)). The ocean calls a wave rogue at
+   `κ = 4` (§4).
+
+The qualification is the one the method always imposes. Both facts are exact statements about the
+census, so they are theorems or exact computations *about the model*. They become physics only through
+the identification of the census amplitude with a physical amplitude, and that identification is the
+conjecture. §5 applies it to two electrons and registers a test that has not been run.
+
+---
+
+## 1. Definitions
+
+All objects are finite. Nothing below uses a real number except as the name of a limit.
+
+- **Twist history.** A finite word over the eight twists `^ v < > / \ + −`, read as unit steps
+  `±e_a` on the four axes of `ℤ⁴` ([`Closure_Walk.md`](Closure_Walk.md)). Net displacement
+  `x(h) ∈ ℤ⁴`.
+- **Closure.** A count-balanced history: `x(h) = 0`. By `count_balanced_pauli_closed`
+  ([`QLF_TwistAlphabet`](lean/QLF_TwistAlphabet.lean)) every closure is also Pauli-closed, so it is a
+  ZFA closure, both conjuncts.
+- **Census.** `W_L` is the number of closures of length `L`. `A_L` is their signed sum, each closure
+  weighted by its fold phase `±1`. The phase is the holonomy of the ℤ₂ edge-sign connection
+  (`fold_eq_connectionPhase`, [`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)).
+- **Census observable.** A function of finitely many census counts at finite lengths. Its values are
+  rational.
+- **Rendering.** A real number `r` is *rendered* by a sequence of census observables `q_L` when
+  `q_L → r`. The sequence is the physical object; `r` names where it goes.
+- **Geodesic (straight-line) history.** A history with `|x(h)|₁ = |h|`: every step moves away from the
+  origin. Equivalently, it never uses both twists of a conjugate pair.
+- **Random-phase baseline.** The model in which the `W_L` closures carry independent fair signs. Then
+  `E[A_L²] = W_L`, so a typical amplitude is `√W_L`, and `P(|A_L| ≥ κ√W_L) ≈ e^{−κ²/2}`. This is the
+  Gaussian statistics of a linear random wave field, the baseline against which ocean and optical
+  waves are called rogue.
+- **Coherence.** `κ_L = |A_L| / √W_L`, the realized amplitude in units of the baseline's standard
+  deviation.
+
+---
+
+## 2. The conjecture
+
+> **No-Continuum Conjecture (NC).** What nature records is closure counts.
+>
+> - **(NC1) Observables are census observables.** Every measured quantity is a census observable at a
+>   finite length, hence rational.
+> - **(NC2) Real numbers are renderings.** Every real-valued quantity in a physical law (a position, a
+>   field value, a coupling, `π`) is rendered by a sequence of census observables. The limit is never
+>   itself the value of a measurement.
+> - **(NC3) Classical laws are laws of means.** A law stated for a continuous trajectory or a smooth
+>   field (straight-line inertial motion, a smooth Coulomb field) holds of an average over ways and of
+>   no single way. Each single way is a closure: a loop, carrying a coherent signed amplitude far from
+>   the random-phase baseline.
+
+**What is assumed.** Only that nature is logical ([`Philosophy.md`](Philosophy.md) §3d), plus one named
+premise that QLF did not invent: a bounded region holds finitely many distinguishable states
+(Bekenstein; the `[Finite R]` hypothesis of `no_continuum_in_finite_region`). QLF's construction is
+one model of these, not a postulate about nature.
+
+**Contrast, once.** NC does not say `ℝ` is inconsistent; it is consistent, and the claim is
+**consistency ≠ realizability** ([`TheContinuum.md`](TheContinuum.md)). It also does not reject the
+continuum as mathematics. It denies that the continuum is *realized*, and keeps it as the rendering,
+which is how [`TheContinuum.md`](TheContinuum.md) §Summary already puts it.
+
+**Which parts are proved.** NC1 restricted to a finite region is the realizability theorem plus the
+Bekenstein premise. NC3's kinematic half is proved below (§3). NC3's amplitude half is an exact
+computation about the census (§4). What is *conjectural* is that the census is where physical counts
+come from: that a physical amplitude is a signed closure census. That bridge is not derived here.
+
+---
+
+### 2a. The lineage
+
+NC is an old position with a new instrument, and the history matters because each earlier version
+failed or stalled at a specific point.
+
+- **Atoms against the continuum.** Leucippus and Democritus held that matter is made of indivisible
+  units; Aristotle (*Physics* VI) argued that magnitude, motion and time are continuous, and his view
+  ruled for two thousand years. Zeno's paradoxes are the original pressure on the continuous side
+  ([`TheContinuum.md`](TheContinuum.md) §5).
+- **The constructive critique.** Weyl's *Das Kontinuum* (1918) and Brouwer's intuitionism attacked the
+  completed continuum on logical grounds; reverse mathematics later showed how little of it ordinary
+  analysis needs ([`ReverseMathematics.md`](ReverseMathematics.md)). NC takes the logical side from
+  this line and adds a physical premise it lacked, the Bekenstein bound.
+- **Physics forced to be discrete.** Planck's quantum (1900) was the first time a continuum answer was
+  replaced by a count because the continuum answer was wrong. Einstein, in the 1954 letter to Besso
+  quoted in [`TheContinuum.md`](TheContinuum.md), allowed that physics may not be based on continuous
+  structures at all. He did not say what would replace them; NC's answer is closure counts.
+- **Discrete and still Lorentz-invariant.** Snyder (1947) showed a quantized spacetime need not pick a
+  frame, and causal set theory (Bombelli, Lee, Meyer and Sorkin 1987) made that the working answer to
+  the lattice objection. NC inherits the objection as kill condition K4.
+
+## 3. The failure of the straight-line law (proved)
+
+For a history `h` with `n_a⁺` and `n_a⁻` steps in the two directions of axis `a`,
+
+```
+|x(h)|₁ = Σ_a |n_a⁺ − n_a⁻|  ≤  Σ_a (n_a⁺ + n_a⁻) = |h|,
+```
+
+with equality exactly when no axis is used in both directions. Three consequences:
+
+- **(S1) No closure is a straight line.** A closure of positive length has `x = 0 < |h|`, so it is not
+  geodesic. Every event contains a reversal on some axis.
+- **(S2) Net motion slower than one step per step requires a reversal.** `|x(h)|₁ < |h|` holds iff some
+  axis carries both a twist and its conjugate. Under the framework's hypothesis that every substrate
+  step runs at `c` ([`Inertia.md`](Inertia.md); a hypothesis there, not yet a theorem), straight
+  histories are null rays, and no history with a massive straight trajectory exists. A massive body is
+  a closed null circulation (Route A, [`QLF_Inertia`](lean/QLF_Inertia.lean)), and its uniform motion is
+  the drift of that circulation.
+- **(S3) Straight lines are exponentially rare.** The number of geodesic histories of length `L` is
+  `G_L = Σ_{k=0}^{4} C(4,k)·2^k·k!·S(L,k)` (choose `k` axes, a sign on each, and a word using all `k`
+  letters; `S` is the Stirling number of the second kind). So `G_L/8^L ≤ 16·2^{−L}`. The formula is
+  checked by brute force to `L = 5`:
+
+  | `L` | `G_L/8^L` | bound `16·2^{−L}` |
+  |---:|---:|---:|
+  | 4 | 0.459 | 1 |
+  | 8 | 5.04·10⁻² | 6.25·10⁻² |
+  | 12 | 3.66·10⁻³ | 3.91·10⁻³ |
+  | 20 | 1.52·10⁻⁵ | 1.53·10⁻⁵ |
+
+  A single repeated twist, the literal straight line along one axis, is 8 histories out of `8^L`, one
+  way to reach its endpoint. It is the least-multiplicity history there is, which is where
+  [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md) says exceptions live.
+
+**Reading.** The straight line is what free motion looks like on average. The mean position of an unbiased
+population of histories stays at the origin, and that of a biased one drifts along a straight line. But a mean over ways need not be a way, and here it never is (CLAUDE.md, "ZFA first,
+then every way", rule 3). Newton's first law survives as a law about the mean; at the level of a single
+event it fails without exception. This is the sense in which "the failure of the straight-line law is
+the story": what classical physics treats as the default (unforced straight motion) is not anything a
+closure does, and what it treats as the departure (interaction, turning) is what every closure does.
+
+**Lean target.** S1 and S2 are a few lines over `List Twist`. They are not yet in Lean.
+
+**History.** Straight-line inertia is younger than it looks. Galileo's inertia was circular, motion
+along the Earth's surface; Descartes (*Principia Philosophiae*, 1644) first stated that free motion is
+straight, and Newton made it Law I (1687). Quantum mechanics already broke it at the level of single
+paths. Dirac (1933) and Feynman (1948) wrote the amplitude as a sum over all paths with equal weight,
+the classical path emerging only by stationary phase, and Feynman and Hibbs (1965) noted that the
+paths that dominate are zigzags, continuous but nowhere differentiable. Closer still: Feynman's
+checkerboard (Feynman and Hibbs, problem 2-6) recovers the 1+1-dimensional Dirac equation from paths
+that always move at the speed of light and only turn, with an amplitude per corner, and Schrödinger's
+*Zitterbewegung* (1930) is the same light-speed trembling in the free electron. S2 is the discrete core
+of both: a massive straight trajectory is made of null steps that reverse. What QLF adds is the
+counting form (S3) and the requirement that what is realized is a closed loop, not an open path.
+
+---
+
+## 4. Rogue waves are the rule (exact computation)
+
+**Classical credit first.** Rogue waves are real and classically explained. The Draupner platform in the
+North Sea recorded a 25.6 m wave in a sea of significant height about 12 m on 1 January 1995. In a
+linear random sea, wave heights are Rayleigh-distributed (Longuet-Higgins 1952), and a height above
+twice the significant height has probability `e^{−8} ≈ 3.4·10⁻⁴`; such waves are seen more often than
+that. The accepted explanations are linear focusing and the nonlinear modulational instability
+(Benjamin & Feir 1967), whose prototype is the Peregrine breather, peaking at three times the
+background (Peregrine 1983); the review is Kharif & Pelinovsky (2003). Optical rogue waves were found by
+Solli et al. (2007). The common thread is that **phases are correlated**, so the random-phase baseline
+underestimates large amplitudes.
+
+**The census.** In QLF the phases are correlated by construction: they are the holonomies of a ℤ₂
+connection with π flux through every mixed spatial plaquette ([`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)).
+So the question is how far the realized amplitude sits from the baseline. [`rogue_census.py`](rogue_census.py)
+computes `W_L` and `A_L` exactly by a transfer recursion on `ℤ⁴`, checks `W_L` against
+[`closure_walk.py`](closure_walk.py) at every length, and reproduces the signed census `−8, 120, −2144`
+of [`Closure_Walk.md`](Closure_Walk.md) §3:
+
+| `L` | `W_L` | `A_L` | `\|A_L\|/W_L` | `κ_L = \|A_L\|/√W_L` | baseline `log₁₀ P` |
+|---:|---:|---:|---:|---:|---:|
+| 2 | 8 | −8 | 1 | 2.83 | −1.7 |
+| 4 | 168 | 120 | 0.714 | 9.26 | −18.6 |
+| 10 | 7,939,008 | −868,608 | 0.109 | 308 | −2.1·10⁴ |
+| 20 | 2.23·10¹⁵ | 5.54·10¹² | 2.5·10⁻³ | 1.18·10⁵ | −3.0·10⁹ |
+| 30 | 1.08·10²⁴ | −5.64·10¹⁹ | 5.2·10⁻⁵ | 5.43·10⁷ | −6.4·10¹⁴ |
+| 40 | 6.57·10³² | 7.30·10²⁶ | 1.1·10⁻⁶ | 2.85·10¹⁰ | −1.8·10²⁰ |
+
+(All rows are in [`data/rogue_census.json`](data/rogue_census.json); `L ≤ 40` runs in about 25 s.)
+
+**What the table shows.**
+
+- **(R1) From `L = 4` on, every census amplitude is past the rogue threshold.** The ocean's threshold
+  `e^{−8}` corresponds to `κ = 4`. The census passes it at `L = 4`, and after that `κ_L` grows by a factor of 3.2 per
+  two steps, rising to 3.5 by `L = 40`. Under the random-phase baseline, the amplitude realized at `L = 40` has
+  probability about `10^{−1.8·10²⁰}`.
+- **(R2) The rate.** Following Jim's rule, the rate is a rational process: the ratio sequence
+  `A_{L}/A_{L−2}` runs `−15.0, −17.9, −19.5, …, −26.8` at `L = 40`. With the leading `L^{−2}` correction
+  of a four-dimensional walk taken out it reads `29.70`, consistent with `(2 + 2√3)² = 29.86`, the
+  square of the band edge of the π-flux hopping on the three spatial axes (`2√3`) plus the commuting
+  gauge axis (`2`). `W_L` grows at `8² = 64` per two steps. So `κ_L` grows like
+  `((2+2√3)/√8)^L ≈ 1.93^L`. This identification is numerical; nothing below depends on it.
+- **(R3) "Rule" does not mean "most ways in phase".** `|A_L|/W_L` falls toward zero, like
+  `((2+2√3)/8)^L ≈ 0.68^L`. The net coherent excess is a vanishing fraction of the ways. The amplitude is
+  enormous compared with random phases and small compared with full alignment. Both statements are
+  true and the claim is only the first.
+
+**The rule-4 test.** For which distribution over ways would R1 be false? For one with independent
+phases: then `κ_L` stays near 1. The census is not such a distribution, so R1 has content, but the
+content is about the census's own phase structure, which is a theorem (`QLF_EdgeSign`). R1 is therefore
+an exact property of the model. It is not yet evidence about nature; it becomes a physical claim only
+through NC's bridge, and the next section names the first place to test that bridge.
+
+**Why this belongs with the straight line.** The straight trajectory and the smooth Gaussian field are
+the same move made twice. Average over ways with unsigned weights and the central limit gives a
+straight drift with diffusive spread; average with independent phases and you get the Gaussian sea in
+which large amplitudes are exceptional. Each average erases what a single way has: the loop in §3 and
+the phase correlation here. NC3 says that physics lives in what the averages erase.
+
+---
+
+## 5. Electron interaction as a joint rogue (conjecture, test registered)
+
+**What is proved.** Charge is the residue of non-closure, and no event is charged
+(`zfa_closure_is_neutral`, [`QLF_ElectronClosure`](lean/QLF_ElectronClosure.lean)). Coulomb's rule is a
+counting rule: a joint closure of two histories carries total charge zero, two like charges admit no
+joint closure, and opposite charges admit some (`coulomb_is_a_counting_rule`). No force, no field, no
+action at a distance. Mead's transactional photon is the same joint closure
+([`Collective_Electrodynamics.md`](Collective_Electrodynamics.md) §2).
+
+**The conjecture (NC-E).** The interaction amplitude of two electrons is the signed census of their
+joint closures, and it is a rogue: coherent far above the random-phase baseline wherever joint closures
+exist. Coulomb's smooth `1/r²` is the rendering of those counts, the large-count, phase-averaged limit,
+and the field that classical electrodynamics integrates is the average that erases the coherence.
+
+**History.** Coulomb measured the inverse-square law in 1785 as a force at a distance; Faraday and
+Maxwell replaced it with a field. A line of physicists then tried to remove the field again:
+Schwarzschild (1903), Tetrode (1922) and Fokker (1929) wrote electrodynamics as a direct interaction
+between charges, and Wheeler and Feynman (1945, 1949) made it work with the absorber, so that a
+radiated photon is a handshake between emitter and absorber. Mead's *Collective Electrodynamics*
+(2000) continues that line, and QLF reads its handshake as a joint closure
+([`Collective_Electrodynamics.md`](Collective_Electrodynamics.md)). NC-E differs from all of them in
+one place: they kept continuous spacetime and continuous phase, and NC-E replaces both with counts.
+
+**Existing data, read honestly.** The signed two-electron census of
+[`logical_bang_census.py`](logical_bang_census.py)
+([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §43–§45) reported `C = |S|/N`, the
+analogue of `|A_L|/W_L`, never `κ = |S|/√N`. It found that interleaved electrons with orthogonal spins
+cancel exactly at lengths 8 and 10, while collinear ones survive. An exact zero is `κ = 0`: orthogonal
+spins make a dark fringe, not a rogue. So NC-E is already scoped by data it did not predict: if it
+holds, it holds for the collinear classes.
+
+**Registered test T3 (not run in this commit).** Run [`logical_bang_census.py`](logical_bang_census.py)
+unchanged, with the §44 definition of entangled (`--depth12`, `--depth 14`), at lengths 10, 12 and 14, and compute `κ = |S|/√N` for the entangled collinear class (P and A
+pooled, as in §44).
+
+- **Pass:** `κ ≥ 4` at all three lengths, and `κ` does not decrease from 10 to 14.
+- **Fail:** `κ < 4` at any of the three lengths.
+- **Reported either way:** `κ` for the orthogonal class and for every remainder class.
+
+Following [`ScientificApproach.md`](ScientificApproach.md) and the project's depth rule, a failure at
+length 14 says that the collinear joint census is near random phase *at that depth*. That would make
+NC-E unsupported at the depth reached and is how it will be reported. It would not decide physical
+electrons, whose closures are thousands of bits deep.
+
+---
+
+## 6. Kill conditions (stated before the tests)
+
+- **K1 (census).** If `κ_L` stops growing, or falls below 4, at some length beyond 40, R1's "rule" is
+  false for the census. The ratio trend makes this unlikely, but it is a computation anyone can extend.
+- **K2 (electrons).** T3 fails as registered: NC-E is withdrawn at that depth.
+- **K3 (realizability).** A measurement whose outcomes provably distinguish more states than a finite
+  region can hold falsifies the Bekenstein premise and NC1 with it.
+- **K4 (Lorentz invariance).** The census is counted on `ℤ⁴`, the space of twist counts. If that lattice
+  were read as space, it would predict a direction- and energy-dependent speed of light at first order in
+  the Planck energy, and the Fermi observation of GRB 090510 already bounds such an effect beyond the
+  Planck scale (Abdo et al. 2009). QLF's answer is that space is the causal order rendered statistically,
+  not this lattice ([`TheContinuum.md`](TheContinuum.md) §4; the bridge `order_metric_continuum_limit`
+  in [`QLF_OrderMetric`](lean/QLF_OrderMetric.lean)). If a rendering of NC ever implies first-order
+  Planck dispersion, NC as built here is refuted by existing data. Hughes–Drever bounds on anisotropy
+  play the same role ([`Inertia.md`](Inertia.md)).
+
+---
+
+## 7. Status at a glance
+
+| Claim | Status |
+|---|---|
+| NC1 for a finite region | **Proved** given the Bekenstein premise (`no_continuum_in_finite_region`) |
+| S1, S2: no closure is straight; slower-than-`c` net motion needs a reversal | **Proved** (elementary, above); Lean target |
+| S3: straight histories are at most `16·2^{−L}` of all | **Proved** (counting formula, brute-force checked) |
+| R1: census amplitude past the rogue threshold for `4 ≤ L ≤ 40` | **Exact computation** |
+| R2: growth rate `(2+2√3)²` per two steps | **Numerical evidence** |
+| NC3: classical laws are laws of means | **Conjecture**; the kinematic half follows from S1–S3 |
+| NC-E: electron interaction is a joint rogue | **Conjecture**; T3 registered, not run; already scoped to collinear classes |
+| The bridge: a physical amplitude is a signed closure census | **Open bridge**, not derived here |
+
+---
+
+## 8. What not to say
+
+- Not "the continuum is inconsistent" or "false". Say: unrealized, and kept as the rendering.
+- Not "QLF proves rogue waves" or "explains ocean rogue waves". The ocean's are explained classically by
+  focusing and modulational instability. The census result is that QLF's own amplitudes sit where
+  classical statistics would call them rogue.
+- Not "most ways are in phase". `|A_L|/W_L → 0`; the claim is coherence relative to random phase.
+- Not "electrons interact by rogue waves" as a finding. It is NC-E, a conjecture with a registered test.
+- Not "nature is QLF's construction". The construction is one model of a logical nature.
+
+---
+
+## See also
+
+- [`TheContinuum.md`](TheContinuum.md): the case against the realized continuum, and the Lorentz answer (§4).
+- [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §5: failures of the continuum, irrationals as rational processes.
+- [`Closure_Walk.md`](Closure_Walk.md): closures as closed walks on `ℤ⁴`, and the ℤ₂ connection.
+- [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md): exceptions are the least-multiplicity histories.
+- [`Inertia.md`](Inertia.md): rest mass as a closed null circulation.
+- [`Electron.md`](Electron.md) and [`Collective_Electrodynamics.md`](Collective_Electrodynamics.md): the electron as a closed mode, and the transactional photon.
+- [`Interference_NoGo.md`](Interference_NoGo.md): why an unsigned tally cannot interfere, which is why the signed census is the one that matters here.
+- [`ScientificApproach.md`](ScientificApproach.md): status labels, R6a, R7.
+
+## References
+
+- T. B. Benjamin and J. E. Feir, *The disintegration of wave trains on deep water*, J. Fluid Mech. **27** (1967) 417–430.
+- M. S. Longuet-Higgins, *On the statistical distribution of the heights of sea waves*, J. Mar. Res. **11** (1952) 245–266.
+- D. H. Peregrine, *Water waves, nonlinear Schrödinger equations and their solutions*, J. Austral. Math. Soc. Ser. B **25** (1983) 16–43.
+- C. Kharif and E. Pelinovsky, *Physical mechanisms of the rogue wave phenomenon*, Eur. J. Mech. B/Fluids **22** (2003) 603–634.
+- D. R. Solli, C. Ropers, P. Koonath and B. Jalali, *Optical rogue waves*, Nature **450** (2007) 1054–1057.
+- A. A. Abdo et al. (Fermi LAT and GBM), *A limit on the variation of the speed of light arising from quantum gravity effects*, Nature **462** (2009) 331–334.
+- J. D. Bekenstein, *Universal upper bound on the entropy-to-energy ratio for bounded systems*, Phys. Rev. D **23** (1981) 287–298.
+- P. A. M. Dirac, *The Lagrangian in quantum mechanics*, Phys. Z. Sowjetunion **3** (1933) 64–72.
+- R. P. Feynman, *Space-time approach to non-relativistic quantum mechanics*, Rev. Mod. Phys. **20** (1948) 367–387.
+- R. P. Feynman and A. R. Hibbs, *Quantum Mechanics and Path Integrals* (McGraw-Hill, 1965).
+- E. Schrödinger, *Über die kräftefreie Bewegung in der relativistischen Quantenmechanik*, Sitzungsber. Preuss. Akad. Wiss. (1930) 418–428.
+- J. A. Wheeler and R. P. Feynman, *Interaction with the absorber as the mechanism of radiation*, Rev. Mod. Phys. **17** (1945) 157–181; *Classical electrodynamics in terms of direct interparticle action*, Rev. Mod. Phys. **21** (1949) 425–433.
+- C. A. Mead, *Collective Electrodynamics: Quantum Foundations of Electromagnetism* (MIT Press, 2000).
+- H. Weyl, *Das Kontinuum* (Veit, Leipzig, 1918).
+- H. S. Snyder, *Quantized space-time*, Phys. Rev. **71** (1947) 38–41.
+- L. Bombelli, J. Lee, D. Meyer and R. D. Sorkin, *Space-time as a causal set*, Phys. Rev. Lett. **59** (1987) 521–524.
