@@ -230,6 +230,9 @@ the phase correlation here. NC3 says that physics lives in what the averages era
 
 ### 4a. A straight-line bound for waves, falsified: Mizohata–Takeuchi
 
+*The conjecture itself, and its resurrection without the continuum, now has its own page:
+[`Mizohata_Takeuchi_QLF.md`](Mizohata_Takeuchi_QLF.md). This section keeps the connection to the census.*
+
 The cleanest independent instance of "straight lines fail, coherence wins" comes from harmonic
 analysis, and it was settled in 2025.
 
