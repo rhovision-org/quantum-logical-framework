@@ -113,6 +113,17 @@ anticommutation drawn on the lattice — the Clifford/Jordan–Wigner cocycle �
 around a mixed loop is `−1`, two turns `+1` (`QLF_Spin`, the `SU(2) → SO(3)` double cover, now as a holonomy).
 It is Wegner's `ℤ₂` lattice gauge theory, arrived at from the Pauli algebra rather than posited.
 
+**And the flux adds up: the holonomy of any planar walk is its area.** The table decides single plaquettes;
+[`QLF_GlobalHolonomy`](lean/QLF_GlobalHolonomy.lean) proves the rule for every word in the X–Y plane at every length,
+self-crossing walks included. With the signed area accumulated edge by edge as `Σ y·dx` (clockwise-positive),
+`spin_stokes` gives holonomy = area mod 2, so a balanced planar closure folds to `(−1)^neg · (−1)^area · I`
+(`spin_fold_area`): one bit of π flux per enclosed cell, counted with winding multiplicity. The colour line does the
+same in `F₃`: every closed planar walk transports to a central Heisenberg element whose phase index is the area mod 3
+(`colour_stokes`). The bridge `signedArea3_eq_cast`, proved by induction from any integer start
+(`area3Aux_cast`), identifies the two area recursions: one integer `signedArea` determines the spin bit modulo 2
+and the colour phase modulo 3. A counterclockwise unit square has signed area `−1` and colour phase `ω⁻¹`.
+Both are proved from QLF's own connection and colour transport alone. The other planes remain open.
+
 Consequences:
 
 - **Balance ≠ spin.** The walk alone is the classical, unsigned census. Every "ways" count in this note is
@@ -201,6 +212,9 @@ distribution, a binomial count.
   inversions), `connectionPhase_eq_predictedPhase` (the product of edge signs is the certified two-factor rule),
   `fold_eq_connectionPhase` (on a balanced history the Pauli fold *is* the holonomy), and the four plaquette
   fluxes of §2 decided.
+- **The plaquette fluxes now add up globally** — [`QLF_GlobalHolonomy`](lean/QLF_GlobalHolonomy.lean), no axioms:
+  `spin_stokes` (holonomy = signed area mod 2 for every X–Y word), `spin_fold_area` (the balanced fold is the area
+  sign), `colour_stokes` (closed planar walks transport to the area's central colour phase). X–Y plane only.
 - **Transience is now Lean** — [`QLF_PolyaTransience`](lean/QLF_PolyaTransience.lean), no axioms, elementary:
   `C(2m,m)²(3m+1) ≤ 16^m` ⟹ `W_L(L+1)(L+2) ≤ 4·8^L` ⟹ the return weight is summable with `Σ u ≤ 4` and tail
   `≤ 4/(N+2)`; the renewal theorem `Σ a = 1 − 1/Σ u` then gives `polya_transience`: any first-return weights in

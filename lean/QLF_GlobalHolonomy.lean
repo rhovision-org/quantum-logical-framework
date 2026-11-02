@@ -1,0 +1,236 @@
+import QLF_EdgeSign
+import QLF_ColourFlux
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.FinCases
+
+/-!
+# Global planar holonomy
+
+Native QLF spin and colour holonomy for words in the X–Y plane only, proved
+from QLF's edge-sign connection and colour transport. Signed area is accumulated
+from horizontal edges as `y * dx`: clockwise-positive, so the counterclockwise
+unit square has area `-1`. It counts winding with multiplicity, including
+self-intersecting walks. At arbitrary length, the same integer area determines
+the spin holonomy modulo 2 and the closed-walk colour phase modulo 3.
+-/
+
+namespace QLF.GlobalHolonomy
+
+open QLF QLF.PhaseRule QLF.EdgeSign QLF.ColourFlux
+
+inductive Step where
+  | east | west | north | south
+  deriving DecidableEq, Repr
+
+def twist : Step → Twist
+  | .east => .right
+  | .west => .left
+  | .north => .up
+  | .south => .down
+
+def dx : Step → ℤ
+  | .east => 1
+  | .west => -1
+  | _ => 0
+
+def dy : Step → ℤ
+  | .north => 1
+  | .south => -1
+  | _ => 0
+
+def xyPos (x y : ℤ) : Axis → ℤ
+  | .X => x
+  | .Y => y
+  | _ => 0
+
+/-- The horizontal-edge integral `Σ y·dx`, with clockwise-positive orientation.
+The counterclockwise unit square (east, north, west, south) has area `-1`. -/
+def areaAux (x y : ℤ) : List Step → ℤ
+  | [] => 0
+  | t :: ts => y * dx t + areaAux (x + dx t) (y + dy t) ts
+
+def signedArea (ts : List Step) : ℤ := areaAux 0 0 ts
+
+theorem stepPos_xy (x y : ℤ) (t : Step) :
+    stepPos (xyPos x y) (twist t) = xyPos (x + dx t) (y + dy t) := by
+  funext a
+  cases t <;> cases a <;>
+    simp [stepPos, xyPos, twist, dx, dy, twistStep, isNegTwist, axisOf]
+
+private theorem zmod_two_neg (z : ZMod 2) : -z = z := by
+  have h : ∀ w : ZMod 2, -w = w := by decide
+  exact h z
+
+theorem edgeParity_xy (x y : ℤ) (t : Step) :
+    edgeParity (posMod (xyPos x y)) (axisOf (twist t)) =
+      ((y * dx t : ℤ) : ZMod 2) := by
+  cases t <;>
+    simp [edgeParity, posMod, xyPos, twist, dx, dy, axisOf,
+      Int.cast_mul, zmod_two_neg]
+
+/-- Discrete Stokes for the fold connection, for every planar word. -/
+theorem spin_stokes_from (ts : List Step) (x y : ℤ) :
+    holAux (xyPos x y) (ts.map twist) = ((areaAux x y ts : ℤ) : ZMod 2) := by
+  induction ts generalizing x y with
+  | nil => simp [holAux, areaAux]
+  | cons t ts ih =>
+      change edgeParity (posMod (xyPos x y)) (axisOf (twist t)) +
+          holAux (stepPos (xyPos x y) (twist t)) (ts.map twist) =
+        ((y * dx t + areaAux (x + dx t) (y + dy t) ts : ℤ) : ZMod 2)
+      rw [stepPos_xy, ih, edgeParity_xy]
+      push_cast
+      rfl
+
+theorem spin_stokes (ts : List Step) :
+    holonomy (ts.map twist) = (signedArea ts : ZMod 2) := by
+  have hzero : xyPos 0 0 = (fun _ : Axis => 0) := by
+    funext a
+    cases a <;> rfl
+  unfold holonomy signedArea
+  rw [← hzero]
+  exact spin_stokes_from ts 0 0
+
+/-- The full edge product, including the sign of negative steps. -/
+theorem spin_connection_area (ts : List Step) :
+    connectionPhase (ts.map twist) =
+      (-1 : ℤ) ^ negCount (ts.map twist) * sgn (signedArea ts : ZMod 2) := by
+  unfold connectionPhase
+  rw [connAux_eq]
+  change (-1 : ℤ) ^ negCount (ts.map twist) * sgn (holonomy (ts.map twist)) = _
+  rw [spin_stokes]
+
+/-- For any balanced planar word its Pauli fold has the area phase. -/
+theorem spin_fold_area (ts : List Step)
+    (h : countBalanced (ts.map twist)) :
+    twistMatrixFold (ts.map twist) =
+      ((((-1 : ℤ) ^ negCount (ts.map twist) *
+        sgn (signedArea ts : ZMod 2) : ℤ) : ℂ)) • (1 : M) := by
+  rw [fold_eq_connectionPhase h, spin_connection_area]
+
+-- A second, independent check: the colour line is transported by the
+-- finite Heisenberg group. Its centre records the symplectic cocycle.
+
+def dx3 : Step → F3
+  | .east => 1
+  | .west => -1
+  | _ => 0
+
+def dy3 : Step → F3
+  | .north => 1
+  | .south => -1
+  | _ => 0
+
+-- `F3` is `Fin 3`; use its definitionally equal `ZMod 3` ring locally for casts.
+local instance : CommRing F3 := inferInstanceAs (CommRing (ZMod 3))
+
+@[simp] theorem dx3_eq_cast (t : Step) : dx3 t = (dx t : F3) := by
+  cases t <;> decide
+
+@[simp] theorem dy3_eq_cast (t : Step) : dy3 t = (dy t : F3) := by
+  cases t <;> decide
+
+/-- The same signed edge integral, now computed in the colour field. -/
+def area3Aux (x y : F3) : List Step → F3
+  | [] => 0
+  | t :: ts => y * dx3 t + area3Aux (x + dx3 t) (y + dy3 t) ts
+
+def signedArea3 (ts : List Step) : F3 := area3Aux 0 0 ts
+
+/-- Reduction modulo 3 commutes with the area recursion from any integer start. -/
+theorem area3Aux_cast (ts : List Step) (x y : ℤ) :
+    area3Aux (x : F3) (y : F3) ts = (areaAux x y ts : F3) := by
+  induction ts generalizing x y with
+  | nil => simp [area3Aux, areaAux]
+  | cons t ts ih =>
+      simp only [area3Aux, areaAux, dx3_eq_cast, dy3_eq_cast,
+        Int.cast_add, Int.cast_mul]
+      rw [← Int.cast_add x (dx t), ← Int.cast_add y (dy t), ih]
+
+/-- Spin and colour use reductions of the same integer signed area. -/
+theorem signedArea3_eq_cast (ts : List Step) :
+    signedArea3 ts = (signedArea ts : F3) := by
+  simpa [signedArea3, signedArea] using area3Aux_cast ts 0 0
+
+structure Trace where
+  x : F3
+  y : F3
+  area : F3
+  deriving Repr
+
+def advance (s : Trace) (t : Step) : Trace :=
+  ⟨s.x + dx3 t, s.y + dy3 t, s.area + s.y * dx3 t⟩
+
+def trace (ts : List Step) : Trace := ts.foldl advance ⟨0, 0, 0⟩
+
+def colourAdvance (h : Heis) (t : Step) : Heis :=
+  h.mul (disp (colVec (twist t)))
+
+def colourWord (ts : List Step) : Heis :=
+  ts.foldl colourAdvance ⟨(0, 0), 0⟩
+
+/-- A Heisenberg state encoding displacement and oriented area. -/
+def model (s : Trace) : Heis :=
+  ⟨(s.y * (colVec Twist.up).1 + s.x * (colVec Twist.right).1,
+    s.y * (colVec Twist.up).2 + s.x * (colVec Twist.right).2),
+    s.x * s.y + s.area⟩
+
+theorem colour_step (s : Trace) (t : Step) :
+    colourAdvance (model s) t = model (advance s t) := by
+  rcases s with ⟨x, y, a⟩
+  fin_cases x <;> fin_cases y <;> fin_cases a <;>
+    cases t <;> decide
+
+/-- Global Heisenberg transport normal form for every planar word. -/
+theorem colour_normal_form_from (ts : List Step) (s : Trace) :
+    ts.foldl colourAdvance (model s) = model (ts.foldl advance s) := by
+  induction ts generalizing s with
+  | nil => rfl
+  | cons t ts ih =>
+      simp only [List.foldl_cons]
+      rw [colour_step, ih]
+
+theorem colour_normal_form (ts : List Step) :
+    colourWord ts = model (trace ts) := by
+  unfold colourWord trace
+  have h := colour_normal_form_from ts ⟨0, 0, 0⟩
+  simpa [model, colVec, qMat, MatF3.act] using h
+
+/-- The transport trace and the edge integral use the same signed area. -/
+theorem trace_area_from (ts : List Step) (s : Trace) :
+    (ts.foldl advance s).area = s.area + area3Aux s.x s.y ts := by
+  induction ts generalizing s with
+  | nil => simp [area3Aux]
+  | cons t ts ih =>
+      simp only [List.foldl_cons, area3Aux]
+      rw [ih]
+      simp only [advance, add_assoc]
+
+theorem area_trace (ts : List Step) :
+    (trace ts).area = signedArea3 ts := by
+  unfold trace signedArea3
+  simpa using trace_area_from ts ⟨0, 0, 0⟩
+
+/-- Discrete Stokes for colour on any closed planar walk, at any length. -/
+theorem colour_stokes (ts : List Step)
+    (hx : (trace ts).x = 0) (hy : (trace ts).y = 0) :
+    colourWord ts = ⟨(0, 0), (signedArea ts : F3)⟩ := by
+  rw [colour_normal_form]
+  simp [model, hx, hy, area_trace, signedArea3_eq_cast]
+
+-- Orientation regressions check the actual transport as well as both integrals.
+example : signedArea [.east, .north, .west, .south] = -1 := by decide
+
+example : signedArea [.north, .east, .south, .west] = 1 := by decide
+
+example : signedArea3 [.east, .north, .west, .south] = (-1 : F3) := by decide
+
+example : colourWord [.east, .north, .west, .south] = ⟨(0, 0), -1⟩ := by decide
+
+example : colourWord [.north, .east, .south, .west] = ⟨(0, 0), 1⟩ := by decide
+
+-- Three counterclockwise turns have area -3: trivial colour phase, odd spin bit.
+example : let ts := List.replicate 3 [.east, .north, .west, .south] |>.flatten
+    signedArea ts = -3 ∧ colourWord ts = ⟨(0, 0), 0⟩ ∧
+      holonomy (ts.map twist) = 1 := by decide
+
+end QLF.GlobalHolonomy
