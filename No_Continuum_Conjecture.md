@@ -1,4 +1,4 @@
-# The No-Continuum Conjecture: straight lines fail, rogue waves are the rule
+# The No-Continuum Conjecture: straight-line histories and census coherence
 
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
@@ -14,21 +14,24 @@ but in pieces: the realizability theorem `no_continuum_in_finite_region`
 [`Collective_Electrodynamics.md`](Collective_Electrodynamics.md) §5, and the rule that irrationals are
 limits of rational processes ([`Hofstadter_Butterfly_QLF.md`](Hofstadter_Butterfly_QLF.md),
 [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §5c). There was no
-single statement that could fail. This page supplies one, built on two new exact facts:
+single statement that could fail. This page supplies one. It rests on two new exact facts about QLF's lattice-walk census. Both are
+properties of the census definitions, not of physical waves:
 
-1. **No closure is a straight line.** A straight-line history never balances, and the straight-line
-   histories are an exponentially vanishing fraction of all histories (at most `16·2^{−L}` at length
-   `L`). The classical straight trajectory is a *mean over ways*, and no single way follows it (§3).
-2. **The census amplitude is a rogue wave at every length from 4 on.** Measured against the
-   random-phase baseline that classical wave statistics uses, the signed closure census sits
-   `κ_L = |A_L|/√W_L` standard deviations out: `9.3` at `L = 4`, `1.2·10⁵` at `L = 20`, `2.8·10¹⁰` at
-   `L = 40` (exact integers, [`rogue_census.py`](rogue_census.py)). The ocean calls a wave rogue at
-   `κ = 4` (§4).
+1. **No closure is a straight line.** In the census, a straight-line history never balances, and
+   straight-line histories make up an exponentially vanishing fraction of all histories (at most
+   `16·2^{−L}` at length `L`) (§3).
+2. **The signed census has large excess coherence over a random-sign null model.** The exact signed
+   sum `A_L` is `κ_L = |A_L|/√W_L` times the standard deviation it would have if its `W_L` terms carried
+   independent fair signs: `9.3` at `L = 4`, `1.2·10⁵` at `L = 20`, `2.8·10¹⁰` at `L = 40` (exact
+   integers, [`rogue_census.py`](rogue_census.py); §4). Rogue waves are a classical *analogy* for this
+   (phase correlation beating a random-phase baseline), not a shared threshold or a claim about
+   physical waves.
 
 The qualification is the one the method always imposes. Both facts are exact statements about the
 census, so they are theorems or exact computations *about the model*. They become physics only through
-the identification of the census amplitude with a physical amplitude, and that identification is the
-conjecture. §5 applies it to two electrons and registers a test that has not been run.
+a measurement/realization map from census quantities to physical observables, which is not derived
+here. §5 applies the census to two electrons; its registered test (T3) and a toy diagnostic (D-MT) are
+reported in §5a.
 
 ---
 
@@ -45,34 +48,36 @@ All objects are finite. Nothing below uses a real number except as the name of a
 - **Census.** `W_L` is the number of closures of length `L`. `A_L` is their signed sum, each closure
   weighted by its fold phase `±1`. The phase is the holonomy of the ℤ₂ edge-sign connection
   (`fold_eq_connectionPhase`, [`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)).
-- **Census observable.** A function of finitely many census counts at finite lengths. Its values are
-  rational.
+- **Census observable.** A function of finitely many census counts at finite lengths. When it is a
+  ratio of counts its value is rational.
 - **Rendering.** A real number `r` is *rendered* by a sequence of census observables `q_L` when
   `q_L → r`. The sequence is the physical object; `r` names where it goes.
 - **Geodesic (straight-line) history.** A history with `|x(h)|₁ = |h|`: every step moves away from the
   origin. Equivalently, it never uses both twists of a conjugate pair.
-- **Random-phase baseline.** The model in which the `W_L` closures carry independent fair signs. Then
-  `E[A_L²] = W_L`, so a typical amplitude is `√W_L`, and `P(|A_L| ≥ κ√W_L) ≈ e^{−κ²/2}`. This is the
-  Gaussian statistics of a linear random wave field, the baseline against which ocean and optical
-  waves are called rogue.
-- **Coherence.** `κ_L = |A_L| / √W_L`, the realized amplitude in units of the baseline's standard
-  deviation.
+- **Random-sign null model.** A hypothetical model in which the `W_L` closures carry independent fair
+  signs. Then `E[A_L²] = W_L`, so a typical amplitude is `√W_L`, and by the normal approximation
+  `P(|A_L| ≥ κ√W_L) ≈ e^{−κ²/2}`. It is a reference distribution for the diagnostic below, not a model
+  of any physical wave.
+- **Excess coherence.** `κ_L = |A_L| / √W_L`, the realized signed sum in units of the null model's
+  standard deviation. A model-relative diagnostic, not an observable.
 
 ---
 
 ## 2. The conjecture
 
-> **No-Continuum Conjecture (NC).** What nature records is closure counts.
+> **No-Continuum Conjecture (NC), a conjecture with modeling assumptions marked.** What nature
+> records is closure counts.
 >
 > - **(NC1) Observables are census observables.** Every measured quantity is a census observable at a
->   finite length, hence rational.
+>   finite length. *(Modeling assumption.)*
 > - **(NC2) Real numbers are renderings.** Every real-valued quantity in a physical law (a position, a
 >   field value, a coupling, `π`) is rendered by a sequence of census observables. The limit is never
 >   itself the value of a measurement.
 > - **(NC3) Classical laws are laws of means.** A law stated for a continuous trajectory or a smooth
 >   field (straight-line inertial motion, a smooth Coulomb field) holds of an average over ways and of
->   no single way. Each single way is a closure: a loop, carrying a coherent signed amplitude far from
->   the random-phase baseline.
+>   no single way, and each single physical history is a closure. *(Modeling assumption: the census
+>   facts of §3–§4 hold for the census definitions; reading them as facts about physical histories
+>   needs the realization map, which is not derived.)*
 
 **What is assumed.** Only that nature is logical ([`Philosophy.md`](Philosophy.md) §3d), plus one named
 premise that QLF did not invent: a bounded region holds finitely many distinguishable states
@@ -84,10 +89,13 @@ one model of these, not a postulate about nature.
 continuum as mathematics. It denies that the continuum is *realized*, and keeps it as the rendering,
 which is how [`TheContinuum.md`](TheContinuum.md) §Summary already puts it.
 
-**Which parts are proved.** NC1 restricted to a finite region is the realizability theorem plus the
-Bekenstein premise. NC3's kinematic half is proved below (§3). NC3's amplitude half is an exact
-computation about the census (§4). What is *conjectural* is that the census is where physical counts
-come from: that a physical amplitude is a signed closure census. That bridge is not derived here.
+**Which parts are proved, and which are assumed.** The Bekenstein premise with
+`no_continuum_in_finite_region` gives only that a bounded region has finitely many distinguishable
+states. It does not make observable *values* rational (a finite-valued observable can carry irrational
+labels), so NC1 is a modeling assumption, not a consequence. S1–S3 (§3) are proved, and the coherence
+figures (§4) are exact, but both are properties of the chosen lattice-walk definitions. NC3 as a claim
+about physical histories is a modeling assumption. What is conjectural throughout is the
+realization map: that physical amplitudes are signed closure censuses.
 
 ---
 
@@ -112,7 +120,7 @@ failed or stalled at a specific point.
   frame, and causal set theory (Bombelli, Lee, Meyer and Sorkin 1987) made that the working answer to
   the lattice objection. NC inherits the objection as kill condition K4.
 
-## 3. The failure of the straight-line law (proved)
+## 3. Straight-line histories in the census (proved for the census)
 
 For a history `h` with `n_a⁺` and `n_a⁻` steps in the two directions of axis `a`,
 
@@ -146,10 +154,11 @@ with equality exactly when no axis is used in both directions. Three consequence
   way to reach its endpoint. It is the least-multiplicity history there is, which is where
   [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md) says exceptions live.
 
-**Reading.** The straight line is what free motion looks like on average. The mean position of an unbiased
+**Reading (interpretive, under NC3).** S1–S3 are statements about the census. If physical histories
+are closures (NC3, assumed), the following reading applies. The straight line is what free motion looks like on average. The mean position of an unbiased
 population of histories stays at the origin, and that of a biased one drifts along a straight line. But a mean over ways need not be a way, and here it never is (CLAUDE.md, "ZFA first,
-then every way", rule 3). Newton's first law survives as a law about the mean; at the level of a single
-event it fails without exception. This is the sense in which "the failure of the straight-line law is
+then every way", rule 3). On that reading, Newton's first law survives as a law about the mean and
+holds of no single closure. This is the sense in which "the failure of the straight-line law is
 the story": what classical physics treats as the default (unforced straight motion) is not anything a
 closure does, and what it treats as the departure (interaction, turning) is what every closure does.
 
@@ -169,9 +178,9 @@ counting form (S3) and the requirement that what is realized is a closed loop, n
 
 ---
 
-## 4. Rogue waves are the rule (exact computation)
+## 4. Excess coherence of the signed census (exact computation)
 
-**Classical credit first.** Rogue waves are real and classically explained. The Draupner platform in the
+**The classical analogy, and its limits.** Rogue waves are real and classically explained. The Draupner platform in the
 North Sea recorded a 25.6 m wave in a sea of significant height about 12 m on 1 January 1995. In a
 linear random sea, wave heights are Rayleigh-distributed (Longuet-Higgins 1952), and a height above
 twice the significant height has probability `e^{−8} ≈ 3.4·10⁻⁴`; such waves are seen more often than
@@ -179,16 +188,19 @@ that. The accepted explanations are linear focusing and the nonlinear modulation
 (Benjamin & Feir 1967), whose prototype is the Peregrine breather, peaking at three times the
 background (Peregrine 1983); the review is Kharif & Pelinovsky (2003). Optical rogue waves were found by
 Solli et al. (2007). The common thread is that **phases are correlated**, so the random-phase baseline
-underestimates large amplitudes.
+underestimates large amplitudes. That is the only point of contact with the census. The Rayleigh
+criterion concerns a different observable (crest-to-trough height) and a different sampling
+distribution, so it does not give a threshold for `κ`, and nothing below is a claim about ocean or
+optical waves.
 
 **The census.** In QLF the phases are correlated by construction: they are the holonomies of a ℤ₂
 connection with π flux through every mixed spatial plaquette ([`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)).
-So the question is how far the realized amplitude sits from the baseline. [`rogue_census.py`](rogue_census.py)
+So the question is how far the realized signed sum sits from the random-sign null model. [`rogue_census.py`](rogue_census.py)
 computes `W_L` and `A_L` exactly by a transfer recursion on `ℤ⁴`, checks `W_L` against
 [`closure_walk.py`](closure_walk.py) at every length, and reproduces the signed census `−8, 120, −2144`
 of [`Closure_Walk.md`](Closure_Walk.md) §3:
 
-| `L` | `W_L` | `A_L` | `\|A_L\|/W_L` | `κ_L = \|A_L\|/√W_L` | baseline `log₁₀ P` |
+| `L` | `W_L` | `A_L` | `\|A_L\|/W_L` | `κ_L = \|A_L\|/√W_L` | null-model `log₁₀ P` (hypothetical) |
 |---:|---:|---:|---:|---:|---:|
 | 2 | 8 | −8 | 1 | 2.83 | −1.7 |
 | 4 | 168 | 120 | 0.714 | 9.26 | −18.6 |
@@ -197,26 +209,27 @@ of [`Closure_Walk.md`](Closure_Walk.md) §3:
 | 30 | 1.08·10²⁴ | −5.64·10¹⁹ | 5.2·10⁻⁵ | 5.43·10⁷ | −6.4·10¹⁴ |
 | 40 | 6.57·10³² | 7.30·10²⁶ | 1.1·10⁻⁶ | 2.85·10¹⁰ | −1.8·10²⁰ |
 
-(All rows are in [`data/rogue_census.json`](data/rogue_census.json); `L ≤ 40` runs in about 25 s.)
+(All rows are in [`data/rogue_census.json`](data/rogue_census.json); `L ≤ 40` runs in about 25 s. The
+last column is the normal-approximation tail `−κ²/(2 ln 10)` of the hypothetical random-sign model, an
+illustration of how far the census is from that model, not a probability of anything physical.)
 
 **What the table shows.**
 
-- **(R1) From `L = 4` on, every census amplitude is past the rogue threshold.** The ocean's threshold
-  `e^{−8}` corresponds to `κ = 4`. The census passes it at `L = 4`, and after that `κ_L` grows by a factor of 3.2 per
-  two steps, rising to 3.5 by `L = 40`. Under the random-phase baseline, the amplitude realized at `L = 40` has
-  probability about `10^{−1.8·10²⁰}`.
+- **(R1) Excess coherence grows with `L`.** `κ_L` is above 4 from `L = 4` on (4 is the convention
+  registered for T3, not an ocean-derived threshold). The step ratio `κ_L/κ_{L−2}` is 3.2 at `L = 6`
+  and rises to 3.5 at `L = 40`, so `κ_40 ≈ 2.85·10¹⁰`.
 - **(R2) The rate.** Following Jim's rule, the rate is a rational process: the ratio sequence
   `A_{L}/A_{L−2}` runs `−15.0, −17.9, −19.5, …, −26.8` at `L = 40`. With the leading `L^{−2}` correction
   of a four-dimensional walk taken out it reads `29.70`, consistent with `(2 + 2√3)² = 29.86`, the
   square of the band edge of the π-flux hopping on the three spatial axes (`2√3`) plus the commuting
   gauge axis (`2`). `W_L` grows at `8² = 64` per two steps. So `κ_L` grows like
   `((2+2√3)/√8)^L ≈ 1.93^L`. This identification is numerical; nothing below depends on it.
-- **(R3) "Rule" does not mean "most ways in phase".** `|A_L|/W_L` falls toward zero, like
+- **(R3) Excess coherence does not mean "most ways in phase".** `|A_L|/W_L` falls toward zero, like
   `((2+2√3)/8)^L ≈ 0.68^L`. The net coherent excess is a vanishing fraction of the ways. The amplitude is
-  enormous compared with random phases and small compared with full alignment. Both statements are
-  true and the claim is only the first.
+  enormous compared with the random-sign model and small compared with full alignment. Both
+  statements are true and the claim is only the first.
 
-**The rule-4 test.** For which distribution over ways would R1 be false? For one with independent
+**The rule-4 test.** For which sign assignment would R1 be false? For one with independent
 phases: then `κ_L` stays near 1. The census is not such a distribution, so R1 has content, but the
 content is about the census's own phase structure, which is a theorem (`QLF_EdgeSign`). R1 is therefore
 an exact property of the model. It is not yet evidence about nature; it becomes a physical claim only
@@ -226,7 +239,7 @@ through NC's bridge, and the next section names the first place to test that bri
 the same move made twice. Average over ways with unsigned weights and the central limit gives a
 straight drift with diffusive spread; average with independent phases and you get the Gaussian sea in
 which large amplitudes are exceptional. Each average erases what a single way has: the loop in §3 and
-the phase correlation here. NC3 says that physics lives in what the averages erase.
+the phase correlation here. NC3 (assumed) says that physics lives in what the averages erase.
 
 ### 4a. A straight-line bound for waves, falsified: Mizohata–Takeuchi
 
@@ -262,9 +275,10 @@ is about `N ≈ log R`, and it grows without bound.
 no QLF input:
 
 - the bound that failed is a **straight-line** bound (the X-ray transform);
-- it failed because of **constructive interference** on a combinatorial set, which is a rogue-wave
-  mechanism; and
-- the failure **grows with scale** (`log R`), as the census coherence `κ_L` grows with `L`.
+- it failed because of **constructive interference** on a combinatorial set, the same kind of phase
+  correlation the rogue-wave analogy points to; and
+- the failure **grows with scale** (`log R`). The census `κ_L` also grows with `L`, but it is a
+  different quantity, so this is a parallel, not a comparison of sizes.
 
 There is one more resemblance. Cairo's interference set is the set of **half-balanced** sums: choose
 exactly half of `N` frequencies, a central-binomial family of size about `2^N/√N`. QLF's one-axis
@@ -273,15 +287,15 @@ only. Nothing here derives Cairo's construction from closures, and her theorem s
 
 **What it does for NC.** It shows that NC3's kinematic claim has a precise analogue in the continuum
 itself: even inside classical harmonic analysis, straight-line bounds on wave energy are false at
-large scale, and they fail because of coherence that a straight line cannot see. In the continuum the
-failure is a slowly growing `log R`. In the census it is the exponential `κ_L ≈ 1.93^L`. A test that
-would connect them is to ask whether the census itself violates a discrete Mizohata–Takeuchi
-inequality: bound the signed closure amplitude deposited on a weight on `ℤ⁴` by the weight's heaviest
-lattice line, and measure the ratio as `L` grows. Registered and run as D-MT in §5a, it **failed** at `L ≤ 8`: the census wave focuses no more than the classical walk.
+large scale, and they fail because of coherence that a straight line cannot see. A toy diagnostic in
+this direction (D-MT, §5a) compared the census wave with the classical walk against nine substrate
+line families. Its registered prediction **failed** at `L ≤ 8`: the census wave focuses no more than
+the classical walk. D-MT is not the Fourier-extension inequality, and it neither tests nor supports
+the Mizohata–Takeuchi conjecture or [`Mizohata_Takeuchi_QLF.md`](Mizohata_Takeuchi_QLF.md)'s MT-Q.
 
 ---
 
-## 5. Electron interaction as a joint rogue (conjecture, test registered)
+## 5. Electron interaction as joint coherence (conjecture, test registered)
 
 **What is proved.** Charge is the residue of non-closure, and no event is charged
 (`zfa_closure_is_neutral`, [`QLF_ElectronClosure`](lean/QLF_ElectronClosure.lean)). Coulomb's rule is a
@@ -291,8 +305,8 @@ action at a distance. Mead's transactional photon is the same joint closure
 ([`Collective_Electrodynamics.md`](Collective_Electrodynamics.md) §2).
 
 **The conjecture (NC-E).** The interaction amplitude of two electrons is the signed census of their
-joint closures, and it is a rogue: coherent far above the random-phase baseline wherever joint closures
-exist. Coulomb's smooth `1/r²` is the rendering of those counts, the large-count, phase-averaged limit,
+joint closures, and it carries large excess coherence over the random-sign null model wherever joint
+closures exist. Coulomb's smooth `1/r²` is the rendering of those counts, the large-count, phase-averaged limit,
 and the field that classical electrodynamics integrates is the average that erases the coherence.
 
 **History.** Coulomb measured the inverse-square law in 1785 as a force at a distance; Faraday and
@@ -309,14 +323,14 @@ one place: they kept continuous spacetime and continuous phase, and NC-E replace
 ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §43–§45) reported `C = |S|/N`, the
 analogue of `|A_L|/W_L`, never `κ = |S|/√N`. It found that interleaved electrons with orthogonal spins
 cancel exactly at lengths 8 and 10, while collinear ones survive. An exact zero is `κ = 0`: orthogonal
-spins make a dark fringe, not a rogue. So NC-E is already scoped by data it did not predict: if it
-holds, it holds for the collinear classes.
+spins make a dark fringe at those lengths. (Superseded at greater depth: see §5a.)
 
-**Registered test T3 (not run in this commit).** Run [`logical_bang_census.py`](logical_bang_census.py)
+**Registered test T3** (registered in commit `743c7e8`; result in §5a). Run [`logical_bang_census.py`](logical_bang_census.py)
 unchanged, with the §44 definition of entangled (`--depth12`, `--depth 14`), at lengths 10, 12 and 14, and compute `κ = |S|/√N` for the entangled collinear class (P and A
 pooled, as in §44).
 
-- **Pass:** `κ ≥ 4` at all three lengths, and `κ` does not decrease from 10 to 14.
+- **Pass:** `κ ≥ 4` at all three lengths, and `κ` does not decrease from 10 to 14. (The threshold 4
+  is a convention fixed at registration.)
 - **Fail:** `κ < 4` at any of the three lengths.
 - **Reported either way:** `κ` for the orthogonal class and for every remainder class.
 
@@ -327,8 +341,18 @@ electrons, whose closures are thousands of bits deep.
 
 ### 5a. Results and registrations (2026-11-02)
 
-**T3 result: PASS.** Run as registered (`census_dp` from
-[`logical_bang_census.py`](logical_bang_census.py), unchanged; entangled classes, all remainders pooled):
+**T3 result: PASS.** Run as registered by `python3 t3_coherence.py` ([`t3_coherence.py`](t3_coherence.py),
+which calls `census_dp` from [`logical_bang_census.py`](logical_bang_census.py) unchanged). Every class's
+`N`, `S` and `κ` at each length is in [`data/t3_coherence.json`](data/t3_coherence.json). Entangled
+classes, all remainders pooled:
+
+| length | orthogonal `N` | orthogonal `S` |
+|---:|---:|---:|
+| 10 | 4,700,160 | 0 |
+| 12 | 1,085,736,960 | −172,032 |
+| 14 | 200,740,700,160 | 34,111,488 |
+
+and
 
 | length | collinear `N` | collinear `S` | collinear `κ` | orthogonal `κ` |
 |---:|---:|---:|---:|---:|
@@ -340,13 +364,15 @@ The collinear joint census is past `κ = 4` at all three lengths and rising (fac
 which passes T3. Two honest notes. First, T3 was not fully blind: the length-12 totals were already
 recorded in [`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §44a, although `κ` had not
 been computed from them. Second, the "orthogonal = dark fringe" scoping in §5 was a shallow-depth
-reading: orthogonal spins cancel exactly at length 10, but they cross the rogue threshold at 12
+reading: orthogonal spins cancel exactly at length 10, but they cross `κ = 4` at 12
 (`κ = 5.2`) and reach `κ = 76` at 14, while staying 30× weaker than collinear. Several orthogonal
 classes (`gggggg`, `ggggnn`, `ggggss`, `ggssss`, `ssssss`, entangled) still cancel exactly at 14. By
 the rule-4 test, the pass shows that the joint census is far from random phase, as the vacuum census
 is; it does not by itself show that physical electrons interact this way.
 
-**D-MT, registered before it is run.** A discrete Mizohata–Takeuchi test on the census wave.
+**D-MT, registered before it was run.** A limited toy-model diagnostic, inspired by
+Mizohata–Takeuchi but not the Fourier-extension inequality: nine chosen line families on normalized
+time-slice distributions, not the supremum over all lines. It is not a test of MT or of MT-Q.
 
 - *Wave.* `ψ_k(x)`, the signed sum over histories of length `k` from the origin ending at `x ∈ ℤ⁴`
   (holonomy signs, as in §4). Density per time slice `ρ_k(x) = ψ_k(x)² / Σ_y ψ_k(y)²`.
@@ -386,7 +412,7 @@ fails. What the numbers say:
   every rational lattice direction. As run, D-MT measures whether coherence beats diffusion against
   the substrate's straight lines, and at `L ≤ 8` it does not.
 
-So §4a's resemblance to Cairo's construction stays a resemblance. The census does not reproduce her
+So §4a's resemblance to Cairo's construction stays a resemblance, and D-MT gives no support to MT-Q. The census does not reproduce her
 mechanism, constructive interference that grows with scale on a set that no line sees, at the depth
 reached. Following the project's depth rule, this is unsupported at `L ≤ 8`, not settled.
 
@@ -394,11 +420,10 @@ reached. Following the project's depth rule, this is unsupported at `L ≤ 8`, n
 
 ## 6. Kill conditions (stated before the tests)
 
-- **K1 (census).** If `κ_L` stops growing, or falls below 4, at some length beyond 40, R1's "rule" is
-  false for the census. The ratio trend makes this unlikely, but it is a computation anyone can extend.
+- **K1 (census).** If `κ_L` stops growing at some length beyond 40, R1 is false for the census. The ratio trend makes this unlikely, but it is a computation anyone can extend.
 - **K2 (electrons).** T3 fails as registered: NC-E is withdrawn at that depth.
 - **K3 (realizability).** A measurement whose outcomes provably distinguish more states than a finite
-  region can hold falsifies the Bekenstein premise and NC1 with it.
+  region can hold falsifies the Bekenstein premise, and with it the finiteness behind NC1.
 - **K4 (Lorentz invariance).** The census is counted on `ℤ⁴`, the space of twist counts. If that lattice
   were read as space, it would predict a direction- and energy-dependent speed of light at first order in
   the Planck energy, and the Fermi observation of GRB 090510 already bounds such an effect beyond the
@@ -414,14 +439,15 @@ reached. Following the project's depth rule, this is unsupported at `L ≤ 8`, n
 
 | Claim | Status |
 |---|---|
-| NC1 for a finite region | **Proved** given the Bekenstein premise (`no_continuum_in_finite_region`) |
-| S1, S2: no closure is straight; slower-than-`c` net motion needs a reversal | **Proved** (elementary, above); Lean target |
-| S3: straight histories are at most `16·2^{−L}` of all | **Proved** (counting formula, brute-force checked) |
-| R1: census amplitude past the rogue threshold for `4 ≤ L ≤ 40` | **Exact computation** |
+| Finitely many distinguishable states in a bounded region | **Proved** given the Bekenstein premise (`no_continuum_in_finite_region`) |
+| NC1: every observable is a census observable | **Modeling assumption** (finiteness does not imply rational values) |
+| S1, S2: no census closure is straight; slower-than-one-step net motion needs a reversal | **Proved** for the census definitions (elementary); Lean target |
+| S3: straight histories are at most `16·2^{−L}` of all | **Proved** for the census (counting formula, brute-force checked) |
+| R1: excess coherence `κ_L` over the random-sign model, `4 ≤ L ≤ 40` | **Exact computation**, model-relative |
 | R2: growth rate `(2+2√3)²` per two steps | **Numerical evidence** |
-| NC3: classical laws are laws of means | **Conjecture**; the kinematic half follows from S1–S3 |
-| NC-E: electron interaction is a joint rogue | **Conjecture**; T3 **passed** at lengths 10–14 (collinear `κ` 50 → 2,340); orthogonal crosses the threshold at 12 |
-| D-MT: the census wave violates a discrete Mizohata–Takeuchi bound | **Failed as registered** at `L ≤ 8`: coherent and random-phase line constants grow together (§5a) |
+| NC3: classical laws are laws of means; physical histories are closures | **Modeling assumption** |
+| NC-E: electron interaction carries excess joint coherence | **Conjecture**; T3 **passed** at lengths 10–14 (collinear `κ` 50 → 2,340); orthogonal passes `κ = 4` at 12 |
+| D-MT toy diagnostic (nine line families, not MT) | **Failed as registered** at `L ≤ 8`: coherent and random-phase line constants grow together (§5a) |
 | The bridge: a physical amplitude is a signed closure census | **Open bridge**, not derived here |
 
 ---
@@ -429,9 +455,10 @@ reached. Following the project's depth rule, this is unsupported at `L ≤ 8`, n
 ## 8. What not to say
 
 - Not "the continuum is inconsistent" or "false". Say: unrealized, and kept as the rendering.
-- Not "QLF proves rogue waves" or "explains ocean rogue waves". The ocean's are explained classically by
-  focusing and modulational instability. The census result is that QLF's own amplitudes sit where
-  classical statistics would call them rogue.
+- Not "rogue waves are the rule", or "QLF explains ocean rogue waves". The ocean's are explained
+  classically by focusing and modulational instability. The census result is excess coherence over a
+  hypothetical random-sign model, and `κ` has no shared threshold with the Rayleigh criterion.
+- Not "D-MT tests Mizohata–Takeuchi". It is a toy diagnostic with nine line families.
 - Not "most ways are in phase". `|A_L|/W_L → 0`; the claim is coherence relative to random phase.
 - Not "electrons interact by rogue waves" as a finding. It is NC-E, a conjecture with a registered test.
 - Not "QLF predicted" or "explains" Cairo's counterexample. It is an independent classical result with the same shape (§4a).

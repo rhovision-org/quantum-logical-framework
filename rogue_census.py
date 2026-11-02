@@ -11,10 +11,11 @@ Two exact computations, integers throughout:
    proved equal to the fold on balanced histories in `lean/QLF_EdgeSign.lean`).
    If the W_L signs were independent fair coins, `A_L` would be a sum of W_L random ±1,
    with E[A_L²] = W_L, so |A_L| ≈ √W_L. The ratio κ_L = |A_L|/√W_L measures how far
-   the realized amplitude sits above that random-phase (Gaussian) baseline, in units of
-   its standard deviation. The script also prints the Gaussian log-probability of a
-   fluctuation that large, log₁₀ P ≈ −κ²/(2 ln 10), next to the ocean's rogue-wave
-   threshold (Rayleigh sea, crest-to-trough H > 2 H_s: P = e^{−8} ≈ 3.4·10⁻⁴).
+   the realized signed sum sits above that hypothetical random-sign null model, in units
+   of its standard deviation: a model-relative coherence diagnostic, not an observable.
+   The script also prints the null model's normal-approximation tail
+   log₁₀ P ≈ −κ²/(2 ln 10), an illustration only. (The ocean's Rayleigh rogue-wave
+   criterion concerns a different observable and gives no threshold for κ.)
 
 2. **Straight-line histories.** A history is *geodesic* (net displacement equal to its
    length, |x|₁ = L) iff it never uses both twists of a conjugate pair. G_L counts them:
@@ -88,7 +89,7 @@ def main(argv=None) -> int:
 
     rows = []
     print(" L            W_L                  A_L      |A|/W     kappa=|A|/sqrt(W)  "
-          "log10 P_gauss   A_L/A_{L-2}")
+          "null-model log10 P   A_L/A_{L-2}")
     prevA = None
     for L, (W, A) in census.items():
         kappa = abs(A) / math.sqrt(W)
@@ -100,7 +101,6 @@ def main(argv=None) -> int:
               f"{'' if ratio is None else f'{ratio:9.4f}'}")
         prevA = A
 
-    print("\nOcean rogue-wave threshold (Rayleigh, H > 2 H_s): P = e^-8 =", f"{math.exp(-8):.3e}")
 
     geo = []
     print("\n L   G_L (geodesic)        G_L/8^L        bound 16*2^-L")
@@ -120,7 +120,8 @@ def main(argv=None) -> int:
     os.makedirs(os.path.dirname(OUT_PATH), exist_ok=True)
     with open(OUT_PATH, "w") as f:
         json.dump({"signed_census": rows, "geodesic": geo,
-                   "rayleigh_rogue_threshold_p": math.exp(-8)}, f, indent=1)
+                   "note": "kappa is excess coherence over a hypothetical independent-sign null model; "
+                           "log10_gauss_tail is that model's normal-approximation tail"}, f, indent=1)
     print(f"\nwrote {os.path.relpath(OUT_PATH, _HERE)}")
     return 0
 

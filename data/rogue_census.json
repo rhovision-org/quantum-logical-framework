@@ -383,5 +383,5 @@
    "fraction": 1.4551622543237187e-11
   }
  ],
- "rayleigh_rogue_threshold_p": 0.00033546262790251185
+ "note": "kappa is excess coherence over a hypothetical independent-sign null model; log10_gauss_tail is that model's normal-approximation tail"
 }
