@@ -119,8 +119,10 @@ self-crossing walks included. With the signed area accumulated edge by edge as `
 `spin_stokes` gives holonomy = area mod 2, so a balanced planar closure folds to `(−1)^neg · (−1)^area · I`
 (`spin_fold_area`): one bit of π flux per enclosed cell, counted with winding multiplicity. The colour line does the
 same in `F₃`: every closed planar walk transports to a central Heisenberg element whose phase index is the area mod 3
-(`colour_stokes`). Both are proved from QLF's own connection and colour transport alone. Still open: the other
-planes, and a stated bridge identifying the mod-3 area with the integer one.
+(`colour_stokes`). The bridge `signedArea3_eq_cast`, proved by induction from any integer start
+(`area3Aux_cast`), identifies the two area recursions: one integer `signedArea` determines the spin bit modulo 2
+and the colour phase modulo 3. A counterclockwise unit square has signed area `−1` and colour phase `ω⁻¹`.
+Both are proved from QLF's own connection and colour transport alone. The other planes remain open.
 
 Consequences:
 

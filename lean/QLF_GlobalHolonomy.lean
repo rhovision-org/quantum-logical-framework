@@ -6,9 +6,12 @@ import Mathlib.Tactic.FinCases
 /-!
 # Global planar holonomy
 
-Signed area is accumulated from horizontal edges as `y * dx`. This convention
-counts winding with multiplicity and works for self-intersecting walks. The
-theorems quantify over lists of arbitrary length.
+Native QLF spin and colour holonomy for words in the X–Y plane only, proved
+from QLF's edge-sign connection and colour transport. Signed area is accumulated
+from horizontal edges as `y * dx`: clockwise-positive, so the counterclockwise
+unit square has area `-1`. It counts winding with multiplicity, including
+self-intersecting walks. At arbitrary length, the same integer area determines
+the spin holonomy modulo 2 and the closed-walk colour phase modulo 3.
 -/
 
 namespace QLF.GlobalHolonomy
@@ -40,7 +43,8 @@ def xyPos (x y : ℤ) : Axis → ℤ
   | .Y => y
   | _ => 0
 
-/-- The oriented lattice area contribution from the horizontal edges. -/
+/-- The horizontal-edge integral `Σ y·dx`, with clockwise-positive orientation.
+The counterclockwise unit square (east, north, west, south) has area `-1`. -/
 def areaAux (x y : ℤ) : List Step → ℤ
   | [] => 0
   | t :: ts => y * dx t + areaAux (x + dx t) (y + dy t) ts
@@ -116,12 +120,36 @@ def dy3 : Step → F3
   | .south => -1
   | _ => 0
 
+-- `F3` is `Fin 3`; use its definitionally equal `ZMod 3` ring locally for casts.
+local instance : CommRing F3 := inferInstanceAs (CommRing (ZMod 3))
+
+@[simp] theorem dx3_eq_cast (t : Step) : dx3 t = (dx t : F3) := by
+  cases t <;> decide
+
+@[simp] theorem dy3_eq_cast (t : Step) : dy3 t = (dy t : F3) := by
+  cases t <;> decide
+
 /-- The same signed edge integral, now computed in the colour field. -/
 def area3Aux (x y : F3) : List Step → F3
   | [] => 0
   | t :: ts => y * dx3 t + area3Aux (x + dx3 t) (y + dy3 t) ts
 
 def signedArea3 (ts : List Step) : F3 := area3Aux 0 0 ts
+
+/-- Reduction modulo 3 commutes with the area recursion from any integer start. -/
+theorem area3Aux_cast (ts : List Step) (x y : ℤ) :
+    area3Aux (x : F3) (y : F3) ts = (areaAux x y ts : F3) := by
+  induction ts generalizing x y with
+  | nil => simp [area3Aux, areaAux]
+  | cons t ts ih =>
+      simp only [area3Aux, areaAux, dx3_eq_cast, dy3_eq_cast,
+        Int.cast_add, Int.cast_mul]
+      rw [← Int.cast_add x (dx t), ← Int.cast_add y (dy t), ih]
+
+/-- Spin and colour use reductions of the same integer signed area. -/
+theorem signedArea3_eq_cast (ts : List Step) :
+    signedArea3 ts = (signedArea ts : F3) := by
+  simpa [signedArea3, signedArea] using area3Aux_cast ts 0 0
 
 structure Trace where
   x : F3
@@ -185,8 +213,24 @@ theorem area_trace (ts : List Step) :
 /-- Discrete Stokes for colour on any closed planar walk, at any length. -/
 theorem colour_stokes (ts : List Step)
     (hx : (trace ts).x = 0) (hy : (trace ts).y = 0) :
-    colourWord ts = ⟨(0, 0), signedArea3 ts⟩ := by
+    colourWord ts = ⟨(0, 0), (signedArea ts : F3)⟩ := by
   rw [colour_normal_form]
-  simp [model, hx, hy, area_trace]
+  simp [model, hx, hy, area_trace, signedArea3_eq_cast]
+
+-- Orientation regressions check the actual transport as well as both integrals.
+example : signedArea [.east, .north, .west, .south] = -1 := by decide
+
+example : signedArea [.north, .east, .south, .west] = 1 := by decide
+
+example : signedArea3 [.east, .north, .west, .south] = (-1 : F3) := by decide
+
+example : colourWord [.east, .north, .west, .south] = ⟨(0, 0), -1⟩ := by decide
+
+example : colourWord [.north, .east, .south, .west] = ⟨(0, 0), 1⟩ := by decide
+
+-- Three counterclockwise turns have area -3: trivial colour phase, odd spin bit.
+example : let ts := List.replicate 3 [.east, .north, .west, .south] |>.flatten
+    signedArea ts = -3 ∧ colourWord ts = ⟨(0, 0), 0⟩ ∧
+      holonomy (ts.map twist) = 1 := by decide
 
 end QLF.GlobalHolonomy
