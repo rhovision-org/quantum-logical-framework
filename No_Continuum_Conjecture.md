@@ -274,7 +274,7 @@ large scale, and they fail because of coherence that a straight line cannot see.
 failure is a slowly growing `log R`. In the census it is the exponential `κ_L ≈ 1.93^L`. A test that
 would connect them is to ask whether the census itself violates a discrete Mizohata–Takeuchi
 inequality: bound the signed closure amplitude deposited on a weight on `ℤ⁴` by the weight's heaviest
-lattice line, and measure the ratio as `L` grows. It is registered as test D-MT in §5a.
+lattice line, and measure the ratio as `L` grows. Registered and run as D-MT in §5a, it **failed** at `L ≤ 8`: the census wave focuses no more than the classical walk.
 
 ---
 
@@ -359,6 +359,34 @@ is; it does not by itself show that physical electrons interact this way.
 - *Fail.* Either condition fails at some step. Lengths `L = 2, 4, …` as far as the linear program
   allows. A failure at the depth reached is reported as unsupported at that depth.
 
+**D-MT result: FAIL.** Run by [`discrete_mt.py`](discrete_mt.py) (numpy + scipy; the length-10
+linear program did not finish in 12 minutes, so the range is `L ≤ 8`):
+
+| `L` | `V_L` signed | `V_L` random phase | ratio |
+|---:|---:|---:|---:|
+| 2 | 1.467 | 1.750 | 0.838 |
+| 4 | 1.996 | 2.021 | 0.988 |
+| 6 | 2.400 | 2.517 | 0.954 |
+| 8 | 2.757 | 2.874 | 0.959 |
+
+`V_L` rises at every step, but the ratio falls from `L = 4` to `L = 6`, so the registered prediction
+fails. What the numbers say:
+
+- **The coherent wave focuses no more than the classical walk.** Its line constant tracks the
+  random-phase one within 5 % from `L = 4` on. The reason is structural. The signed transfer operator
+  is antisymmetric (`Σ_x ψ_k(x)² = (−1)^k A_{2k}`, asserted in the script), so the return density is
+  `ρ_k(0) = A_k²/|A_{2k}| ≈ 4/k²`, the same decay as diffusion. The coherence `κ` of §4 is measured
+  against random *signs* on a fixed set of closures. It does not make the wave pile up in space.
+- **Both constants grow, so this line family is too poor to test Mizohata–Takeuchi.** With only the
+  nine substrate directions (rest and null), the line bound already fails for the classical walk,
+  whereas the continuum statement takes the supremum over all lines. A sharper design would include
+  every rational lattice direction. As run, D-MT measures whether coherence beats diffusion against
+  the substrate's straight lines, and at `L ≤ 8` it does not.
+
+So §4a's resemblance to Cairo's construction stays a resemblance. The census does not reproduce her
+mechanism, constructive interference that grows with scale on a set that no line sees, at the depth
+reached. Following the project's depth rule, this is unsupported at `L ≤ 8`, not settled.
+
 ---
 
 ## 6. Kill conditions (stated before the tests)
@@ -390,7 +418,7 @@ is; it does not by itself show that physical electrons interact this way.
 | R2: growth rate `(2+2√3)²` per two steps | **Numerical evidence** |
 | NC3: classical laws are laws of means | **Conjecture**; the kinematic half follows from S1–S3 |
 | NC-E: electron interaction is a joint rogue | **Conjecture**; T3 **passed** at lengths 10–14 (collinear `κ` 50 → 2,340); orthogonal crosses the threshold at 12 |
-| D-MT: the census wave violates a discrete Mizohata–Takeuchi bound | **Registered** (§5a) |
+| D-MT: the census wave violates a discrete Mizohata–Takeuchi bound | **Failed as registered** at `L ≤ 8`: coherent and random-phase line constants grow together (§5a) |
 | The bridge: a physical amplitude is a signed closure census | **Open bridge**, not derived here |
 
 ---
