@@ -343,7 +343,7 @@ electrons, whose closures are thousands of bits deep.
 
 **T3 result: PASS.** Run as registered by `python3 t3_coherence.py` ([`t3_coherence.py`](t3_coherence.py),
 which calls `census_dp` from [`logical_bang_census.py`](logical_bang_census.py) unchanged). Every class's
-`N`, `S` and `κ` at each length is in [`data/t3_coherence.json`](data/t3_coherence.json). Entangled
+`N`, `S` and `κ` at each length is in [`data/t3_coherence.json`](data/t3_coherence.json). The script enforces the criterion stepwise (`κ(10) ≤ κ(12) ≤ κ(14)`) and exits nonzero on FAIL. It is a manual check: CI runs only the doc-network check, and none of the numerical scripts here are CI-enforced. Entangled
 classes, all remainders pooled:
 
 | length | orthogonal `N` | orthogonal `S` |

@@ -9,11 +9,12 @@ continuum? … Mizohata–Takeuchi! … 17 year old falsified."*
 **Short answer.** A conditional version can be stated, and this page states it with its hypotheses
 explicit. The Mizohata–Takeuchi conjecture (MT) is false in the continuum. The known counterexamples are
 stated for unbounded scale `R`, and the power-loss ones for surfaces with limited smoothness. A
-finite-information world caps `R`, but **a cap alone recovers nothing**: it makes every scale-dependent
+bounded physical domain, which is an assumption chosen separately from QLF's finite-capacity premise,
+caps `R`, but **a cap alone recovers nothing**: it makes every scale-dependent
 loss finite, power losses included, and it does not restore a scale-independent estimate. So the
 resurrected statement has two parts. MT-A is a mathematical conjecture (open): on analytic, curved,
 compact surfaces the loss is only polylogarithmic. MT-Q says that **if** MT-A holds, then free on-shell
-modes at physically bounded scales satisfy MT with a constant that is polylogarithmic in `R_max`, about
+modes in such an assumed bounded domain satisfy MT with a constant that is polylogarithmic in `R_max`, about
 `C_Σ·141^c`. MT-Q adds a physical scale and a physical surface class to MT-A. It does not prove
 anything MT-A does not.
 
@@ -71,8 +72,19 @@ states (Bekenstein; the `[Finite R]` hypothesis of `no_continuum_in_finite_regio
 [`QLF_Realizability`](lean/QLF_Realizability.lean)). That theorem proves only that an infinite set
 cannot inject into a finite one. It proves no extension inequality and no constant.
 
-**The scale cap.** Read in Planck units, `R` is bounded by the largest region there is. For the
-observable universe (radius about `4.4·10²⁶ m`, Planck length `1.6·10⁻³⁵ m`), `R_max ≈ 2.7·10⁶¹`, so
+**The scale cap: a separate assumption, not a consequence.** Finite distinguishability within a
+bounded region does not entail a maximal radius, a Planck-length cutoff, or any identification of the
+analytic `R` with a physical length. So three assumptions are kept apart:
+
+- **(a) Finite capacity** (the Bekenstein premise above), conditional and used only as motivation.
+- **(b) A bounded physical domain**, chosen separately, together with a dimensionless map from the
+  analytic `R` (the ball radius measured in units of the inverse frequency scale of `Σ`) to physical
+  length. Taking the shortest length to be the Planck length and the domain to be the observable
+  universe is one such choice, not a theorem.
+- **(c) MT-A**, the independent analytic assumption (§3).
+
+Under choice (b), with the observable universe (radius about `4.4·10²⁶ m`) and the Planck length
+(`1.6·10⁻³⁵ m`), `R_max ≈ 2.7·10⁶¹`, so
 
 ```
 ln R_max ≈ 141,      and for a one-metre laboratory   ln R ≈ 80.
@@ -125,8 +137,8 @@ The constants may depend on `Σ` (on its curvature bounds and its analytic data)
 `log R` is the right order up to the power `c_Σ`, on analytic curved surfaces.
 
 > **MT-Q (conditional physical reading).** Assume (i) MT-A for the compact pieces of the mass shell
-> that are in Σ1, (ii) the momentum reading of the `Form` in §2, and (iii) the Bekenstein scale cap
-> `R ≤ R_max`. Then every free on-shell mode of mass `m > 0` whose momenta lie on a fixed compact piece
+> that are in Σ1, (ii) the momentum reading of the `Form` in §2, and (iii) a chosen bounded domain with its
+> length map, giving `R ≤ R_max` (assumption (b) of §2). Then every free on-shell mode of mass `m > 0` whose momenta lie on a fixed compact piece
 > `Σ` of the shell satisfies the local inequality at every physical scale with constant
 > `C_Σ (ln R_max)^{c_Σ} ≈ C_Σ · 141^{c_Σ}`. The same holds for `m = 0` on Σ2 if MT-A′ holds.
 
@@ -149,8 +161,11 @@ statements about `ℝ^n`.
   weakens MT-Q, since `141^c` stops being small.
 - **K3 (the bridge).** If QLF's census, once a realization map is built, does not give the momentum
   reading of §2, MT-Q loses its surface class.
-- **K4 (realizability).** Any physical region holding more distinguishable states than its Bekenstein
-  bound refutes the scale cap.
+- **K4 (the domain choice).** The scale cap is an assumed domain (assumption (b)), so no experiment
+  refutes it as such. If physical waves were shown to need scales beyond the chosen `R_max` (or a length
+  map different from the Planck one), the constant changes with the new `R_max`. A violation of the
+  Bekenstein capacity bound would remove the motivation (a) but would not by itself refute the
+  separately assumed domain.
 
 ---
 
@@ -183,10 +198,10 @@ statements about `ℝ^n`.
 | MT is false, with `log R` loss on every non-planar `C²` surface | **Theorem** (Cairo 2025) |
 | Power loss `R^α`, `α < (n−1)/(n−1+k)`, on a `C^k`-dense family | **Theorem** (Cairo–Zhang 2025) |
 | A bounded region has finitely many distinguishable states | **Proved** given the Bekenstein premise; it implies no extension inequality |
-| Physical scale `ln R ≤ 141` | **Follows** from the Bekenstein premise and the observed size of the universe; useful only with a polylog loss |
+| Physical scale `ln R ≤ 141` | **Assumed** domain choice: observable universe in Planck units (assumption (b)); not a consequence of the Bekenstein premise; useful only with a polylog loss |
 | `Form` read as four-momentum, free modes on `det = m²` | **Named bridge**, assumed (standard relativity, not derived in QLF) |
 | MT-A on Σ1, MT-A′ on Σ2 | **Open** (mathematics) |
-| MT-Q for free on-shell modes on compact shell pieces | **Conditional conjecture** on MT-A, the bridge and the scale cap |
+| MT-Q for free on-shell modes on compact shell pieces | **Conditional conjecture** on MT-A, the bridge and the assumed domain |
 | Cairo's half-balanced set and the `C(2n,n)` census | **Resemblance** only |
 
 ---
