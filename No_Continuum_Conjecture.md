@@ -274,7 +274,7 @@ large scale, and they fail because of coherence that a straight line cannot see.
 failure is a slowly growing `log R`. In the census it is the exponential `κ_L ≈ 1.93^L`. A test that
 would connect them is to ask whether the census itself violates a discrete Mizohata–Takeuchi
 inequality: bound the signed closure amplitude deposited on a weight on `ℤ⁴` by the weight's heaviest
-lattice line, and measure the ratio as `L` grows. It is not done here.
+lattice line, and measure the ratio as `L` grows. It is registered as test D-MT in §5a.
 
 ---
 
@@ -322,6 +322,43 @@ length 14 says that the collinear joint census is near random phase *at that dep
 NC-E unsupported at the depth reached and is how it will be reported. It would not decide physical
 electrons, whose closures are thousands of bits deep.
 
+### 5a. Results and registrations (2026-11-02)
+
+**T3 result: PASS.** Run as registered (`census_dp` from
+[`logical_bang_census.py`](logical_bang_census.py), unchanged; entangled classes, all remainders pooled):
+
+| length | collinear `N` | collinear `S` | collinear `κ` | orthogonal `κ` |
+|---:|---:|---:|---:|---:|
+| 10 | 2,350,080 | −76,800 | 50.1 | 0 (exact zero) |
+| 12 | 542,868,480 | 8,825,856 | 378.8 | 5.2 |
+| 14 | 100,370,350,080 | −741,470,208 | 2,340.4 | 76.1 |
+
+The collinear joint census is past `κ = 4` at all three lengths and rising (factor ~6–7 per two steps),
+which passes T3. Two honest notes. First, T3 was not fully blind: the length-12 totals were already
+recorded in [`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §44a, although `κ` had not
+been computed from them. Second, the "orthogonal = dark fringe" scoping in §5 was a shallow-depth
+reading: orthogonal spins cancel exactly at length 10, but they cross the rogue threshold at 12
+(`κ = 5.2`) and reach `κ = 76` at 14, while staying 30× weaker than collinear. Several orthogonal
+classes (`gggggg`, `ggggnn`, `ggggss`, `ggssss`, `ssssss`, entangled) still cancel exactly at 14. By
+the rule-4 test, the pass shows that the joint census is far from random phase, as the vacuum census
+is; it does not by itself show that physical electrons interact this way.
+
+**D-MT, registered before it is run.** A discrete Mizohata–Takeuchi test on the census wave.
+
+- *Wave.* `ψ_k(x)`, the signed sum over histories of length `k` from the origin ending at `x ∈ ℤ⁴`
+  (holonomy signs, as in §4). Density per time slice `ρ_k(x) = ψ_k(x)² / Σ_y ψ_k(y)²`.
+- *Random-phase baseline.* Independent signs give `E[ψ_k(x)²] = W_k(x)`, so the baseline density is
+  `p_k(x) = W_k(x)/8^k`, the classical walk.
+- *Lines.* The substrate's own straight lines in discrete spacetime `(x, k)`, `0 ≤ k ≤ L`: rest lines
+  `x = x₀`, and null lines `x = x₀ + k·(±e_a)` for the eight twists. Each spacetime point lies on nine.
+- *Constant.* `V_L = max Σ_{k,x} ρ_k(x) w(x,k)` over weights `w ≥ 0` whose sum along every line is at
+  most 1 (a linear program). `V_L` is the best constant in `Σ ρ w ≤ V_L · sup_ℓ X w` for this wave, and
+  `V_L^{rp}` is the same for `p_k`. Mizohata–Takeuchi holding here means `V_L` stays bounded.
+- *NC's prediction (MT fails for the census).* `V_L` increases at every step of the range computed, and
+  `V_L / V_L^{rp}` increases at every step.
+- *Fail.* Either condition fails at some step. Lengths `L = 2, 4, …` as far as the linear program
+  allows. A failure at the depth reached is reported as unsupported at that depth.
+
 ---
 
 ## 6. Kill conditions (stated before the tests)
@@ -352,7 +389,8 @@ electrons, whose closures are thousands of bits deep.
 | R1: census amplitude past the rogue threshold for `4 ≤ L ≤ 40` | **Exact computation** |
 | R2: growth rate `(2+2√3)²` per two steps | **Numerical evidence** |
 | NC3: classical laws are laws of means | **Conjecture**; the kinematic half follows from S1–S3 |
-| NC-E: electron interaction is a joint rogue | **Conjecture**; T3 registered, not run; already scoped to collinear classes |
+| NC-E: electron interaction is a joint rogue | **Conjecture**; T3 **passed** at lengths 10–14 (collinear `κ` 50 → 2,340); orthogonal crosses the threshold at 12 |
+| D-MT: the census wave violates a discrete Mizohata–Takeuchi bound | **Registered** (§5a) |
 | The bridge: a physical amplitude is a signed closure census | **Open bridge**, not derived here |
 
 ---
