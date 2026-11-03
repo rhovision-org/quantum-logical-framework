@@ -59,13 +59,18 @@ conjugate, so nothing is left outstanding. That is count balance, and count bala
 order-sensitive condition too: `count_balanced_pauli_closed` proves every count-balanced history
 folds to a Pauli scalar. Operationally, `full_zeno_prune s = []`.
 
-**Where the premise comes from.** It is the substrate reading of **least action**. Physical systems
-select histories that extremise action; the substrate's version is sharper and simpler — a history
-persists as an event exactly when its *free* action is zero, `S = ∫ℒ dΩ` with `ℒ = 0`
-([`Lagrangian_Formulation.md`](Lagrangian_Formulation.md)). Least action is the evidence that
-suggested ZFA; ZFA is the discrete condition proposed to underlie it. The derivation now exists for the
-unsigned census: the closure is the stationary mode of the multiplicity, and a biased alphabet breaks it
-([`Stationary_Action.md`](Stationary_Action.md), `QLF_StationaryAction`).
+**Where the premise comes from.** It is the substrate reading of classical **stationary action**.
+Classical physics restricts the continuum of mathematically possible histories by `δS = 0`; QLF
+proposes the sharper substrate condition underneath that restriction. An open history may carry free
+action, but a physical event occurs at its **first** `F(h)=0` closure, where nothing remains
+outstanding. Closure is absorbing, so first closure supplies priority without a multiplicity rule
+([`MostWays_First.md`](MostWays_First.md)).
+
+The multiplicity result is separate and supporting: on the unsigned census, conjugate symmetry makes
+ZFA balance a stationary, strict mode, and a biased alphabet breaks that stationarity
+([`Stationary_Action.md`](Stationary_Action.md), `QLF_StationaryAction`). It does **not** select the
+event; `QLF_ClosureMultiplicity.depth_one_not_modal` proves first depth and modal depth can differ.
+The open bridge is to derive classical `δS = 0` as the continuum rendering of first ZFA closure.
 
 **Its epistemic status, by this document's own labels: a standing premise under continuous test —
 and it stands uncontradicted so far.** It is not an axiom held beyond question. Every invariant
