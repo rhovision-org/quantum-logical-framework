@@ -36,7 +36,7 @@ One rule has to earn its keep. Five representative results show why the proposal
 |---|---|---|
 | **Spin-½** | The primitive twists form the genuine `SU(2) → SO(3)` double cover; 360° gives `−I`, 720° returns to `+I` | **Proved** in [`QLF_Spin`](lean/QLF_Spin.lean) |
 | **Minkowski spacetime** | A state is represented by a 2×2 Hermitian matrix whose determinant is the Minkowski interval | **Proved** in [`QLF_Minkowski`](lean/QLF_Minkowski.lean); the full Lorentz-cover surjectivity has one named bridge |
-| **Stationarity at balance** | Equal-weight conjugate histories have maximal, stationary multiplicity at ZFA balance | **Proved** in [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean) and [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean); identifying that multiplicity with the physical action functional remains open |
+| **Stationarity at balance** | Equal-weight conjugate histories have maximal, stationary multiplicity at ZFA balance; **first closure, not the mode, supplies event priority** | **Proved** in [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean) and [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean); the bridge from first ZFA closure to the physical action functional remains open |
 | **Critical normalization** | At the census temperature the unconstrained eight-way history ensemble is non-normalizable, while the ZFA-closed census is normalizable because closure supplies the required return-census suppression | **Proved** in [`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean) using the closure-walk results |
 | **Galactic dynamics** | The radial-acceleration relation is obtained with `a₀ = cH₀/2π`, without a dark-matter particle or a fitted acceleration scale, and benchmarked on 147 SPARC galaxies | **Derived and benchmarked** in [`QLF_DarkMatter`](lean/QLF_DarkMatter.lean), [`DarkMatter.md`](DarkMatter.md) and [`SPARC.md`](SPARC.md) |
 
@@ -65,6 +65,14 @@ The point is therefore not that classical mathematics is defective. It is that
 \]
 
 QLF claims to explain both sides with the same boundary.
+
+Classical physics already hints at that boundary. It does not let the mathematical continuum realize
+arbitrary trajectories; it imposes **stationary action** as a physical restriction. QLF proposes why
+that restriction works. At the substrate, an open possibility may carry free action, but **no physical
+event can retain it**: the first point at which the ledger reaches Zero Free Action is the closure and
+therefore the event. Classical `δS = 0` is proposed as the continuum rendering of that sharper
+first-closure rule. The proved multiplicity maximum at balance is supporting evidence for the
+variational form, not the selector of which event occurs first.
 
 ---
 
@@ -116,24 +124,30 @@ finitely many distinguishable states.** That is Bekenstein's bound. QLF did not 
 constructive.
 
 **ZFA is the sufficient basis.** QLF's thesis is that one principle is enough to build physics on:
-**ZFA, equal and opposite logical action**. Every distinction is paired with its opposite, and the pair
-closes with zero free energy. Nothing else is posited. Numbers, the unit group `{±1, ±i}`, spin, the
-non-distributive logic of measurement and the census constants are derived from that one closure
-condition. Least action is approached the same way. The realized history is the one realized in the
-most ways, and because every twist has a conjugate of equal weight, the discrete multiplicity is
-stationary, and maximal, at balance. That is proved
-([`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), and
-[`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) for the signed phase on all four axes, no
-axioms). Reading that multiplicity as Hamilton's action, `S ↔ −ħ log W`, is an identification, not yet
-derived, so the step from ZFA to `δS = 0` is an open bridge
-([`Stationary_Action.md`](Stationary_Action.md)) ([`Philosophy.md`](Philosophy.md) §3a, [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md)
-§1, [`Quantum_Logic_Foundations.md`](Quantum_Logic_Foundations.md)). Where a derivation still needs
-something more, the gap is named as an explicit bridge, not added as a second principle (the axiom
-inventory in [`Open_Problems.md`](Open_Problems.md)). This is what turns the rest of the page into
-predictions. If equal and opposite logical action is sufficient, classical mathematics can only be
-reasonable where it describes such closures and their large-count limits. Its completed infinities and
-unconstructed choices are additions the basis does not need, and they are where the paradoxes and
-wrong answers turn up.
+**ZFA, equal and opposite logical action**. Every distinction is paired with its opposite, and a physical
+event occurs at the **first closure** where no free action remains. Nothing else selects priority.
+Multiplicity enters one level later: it counts how often admissible closures occur.
+
+That distinction matters for stationary action. The repo proves that conjugate symmetry makes the
+discrete multiplicity stationary and maximal at ZFA balance
+([`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), with the signed four-axis result in
+[`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean)). But
+[`QLF_ClosureMultiplicity`](lean/QLF_ClosureMultiplicity.lean) also proves `depth_one_not_modal`: the
+first closure need not be the modal one. So the corrected physical chain is
+
+\[
+\text{first ZFA closure} \rightarrow \text{event}, \qquad
+\text{multiplicity} \rightarrow \text{frequency}.
+\]
+
+Reading classical stationary action as the continuum shadow of "no surviving free action" is still an
+open bridge. The older identification `S ↔ −ħ log W` remains a possible statistical rendering, not the
+event-selection rule ([`Stationary_Action.md`](Stationary_Action.md)). Where a derivation still needs
+something more, the gap is named explicitly in [`Open_Problems.md`](Open_Problems.md). This makes the
+page's prediction sharper: classical mathematics is physically reasonable where its continuous
+structures render finite closures and the physical restrictions inherited from them. It becomes
+unreasonable when those restrictions are forgotten and completed mathematical objects are treated as
+physically realizable.
 
 The opening section used only five representative results so that the thesis can be judged before the
 inventory overwhelms it. The complete natural-law table, the mass/energy/information discussion, and
@@ -534,7 +548,7 @@ is reached but a residual remains open.
 | Law | What QLF shows | Status | Where |
 |---|---|---|---|
 | **Newton's third law** (action = reaction) | ZFA *is* equal and opposite action at every elementary event; *actio = reactio* is how it looks when the pairings blur together | The principle itself | [`Philosophy.md`](Philosophy.md), [`Introducing_QLF.md`](Introducing_QLF.md) |
-| **Least action** (`δS = 0`) | The most-ways history sits at balance, where the first variation of multiplicity vanishes | **Proved:** discrete multiplicity is stationary at balance. **Open bridge:** multiplicity → physical action functional | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean), [`Stationary_Action.md`](Stationary_Action.md) |
+| **Stationary action** (`δS = 0`) | Classical mathematics becomes physical only after arbitrary paths are restricted by a stationary-action condition. QLF proposes the substrate reason: no free action survives into an event, and first ZFA closure supplies priority. Separately, the closure census is stationary at balance. | **Proved:** discrete multiplicity is stationary at balance. **Proved:** first and modal closure are distinct orderings (`depth_one_not_modal`). **Open bridge:** first ZFA closure → physical action functional | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_ClosureMultiplicity`](lean/QLF_ClosureMultiplicity.lean), [`Stationary_Action.md`](Stationary_Action.md) |
 | **Newton's gravitation** (`F = GMm/r²`) | Holographic event count `4πR²` × `log 2` per event gives the area law; the entropy gradient gives the force; only 3-D space gives `1/r²` | **Derived**; area law and the `1/r²` exponent proved, the Bekenstein-gradient step structural | [`QLF_GravityFromDelay`](lean/QLF_GravityFromDelay.lean) (`holographic_entropy_eq`, `newton_exponent_only_3d_matches`), [`Gravity_From_Delay.md`](Gravity_From_Delay.md) |
 | **Newton's second law** (`F = ma`) | A rest mass is a closed light-speed circulation; acceleration shifts it, and the force is exactly proportional to the shift | **Proved** for the two-leg light clock (Route A); the counting version is open | [`QLF_Inertia`](lean/QLF_Inertia.lean), [`Inertia.md`](Inertia.md) |
 | **Special relativity** | The state is a 2×2 Hermitian matrix whose determinant is the Minkowski interval; `SL(2,ℂ)` acts as the Lorentz group | **Proved**; surjectivity onto `SO⁺(1,3)` rests on one named bridge | [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (`det_toMatrix_eq_interval`), [`QLF_LorentzCover`](lean/QLF_LorentzCover.lean) |
