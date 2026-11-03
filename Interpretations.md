@@ -22,15 +22,14 @@ pointers to where each is developed.
 
 **The reading.** Possibilism already asserts the Everett premise: every ZFA-closing history is real *a
 priori* ([`Philosophy.md`](Philosophy.md) §3) — the full free monoid of eight-twist strings that balance,
-nothing discarded. What standard many-worlds does *not* supply, and QLF does, is an **order**. The
-multiplicity principle ([`Philosophy.md`](Philosophy.md) §3a) makes a closure's frequency **its census
-count of ways**; the modal closures — shallow, maximal-multiplicity — therefore happen **first**, and
-within any finite capacity `R` ([`QLF_HorizonClosure`](lean/QLF_HorizonClosure.lean),
-[`QLF_Realizability`](lean/QLF_Realizability.lean)) their relative measure approaches `1` while every
-other closure's approaches `0`.
+nothing discarded. What standard many-worlds does *not* supply, and QLF does, is an **order**. That
+order is **first closure**, not multiplicity: a closure is an event and is irrevocable, so the
+shallowest closure available to a growing history has priority. Separately, multiplicity gives a
+closure's frequency in the census ([`MostWays_First.md`](MostWays_First.md));
+`QLF_ClosureMultiplicity.depth_one_not_modal` proves the two orderings can differ.
 
-> **The probability of what closes in the most ways is one; every other universe is zero — *relative to
-> a listening capacity*, not absolutely.**
+> **First closure fixes priority; multiplicity fixes frequency — both relative to the capacity that can
+> receive the closure.**
 
 That qualification is the whole point. A closure the horizon cannot receive is not *unreal*; it is a zero
 **listening** — the count exists, the capacity misses it ([`Philosophy.md`](Philosophy.md) §3a rule 2).
@@ -39,10 +38,10 @@ them.
 
 **Where the Law of Exceptions does the work.** [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md) §2 proves
 that for **every** finite `R` there is a constructed history — `[+^(R+1) −^(R+1)]` — invisible at
-capacity `R` and *genuinely closing* at `R+1`. Those deeper closures are exactly the low-multiplicity
-exceptions of [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md) §4: multiplicity falls rapidly with depth
-([`QLF_ClosureDepth`](lean/QLF_ClosureDepth.lean) — `2ⁿ` ways at depth one, two at maximal depth), so
-they are the histories that happen **last**. The two claims then fit without strain:
+capacity `R` and *genuinely closing* at `R+1`. Those deeper closures are also low-multiplicity
+exceptions of [`Law_Of_Exceptions.md`](Law_Of_Exceptions.md) §4, but their lateness and rarity are
+separate facts. They happen **last** because they require a wider closure horizon; they are **rare**
+because their multiplicity is small ([`QLF_ClosureDepth`](lean/QLF_ClosureDepth.lean)). The two claims then fit without strain:
 
 * **within our finite horizon** the exceptions remain measure-zero — "they never happen in our time";
 * **they are real ZFA events nonetheless**, admitted the moment the budget expands, and
