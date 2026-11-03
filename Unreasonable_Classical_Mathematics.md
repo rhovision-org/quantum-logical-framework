@@ -1,25 +1,70 @@
 # The Uncanny Unreasonableness of Classical Mathematics
 
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
-> opposite quantum logical action with zero free energy, the principle of QLF.
+> opposite quantum logical action with zero free energy, the closure principle of QLF.
+
+**The claim in one line:** mathematics is uncannily effective where it is the large-count rendering of
+realizable closure, and becomes unreasonable where a completed mathematical construction is mistaken
+for something the physical world can realize.
 
 Wigner (1960) called the effectiveness of mathematics in physics *unreasonable*, a miracle with no
-rational explanation. [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §4 gives QLF's answer: the
-mathematics that works is the mathematics that can be realized, because both are readings of one
-closure process. This page is the other side of that answer. If effectiveness follows realizability,
-then wherever classical mathematics asserts something no finite process can realize, it should stop
-working, and in an odd, recognizable way. It produces paradoxes, objects that cannot be exhibited, and
-answers that are wrong when applied to the world. That is the *uncanny unreasonableness*: the same
-mathematics that is uncannily right inside the realizable is uncannily wrong just outside it, and the
-boundary is the same in every case.
+rational explanation. QLF proposes a reason. Mathematics and physics are not two independently invented
+systems that happen to fit. They are two readings of the same closure process: one counts the possible
+relations; the other is what those relations look like when they persist as physical events. If that is
+right, the fit should have a boundary. Mathematics should work extraordinarily well while it describes
+finite closures and their large-count limits, and it should become physically misleading when it asks
+for completed infinities, ungrounded self-reference, or selections no construction makes.
 
-So QLF has to account for two things, and one account covers both. The account starts from ZFA, equal
-and opposite logical action, which QLF takes as the sufficient basis of physics (§2). Mathematics is reasonable where it
-describes finite closures and their large-count limits. It becomes unreasonable where it asserts
-objects that no finite closure realizes. §1 sets this against Wigner's original paper point by point.
-The rest of the page collects the failures, with a link for each to the document and Lean module where
-it is worked out. The page adds no new theorem. What it adds is the observation that the scattered
-results share one cause.
+That is a stronger claim than merely explaining Wigner after the fact, so QLF has to earn it. The next
+section gives the shortest case first. The rest of the page then does the slower work: Wigner point by
+point, the realizability boundary, paradoxes, continuum failures, Choice, and finally the full theorem
+and derivation ledger. The technical details are deliberately later so the central proposition can be
+judged before its machinery.
+
+---
+
+## 0. Why take QLF seriously?
+
+QLF starts from one physical rule: **a persistent physical event is a closure of equal and opposite
+logical action**. The framework calls that condition Zero Free Action, ZFA. The primitive alphabet is
+finite; histories compose; opposite actions can close; and the same closure calculus is then asked to
+account for quantum structure, spacetime structure, dynamics and observation.
+
+One rule has to earn its keep. Five representative results show why the proposal is worth examining:
+
+| Result | What the closure framework supplies | Status |
+|---|---|---|
+| **Spin-½** | The primitive twists form the genuine `SU(2) → SO(3)` double cover; 360° gives `−I`, 720° returns to `+I` | **Proved** in [`QLF_Spin`](lean/QLF_Spin.lean) |
+| **Minkowski spacetime** | A state is represented by a 2×2 Hermitian matrix whose determinant is the Minkowski interval | **Proved** in [`QLF_Minkowski`](lean/QLF_Minkowski.lean); the full Lorentz-cover surjectivity has one named bridge |
+| **Stationarity at balance** | Equal-weight conjugate histories have maximal, stationary multiplicity at ZFA balance | **Proved** in [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean) and [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean); identifying that multiplicity with the physical action functional remains open |
+| **Critical normalization** | At the census temperature the unconstrained eight-way history ensemble is non-normalizable, while the ZFA-closed census is normalizable because closure supplies the required return-census suppression | **Proved** in [`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean) using the closure-walk results |
+| **Galactic dynamics** | The radial-acceleration relation is obtained with `a₀ = cH₀/2π`, without a dark-matter particle or a fitted acceleration scale, and benchmarked on 147 SPARC galaxies | **Derived and benchmarked** in [`QLF_DarkMatter`](lean/QLF_DarkMatter.lean), [`DarkMatter.md`](DarkMatter.md) and [`SPARC.md`](SPARC.md) |
+
+These five are intentionally not a catalogue. They span quantum kinematics, relativity, a variational
+principle, statistical normalization and an astrophysical benchmark. The full ledger appears later,
+with every item marked **proved**, **derived**, **leading value**, **open bridge**, or **reading**.
+Failed routes are kept as failures rather than silently promoted into the theory.
+
+The same principle then makes a second prediction. If physical events are finite closures, mathematics
+should cease to describe the world faithfully when it demands one of three things no closure can
+deliver:
+
+1. a closure that contains or grounds itself;
+2. infinitely many distinguishable states in a finite physical capacity;
+3. a selection for which no construction performs the selecting.
+
+That is the test developed below. On the realizable side, classical mathematics is the extraordinarily
+accurate large-count rendering Wigner admired. Beyond the realizability boundary, the same classical
+machinery remains mathematically consistent but produces paradoxes, divergences, nonconstructive
+objects, or physically wrong extrapolations.
+
+The point is therefore not that classical mathematics is defective. It is that
+
+\[
+\boxed{\text{consistency} \ne \text{physical realizability}.}
+\]
+
+QLF claims to explain both sides with the same boundary.
 
 ---
 
@@ -90,69 +135,10 @@ reasonable where it describes such closures and their large-count limits. Its co
 unconstructed choices are additions the basis does not need, and they are where the paradoxes and
 wrong answers turn up.
 
-**Natural laws derived from ZFA.** The table lists the laws QLF obtains from equal and opposite
-logical action, with the honest status of each. It is a summary: the status ledger of record is
-[`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) with [`Open_Problems.md`](Open_Problems.md), and
-where they differ, they win. "Proved" means a Lean theorem with no QLF axiom.
-"Derived" means a derivation whose steps are named in the linked document, with the step that is not
-yet Lean-checked or that is cited from standard physics stated there. "Leading value" means the number
-is reached but a residual remains open.
-
-| Law | What QLF shows | Status | Where |
-|---|---|---|---|
-| **Newton's third law** (action = reaction) | ZFA *is* equal and opposite action at every elementary event; *actio = reactio* is how it looks when the pairings blur together | The principle itself | [`Philosophy.md`](Philosophy.md), [`Introducing_QLF.md`](Introducing_QLF.md) |
-| **Least action** (`δS = 0`) | The most-ways history sits at balance, where the first variation of multiplicity vanishes | **Proved:** discrete multiplicity is stationary at balance. **Open bridge:** multiplicity → physical action functional | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean), [`Stationary_Action.md`](Stationary_Action.md) |
-| **Newton's gravitation** (`F = GMm/r²`) | Holographic event count `4πR²` × `log 2` per event gives the area law; the entropy gradient gives the force; only 3-D space gives `1/r²` | **Derived**; area law and the `1/r²` exponent proved, the Bekenstein-gradient step structural | [`QLF_GravityFromDelay`](lean/QLF_GravityFromDelay.lean) (`holographic_entropy_eq`, `newton_exponent_only_3d_matches`), [`Gravity_From_Delay.md`](Gravity_From_Delay.md) |
-| **Newton's second law** (`F = ma`) | A rest mass is a closed light-speed circulation; acceleration shifts it, and the force is exactly proportional to the shift | **Proved** for the two-leg light clock (Route A); the counting version is open | [`QLF_Inertia`](lean/QLF_Inertia.lean), [`Inertia.md`](Inertia.md) |
-| **Special relativity** | The state is a 2×2 Hermitian matrix whose determinant is the Minkowski interval; `SL(2,ℂ)` acts as the Lorentz group | **Proved**; surjectivity onto `SO⁺(1,3)` rests on one named bridge | [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (`det_toMatrix_eq_interval`), [`QLF_LorentzCover`](lean/QLF_LorentzCover.lean) |
-| **`E = mc²`** | Mass is closure depth; `c` is one event length per event time | **Derived** | [`E_mc2_derivation.md`](E_mc2_derivation.md) |
-| **Einstein's field equations** | Jacobson's route: the equations are the equation of state of horizon thermodynamics, and QLF supplies both inputs (area law, Unruh temperature) from the substrate | **Derived** via a cited route | [`QLF_EinsteinEquations`](lean/QLF_EinsteinEquations.lean), [`Einstein_Equations.md`](Einstein_Equations.md) |
-| **Mercury's perihelion** (43″/century) | Newton's law composed with the weak-field Schwarzschild metric | **Derived**; the Schwarzschild components are not yet Lean-anchored individually | [`QLF_MercuryPerihelion`](lean/QLF_MercuryPerihelion.lean), [`Mercury_Perihelion.md`](Mercury_Perihelion.md) |
-| **Fine-structure constant** | `α⁻¹ = 128 + 3² = 137` from the 8-twist alphabet and 3-D space, with no observed input (0.026 % from measured) | **Leading value proved**; residual bracketed two-sided, `+0.036` open | [`QLF_FineStructureSubstrate`](lean/QLF_FineStructureSubstrate.lean) (`alpha_QLF_eq`), [`Alpha.md`](Alpha.md) |
-| **Maxwell** | No magnetic monopoles; Faraday's law as flux conservation over the event sequence | **Proved** (`∇·B = 0`, Faraday integral form) | [`ZFAEventDynamics`](lean/ZFAEventDynamics.lean) (`no_magnetic_monopoles`), [`QLF_MaxwellCurl`](lean/QLF_MaxwellCurl.lean), [`Maxwell.md`](Maxwell.md) |
-| **Spin-½** | The twists are spin; a genuine `SU(2) → SO(3)` double cover | **Proved** | [`QLF_Spin`](lean/QLF_Spin.lean), [`Spin_QLF.md`](Spin_QLF.md) |
-| **Pauli exclusion** | The antisymmetric combination of two identical processes is zero | **Proved** | [`PauliExclusion`](lean/PauliExclusion.lean) (`pauli_exclusion`) |
-| **Heisenberg uncertainty** | The `ħ/2` quantum is the half-width of one count bin; the product form uses the proved non-commuting axes | **Proved** for the quantum; product form cites the entropic relation | [`QLF_Uncertainty`](lean/QLF_Uncertainty.lean), [`UncertaintyPrinciple.md`](UncertaintyPrinciple.md) |
-| **Quantum logic** | Measurement propositions form the orthomodular, non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
-| **Landauer's bound** | Each half-spin closure releases `log 2` nats of variational free energy | **Proved** as a dimensionless information identity (binary KL); at the census temperature `T_c = ε/log 8` the Landauer scale equals `ε/3` per bit (an energy-scale identity, not an erasure model); the energy per twist step `ε` is an input | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`); [`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean) (`landauer_eight`); at a horizon, [`QLF_HorizonFirstLaw`](lean/QLF_HorizonFirstLaw.lean) (`bh_entropy_first_law`) |
-| **Born rule** | Why the *square*: an event is a ket–bra pair, so its count is `a · a*` | **Half proved**; that the norm is the count of ways is open | [`QLF_BornCounting`](lean/QLF_BornCounting.lean), [`Born_Rule.md`](Born_Rule.md) |
-| **The arrow of time** | No time loops, from the law of weakening alone | **Proved** | [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean) |
-| **Horizon thermodynamics** (Unruh, Hawking, de Sitter) | All three are one Unruh relation `T = ℏa/2πck_B` at the right acceleration; the `2π` is the loop phase | **Derived** | [`QLF_HorizonTemperature`](lean/QLF_HorizonTemperature.lean) |
-| **Entanglement** (ER = EPR) | Entanglement is a shared closure of two histories, a shared past rather than a signal | **Proved** that a shared closure does not factorize; ER = EPR is a reading | [`QLF_IndexedFactors`](lean/QLF_IndexedFactors.lean) (`shared_closure_not_factorizable`), [`ER_EPR_QLF`](lean/ER_EPR_QLF.lean), [`Entanglement.md`](Entanglement.md) |
-| **Three spatial dimensions** | 3 is the least dimension in which every finite relational graph renders without crossings | **Proved** | [`QLF_Generations`](lean/QLF_Generations.lean), [`SpaceTime.md`](SpaceTime.md) §3a |
-| **Galactic dynamics** (the radial acceleration relation) | Derived with `a₀ = cH₀/2π`, no particle and no free parameter; blind-tested on 147 SPARC galaxies | **Derived and benchmarked** | [`QLF_DarkMatter`](lean/QLF_DarkMatter.lean), [`DarkMatter.md`](DarkMatter.md), [`SPARC.md`](SPARC.md) |
-| **Primordial helium** | Every surviving neutron ends in ⁴He, so `Y_p = 1/4` at freeze-out `n/p = 1/7` (measured 0.247) | **Derived** | [`QLF_Nucleosynthesis`](lean/QLF_Nucleosynthesis.lean) |
-| **Strong CP** (`θ̄ = 0`) | Every CP-odd winding vanishes on every closure, so no axion is needed | **Mechanism proved**; field-theoretic reading open | [`QLF_StrongCP`](lean/QLF_StrongCP.lean) |
-| **Proton stability** | Baryon number is a winding that no gauge twist changes | **Proved** | [`QLF_BaryonWinding`](lean/QLF_BaryonWinding.lean) |
-| **Weak mixing angle** | `sin²θ_W = 3/8` at unification, from the same 6+2 split as α | **Unification value**; running to 0.231 open | [`QLF_WeinbergAngle`](lean/QLF_WeinbergAngle.lean), [`Weak_Force.md`](Weak_Force.md) |
-| **Proton–electron mass ratio** | `m_p/m_e = 6π⁵` | **Leading value**; residual open | [`QLF_LenzMassRatio`](lean/QLF_LenzMassRatio.lean), [`Proton_Resonance_R_e.md`](Proton_Resonance_R_e.md) |
-| **The hierarchy of scales** | `ln(M_P/m_p) = 2π·b₀ = 14π`, 0.07 % from measured | **Derived** from one posit (`α_s` at the Planck scale) | [`QLF_AlphaS`](lean/QLF_AlphaS.lean) |
-
-**Mass, energy and bits.** Mass and energy convert at a fixed rate, `c²`. Bits convert to energy only
-at a temperature or a size: Landauer's bound puts the cost of a bit at `k_B T ln 2`, and Bekenstein's
-bound lets energy `E` within radius `R` hold at most `2πER/(ħc ln 2)` bits. So the three are
-interconvertible, with temperature or size as the second exchange rate. They are not equivalent at a
-fixed rate the way mass and energy are, and a fixed mass per bit (Vopson 2019) is an untested
-proposal. QLF proves one exact instance. At a Schwarzschild horizon, with QLF's Hawking temperature,
-the first law `T_H dS = d(Mc²)` holds for the Bekenstein–Hawking entropy
-([`bh_entropy_first_law`](lean/QLF_HorizonFirstLaw.lean)). So one bit added to a horizon
-(`dS = k_B ln 2`) adds mass `k_B T_H ln 2 / c²`: mass, energy and a bit, related exactly, with the
-horizon supplying the temperature. The same module shows that the naive count of one bit per Planck
-patch breaks that law (`naive_count_breaks_first_law`), so a horizon bit occupies `4 log 2` Planck
-areas, not one. The inputs are named there: the Unruh relation, `E = Mc²` with `R = 2GM/c²`, and the
-first law holding in the mean. Away from a horizon, the census supplies a temperature: with energy
-`ε` per twist step and eight choices per step, `1/T = dS/dE` gives `T_c = ε / log 8`, at which the
-Landauer energy scale `k_B T_c ln 2` equals `ε/3`, the energy per bit of symbol-choice entropy
-([`landauer_eight`](lean/QLF_CensusTemperature.lean),
-[`Information_Physics.md`](Information_Physics.md) §5b). That is an energy-scale identity, not a
-model of erasure. The sharper result is about normalization: at `T_c` the free census is critical
-and cannot be normalized, while the closed census can, because of the `L⁻²` suppression of the
-four-dimensional closure walk ([`closed_census_normalizable`](lean/QLF_CensusTemperature.lean)). So
-ZFA closure is what makes the ensemble well defined at its own temperature. Open: `ε` itself, which
-is the energy per step of whichever ensemble is counting (Planck only at the logical bang), and the
-identification of `T_c` with a thermometer's temperature.
-
-The full survey, mystery by mystery and including the particles QLF predicts are absent (supersymmetric partners, the axion, a dark-matter particle, monopoles, proton decay), is [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md). The open entries are listed with their owning documents in [`Open_Problems.md`](Open_Problems.md).
+The opening section used only five representative results so that the thesis can be judged before the
+inventory overwhelms it. The complete natural-law table, the mass/energy/information discussion, and
+their proof-status qualifications are collected later under **Technical ledger: what ZFA currently
+buys**.
 
 **Why determinism sharpens the point.** In QLF every outcome is fixed by counting closures: what
 happens first is what closes first, and what happens most often is what closes in the most ways
@@ -530,9 +516,84 @@ realize, so the two cannot drift apart.
 
 ---
 
+## Technical ledger: what ZFA currently buys
+
+The opening case deliberately showed only five representative results. This is the full inventory that
+used to interrupt the argument near the beginning. It belongs here because the reader now has the
+organizing idea: realizability is the proposed boundary, and the question is how much the single ZFA
+principle actually earns before an additional physical bridge is required.
+
+**Natural laws derived from ZFA.** The table lists the laws QLF obtains from equal and opposite
+logical action, with the honest status of each. It is a summary: the status ledger of record is
+[`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) with [`Open_Problems.md`](Open_Problems.md), and
+where they differ, they win. "Proved" means a Lean theorem with no QLF axiom.
+"Derived" means a derivation whose steps are named in the linked document, with the step that is not
+yet Lean-checked or that is cited from standard physics stated there. "Leading value" means the number
+is reached but a residual remains open.
+
+| Law | What QLF shows | Status | Where |
+|---|---|---|---|
+| **Newton's third law** (action = reaction) | ZFA *is* equal and opposite action at every elementary event; *actio = reactio* is how it looks when the pairings blur together | The principle itself | [`Philosophy.md`](Philosophy.md), [`Introducing_QLF.md`](Introducing_QLF.md) |
+| **Least action** (`δS = 0`) | The most-ways history sits at balance, where the first variation of multiplicity vanishes | **Proved:** discrete multiplicity is stationary at balance. **Open bridge:** multiplicity → physical action functional | [`QLF_StationaryAction`](lean/QLF_StationaryAction.lean), [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean), [`Stationary_Action.md`](Stationary_Action.md) |
+| **Newton's gravitation** (`F = GMm/r²`) | Holographic event count `4πR²` × `log 2` per event gives the area law; the entropy gradient gives the force; only 3-D space gives `1/r²` | **Derived**; area law and the `1/r²` exponent proved, the Bekenstein-gradient step structural | [`QLF_GravityFromDelay`](lean/QLF_GravityFromDelay.lean) (`holographic_entropy_eq`, `newton_exponent_only_3d_matches`), [`Gravity_From_Delay.md`](Gravity_From_Delay.md) |
+| **Newton's second law** (`F = ma`) | A rest mass is a closed light-speed circulation; acceleration shifts it, and the force is exactly proportional to the shift | **Proved** for the two-leg light clock (Route A); the counting version is open | [`QLF_Inertia`](lean/QLF_Inertia.lean), [`Inertia.md`](Inertia.md) |
+| **Special relativity** | The state is a 2×2 Hermitian matrix whose determinant is the Minkowski interval; `SL(2,ℂ)` acts as the Lorentz group | **Proved**; surjectivity onto `SO⁺(1,3)` rests on one named bridge | [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (`det_toMatrix_eq_interval`), [`QLF_LorentzCover`](lean/QLF_LorentzCover.lean) |
+| **`E = mc²`** | Mass is closure depth; `c` is one event length per event time | **Derived** | [`E_mc2_derivation.md`](E_mc2_derivation.md) |
+| **Einstein's field equations** | Jacobson's route: the equations are the equation of state of horizon thermodynamics, and QLF supplies both inputs (area law, Unruh temperature) from the substrate | **Derived** via a cited route | [`QLF_EinsteinEquations`](lean/QLF_EinsteinEquations.lean), [`Einstein_Equations.md`](Einstein_Equations.md) |
+| **Mercury's perihelion** (43″/century) | Newton's law composed with the weak-field Schwarzschild metric | **Derived**; the Schwarzschild components are not yet Lean-anchored individually | [`QLF_MercuryPerihelion`](lean/QLF_MercuryPerihelion.lean), [`Mercury_Perihelion.md`](Mercury_Perihelion.md) |
+| **Fine-structure constant** | `α⁻¹ = 128 + 3² = 137` from the 8-twist alphabet and 3-D space, with no observed input (0.026 % from measured) | **Leading value proved**; residual bracketed two-sided, `+0.036` open | [`QLF_FineStructureSubstrate`](lean/QLF_FineStructureSubstrate.lean) (`alpha_QLF_eq`), [`Alpha.md`](Alpha.md) |
+| **Maxwell** | No magnetic monopoles; Faraday's law as flux conservation over the event sequence | **Proved** (`∇·B = 0`, Faraday integral form) | [`ZFAEventDynamics`](lean/ZFAEventDynamics.lean) (`no_magnetic_monopoles`), [`QLF_MaxwellCurl`](lean/QLF_MaxwellCurl.lean), [`Maxwell.md`](Maxwell.md) |
+| **Spin-½** | The twists are spin; a genuine `SU(2) → SO(3)` double cover | **Proved** | [`QLF_Spin`](lean/QLF_Spin.lean), [`Spin_QLF.md`](Spin_QLF.md) |
+| **Pauli exclusion** | The antisymmetric combination of two identical processes is zero | **Proved** | [`PauliExclusion`](lean/PauliExclusion.lean) (`pauli_exclusion`) |
+| **Heisenberg uncertainty** | The `ħ/2` quantum is the half-width of one count bin; the product form uses the proved non-commuting axes | **Proved** for the quantum; product form cites the entropic relation | [`QLF_Uncertainty`](lean/QLF_Uncertainty.lean), [`UncertaintyPrinciple.md`](UncertaintyPrinciple.md) |
+| **Quantum logic** | Measurement propositions form the orthomodular, non-distributive `MO2` | **Proved** | [`QLF_QuantumLogic`](lean/QLF_QuantumLogic.lean) |
+| **Landauer's bound** | Each half-spin closure releases `log 2` nats of variational free energy | **Proved** as a dimensionless information identity (binary KL); at the census temperature `T_c = ε/log 8` the Landauer scale equals `ε/3` per bit (an energy-scale identity, not an erasure model); the energy per twist step `ε` is an input | [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean) (`zfa_closure_minimizes_free_energy`); [`QLF_CensusTemperature`](lean/QLF_CensusTemperature.lean) (`landauer_eight`); at a horizon, [`QLF_HorizonFirstLaw`](lean/QLF_HorizonFirstLaw.lean) (`bh_entropy_first_law`) |
+| **Born rule** | Why the *square*: an event is a ket–bra pair, so its count is `a · a*` | **Half proved**; that the norm is the count of ways is open | [`QLF_BornCounting`](lean/QLF_BornCounting.lean), [`Born_Rule.md`](Born_Rule.md) |
+| **The arrow of time** | No time loops, from the law of weakening alone | **Proved** | [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean) |
+| **Horizon thermodynamics** (Unruh, Hawking, de Sitter) | All three are one Unruh relation `T = ℏa/2πck_B` at the right acceleration; the `2π` is the loop phase | **Derived** | [`QLF_HorizonTemperature`](lean/QLF_HorizonTemperature.lean) |
+| **Entanglement** (ER = EPR) | Entanglement is a shared closure of two histories, a shared past rather than a signal | **Proved** that a shared closure does not factorize; ER = EPR is a reading | [`QLF_IndexedFactors`](lean/QLF_IndexedFactors.lean) (`shared_closure_not_factorizable`), [`ER_EPR_QLF`](lean/ER_EPR_QLF.lean), [`Entanglement.md`](Entanglement.md) |
+| **Three spatial dimensions** | 3 is the least dimension in which every finite relational graph renders without crossings | **Proved** | [`QLF_Generations`](lean/QLF_Generations.lean), [`SpaceTime.md`](SpaceTime.md) §3a |
+| **Galactic dynamics** (the radial acceleration relation) | Derived with `a₀ = cH₀/2π`, no particle and no free parameter; blind-tested on 147 SPARC galaxies | **Derived and benchmarked** | [`QLF_DarkMatter`](lean/QLF_DarkMatter.lean), [`DarkMatter.md`](DarkMatter.md), [`SPARC.md`](SPARC.md) |
+| **Primordial helium** | Every surviving neutron ends in ⁴He, so `Y_p = 1/4` at freeze-out `n/p = 1/7` (measured 0.247) | **Derived** | [`QLF_Nucleosynthesis`](lean/QLF_Nucleosynthesis.lean) |
+| **Strong CP** (`θ̄ = 0`) | Every CP-odd winding vanishes on every closure, so no axion is needed | **Mechanism proved**; field-theoretic reading open | [`QLF_StrongCP`](lean/QLF_StrongCP.lean) |
+| **Proton stability** | Baryon number is a winding that no gauge twist changes | **Proved** | [`QLF_BaryonWinding`](lean/QLF_BaryonWinding.lean) |
+| **Weak mixing angle** | `sin²θ_W = 3/8` at unification, from the same 6+2 split as α | **Unification value**; running to 0.231 open | [`QLF_WeinbergAngle`](lean/QLF_WeinbergAngle.lean), [`Weak_Force.md`](Weak_Force.md) |
+| **Proton–electron mass ratio** | `m_p/m_e = 6π⁵` | **Leading value**; residual open | [`QLF_LenzMassRatio`](lean/QLF_LenzMassRatio.lean), [`Proton_Resonance_R_e.md`](Proton_Resonance_R_e.md) |
+| **The hierarchy of scales** | `ln(M_P/m_p) = 2π·b₀ = 14π`, 0.07 % from measured | **Derived** from one posit (`α_s` at the Planck scale) | [`QLF_AlphaS`](lean/QLF_AlphaS.lean) |
+
+**Mass, energy and bits.** Mass and energy convert at a fixed rate, `c²`. Bits convert to energy only
+at a temperature or a size: Landauer's bound puts the cost of a bit at `k_B T ln 2`, and Bekenstein's
+bound lets energy `E` within radius `R` hold at most `2πER/(ħc ln 2)` bits. So the three are
+interconvertible, with temperature or size as the second exchange rate. They are not equivalent at a
+fixed rate the way mass and energy are, and a fixed mass per bit (Vopson 2019) is an untested
+proposal. QLF proves one exact instance. At a Schwarzschild horizon, with QLF's Hawking temperature,
+the first law `T_H dS = d(Mc²)` holds for the Bekenstein–Hawking entropy
+([`bh_entropy_first_law`](lean/QLF_HorizonFirstLaw.lean)). So one bit added to a horizon
+(`dS = k_B ln 2`) adds mass `k_B T_H ln 2 / c²`: mass, energy and a bit, related exactly, with the
+horizon supplying the temperature. The same module shows that the naive count of one bit per Planck
+patch breaks that law (`naive_count_breaks_first_law`), so a horizon bit occupies `4 log 2` Planck
+areas, not one. The inputs are named there: the Unruh relation, `E = Mc²` with `R = 2GM/c²`, and the
+first law holding in the mean. Away from a horizon, the census supplies a temperature: with energy
+`ε` per twist step and eight choices per step, `1/T = dS/dE` gives `T_c = ε / log 8`, at which the
+Landauer energy scale `k_B T_c ln 2` equals `ε/3`, the energy per bit of symbol-choice entropy
+([`landauer_eight`](lean/QLF_CensusTemperature.lean),
+[`Information_Physics.md`](Information_Physics.md) §5b). That is an energy-scale identity, not a
+model of erasure. The sharper result is about normalization: at `T_c` the free census is critical
+and cannot be normalized, while the closed census can, because of the `L⁻²` suppression of the
+four-dimensional closure walk ([`closed_census_normalizable`](lean/QLF_CensusTemperature.lean)). So
+ZFA closure is what makes the ensemble well defined at its own temperature. Open: `ε` itself, which
+is the energy per step of whichever ensemble is counting (Planck only at the logical bang), and the
+identification of `T_c` with a thermometer's temperature.
+
+The full survey, mystery by mystery and including the particles QLF predicts are absent (supersymmetric partners, the axion, a dark-matter particle, monopoles, proton decay), is [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md). The open entries are listed with their owning documents in [`Open_Problems.md`](Open_Problems.md).
+
+---
+
 ## 8. In the end: consciousness and the manifestation of spirit
 
-> **Scope note.** This section is of a different kind from §§1–7. It extends the closure reading to
+> **Scope note.** The scientific and mathematical case is complete before this section. Readers who
+> want only that case can stop at the technical ledger or skip directly to §9. This section is of a
+> different kind from §§1–7. It extends the closure reading to
 > mind, social reality and spirit. Apart from the theorems it names, its content is **reading** or
 > **stance**, labelled as such, and nothing in §§1–7 depends on it.
 
