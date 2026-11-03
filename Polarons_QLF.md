@@ -1,5 +1,7 @@
 # Polarons in the Quantum Logical Framework
 
+> Part of the [**Quantum Logical Framework (QLF)**](README.md). QLF treats physical reality as finite histories that persist by **Zero Free Action (ZFA)** closure; this page applies that substrate to polarons. New readers can start with [`README.md`](README.md) or [`Introducing_QLF.md`](Introducing_QLF.md).
+
 > **Status:** proposed QLF composite-closure model with established experimental targets. The external polaron physics cited here is standard or experimentally observed; the QLF identification of a polaron with a particular class of shared ZFA histories is a model to be tested, not yet a Lean theorem.
 
 A **polaron** is normally described as an impurity or charge carrier dressed by excitations of its surrounding medium. In a polar crystal the medium response is phononic; in an ultracold Bose gas it is the collective response of the condensate. QLF asks whether the same phenomenon can be described without making either the impurity or the dressing field fundamental.
@@ -13,6 +15,30 @@ The proposed answer is:
 The impurity alone carries unresolved free action. The bath contributes complementary directional history. When the joint history closes, the impurity and its dressing are no longer two independent objects: they are one irreducible shared closure. In this reading, **the polaron is the closure, not a bare particle plus an added cloud**.
 
 See [`README.md`](README.md) for the QLF premise, [`QuCalc.md`](QuCalc.md) for composite histories, [`BOSE-EINSTEIN-CONDENSATE.md`](BOSE-EINSTEIN-CONDENSATE.md) for the repo's condensate shared-prefix model, [`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) for lattice closure counting, and [`Particles.md`](Particles.md) for the particle-as-closure ontology.
+
+---
+
+## Existing QLF substrate already proved
+
+The polaron proposal does **not** need to invent its closure mechanics. Several pieces are already
+machine-verified elsewhere in the repository:
+
+| Existing result | What it buys the polaron model | Status |
+|---|---|---|
+| **Joint closure = exact compensation** — `countBalanced_append_iff` | if impurity `I` and bath response `B` close together, the signed action vector of `B` is exactly the negative of `I` on every axis | **Proved**, [`QLF_Discoveries2026`](lean/QLF_Discoveries2026.lean) |
+| **Balance implies Pauli closure** — `count_balanced_pauli_closed` | the joint history does not need a second independent “Pauli closed” assumption; count balance already forces the fold into the Pauli-scalar sector | **Proved**, [`QLF_TwistAlphabet`](lean/QLF_TwistAlphabet.lean) |
+| **Coupled closures really exist** — `shared_closure_not_factorizable` | two open factors can form one joint closure even though neither factor closes independently; this is the exact structural pattern required for dressing | **Proved**, [`QLF_IndexedFactors`](lean/QLF_IndexedFactors.lean) |
+| **First closure is unique** — `prime_prefix_exists`, `prime_prefix_unique` | an “irreducible polaron” can be defined as a **prime** joint closure, eliminating histories that already closed earlier | **Proved**, [`QLF_FirstReturn`](lean/QLF_FirstReturn.lean) |
+| **Prime closures can be counted exactly** — `card_fiber_prime`, `walkCount_eq_sum_prime` | branch weights can be based on first-return closures rather than arbitrary raw continuations | **Proved**, [`QLF_FirstReturn`](lean/QLF_FirstReturn.lean), [`QLF_ProductWalk`](lean/QLF_ProductWalk.lean) |
+| **Closed-state quotient** — `closureToken`, `ClosureEquiv` | different microscopic bath histories can be grouped only when they have the same ledger **and** fold, giving a principled definition of a polaron branch/class | **Proved**, [`QLF_ClosureEquivalence`](lean/QLF_ClosureEquivalence.lean) |
+| **Closure renewal** — `closure_renewal` | after the composite closes, its closing futures are the vacuum's up to one retained sign, giving a precise sense in which the composite can behave as one reusable quasiparticle event | **Proved**, [`QLF_ClosureRenewal`](lean/QLF_ClosureRenewal.lean) |
+| **Depth = maximum excursion** — `closureDepth_eq_maxExcursion` | supplies an exact discrete depth variable for self-trapping tests **in the gauge-free phase submodel** | **Proved with scope restriction**, [`QLF_ClosureDepthLaw`](lean/QLF_ClosureDepthLaw.lean) |
+| **Coherent signed census** — `signed_mode_at_balance` | spectroscopy should ultimately use coherent/signed closure weight, not unsigned multiplicity alone | **Proved**, [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) |
+
+A particularly useful existing demonstration is `joint_closure_allows_unequal_components` in
+[`QLF_ElectronClosure`](lean/QLF_ElectronClosure.lean): two open histories of **different lengths**
+neither close alone, yet their concatenation closes. It is not a polaron model, but it proves that the
+substrate already admits the exact kind of unequal-component composite closure a dressed impurity needs.
 
 ---
 
