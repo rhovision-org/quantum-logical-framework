@@ -6,38 +6,35 @@ import Mathlib.Tactic.Linarith
 set_option linter.unusedVariables false
 
 /-!
-# QLF_StationaryAction — **stationary action is ZFA**: the realized history is the most-ways one
+# QLF_StationaryAction — stationarity at ZFA balance, not event selection
 
-Hamilton's principle `δS = 0` is postulated in every classical field theory. Hilbert's 1915
-derivation of general relativity from `S = ∫ R √−g` is that postulate applied to curvature. This
-module proves the substrate reason it holds: *what happens in the most ways happens most often*
-(`Philosophy.md` §3a). The realized history is the mode of the census multiplicity `W`. Because every
-twist has its conjugate at equal weight, the mode sits at balance, and there the first variation of
-`W` vanishes. With `S ↔ −ħ log W` that is `δS = 0`.
+Hamilton's principle `δS = 0` is postulated in classical field theory. This module proves a precise
+substrate fact about the one-axis closure census: conjugate symmetry places ZFA balance at a stationary,
+strictly maximal point of the multiplicity `W`. With the additional identification
+`S ↔ −ħ log W`, that has the stationary signature of a Euclidean action.
 
-The object is the one-axis census: a `2n`-step `±` history with `k` up-steps, `W(k) = C(2n, k)`,
-with balance (ZFA closure) at `k = n`.
+**It does not prove that nature selects the modal history.** Event priority is supplied elsewhere by
+the absorbing first-closure semantics: what closes first happens first. In fact
+`QLF_ClosureMultiplicity.depth_one_not_modal` proves that first depth and modal depth can differ.
+Multiplicity is a frequency statistic; first closure is the priority rule.
 
-* **`ways_symmetric`** — `W(n + d) = W(n − d)`: conjugate symmetry of the multiplicity about balance.
-* **`first_variation_zero`** / **`central_difference_zero`** — the discrete first variation at
-  balance is `0`: **stationarity**.
-* **`balance_is_mode`** and **`balance_strict_max`** — balance is the maximum, and a strict one
-  (second variation negative): stationarity of the *realized* kind, a maximum of ways.
-* **`straight_path_most_ways`** — among closures of `2n` steps (an `n`-step leg out and an `n`-step
-  leg back), the number passing each midpoint height is `C(n,j)²`, maximised at the straight path
-  `j = n/2`. The classical (geodesic) trajectory is the path the most ways pass through.
+The object here is the one-axis census: a `2n`-step `±` history with `k` up-steps,
+`W(k) = C(2n, k)`, with balance (ZFA closure) at `k = n`.
 
-**Kill condition, and why it is not bookkeeping (method rule 4).** The result depends on the
-conjugate pairing. If conjugates had unequal weight, the claim would fail:
-**`biased_first_variation`** gives weight `2` to each up-step and gets `W'(n+1) = 4·W'(n−1)`, so the
-first variation at balance is non-zero and the mode moves off balance (`biased_mode_off_balance`).
-Stationarity at the closure is therefore a consequence of ZFA's conjugate symmetry. It is not an
-identity that holds for every weighting.
+* `ways_symmetric` — conjugate symmetry of the multiplicity about balance.
+* `first_variation_zero` / `central_difference_zero` — discrete stationarity at balance.
+* `balance_is_mode` / `balance_strict_max` — balance is the strict maximum of this census.
+  This is a count theorem, not an event-selection theorem.
+* `straight_path_most_ways` — the midpoint pass-through count `C(n,j)²` is maximised at `j = n/2`.
+  Again this is a census/geodesic statistic, not priority.
 
-**Scope.** This proves *why the realized history is stationary*. *Which functional* is stationary —
-Hilbert's `∫R` — is supplied by the causal-set (Benincasa–Dowker) action on QLF's causal order,
-`QLF_CausalContinuum` (`benincasa_dowker_limit`, cited, unchanged). The open step is to identify that
-BD count with the multiplicity whose mode is taken. See `Stationary_Action.md`. No axioms.
+**Kill condition.** Unequal conjugate weights break stationarity at balance:
+`biased_first_variation` makes the first variation non-zero and `biased_mode_off_balance` moves the
+mode off balance. Thus the stationary signature depends on ZFA's conjugate symmetry.
+
+**Scope.** This module proves the discrete stationary signature. The open physical bridge is to show
+that classical stationary action — in particular the Benincasa–Dowker/Hilbert functional on QLF's
+causal order — is the continuum rendering of first ZFA closure. See `Stationary_Action.md`. No axioms.
 -/
 
 namespace QLF.StationaryAction
