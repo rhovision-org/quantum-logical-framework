@@ -336,38 +336,41 @@ Only after that census should labels such as "attractive," "repulsive," or "self
 
 ## 8. Lean target
 
-The formal target can be kept small. No continuum polaron Hamiltonian is needed for the first theorem.
+The formal target can be kept small because most of the substrate mechanics is already proved. No continuum polaron Hamiltonian is needed for the first theorem.
 
 ```lean
-structure PolaronWitness where
-  impurity : List Twist
-  bath     : List Twist
-  impurity_open : ¬ countBalanced impurity
-  joint_balanced : countBalanced (impurity ++ bath)
-  joint_closed : PauliClosed (impurity ++ bath)
+def CoupledPolaron (impurity bath : List Twist) : Prop :=
+  ¬ countBalanced impurity ∧
+  ¬ countBalanced bath ∧
+  countBalanced (impurity ++ bath)
 
-def IsPolaron (impurity bath : List Twist) : Prop :=
-  (¬ countBalanced impurity) ∧
-  countBalanced (impurity ++ bath) ∧
-  PauliClosed (impurity ++ bath)
+def PrimePolaron (impurity bath : List Twist) : Prop :=
+  CoupledPolaron impurity bath ∧
+  QLF.FirstReturn.IsPrime (impurity ++ bath)
 ```
 
-Suggested first theorem:
+The first useful theorems should reuse the existing core rather than re-prove it:
 
 ```lean
-theorem polaron_is_composite_closure
-    (h : IsPolaron impurity bath) :
-    countBalanced (impurity ++ bath) ∧
-    PauliClosed (impurity ++ bath) :=
-  ⟨h.2.1, h.2.2⟩
+theorem polaron_pauli_closed
+    (h : CoupledPolaron impurity bath) :
+    ∃ p : PauliScalar,
+      twistMatrixFold (impurity ++ bath) = pauliScalarToMatrix p :=
+  count_balanced_pauli_closed h.2.2
+
+theorem polaron_actions_compensate
+    (h : CoupledPolaron impurity bath) :
+    -- bath net action = negative impurity net action on all four axes
+    _ :=
+  (QLF.Discoveries2026.countBalanced_append_iff impurity bath).mp h.2.2
 ```
 
-That theorem is intentionally modest. The scientifically interesting Lean work would come next:
+Then add the polaron-specific layer:
 
-- define a bath-response equivalence class;
-- prove conjugation maps attractive/repulsive candidate sectors appropriately, if it does;
-- define closure depth for the joint history;
-- prove or refute a discrete depth-jump theorem under a precisely stated coupling rule;
+- classify `PrimePolaron` histories by [`ClosureEquiv`](lean/QLF_ClosureEquivalence.lean);
+- count first-return fibers using [`QLF_FirstReturn`](lean/QLF_FirstReturn.lean);
+- compare unsigned and signed weights using [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean);
+- prove or refute a depth-jump theorem under a precisely stated **gauge-free** coupling rule;
 - connect the counted spectrum to a continuum observable only through a named bridge.
 
 ---
@@ -384,6 +387,29 @@ That theorem is intentionally modest. The scientifically interesting Lean work w
 | No joint-closure census reproduces attractive/repulsive branch structure | composite-closure model falsified |
 
 The standard is the same as elsewhere in the repository: construction proves possibility, exact census establishes the discrete result, and only a separately tested bridge licenses a physical identification.
+
+---
+
+## Internal QLF crosslinks
+
+This page sits at the intersection of several existing QLF threads:
+
+- [`README.md`](README.md) — QLF overview and proof-status conventions.
+- [`QuCalc.md`](QuCalc.md) — the eight-twist history language and composite closures.
+- [`QLF_Discoveries2026`](lean/QLF_Discoveries2026.lean) — exact opposite-action condition for joint closure.
+- [`QLF_IndexedFactors`](lean/QLF_IndexedFactors.lean) — product versus coupled sectors and non-factorizable shared closure.
+- [`QLF_TwistAlphabet`](lean/QLF_TwistAlphabet.lean) — count balance implies Pauli closure.
+- [`QLF_FirstReturn`](lean/QLF_FirstReturn.lean) — prime/irreducible first closures and their exact census.
+- [`QLF_ClosureEquivalence`](lean/QLF_ClosureEquivalence.lean) — principled quotient into physical closure classes.
+- [`QLF_ClosureRenewal`](lean/QLF_ClosureRenewal.lean) — how a completed closure acts on future continuations.
+- [`QLF_ClosureDepthLaw`](lean/QLF_ClosureDepthLaw.lean) — exact depth/excursion law in its gauge-free domain.
+- [`QLF_StationaryPhase`](lean/QLF_StationaryPhase.lean) — coherent signed closure weights.
+- [`BOSE-EINSTEIN-CONDENSATE.md`](BOSE-EINSTEIN-CONDENSATE.md) — condensate shared-prefix model used by the Bose-polaron case.
+- [`Chemistry.md`](Chemistry.md) — shared closure as the emergent-matter binding motif.
+- [`Protein_Folding.md`](Protein_Folding.md) — exact closure census plus explicit failed bridges and kill conditions.
+- [`Higgs.md`](Higgs.md) / [`Per_Qubit_Mass_Quantum.md`](Per_Qubit_Mass_Quantum.md) — current QLF mass/delay interpretation needed before claiming an effective-mass derivation.
+- [`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) — lattice/condensed-matter closure tests and status discipline.
+- [`FlowChart.md`](FlowChart.md) — domain 11 placement in Emergent Matter.
 
 ---
 
