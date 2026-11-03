@@ -1,5 +1,7 @@
 # Demonstration of Bose-Einstein Condensation in QLF/QuCalc
 
+> Part of the [**Quantum Logical Framework (QLF)**](README.md). This document applies QLF/QuCalc to Bose-Einstein condensation; new readers can start with [`README.md`](README.md).
+
 **Repository:** `qlf-qucalc` (Quantum Logical Framework)  
 **Document:** `BOSE-EINSTEIN-CONDENSATE.md`  
 **Document version:** 1.2  
@@ -154,3 +156,5 @@ This is yet another confirmation that our universe is most likely a closed quant
 Contributions, formal QuCalc rewrite traces for larger N, extensions to interacting BECs, or refinements of the $T_c$ derivation are warmly welcomed via pull request.
 
 See also: [Spin_Statistics.md](Spin_Statistics.md) — bosonic stacking derived from the parallel composition of an even number of 1/2-spin atoms; the spin-statistics theorem stated as the arithmetic of the per-atom $-I$ Pauli fold.
+
+See also: [`Polarons_QLF.md`](Polarons_QLF.md) — an impurity dressed by this condensate is modeled as a joint impurity–bath ZFA closure, with the branch structure left as a quantitative test.
