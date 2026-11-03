@@ -79,21 +79,44 @@ The impurity is *open* when it still carries free action:
 F(I) > 0.
 \]
 
-A bath completion `B` dresses the impurity when the joint history closes:
+A bath completion `B` dresses the impurity when the **joint** history reaches ZFA:
 
 \[
-F(I \circ B)=0
+F(I \circ B)=0.
 \]
 
-together with the structural Pauli/fold closure required by QLF. The proposed polaron predicate is therefore
+For twist histories that is already enough to obtain structural Pauli closure:
+`count_balanced_pauli_closed` proves that every count-balanced joint history folds to a Pauli scalar.
+The fold condition is therefore a **theorem downstream of balance**, not a second polaron postulate.
+
+The minimal proposed predicate is consequently
 
 \[
 \operatorname{Polaron}(I,B)
 \iff
-F(I)>0 \;\land\; F(I\circ B)=0 \;\land\; \operatorname{PauliClosed}(I\circ B).
+F(I)>0 \;\land\; F(I\circ B)=0.
 \]
 
-This is intentionally a **joint** predicate. There is no independently real deformation field that later attaches to a particle. The environment supplies the complementary distinctions required for one physical closure.
+For the stronger claim made by this page — that the dressed object is an **irreducible shared history** —
+use the first-return condition as well:
+
+\[
+\operatorname{PrimePolaron}(I,B)
+\iff
+\neg ZFA(I) \;\land\; \neg ZFA(B)
+\;\land\;
+\operatorname{IsPrime}(I\circ B).
+\]
+
+`IsPrime` is already defined in [`QLF_FirstReturn`](lean/QLF_FirstReturn.lean), where first closure is
+proved to exist and be unique. This makes “irreducible” operational: neither factor is a physical
+closure by itself, and the combined history closes for the first time as one event.
+
+The exact compensation law is also already proved:
+[`countBalanced_append_iff`](lean/QLF_Discoveries2026.lean) says the bath's signed action vector must
+be the negative of the impurity's on **every axis**. There is no independently real deformation field
+that later attaches to a particle; the environment supplies the complementary distinctions required
+for one physical closure.
 
 ### 2.1 Crystal polaron
 
@@ -107,7 +130,7 @@ For an impurity in a Bose-Einstein condensate, the bath already has the shared-p
 
 ## 3. Confluence is the binding mechanism
 
-QLF needs no separate polaron force. The proposed binding mechanism is **confluence**: many open continuations of `I` enter the same composite closure class once the bath is included.
+QLF needs no separate polaron force. The proposed binding mechanism is **shared closure plus confluence**: the bath exactly compensates the impurity ledger, while many microscopic completions may land in the same physical closure class. The class itself should be defined by [`ClosureEquiv`](lean/QLF_ClosureEquivalence.lean), which preserves both the ledger and the ordered Pauli fold rather than quotienting histories by count alone.
 
 If
 
@@ -194,6 +217,87 @@ But this cannot be advertised as a generic recovery of the Fröhlich model. Gerl
 - the QLF model is wrong.
 
 This is a useful kill condition. The QuCalc census should decide which of the three occurs before the wording is strengthened.
+
+---
+
+## 6a. Proof and demonstration ladder
+
+The fastest way to strengthen this document is to close the polaron-specific gap in this order.
+
+### P1 — exact shared-closure theorem
+
+Define a twist-level `CoupledPolaron I B` as
+
+```lean
+¬ countBalanced I ∧
+¬ countBalanced B ∧
+countBalanced (I ++ B)
+```
+
+and prove immediately that the bath exactly compensates the impurity using
+`QLF_Discoveries2026.countBalanced_append_iff`. This is mostly a packaging theorem over an existing
+result, but it anchors the ontology in the actual twist algebra.
+
+### P2 — Pauli closure comes for free
+
+From the joint balance proof, derive
+
+```lean
+∃ p : PauliScalar,
+  twistMatrixFold (I ++ B) = pauliScalarToMatrix p
+```
+
+directly with `count_balanced_pauli_closed`. This removes an unnecessary assumption from the current
+sketch.
+
+### P3 — irreducibility / first return
+
+Define a **prime polaron** by requiring `FirstReturn.IsPrime (I ++ B)`. Then the existing
+`prime_prefix_unique` theorem gives a unique first closure. This is the clean proof of the phrase
+“irreducible shared history.”
+
+### P4 — branch classes from the closure quotient
+
+Use `closureToken = (ledger, fold)` and `ClosureEquiv` to group microscopic bath completions.
+Only after that quotient should the resulting classes be compared with the experimental
+**attractive** and **repulsive** branches. This prevents a branch label from being put in by hand.
+
+### P5 — exact finite census
+
+A new `polaron_census.py` should enumerate a fixed impurity prefix against bounded bath words and
+report, for every coupling rule:
+
+- first-return length;
+- closure token / equivalence class;
+- unsigned multiplicity;
+- signed/coherent amplitude;
+- factorized versus genuinely coupled sector;
+- capacity/depth where applicable.
+
+Cross-check the raw balanced-history totals against
+[`QLF_ProductWalk`](lean/QLF_ProductWalk.lean) and the first-return totals against
+[`QLF_FirstReturn`](lean/QLF_FirstReturn.lean). That turns the simulation from a bespoke script into a
+regression against proved combinatorics.
+
+### P6 — self-trapping only after the gauge-free restriction is explicit
+
+The existing theorem `closureDepth_eq_maxExcursion` applies to **gauge-free** phase histories. A
+fold-depth self-trapping claim should therefore first be tested in a crystal/phonon submodel satisfying
+that hypothesis. Extending the depth law to general eight-twist histories would be a separate theorem;
+without it, a general polaron depth jump is not yet licensed.
+
+### P7 — strong-coupling mass requires the mass bridge
+
+Before testing `m_eff ∝ α^4`, specify the QLF observable that is being called effective mass.
+[`Higgs.md`](Higgs.md) and [`Per_Qubit_Mass_Quantum.md`](Per_Qubit_Mass_Quantum.md) tie mass to
+constructing delay/fold depth, but that identification is not yet a polaron effective-mass theorem.
+The decisive quantitative result would be a derived map
+
+\[
+\text{joint closure statistic} \longrightarrow m_{\rm eff}
+\]
+
+that approaches the Landau–Pekar `α^4` asymptotic without fitting a new exponent.
 
 ---
 
