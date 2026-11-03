@@ -106,7 +106,7 @@ Because **exceptions are the least-multiplicity histories.** The census strata a
 ([`onePass_ways_iff`](lean/QLF_ClosureDepth.lean)) while the maximal depth holds only the nested singlet
 and its mirror — two. So the deep exception is both the **rarest** (frequency is multiplicity, and it has
 the fewest ways) and the **last** (it closes only at the widest horizon, `closedAtHorizon_mono`). These are
-two separate facts: rarity is a count, and lateness is the order of closing. The shallowest closure is
+two separate facts: rarity is a count, and lateness is the order of closing. **Multiplicity never turns rarity into priority; first closure fixes priority before the census is counted.** The shallowest closure is
 first but is not the most frequent; the mode sits deeper (`depth_one_not_modal`,
 [`MostWays_First.md`](MostWays_First.md)).
 
