@@ -2,7 +2,7 @@
 
 > Part of the [**Quantum Logical Framework (QLF)**](README.md). QLF treats physical reality as finite histories that persist by **Zero Free Action (ZFA)** closure; this page applies that substrate to polarons. New readers can start with [`README.md`](README.md) or [`Introducing_QLF.md`](Introducing_QLF.md).
 
-> **Status:** proposed QLF composite-closure model with established experimental targets. The external polaron physics cited here is standard or experimentally observed; the QLF identification of a polaron with a particular class of shared ZFA histories is a model to be tested, not yet a Lean theorem.
+> **Status:** **substrate mechanism machine-verified; physical polaron identification still open.** [`QLF_Polarons`](lean/QLF_Polarons.lean) proves that an open impurity plus a bath can form one irreducible shared ZFA closure, that bath openness is forced by shared closure, that the bath exactly compensates the impurity's signed action on all four axes, that Pauli closure follows from balance, and that a prime non-factorizable witness exists. What remains open is the bridge from these closure classes to the measured Fröhlich/Landau–Pekar and Bose-polaron spectra.
 
 A **polaron** is normally described as an impurity or charge carrier dressed by excitations of its surrounding medium. In a polar crystal the medium response is phononic; in an ultracold Bose gas it is the collective response of the condensate. QLF asks whether the same phenomenon can be described without making either the impurity or the dressing field fundamental.
 
@@ -15,6 +15,39 @@ The proposed answer is:
 The impurity alone carries unresolved free action. The bath contributes complementary directional history. When the joint history closes, the impurity and its dressing are no longer two independent objects: they are one irreducible shared closure. In this reading, **the polaron is the closure, not a bare particle plus an added cloud**.
 
 See [`README.md`](README.md) for the QLF premise, [`QuCalc.md`](QuCalc.md) for composite histories, [`BOSE-EINSTEIN-CONDENSATE.md`](BOSE-EINSTEIN-CONDENSATE.md) for the repo's condensate shared-prefix model, [`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) for lattice closure counting, and [`Particles.md`](Particles.md) for the particle-as-closure ontology.
+
+---
+
+## What is now proved specifically for polarons
+
+The new module [`QLF_Polarons.lean`](lean/QLF_Polarons.lean) packages the existing closure machinery
+into a polaron-specific theorem set. Its key result is not merely that a composite closure is possible,
+but that the **dressing structure follows from the minimal definition**.
+
+Let
+
+```lean
+IsPolaron impurity bath :=
+  ¬ countBalanced impurity ∧ countBalanced (impurity ++ bath)
+```
+
+Then Lean proves:
+
+- `polaron_bath_open` — if the impurity is open and the joint history closes, the bath is necessarily open too;
+- `isPolaron_iff_coupled` — the minimal definition is equivalent to the full coupled-sector statement: neither factor closes alone, but the pair does;
+- `polaron_actions_compensate` — the bath carries the exact negative signed action of the impurity on all four twist axes;
+- `polaron_pauli_closed` — joint ZFA balance automatically puts the fold in the Pauli-scalar sector;
+- `polaron_has_prime_prefix` — every closing impurity+bath history has a prime first closure;
+- `prime_polaron_no_early_closure` — a prime polaron has no earlier nonempty ZFA prefix;
+- `prime_polaron_first_closure_unique` — that first closure is unique;
+- `polaronClass_eq_of_equiv` — equal ledger+fold closure tokens define one reportable polaron class;
+- `demo_prime_polaron` / `demo_nonfactorizable` — the concrete `^ | v` pair is a prime, genuinely coupled witness;
+- `prime_polaron_exists` — at least one irreducible, non-factorizable composite closure of the required form exists;
+- `polaron_substrate_summary` — bundles openness of both factors, joint balance, Pauli closure and irreducibility.
+
+These are **machine-verified substrate theorems**, not a derivation of a laboratory polaron. The
+physical bridge is now sharply localized: show that the closure classes and their coherent census
+reproduce the observed polaron branches, scaling and strong-coupling effective mass.
 
 ---
 
@@ -430,10 +463,10 @@ This page sits at the intersection of several existing QLF threads:
 
 **Established externally:** Fröhlich polarons, strong-coupling Pekar/Landau–Pekar behavior, attractive and repulsive Bose-polaron branches, and universal Bose-polaron scaling.
 
-**Already available in QLF:** finite twist histories, open prefixes, ZFA closure, Pauli closure, composite histories, closure depth/capacity and multiplicity machinery.
+**Machine-verified in QLF:** the polaron substrate pattern itself — open impurity + open bath + irreducible joint ZFA closure; exact four-axis compensation; Pauli closure from balance; unique prime first closure; closure-class quotienting; and an explicit non-factorizable witness (`QLF_Polarons`).
 
-**Proposed here:** identify a polaron with an impurity–bath composite ZFA closure.
+**Physical identification:** still a **proposed bridge**. The theorem proves that QLF contains the exact composite-closure structure required for dressing; it does not yet prove that experimental polarons instantiate that structure.
 
-**Open:** derive the continuum Fröhlich/Pekar limits from the closure census; derive the Bose-polaron branch structure quantitatively; determine whether a genuine discrete fold-depth transition exists and in what domain.
+**Open:** derive the continuum Fröhlich/Pekar limits from the closure census; derive the Bose-polaron attractive/repulsive branch structure quantitatively; derive the strong-coupling effective mass; determine whether a genuine discrete fold-depth transition exists and in what domain.
 
 **Falsifier:** failure of the joint-closure census to reproduce the observed branch/scaling structure without ad hoc branch-specific rules.
