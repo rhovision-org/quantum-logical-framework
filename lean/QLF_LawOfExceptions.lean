@@ -45,8 +45,10 @@ The kill condition is sharp: exhibit any *other* exceptionless law and the Law o
 
 Because the exceptions are the **least-multiplicity** histories. `QLF_ClosureDepth` counts the strata:
 depth 1 holds `2ⁿ` ways (`onePass_ways_iff`) while the maximal depth holds just the nested singlet and
-its mirror. So by the most-ways principle ([`Philosophy.md`](../Philosophy.md) §3a) the shallow
-closures happen first and overwhelmingly; the deep exception happens *last* — but it happens. A
+its mirror. Two different facts follow. **Priority** comes from closure depth: shallow closures happen
+first and the deepest exception happens last (`closedAtHorizon_mono`). **Frequency** comes from
+multiplicity: the deep exception is rare because it has few ways. The modal depth is not the first depth
+(`QLF_ClosureMultiplicity.depth_one_not_modal`). A
 capacity-1 law admits a vanishing fraction of the census as histories lengthen (measured
 `0.667, 0.400, 0.229, 0.127, 0.069, …, 0.0055` at `n = 10`), so a law can be nearly always right and
 still have a real exception at every scale.
