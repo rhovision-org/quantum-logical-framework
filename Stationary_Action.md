@@ -2,11 +2,22 @@
 
 **Claim.** Hamilton's principle `δS = 0` is the law every fundamental theory shares. That includes
 Hilbert's 1915 derivation of general relativity from `S = ∫ R √−g d⁴x`, where the field equations are
-just the stationarity of the curvature action. QLF's claim is that classical `δS = 0` is the continuum shadow of a sharper substrate rule: **free
-action cannot survive into a physical event**. An open history may carry free action, but its first ZFA
-closure is absorbing and is the event. Priority therefore comes from **first closure**, not from a modal
-count. Separately, conjugate symmetry makes the multiplicity stationary and maximal at balance. That
-proves the right variational signature; it does not make the mode the event selector.
+just the stationarity of the curvature action. QLF proposes the substrate reason in one chain:
+
+\[
+\boxed{\text{equal and opposite logical action}
+\;\longrightarrow\;
+\text{Zero Free Action}
+\;\longrightarrow\;
+\text{stationary action}.}
+\]
+
+Equal and opposite logical action is primitive. When the ledger closes exactly, free action is zero.
+When that discrete closure condition is rendered in continuum mathematics, the corresponding physical
+history is stationary under variation. Thus QLF does not need multiplicity to *cause* stationary
+action: conjugate balance already supplies the reason. The multiplicity theorems below show that the
+census is indeed stationary and maximal at the same balance point, providing an independent structural
+check. First closure determines event priority; multiplicity determines frequency.
 
 Lean: [`lean/QLF_StationaryAction.lean`](lean/QLF_StationaryAction.lean) (one axis), and
 [`lean/QLF_StationaryPhase.lean`](lean/QLF_StationaryPhase.lean) for the signed phase and all four
@@ -34,14 +45,15 @@ readings are the two halves of the quantum-gravity problem. GR is a classical va
 geometry, and QM is a sum over histories. The principle they share has never been explained, so their
 agreement has looked like a coincidence.
 
-**ZFA supplies the reason and makes the two halves one.** Both follow from a single count on a single
-substrate, and both are machine-verified:
+**ZFA supplies the reason and makes the two halves one.** The common source is not the modal count
+but the conjugate structure itself: every logical action has an equal and opposite partner, exact
+balance is ZFA, and the continuum image of that balance is stationarity. The census and phase theorems
+then verify that both unsigned and signed descriptions are stationary at that same closure:
 
-* **The classical half — the GR side.** Event order comes from first ZFA closure: the event occurs
-  when outstanding free action first reaches zero. Separately, conjugate pairing puts the unsigned
-  census at a stationary, maximal point at balance (`balance_is_stationary_mode`,
-  `ways_mode_at_balance`, §2). That is a proved variational signature, not the priority rule. The open
-  bridge is to show that classical `δS = 0` is the continuum rendering of this first-closure condition.
+* **The classical half — the GR side.** Conjugate pairing makes exact balance the ZFA condition and
+  puts the unsigned census at a stationary, maximal point there (`balance_is_stationary_mode`,
+  `ways_mode_at_balance`, §2). The open bridge is to show rigorously that the physical action
+  functional used by GR is the continuum rendering of this equal-and-opposite closure condition.
 * **The quantum half — the QM side.** The same pairing, read on phases, makes the signed transfer
   kernel anti-Hermitian. The closure amplitude is then the norm of the half-way amplitude, and no
   endpoint beats it (`amp_swap`, `return_amplitude_sum_sq`, `signed_mode_at_balance`, §5a). This is
