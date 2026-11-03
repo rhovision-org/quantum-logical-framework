@@ -1,11 +1,12 @@
-# Stationary Action Is ZFA
+# Stationary Action Is the Continuum Shadow of ZFA
 
 **Claim.** Hamilton's principle `δS = 0` is the law every fundamental theory shares. That includes
 Hilbert's 1915 derivation of general relativity from `S = ∫ R √−g d⁴x`, where the field equations are
-just the stationarity of the curvature action. QLF's claim is that `δS = 0` is **a consequence of ZFA,
-not a separate postulate**. The realized history is the one realized in the most ways. Because every
-twist has a conjugate of equal weight, the most-ways history sits at balance, and there the first
-variation of the multiplicity vanishes.
+just the stationarity of the curvature action. QLF's claim is that classical `δS = 0` is the continuum shadow of a sharper substrate rule: **free
+action cannot survive into a physical event**. An open history may carry free action, but its first ZFA
+closure is absorbing and is the event. Priority therefore comes from **first closure**, not from a modal
+count. Separately, conjugate symmetry makes the multiplicity stationary and maximal at balance. That
+proves the right variational signature; it does not make the mode the event selector.
 
 Lean: [`lean/QLF_StationaryAction.lean`](lean/QLF_StationaryAction.lean) (one axis), and
 [`lean/QLF_StationaryPhase.lean`](lean/QLF_StationaryPhase.lean) for the signed phase and all four
@@ -36,12 +37,11 @@ agreement has looked like a coincidence.
 **ZFA supplies the reason and makes the two halves one.** Both follow from a single count on a single
 substrate, and both are machine-verified:
 
-* **The classical half — the GR side.** The realized history is the one that happens in the most
-  ways. The conjugate pairing puts that mode at balance, so the first variation of the multiplicity
-  vanishes there: `δS = 0` as a theorem, not a postulate (`balance_is_stationary_mode`,
-  `ways_mode_at_balance`, §2). The classical path is the most-ways path
-  (`straight_path_most_ways`). This is the variational principle Hilbert used to derive Einstein's
-  equations.
+* **The classical half — the GR side.** Event order comes from first ZFA closure: the event occurs
+  when outstanding free action first reaches zero. Separately, conjugate pairing puts the unsigned
+  census at a stationary, maximal point at balance (`balance_is_stationary_mode`,
+  `ways_mode_at_balance`, §2). That is a proved variational signature, not the priority rule. The open
+  bridge is to show that classical `δS = 0` is the continuum rendering of this first-closure condition.
 * **The quantum half — the QM side.** The same pairing, read on phases, makes the signed transfer
   kernel anti-Hermitian. The closure amplitude is then the norm of the half-way amplitude, and no
   endpoint beats it (`amp_swap`, `return_amplitude_sum_sq`, `signed_mode_at_balance`, §5a). This is
@@ -68,10 +68,11 @@ closed cycle, the electron is a closed mode of finite extent, and the sum over h
 absolutely (`twist_kraft`). **Stationary action was always the theory of everything. ZFA is the
 version of it that does not break.**
 
-**The remaining step**, stated once: that the classical half's stationary functional *is* Hilbert's
-`∫R` rests on the Benincasa–Dowker causal-set result (cited, `QLF_CausalContinuum`), and identifying
-that functional with the census multiplicity is not yet proved (§5). The principle is unified and
-proved; matching it to Hilbert's particular functional is the one step left.
+**The remaining step**, stated once: first ZFA closure supplies the substrate event semantics, and
+stationarity of the closure census is proved. What is not yet proved is the continuum bridge that turns
+"no surviving free action" into Hilbert's particular stationary functional `∫R`. The
+Benincasa–Dowker causal-set result supplies the continuum target. The multiplicity theorem is supporting
+structure, not the selector.
 
 ## §1 What the classical principle leaves unexplained
 
@@ -81,13 +82,15 @@ quantum-mechanical reason: amplitudes `e^{iS/ħ}` from nearby paths cancel unles
 stationary point, so the classical path is where the contributions pile up. QLF gives the substrate
 version of that reason, with the phase replaced by the **count of ways**:
 
-> Nothing happens one way; everything happens every way that closes; **what happens in the most ways
-> happens first** ([`Philosophy.md`](Philosophy.md) §3a).
+> **What closes first happens first.** Closure is the event, and it is irrevocable
+> ([`MostWays_First.md`](MostWays_First.md)). Multiplicity answers a different question: how often a
+> closure occurs across the admissible census.
 
-If the realized history is the mode of the multiplicity `W`, then it is automatically a stationary
-point of `log W`, since a maximum has zero first variation. Identify `S ↔ −ħ log W`, the Euclidean
-(Wick-rotated) reading in which the action is the negative log of the weight. Then **the stationary
-action principle is the most-ways principle.** What remains is to show that the mode is the ZFA closure.
+This distinction is proved to matter: [`QLF_ClosureMultiplicity`](lean/QLF_ClosureMultiplicity.lean)
+shows `depth_one_not_modal`, so first depth and modal depth can differ. The census result below remains
+important: `W` is stationary at ZFA balance. If one additionally identifies `S ↔ −ħ log W`, that
+stationarity has the Euclidean action form. But that identification is a bridge, and the mode is not the
+selector.
 
 ## §2 The proof (one-axis census)
 
@@ -97,16 +100,17 @@ A `2n`-step `±` history with `k` up-steps is realized in `W(k) = C(2n, k)` ways
 |---|---|---|
 | `ways_symmetric` | `W(n+d) = W(n−d)` | conjugate symmetry about balance |
 | `first_variation_zero` / `central_difference_zero` | `W(n+d) − W(n−d) = 0` | **`δ log W = 0` at the closure** |
-| `balance_is_mode` | `W(k) ≤ W(n)` for all `k` | the closure is the most-ways outcome |
+| `balance_is_mode` | `W(k) ≤ W(n)` for all `k` | balance is the modal census outcome; **not** the event-priority rule |
 | `balance_strict_max` (+ `'`) | `W(n±1) < W(n)` | negative second variation: a true maximum |
-| `straight_path_most_ways` | `C(n,j)² ≤ C(n,⌊n/2⌋)²` | **discrete geodesic principle** |
+| `straight_path_most_ways` | `C(n,j)² ≤ C(n,⌊n/2⌋)²` | maximum pass-through count at the balanced midpoint; supporting geodesic statistic, not a selector |
 | `balance_is_stationary_mode` | all of the above plus the kill witness | summary |
 
 The geodesic statement is the one that looks most like mechanics. Split a `2n`-step closure into a leg
 out and a leg back. The closures passing through a given midpoint number `C(n,j)·C(n,n−j) = C(n,j)²`.
-That count is largest for the straight path, the one that stays at balance. So **the classical
-trajectory is the path the most closures pass through.** It is realized because it is the most
-multiply realized. No postulate selects it.
+That count is largest for the balanced midpoint. This is exact combinatorics and a useful classical
+rendering. It does **not** establish that the substrate chooses that path because it has the largest
+count. Event priority has already been fixed by first closure; this theorem says where the census is
+stationary and most concentrated.
 
 ## §3 Why this is not bookkeeping — the kill condition
 
@@ -129,12 +133,15 @@ split, and this module supplies the mechanism behind it:
 
 * **Closed history** (a loop, a Markov blanket, the totality): the ledger balances exactly, and free
   action is `0`. This is `ℒ = 0`.
-* **Open sub-arc** (a leg of a closure still in progress): the action need not vanish, but the
-  realized arc is the most-ways arc through the closure's midpoints. That is `δS = 0`,
-  `straight_path_most_ways`.
+* **Open sub-arc** (a leg of a closure still in progress): free action need not vanish because no
+  event has yet completed. The balanced census nevertheless has a stationary pass-through profile
+  (`straight_path_most_ways`). That is a statement about the rendering of open possibilities, not a
+  rule selecting an event.
 
-So `ℒ = 0` does not *replace* `δS = 0`. It is the closed-loop case of the same principle, and `δS = 0`
-is what that principle looks like on an arc that has not closed yet.
+So the logical order is asymmetric: **`ℒ = 0` at first closure is primitive at the substrate**, while
+classical `δS = 0` is the continuum variational form that must be recovered from it. The census
+stationarity theorem shows the right local signature at balance, but it does not by itself complete that
+continuum bridge.
 
 ## §5 Hilbert — which action is stationary
 
@@ -149,14 +156,17 @@ own causal order:
   boundary `benincasa_dowker_limit` ([`QLF_CausalContinuum`](lean/QLF_CausalContinuum.lean)),
   unchanged here. See [`Einstein_Equations.md`](Einstein_Equations.md) §6a.
 
-So the chain is: **ZFA's conjugate pairing ⟹ the closure is the stationary mode of the census**
-(proved here) **+ the census's causal-set action → `∫R`** (Benincasa–Dowker, cited) ⟹ Hilbert's
-variational principle, whose stationarity gives `G_μν = 8πG T_μν`. The coefficient `8πG = 2π/η` comes
-separately from the thermodynamic leg ([`Einstein_Equations.md`](Einstein_Equations.md) §§2–5).
+So the corrected chain is: **first ZFA closure ⟹ event selection/order**; **conjugate pairing ⟹
+multiplicity stationary at balance** (proved here); and the causal-set Benincasa–Dowker action
+**→ `∫R`** (cited continuum result). What remains is to prove that Hilbert's stationarity is the
+continuum rendering of the first-closure condition, rather than to assume that the substrate takes a
+multiplicity mode. The coefficient `8πG = 2π/η` comes separately from the thermodynamic leg
+([`Einstein_Equations.md`](Einstein_Equations.md) §§2–5).
 
-**The named gap.** The identification in the middle is open. The proofs here are for the census of
-twist histories on `ℤ⁴`. That the Benincasa–Dowker count is the log of a multiplicity whose mode the substrate
-takes, so that *its* stationarity follows the same way, has not been proved. It is the bridge between
+**The named gap.** The continuum identification is open. The proofs here establish stationarity of
+the twist census at ZFA balance; they do not prove that the physical action functional is `−ħ log W`,
+nor that nature selects the census mode. What remains is to connect the absorbing first-closure condition
+to the Benincasa–Dowker/Hilbert variational functional. It is the bridge between
 this module and `QLF_CausalContinuum`. It is harder than the two halves proved here for a stated
 reason: those are statements about **paths** (twist histories and their endpoints on `ℤ⁴`), while the
 Benincasa–Dowker action is a functional of the **causal order**, built from its interval layers. On a
@@ -201,6 +211,7 @@ reached by a single path has coherence exactly `1`. It is recorded as a failure 
   peaks at balance. It does not derive the Born weights; that remains
   [`Born_Rule.md`](Born_Rule.md)'s question, though `return_amplitude_sum_sq` (closure amplitude =
   norm of the half-way amplitude) bears directly on it.
+* **Priority is not multiplicity.** No theorem here says nature selects the modal history. First closure supplies priority; `QLF_ClosureMultiplicity.depth_one_not_modal` proves modal depth can differ from first depth.
 * `S ↔ −ħ log W` is an identification (Boltzmann/Jaynes: log-count is entropy; the Euclidean action
   is the log-weight). It is not derived here.
 
