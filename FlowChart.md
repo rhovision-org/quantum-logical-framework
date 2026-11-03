@@ -223,9 +223,9 @@ no forces and no orbitals put in by hand ([`Chemistry.md`](Chemistry.md)). Nothi
 everything is domains 3–4 assembled.
 
 
-**Connectors:** *saturate* &rarr; shared closure = bond &middot; *H2O, CO2, graphite, rust* &rarr; molecules and carbon allotropes &middot; *Pauli holds them apart* &rarr; crystals and condensates &middot; *(v-2)/2 each* &rarr; closure count &middot; *b1 counts them* &rarr; double bond = ring = one closure &middot; *only k is free* &rarr; reaction class &middot; *free valence for water?* &rarr; hydrophobic / polar &middot; *valence 2 is neutral* &rarr; divalent chains &middot; *backbone carries none* &rarr; folding &middot; *only H-H pays* &rarr; folding &middot; *two liquids (2026)* &rarr; water = two closure inventories
+**Connectors:** *saturate* &rarr; shared closure = bond &middot; *H2O, CO2, graphite, rust* &rarr; molecules and carbon allotropes &middot; *Pauli holds them apart* &rarr; crystals and condensates &middot; *(v-2)/2 each* &rarr; closure count &middot; *b1 counts them* &rarr; double bond = ring = one closure &middot; *only k is free* &rarr; reaction class &middot; *free valence for water?* &rarr; hydrophobic / polar &middot; *valence 2 is neutral* &rarr; divalent chains &middot; *backbone carries none* &rarr; folding &middot; *only H-H pays* &rarr; folding &middot; *two liquids (2026)* &rarr; water = two closure inventories &middot; *impurity + bath* &rarr; polaron = composite closure
 
-**Open:** [`Chemistry.md`](Chemistry.md) · [`Protein_Folding.md`](Protein_Folding.md) · [`lean/QLF_Unsaturation.lean`](lean/QLF_Unsaturation.lean) · [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`hydrocarbon_census.py`](hydrocarbon_census.py) · [`protein_census.py`](protein_census.py)
+**Open:** [`Chemistry.md`](Chemistry.md) · [`Protein_Folding.md`](Protein_Folding.md) · [`Polarons_QLF.md`](Polarons_QLF.md) · [`lean/QLF_Unsaturation.lean`](lean/QLF_Unsaturation.lean) · [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`hydrocarbon_census.py`](hydrocarbon_census.py) · [`protein_census.py`](protein_census.py)
 
 **The counting layer.** An atom's valence is what it contributes to a molecule's **closure count**,
 `(valence − 2)/2`, and the cycle rank `b₁ = E − V + 1` counts the closures the molecule carries. That
@@ -243,6 +243,13 @@ keystone ([`QLF_Folding`](lean/QLF_Folding.lean)). The lattice-protein parity ru
 quantum follow; the **mirror no-go** — counting cannot select a handedness — bounds what the census can
 ever answer ([`Protein_Folding.md`](Protein_Folding.md)).
 
+**Polarons as composite closures.** [`Polarons_QLF.md`](Polarons_QLF.md) proposes that an impurity
+open prefix and the response of a crystal or condensate form one irreducible joint ZFA closure. The
+mapping is deliberately status-graded: Fröhlich/Landau–Pekar behavior and attractive/repulsive Bose
+polarons are external targets; the QLF impurity–bath closure is a proposed model; a discrete
+self-trapping fold-depth jump is a falsifiable prediction, not a borrowed Fröhlich result. The first
+QuCalc task is an inventory of joint closures, branch families, depth and coherent weight before any
+physical labels are assigned.
 **Water as two liquids (2026).** The two interconverting structures reported in 2026 read as two closure
 inventories: four shared closures in a tetrahedron, or a crowded fifth neighbour. In the two-state model
 the density maximum is proved (`density_maximum`, and none without the open structure). It gives
