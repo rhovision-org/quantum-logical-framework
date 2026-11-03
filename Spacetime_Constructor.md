@@ -10,13 +10,14 @@ Dependency-free, self-contained, mobile.
 
 ---
 
-## The thesis: no forces, no fields — only closures that happen in the most ways
+## The thesis: no forces, no fields — first ZFA closures, then the census
 
 There are **no forces and no fields** here, and **no magical influence at a distance** — nothing reaches across a
 gap to push, pull, or signal anything. There are only **ZFA closures**: balanced phase-string histories that come
-back to zero ([`QLF_Axioms`](lean/QLF_Axioms.lean), [`QLF_Universality`](lean/QLF_Universality.lean)). And not
-closures that merely *can* close — the ones that **do** close, because in a quantum-logical system a thing does not
-happen in one way: **it happens every way that is possible**, and what we see is what happens in the **most ways**.
+back to zero ([`QLF_Axioms`](lean/QLF_Axioms.lean), [`QLF_Universality`](lean/QLF_Universality.lean)). An open
+possibility may carry free action, but **the first ZFA closure is the event**. That fixes priority before any count
+is taken. The census then answers a different question: among closures that occur, how often does each occur?
+There multiplicity is frequency — what happens in more ways happens more often.
 
 - **Everything happens every possible way.** The one **first distinction** (`+g/−g`, phase 0) unfolds the whole
   closure census — the *logical bang* ([`Creation.md`](Creation.md) §8a, [`QLF_LogicalBang`](lean/QLF_LogicalBang.lean)).
@@ -37,7 +38,7 @@ happen in one way: **it happens every way that is possible**, and what we see is
   of the churning logical foam **freezes out as persistent matter**. Turn it up and more of what is already happening
   survives as real particles, atoms, nuclei, black holes. It is an *amplifier* on the generation, never its cause.
 
-Everything below is a consequence: closures that **do** happen — every way, the most-ways ones dominating — with no
+Everything below is a consequence: **first closure fixes event order; multiplicity fixes frequency** — with no
 force, no field, and no action at a distance.
 
 ---
