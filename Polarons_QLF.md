@@ -18,6 +18,56 @@ See [`README.md`](README.md) for the QLF premise, [`QuCalc.md`](QuCalc.md) for c
 
 ---
 
+## Why this document now — Laurent Simons and the “new state of matter” announcement
+
+A widely circulated 2026 announcement asks whether **Laurent Simons** had found a “new state of
+matter.” The scientifically precise story is even more relevant to QLF: Simons' doctoral work at the
+University of Antwerp studied **Bose polarons in superfluids and supersolids** — an impurity that
+becomes inseparable from the collective excitations of an ultracold quantum medium.
+
+The age in the viral retelling varies with when the work is being described. The University of
+Antwerp records Simons' public PhD defense, *Bose polarons in superfluids and supersolids*, on
+17 November 2025; popular coverage describes him as **15** at the defense. His first supersolid-polaron
+paper had already been submitted in July 2024, while the research program was underway.
+
+The peer-reviewed result is not that a new elementary substance was discovered. The underlying
+**supersolid** is already an exotic state of matter, combining crystalline order with superfluidity.
+Simons, Wouters and Tempere asked what happens when an impurity is placed inside that state. Their
+2025 *Physical Review B* paper found that the impurity is dressed by the supersolid excitations; at
+strong impurity–atom coupling the calculated polaron radius can localize to a single droplet, so the
+object behaves like a small solid-state polaron. A companion *Physical Review Research* paper showed
+that its optical response carries signatures of the supersolid excitation spectrum, including the
+two Goldstone-mode Van Hove singularities.
+
+That is exactly why the result is interesting from the QLF side. The experimental/theoretical object
+is neither a bare impurity nor the medium alone. It is a **composite dressed state whose identity
+belongs to the impurity-plus-environment system**. QLF already has a native discrete object with that
+form:
+
+\[
+\boxed{
+\text{open impurity}
++
+\text{open bath response}
+\longrightarrow
+\text{one irreducible shared ZFA closure}.
+}
+\]
+
+The new Lean module [`QLF_Polarons.lean`](lean/QLF_Polarons.lean) proves that this composite-closure
+structure exists in the QLF substrate and that it has the required irreducibility properties. What it
+does **not** yet prove is that Simons' supersolid polaron is quantitatively the same closure class.
+That is now the concrete bridge to test: reproduce the supersolid-polaron localization, branch
+structure and optical spectrum from the QLF closure census without inserting them by hand.
+
+**External anchors:** University of Antwerp, *Bose polarons in superfluids and supersolids* (PhD
+defense, 17 Nov 2025); Laurent H. A. Simons, Michiel Wouters & Jacques Tempere,
+*Polarons in supersolids: Path-integral treatment of an impurity in a one-dimensional dipolar
+supersolid*, **Physical Review B 111, 054524 (2025)**; Laurent H. A. Simons et al.,
+*Optical response of the supersolid polaron*, **Physical Review Research 7, L032033 (2025)**.
+
+---
+
 ## What is now proved specifically for polarons
 
 The new module [`QLF_Polarons.lean`](lean/QLF_Polarons.lean) packages the existing closure machinery
