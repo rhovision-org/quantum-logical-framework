@@ -60,11 +60,7 @@ does **not** yet prove is that Simons' supersolid polaron is quantitatively the 
 That is now the concrete bridge to test: reproduce the supersolid-polaron localization, branch
 structure and optical spectrum from the QLF closure census without inserting them by hand.
 
-**External anchors:** University of Antwerp, *Bose polarons in superfluids and supersolids* (PhD
-defense, 17 Nov 2025); Laurent H. A. Simons, Michiel Wouters & Jacques Tempere,
-*Polarons in supersolids: Path-integral treatment of an impurity in a one-dimensional dipolar
-supersolid*, **Physical Review B 111, 054524 (2025)**; Laurent H. A. Simons et al.,
-*Optical response of the supersolid polaron*, **Physical Review Research 7, L032033 (2025)**.
+**Announcement and external anchors:** the popular hook is Nap Theory's [*Did This 15-Year-Old Just Find a New State of Matter?*](https://www.youtube.com/watch?v=IeNBid9X5dw). The scientific anchors are the University of Antwerp's [*Bose polarons in superfluids and supersolids* PhD defense](https://www.uantwerpen.be/en/about-uantwerp/faculties/faculty-of-science/news-and-calendar/phd-defences/public-defences-2025/) (17 Nov 2025); Laurent H. A. Simons, Michiel Wouters & Jacques Tempere, [*Polarons in supersolids: Path-integral treatment of an impurity in a one-dimensional dipolar supersolid*](https://doi.org/10.1103/PhysRevB.111.054524), **Physical Review B 111, 054524 (2025)**; and Laurent H. A. Simons et al., [*Optical response of the supersolid polaron*](https://doi.org/10.1103/kl1y-pj63), **Physical Review Research 7, L032033 (2025)**.
 
 ---
 
@@ -499,6 +495,8 @@ This page sits at the intersection of several existing QLF threads:
 
 ## 10. References
 
+- Nap Theory, “Did This 15-Year-Old Just Find a New State of Matter?” (2026). https://www.youtube.com/watch?v=IeNBid9X5dw
+- University of Antwerp, “Bose polarons in superfluids and supersolids — Laurent Simons,” public PhD defense, 17 November 2025. https://www.uantwerpen.be/en/about-uantwerp/faculties/faculty-of-science/news-and-calendar/phd-defences/public-defences-2025/
 - H. Fröhlich, “Electrons in lattice fields,” *Advances in Physics* **3**, 325–361 (1954). DOI: https://doi.org/10.1080/00018735400101213
 - R. P. Feynman, “Slow Electrons in a Polar Crystal,” *Physical Review* **97**, 660–665 (1955). DOI: https://doi.org/10.1103/PhysRev.97.660
 - B. Gerlach and H. Löwen, “Analytical properties of polaron systems or: Do polaronic phase transitions exist or not?”, *Reviews of Modern Physics* **63**, 63 (1991). DOI: https://doi.org/10.1103/RevModPhys.63.63
