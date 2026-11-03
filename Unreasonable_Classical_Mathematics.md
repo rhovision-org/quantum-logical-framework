@@ -67,12 +67,26 @@ The point is therefore not that classical mathematics is defective. It is that
 QLF claims to explain both sides with the same boundary.
 
 Classical physics already hints at that boundary. It does not let the mathematical continuum realize
-arbitrary trajectories; it imposes **stationary action** as a physical restriction. QLF proposes why
-that restriction works. At the substrate, an open possibility may carry free action, but **no physical
-event can retain it**: the first point at which the ledger reaches Zero Free Action is the closure and
-therefore the event. Classical `δS = 0` is proposed as the continuum rendering of that sharper
-first-closure rule. The proved multiplicity maximum at balance is supporting evidence for the
-variational form, not the selector of which event occurs first.
+arbitrary trajectories; it requires **stationary action**. QLF proposes the substrate reason in one
+chain:
+
+\[
+\boxed{\text{equal and opposite logical action}
+\;\longrightarrow\;
+\text{Zero Free Action}
+\;\longrightarrow\;
+\text{stationary action}.}
+\]
+
+Equal and opposite logical action is the primitive. Exact cancellation is ZFA: no free action remains
+in the completed event. In the continuum rendering, that same balance appears as the requirement that
+the physical history be stationary under variation. On this reading, stationary action works because
+it is the macroscopic mathematical expression of closure, not because the continuum itself is
+fundamental.
+
+First closure and multiplicity answer different questions downstream: first closure orders events;
+multiplicity gives their frequency. Neither is the source of stationary action. The source is the
+equal-and-opposite balance that defines ZFA.
 
 ---
 
