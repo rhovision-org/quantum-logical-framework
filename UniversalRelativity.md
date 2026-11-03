@@ -271,7 +271,7 @@ The central claim is not that events occur inside spacetime. The stronger claim 
 
 ZFA is not an arbitrary stipulation. That a realized history closes with **δS = 0** is *over-determined* — five independent lines of standard physics already force it, and Universal Relativity only reads them ontologically:
 
-1. **It is already the law of all physics (Hamilton's principle).** Newton, Maxwell, general relativity, quantum mechanics, and the Standard Model each derive their equations of motion from the *same* stationary-action condition, **δS = 0**. Universal Relativity adds no new dynamical law — it reframes the one law every fundamental theory shares: the stationary histories are not merely the *calculable* ones, they are the *realized* ones. Selection by δS = 0 is the variational principle taken as ontology.
+1. **Classical physics already imposes stationary action.** Newtonian mechanics, electromagnetism, general relativity, quantum mechanics, and the Standard Model all use **δS = 0** to restrict the continuum of mathematically possible histories. QLF does **not** identify that continuum stationarity with the primitive selector. It proposes the sharper substrate condition underneath it: free action cannot survive into an event, so the **first ZFA closure** is realized. Classical stationary action is the continuum shadow that this discrete rule must reproduce.
 
 2. **The totality has no outside to borrow from (conservation).** "Free action" means *net, unbalanced* action — action created or destroyed with no source or sink. By Noether's theorem (1918) every continuous symmetry yields a conserved current, and a **closed** system's total charge cannot change. The universe as a whole is closed *by definition*: there is no external reservoir to draw from or dump into, so its ledger must balance. A history producing net free action would be an *effect with no cause* — a perpetual-motion machine in the currency of change itself. "From nowhere" names a reservoir that does not exist.
 
@@ -281,7 +281,7 @@ ZFA is not an arbitrary stipulation. That a realized history closes with **δS =
 
 5. **Logically, free-action-from-nowhere = an unsourced computation.** A process that manufactured net free action would be a non-terminating, unsourced computation — precisely the undecidable / Busy-Beaver tail that `full_zeno_prune` removes *before* it can become an event. ZFA closure **is** causal closure: every event's action is sourced by prior events, and around a closed loop the initial and final states are the same vacuum, so the net is zero.
 
-The local-vs-global subtlety is the usual one: along a *sub-arc* the action need not be numerically zero — there you recover ordinary stationary-action dynamics. The **null** statement (the books summing to exactly zero, `S = ∫ℒ dΩ` with `ℒ = 0`) is for the *closed* history — the loop, the Markov blanket, the totality — where the boundary terms vanish. So δS = 0 is not a law imposed on physics from outside; it is the statement that **the ledger of change is closed**. The mechanism on the open arc is proved in [`Stationary_Action.md`](Stationary_Action.md): the realized arc is the most-ways arc, and conjugate symmetry makes that mode stationary at balance (`QLF_StationaryAction`). The universe cannot get free action from nowhere because *nowhere* — an outside reservoir, an uncaused source — is not a place that exists. (Fuller philosophical treatment: [`Philosophy.md`](Philosophy.md) §4.)
+The local-vs-global subtlety is the usual one: along a *sub-arc* the action need not be numerically zero because the history has not yet closed. The **null** statement (the books summing to exactly zero, `S = ∫ℒ dΩ` with `ℒ = 0`) is for the *closed* history — the loop, the Markov blanket, the totality — where the boundary terms vanish. The primitive QLF rule is therefore **first zero-free-action closure**. [`Stationary_Action.md`](Stationary_Action.md) proves a separate supporting fact: conjugate symmetry makes the closure census stationary at balance (`QLF_StationaryAction`). The open bridge is to derive ordinary continuum `δS = 0` from first closure, not to select an arc by multiplicity. The universe cannot get free action from nowhere because *nowhere* — an outside reservoir, an uncaused source — is not a place that exists. (Fuller philosophical treatment: [`Philosophy.md`](Philosophy.md) §4.)
 
 ### 2a. Action balance as a classical and quantum principle
 
@@ -291,8 +291,9 @@ pedigree matters, because it shows that adopting `ZFA = 0` as the selection rule
 content — it makes an existing continuum principle finitary.
 
 - **Hamilton's principle, `δS = 0`.** Classical mechanics, electromagnetism, general relativity, and
-  quantum field theory each select their equations of motion by stationary action. QLF reads
-  "stationary" as "realized," and the closed-loop form of stationarity is exact balance.
+  quantum field theory each restrict their equations of motion by stationary action. QLF reads that
+  success as evidence for a deeper discrete constraint: first ZFA closure is realized, while classical
+  stationarity is its continuum rendering. The two are related, but not identified by fiat.
 - **The Hamiltonian constraint `H = 0`.** In the canonical (ADM) formulation of general relativity, a
   spatially closed universe has an *identically vanishing* total Hamiltonian, promoted to the
   Wheeler–DeWitt equation `HΨ = 0`; the "zero-energy universe" (Tryon 1973) is the same fact. ZFA is
