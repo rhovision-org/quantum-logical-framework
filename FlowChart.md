@@ -243,13 +243,14 @@ keystone ([`QLF_Folding`](lean/QLF_Folding.lean)). The lattice-protein parity ru
 quantum follow; the **mirror no-go** — counting cannot select a handedness — bounds what the census can
 ever answer ([`Protein_Folding.md`](Protein_Folding.md)).
 
-**Polarons as composite closures.** [`Polarons_QLF.md`](Polarons_QLF.md) proposes that an impurity
-open prefix and the response of a crystal or condensate form one irreducible joint ZFA closure. The
-mapping is deliberately status-graded: Fröhlich/Landau–Pekar behavior and attractive/repulsive Bose
-polarons are external targets; the QLF impurity–bath closure is a proposed model; a discrete
-self-trapping fold-depth jump is a falsifiable prediction, not a borrowed Fröhlich result. The first
-QuCalc task is an inventory of joint closures, branch families, depth and coherent weight before any
-physical labels are assigned.
+**Polarons as composite closures.** [`Polarons_QLF.md`](Polarons_QLF.md) now has a machine-verified
+substrate core in [`QLF_Polarons`](lean/QLF_Polarons.lean): an open impurity plus bath can form one
+irreducible, non-factorizable joint ZFA closure; bath openness is forced, the bath exactly compensates
+the impurity on all four axes, Pauli closure follows from balance, and prime first closure is unique.
+The **physical identification remains open**: Fröhlich/Landau–Pekar behavior and
+attractive/repulsive Bose-polaron branches are quantitative targets; a discrete self-trapping
+fold-depth jump remains a falsifiable, domain-restricted prediction. The next QuCalc task is the
+branch/depth/coherent-weight census before physical labels are assigned.
 **Water as two liquids (2026).** The two interconverting structures reported in 2026 read as two closure
 inventories: four shared closures in a tetrahedron, or a crowded fifth neighbour. In the two-state model
 the density maximum is proved (`density_maximum`, and none without the open structure). It gives
