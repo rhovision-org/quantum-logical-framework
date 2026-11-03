@@ -1,5 +1,7 @@
 # QuCalc and RhoQuCalc
 
+> Part of the [**Quantum Logical Framework (QLF)**](README.md). QuCalc is QLF's discrete history language and RhoQuCalc its compositional process layer; new readers can start with [`README.md`](README.md).
+
 QuCalc is the discrete logical language of the Quantum Logical Framework.  
 RhoQuCalc is its process-calculus extension.
 
@@ -401,3 +403,5 @@ That is the decisive change.
 The framework treats a stable closure not only as the end of a search, but as a named constructive unit in a larger possibilist process algebra.
 
 See also: [zfa-catalog-rho-notation.md](zfa-catalog-rho-notation.md) — pre-verified ZFA closure catalog in RhoLang notation; orders-of-magnitude speedup by reusing named closures instead of re-running BFS.
+
+Application: [`Polarons_QLF.md`](Polarons_QLF.md) uses open prefixes, joint closure, first-return irreducibility and closure classes to formulate a dressed impurity as a composite ZFA event.
