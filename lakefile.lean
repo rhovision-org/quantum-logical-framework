@@ -276,5 +276,6 @@ lean_lib QLF where
     `QLF_ClosureLeakage,
     `QLF_ClosureChannels,
     `QLF_ChannelZeros,
-    `QLF_LightCone
+    `QLF_LightCone,
+    `QLF_RealizableWalk
   ]

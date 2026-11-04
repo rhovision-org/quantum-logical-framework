@@ -65,6 +65,7 @@ import QLF_ClosureLeakage
 import QLF_ClosureChannels
 import QLF_ChannelZeros
 import QLF_LightCone
+import QLF_RealizableWalk
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -240,3 +241,6 @@ import QLF_LightCone
 #print axioms QLF.ClosureChannels.shellKernel_compose
 #print axioms QLF.ClosureChannels.coneStep_unitary
 #print axioms QLF.ClosureChannels.shell_total_unitary
+#print axioms QLF.ClosureChannels.rawStep_not_unitary
+#print axioms QLF.ClosureChannels.realStep_unitary
+#print axioms QLF.ClosureChannels.realWalk_unitary

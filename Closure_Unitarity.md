@@ -414,3 +414,58 @@ normalised by it, and their own unitary normalisation is still open.
 covers the positive octant. Gauge twists are left out by the fixed-time choice. Still open: a
 channel-resolved unitary kernel, and kernels that admit inward steps.
 
+## 12. What is realizable is unitary
+
+§11 normalised the shell total, which is the zero-momentum part. Channel by channel the raw sum is
+not a time evolution. Give each outward step a momentum phase and sum the three twists: with phase
+`i` on the up step, `(iσ_y − σ_x + σ_z)/√3` has Gram entry `5/3`, so it is not unitary
+(`rawStep_not_unitary`, [`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean)). Numerically the
+deviation reaches `0.94` over random momenta.
+
+**The realizable part of a step.** A step by twist `t` does zero free action on the spin exactly on
+the spin states `t` leaves unchanged, the `+1` eigenspace of `M(t)`. Keep only that part:
+
+```text
+fix t = (1 + M(t))/2           the projector onto the states t fixes
+```
+
+Since the conjugate twist has `M(t̄) = −M(t)`, the realizable parts of a twist and its conjugate are
+complementary projectors:
+
+```text
+fix_idem      :  fix t · fix t = fix t
+fix_mul_conj  :  fix t · fix t̄ = 0
+fix_add_conj  :  fix t + fix t̄ = 1
+```
+
+So a step that moves along `t` with phase `e^{ik}` and along `t̄` with `e^{−ik}`, keeping only the
+realizable parts, is unitary at every momentum, and so is the walk over the three spatial axes:
+
+```text
+realStep_unitary :  e^{ik}·fix t + e^{−ik}·fix t̄   is unitary for every real k
+realWalk_unitary :  the up · left · slash walk is unitary for every (k_y, k_x, k_z)
+realStep_eq_half :  realizable step = ½(bare displacement + raw twist step)
+```
+
+The last line says what is dropped. The raw twist step carries the spin flip that no closure pays
+for; the realizable step averages it with the bare displacement, which removes exactly that part.
+
+**What it renders.** The step moves along its axis in the direction of the spin's sign on that axis.
+To first order in `k` the walk is `1 + i(k_y σ_y − k_x σ_x + k_z σ_z)`, the Weyl operator of a
+massless spin-½ particle. That expansion is checked numerically to `10⁻³` at `|k| ~ 10⁻⁴` and is not
+proved in Lean; it is a reading of the finite walk, not a continuum assumption.
+
+**Credit and status.** This walk has the form of the split-step Weyl walk of the quantum-walk
+literature: Bialynicki-Birula, *Weyl, Dirac, and Maxwell equations on a lattice as unitary cellular
+automata*, Phys. Rev. D 49 (1994) 6920; Arrighi, Nesme and Forets, *The Dirac equation as a quantum
+walk: higher dimensions, observational convergence* (2014, arXiv:1307.3524); and the
+information-theoretic derivation of D'Ariano and Perinotti, *Derivation of the Dirac equation from
+principles of information processing* (2014, arXiv:1306.1934). There the
+spin-locked step is a postulate or a design choice. Here it is read off zero free action per step:
+a step is realizable only on the spin states it leaves unchanged. Whether that reading is forced, or
+is one choice among several, is the question to settle next. The order of the three axes is a
+convention, and different orders agree to first order in `k`.
+
+Still open: mass (a Dirac rather than Weyl walk), the gauge axis, and the inward steps of the full
+census.
+
