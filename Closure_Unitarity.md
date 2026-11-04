@@ -289,16 +289,49 @@ in their open amplitude `O(v)`. That amplitude is a genuine matrix: one step up 
 The caveat of §7 applies unchanged. A shared formal dressing does not by itself give shared physical
 poles, because `O(v)` can cancel a zero of `1 − K` once both are rendered as functions.
 
-**Channel zeros (exact computation, not yet a theorem).** Enumerating every history to `L = 5`
-confirms the factorization in four channels and shows that some channels vanish at every length
-computed. A channel whose displacement is odd on two or three spatial axes (one `^` with one `>`, or
-one `^`, one `<` and one `/`) has `chanAmp = 0` at all `L ≤ 5`. A channel odd on one spatial axis, or
-on one spatial axis and the gauge axis, does not vanish. The likely mechanism is the one of §5:
-every history in such a channel folds to an anti-Hermitian matrix, and reversal maps the channel to
-itself while replacing each fold by its adjoint. Proving that every fold in the channel is
-anti-Hermitian needs the phase of the axis normal form, so this is the next target. By
-`channel_last_exit` such a zero would sit in the open amplitude `O(v)`, not in the shared dressing.
+**Channel zeros.** Some channels vanish at every length. §10 proves which ones and why.
 
 **What remains of PZ2.** The factorization above is a vector over channels. A transfer kernel
 `K_{vw}` between two boundary states, residues at a rendered pole, and the RG flow of the kernel are
 still open.
+
+---
+
+## 10. Mixed spatial channels vanish at every order
+
+Lean: [`lean/QLF_ChannelZeros.lean`](lean/QLF_ChannelZeros.lean). No axioms.
+
+**The reversal sign.** Two twist matrices anticommute exactly when they lie on different spatial
+axes, and otherwise commute (`twist_mul_comm`). Reversing a history therefore costs one sign per
+anticommuting pair, and the number of such pairs is fixed by the axis counts alone:
+
+```text
+fold_reverse_sign :  U(reverse h) = (−1)^{P(h)} · U(h)
+pairs_eq          :  P(h) = c_y c_x + c_y c_z + c_x c_z
+```
+
+where `c_a` counts the twists on spatial axis `a`, both signs. Since `U(reverse h) = U(h)†` (§3),
+every fold is Hermitian or anti-Hermitian, and which one depends only on the parities of the three
+spatial counts. Each `c_a` has the parity of the channel coordinate `v_a`, so the boundary state
+decides it.
+
+**The channel zeros.** Call a boundary state *mixed* when `v_y v_x + v_y v_z + v_x v_z` is odd, that
+is, when it is odd on two or three spatial axes. Every history in a mixed channel folds to an
+anti-Hermitian matrix (`fold_antiHermitian_of_mixed`). Reversal maps the channel to itself, so the
+channel cancels in pairs:
+
+```text
+mixed_channel_zero :  chanAmp v L = 0      for every L, when v is mixed
+mixed_open_zero    :  O_n(v) = 0           for every n, when v is mixed
+```
+
+The second line follows from the first through the last-exit factorization of §9 and `G_0 = 1`. The
+zero is carried by the channel's own open amplitude, not by the vacuum dressing that every channel
+shares. This is the channel form of §5's `antiHermitian_seed_forbidden`, with the same mechanism, and
+it confirms the enumeration to `L = 5` that first showed these zeros. A channel odd on one spatial
+axis is Hermitian and does not cancel this way: `O_1(e_up) = σy` (§9).
+
+**What this means.** The rule is a selection rule on boundary states: a history can never end in a
+mixed channel with non-zero coherent amplitude, at any length, although many histories reach it. In
+§4's terms it is an interference zero, not a structural one. The physical reading of a mixed channel
+is not settled here.

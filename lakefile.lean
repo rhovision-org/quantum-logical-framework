@@ -274,5 +274,6 @@ lean_lib QLF where
     `QLF_ClosureUnitarity,
     `QLF_ClosureKernel,
     `QLF_ClosureLeakage,
-    `QLF_ClosureChannels
+    `QLF_ClosureChannels,
+    `QLF_ChannelZeros
   ]
