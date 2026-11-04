@@ -233,3 +233,4 @@ import QLF_ChannelZeros
 #print axioms QLF.ClosureChannels.channel_series
 #print axioms QLF.ClosureChannels.mixed_channel_zero
 #print axioms QLF.ClosureChannels.mixed_open_zero
+#print axioms QLF.ClosureChannels.channel_two_sided

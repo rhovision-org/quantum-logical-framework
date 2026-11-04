@@ -335,3 +335,18 @@ axis is Hermitian and does not cancel this way: `O_1(e_up) = σy` (§9).
 mixed channel with non-zero coherent amplitude, at any length, although many histories reach it. In
 §4's terms it is an interference zero, not a structural one. The physical reading of a mixed channel
 is not settled here.
+
+**Open equals first arrival.** Reversal does one more thing. Read backwards, a history that leaves
+the origin and never returns becomes a history that reaches its endpoint `v` for the first time at
+its last step, in the same channel (`reverse_mem_firstSet`). The reversal sign is `+1` outside the
+mixed channels (`pairs_odd_iff`), and inside them both sides vanish, so
+
+```text
+openAmp_eq_firstAmp :  O_n(v) = F_n(v)                         for every v and n
+channel_two_sided   :  G(v) = G_∅ · F(v) = F(v) · G_∅
+```
+
+The amplitude to leave the origin for good equals the amplitude to arrive at `v` for the first time.
+So the shared vacuum dressing can be put before the channel's kernel or after it, and the kernel is
+the same. This is the scalar-dressing case of a two-sided transfer kernel. A kernel `K_{vw}` that is
+not translation invariant, as a background or a boundary would make it, is still open.
