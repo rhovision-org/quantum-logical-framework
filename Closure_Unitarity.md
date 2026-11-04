@@ -123,10 +123,70 @@ remain open, as the issue frames them:
   proves the non-closing mass is positive, so closed channels cannot simply be normalized to one (kill
   condition 7). U1 shows the full possibility space is unitary history by history. A channel operator
   `S_R` with `S†S = I`, or a closed-plus-open leakage identity, has not been built.
-- **PZ1–PZ2, the closure kernel and resolvent**, and pole factorization. The scalar renewal is in
-  [`lean/QLF_ClosureRenewal.lean`](lean/QLF_ClosureRenewal.lean) and the finite RG flow is in
-  [`lean/QLF_ExactRG.lean`](lean/QLF_ExactRG.lean). The matrix version `G = I + K G` is not built.
+- **PZ1–PZ2 beyond the single vacuum channel.** §7 gives the scalar kernel, the resolvent and the
+  first-closure factorization of every seeded channel. Still open: a genuine multi-channel matrix
+  `K` (channels as boundary states, `G = I + K G`), residue factorization *at* a pole of a
+  continuum rendering, and the finite RG flow of `K` through
+  [`lean/QLF_ExactRG.lean`](lean/QLF_ExactRG.lean).
 - **G1–G4**, every gluon benchmark.
 
-Status: the U1 and PZ3 rows of the issue's Phase A/B checklist are done. Nothing on this page claims that
+Status: the U1, PZ1–PZ1c and PZ3 rows of the issue's Phase A/B checklist are done, with a first seed of PZ2. Nothing on this page claims that
 unitarity *is* closure (kill condition 1).
+
+---
+
+## 7. PZ1: the closure kernel, the renewal and the resolvent
+
+Lean: [`lean/QLF_ClosureKernel.lean`](lean/QLF_ClosureKernel.lean). No axioms in the structural
+theorems. `native_decide` is used only for the numerical cross-checks.
+
+**The kernel.** For a seed `s`, a *first closure* of length `k ≥ m` is a continuation `c` with
+`s ++ c` balanced and no `s ++ c.take j` balanced for `m ≤ j < k` (`firstFamily`). Its signed sum is
+`F_k(s)` (`kernelAmp`). For the vacuum with `m = 1` the first closures are exactly the primes of
+[`lean/QLF_FirstReturn.lean`](lean/QLF_FirstReturn.lean), and `K_k = F_k(∅)` is the **prime closure
+kernel** (`primeKernel`).
+
+**The factorization.** For every seed `s` and every `m ≤ L`:
+
+```text
+closure_factorization :  A_L(s) = Σ_{k=m}^{L} F_k(s) · A_{L−k}(∅)
+```
+
+A closing history splits uniquely at its first closure past `m` (`first_exists`, `first_unique`).
+What remains is a vacuum closure (`balanced_drop`), and the phase is the product of the two phases
+(`phase_split`). This is the Dyson bijection `card_balanced_eq_sum_prime` of `QLF_FirstReturn`, but
+for signed amplitudes instead of counts, so cancellation is carried through the split rather than
+discarded.
+
+**PZ1b, the renewal.** Take `s = ∅` and `m = 1`:
+
+```text
+vacuum_renewal   :  A_L(∅) = Σ_{k=1}^{L} K_k · A_{L−k}(∅)    (L ≥ 1),   A_0(∅) = 1
+vacuum_resolvent :  G = 1 + K·G           (formal power series over ℤ)
+vacuum_resolvent_inverse :  G·(1 − K) = 1,   i.e.  G = (1 − K)⁻¹
+```
+
+This is the signed form of the issue's `U = 1 + A U`. The kernel does not vanish: `K_2 = −8` (the
+eight Hermitian pairs, each `−I`) and `K_4 = 56`. The renewal reproduces the registry's
+`A_4(∅) = (−8)(−8) + 56 = 120` (`vacuum_amp_four`).
+
+**PZ2 seed, channel factorization.** Take `m = 0`:
+
+```text
+channel_factorization :  G_s = F_s · G_∅ = F_s · (1 − K)⁻¹
+```
+
+Every channel carries the **same** dressed vacuum factor `(1 − K)⁻¹`. Channels differ only in their
+first-closure kernel `F_s`. Under the issue's dictionary, where poles come from `(1 − K)⁻¹` once a
+continuum rendering is named, this would make pole positions channel-independent, with only the
+residues `F_s` depending on the channel. That is a reading for PZ2 to test. The identity itself is
+the theorem.
+
+**Zeros live in the kernel.** Because `A_0(∅) = 1`, the factorization can be inverted order by order.
+An amplitude that vanishes at every order therefore has a first-closure kernel that vanishes at every
+order (`kernel_zero_of_amplitude_zero`). The all-orders zero of `^<` (§5) is a zero of `F_{^<}`
+(`upLeft_kernel_zero`), so it is not produced by the dressing. In the issue's terms the forbidden
+transition sits in the irreducible interaction, not in propagation.
+
+All the identities above are checked against direct enumeration of `A_L` and `F_k` for the seeds `∅`,
+`^`, `^<`, `^>` and `^^<` up to `L = 5`.

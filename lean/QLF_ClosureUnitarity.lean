@@ -1,5 +1,13 @@
 import QLF_PhaseRule
-import Mathlib
+import Mathlib.LinearAlgebra.UnitaryGroup
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+import Mathlib.Algebra.BigOperators.Ring.Finset
+import Mathlib.Algebra.Module.BigOperators
+import Mathlib.Algebra.Star.Basic
+import Mathlib.Tactic.FinCases
+import Mathlib.Tactic.Ring
+-- Narrow imports on purpose (see QLF_PhaseRule): keeps local checking feasible on small machines.
 
 set_option linter.unusedVariables false
 
@@ -276,7 +284,7 @@ def closureFamily (seed : List Twist) (L : ℕ) : Finset (List Twist) :=
 
 theorem mem_closureFamily (seed : List Twist) (L : ℕ) (c : List Twist) :
     c ∈ closureFamily seed L ↔ c.length = L ∧ countBalanced (seed ++ c) := by
-  simp [closureFamily, List.mem_filter, mem_words]
+  simp [closureFamily, mem_words]
 
 /-- The multiplicity `W_L`: how many ways the seed closes at length `L`. -/
 def ways (seed : List Twist) (L : ℕ) : ℕ := (closureFamily seed L).card
