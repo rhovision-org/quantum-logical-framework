@@ -127,14 +127,14 @@ remain open, as the issue frames them:
 
 - **U3 beyond the measure.** §8 proves the leakage identity, in the cylinder measure and as an
   amplitude identity. A channel operator `S_R` on boundary states with `S†S = I` has not been built.
-- **PZ1–PZ2 beyond the single vacuum channel.** §7 gives the scalar kernel, the resolvent and the
-  first-closure factorization of every seeded channel. Still open: a genuine multi-channel matrix
-  `K` (channels as boundary states, `G = I + K G`), residue factorization *at* a pole of a
-  continuum rendering, and the finite RG flow of `K` through
-  [`lean/QLF_ExactRG.lean`](lean/QLF_ExactRG.lean).
+- **PZ2 beyond the vector of channels.** §7 gives the scalar kernel, the resolvent and the
+  first-closure factorization of every seeded channel. §9 factorizes every boundary channel, with
+  matrix-valued amplitudes. Still open: a transfer kernel `K_{vw}` between two boundary states
+  (`G = I + K G` as a matrix over channels), residue factorization *at* a pole of a continuum
+  rendering, and the finite RG flow of `K` through [`lean/QLF_ExactRG.lean`](lean/QLF_ExactRG.lean).
 - **G1–G4**, every gluon benchmark.
 
-Status: the U1, U3, PZ1–PZ1c and PZ3 rows of the issue's Phase A/B checklist are done, with a first seed of PZ2. Nothing on this page claims that
+Status: the U1, U3, PZ1–PZ1c and PZ3 rows of the issue's Phase A/B checklist are done, and PZ2 has its channel factorization (§9). Nothing on this page claims that
 unitarity *is* closure (kill condition 1).
 
 ---
@@ -250,3 +250,55 @@ that generates every closed one.
 **What remains of U3.** These are identities on the full possibility space, graded by length. A
 channel operator on boundary states, with `S†S = I` on a named finite channel space, still has to be
 built. That is the same missing object as the multi-channel `K` of PZ2.
+
+---
+
+## 9. PZ2: every boundary channel factors through the same vacuum
+
+Lean: [`lean/QLF_ClosureChannels.lean`](lean/QLF_ClosureChannels.lean). No axioms.
+
+§7 cut each *seeded* channel at its first closure and gave a scalar kernel. The review of #208 asked
+for channels as boundary states and for amplitudes that are matrices. This section gives both.
+
+**Channels are boundary states.** A history's boundary state is its net displacement
+`disp h ∈ ℤ⁴`, the signed twist count on each axis. A history closes exactly when that is the origin
+(`balanced_iff_disp`). The channel `v` at length `L` is the coherent sum of the actual `2×2` folds:
+
+```text
+chanAmp v L = Σ_{|h| = L, disp h = v} U(h)          a matrix, not a sign
+```
+
+**The last-exit factorization.** Cut each history at its *last* closure, the longest balanced prefix
+(`lastExit`). What comes before is a vacuum closure. What comes after leaves the origin and never
+returns, so it is an open history in the sense of §8 (`drop_lastExit_open`). The cut is unique
+(`lastExit_append`). So for every channel `v` and every `L`:
+
+```text
+channel_last_exit :  chanAmp v L = Σ_{k=0}^{L} G_k · O_{L−k}(v)
+vacAmp_eq         :  G_k = A_k(∅) · I
+channel_series    :  G(v) = G_∅ · O(v)          (power series over the 2×2 matrices)
+origin_channel    :  chanAmp 0 L = G_L          (O(0) = 1: an open history never ends at the origin)
+```
+
+Every boundary channel carries the **same** dressing `G_∅`, which is scalar, and channels differ only
+in their open amplitude `O(v)`. That amplitude is a genuine matrix: one step up gives
+`O_1(e_up) = σy` (`openAmp_up_one`). This is the multi-channel, matrix-valued form of
+`channel_factorization` in §7, and it is the last-exit dual of that theorem's first-closure cut.
+`G_∅ = (1 − K)⁻¹` there, so `G(v) = (1 − K)⁻¹ · O(v)`.
+
+The caveat of §7 applies unchanged. A shared formal dressing does not by itself give shared physical
+poles, because `O(v)` can cancel a zero of `1 − K` once both are rendered as functions.
+
+**Channel zeros (exact computation, not yet a theorem).** Enumerating every history to `L = 5`
+confirms the factorization in four channels and shows that some channels vanish at every length
+computed. A channel whose displacement is odd on two or three spatial axes (one `^` with one `>`, or
+one `^`, one `<` and one `/`) has `chanAmp = 0` at all `L ≤ 5`. A channel odd on one spatial axis, or
+on one spatial axis and the gauge axis, does not vanish. The likely mechanism is the one of §5:
+every history in such a channel folds to an anti-Hermitian matrix, and reversal maps the channel to
+itself while replacing each fold by its adjoint. Proving that every fold in the channel is
+anti-Hermitian needs the phase of the axis normal form, so this is the next target. By
+`channel_last_exit` such a zero would sit in the open amplitude `O(v)`, not in the shared dressing.
+
+**What remains of PZ2.** The factorization above is a vector over channels. A transfer kernel
+`K_{vw}` between two boundary states, residues at a rendered pole, and the RG flow of the kernel are
+still open.

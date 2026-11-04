@@ -273,5 +273,6 @@ lean_lib QLF where
     `QLF_HorizonCrossing,
     `QLF_ClosureUnitarity,
     `QLF_ClosureKernel,
-    `QLF_ClosureLeakage
+    `QLF_ClosureLeakage,
+    `QLF_ClosureChannels
   ]

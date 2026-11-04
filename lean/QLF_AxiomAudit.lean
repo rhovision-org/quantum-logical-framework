@@ -62,6 +62,7 @@ import QLF_StationaryAction
 import QLF_StationaryPhase
 import QLF_ClosureKernel
 import QLF_ClosureLeakage
+import QLF_ClosureChannels
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -227,3 +228,5 @@ import QLF_ClosureLeakage
 #print axioms QLF.ClosureLeakage.leakage_identity
 #print axioms QLF.ClosureLeakage.openMass_ge_quarter
 #print axioms QLF.ClosureLeakage.open_amplitude
+#print axioms QLF.ClosureChannels.channel_last_exit
+#print axioms QLF.ClosureChannels.channel_series
