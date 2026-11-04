@@ -507,3 +507,42 @@ yet say which census quantity is the state `ψ`, nor derive the probabilities `�
 is still open, [`Interference_NoGo.md`](Interference_NoGo.md)). It also does not yet build the
 two-site state from a joint closure (entanglement as a shared closure, [`MultiParticle.md`](MultiParticle.md)).
 
+## 14. Mass is what flips handedness
+
+The realizable walk of §12 renders a massless particle. Its generator is momentum along the three
+spatial twists, and by the Clifford relations it squares to the momentum squared
+([`QLF_Mass`](lean/QLF_Mass.lean)):
+
+```text
+weyl_sq       :  (k_y·up + k_x·left + k_z·slash)² = |k|²           E² = p²
+no_weyl_mass  :  X anticommutes with up, left, slash  ⟹  X = 0
+```
+
+A mass term has to anticommute with every momentum direction, so `no_weyl_mass` says **no mass fits
+on two components**: the three spatial twists use up the 2×2 Clifford algebra. A mass needs a
+second factor, and the natural one is **handedness**, which [`QLF_Handedness`](lean/QLF_Handedness.lean)
+already takes as the primitive. On spin ⊗ handedness, with twists on both factors:
+
+```text
+alpha t   = slash ⊗ t        momentum along twist t, labelled by handedness
+beta      = right ⊗ 1        the mass generator
+chirality = slash ⊗ 1        the handedness label
+
+dirac_sq             :  (k_y α_y + k_x α_x + k_z α_z + m β)² = k² + m²     E² = p² + m², exactly
+chirality_comm_dirac :  [chirality, D] = 2m · chirality · β
+massless_keeps_handedness :  [chirality, D] = 0 when m = 0
+massStep_unitary     :  cos m + i sin m · β  is unitary for every real m
+```
+
+So momentum keeps handedness and mass flips it. A massive particle is one whose history keeps
+switching handedness, and the rate of switching is the mass. That is Feynman's checkerboard reading
+of the Dirac equation (Feynman and Hibbs, *Quantum Mechanics and Path Integrals*, 1965), and it
+matches [`Inertia.md`](Inertia.md)'s rest mass as a closed null circulation: every step runs at `c`,
+and only the zigzag between handednesses keeps the particle in place on average.
+
+**Credit and status.** The algebra is the chiral (Weyl) representation of the Dirac matrices,
+standard physics. What QLF supplies is that every generator is a twist, and that the second factor is
+the handedness the framework already has. Still open: assembling the full Dirac walk (mass step
+times a handedness-labelled realizable shift) and showing it renders the Dirac equation; and whether
+the handedness factor is forced, or one choice of second factor among several.
+

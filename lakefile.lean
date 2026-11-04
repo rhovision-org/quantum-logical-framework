@@ -278,5 +278,6 @@ lean_lib QLF where
     `QLF_ChannelZeros,
     `QLF_LightCone,
     `QLF_RealizableWalk,
-    `QLF_Tsirelson
+    `QLF_Tsirelson,
+    `QLF_Mass
   ]

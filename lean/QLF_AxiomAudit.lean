@@ -67,6 +67,7 @@ import QLF_ChannelZeros
 import QLF_LightCone
 import QLF_RealizableWalk
 import QLF_Tsirelson
+import QLF_Mass
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -250,3 +251,8 @@ import QLF_Tsirelson
 #print axioms QLF.Tsirelson.chsh_tsirelson
 #print axioms QLF.Tsirelson.twistChsh_tsirelson
 #print axioms QLF.Tsirelson.twistChsh_sq_e00
+#print axioms QLF.Mass.weyl_sq
+#print axioms QLF.Mass.no_weyl_mass
+#print axioms QLF.Mass.dirac_sq
+#print axioms QLF.Mass.chirality_comm_dirac
+#print axioms QLF.Mass.massStep_unitary
