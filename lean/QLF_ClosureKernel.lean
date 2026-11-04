@@ -41,7 +41,9 @@ that is `G = 1 + K G` (`vacuum_renewal`), the signed form of the issue's `U = 1 
 `s` open and `m = 0` it says `G_s = F_s · G_∅`: **the dressed vacuum factor is shared by every
 channel**, and channels differ only in their first-closure kernel `F_s`. So whatever pole structure
 `G_∅ = (1 − K)⁻¹` acquires under a continuum rendering is common to all channels; only residues are
-channel-specific. That last sentence is a reading; the identity is the theorem.
+channel-specific. That last sentence is a reading, not a theorem: a shared formal denominator need not
+give shared physical poles, since a channel's `F_s` can cancel a zero of `1 − K` once rendered. The
+identity is the theorem, and it is scalar; a matrix-valued kernel is a separate target.
 
 ## Zeros live in the kernel
 

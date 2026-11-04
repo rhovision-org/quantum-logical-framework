@@ -93,12 +93,18 @@ The proof is an involution on the closure family. `c ↦ reverse c` keeps `s ++ 
 (`phase_reverse_flip`). The family therefore splits into `±` pairs that cancel exactly. A corollary is that no
 palindrome ever closes an anti-Hermitian seed (`antiHermitian_no_palindrome`).
 
+The pairing is **continuation reversal**, a combinatorial involution on words, which acts on the fold
+as the dagger. It is the substrate's candidate for time reversal, in line with
+[`Reversibility.md`](Reversibility.md), but physical time reversal is antiunitary, and no antiunitary
+operator on a state space has been constructed here. Until it is, the theorem should be read as a
+statement about reversal of continuations, not as a time-reversal selection rule.
+
 `U(^<) = σy·(−σx) = iσz` is anti-Hermitian (`upLeft_antiHermitian`), so:
 
 - `upLeft_forbidden_all_orders`: `A_L(^<) = 0` for all `L`.
 - `upLeft_interference_zero`: at `L = 2`, closures exist (`v>`, `>v`), so this is an interference zero
-  and not a structural one. The transition is forbidden by destructive interference that time reversal
-  forces. It is not forbidden for lack of histories.
+  and not a structural one. The transition is forbidden by destructive interference that continuation
+  reversal forces. It is not forbidden for lack of histories.
 - `upLeft_ways_two/four/six`: the registry's `2, 72, 2820`, re-derived.
 
 Two contrasts show what the theorem does and does not cover:
@@ -110,7 +116,7 @@ Two contrasts show what the theorem does and does not cover:
 
 **What would make this physics.** In the issue's dictionary an interference zero is the substrate candidate
 for a hidden amplitude zero. That match is a hypothesis. The theorem gives one concrete, all-orders mechanism
-(time-reversal pairing). Whether the Arkani-Hamed–Cao–Dong–Figueiredo–He zero loci
+(continuation-reversal pairing). Whether the Arkani-Hamed–Cao–Dong–Figueiredo–He zero loci
 ([arXiv:2312.16282](https://arxiv.org/abs/2312.16282)) come from a mechanism of this kind is benchmark PZ4,
 and it is open.
 
@@ -177,8 +183,11 @@ channel_factorization :  G_s = F_s · G_∅ = F_s · (1 − K)⁻¹
 Every channel carries the **same** dressed vacuum factor `(1 − K)⁻¹`. Channels differ only in their
 first-closure kernel `F_s`. Under the issue's dictionary, where poles come from `(1 − K)⁻¹` once a
 continuum rendering is named, this would make pole positions channel-independent, with only the
-residues `F_s` depending on the channel. That is a reading for PZ2 to test. The identity itself is
-the theorem.
+residues `F_s` depending on the channel. That is a reading for PZ2 to test, and it has a known gap: a
+shared formal denominator does not by itself give shared physical poles, because a channel's numerator
+`F_s` can cancel a zero of `1 − K` once both are rendered as functions. Which zeros of `1 − K` survive
+in which channel depends on that rendering. The identity itself is the theorem, and it is scalar: the
+matrix-valued kernel and factorization of residues at a pole are separate targets (§6).
 
 **Zeros live in the kernel.** Because `A_0(∅) = 1`, the factorization can be inverted order by order.
 An amplitude that vanishes at every order therefore has a first-closure kernel that vanishes at every

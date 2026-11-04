@@ -68,7 +68,8 @@ Reversing the continuation (`c ↦ c.reverse`) maps the closure family to itself
 family splits into `±` pairs and cancels exactly — and no balanced continuation can be a palindrome.
 `U(^<) = σy·(−σx) = iσz` is anti-Hermitian (`upLeft_antiHermitian`), so `^<` is forbidden to all
 orders (`upLeft_forbidden_all_orders`) while having closures (`upLeft_interference_zero`): the zero is
-**destructive interference driven by time reversal**, not an absence of histories. The registry counts
+**destructive interference driven by continuation reversal** (combinatorial; no antiunitary
+time-reversal operator is constructed here), not an absence of histories. The registry counts
 are re-derived as a cross-check (`upLeft_ways_two/four/six`). A Hermitian seed such as `^` has no such
 pairing and a nonzero amplitude (`up_amplitude_one`); `^^^^` at `L = 2` is a structural zero
 (`upFour_structural_zero_two`).
