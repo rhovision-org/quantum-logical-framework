@@ -1,0 +1,662 @@
+{
+ "lengths": {
+  "10": {
+   "entangled_pooled": {
+    "collinear": {
+     "N": 2350080,
+     "S": -76800,
+     "kappa": 50.097943286811955
+    },
+    "O": {
+     "N": 4700160,
+     "S": 0,
+     "kappa": 0.0
+    }
+   },
+   "classes": [
+    {
+     "relation": "O",
+     "remainder": "gg",
+     "entangled": "entangled",
+     "N": 1175040,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "gg",
+     "entangled": "separate",
+     "N": 34560,
+     "S": -34560,
+     "kappa": 185.90320061795603
+    },
+    {
+     "relation": "O",
+     "remainder": "nn",
+     "entangled": "entangled",
+     "N": 2350080,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "nn",
+     "entangled": "separate",
+     "N": 69120,
+     "S": -7680,
+     "kappa": 29.21186973360886
+    },
+    {
+     "relation": "O",
+     "remainder": "ss",
+     "entangled": "entangled",
+     "N": 1175040,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "ss",
+     "entangled": "separate",
+     "N": 34560,
+     "S": -3840,
+     "kappa": 20.65591117977289
+    },
+    {
+     "relation": "collinear",
+     "remainder": "gg",
+     "entangled": "entangled",
+     "N": 587520,
+     "S": -34560,
+     "kappa": 45.08814895813076
+    },
+    {
+     "relation": "collinear",
+     "remainder": "gg",
+     "entangled": "separate",
+     "N": 17280,
+     "S": -17280,
+     "kappa": 131.45341380123986
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nn",
+     "entangled": "entangled",
+     "N": 587520,
+     "S": -3840,
+     "kappa": 5.0097943286811955
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nn",
+     "entangled": "separate",
+     "N": 17280,
+     "S": -1920,
+     "kappa": 14.60593486680443
+    },
+    {
+     "relation": "collinear",
+     "remainder": "pp",
+     "entangled": "entangled",
+     "N": 1175040,
+     "S": -38400,
+     "kappa": 35.42459542160382
+    },
+    {
+     "relation": "collinear",
+     "remainder": "pp",
+     "entangled": "separate",
+     "N": 34560,
+     "S": -3840,
+     "kappa": 20.65591117977289
+    }
+   ]
+  },
+  "12": {
+   "entangled_pooled": {
+    "collinear": {
+     "N": 542868480,
+     "S": 8825856,
+     "kappa": 378.7996108313011
+    },
+    "O": {
+     "N": 1085736960,
+     "S": -172032,
+     "kappa": 5.2209186626034585
+    }
+   },
+   "classes": [
+    {
+     "relation": "O",
+     "remainder": "gggg",
+     "entangled": "entangled",
+     "N": 38776320,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "gggg",
+     "entangled": "separate",
+     "N": 1140480,
+     "S": 1140480,
+     "kappa": 1067.9325821417756
+    },
+    {
+     "relation": "O",
+     "remainder": "ggnn",
+     "entangled": "entangled",
+     "N": 310210560,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "ggnn",
+     "entangled": "separate",
+     "N": 9123840,
+     "S": 1013760,
+     "kappa": 335.6188314144485
+    },
+    {
+     "relation": "O",
+     "remainder": "ggss",
+     "entangled": "entangled",
+     "N": 155105280,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "ggss",
+     "entangled": "separate",
+     "N": 4561920,
+     "S": 506880,
+     "kappa": 237.31835158706124
+    },
+    {
+     "relation": "O",
+     "remainder": "nnnn",
+     "entangled": "entangled",
+     "N": 232657920,
+     "S": 147456,
+     "kappa": 9.667262874231822
+    },
+    {
+     "relation": "O",
+     "remainder": "nnnn",
+     "entangled": "separate",
+     "N": 6842880,
+     "S": 115200,
+     "kappa": 44.038550605054425
+    },
+    {
+     "relation": "O",
+     "remainder": "nnss",
+     "entangled": "entangled",
+     "N": 310210560,
+     "S": -319488,
+     "kappa": 18.139539673985006
+    },
+    {
+     "relation": "O",
+     "remainder": "nnss",
+     "entangled": "separate",
+     "N": 9123840,
+     "S": 43008,
+     "kappa": 14.238374666067513
+    },
+    {
+     "relation": "O",
+     "remainder": "ssss",
+     "entangled": "entangled",
+     "N": 38776320,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "ssss",
+     "entangled": "separate",
+     "N": 1140480,
+     "S": 34560,
+     "kappa": 32.36159339823563
+    },
+    {
+     "relation": "collinear",
+     "remainder": "gggg",
+     "entangled": "entangled",
+     "N": 19388160,
+     "S": 1140480,
+     "kappa": 259.0116963064205
+    },
+    {
+     "relation": "collinear",
+     "remainder": "gggg",
+     "entangled": "separate",
+     "N": 570240,
+     "S": 570240,
+     "kappa": 755.1423706825092
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggnn",
+     "entangled": "entangled",
+     "N": 77552640,
+     "S": 506880,
+     "kappa": 57.55815473476011
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggnn",
+     "entangled": "separate",
+     "N": 2280960,
+     "S": 253440,
+     "kappa": 167.80941570722425
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggpp",
+     "entangled": "entangled",
+     "N": 155105280,
+     "S": 5068800,
+     "kappa": 406.9976152553346
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggpp",
+     "entangled": "separate",
+     "N": 4561920,
+     "S": 506880,
+     "kappa": 237.31835158706124
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnnn",
+     "entangled": "entangled",
+     "N": 19388160,
+     "S": 34560,
+     "kappa": 7.848839282012742
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnnn",
+     "entangled": "separate",
+     "N": 570240,
+     "S": 17280,
+     "kappa": 22.883102141894216
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnpp",
+     "entangled": "entangled",
+     "N": 155105280,
+     "S": 460800,
+     "kappa": 36.99978320503042
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnpp",
+     "entangled": "separate",
+     "N": 4561920,
+     "S": 46080,
+     "kappa": 21.57439559882375
+    },
+    {
+     "relation": "collinear",
+     "remainder": "pppp",
+     "entangled": "entangled",
+     "N": 116328960,
+     "S": 1614336,
+     "kappa": 149.67525578563064
+    },
+    {
+     "relation": "collinear",
+     "remainder": "pppp",
+     "entangled": "separate",
+     "N": 3421440,
+     "S": 33024,
+     "kappa": 17.85357578610426
+    }
+   ]
+  },
+  "14": {
+   "entangled_pooled": {
+    "collinear": {
+     "N": 100370350080,
+     "S": -741470208,
+     "kappa": 2340.40483403818
+    },
+    "O": {
+     "N": 200740700160,
+     "S": 34111488,
+     "kappa": 76.13475371212942
+    }
+   },
+   "classes": [
+    {
+     "relation": "O",
+     "remainder": "gggggg",
+     "entangled": "entangled",
+     "N": 784143360,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "gggggg",
+     "entangled": "separate",
+     "N": 23063040,
+     "S": -23063040,
+     "kappa": 4802.399400299812
+    },
+    {
+     "relation": "O",
+     "remainder": "ggggnn",
+     "entangled": "entangled",
+     "N": 14114580480,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "ggggnn",
+     "entangled": "separate",
+     "N": 415134720,
+     "S": -46126080,
+     "kappa": 2263.8727879454714
+    },
+    {
+     "relation": "O",
+     "remainder": "ggggss",
+     "entangled": "entangled",
+     "N": 7057290240,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "ggggss",
+     "entangled": "separate",
+     "N": 207567360,
+     "S": -23063040,
+     "kappa": 1600.7998000999376
+    },
+    {
+     "relation": "O",
+     "remainder": "ggnnnn",
+     "entangled": "entangled",
+     "N": 42343741440,
+     "S": -26836992,
+     "kappa": 130.41850639103777
+    },
+    {
+     "relation": "O",
+     "remainder": "ggnnnn",
+     "entangled": "separate",
+     "N": 1245404160,
+     "S": -20966400,
+     "kappa": 594.1125288779028
+    },
+    {
+     "relation": "O",
+     "remainder": "ggnnss",
+     "entangled": "entangled",
+     "N": 56458321920,
+     "S": 58146816,
+     "kappa": 244.71576925956742
+    },
+    {
+     "relation": "O",
+     "remainder": "ggnnss",
+     "entangled": "separate",
+     "N": 1660538880,
+     "S": -7827456,
+     "kappa": 192.08617594688846
+    },
+    {
+     "relation": "O",
+     "remainder": "ggssss",
+     "entangled": "entangled",
+     "N": 7057290240,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "ggssss",
+     "entangled": "separate",
+     "N": 207567360,
+     "S": -6289920,
+     "kappa": 436.5817636636193
+    },
+    {
+     "relation": "O",
+     "remainder": "nnnnnn",
+     "entangled": "entangled",
+     "N": 15682867200,
+     "S": -6193152,
+     "kappa": 49.45372467680981
+    },
+    {
+     "relation": "O",
+     "remainder": "nnnnnn",
+     "entangled": "separate",
+     "N": 461260800,
+     "S": -1505280,
+     "kappa": 70.08805650277132
+    },
+    {
+     "relation": "O",
+     "remainder": "nnnnss",
+     "entangled": "entangled",
+     "N": 42343741440,
+     "S": 2285568,
+     "kappa": 11.107070599236733
+    },
+    {
+     "relation": "O",
+     "remainder": "nnnnss",
+     "entangled": "separate",
+     "N": 1245404160,
+     "S": 58368,
+     "kappa": 1.6539396408322569
+    },
+    {
+     "relation": "O",
+     "remainder": "nnssss",
+     "entangled": "entangled",
+     "N": 14114580480,
+     "S": 6709248,
+     "kappa": 56.47286982913094
+    },
+    {
+     "relation": "O",
+     "remainder": "nnssss",
+     "entangled": "separate",
+     "N": 415134720,
+     "S": 64512,
+     "kappa": 3.166255647476184
+    },
+    {
+     "relation": "O",
+     "remainder": "ssssss",
+     "entangled": "entangled",
+     "N": 784143360,
+     "S": 0,
+     "kappa": 0.0
+    },
+    {
+     "relation": "O",
+     "remainder": "ssssss",
+     "entangled": "separate",
+     "N": 23063040,
+     "S": -268800,
+     "kappa": 55.9720209825153
+    },
+    {
+     "relation": "collinear",
+     "remainder": "gggggg",
+     "entangled": "entangled",
+     "N": 392071680,
+     "S": -23063040,
+     "kappa": 1164.7529402258258
+    },
+    {
+     "relation": "collinear",
+     "remainder": "gggggg",
+     "entangled": "separate",
+     "N": 11531520,
+     "S": -11531520,
+     "kappa": 3395.8091819182064
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggggnn",
+     "entangled": "entangled",
+     "N": 3528645120,
+     "S": -23063040,
+     "kappa": 388.25098007527527
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggggnn",
+     "entangled": "separate",
+     "N": 103783680,
+     "S": -11531520,
+     "kappa": 1131.9363939727357
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggggpp",
+     "entangled": "entangled",
+     "N": 7057290240,
+     "S": -230630400,
+     "kappa": 2745.349008135503
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggggpp",
+     "entangled": "separate",
+     "N": 207567360,
+     "S": -23063040,
+     "kappa": 1600.7998000999376
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggnnnn",
+     "entangled": "entangled",
+     "N": 3528645120,
+     "S": -6289920,
+     "kappa": 105.88663092962052
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggnnnn",
+     "entangled": "separate",
+     "N": 103783680,
+     "S": -3144960,
+     "kappa": 308.7099256289279
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggnnpp",
+     "entangled": "entangled",
+     "N": 28229160960,
+     "S": -83865600,
+     "kappa": 499.154365115546
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggnnpp",
+     "entangled": "separate",
+     "N": 830269440,
+     "S": -8386560,
+     "kappa": 291.05450910907956
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggpppp",
+     "entangled": "entangled",
+     "N": 21171870720,
+     "S": -293809152,
+     "kappa": 2019.2295955135712
+    },
+    {
+     "relation": "collinear",
+     "remainder": "ggpppp",
+     "entangled": "separate",
+     "N": 622702080,
+     "S": -6010368,
+     "kappa": 240.85790549560676
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnnnnn",
+     "entangled": "entangled",
+     "N": 392071680,
+     "S": -268800,
+     "kappa": 13.575209093541092
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnnnnn",
+     "entangled": "separate",
+     "N": 11531520,
+     "S": -134400,
+     "kappa": 39.57819559345229
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnnnpp",
+     "entangled": "entangled",
+     "N": 7057290240,
+     "S": -4838400,
+     "kappa": 57.594734436409155
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnnnpp",
+     "entangled": "separate",
+     "N": 207567360,
+     "S": -483840,
+     "kappa": 33.58321258950918
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnpppp",
+     "entangled": "entangled",
+     "N": 21171870720,
+     "S": -22600704,
+     "kappa": 155.32535350104394
+    },
+    {
+     "relation": "collinear",
+     "remainder": "nnpppp",
+     "entangled": "separate",
+     "N": 622702080,
+     "S": -462336,
+     "kappa": 18.52753119196975
+    },
+    {
+     "relation": "collinear",
+     "remainder": "pppppp",
+     "entangled": "entangled",
+     "N": 7841433600,
+     "S": -53041152,
+     "kappa": 598.9839883928958
+    },
+    {
+     "relation": "collinear",
+     "remainder": "pppppp",
+     "entangled": "separate",
+     "N": 230630400,
+     "S": 205824,
+     "kappa": 13.553071764207338
+    }
+   ]
+  }
+ },
+ "criterion": "collinear entangled kappa >= 4 at 10,12,14 and non-decreasing stepwise",
+ "verdict": "PASS"
+}

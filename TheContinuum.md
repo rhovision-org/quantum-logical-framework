@@ -310,7 +310,7 @@ The paradoxes of the continuum, of Choice and of self-reference are collected in
 
 The continuum is not rejected. It is derived — as the macroscale limit of a dense, constructive, ZFA-filtered combinatorial process. The Axiom of Choice is not needed because every physical object that exists can be explicitly constructed by the QuCalc engine.
 
-See also: [ReverseMathematics.md](ReverseMathematics.md) for the formal subsystem analysis, [SpaceTime.md](SpaceTime.md) for the event-synthesis picture, [Philosophy.md](Philosophy.md) for the possibilist ontological grounding, [QFT_QLF.md](QFT_QLF.md) for the QFT/UV-finiteness face, and [Continuum_Choice_Fallacy.md](Continuum_Choice_Fallacy.md) for the Millennium-program thesis.
+See also: [ReverseMathematics.md](ReverseMathematics.md) for the formal subsystem analysis, [SpaceTime.md](SpaceTime.md) for the event-synthesis picture, [Philosophy.md](Philosophy.md) for the possibilist ontological grounding, [QFT_QLF.md](QFT_QLF.md) for the QFT/UV-finiteness face, and [Continuum_Choice_Fallacy.md](Continuum_Choice_Fallacy.md) for the Millennium-program thesis, and [No_Continuum_Conjecture.md](No_Continuum_Conjecture.md) for the denial stated as one falsifiable conjecture (straight-line histories and excess coherence in the census, with its modeling assumptions marked), and [Mizohata_Takeuchi_QLF.md](Mizohata_Takeuchi_QLF.md) for a conditional finite-scale reading of the Mizohata–Takeuchi conjecture.
 
 ## References
 
