@@ -66,6 +66,7 @@ import QLF_ClosureChannels
 import QLF_ChannelZeros
 import QLF_LightCone
 import QLF_RealizableWalk
+import QLF_Tsirelson
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -244,3 +245,8 @@ import QLF_RealizableWalk
 #print axioms QLF.ClosureChannels.rawStep_not_unitary
 #print axioms QLF.ClosureChannels.realStep_unitary
 #print axioms QLF.ClosureChannels.realWalk_unitary
+#print axioms QLF.Tsirelson.chsh_sq
+#print axioms QLF.Tsirelson.chsh_classical
+#print axioms QLF.Tsirelson.chsh_tsirelson
+#print axioms QLF.Tsirelson.twistChsh_tsirelson
+#print axioms QLF.Tsirelson.twistChsh_sq_e00

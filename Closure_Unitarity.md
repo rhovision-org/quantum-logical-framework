@@ -469,3 +469,41 @@ convention, and different orders agree to first order in `k`.
 Still open: mass (a Dirac rather than Weyl walk), the gauge axis, and the inward steps of the full
 census.
 
+## 13. Composite systems: Bell violation is the twist Clifford relation
+
+Two sites each choose one of two two-outcome observables (each squares to `1`), and observables at
+different sites commute. The CHSH combination (Clauser, Horne, Shimony and Holt, Phys. Rev. Lett. 23
+(1969) 880) is `C = a₀b₀ + a₀b₁ + a₁b₀ − a₁b₁`. In **any** ring, with nothing else assumed
+([`QLF_Tsirelson`](lean/QLF_Tsirelson.lean)):
+
+```text
+chsh_sq        :  C² = 4 − [a₀, a₁]·[b₀, b₁]
+chsh_classical :  a₀a₁ = a₁a₀            ⟹  C² = 4               (|C| ≤ 2, Bell)
+chsh_tsirelson :  a₀a₁ = −a₁a₀, b₀b₁ = −b₁b₀  ⟹  C²(C² − 8) = 0  (|C| ≤ 2√2, Tsirelson)
+```
+
+So the whole gap between Bell's bound and Tsirelson's (Cirel'son, Lett. Math. Phys. 4 (1980) 93)
+is whether a site's two observables commute. Commuting observables can be given joint values, and
+then the bound is 2. Anticommuting ones cannot, and the bound is `2√2`, no more.
+
+**Twists supply exactly that.** Twists on different spatial axes anticommute, the same Clifford
+relation that makes the light-cone zeros exact (§11). With `up` and `left` on each of two sites:
+
+```text
+twist_bell_pair      :  each squares to 1, the sites commute
+twistChsh_herm       :  the CHSH operator is Hermitian
+twistChsh_tsirelson  :  C²(C² − 8) = 0
+twistChsh_sq_e00     :  C²|00⟩ = 8|00⟩         so 2√2 is attained
+```
+
+The reading: two measurements on one site that cannot share a value are two twists on different
+axes, and that non-commutation is the entire quantum excess over a local joint assignment. Nothing
+here is new as mathematics; the CHSH square identity is standard. What QLF adds is where the
+anticommutation comes from: the eight twists are the signed axis frame, so a second axis is a second
+measurement that cannot share the first one's value.
+
+**Scope.** This is the algebraic bound and its attainment by an eigenvector of `C²`. It does not
+yet say which census quantity is the state `ψ`, nor derive the probabilities `⟨ψ|C|ψ⟩` (the Born rule
+is still open, [`Interference_NoGo.md`](Interference_NoGo.md)). It also does not yet build the
+two-site state from a joint closure (entanglement as a shared closure, [`MultiParticle.md`](MultiParticle.md)).
+
