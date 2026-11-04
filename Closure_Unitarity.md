@@ -127,14 +127,14 @@ remain open, as the issue frames them:
 
 - **U3 beyond the measure.** §8 proves the leakage identity, in the cylinder measure and as an
   amplitude identity. A channel operator `S_R` on boundary states with `S†S = I` has not been built.
-- **PZ1–PZ2 beyond the single vacuum channel.** §7 gives the scalar kernel, the resolvent and the
-  first-closure factorization of every seeded channel. Still open: a genuine multi-channel matrix
-  `K` (channels as boundary states, `G = I + K G`), residue factorization *at* a pole of a
-  continuum rendering, and the finite RG flow of `K` through
-  [`lean/QLF_ExactRG.lean`](lean/QLF_ExactRG.lean).
+- **PZ2 beyond the vector of channels.** §7 gives the scalar kernel, the resolvent and the
+  first-closure factorization of every seeded channel. §9 factorizes every boundary channel, with
+  matrix-valued amplitudes. Still open: a transfer kernel `K_{vw}` between two boundary states
+  (`G = I + K G` as a matrix over channels), residue factorization *at* a pole of a continuum
+  rendering, and the finite RG flow of `K` through [`lean/QLF_ExactRG.lean`](lean/QLF_ExactRG.lean).
 - **G1–G4**, every gluon benchmark.
 
-Status: the U1, U3, PZ1–PZ1c and PZ3 rows of the issue's Phase A/B checklist are done, with a first seed of PZ2. Nothing on this page claims that
+Status: the U1, U3, PZ1–PZ1c and PZ3 rows of the issue's Phase A/B checklist are done, and PZ2 has its channel factorization (§9). Nothing on this page claims that
 unitarity *is* closure (kill condition 1).
 
 ---
@@ -250,3 +250,103 @@ that generates every closed one.
 **What remains of U3.** These are identities on the full possibility space, graded by length. A
 channel operator on boundary states, with `S†S = I` on a named finite channel space, still has to be
 built. That is the same missing object as the multi-channel `K` of PZ2.
+
+---
+
+## 9. PZ2: every boundary channel factors through the same vacuum
+
+Lean: [`lean/QLF_ClosureChannels.lean`](lean/QLF_ClosureChannels.lean). No axioms.
+
+§7 cut each *seeded* channel at its first closure and gave a scalar kernel. The review of #208 asked
+for channels as boundary states and for amplitudes that are matrices. This section gives both.
+
+**Channels are boundary states.** A history's boundary state is its net displacement
+`disp h ∈ ℤ⁴`, the signed twist count on each axis. A history closes exactly when that is the origin
+(`balanced_iff_disp`). The channel `v` at length `L` is the coherent sum of the actual `2×2` folds:
+
+```text
+chanAmp v L = Σ_{|h| = L, disp h = v} U(h)          a matrix, not a sign
+```
+
+**The last-exit factorization.** Cut each history at its *last* closure, the longest balanced prefix
+(`lastExit`). What comes before is a vacuum closure. What comes after leaves the origin and never
+returns, so it is an open history in the sense of §8 (`drop_lastExit_open`). The cut is unique
+(`lastExit_append`). So for every channel `v` and every `L`:
+
+```text
+channel_last_exit :  chanAmp v L = Σ_{k=0}^{L} G_k · O_{L−k}(v)
+vacAmp_eq         :  G_k = A_k(∅) · I
+channel_series    :  G(v) = G_∅ · O(v)          (power series over the 2×2 matrices)
+origin_channel    :  chanAmp 0 L = G_L          (O(0) = 1: an open history never ends at the origin)
+```
+
+Every boundary channel carries the **same** dressing `G_∅`, which is scalar, and channels differ only
+in their open amplitude `O(v)`. That amplitude is a genuine matrix: one step up gives
+`O_1(e_up) = σy` (`openAmp_up_one`). This is the multi-channel, matrix-valued form of
+`channel_factorization` in §7, and it is the last-exit dual of that theorem's first-closure cut.
+`G_∅ = (1 − K)⁻¹` there, so `G(v) = (1 − K)⁻¹ · O(v)`.
+
+The caveat of §7 applies unchanged. A shared formal dressing does not by itself give shared physical
+poles, because `O(v)` can cancel a zero of `1 − K` once both are rendered as functions.
+
+**Channel zeros.** Some channels vanish at every length. §10 proves which ones and why.
+
+**What remains of PZ2.** The factorization above is a vector over channels. A transfer kernel
+`K_{vw}` between two boundary states, residues at a rendered pole, and the RG flow of the kernel are
+still open.
+
+---
+
+## 10. Mixed spatial channels vanish at every order
+
+Lean: [`lean/QLF_ChannelZeros.lean`](lean/QLF_ChannelZeros.lean). No axioms.
+
+**The reversal sign.** Two twist matrices anticommute exactly when they lie on different spatial
+axes, and otherwise commute (`twist_mul_comm`). Reversing a history therefore costs one sign per
+anticommuting pair, and the number of such pairs is fixed by the axis counts alone:
+
+```text
+fold_reverse_sign :  U(reverse h) = (−1)^{P(h)} · U(h)
+pairs_eq          :  P(h) = c_y c_x + c_y c_z + c_x c_z
+```
+
+where `c_a` counts the twists on spatial axis `a`, both signs. Since `U(reverse h) = U(h)†` (§3),
+every fold is Hermitian or anti-Hermitian, and which one depends only on the parities of the three
+spatial counts. Each `c_a` has the parity of the channel coordinate `v_a`, so the boundary state
+decides it.
+
+**The channel zeros.** Call a boundary state *mixed* when `v_y v_x + v_y v_z + v_x v_z` is odd, that
+is, when it is odd on two or three spatial axes. Every history in a mixed channel folds to an
+anti-Hermitian matrix (`fold_antiHermitian_of_mixed`). Reversal maps the channel to itself, so the
+channel cancels in pairs:
+
+```text
+mixed_channel_zero :  chanAmp v L = 0      for every L, when v is mixed
+mixed_open_zero    :  O_n(v) = 0           for every n, when v is mixed
+```
+
+The second line follows from the first through the last-exit factorization of §9 and `G_0 = 1`. The
+zero is carried by the channel's own open amplitude, not by the vacuum dressing that every channel
+shares. This is the channel form of §5's `antiHermitian_seed_forbidden`, with the same mechanism, and
+it confirms the enumeration to `L = 5` that first showed these zeros. A channel odd on one spatial
+axis is Hermitian and does not cancel this way: `O_1(e_up) = σy` (§9).
+
+**What this means.** The rule is a selection rule on boundary states: a history can never end in a
+mixed channel with non-zero coherent amplitude, at any length, although many histories reach it. In
+§4's terms it is an interference zero, not a structural one. The physical reading of a mixed channel
+is not settled here.
+
+**Open equals first arrival.** Reversal does one more thing. Read backwards, a history that leaves
+the origin and never returns becomes a history that reaches its endpoint `v` for the first time at
+its last step, in the same channel (`reverse_mem_firstSet`). The reversal sign is `+1` outside the
+mixed channels (`pairs_odd_iff`), and inside them both sides vanish, so
+
+```text
+openAmp_eq_firstAmp :  O_n(v) = F_n(v)                         for every v and n
+channel_two_sided   :  G(v) = G_∅ · F(v) = F(v) · G_∅
+```
+
+The amplitude to leave the origin for good equals the amplitude to arrive at `v` for the first time.
+So the shared vacuum dressing can be put before the channel's kernel or after it, and the kernel is
+the same. This is the scalar-dressing case of a two-sided transfer kernel. A kernel `K_{vw}` that is
+not translation invariant, as a background or a boundary would make it, is still open.
