@@ -395,7 +395,22 @@ example `K((1,0,0) → (2,1,1)) = 0` because the displacement `(1,1,1)` is mixed
 `K((1,0,0) → (3,0,0)) = I`. Inside one octant it is still translation invariant; what breaks
 translation invariance is the shell itself, since only outward steps are admitted.
 
+**Normalisation of the shell total.** Summed over every point of the shell, the cone sums give
+the `L`-th power of the summed outward step `D = σ_y − σ_x + σ_z` (`shell_total`), and the shell
+holds `3^L` histories (`shell_count`). Because the three twists anticommute, `D² = 3` (`outStep_sq`),
+so `S = D/√3` is Hermitian and unitary, and
+
+```text
+coneStep_unitary    :  S = (σ_y − σ_x + σ_z)/√3  is unitary
+shell_total_unitary :  Σ_{v on shell L} G_L(v) = (√3)^L · S^L
+```
+
+The coherent total over the shell is exactly `√(number of histories)` times a unitary, so `S` is a
+normalised one-step transfer for the whole shell. `S` is the spin-½ operator along the shell's
+diagonal, and `S² = I`. This normalises the total only: the individual channels `G_L(v)` are not
+normalised by it, and their own unitary normalisation is still open.
+
 **Scope.** The other seven octants differ by reflecting axes, which changes only signs, but Lean
 covers the positive octant. Gauge twists are left out by the fixed-time choice. Still open: a
-normalised kernel (the raw sums are not unitary), and kernels that admit inward steps.
+channel-resolved unitary kernel, and kernels that admit inward steps.
 

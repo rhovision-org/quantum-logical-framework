@@ -41,6 +41,18 @@ one point, so
 the composition law of a transfer kernel, with matrix products in order (`coneSum_split`, for any
 weight per twist).
 
+## Normalisation
+
+Summed over the whole shell, the cone sums give the power of the summed outward step
+(`shell_total`), and the shell holds `3^L` histories (`shell_count`). The summed step squares to
+`3` (`outStep_sq`), so its normalisation `(σ_y − σ_x + σ_z)/√3` is unitary and Hermitian:
+
+> **`coneStep_unitary`**, **`shell_total_unitary`** — `Σ_{v on shell L} G_L(v) = (√3)^L · S^L`
+> with `S` unitary.
+
+The coherent total over the shell is exactly the square root of its history count times a unitary.
+The channel-resolved amplitudes are not normalised by this.
+
 No continuum is used: everything is a finite sum over histories. No axioms.
 -/
 
@@ -437,6 +449,135 @@ theorem shellKernel_compose (a b c t : ℕ) (ht : t ≤ a + b + c) :
   intro x hx
   simp only [shellPts, Finset.mem_filter, Finset.mem_product, Finset.mem_range] at hx
   simp only [show x.1 ≤ a ∧ x.2.1 ≤ b ∧ x.2.2 ≤ c from ⟨by omega, by omega, by omega⟩]
+  rfl
+
+-- ==========================================
+-- §7  Normalisation: the shell total is √(count) times a unitary
+-- ==========================================
+
+theorem sum_prod_words {R : Type} [Ring R] (g : Twist → R) (n : ℕ) :
+    ∑ w ∈ words Twist n, (w.map g).prod = (∑ t : Twist, g t) ^ n := by
+  induction n with
+  | zero => simp [words]
+  | succ n ih =>
+    rw [sum_words_succ, pow_succ', Finset.sum_mul]
+    apply sum_congr rfl
+    intro t _
+    simp only [List.map_cons, List.prod_cons, ← Finset.mul_sum, ih]
+
+/-- A weight cut down to the three outward twists. -/
+def cut {R : Type} [Ring R] (f : Twist → R) (t : Twist) : R :=
+  if t = Twist.up ∨ t = Twist.left ∨ t = Twist.slash then f t else 0
+
+theorem prod_cut {R : Type} [Ring R] (f : Twist → R) (w : List Twist) :
+    (w.map (cut f)).prod = if w.count Twist.up + w.count Twist.left + w.count Twist.slash =
+      w.length then (w.map f).prod else 0 := by
+  induction w with
+  | nil => simp
+  | cons t w ih =>
+    have hle := count_three_le w
+    rw [List.map_cons, List.prod_cons, ih]
+    cases t <;> simp +decide only [cut, List.count_cons, List.length_cons, List.map_cons,
+      List.prod_cons] <;> split_ifs <;> first | contradiction | rfl | omega | simp
+
+theorem sum_cut_shell {R : Type} [Ring R] (f : Twist → R) (n : ℕ) :
+    ∑ w ∈ words Twist n, (w.map (cut f)).prod =
+      ∑ x ∈ shellPts n n n n, coneSum f x.1 x.2.1 x.2.2 := by
+  simp only [prod_cut]
+  rw [← Finset.sum_filter]
+  rw [← Finset.sum_fiberwise_of_maps_to (g := fun w => (w.count Twist.up, w.count Twist.left,
+    w.count Twist.slash)) (t := shellPts n n n n)]
+  · apply sum_congr rfl
+    intro x hx
+    simp only [shellPts, Finset.mem_filter, Finset.mem_product, Finset.mem_range] at hx
+    unfold coneSum
+    apply Finset.sum_congr _ (fun _ _ => rfl)
+    ext w
+    simp only [Finset.mem_filter, mem_words, mem_coneSet]
+    obtain ⟨x1, x2, x3⟩ := x
+    simp only [Prod.mk.injEq] at hx ⊢
+    omega
+  · intro w hw
+    simp only [Finset.mem_filter, mem_words] at hw
+    simp only [shellPts, Finset.mem_filter, Finset.mem_product, Finset.mem_range]
+    omega
+
+/-- **The shell total.** Summed over every point of the shell, the cone sums give the `n`-th power
+of the summed outward step. -/
+theorem shell_total {R : Type} [Ring R] (f : Twist → R) (n : ℕ) :
+    ∑ x ∈ shellPts n n n n, coneSum f x.1 x.2.1 x.2.2 =
+      (f Twist.up + f Twist.left + f Twist.slash) ^ n := by
+  rw [← sum_cut_shell, sum_prod_words]
+  congr 1
+  show ∑ t ∈ ({Twist.up, Twist.down, Twist.left, Twist.right,
+    Twist.slash, Twist.backslash, Twist.plus, Twist.minus} : Finset Twist), cut f t = _
+  simp [cut, add_assoc]
+
+/-- The shell holds `3^n` histories. -/
+theorem shell_count (n : ℕ) :
+    ∑ x ∈ shellPts n n n n, (coneCount x.1 x.2.1 x.2.2 : ℤ) = 3 ^ n := by
+  have h := shell_total (fun _ => (1 : ℤ)) n
+  simp only [coneSum_one] at h
+  rw [h]
+  norm_num
+
+/-- The summed outward step. -/
+noncomputable def outStep : M := Twist.up.toMatrix + Twist.left.toMatrix + Twist.slash.toMatrix
+
+theorem outStep_sq : outStep * outStep = (3 : ℂ) • (1 : M) := by
+  have h1 := up_up 1
+  have h2 := left_left 1
+  have h3 := slash_slash 1
+  have h4 := left_up 1
+  have h5 := slash_up 1
+  have h6 := slash_left 1
+  simp only [mul_one] at h1 h2 h3 h4 h5 h6
+  unfold outStep
+  simp only [add_mul, mul_add, h1, h2, h3, h4, h5, h6]
+  rw [show (3 : ℂ) = 1 + 1 + 1 by norm_num, add_smul, add_smul, one_smul]
+  abel
+
+theorem outStep_herm : outStep.conjTranspose = outStep := by
+  unfold outStep
+  simp only [Matrix.conjTranspose_add, ClosureUnitarity.twist_herm]
+
+/-- `√3` as a complex number. -/
+noncomputable def r3 : ℂ := ((Real.sqrt 3 : ℝ) : ℂ)
+
+theorem r3_sq : r3 * r3 = 3 := by
+  unfold r3
+  rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num)]
+  norm_num
+
+theorem r3_ne : r3 ≠ 0 := by
+  intro h
+  have := r3_sq
+  rw [h, zero_mul] at this
+  norm_num at this
+
+/-- **The normalised step**, `(σ_y − σ_x + σ_z)/√3`. -/
+noncomputable def coneStep : M := r3⁻¹ • outStep
+
+/-- **The normalised step is unitary** (and Hermitian). -/
+theorem coneStep_unitary : coneStep ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+  rw [Matrix.mem_unitaryGroup_iff, Matrix.star_eq_conjTranspose]
+  unfold coneStep
+  rw [Matrix.conjTranspose_smul, outStep_herm, smul_mul_smul_comm, outStep_sq, smul_smul]
+  have hs : star r3⁻¹ = r3⁻¹ := by
+    unfold r3
+    rw [star_inv₀, Complex.star_def, Complex.conj_ofReal]
+  rw [hs, show r3⁻¹ * r3⁻¹ * 3 = 1 by rw [← r3_sq]; field_simp [r3_ne], one_smul]
+
+/-- **The shell total is `√(count)` times a unitary.** Summed over the whole light-cone shell at time
+`n`, the coherent amplitude is `(√3)^n · coneStep^n`, and the shell holds `3^n` histories
+(`shell_count`), so its size is exactly the square root of the history count. -/
+theorem shell_total_unitary (n : ℕ) :
+    ∑ x ∈ shellPts n n n n, coneAmp x.1 x.2.1 x.2.2 = r3 ^ n • coneStep ^ n := by
+  unfold coneAmp
+  rw [shell_total, ← smul_pow]
+  congr 1
+  unfold coneStep
+  rw [smul_smul, mul_inv_cancel₀ r3_ne, one_smul]
   rfl
 
 end QLF.ClosureChannels

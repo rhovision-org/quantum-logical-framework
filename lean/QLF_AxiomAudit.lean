@@ -238,3 +238,5 @@ import QLF_LightCone
 #print axioms QLF.ClosureChannels.cone_amplitude
 #print axioms QLF.ClosureChannels.cone_zero_iff
 #print axioms QLF.ClosureChannels.shellKernel_compose
+#print axioms QLF.ClosureChannels.coneStep_unitary
+#print axioms QLF.ClosureChannels.shell_total_unitary
