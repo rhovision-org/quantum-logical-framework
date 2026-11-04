@@ -270,5 +270,8 @@ lean_lib QLF where
     `QLF_HandedLoops,
     `QLF_CensusTemperature,
     `QLF_ChainTheory,
-    `QLF_HorizonCrossing
+    `QLF_HorizonCrossing,
+    `QLF_ClosureUnitarity,
+    `QLF_ClosureKernel,
+    `QLF_ClosureLeakage
   ]
