@@ -379,7 +379,23 @@ below the count `N(n, n, n)`, and also below the random-phase scale `√N(n, n, 
 coherent amplitude is concentrated inside the cone, among histories that turn back, and not on the
 light cone itself. Whether this has a turbulence reading is not settled here.
 
+**The shell kernel.** From a cone point `v` on shell `s` to a cone point `w` on shell `s + t`, set
+`K(v → w)` to the cone amplitude of the outward displacement `w − v`, and `0` when `w` is not
+outward of `v`. A cone history crosses each intermediate shell at exactly one point, so the kernel
+composes:
+
+```text
+coneSum_split       :  splitting the ordered sum at time t, for any weight per twist
+shellKernel_compose :  K(0 → w) = Σ_{v on shell t} K(0 → v) · K(v → w)
+```
+
+with the 2×2 matrices multiplied in time order. This is a genuine transfer kernel between boundary
+states, with an incoming and an outgoing label, and its zeros are read off `cone_amplitude`: for
+example `K((1,0,0) → (2,1,1)) = 0` because the displacement `(1,1,1)` is mixed, while
+`K((1,0,0) → (3,0,0)) = I`. Inside one octant it is still translation invariant; what breaks
+translation invariance is the shell itself, since only outward steps are admitted.
+
 **Scope.** The other seven octants differ by reflecting axes, which changes only signs, but Lean
-covers the positive octant. Gauge twists are left out by the fixed-time choice. The shell kernel
-from shell `s` to shell `s + t`, with a composition law, is the next step toward `K_{vw}`.
+covers the positive octant. Gauge twists are left out by the fixed-time choice. Still open: a
+normalised kernel (the raw sums are not unitary), and kernels that admit inward steps.
 

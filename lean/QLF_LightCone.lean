@@ -30,6 +30,17 @@ where `N` is the multinomial count and `σ` is the leftover single twist (or `1`
 
 `mixed_channel_zero` gave one direction at every length; on the cone it is the only source of zeros.
 
+## The shell kernel
+
+From a cone point `v` to a later cone point `w`, the kernel `shellKernel v w` is the cone amplitude
+of the outward displacement `w − v`. Every cone history passes each intermediate shell at exactly
+one point, so
+
+> **`shellKernel_compose`** — `K(0 → w) = Σ_{v on shell t} K(0 → v) · K(v → w)`,
+
+the composition law of a transfer kernel, with matrix products in order (`coneSum_split`, for any
+weight per twist).
+
 No continuum is used: everything is a finite sum over histories. No axioms.
 -/
 
@@ -345,5 +356,87 @@ theorem cone_zero_iff (a b c : ℕ) :
       exact zero_ne_one this
     exact smul_ne_zero hN hs h0
   · simp [hp]
+
+-- ==========================================
+-- §6  The shell-to-shell kernel and its composition law
+-- ==========================================
+
+/-- The intermediate shell: the cone points `(i, j, k) ≤ (a, b, c)` at time `t`. -/
+def shellPts (a b c t : ℕ) : Finset (ℕ × ℕ × ℕ) :=
+  (range (a + 1) ×ˢ range (b + 1) ×ˢ range (c + 1)).filter (fun x => x.1 + x.2.1 + x.2.2 = t)
+
+theorem mem_coneSet {a b c : ℕ} {w : List Twist} : w ∈ coneSet a b c ↔
+    w.length = a + b + c ∧ w.count Twist.up = a ∧ w.count Twist.left = b ∧
+      w.count Twist.slash = c := by
+  simp [coneSet, mem_words]
+
+theorem count_take_add_drop (t : ℕ) (s : Twist) (w : List Twist) :
+    (w.take t).count s + (w.drop t).count s = w.count s := by
+  rw [← List.count_append, List.take_append_drop]
+
+/-- **Splitting a cone sum at an intermediate shell**, for any weight per twist. -/
+theorem coneSum_split {R : Type} [Ring R] (f : Twist → R) (a b c t : ℕ) (ht : t ≤ a + b + c) :
+    coneSum f a b c = ∑ x ∈ shellPts a b c t,
+      coneSum f x.1 x.2.1 x.2.2 * coneSum f (a - x.1) (b - x.2.1) (c - x.2.2) := by
+  unfold coneSum
+  simp only [Finset.sum_mul_sum, ← Finset.sum_product']
+  rw [Finset.sum_sigma']
+  refine Finset.sum_nbij' (fun w => ⟨((w.take t).count Twist.up, (w.take t).count Twist.left,
+      (w.take t).count Twist.slash), (w.take t, w.drop t)⟩) (fun y => y.2.1 ++ y.2.2)
+    ?_ ?_ ?_ ?_ ?_
+  · intro w hw
+    rw [mem_coneSet] at hw
+    obtain ⟨hl, hu, hlf, hs⟩ := hw
+    have h3 := count_three_le (w.take t)
+    have h3' := count_three_le (w.drop t)
+    have e1 := count_take_add_drop t Twist.up w
+    have e2 := count_take_add_drop t Twist.left w
+    have e3 := count_take_add_drop t Twist.slash w
+    have lt : (w.take t).length = t := by rw [List.length_take]; omega
+    have ld : (w.drop t).length = a + b + c - t := by rw [List.length_drop]; omega
+    simp only [Finset.mem_sigma, shellPts, Finset.mem_filter, Finset.mem_product,
+      Finset.mem_range, mem_coneSet]
+    refine ⟨⟨⟨by omega, by omega, by omega⟩, by omega⟩, ⟨by omega, trivial, trivial, trivial⟩,
+      ⟨by omega, by omega, by omega, by omega⟩⟩
+  · rintro ⟨x, p, q⟩ hy
+    simp only [Finset.mem_sigma, shellPts, Finset.mem_filter, Finset.mem_product,
+      Finset.mem_range, mem_coneSet] at hy
+    obtain ⟨⟨⟨h1, h2, h3⟩, hx⟩, ⟨lp, cp1, cp2, cp3⟩, ⟨lq, cq1, cq2, cq3⟩⟩ := hy
+    simp only [mem_coneSet, List.length_append, List.count_append]
+    omega
+  · intro w hw
+    simp
+  · rintro ⟨x, p, q⟩ hy
+    simp only [Finset.mem_sigma, shellPts, Finset.mem_filter, Finset.mem_product,
+      Finset.mem_range, mem_coneSet] at hy
+    obtain ⟨⟨⟨h1, h2, h3⟩, hx⟩, ⟨lp, cp1, cp2, cp3⟩, -⟩ := hy
+    have hp : (p ++ q).take t = p := by rw [List.take_left' (by omega)]
+    have hq : (p ++ q).drop t = q := by rw [List.drop_left' (by omega)]
+    obtain ⟨x1, x2, x3⟩ := x
+    simp only [hp, hq, cp1, cp2, cp3]
+  · intro w hw
+    simp
+
+/-- **The shell kernel.** From a cone point `v` to a later cone point `w`: the cone amplitude of
+the outward displacement `w − v`, and `0` if `w` is not outward of `v`. -/
+noncomputable def shellKernel (v w : ℕ × ℕ × ℕ) : M :=
+  if v.1 ≤ w.1 ∧ v.2.1 ≤ w.2.1 ∧ v.2.2 ≤ w.2.2 then
+    coneAmp (w.1 - v.1) (w.2.1 - v.2.1) (w.2.2 - v.2.2) else 0
+
+/-- **Composition law (Chapman–Kolmogorov on the light cone).** The kernel from the origin to `w`
+is the sum over every point `v` of an intermediate shell of the kernel to `v` times the kernel from
+`v` to `w`. -/
+theorem shellKernel_compose (a b c t : ℕ) (ht : t ≤ a + b + c) :
+    shellKernel (0, 0, 0) (a, b, c) = ∑ v ∈ shellPts a b c t,
+      shellKernel (0, 0, 0) v * shellKernel v (a, b, c) := by
+  have h := coneSum_split Twist.toMatrix a b c t ht
+  unfold shellKernel
+  simp only [Nat.zero_le, and_self, ↓reduceIte, Nat.sub_zero]
+  rw [show coneAmp a b c = coneSum Twist.toMatrix a b c from rfl, h]
+  apply sum_congr rfl
+  intro x hx
+  simp only [shellPts, Finset.mem_filter, Finset.mem_product, Finset.mem_range] at hx
+  simp only [show x.1 ≤ a ∧ x.2.1 ≤ b ∧ x.2.2 ≤ c from ⟨by omega, by omega, by omega⟩]
+  rfl
 
 end QLF.ClosureChannels
