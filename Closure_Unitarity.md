@@ -119,10 +119,8 @@ and it is open.
 These are finite and exact, and they cover only the first rows of the issue's checklist. The following
 remain open, as the issue frames them:
 
-- **U3, complete-channel unitarity.** [`lean/QLF_PolyaTransience.lean`](lean/QLF_PolyaTransience.lean)
-  proves the non-closing mass is positive, so closed channels cannot simply be normalized to one (kill
-  condition 7). U1 shows the full possibility space is unitary history by history. A channel operator
-  `S_R` with `S†S = I`, or a closed-plus-open leakage identity, has not been built.
+- **U3 beyond the measure.** §8 proves the leakage identity, in the cylinder measure and as an
+  amplitude identity. A channel operator `S_R` on boundary states with `S†S = I` has not been built.
 - **PZ1–PZ2 beyond the single vacuum channel.** §7 gives the scalar kernel, the resolvent and the
   first-closure factorization of every seeded channel. Still open: a genuine multi-channel matrix
   `K` (channels as boundary states, `G = I + K G`), residue factorization *at* a pole of a
@@ -130,7 +128,7 @@ remain open, as the issue frames them:
   [`lean/QLF_ExactRG.lean`](lean/QLF_ExactRG.lean).
 - **G1–G4**, every gluon benchmark.
 
-Status: the U1, PZ1–PZ1c and PZ3 rows of the issue's Phase A/B checklist are done, with a first seed of PZ2. Nothing on this page claims that
+Status: the U1, U3, PZ1–PZ1c and PZ3 rows of the issue's Phase A/B checklist are done, with a first seed of PZ2. Nothing on this page claims that
 unitarity *is* closure (kill condition 1).
 
 ---
@@ -190,3 +188,56 @@ transition sits in the irreducible interaction, not in propagation.
 
 All the identities above are checked against direct enumeration of `A_L` and `F_k` for the seeds `∅`,
 `^`, `^<`, `^>` and `^^<` up to `L = 5`.
+
+---
+
+## 8. U3: closed plus open channels are complete, and the open channel never empties
+
+Lean: [`lean/QLF_ClosureLeakage.lean`](lean/QLF_ClosureLeakage.lean). No axioms.
+
+The issue warned that [`lean/QLF_PolyaTransience.lean`](lean/QLF_PolyaTransience.lean) rules out
+normalizing the closed channels to one, and listed four ways out. This section proves which one the
+substrate takes.
+
+**The decomposition.** Every length-`L` history is exactly one of two kinds. It is *closed by `L`*
+when it has a first closure, a prime prefix of length `k ≤ L` in the sense of
+[`lean/QLF_FirstReturn.lean`](lean/QLF_FirstReturn.lean), and then anything may follow. It is *open*
+when no non-empty prefix is balanced (`IsOpen`). The pieces are disjoint and cover every word
+(`words_partition`), and each closed piece is a product, prime × free tail (`sum_fiber`).
+
+**U3, the measure.** In the cylinder measure `8^{−|h|}`:
+
+```text
+leakage_identity           :  closedMass L + openMass L = 1        for every L
+openMass_ge_quarter        :  1/4 ≤ openMass L                       for every L
+closed_channels_incomplete :  closedMass L < 1                       for every L
+```
+
+`closedMass L = Σ_{k≤L} I_k / 8^k` is the prime Kraft mass heard by `L`, and `openMass L` is the
+fraction of length-`L` words with no closed prefix. The first line is the issue's
+`S_closed† S_closed + S_open† S_open = I`, read in the measure. The bound comes from
+`at_least_quarter_never_closes`: at least a quarter of the possibility space is always in the open
+channel, at every capacity.
+
+So of the issue's four resolutions the substrate takes the second: the complete channel space is the
+closed channels **plus** the open (escape) channels. Conditioning on closure would divide by a mass of
+at most `3/4`, which is an added normalization postulate. Kill condition 1 forbids that, and nothing
+here needs it.
+
+**U3b, the amplitude.** Each history is unitary (§1), but the eight twists cancel as a sum,
+`Σ_t U(t) = 0` (`sum_twist_matrices`), so the free amplitude over all words of length `L ≥ 1` is zero.
+Split by channel, every closed piece that has a free tail vanishes with it, and only the primes of full
+length survive:
+
+```text
+open_amplitude :  Σ_{open h, |h| = L} U(h) = − Σ_{prime p, |p| = L} U(p)      (L ≥ 1)
+```
+
+The right side is `−K_L · I` by the phase rule, with `K_L` the prime kernel of §7. So the amplitude
+that has not closed by `L` is exactly balanced by the amplitude that closes for the first time at `L`.
+This is the same completeness at the level of amplitudes, and it ties the open channel to the kernel
+that generates every closed one.
+
+**What remains of U3.** These are identities on the full possibility space, graded by length. A
+channel operator on boundary states, with `S†S = I` on a named finite channel space, still has to be
+built. That is the same missing object as the multi-channel `K` of PZ2.
