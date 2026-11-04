@@ -94,7 +94,10 @@ Other registry modes map onto standard perturbative distinctions:
   `n`-point function / a multi-particle amplitude ([`MultiParticle.py`](MultiParticle.py)).
 - **A seed with `A_L = 0` at every order is a forbidden transition.** `^<` gives `W = 2, 72, 2820` with
   `A_L = 0` throughout: perfect `+1`/`−1` cancellation, destructive interference to all orders. The registry
-  finds selection rules by exhausting the expansion, not by invoking one.
+  finds selection rules by exhausting the expansion, not by invoking one. That observation is now a theorem at **every** order with its mechanism: `U(^<) = iσz` is
+  anti-Hermitian, and reversing the continuation pairs each closure with one of opposite sign
+  (`antiHermitian_seed_forbidden`, [`QLF_ClosureUnitarity`](lean/QLF_ClosureUnitarity.lean),
+  [`Closure_Unitarity.md`](Closure_Unitarity.md)). It is an *interference* zero, not a *structural* one.
 
 ---
 
