@@ -350,3 +350,36 @@ The amplitude to leave the origin for good equals the amplitude to arrive at `v`
 So the shared vacuum dressing can be put before the channel's kernel or after it, and the kernel is
 the same. This is the scalar-dressing case of a two-sided transfer kernel. A kernel `K_{vw}` that is
 not translation invariant, as a background or a boundary would make it, is still open.
+
+## 11. The light-cone boundary: zeros are exactly the mixed channels
+
+Take three spatial axes at a fixed time `L` and the shell `|v|₁ = L`: the boundary states reachable
+only by stepping outward every time. No continuum is involved; every quantity below is a finite sum
+over histories ([`QLF_LightCone`](lean/QLF_LightCone.lean)). For `v = (a, b, c, 0)` with
+`a + b + c = L`, the histories are exactly the orderings of `a` ups, `b` lefts and `c` slashes
+(`chanAmp_cone`); their number `N(a, b, c)` is the multinomial.
+
+The three spatial twists square to `1` and anticommute pairwise. So in the sum over orderings, two
+adjacent different steps cancel against their swap, and two adjacent equal steps fold to `1`
+(`cone_two_step`). What survives is the count of walks made of **pairs** of steps:
+
+```text
+cone_amplitude :  G_L(a, b, c, 0) = N(⌊a/2⌋, ⌊b/2⌋, ⌊c/2⌋) · σ    at most one of a, b, c odd
+                                  = 0                              otherwise
+cone_zero_iff  :  G_L(a, b, c, 0) = 0   ⟺   (a, b, c, 0) is mixed
+```
+
+where `σ` is the twist of the one odd axis, or `1`. §10 showed that mixed channels vanish at every
+length. On the light cone the converse also holds: mixing is the only source of zeros. Checked first
+by enumeration with no mismatches through `L = 7`.
+
+**The interference is strong.** For `a = b = c = n` even, the amplitude `N(n/2, n/2, n/2)` is far
+below the count `N(n, n, n)`, and also below the random-phase scale `√N(n, n, n)`. The ratio is
+0.63, 0.48, 0.36, 0.26, 0.18 at `L = 6, 12, 24, 48, 96`, falling roughly as `L^{−1/2}`. So the
+coherent amplitude is concentrated inside the cone, among histories that turn back, and not on the
+light cone itself. Whether this has a turbulence reading is not settled here.
+
+**Scope.** The other seven octants differ by reflecting axes, which changes only signs, but Lean
+covers the positive octant. Gauge twists are left out by the fixed-time choice. The shell kernel
+from shell `s` to shell `s + t`, with a composition law, is the next step toward `K_{vw}`.
+

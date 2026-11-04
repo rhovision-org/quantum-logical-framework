@@ -64,6 +64,7 @@ import QLF_ClosureKernel
 import QLF_ClosureLeakage
 import QLF_ClosureChannels
 import QLF_ChannelZeros
+import QLF_LightCone
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -234,3 +235,5 @@ import QLF_ChannelZeros
 #print axioms QLF.ClosureChannels.mixed_channel_zero
 #print axioms QLF.ClosureChannels.mixed_open_zero
 #print axioms QLF.ClosureChannels.channel_two_sided
+#print axioms QLF.ClosureChannels.cone_amplitude
+#print axioms QLF.ClosureChannels.cone_zero_iff
