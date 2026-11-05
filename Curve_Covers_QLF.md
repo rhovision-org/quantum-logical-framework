@@ -305,3 +305,5 @@ vocabulary the two cases separate cleanly:
 That is the paper's own rule ("purely left-turning or not") restated, now checked on ten splits. It is a
 rule about where the ghost-like `+1` lives, not a count of physical polarizations. The polarization-count
 reading of `D − 2` is recorded as a **rejected route**, and the dictionary itself survives.
+
+The next target, G2c (hidden zeros), is pre-registered in [`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md).
