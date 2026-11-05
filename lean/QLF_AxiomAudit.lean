@@ -303,6 +303,10 @@ import QLF_TsirelsonBound
 #print axioms QLF.CoupledEvolution.evolve_gauss
 #print axioms QLF.CoupledEvolution.evolve_norm
 #print axioms QLF.CoupledEvolution.evolve_covariant
+#print axioms QLF.CoupledEvolution.gauss_neutral
+#print axioms QLF.CoupledEvolution.no_background_no_walk
+#print axioms QLF.CoupledEvolution.exists_nonzero_admissible
+#print axioms QLF.CoupledEvolution.evolve_gauss_neutral
 #print axioms QLF.TsirelsonBound.chsh_sos
 #print axioms QLF.TsirelsonBound.tsirelson_bound
 #print axioms QLF.TsirelsonBound.tsirelson_bound_neg

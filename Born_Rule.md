@@ -1,8 +1,10 @@
-# The Born Rule, Derived from ZFA
+# The Born Rule from ZFA
 
 **Standard QM postulates the Born rule** — the probability of observing outcome $\varphi$ given state $\psi$ is $|\langle \varphi | \psi \rangle|^2$. This single postulate, added on top of unitary evolution, is the **measurement axiom** that connects the deterministic Schrödinger equation to probabilistic experimental outcomes. In standard QM no derivation from more fundamental principles is generally accepted; the rule is empirical input.
 
-**QLF derives the Born rule** as a consequence of (a) the uniform-prior structure of the possibility tree, (b) the binary-partition information-gain bound of [MRE.md](MRE.md), (c) the multiplicity principle of [BayesianMechanics.md](BayesianMechanics.md), and (d) the local-ZFA-closure framing of [Measurement_Problem.md](Measurement_Problem.md). The Born rule is not a postulate — it is what the QLF algebra produces when an observer asks "what is the probability that the next ZFA closure yields branch $\varphi$ given the current state $\psi$?"
+**QLF's route to the Born rule** combines (a) the uniform-prior structure of the possibility tree, (b) the binary-partition information-gain bound of [MRE.md](MRE.md), (c) the multiplicity principle of [BayesianMechanics.md](BayesianMechanics.md), and (d) the local-ZFA-closure framing of [Measurement_Problem.md](Measurement_Problem.md). The aim is to show the Born rule is what the QLF algebra produces when an observer asks "what is the probability that the next ZFA closure yields branch $\varphi$ given the current state $\psi$?"
+
+**Status.** What is proved is a finite uniqueness characterization: on a Gaussian-integer register, relabeling symmetry, normalization and additivity under refinement into unit ways force the weights $|\psi_i|^2/\sum_j|\psi_j|^2$ ([`QLF_BornFromWays`](lean/QLF_BornFromWays.lean), §8 below). The refinement is a premise, not yet derived from QLF dynamics, and which census quantity is the register is open. The sections below are the derivation programme; read them as a route, with that theorem as its proved step.
 
 ## 1. The possibility tree and uniform prior
 

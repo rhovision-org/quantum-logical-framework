@@ -881,10 +881,18 @@ walk `ψ`, link phases `A` and an electric field `E`. One coupled step along axi
 E' = E + curl F(A) − J(ψ)            the field is pushed by the walk's own current
 A' = A − E'                          so E' = −(A' − A), the time-link field   (step_elec)
 
-evolve_gauss      :  div E = ‖ψ‖² at the start  ⟹  at every step, for every schedule of axes and twists
+gauss_neutral          :  div E = ‖ψ‖² − b  ⟹  Σ‖ψ‖² = Σ b           (a closed lattice forces neutrality)
+no_background_no_walk  :  div E = ‖ψ‖²  ⟹  ψ = 0                     (so a background is needed)
+exists_nonzero_admissible :  a non-zero walk with E = 0 against its own charge as background
+evolve_gauss      :  div E = ‖ψ‖² − b at the start  ⟹  at every step, for every schedule of axes and twists
 evolve_norm       :  Σ‖ψ‖² is the same at every step, whatever the links have become
 evolve_covariant  :  (ψ, A) ↦ (e^{iθ}ψ, A + ∇θ) commutes with the whole coupled history
 ```
+
+Why the background. On a closed lattice every divergence sums to zero, and the walk's charge
+`‖ψ‖²` is non-negative, so `div E = ‖ψ‖²` alone admits only the empty walk (`no_background_no_walk`;
+pointed out by Aria in review). A static background `b`, the lattice's fixed ions, makes the total
+charge neutral, and then every walk is admissible (`evolve_gauss_neutral` starts from any `ψ`).
 
 The reading. The links the walk sees at step `m + 1` already carry the current it made at step `m`,
 so this is genuine back-reaction, not a walk on a fixed background. Nothing breaks: the walk stays
@@ -895,7 +903,7 @@ are. These are three separate finite facts, and each is used exactly once.
 
 **Credit and scope.** Self-consistent evolution of charged matter with a dynamical lattice gauge
 field is Kogut–Susskind Hamiltonian lattice gauge theory (1975), and as a leapfrog scheme Yee's
-(1966). Not included: conservation of a coupled energy, compact links, non-abelian links. The
+(1966). Not included: a dynamical background (a second species), conservation of a coupled energy, compact links, non-abelian links. The
 field is real and the current enters through its real part (it is `‖·‖²`-valued, carried in `ℂ`).
 
 ## 26. Tsirelson's bound for every pair of observables
