@@ -121,3 +121,26 @@ repeats across the whole rectangle**.
 
 Scope: all histories of 6 spatial twists of length `n = 4, 6, 8` satisfying conservation. (`n` must be even,
 since kets and bras pair.) K3 is automatic at `n = 4`, where `A₄ = c₁₃/(X₁₃X₂₄)`; it has content from `n = 6`.
+
+## 6. Results, round 2 (after commit `ffacd9f`)
+
+`python3 hidden_zero_kinematics.py --max-n 8` (about 2 s).
+
+| `n` | conserving histories | singular (some `X_{ij} = 0`) | on a hidden-zero locus | of those, non-singular | zeros of `A` |
+|---|---|---|---|---|---|
+| 4 | 90 | 66 | 6 | 0 | 0 |
+| 6 | 1,860 | 1,812 | 96 | 0 | 0 |
+| 8 | 44,730 | 44,298 | 246 | 0 | 0 |
+
+* **K1: pass.** `c_{ab} = −2 p_a·p_b` on every history.
+* **K2, K3: vacuous.** Every history that lands on a hidden-zero locus is singular: repeating one twist
+  across the rectangle also makes some planar sub-sum null, so a propagator vanishes on the same history
+  and the amplitude is not defined there. Off the loci the amplitude never vanishes either. Neither
+  prediction could fail, so neither is evidence.
+
+**What this settles.** Taking each particle's momentum to be a single twist does not give usable
+kinematics: 97–99 % of conserving histories are singular, and the zero loci sit on poles. The six null
+directions of one twist are too coarse. This momentum map is recorded as a **rejected route** for deriving
+`X_{ij}` from closures. A viable map would give each particle a momentum built from many twists (a long
+closed word per particle, with its realizable projection as the momentum), so that generic sub-sums are
+not null; that is the next thing to pre-register.
