@@ -142,7 +142,7 @@ def linear_factor(core, ext_a, ext_b):
     return out
 
 
-def curves(R, spiral_ok=None, puncture_label='p', zero=lambda a, b: False):
+def curves(R, spiral_ok=None, puncture_label='p', zero=lambda a, b: False, namer=None):
     """All curves with non-zero X: label -> list of linear options.
     zero(a, b) says the kinematic variable of a curve from a to b vanishes
     (b may be the puncture label). A label is (kinematic name, walk key): curves
@@ -154,15 +154,20 @@ def curves(R, spiral_ok=None, puncture_label='p', zero=lambda a, b: False):
         for kind, edges, turns, end in walks_from_leg(R, leg, max_len, spiral_ok):
             if kind == 'open':
                 k2 = R.legs[end]
-                if k2 == k or zero(k, k2):
+                if namer is None and (k2 == k or zero(k, k2)):
                     continue  # tadpole X_{k,k}, massless or on-shell: X = 0
                 key = min((k, edges, k2), (k2, tuple(reversed(edges)), k))
+                name = None
+                if namer is not None:
+                    name = namer(leg, edges, turns, end)
+                    if name is None:
+                        continue  # the curve's momentum makes X vanish
                 rc = read_curve(edges, turns)
                 if rc is None:
                     continue
                 if key in seen:
                     continue
-                label = ((min(k, k2), max(k, k2)), key)
+                label = (name if namer is not None else (min(k, k2), max(k, k2)), key)
                 seen[key] = (label, rc)
             else:
                 if zero(k, puncture_label):
@@ -185,12 +190,12 @@ def curves(R, spiral_ok=None, puncture_label='p', zero=lambda a, b: False):
     return out
 
 
-def leading_singularity(R, closed=None, spiral_ok=None, zero=lambda a, b: False):
+def leading_singularity(R, closed=None, spiral_ok=None, zero=lambda a, b: False, namer=None):
     """Coefficient of prod y over all internal edges. closed: list of
     (name, edge set) closed curves, each weighted by its own symbol.
     Returns Counter: (frozenset of curve labels) -> polynomial in symbols,
     represented as Counter of (tuple of symbols) -> int."""
-    C = curves(R, spiral_ok, zero=zero)
+    C = curves(R, spiral_ok, zero=zero, namer=namer)
     options = []
     for label, opts in C.items():
         for es, sg, ne in opts:

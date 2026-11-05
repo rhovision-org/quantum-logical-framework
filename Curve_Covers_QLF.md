@@ -242,3 +242,38 @@ pure-YM monomials), every pure Yang–Mills coefficient is ±1. Coefficients of 
 but only with at least one `F³` insertion. So the pure-gluon leading singularity has unit multiplicity
 through eight gluons: its cancellations are equal-and-opposite pairs. This is now a prediction that
 survived one blind round. It is not proved for all `n`, and no mechanism is given here.
+
+---
+
+## 9. Pre-registration, round 3: the non-planar loop
+
+Committed before any non-planar run. Script: [`curve_cover_nonplanar.py`](curve_cover_nonplanar.py).
+
+**The surface.** A one-loop `n`-gon whose gluons attach to the loop from both sides, so the surface is an
+annulus with marked points on both boundaries. There is no puncture, so no curve spirals. Curves are walks
+read by handedness, as before. Each curve's variable `X_C` is computed from momentum flow: the square of
+the momentum crossing the curve, the start leg plus every branch the walk passes on its left. `X_C`
+vanishes when that momentum is zero, a single external scalar, an on-shell gluon, or a cut loop
+propagator, and curves with equal momentum share a variable. Checked before this commit: with momentum
+naming in place of endpoint labels, the walker reproduces eq. (13) on all 22 tree fatgraphs through
+`n = 6`.
+
+The closed curve around the loop covers every loop propagator. The paper fixes its weight at
+`Δ = −D` for non-planar one-loop graphs, because no closed curve there is purely left-turning, so the
+gluing correction that gave `+1` in the planar case vanishes (paper §4.2, eq. 59). The enumerator does not
+assume this: it carries `Δ` as a symbol and reports each coefficient as `c₀ + c₁Δ`, where `c₀` collects the
+open-curve fillings of the same monomial.
+
+Scope: every split of `n = 2, 3, 4` gluons between the two sides, with both sides used (up to rotation:
+`oi`; `ooi`, `oii`; and the six four-gluon splits beginning with `o`).
+
+| | Prediction | Kill condition |
+|---|---|---|
+| **L4** (the QLF transverse reading) | Every coefficient that carries the closed curve is a multiple of `D − 2`, with `Δ = −D`. | Any such coefficient with a root other than `D = 2`. |
+| **L5** (the alternative, from the paper's gluing argument) | Every such coefficient is a multiple of `D`: the open fillings add nothing, `c₀ = 0`. | Any such coefficient with `c₀ ≠ 0`. |
+
+At most one of L4 and L5 can pass on a given monomial. If both fail, the coefficient has some third root,
+and the handedness reading of the annulus needs checking before anything is concluded. Either way this
+is a statement about standard Yang–Mills leading singularities and cannot by itself be physics beyond
+the Standard Model; L4 passing would make "only transverse polarizations circulate" a property of the
+closure reading at one loop, planar and non-planar alike.
