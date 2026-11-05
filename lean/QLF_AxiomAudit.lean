@@ -82,6 +82,7 @@ import QLF_CoupledEvolution
 import QLF_TsirelsonBound
 import QLF_FieldEnergy
 import QLF_CompactLinks
+import QLF_NonAbelian
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -327,3 +328,6 @@ import QLF_CompactLinks
 #print axioms QLF.CompactLinks.wilson_periodic
 #print axioms QLF.CompactLinks.walk_periodic
 #print axioms QLF.CompactLinks.compact_gauss_preserved
+#print axioms QLF.NonAbelian.step_norm
+#print axioms QLF.NonAbelian.step_covariant
+#print axioms QLF.NonAbelian.wilson_loop_invariant

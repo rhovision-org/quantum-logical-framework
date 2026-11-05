@@ -1009,3 +1009,29 @@ and the walk's responses balance at every `ε`, with no small-angle step. For sm
 **Credit and scope.** Wilson (*Phys. Rev. D* **10**, 2445 (1974)); Kogut–Susskind (1975) for the
 Hamiltonian form. Open: the compact field's energy and stability (`sin F` is not linear, so §27's
 argument does not carry over as it stands) and non-abelian links.
+
+## 29. Non-abelian links
+
+[`QLF_NonAbelian`](lean/QLF_NonAbelian.lean) lets a link carry a unitary `N × N` matrix instead of a
+phase. The matrix acts on a colour index that the twists do not touch: a walk value is a `2 × N`
+matrix, spin rows and colour columns, twists on the left and links on the right.
+
+```text
+step            :  ψ'(x) = fix t · ψ(x−e) · U(x−e) + fix t̄ · ψ(x+e) · U(x)ᴴ
+step_norm       :  Σ tr(ψᴴψ) is conserved for every assignment of unitary links
+step_covariant  :  ψ(x) ↦ ψ(x) g(x),  U(x) ↦ g(x)ᴴ U(x) g(x+e)  commutes with the step
+holonomy_gauge  :  U_i(x) U_j(x+e_i) U_i(x+e_j)ᴴ U_j(x)ᴴ  ↦  g(x)ᴴ (···) g(x)
+wilson_loop_invariant :  its trace is gauge invariant
+```
+
+The proof of unitarity is the abelian one with nothing added: the two hops land in orthogonal spin
+subspaces (`fix t · fix t̄ = 0`), and a unitary acting on colour does not change a norm. Nothing uses
+commutativity of the links, so the step is unitary even when neighbouring links do not commute. Spin
+and colour must be separate indices: a link acting on spin would have to commute with `fix t` for
+the hops to stay orthogonal. For `N = 1` this is §18–§19.
+
+**Credit and scope.** Yang and Mills (*Phys. Rev.* **96**, 191 (1954)); Wilson (1974) for the lattice
+form; non-abelian gauge quantum walks are Arnault, Di Molfetta, Brachet and Debbasch (*Phys. Rev. A*
+**94**, 012335 (2016)). Open: the non-abelian Wilson action and its variation, the non-abelian
+Gauss law, and which colour group the twists select (the colour structure QLF proposes, the Weyl
+qutrit of [`QLF_ColourFlux`](lean/QLF_ColourFlux.lean), is not connected to these links here).

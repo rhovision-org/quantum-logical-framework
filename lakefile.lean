@@ -294,5 +294,6 @@ lean_lib QLF where
     `QLF_CoupledEvolution,
     `QLF_TsirelsonBound,
     `QLF_FieldEnergy,
-    `QLF_CompactLinks
+    `QLF_CompactLinks,
+    `QLF_NonAbelian
   ]
