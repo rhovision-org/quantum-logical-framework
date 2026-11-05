@@ -7,8 +7,9 @@ compare the curve covers of Carrôlo and Figueiredo, *How gluon leading singular
 surfaces* ([arXiv:2512.17019](https://arxiv.org/abs/2512.17019), JHEP 07 (2026) 101), with QLF closure covers
 on small graphs. Script: [`curve_cover_census.py`](curve_cover_census.py).
 
-**§1–§4 are the pre-registration.** They were committed before the curve side was run on any graph beyond
-the published 3-point example. The results are in §5, added afterwards.
+**§1–§4 are the pre-registration.** They were committed (`b35fe62`) before the curve side was run on any graph
+beyond the published 3-point example. The results are in §5, added afterwards: **all four predictions
+passed on all 63 graphs**, and §5 says why that confirms a dictionary rather than a derivation.
 
 ---
 
@@ -109,3 +110,60 @@ What the QLF side already says, on its own numbers, and which the blind run will
 * **Kinematics.** Nothing here derives an `X_C` from closures. The comparison is of the combinatorics only.
 * **Dynamics.** Q3 reads handedness off a given fatgraph. Deriving the extension rule from first closure
   would be the step that gives the dictionary physical content.
+
+---
+
+## 5. Results (blind run, after commit `b35fe62`)
+
+`python3 curve_cover_census.py --compare 7` (about 15 s). Every pre-registered prediction passed.
+
+| | Result |
+|---|---|
+| **H1** | **Pass, 63/63.** The eq. (13) polynomial equals the handedness polynomial coefficient by coefficient on every tree fatgraph for `n = 4…7` (and on the calibration graph at `n = 3`). |
+| **H2** | **Pass, 63/63.** Configuration counts 44, 274, 1687–1712, 10474–10676, graph by graph as predicted. Since the map from a configuration to its strand cover and per-strand reading is injective, equal counts make it a **bijection**: curve covers are handedness strand covers. |
+| **H3** | **Pass, 63/63.** Every one of the `4^{n−2}` strand covers is realized. |
+| **H4** | **Pass.** In the `s` channel `X14 X16 X58` is generated twice and cancels; `X14 X16 X25` is never generated. |
+
+Inventory, all 63 graphs:
+
+| `n` | graphs | configurations | YM monomials | `|coef|` values | `LS(X ≡ 1)` |
+|---|---|---|---|---|---|
+| 3 | 1 | 7 | 6 | 1 | −1 |
+| 4 | 2 | 44 | 27 | 1, 2 | 0 |
+| 5 | 5 | 274 | 121 | 1, 2 | 0 |
+| 6 | 14 | 1687–1712 | 528 or 544 | 1, 2, 4 | 0 (12 graphs), −1 (2) |
+| 7 | 42 | 10474–10676 | 2381 or 2445 | 1, 2, 4 | 0 |
+
+The top degree (`2n − 3`, the pure `Tr F³` leading singularity) is one monomial with coefficient `−1` on
+every graph: one single-edge core per edge and no extension, as the paper states (§3.4).
+
+**What this establishes.** Carrôlo and Figueiredo's covering problem is a handedness problem. A leading
+singularity configuration is a partition of the fatgraph into strands, each read as a core plus extended
+ends, where an extended end is one turn of the opposite hand followed by a constant-hand run, and the
+curve is fixed by the core alone. That is G3 (counts match) and the finite form of G3b (an explicit
+bijection), checked exhaustively on all tree fatgraphs through seven gluons.
+
+**What it does not establish.** Q3 was built by rewriting the paper's own extension rule in turn words
+(§2), so the pass confirms the rewriting, not any QLF dynamics. By rule 4 of
+[`ScientificApproach.md`](ScientificApproach.md), it changes no count of ways that the paper did not
+already fix. Its value is the vocabulary: the extension, the ingredient that produces every cancellation,
+is a *partial circulation* of one face at constant hand, and the closed curve at one loop is the full
+circulation. That is where a closure derivation would have to start.
+
+**Two further observations, not pre-registered** (found after the blind run, labelled as such):
+
+1. **Pure Yang–Mills coefficients are all ±1 through `n = 7`.** Every coefficient of magnitude 2 or 4 sits
+   in a degree above the YM part, i.e. it needs at least one `F³` insertion. So the reading "every
+   cancellation is an equal-and-opposite pair, leaving 0 or ±1" fails for the full polynomial, as §3
+   predicted, but holds on the pure-gluon part at every graph computed. Whether it holds for all `n` is open.
+2. **`LS(X ≡ 1) = 0` on all but three graphs** (the 3-point graph, and two of the fourteen 6-point
+   graphs, where it is −1). No mechanism for this is offered here.
+
+## 6. Next steps
+
+* **Prove H1 for all trees.** The rewriting argument in §2 is short; a Lean statement would need the
+  fatgraph, the lamination and the turn word as finite data. Worth doing only if the vocabulary is used.
+* **Derive the extension rule.** The step with physical content: obtain "one opposite turn, then constant
+  hand" from first closure on the fatgraph, rather than reading it off the paper.
+* **One loop (G4b).** Extend the enumerator to the punctured disk and test the closed-curve exponent
+  `1 − D` against a pre-registered reading of `D` as the four twist axes.

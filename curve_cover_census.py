@@ -32,6 +32,7 @@ Usage:
     python3 curve_cover_census.py --curves 6     # curve side, n = 3..6
     python3 curve_cover_census.py --check3       # paper's 3-point example
     python3 curve_cover_census.py --json out.json --curves 6 --qlf 6
+    python3 curve_cover_census.py --compare 7    # the G3 blind comparison (~15 s)
 """
 from __future__ import annotations
 
@@ -405,6 +406,8 @@ def main():
     ap.add_argument('--curves', type=int, default=0, help='curve side for n = 3..CURVES')
     ap.add_argument('--check3', action='store_true', help="paper's 3-point LS")
     ap.add_argument('--json', help='write results to this file')
+    ap.add_argument('--compare', type=int, default=0,
+                    help='compare eq. (13) with Q3 on every graph, n = 3..COMPARE')
     args = ap.parse_args()
     results = {}
 
@@ -418,6 +421,22 @@ def main():
                          frozenset({(1, 4), (3, 6)}): -1, frozenset({(1, 4), (2, 5)}): -1})
         mine = Counter({m: c for m, c in s['poly'].items() if len(m) == 2 and c})
         print('matches paper eq. (16):', mine == paper)
+
+    for n in range(3, args.compare + 1):
+        N, agree, total = 2 * n, 0, 0
+        big = Counter()
+        for T in scaffolded_fatgraphs(n):
+            s = curve_summary(N, T)
+            q, qn = handedness_polynomial(N, T)
+            same = ({m: c for m, c in s['poly'].items() if c} == {m: c for m, c in q.items() if c}
+                    and s['configs'] == qn and s['path_partitions_realized'] == 4 ** (n - 2))
+            agree += same
+            total += 1
+            for m, c in s['poly'].items():
+                if abs(c) > 1:
+                    big[len(m) - s['degree_YM']] += 1
+        print(f'n={n}: eq. (13) == Q3 on {agree}/{total} graphs; '
+              f'|coef| > 1 by degree above YM: {dict(sorted(big.items()))}')
 
     for n in range(3, max(args.qlf, args.curves) + 1):
         N = 2 * n
