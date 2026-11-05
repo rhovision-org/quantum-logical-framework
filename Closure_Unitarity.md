@@ -1341,3 +1341,28 @@ thresholds, stays the tower's input.
 
 **Credit.** Dyson (*Phys. Rev.* **75**, 1736 (1949)); Landau, Abrikosov and Khalatnikov (*Dokl. Akad.
 Nauk SSSR* **95**, 497 (1954)).
+
+## 42. CKM and PMNS as restrictions of channel unitarity
+
+A mixing matrix is the part of a unitary channel map that connects the flavour channels we can
+see. [`QLF_MixingUnitarity`](lean/QLF_MixingUnitarity.lean) reads the three standard tests of CKM
+and PMNS as consequences of channel unitarity.
+
+```text
+column_split           :  U unitary on visible ⊕ hidden  ⟹  Σ_i |U_ij|² + Σ_k |U_kj|² = 1
+block_unitary_iff      :  the visible block's columns are unit  ⟺  nothing leaks to hidden channels
+triangle_closes        :  i ≠ j  ⟹  V_{i0}V̄_{j0} + V_{i1}V̄_{j1} + V_{i2}V̄_{j2} = 0
+closed_triangle_area   :  a + b + c = 0  ⟹  Im(a b̄) = Im(b c̄) = Im(c ā)
+jarlskog_invariant     :  the triangle's Jarlskog invariant is the same from every pair of sides
+jarlskog_zero_iff_flat :  Im(a b̄) = 0  ⟺  a is a real multiple of b
+```
+
+A first-row deficit `|V_ud|² + |V_us|² + |V_ub|² < 1`, or a PMNS row short of one, is a leak into
+channels outside the visible block: the same balance as a resonance (§39). Orthogonality of two
+flavour channels is a closure, three amplitudes with zero sum, and CP violation is the area that
+closure encloses; every side pair reads the same area, which is why the Jarlskog invariant is one
+number. The mixing angles' values are not derived here.
+
+**Credit.** Cabibbo (*Phys. Rev. Lett.* **10**, 531 (1963)); Kobayashi and Maskawa (*Prog. Theor.
+Phys.* **49**, 652 (1973)); Maki, Nakagawa and Sakata (*Prog. Theor. Phys.* **28**, 870 (1962));
+Pontecorvo (*Sov. Phys. JETP* **26**, 984 (1968)); Jarlskog (*Phys. Rev. Lett.* **55**, 1039 (1985)).

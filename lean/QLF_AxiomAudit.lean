@@ -95,6 +95,7 @@ import QLF_GluonGluing
 import QLF_Resonance
 import QLF_JointClosure
 import QLF_VacuumResolvent
+import QLF_MixingUnitarity
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -394,3 +395,6 @@ import QLF_VacuumResolvent
 #print axioms QLF.VacuumResolvent.chain_tendsto
 #print axioms QLF.VacuumResolvent.resummed_is_tower
 #print axioms QLF.VacuumResolvent.landau_capacity
+#print axioms QLF.MixingUnitarity.block_unitary_iff
+#print axioms QLF.MixingUnitarity.triangle_closes
+#print axioms QLF.MixingUnitarity.jarlskog_invariant

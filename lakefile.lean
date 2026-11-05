@@ -307,5 +307,6 @@ lean_lib QLF where
     `QLF_GluonGluing,
     `QLF_Resonance,
     `QLF_JointClosure,
-    `QLF_VacuumResolvent
+    `QLF_VacuumResolvent,
+    `QLF_MixingUnitarity
   ]
