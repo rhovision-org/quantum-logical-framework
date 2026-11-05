@@ -649,7 +649,7 @@ the only axis with no spin direction, which fits the QLF reading of time as the 
 standard; what is new is where each piece comes from. Here `ω` is a frequency label, as `k` is a
 momentum label, and the derivative in those labels is the only continuum notion used. The gauge
 phase is a global phase, so this section does not yet tell energy apart from an electromagnetic
-gauge phase; that needs the phase to vary from place to place, which is open, along with a
+gauge phase; that needs the phase to vary from place to place (§18). Open: a
 convergence theorem for long walks.
 
 ## 18. A local phase needs a link field, and the flux is what it carries
