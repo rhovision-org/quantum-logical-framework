@@ -855,4 +855,31 @@ action demands (§23).
 currents are studied by Arnault and Debbasch (arXiv:1508.00038) and Márquez-Martín, Arnault,
 Di Molfetta and Pérez (*Phys. Rev. A* **98**, 032333 (2018)). Not included: one action whose
 stationarity gives the walk and the field together (the walk is a unitary step, not a stationary
-point), back-reaction of the links on the walk over many steps, and compact or non-abelian links.
+point), and compact or non-abelian links. Back-reaction over many steps is §25.
+
+## 25. The walk and the links evolve together
+
+[`QLF_CoupledEvolution`](lean/QLF_CoupledEvolution.lean) lets the two act on each other. A state is a
+walk `ψ`, link phases `A` and an electric field `E`. One coupled step along axis `k` with twist `t`:
+
+```text
+ψ' = U_{A_k} ψ                       the walk moves on the current links
+E' = E + curl F(A) − J(ψ)            the field is pushed by the walk's own current
+A' = A − E'                          so E' = −(A' − A), the time-link field   (step_elec)
+
+evolve_gauss      :  div E = ‖ψ‖² at the start  ⟹  at every step, for every schedule of axes and twists
+evolve_norm       :  Σ‖ψ‖² is the same at every step, whatever the links have become
+evolve_covariant  :  (ψ, A) ↦ (e^{iθ}ψ, A + ∇θ) commutes with the whole coupled history
+```
+
+The reading. The links the walk sees at step `m + 1` already carry the current it made at step `m`,
+so this is genuine back-reaction, not a walk on a fixed background. Nothing breaks: the walk stays
+unitary because each step is realizable for *any* links (§19), Gauss's law survives because the
+walk's current is conserved site by site (§20) and the update is the one the action selects (§22),
+and the whole history is gauge covariant because the step, the current and the plaquette field each
+are. These are three separate finite facts, and each is used exactly once.
+
+**Credit and scope.** Self-consistent evolution of charged matter with a dynamical lattice gauge
+field is Kogut–Susskind Hamiltonian lattice gauge theory (1975), and as a leapfrog scheme Yee's
+(1966). Not included: conservation of a coupled energy, compact links, non-abelian links. The
+field is real and the current enters through its real part (it is `‖·‖²`-valued, carried in `ℂ`).

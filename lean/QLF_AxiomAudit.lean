@@ -78,6 +78,7 @@ import QLF_LinkAction
 import QLF_MaxwellTime
 import QLF_GaussLaw
 import QLF_WalkCoupling
+import QLF_CoupledEvolution
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -297,3 +298,6 @@ import QLF_WalkCoupling
 #print axioms QLF.GaussLaw.gauge_invariant_iff_continuity
 #print axioms QLF.WalkCoupling.link_overlap
 #print axioms QLF.WalkCoupling.link_response
+#print axioms QLF.CoupledEvolution.evolve_gauss
+#print axioms QLF.CoupledEvolution.evolve_norm
+#print axioms QLF.CoupledEvolution.evolve_covariant
