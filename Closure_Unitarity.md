@@ -1205,3 +1205,34 @@ continuum limit of the pole into a Feynman propagator.
 
 **Credit.** Riesz projectors are standard; pole factorization is the analytic S-matrix's (Eden,
 Landshoff, Olive and Polkinghorne, *The Analytic S-Matrix*, 1966).
+
+## 37. The three-gluon colour vertex is a colour closure (G1, colour part)
+
+[`QLF_ColourFlux`](lean/QLF_ColourFlux.lean) identified the eight twists with the eight nonzero
+vectors of `F₃²` and read a colour line as the Weyl qutrit over that plane.
+[`QLF_GluonVertex`](lean/QLF_GluonVertex.lean) builds the qutrit's Weyl operators,
+`W(a, b)ᵢⱼ = [i = j + a] ω^{bj}` with `ω = e^{2πi/3}`, and computes the colour factor of the
+three-gluon vertex, `V(p, q, r) = tr(W(p)[W(q), W(r)])`:
+
+```text
+W_mul              :  W(p) W(q) = ω^{p₂q₁} W(p + q)
+trace_W            :  tr W(p) = 3 if p = 0, else 0          (the eight p ≠ 0 span sl(3))
+vertex_ne_zero_iff :  V(p, q, r) ≠ 0  ⟺  p + q + r = 0  and  ⟨q, r⟩ ≠ 0
+gluon_vertex_iff   :  for twists: colour balanced and on different axes
+vertex_axes_distinct : a nonzero vertex uses three different axes
+two_gluon_commute  :  two gluons close only as t and t̄, and those commute
+vertex_count       :  48 ordered twist triples (8 unordered) carry a nonzero vertex
+```
+
+So the colour factor of the three-gluon vertex is a closure condition: the three colour labels
+must sum to zero in `F₃²`, the same shape as count balance for twists, and they must not be
+collinear, the same shape as "carriers are commutators" (`bracket_iff_distinct_axes`). No closure
+of one or two gluons has a nonzero bracket, so the three-gluon vertex is the smallest colour
+closure with an amplitude: a prime closure, as G1 asks.
+
+**Scope.** This is the colour part of G1 only. The spin and momentum factor of the vertex (the
+Yang–Mills kinematic factor), the identification of this `sl(3)` with physical `su(3)` beyond the
+colour factor, and G2's gluing into four-gluon amplitudes are open.
+
+**Credit.** The clock-and-shift basis of `sl(N)` and its sine structure constants are Fairlie,
+Fletcher and Zachos's (*Phys. Lett. B* **218**, 203 (1989)).

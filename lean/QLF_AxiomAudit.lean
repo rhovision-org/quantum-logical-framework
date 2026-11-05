@@ -90,6 +90,7 @@ import QLF_CompactBound
 import QLF_OpticalTheorem
 import QLF_ChannelGroupoid
 import QLF_PoleFactorization
+import QLF_GluonVertex
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -369,3 +370,9 @@ import QLF_PoleFactorization
 #print axioms QLF.PoleFactorization.resolvent_partial
 #print axioms QLF.PoleFactorization.eig_unit
 #print axioms QLF.PoleFactorization.realWalk_poles
+#print axioms QLF.GluonVertex.W_mul
+#print axioms QLF.GluonVertex.trace_W
+#print axioms QLF.GluonVertex.vertex_ne_zero_iff
+#print axioms QLF.GluonVertex.gluon_vertex_iff
+#print axioms QLF.GluonVertex.two_gluon_commute
+#print axioms QLF.GluonVertex.vertex_count
