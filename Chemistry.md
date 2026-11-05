@@ -269,7 +269,7 @@ self-assembling — not a quantum-chemistry solver.
 
 ---
 
-**See also:** [`Protein_Folding.md`](Protein_Folding.md) (the rung above — folding as a closure census) ·
+**See also:** [`Protein_Folding.md`](Protein_Folding.md) (the rung above — folding as a closure census) · [`Polarons_QLF.md`](Polarons_QLF.md) (impurity + medium as a shared composite closure) ·
 [`Spacetime_Constructor.md`](Spacetime_Constructor.md) (the visualizer) · [`Bound_States_QLF.md`](Bound_States_QLF.md)
 (why atoms, not free leptons, are the observables) · [`Geometry_Of_Space.md`](Geometry_Of_Space.md) (crystals as
 resonant lattices) · [`SpaceTime.md`](SpaceTime.md) · [`Philosophy.md`](Philosophy.md).

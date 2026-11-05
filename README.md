@@ -48,6 +48,18 @@ QLF spans **more than a hundred machine-verified Lean modules** (zero `sorry`) c
 
 **Six of these have ZERO empirical input** (#1, #2, #3, #6, #10 are zero; #4 is just m_e). **g−2** at #6 is the headline zero-empirical-input win. **Ω_Λ ≈ log 2** at #9 matches to 1.2% and is significant, but it is no longer derived: QLF's own every-epoch version was falsifiable and the early-universe data exclude it, so the match is a statement about the epoch we observe, whose explanation is open ([`Cosmological_Constant.md`](Cosmological_Constant.md) status note). (The `H_0` listed for #9 is the **single residual calibration** of the cosmological sector — and it is the *same* input behind the **age of the universe**, which is **not** empirical but a derived **count of Planck ticks** `t₀ = N·τ_Planck`: `ℏ` fixes the tick, the substrate is meant to fix the count `N`, which is not yet derived, so for now `N` is calibrated by `H_0` — "deriving `H_0`" *is* "deriving `N`." See [`UniversalRelativity.md`](UniversalRelativity.md) §5.)
 
+### New structural finding — composite dressing / polarons
+
+`QLF_Polarons` now machine-verifies the **substrate mechanism** required for a dressed quasiparticle:
+an impurity can be open on its own while the impurity+bath history closes as one irreducible ZFA
+event. From the minimal predicate, Lean proves the bath is also open, its signed action exactly
+compensates the impurity on all four axes, Pauli closure follows from balance, and the prime first
+closure is unique; `^ | v` is an explicit non-factorizable witness. This is a structural result,
+not one of the ten quantitative wins above: identifying those closure classes with laboratory
+Fröhlich/Bose polarons and deriving their spectra, universal scaling and Landau–Pekar effective mass
+remain open tests. See [`Polarons_QLF.md`](Polarons_QLF.md) and
+[`lean/QLF_Polarons.lean`](lean/QLF_Polarons.lean).
+
 ### One discrete census, four continuum universals
 
 The closure census is a **closed `±1` random walk** ([`QLF_CensusBrownian`](lean/QLF_CensusBrownian.lean): a ZFA-balanced string of length `2n` is a walk that returns to origin, count `C(2n,n)`). Four of the most ubiquitous scaling laws in nature are each *one reading* of that single object — no fitting, no free parameter:
