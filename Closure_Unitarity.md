@@ -710,5 +710,32 @@ twist algebra comes with a fixed background field, and a gauge phase on the gaug
 
 **Credit and scope.** Link phases, plaquettes and the lattice Bianchi identity are Wilson's lattice
 gauge theory (*Phys. Rev. D* **10**, 2445 (1974)). What QLF adds is the hop and the phase. Not here:
-the other half of Maxwell's equations (Gauss and Ampère), which needs a dynamics for the links, and
-non-abelian link fields.
+the other half of Maxwell's equations (Gauss and Ampère; §20 shows Gauss's law is kept by the walk's
+conserved current), a dynamics for the links, and non-abelian link fields.
+
+## 20. The walk carries a conserved current, and that is what Gauss's law needs
+
+§19 gave the source-free half of Maxwell's equations. The other half couples the field to charge:
+Gauss's law `div E = ρ`, and the Ampère–Maxwell update `E' = E + curl B − J`.
+[`QLF_Maxwell`](lean/QLF_Maxwell.lean) shows what QLF supplies for it and what it does not.
+
+```text
+continuity               :  ρ'(x) − ρ(x) + J(x) − J(x − e) = 0          every site, every link field
+current_invariant        :  J is unchanged by a local phase change
+div_curl                 :  div (curl B) = 0                              for any oriented plaquette field
+gauss_preserved          :  div E = ρ  and continuity   ⟹   div E' = ρ'   after E' = E + curl B − J
+gauss_preserved_by_walk  :  the same, with ρ and J the walk's own charge and current
+```
+
+Here `ρ(x) = ‖ψ(x)‖²` and `J(x)` is what a step carries across the link from `x` to `x + e`: the
+forward part leaving `x` minus the backward part arriving from `x + e`. The reading. Unitarity of a
+realizable step is not only global: it holds site by site, as a continuity equation with a gauge
+invariant current. That is exactly what Gauss's law needs. Since `div curl = 0`, an Ampère–Maxwell
+update keeps `div E = ρ` true precisely when charge is conserved, and the walk's charge is.
+
+**Credit and scope.** Lattice continuity and the compatibility of Gauss's law with charge conservation
+are standard; Maxwell's displacement current exists to make them agree, and on a lattice this is Yee's
+scheme (*IEEE Trans. Antennas Propag.* **14**, 302 (1966)). What QLF supplies is the conserved current,
+from the realizability of each step. What is **not** derived is the update `E' = E + curl B − J`
+itself, which is taken as the form; deriving it needs an action or dynamics for the links, which is
+open. Reading the walk's norm density as electric charge is also a reading, not a theorem.

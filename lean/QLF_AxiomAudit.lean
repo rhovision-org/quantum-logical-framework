@@ -73,6 +73,7 @@ import QLF_BornFromWays
 import QLF_GaugeAxis
 import QLF_LocalGauge
 import QLF_LatticeGauge
+import QLF_Maxwell
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -278,3 +279,6 @@ import QLF_LatticeGauge
 #print axioms QLF.LatticeGauge.plaquette_invariant
 #print axioms QLF.LatticeGauge.bianchi
 #print axioms QLF.LatticeGauge.total_plaquette_zero
+#print axioms QLF.Maxwell.continuity
+#print axioms QLF.Maxwell.div_curl
+#print axioms QLF.Maxwell.gauss_preserved_by_walk

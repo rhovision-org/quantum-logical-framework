@@ -284,5 +284,6 @@ lean_lib QLF where
     `QLF_BornFromWays,
     `QLF_GaugeAxis,
     `QLF_LocalGauge,
-    `QLF_LatticeGauge
+    `QLF_LatticeGauge,
+    `QLF_Maxwell
   ]
