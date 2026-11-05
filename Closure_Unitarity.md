@@ -651,3 +651,32 @@ momentum label, and the derivative in those labels is the only continuum notion 
 phase is a global phase, so this section does not yet tell energy apart from an electromagnetic
 gauge phase; that needs the phase to vary from place to place, which is open, along with a
 convergence theorem for long walks.
+
+## 18. A local phase needs a link field, and the flux is what it carries
+
+§17 left the gauge phase global, the same everywhere, so it could not tell a clock tick from an
+electromagnetic phase. [`QLF_LocalGauge`](lean/QLF_LocalGauge.lean) lets it vary from place to place.
+The walk lives on a ring of `N` sites (`ZMod N`, finite). One step moves the part a twist leaves
+unchanged one site forward and the conjugate part one site back, and each hop picks up the phase
+`a(x)` on the link it crosses.
+
+```text
+ringWalk_norm           :  Σₓ ‖(W_a ψ)(x)‖² = Σₓ ‖ψ(x)‖²        unitary, for every link field a
+ringWalk_covariant      :  W_{a'} (e^{iθ} ψ) = e^{iθ} (W_a ψ)     a'(x) = a(x) + θ(x+1) − θ(x)
+global_phase_trivial    :  constant θ shifts no link
+flux_invariant          :  Σₓ a'(x) = Σₓ a(x)
+gauge_equiv_of_flux_eq  :  equal flux  ⟹  related by a local phase change
+```
+
+The reading. A phase that varies by site is consistent with the walk only if the links absorb the
+difference across each hop. So a local phase brings a link field with it, and a global phase (§17's
+clock tick) is the one case that needs none; that is how energy and an electromagnetic phase come
+apart. And the links carry exactly one gauge-invariant number on a ring: the total phase around it.
+Two link fields with the same flux are the same up to a local phase change, so the flux is the whole
+physical content. That is the Aharonov–Bohm phase (*Phys. Rev.* **115**, 485 (1959)).
+
+**Credit and scope.** The gauge principle is Weyl's (*Z. Phys.* **56**, 330 (1929)), and link phases
+with their holonomies are Wilson's lattice form (*Phys. Rev. D* **10**, 2445 (1974)). What QLF adds is
+where the pieces come from: each hop is a realizable twist step (§12), and the phase on it is the
+gauge axis (§17). The ring is one-dimensional, so its only loop is the ring itself. Plaquettes,
+field strength and Maxwell dynamics need a two- or three-dimensional lattice and are open.

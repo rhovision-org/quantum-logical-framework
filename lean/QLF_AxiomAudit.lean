@@ -71,6 +71,7 @@ import QLF_Mass
 import QLF_DiracWalk
 import QLF_BornFromWays
 import QLF_GaugeAxis
+import QLF_LocalGauge
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -268,3 +269,7 @@ import QLF_GaugeAxis
 #print axioms QLF.GaugeAxis.spacetimeWalk_unitary
 #print axioms QLF.GaugeAxis.spacetimeWalk_generator
 #print axioms QLF.GaugeAxis.mass_shell
+#print axioms QLF.LocalGauge.ringWalk_norm
+#print axioms QLF.LocalGauge.ringWalk_covariant
+#print axioms QLF.LocalGauge.flux_invariant
+#print axioms QLF.LocalGauge.gauge_equiv_of_flux_eq
