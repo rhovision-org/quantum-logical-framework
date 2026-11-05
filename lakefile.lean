@@ -287,5 +287,6 @@ lean_lib QLF where
     `QLF_LocalGauge,
     `QLF_LatticeGauge,
     `QLF_Maxwell,
-    `QLF_LinkAction
+    `QLF_LinkAction,
+    `QLF_MaxwellTime
   ]

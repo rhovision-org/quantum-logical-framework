@@ -29,7 +29,8 @@ phase `a i x` on the axis-`i` link at `x`, and its plaquette field is
 
 This is a concrete instance of the open bridge in [`Stationary_Action.md`](../Stationary_Action.md):
 here an action, its admissible variations and its first-variation identity are all explicit and
-finite. It is the link sector only; the walk's own action and the time direction are not included.
+finite. It is the link sector only; the walk's own action is not included, and the time direction is added
+in [`QLF_MaxwellTime`](QLF_MaxwellTime.lean).
 
 **Credit.** This is the standard lattice (Wilson) action at weak coupling, in its quadratic,
 non-compact form, and the Euler–Lagrange equations are the lattice Maxwell equations; the gauge/

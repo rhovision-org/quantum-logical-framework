@@ -75,6 +75,7 @@ import QLF_LocalGauge
 import QLF_LatticeGauge
 import QLF_Maxwell
 import QLF_LinkAction
+import QLF_MaxwellTime
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -286,3 +287,6 @@ import QLF_LinkAction
 #print axioms QLF.LinkAction.first_variation
 #print axioms QLF.LinkAction.stationary_iff_ampere
 #print axioms QLF.LinkAction.gauge_invariant_iff_conserved
+#print axioms QLF.MaxwellTime.first_variation
+#print axioms QLF.MaxwellTime.stationary_iff_update
+#print axioms QLF.MaxwellTime.gauss_from_action

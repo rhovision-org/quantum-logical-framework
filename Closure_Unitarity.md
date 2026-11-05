@@ -737,8 +737,8 @@ update keeps `div E = ρ` true precisely when charge is conserved, and the walk'
 are standard; Maxwell's displacement current exists to make them agree, and on a lattice this is Yee's
 scheme (*IEEE Trans. Antennas Propag.* **14**, 302 (1966)). What QLF supplies is the conserved current,
 from the realizability of each step. What is **not** derived is the update `E' = E + curl B − J`
-itself, which is taken as the form; deriving it needs an action or dynamics for the links, which is
-open. Reading the walk's norm density as electric charge is also a reading, not a theorem.
+itself, which is taken as the form here and derived from a finite action in §21 (static) and §22
+(with time). Reading the walk's norm density as electric charge is also a reading, not a theorem.
 
 ## 21. A finite action for the links, and Ampère's law as its stationarity
 
@@ -769,5 +769,34 @@ is about the substrate's own closure condition and gravity.
 
 **Credit and scope.** This is the standard non-compact (weak-coupling) Wilson action, whose
 Euler–Lagrange equations are the lattice Maxwell equations, and the gauge/conservation link is
-Noether's (1918). Not included: the time direction (the electric term and the full update), the
-walk's own action coupled to the links, and the compact (cosine) action.
+Noether's (1918). Not included here: the time direction, which §22 adds; the walk's own action
+coupled to the links; and the compact (cosine) action.
+
+## 22. Time: the Ampère–Maxwell update as the stationarity of a finite history
+
+[`QLF_MaxwellTime`](lean/QLF_MaxwellTime.lean) adds time to §21 and derives the update that §20 took
+as its form. A history is a link field `A_τ` at every time `τ` on a finite cycle `ZMod N` (a history
+that closes on itself, so there are no boundary terms), with no phase on the time links (temporal
+gauge). The electric field lives on the time link, `E_τ = −(A_{τ+1} − A_τ)`, and
+
+```text
+S[A] = ½ Σ_τ Σₓ Σᵢ E_τ,i(x)² − Σ_τ ( ¼ Σ F(A_τ)² − Σ J_τ · A_τ )
+
+first_variation        :  (S[A + εδ_{σ,k,y}] − S[A − εδ_{σ,k,y}]) / 2ε
+                            = (E_σ − E_{σ−1})_k(y) − ((curl F(A_σ))_k(y) − J_σ,k(y))     every ε ≠ 0
+stationary_iff_update  :  S stationary under every variation  ⟺  E_σ = E_{σ−1} + curl F(A_σ) − J_σ
+gauss_from_action      :  div E_{σ−1} = ρ, ρ' − ρ + div J_σ = 0, stationary  ⟹  div E_σ = ρ'
+```
+
+The reading. The update `E' = E + curl B − J` of §20 is no longer an assumption: it is the condition
+that no single link at any single time can change the history's action to first order, and the
+action is again quadratic, so that condition is a finite identity. Together with §20 this closes
+the loop for the source half: the walk supplies a conserved current, the action supplies the update,
+and the update keeps Gauss's law.
+
+**Credit and scope.** The discrete-time lattice Maxwell action and its leapfrog equations are
+standard (Yee 1966, *IEEE Trans. Antennas Propag.* **14**, 302; Kogut and Susskind 1975, *Phys. Rev.
+D* **11**, 395, for the Hamiltonian lattice form). Gauss's law itself is the equation of the
+time-link phase; in temporal gauge it is a constraint that the update keeps, not one the variation
+produces. Not included: the walk's own action coupled to the links, and compact or non-abelian
+links.

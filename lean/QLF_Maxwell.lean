@@ -23,7 +23,8 @@ for that half and what it does not.
 
 What is proved is consistency: a conserved current exists, and Gauss's law is compatible with the
 update because of it. What is **not** derived is the update itself, `E' = E + curl B − J`, which is
-taken as the form; deriving it needs an action or dynamics for the links. The charge here is the
+taken as the form here; [`QLF_MaxwellTime`](QLF_MaxwellTime.lean) derives it as the stationarity
+of a finite link action over time. The charge here is the
 walk's norm density; identifying it with electric charge is a reading. No axioms.
 
 **Credit.** Lattice continuity and the compatibility of Gauss's law with charge conservation are
