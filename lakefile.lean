@@ -310,5 +310,6 @@ lean_lib QLF where
     `QLF_VacuumResolvent,
     `QLF_MixingUnitarity,
     `QLF_SharedClosure,
-    `QLF_PolaronBranches
+    `QLF_PolaronBranches,
+    `QLF_NonAbelianGauss
   ]

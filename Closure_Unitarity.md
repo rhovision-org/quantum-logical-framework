@@ -1421,3 +1421,27 @@ modes. The effective mass needs a momentum-labelled bath and is not here.
 
 **Credit.** Fano (*Phys. Rev.* **124**, 1866 (1961)); Anderson (*Phys. Rev.* **124**, 41 (1961));
 Massignan, Zaccanti and Bruun (*Rep. Prog. Phys.* **77**, 034401 (2014)).
+
+## 45. The non-abelian Gauss identity
+
+§31's field equation at a link is `E_k(z) = A(M_k(z) U_k(z)) = 0`, with `M` the staple sum and
+`A(X) = X − Xᴴ`. [`QLF_NonAbelianGauss`](lean/QLF_NonAbelianGauss.lean) proves the identity these
+satisfy for every link configuration, on shell or not.
+
+```text
+noether          :  Σ_k A(U_k(y) M_k(y)) = Σ_k A(M_k(y − e_k) U_k(y − e_k))      (no unitarity)
+gauss_covariant  :  U unitary  ⟹  Σ_k U_k(y) E_k(y) U_k(y)ᴴ = Σ_k E_k(y − e_k)
+gauss_on_shell   :  E = J  ⟹  Σ_k U_k(y) J_k(y) U_k(y)ᴴ = Σ_k J_k(y − e_k)
+```
+
+Every plaquette through `y` enters the identity twice, through each of its two links at `y`, and
+the two entries cancel: at the corner where both links leave `y` they give the holonomy and its
+dagger, and at the other corners the same rotated loop appears once outgoing and once incoming.
+For unitary links the identity says the covariant divergence of the field equation vanishes: the
+outgoing values parallel-transported back to `y` balance the incoming ones. So a source `J` of the
+field equation must be covariantly conserved at every site. This is the non-abelian Gauss law as a
+Noether identity. As the time-link equation of a dynamical history it still needs a time step for
+matrix links, and the walk's colour current as the source.
+
+**Credit.** The lattice Noether identity of gauge invariance; Creutz, *Quarks, Gluons and Lattices*
+(Cambridge, 1983); Kogut and Susskind (*Phys. Rev. D* **11**, 395 (1975)).
