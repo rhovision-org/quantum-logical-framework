@@ -828,5 +828,31 @@ conservation from the walk.
 
 **Credit and scope.** `E = −∂_t A − ∇φ` and Gauss's law as the `φ` equation are Maxwell's; the
 lattice form is standard (Kogut and Susskind 1975). Not included: the walk's own action coupled to
-the links (here `ρ`, `J` are given, and the walk is shown to supply ones that qualify), and compact
-or non-abelian links.
+the links (here `ρ`, `J` are given, and the walk is shown to supply ones that qualify; §24 takes
+the next step), and compact or non-abelian links.
+
+## 24. The walk's current is its response to a link phase
+
+[`QLF_WalkCoupling`](lean/QLF_WalkCoupling.lean) looks at the coupling from the walk's side. Take one
+realizable step along axis `e` with link phases `a` and move the phase of the single link `y` by `ε`.
+Only two hops cross that link: the forward part `fix t ψ(y)` and the backward part
+`fix t̄ ψ(y + e)`. Because the realizable parts are orthogonal, they pick up their phases without
+interfering:
+
+```text
+link_overlap   :  ⟨U_a ψ, U_{a+εδ_y} ψ⟩ = Σₓ ‖ψ(x)‖² + (e^{iε} − 1)·‖fix t ψ(y)‖² + (e^{−iε} − 1)·‖fix t̄ ψ(y+e)‖²
+link_response  :  ⟨U_a ψ, U_{a+εδ_y} ψ⟩ − ⟨U_a ψ, U_{a−εδ_y} ψ⟩ = (e^{iε} − e^{−iε}) · J(y)        every ε
+```
+
+The reading. The current `J(y)` of §20 (forward minus backward across the link) is exactly the odd
+part of the walk's response to its own link phase: the lattice form of `J = δS_matter/δa`, with no
+derivative taken. So the walk is a source of the right kind twice over: it is what the link phase
+couples to (this section), and it is conserved (§20), which is what gauge invariance of the link
+action demands (§23).
+
+**Credit and scope.** Current as the response to a gauge field is standard in lattice gauge theory
+(Wilson 1974; Kogut and Susskind 1975), and gauge-coupled quantum walks with their conserved
+currents are studied by Arnault and Debbasch (arXiv:1508.00038) and Márquez-Martín, Arnault,
+Di Molfetta and Pérez (*Phys. Rev. A* **98**, 032333 (2018)). Not included: one action whose
+stationarity gives the walk and the field together (the walk is a unitary step, not a stationary
+point), back-reaction of the links on the walk over many steps, and compact or non-abelian links.

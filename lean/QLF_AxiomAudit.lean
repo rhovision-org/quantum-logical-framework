@@ -77,6 +77,7 @@ import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
 import QLF_GaussLaw
+import QLF_WalkCoupling
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -294,3 +295,5 @@ import QLF_GaussLaw
 #print axioms QLF.GaussLaw.stationary_iff_gauss
 #print axioms QLF.GaussLaw.stationary_forces_continuity
 #print axioms QLF.GaussLaw.gauge_invariant_iff_continuity
+#print axioms QLF.WalkCoupling.link_overlap
+#print axioms QLF.WalkCoupling.link_response

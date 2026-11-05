@@ -289,5 +289,6 @@ lean_lib QLF where
     `QLF_Maxwell,
     `QLF_LinkAction,
     `QLF_MaxwellTime,
-    `QLF_GaussLaw
+    `QLF_GaussLaw,
+    `QLF_WalkCoupling
   ]
