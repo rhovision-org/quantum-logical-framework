@@ -83,10 +83,10 @@ Then Lean proves:
 - `isPolaron_iff_coupled` — the minimal definition is equivalent to the full coupled-sector statement: neither factor closes alone, but the pair does;
 - `polaron_actions_compensate` — the bath carries the exact negative signed action of the impurity on all four twist axes;
 - `polaron_pauli_closed` — joint ZFA balance automatically puts the fold in the Pauli-scalar sector;
-- `polaron_has_prime_prefix` — every closing impurity+bath history has a prime first closure;
+- `polaron_has_prime_prefix` — every closing impurity+bath history has a prime first closure. That prefix may end before the bath begins (a balanced prefix of the impurity alone), so it does not by itself give a first closure involving both; `PrimePolaron` is the stronger condition in which the first closure is the whole joint history;
 - `prime_polaron_no_early_closure` — a prime polaron has no earlier nonempty ZFA prefix;
 - `prime_polaron_first_closure_unique` — that first closure is unique;
-- `polaronClass_eq_of_equiv` — equal ledger+fold closure tokens define one reportable polaron class;
+- `polaronClass_eq_of_equiv` — equal ledger+fold closure tokens define one reportable polaron class. The class is a history-level equivalence: it forgets the impurity/bath boundary, so different partitions of one history land in the same class;
 - `demo_prime_polaron` / `demo_nonfactorizable` — the concrete `^ | v` pair is a prime, genuinely coupled witness;
 - `prime_polaron_exists` — at least one irreducible, non-factorizable composite closure of the required form exists;
 - `polaron_substrate_summary` — bundles openness of both factors, joint balance, Pauli closure and irreducibility.
@@ -340,6 +340,9 @@ Define a **prime polaron** by requiring `FirstReturn.IsPrime (I ++ B)`. Then the
 Use `closureToken = (ledger, fold)` and `ClosureEquiv` to group microscopic bath completions.
 Only after that quotient should the resulting classes be compared with the experimental
 **attractive** and **repulsive** branches. This prevents a branch label from being put in by hand.
+**Open first:** `polaronClass` is a history-level quotient of `impurity ++ bath` and forgets the
+impurity/bath boundary. Whether a branch classification must also keep the partition, the coupling,
+or a boundary state has to be settled before these classes are read as physical branches.
 
 ### P5 — exact finite census
 

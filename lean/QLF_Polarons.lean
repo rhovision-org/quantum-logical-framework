@@ -110,10 +110,13 @@ theorem prime_polaron_first_closure_unique {impurity bath : List Twist}
   · exact hℓ
   · exact le_rfl
   · exact hp
-  · simpa using h.2
+  · rw [List.take_length]; exact h.2
 
 /-- Every minimal polaron has a unique prime first closure somewhere in its closing joint history.
-    `PrimePolaron` is the special case in which that first closure is the full joint history. -/
+    **Scope:** that prefix can end before the bath begins (a balanced prefix of the impurity alone,
+    e.g. impurity `^v^`), so this theorem does not by itself give a first closure that involves both
+    impurity and bath. `PrimePolaron` is the stronger condition: there the first closure is the full
+    joint history, so it necessarily spans both. -/
 theorem polaron_has_prime_prefix {impurity bath : List Twist} (h : IsPolaron impurity bath) :
     ∃ ℓ, ℓ ≤ (impurity ++ bath).length ∧
       QLF.FirstReturn.IsPrime ((impurity ++ bath).take ℓ) := by
@@ -125,7 +128,7 @@ theorem polaron_has_prime_prefix {impurity bath : List Twist} (h : IsPolaron imp
     simp
   have hlen : 0 < (impurity ++ bath).length := by
     rw [List.length_append]
-    have hi_pos : 0 < impurity.length := List.length_pos.mpr hi_ne
+    have hi_pos : 0 < impurity.length := List.length_pos_of_ne_nil hi_ne
     omega
   exact QLF.FirstReturn.prime_prefix_exists (impurity ++ bath) h.2 hlen
 
@@ -133,7 +136,11 @@ theorem polaron_has_prime_prefix {impurity bath : List Twist} (h : IsPolaron imp
 -- 3. Physical closure classes
 -- ============================================================================
 
-/-- The reportable class of a joint polaron history, using QLF's existing ledger+fold quotient. -/
+/-- The reportable class of a joint polaron history, using QLF's existing ledger+fold quotient.
+    **This is a history-level equivalence by design.** It keeps the combined ledger and fold of
+    `impurity ++ bath` and forgets where the impurity ends and the bath begins, so different
+    partitions of one history give the same class. Before these classes are used to label physical
+    branches, it is open whether the partition, the coupling or a boundary state must be kept too. -/
 noncomputable def polaronClass (impurity bath : List Twist) :
     QLF.ClosureEquivalence.ClosureClass :=
   Quotient.mk QLF.ClosureEquivalence.closureSetoid (impurity ++ bath)
@@ -160,7 +167,10 @@ def demoBath : List Twist := [Twist.down]
 /-- `^ | v` is an actual prime polaron-shaped closure: neither side is balanced, their pair closes,
     and no earlier nonempty prefix closes. -/
 theorem demo_prime_polaron : PrimePolaron demoImpurity demoBath := by
-  native_decide
+  refine ⟨⟨?_, ?_⟩, ?_⟩
+  · unfold demoImpurity countBalanced; decide
+  · unfold demoImpurity demoBath countBalanced; decide
+  · unfold demoImpurity demoBath; decide
 
 /-- The same witness is genuinely in the coupled sector: neither factor's fold is a scalar on its
     own, even though the joint history closes. This rules out reinterpreting the witness as two
