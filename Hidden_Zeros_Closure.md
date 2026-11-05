@@ -57,3 +57,36 @@ which bears on the priority-versus-multiplicity distinction in
 have one sub-closure of length 2 on its shorter side), so `n = 4` cannot discriminate.
 
 None of this can be physics beyond the Standard Model: W0 is the standard amplitude.
+
+## 4. Results (after commit `3f37672`)
+
+`python3 hidden_zero_closures.py --max-n 7 --points 20` (under a second; seed 207).
+
+| `n` | decompositions | distinct weights W0 / W1 / W2 | points tested | nonzero `A` for W0 / W1 / W2 |
+|---|---|---|---|---|
+| 4 | 2 | 1 / 1 / 1 | 40 | 0 / 0 / 0 |
+| 5 | 5 | 1 / 1 / 1 | 100 | 0 / 0 / 0 |
+| 6 | 14 | 1 / 2 / 2 | 180 | 0 / **180** / **180** |
+| 7 | 42 | 1 / 2 / 2 | 279 | 0 / **279** / **279** |
+
+(Points where a random draw put some `X` at zero were skipped, which is why `n = 7` has 279, not 280.)
+
+* **Z0: pass.** Summing over complete compatible closure decompositions, one event each, vanishes on
+  every hidden-zero locus through seven points. The zero is not imposed anywhere: it comes from the
+  compatibility rule (nest or be disjoint) and the sum.
+* **Z1, Z2: fail**, at every point once the weights can differ (`n = 6`, 7). At `n = 4, 5` every
+  decomposition has the same weight under both, so those rows could not discriminate.
+
+**What this establishes.** Hidden zeros pick a reading. Counting each complete closure decomposition
+once (it either happens or it doesn't) gives the zeros; counting its ways — closure orderings, or 1-D
+closure multiplicity — destroys them on every locus tested. This matches the repository's existing
+distinction between what closes first and what happens most ways
+([`MostWays_First.md`](MostWays_First.md)): the amplitude is built from events, and multiplicity is not
+a weight inside it.
+
+**What it does not establish.** The propagator `1/X` was inserted (§1), and with unit weights the
+construction *is* the `Tr(φ³)` sum over triangulations, so Z0 passing is the known theorem expressed in
+closure language. Kill condition 2 is met for the zero itself, which was never inserted; it is not met for
+the kinematics. G2c in full needs `X_{ij}` from closures, and that is still the open step. The negative
+result (Z1, Z2) is the new information: it rules out the two natural ways of letting closure multiplicity
+into the amplitude.
