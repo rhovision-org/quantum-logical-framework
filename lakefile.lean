@@ -295,5 +295,6 @@ lean_lib QLF where
     `QLF_TsirelsonBound,
     `QLF_FieldEnergy,
     `QLF_CompactLinks,
-    `QLF_NonAbelian
+    `QLF_NonAbelian,
+    `QLF_NonAbelianAction
   ]

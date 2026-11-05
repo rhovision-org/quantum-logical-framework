@@ -1032,6 +1032,31 @@ the hops to stay orthogonal. For `N = 1` this is §18–§19.
 
 **Credit and scope.** Yang and Mills (*Phys. Rev.* **96**, 191 (1954)); Wilson (1974) for the lattice
 form; non-abelian gauge quantum walks are Arnault, Di Molfetta, Brachet and Debbasch (*Phys. Rev. A*
-**94**, 012335 (2016)). Open: the non-abelian Wilson action and its variation, the non-abelian
-Gauss law, and which colour group the twists select (the colour structure QLF proposes, the Weyl
-qutrit of [`QLF_ColourFlux`](lean/QLF_ColourFlux.lean), is not connected to these links here).
+**94**, 012335 (2016)). Open: the non-abelian Wilson action and its variation (the action is §30),
+the non-abelian Gauss law, and which colour group the twists select (the colour structure QLF
+proposes, the Weyl qutrit of [`QLF_ColourFlux`](lean/QLF_ColourFlux.lean), is not connected to these
+links here).
+
+## 30. The Wilson action for matrix links
+
+[`QLF_NonAbelianAction`](lean/QLF_NonAbelianAction.lean) turns §29's gauge-invariant plaquette trace
+into an action. For a unitary holonomy `W`, one identity carries everything:
+
+```text
+N − Re tr W  =  ½ tr((W − 1)ᴴ (W − 1))        (half the squared distance of W from 1)
+
+plaq_nonneg, plaq_eq_zero_iff :  each plaquette term is ≥ 0, and = 0 exactly when W = 1
+wilson        :  S(U) = ½ Σ_{i,j,x} (N − Re tr W_ij(x))
+wilson_gauge  :  S is unchanged by every site-dependent unitary colour rotation
+wilson_eq_zero_iff :  S = 0  ⟺  every plaquette holonomy is the identity (flat links)
+pure_gauge_action  :  U_k(x) = g(x)ᴴ g(x+e_k)  has S = 0
+holonomy_abelian, wilson_abelian :  N = 1, U = e^{ia}  gives W = e^{iF} and S = §28's compact action
+```
+
+So the matrix action is bounded below, its minimum is reached exactly on the flat links, and pure
+gauge configurations are among them. The `N = 1` case is not a new action: it is §28's term by term.
+
+**Scope.** This is the action, not its dynamics. Open: its variation (the non-abelian field
+equation, which needs a derivative along the unitary group rather than §28's derivative in `a`), an
+energy and leapfrog for matrix links, the non-abelian Gauss law, and which colour group the twists
+select.

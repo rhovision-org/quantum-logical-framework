@@ -83,6 +83,7 @@ import QLF_TsirelsonBound
 import QLF_FieldEnergy
 import QLF_CompactLinks
 import QLF_NonAbelian
+import QLF_NonAbelianAction
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -331,3 +332,8 @@ import QLF_NonAbelian
 #print axioms QLF.NonAbelian.step_norm
 #print axioms QLF.NonAbelian.step_covariant
 #print axioms QLF.NonAbelian.wilson_loop_invariant
+#print axioms QLF.NonAbelianAction.plaq_eq_zero_iff
+#print axioms QLF.NonAbelianAction.wilson_gauge
+#print axioms QLF.NonAbelianAction.wilson_eq_zero_iff
+#print axioms QLF.NonAbelianAction.pure_gauge_action
+#print axioms QLF.NonAbelianAction.wilson_abelian
