@@ -1263,3 +1263,26 @@ are kinematic, and QLF has no momentum-space vertex yet.
 **Credit.** Colour decomposition: Dixon, TASI 1995 (hep-ph/9601359). The relation `c_s + c_t + c_u = 0`
 is the colour side of Bern, Carrasco and Johansson's colour–kinematics duality
 (*Phys. Rev. D* **78**, 085011 (2008)).
+
+## 39. Resonance poles: the decay rate is the leakage
+
+[`QLF_Resonance`](lean/QLF_Resonance.lean) does Phase D's resonance demonstration. Take a unitary
+step `U` on a finite channel space and a closed sector, a Hermitian projector `P`. Inside the
+sector the step is `K = P U P`, and by §36 its resolvent's poles sit at `z = 1/μ` for the
+eigenvalues `μ` of `K`.
+
+```text
+norm_unitary, norm_split :  ‖U w‖ = ‖w‖,   ‖w‖² = ‖P w‖² + ‖(1 − P) w‖²
+resonance_balance        :  K v = μ v, v in the sector  ⟹  |μ|²‖v‖² + ‖(1 − P) U v‖² = ‖v‖²
+resonance_le_one         :  |μ| ≤ 1                       (poles on or outside the unit circle)
+stable_iff_no_leak       :  |μ| = 1  ⟺  (1 − P) U v = 0
+```
+
+A mode keeps `|μ|²` of its norm each step and leaks the rest out of the sector: this is #208's
+leakage identity (U3) for one mode. A mode that does not leak has its pole on the unit circle,
+on shell and stable, like the realizable walk's poles (§36). A mode that leaks has its pole
+pushed off the circle: a resonance with survival `|μ|²` per step and width `Γ = −log|μ|²`.
+Resonances are closures that leak.
+
+**Credit.** Gamow (1928), Weisskopf and Wigner (1930); the projection picture is Feshbach's
+(*Ann. Phys.* **5**, 357 (1958)).

@@ -92,6 +92,7 @@ import QLF_ChannelGroupoid
 import QLF_PoleFactorization
 import QLF_GluonVertex
 import QLF_GluonGluing
+import QLF_Resonance
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -381,3 +382,6 @@ import QLF_GluonGluing
 #print axioms QLF.GluonGluing.chan_ne_zero_iff
 #print axioms QLF.GluonGluing.gluing
 #print axioms QLF.GluonGluing.jacobi
+#print axioms QLF.Resonance.resonance_balance
+#print axioms QLF.Resonance.resonance_le_one
+#print axioms QLF.Resonance.stable_iff_no_leak
