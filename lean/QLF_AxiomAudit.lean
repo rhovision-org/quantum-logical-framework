@@ -96,6 +96,7 @@ import QLF_Resonance
 import QLF_JointClosure
 import QLF_VacuumResolvent
 import QLF_MixingUnitarity
+import QLF_SharedClosure
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -398,3 +399,6 @@ import QLF_MixingUnitarity
 #print axioms QLF.MixingUnitarity.block_unitary_iff
 #print axioms QLF.MixingUnitarity.triangle_closes
 #print axioms QLF.MixingUnitarity.jarlskog_invariant
+#print axioms QLF.SharedClosure.bonding_above
+#print axioms QLF.SharedClosure.symmetric_split
+#print axioms QLF.SharedClosure.feshbach_entry

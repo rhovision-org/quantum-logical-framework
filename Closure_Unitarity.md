@@ -1366,3 +1366,28 @@ number. The mixing angles' values are not derived here.
 **Credit.** Cabibbo (*Phys. Rev. Lett.* **10**, 531 (1963)); Kobayashi and Maskawa (*Prog. Theor.
 Phys.* **49**, 652 (1973)); Maki, Nakagawa and Sakata (*Prog. Theor. Phys.* **28**, 870 (1962));
 Pontecorvo (*Sov. Phys. JETP* **26**, 984 (1968)); Jarlskog (*Phys. Rev. Lett.* **55**, 1039 (1985)).
+
+## 43. A bond is a shared closure: the two-channel resolvent
+
+[`Chemistry.md`](Chemistry.md) reads a bond as a shared closure. Two sites close on their own with
+kernels `a` and `b` and together with amplitude `g`, so the pair's kernel is `K = [[a, g], [g, b]]`
+and its resolvent's poles sit at `z = 1/μ` for the roots of `(μ − a)(μ − b) = g²` (§36).
+[`QLF_SharedClosure`](lean/QLF_SharedClosure.lean) works this out.
+
+```text
+levels_root       :  μ± = (a + b)/2 ± √(((a − b)/2)² + g²)  solve (μ − a)(μ − b) = g²
+bonding_above     :  g ≠ 0  ⟹  μ₊ > max(a, b)
+antibonding_below :  g ≠ 0  ⟹  μ₋ < min(a, b)
+symmetric_split   :  a = b  ⟹  μ± = a ± |g|
+resolvent_two     :  (1 − zK)⁻¹ = [[1 − zb, zg], [zg, 1 − za]] / ((1 − za)(1 − zb) − z²g²)
+feshbach_entry    :  [(1 − zK)⁻¹]₀₀ = 1 / (1 − za − z²g²/(1 − zb))
+```
+
+Any nonzero shared closure pushes one level above both sites and one below. The bonding pole
+`1/μ₊` moves toward the origin, so the shared closure is reached before either site's own. For
+equal sites, as in `H₂`, the splitting is `2|g|`: the bond strength is the shared-closure amplitude.
+Seen from one site, the partner enters only through the round trip `z²g²/(1 − zb)`, the Feshbach
+reduction of §39's closed sector. The values of `a`, `b` and `g` for real atoms, bond angles and
+multiple bonds are not here.
+
+**Credit.** Heitler and London (*Z. Phys.* **44**, 455 (1927)); Feshbach (*Ann. Phys.* **5**, 357 (1958)).
