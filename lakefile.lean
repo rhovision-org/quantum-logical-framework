@@ -280,5 +280,6 @@ lean_lib QLF where
     `QLF_RealizableWalk,
     `QLF_Tsirelson,
     `QLF_Mass,
-    `QLF_DiracWalk
+    `QLF_DiracWalk,
+    `QLF_BornFromWays
   ]

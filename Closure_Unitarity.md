@@ -503,8 +503,8 @@ anticommutation comes from: the eight twists are the signed axis frame, so a sec
 measurement that cannot share the first one's value.
 
 **Scope.** This is the algebraic bound and its attainment by an eigenvector of `C²`. It does not
-yet say which census quantity is the state `ψ`, nor derive the probabilities `⟨ψ|C|ψ⟩` (the Born rule
-is still open, [`Interference_NoGo.md`](Interference_NoGo.md)). It also does not yet build the
+yet say which census quantity is the state `ψ`, nor derive the probabilities `⟨ψ|C|ψ⟩` from the census (the
+Born rule's form is now derived from counting ways, §16). It also does not yet build the
 two-site state from a joint closure (entanglement as a shared closure, [`MultiParticle.md`](MultiParticle.md)).
 
 ## 14. Mass is what flips handedness
@@ -578,3 +578,45 @@ each piece: unitarity from realizability (§12), the second factor as handedness
 generator a twist. Still open: a convergence theorem for long walks (the generator is first order
 only), and the gauge axis.
 
+
+## 16. The Born rule is the count of equal ways
+
+The measurement postulate was the largest piece still taken as given. It is now a theorem about
+counting ([`QLF_BornFromWays`](lean/QLF_BornFromWays.lean)). An outcome register is a list of
+Gaussian-integer amplitudes `ψ`, as in [`The_QLF_State_Space.md`](The_QLF_State_Space.md). A
+probability assignment `P` is asked to obey three rules:
+
+* **Relabeling.** Renaming the outcomes renames the probabilities; no outcome is privileged by its label.
+* **Normalization.** The probabilities sum to one.
+* **Adding over ways.** An outcome of norm `m` is `m` unit ways. Once a record tells the ways apart,
+  the outcome splits into `m` orthogonal unit outcomes, and its probability is the sum of theirs.
+
+The third rule takes the norm as its input, and the norm is not a probability rule. It is unitarity's
+Pythagoras (an orthogonal sum's squared length is the sum of the squared lengths) together with
+`pairCount = ways` from [`QLF_BornCounting`](lean/QLF_BornCounting.lean).
+
+```text
+uniform             :  on the all-ones register every way has probability 1/N
+exists_refinement   :  every register refines into Σ‖ψⱼ‖² unit ways, ‖ψᵢ‖² of them for outcome i
+born_from_ways      :  P ψ i = ‖ψᵢ‖² / Σⱼ ‖ψⱼ‖²                 for every admissible P
+bornAssignment      :  the Born rule obeys all three rules
+assignment_unique   :  any two admissible assignments agree
+two_thirds          :  the register (1+i, 1) gives 2/3 : 1/3, never √2 : 1
+```
+
+The proof is counting. Refine every outcome into unit ways, and the register becomes `N` equal ways.
+Relabeling symmetry makes them equally likely, so each has probability `1/N`, and outcome `i` owns
+`‖ψᵢ‖²` of them. This is the QLF reading made exact: a probability is a count of ways, and the square
+is there because a way is a closed ket–bra pair.
+
+**R6a check.** The rules are satisfiable (`bornAssignment`) and pin `P` completely
+(`assignment_unique`). So they are neither empty nor free; they exclude the modulus rule and every
+`|ψ|^q` with `q ≠ 2`.
+
+**Credit and status.** This is Zurek's envariance argument (*Phys. Rev. A* **71**, 052105 (2005)) in
+finite form, and Deutsch's decision-theoretic derivation (*Proc. R. Soc. A* **455**, 3129 (1999)) reaches
+the same rule. Zurek's version needs a continuity step to reach irrational weights. QLF needs none,
+because its amplitudes are Gaussian integers: every Born weight is a ratio of whole counts, so the
+rational case is the only case. No continuum enters. Still open, as before: why nature's weight has
+no third-order interference ([`Interference_NoGo.md`](Interference_NoGo.md) §6, the three-slit
+bound), and which census quantity is the register `ψ`.

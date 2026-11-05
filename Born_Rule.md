@@ -77,6 +77,8 @@ This is exactly the [Measurement_Problem.md §4a](Measurement_Problem.md) framin
 
 Gleason's theorem (1957) shows that for Hilbert spaces of dimension $\geq 3$, the **only** probability measure on the lattice of projection operators that satisfies countable additivity is the Born rule $P(\varphi) = \text{Tr}(\rho \, \Pi_\varphi)$. This is often cited as a derivation of the Born rule from first principles in standard QM.
 
+Gleason needs dimension ≥ 3 and countable additivity. The finite counting route in [`QLF_BornFromWays`](lean/QLF_BornFromWays.lean) needs neither, and works in dimension 2 (§8).
+
 The QLF construction in §3–4 is consistent with Gleason but goes further: it identifies **what is being assigned probability** (admissible ZFA-closed leaves of the local possibility tree) and **why** (the uniform prior over admissible micro-paths follows from the multiplicity principle and the algebra's Hermitian symmetry). Gleason fixes the form $|\langle \varphi | \psi \rangle|^2$; QLF fixes the underlying ensemble.
 
 ## 7. Worked example: spin-1/2 measurement
@@ -400,7 +402,7 @@ QLF reading: the path-integral sum gives $\cos(\theta/2)$ as the constructively-
     integers.
 - **Remaining canonical cases** — two-spin singlet, Mach–Zehnder, three-path interference — still to be
   run, and to be run **blind**, with the symmetry-lock check above applied to every agreement.
-- **Gleason-theorem connection in Lean**: formalize the QLF-side of Gleason's uniqueness — given the uniform prior and the Pauli algebra, $|A|^2$ is the unique probability functional.
+- **Uniqueness of the probability functional — delivered by counting, not Gleason.** [`QLF_BornFromWays`](lean/QLF_BornFromWays.lean) proves that any probability assignment on a Gaussian-integer register that is symmetric under relabeling, normalized, and additive over unit ways is the Born rule (`born_from_ways`, `assignment_unique`). It is Zurek's envariance argument in finite form; because amplitudes are Gaussian integers, every weight is rational and no continuity step is needed. Write-up: [`Closure_Unitarity.md`](Closure_Unitarity.md) §16. What it does not settle is which census quantity is the register.
 - **Quantum contextuality**: Bell-Kochen-Specker theorem is the constraint that probability assignments must be consistent across measurement contexts. QLF's per-context possibility trees should derive this consistency automatically.
 
 ## References

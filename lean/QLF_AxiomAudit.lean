@@ -69,6 +69,7 @@ import QLF_RealizableWalk
 import QLF_Tsirelson
 import QLF_Mass
 import QLF_DiracWalk
+import QLF_BornFromWays
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -261,3 +262,5 @@ import QLF_DiracWalk
 #print axioms QLF.DiracWalk.handed_unitary
 #print axioms QLF.DiracWalk.diracWalk_unitary
 #print axioms QLF.DiracWalk.diracWalk_generator
+#print axioms QLF.BornFromWays.born_from_ways
+#print axioms QLF.BornFromWays.assignment_unique
