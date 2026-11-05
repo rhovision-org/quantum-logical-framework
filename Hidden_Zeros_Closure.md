@@ -144,3 +144,33 @@ directions of one twist are too coarse. This momentum map is recorded as a **rej
 `X_{ij}` from closures. A viable map would give each particle a momentum built from many twists (a long
 closed word per particle, with its realizable projection as the momentum), so that generic sub-sums are
 not null; that is the next thing to pre-register.
+
+---
+
+## 7. Pre-registration, round 3: momenta from long words
+
+Committed before the run. Script: [`hidden_zero_words.py`](hidden_zero_words.py).
+
+**Momenta.** A particle is a long twist word `w` over the six spatial twists. Its lattice momentum is the
+word's net displacement `k(w) = Σ s·e_a ∈ ℤ³` (the walk picture of [`Closure_Walk.md`](Closure_Walk.md)), and
+its energy is the on-shell value of the realizable walk, `|k|`: the walk's generator is the Weyl operator
+`k·σ` ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean), `realWalk_generator`), whose eigenvalues are
+`±|k|`. So `p(w) = η·(|k|, k)`, null, with `η = +1` for kets (incoming) and `−1` for bras. A single twist
+gives `|k| = 1` and reproduces round 2 exactly. Exact arithmetic needs `|k| ∈ ℤ`; the words used are those
+with `|k| ≤ 3` (displacements `(1,0,0)`, `(2,0,0)`, `(3,0,0)`, `(2,2,1)` and their images: 42 directions).
+
+`n = 4`: every conserving quadruple. `n = 6`: every conserving sextuple reachable by choosing four momenta
+and splitting the remainder into two null momenta from the same set, capped at 200,000 histories.
+
+| | Prediction | Kill condition |
+|---|---|---|
+| **K1′** | `c_{ab} = −2 p_a·p_b` (code check). | Any mismatch. |
+| **K4** (the route) | Non-singular histories on a hidden-zero locus exist at `n = 4` and `n = 6`. | None at either `n`: the route is rejected like round 2. |
+| **K2′** | `A^{W0}` vanishes on every one of them. | Any nonzero value. |
+| **K3′** | Every zero of `A^{W0}` on non-singular histories lies on a hidden-zero locus. | One zero off every locus. |
+
+Expected, and stated so it is not mistaken for a finding: for null momenta `p_a·p_b = 0` only when they are
+parallel, so the loci are collinear configurations (at four points, forward scattering `p₃ = −p₁`). A pass on
+K4 and K2′ means the closure lattice reaches the hidden zeros with finite propagators. It is standard
+kinematics on a QLF-generated momentum set, not new physics. K3′ is the part that could surprise: zeros
+off the loci would be zeros the continuum theory does not name, special to the lattice.
