@@ -2,11 +2,38 @@
 
 **Claim.** Hamilton's principle `δS = 0` is the law every fundamental theory shares. That includes
 Hilbert's 1915 derivation of general relativity from `S = ∫ R √−g d⁴x`, where the field equations are
-just the stationarity of the curvature action. QLF's claim is that classical `δS = 0` is the continuum shadow of a sharper substrate rule: **free
-action cannot survive into a physical event**. An open history may carry free action, but its first ZFA
-closure is absorbing and is the event. Priority therefore comes from **first closure**, not from a modal
-count. Separately, conjugate symmetry makes the multiplicity stationary and maximal at balance. That
-proves the right variational signature; it does not make the mode the event selector.
+just the stationarity of the curvature action. QLF proposes the substrate reason in one chain:
+
+\[
+\boxed{\text{equal and opposite logical action}
+\;\longrightarrow\;
+\text{Zero Free Action}
+\;\xrightarrow{\text{proposed continuum bridge (open)}}\;
+\text{stationary action}.}
+\]
+
+Equal and opposite logical action is primitive. When the ledger closes exactly, free action is zero.
+**QLF conjectures that this balance is represented by stationarity under admissible continuum
+variations.** That last arrow is an open bridge, not a consequence of ZFA alone. An exact closure
+condition `F(h) = 0` constrains the *value* at a history; `δS[h] = 0` constrains its first-order
+*response* to admissible variations. Neither follows from the other without a map and a theorem: even
+`F(q) = q` vanishes at `q = 0` while `dF/dq = 1` there. If the bridge holds, QLF does not need
+multiplicity to *cause* stationary action, because conjugate balance supplies the reason. The
+multiplicity theorems below show that the discrete census is stationary and maximal at the same
+balance point, which is an independent structural check, not a proof of the bridge. First closure
+determines event priority; multiplicity determines frequency.
+
+**What the bridge would have to supply.** A proof of the last arrow needs four things, none of which
+is formalized yet:
+
+1. the space of closed discrete histories and a continuum reconstruction map `Φ`, saying which fields
+   and geometries it reconstructs;
+2. the physical (or discrete) action functional, its boundary conditions, and the class of admissible
+   variations;
+3. a first-variation identity, or a conjugation symmetry of that **action** (not only of the
+   multiplicity), strong enough to force `δS[Φ(h)] = 0`;
+4. convergence of the **variations**, not merely of the values, of the causal-set action to the
+   Einstein–Hilbert variational problem, boundary terms included.
 
 Lean: [`lean/QLF_StationaryAction.lean`](lean/QLF_StationaryAction.lean) (one axis), and
 [`lean/QLF_StationaryPhase.lean`](lean/QLF_StationaryPhase.lean) for the signed phase and all four
@@ -34,25 +61,33 @@ readings are the two halves of the quantum-gravity problem. GR is a classical va
 geometry, and QM is a sum over histories. The principle they share has never been explained, so their
 agreement has looked like a coincidence.
 
-**ZFA supplies the reason and makes the two halves one.** Both follow from a single count on a single
-substrate, and both are machine-verified:
+**ZFA supplies the reason and makes the two halves one.** The common source is not the modal count
+but the conjugate structure itself: every logical action has an equal and opposite partner, exact
+balance is ZFA, and QLF conjectures that the continuum image of that balance is stationarity. The
+census and phase theorems prove the discrete part: the unsigned census and the signed endpoint
+amplitude both peak at that same closure. They do not by themselves give `δS = 0`:
 
-* **The classical half — the GR side.** Event order comes from first ZFA closure: the event occurs
-  when outstanding free action first reaches zero. Separately, conjugate pairing puts the unsigned
-  census at a stationary, maximal point at balance (`balance_is_stationary_mode`,
-  `ways_mode_at_balance`, §2). That is a proved variational signature, not the priority rule. The open
-  bridge is to show that classical `δS = 0` is the continuum rendering of this first-closure condition.
-* **The quantum half — the QM side.** The same pairing, read on phases, makes the signed transfer
-  kernel anti-Hermitian. The closure amplitude is then the norm of the half-way amplitude, and no
-  endpoint beats it (`amp_swap`, `return_amplitude_sum_sq`, `signed_mode_at_balance`, §5a). This is
-  Feynman's stationary phase, proved for QLF's own phase.
+* **The classical half — the GR side.** Conjugate pairing makes exact balance the ZFA condition and
+  puts the unsigned census at a stationary, maximal point there (`balance_is_stationary_mode`,
+  `ways_mode_at_balance`, §2). The open bridge is to show rigorously that the physical action
+  functional used by GR is the continuum rendering of this equal-and-opposite closure condition.
+* **The quantum half — the QM side.** The same pairing, read on phases, gives the reversal law
+  `K_m(y, x) = (−1)^m K_m(x, y)` (`amp_swap`). The amplitudes are real, so the `m`-step kernel is
+  **skew-symmetric for odd `m` and symmetric for even `m`**. The closure amplitude is then the norm of
+  the half-way amplitude, and no endpoint beats it (`return_amplitude_sum_sq`,
+  `signed_mode_at_balance`, §5a). This is a discrete analogue of Feynman's stationary phase, an
+  endpoint-amplitude bound proved for QLF's own phase. It is not by itself a derivation of `δS = 0`.
 
 So QM and GR are not two theories that happen to share a principle. They are **the unsigned and the
 signed readings of one closure census**, and ZFA's conjugate pairing is what makes each of them
-stationary at the same place. **This is the unification of quantum mechanics and general relativity
-at the level where both were always defined — their shared variational principle — and it is
-machine-verified.** The kill condition (§3) shows the claim has content: break the pairing and both
-stationarities leave the closure.
+stationary at the same place. **That is the proposed unification of quantum mechanics and general
+relativity, at the level where both were always defined: their shared variational principle.** What is
+machine-verified is its discrete half: both readings of the closure census peak at balance, and the
+kill condition (§3) shows this has content, because breaking the pairing moves both peaks off the
+closure. The physical identification, that the census and the amplitude *are* the GR and QM action
+functionals, is the open bridge above. The causal-set continuum step it would rest on is itself an
+explicit axiom (`benincasa_dowker_limit` in [`lean/QLF_CausalContinuum.lean`](lean/QLF_CausalContinuum.lean)),
+and it concerns the mean value of an operator, not its first variation.
 
 **Why Hilbert could not finish, and why ZFA can.** Hilbert had the right principle and the wrong
 arena. He wrote his action over the continuum, and the continuum has produced physical fantasy every
@@ -185,7 +220,7 @@ proves the signed statement on all of `ℤ⁴` with no axioms:
 | Theorem | Statement | Reading |
 |---|---|---|
 | `amp_add` | `amp(m+n) x z = Σ_u phase(u)·amp(n) (end u) z` | a history splits; its phase factors |
-| `amp_swap` | `amp m y x = (−1)^m · amp m x y` | reversal flips every edge sign: the signed kernel is **anti-Hermitian**, the conjugate pairing at the level of phases |
+| `amp_swap` | `amp m y x = (−1)^m · amp m x y` | reversal flips every edge sign: the real kernel is **skew-symmetric for odd `m`, symmetric for even `m`**, the conjugate pairing at the level of phases |
 | `return_amplitude_sum_sq` | `amp(2m) x x = (−1)^m · Σ_y amp(m) x y²` | **the closure amplitude is the norm of the half-way amplitude** |
 | `amp_closed_translate` | `amp n x x = amp n 0 0` | a closed loop carries the same phase wherever it starts |
 | `signed_mode_at_balance` | `\|amp(2m) 0 x\| ≤ \|amp(2m) 0 0\|` | **stationary phase:** no endpoint beats the closure |
@@ -194,7 +229,7 @@ proves the signed statement on all of `ℤ⁴` with no axioms:
 The proof is short once the pieces exist. Split a `2m`-step history at its midpoint. Reversal turns
 the second half into a first half with sign `(−1)^m`. Grouping by midpoint then gives
 `amp(2m) 0 x = (−1)^m Σ_y f(y)·g_x(y)`, and Cauchy–Schwarz bounds it by `Σ f² = |amp(2m) 0 0|`.
-The one input that is specific to QLF is the anti-Hermitian step: the connection never reads the
+The one input that is specific to QLF is the reversal step: the connection never reads the
 coordinate being stepped (`edgeParity_stepPos_own`), so stepping back through an edge flips exactly
 its twist sign.
 

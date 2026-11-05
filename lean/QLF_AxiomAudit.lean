@@ -60,6 +60,10 @@ import QLF_LorentzCover
 import QLF_RiemannMRE
 import QLF_StationaryAction
 import QLF_StationaryPhase
+import QLF_ClosureKernel
+import QLF_ClosureLeakage
+import QLF_ClosureChannels
+import QLF_ChannelZeros
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -205,3 +209,28 @@ import QLF_StationaryPhase
 #print axioms QLF.p_vs_np_in_qlf
 #print axioms QLF.riemann_hypothesis_in_qlf
 #print axioms QLF.riemann_hypothesis_in_qlf_via_MRE
+
+/-! ## Closure algebra (issue #207) — expected: no QLF name
+
+    U1, U2 seed, PZ1, PZ3 and U3 are finite combinatorics over the twist alphabet. Every anchor
+    below should carry at most the Lean three. The `native_decide` cross-checks in those modules
+    (registry counts, `K_2`, `K_4`) are deliberately not listed: they add `Lean.ofReduceBool` and
+    nothing structural depends on them. -/
+
+#print axioms QLF.ClosureUnitarity.history_unitary
+#print axioms QLF.ClosureUnitarity.closure_by_dagger
+#print axioms QLF.ClosureUnitarity.zero_taxonomy
+#print axioms QLF.ClosureUnitarity.antiHermitian_seed_forbidden
+#print axioms QLF.ClosureUnitarity.upLeft_forbidden_all_orders
+#print axioms QLF.ClosureKernel.closure_factorization
+#print axioms QLF.ClosureKernel.vacuum_resolvent_inverse
+#print axioms QLF.ClosureKernel.channel_factorization
+#print axioms QLF.ClosureKernel.kernel_zero_of_amplitude_zero
+#print axioms QLF.ClosureLeakage.leakage_identity
+#print axioms QLF.ClosureLeakage.openMass_ge_quarter
+#print axioms QLF.ClosureLeakage.open_amplitude
+#print axioms QLF.ClosureChannels.channel_last_exit
+#print axioms QLF.ClosureChannels.channel_series
+#print axioms QLF.ClosureChannels.mixed_channel_zero
+#print axioms QLF.ClosureChannels.mixed_open_zero
+#print axioms QLF.ClosureChannels.channel_two_sided
