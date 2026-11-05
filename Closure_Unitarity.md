@@ -576,7 +576,7 @@ and assumes nothing about space.
 Arrighi, Nesme and Forets 2014; D'Ariano and Perinotti 2014). What QLF supplies is the derivation of
 each piece: unitarity from realizability (§12), the second factor as handedness (§14), and every
 generator a twist. Still open: a convergence theorem for long walks (the generator is first order
-only), and the gauge axis.
+only), and the gauge axis (now §17).
 
 
 ## 16. The Born rule is the count of equal ways
@@ -620,3 +620,34 @@ because its amplitudes are Gaussian integers: every Born weight is a ratio of wh
 rational case is the only case. No continuum enters. Still open, as before: why nature's weight has
 no third-order interference ([`Interference_NoGo.md`](Interference_NoGo.md) §6, the three-slit
 bound), and which census quantity is the register `ψ`.
+
+## 17. The gauge axis is the clock, and closure is on the mass shell
+
+The walks of §12–§15 used the three spatial axes and left the gauge axis out. Put it back and it turns
+out to have one job ([`QLF_GaugeAxis`](lean/QLF_GaugeAxis.lean)). The gauge twists `+` and `−` map to
+`1` and `−1`, so the realizable part of `+` is the whole space and of `−` is nothing. A gauge step has
+no spin direction to choose, and its realizable step is a pure phase:
+
+```text
+fix_plus, fix_minus     :  fix + = 1,  fix − = 0
+gaugeStep_eq            :  realStep + ω = e^{iω} · 1            a clock tick
+gaugeStep_central       :  it commutes with every step
+spacetimeWalk_unitary   :  tick ω · diracWalk k m is unitary
+spacetimeWalk_generator :  its generator is i(ω + k·α + mβ)
+mass_shell              :  (ω + k·α + mβ) ψ = 0,  ψ ≠ 0   ⟹   ω² = k² + m²
+light_cone              :  (ω + k·σ) ψ = 0,  ψ ≠ 0         ⟹   ω² = k²
+```
+
+The reading. A state whose tick exactly cancels its spatial phase has zero net phase per step, which
+is zero free action. `mass_shell` says those states satisfy `ω² = k² + m²`: closure puts the walk on
+the mass shell, and without mass, on the light cone. The shell is not put in by hand. It comes from
+the Clifford square `dirac_sq` and nothing else. The gauge axis carries the frequency because it is
+the only axis with no spin direction, which fits the QLF reading of time as the rate of closure
+([`Philosophy.md`](Philosophy.md)).
+
+**Credit and scope.** That a stationary solution of the Dirac equation lies on the mass shell is
+standard; what is new is where each piece comes from. Here `ω` is a frequency label, as `k` is a
+momentum label, and the derivative in those labels is the only continuum notion used. The gauge
+phase is a global phase, so this section does not yet tell energy apart from an electromagnetic
+gauge phase; that needs the phase to vary from place to place, which is open, along with a
+convergence theorem for long walks.

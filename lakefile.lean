@@ -281,5 +281,6 @@ lean_lib QLF where
     `QLF_Tsirelson,
     `QLF_Mass,
     `QLF_DiracWalk,
-    `QLF_BornFromWays
+    `QLF_BornFromWays,
+    `QLF_GaugeAxis
   ]

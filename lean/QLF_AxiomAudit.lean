@@ -70,6 +70,7 @@ import QLF_Tsirelson
 import QLF_Mass
 import QLF_DiracWalk
 import QLF_BornFromWays
+import QLF_GaugeAxis
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -264,3 +265,6 @@ import QLF_BornFromWays
 #print axioms QLF.DiracWalk.diracWalk_generator
 #print axioms QLF.BornFromWays.born_from_ways
 #print axioms QLF.BornFromWays.assignment_unique
+#print axioms QLF.GaugeAxis.spacetimeWalk_unitary
+#print axioms QLF.GaugeAxis.spacetimeWalk_generator
+#print axioms QLF.GaugeAxis.mass_shell
