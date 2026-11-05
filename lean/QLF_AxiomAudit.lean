@@ -87,6 +87,7 @@ import QLF_NonAbelianAction
 import QLF_NonAbelianField
 import QLF_Courant
 import QLF_CompactBound
+import QLF_OpticalTheorem
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -351,3 +352,8 @@ import QLF_CompactBound
 #print axioms QLF.CompactBound.force_le
 #print axioms QLF.CompactBound.E_bound
 #print axioms QLF.CompactBound.A_bound
+#print axioms QLF.OpticalTheorem.optical_iff
+#print axioms QLF.OpticalTheorem.optical_forward
+#print axioms QLF.OpticalTheorem.history_optical
+#print axioms QLF.OpticalTheorem.realWalk_optical
+#print axioms QLF.OpticalTheorem.raw_optical_defect

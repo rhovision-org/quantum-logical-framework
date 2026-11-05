@@ -1,7 +1,7 @@
 # Lean 4 Formalization — Quantum Logical Framework
 
 **Build:** `lake build` on Lean 4.30.0-rc2 + Mathlib  
-**Status:** CI passing, zero `sorry` blocks across all 277 active modules (registered in [`../lakefile.lean`](../lakefile.lean) roots). This table is the **canonical full per-module index** — [`../CLAUDE.md`](../CLAUDE.md) keeps only a short core-anchor list and points here. The table may trail the roots by a few of the most recent modules.
+**Status:** CI passing, zero `sorry` blocks across all 278 active modules (registered in [`../lakefile.lean`](../lakefile.lean) roots). This table is the **canonical full per-module index** — [`../CLAUDE.md`](../CLAUDE.md) keeps only a short core-anchor list and points here. The table may trail the roots by a few of the most recent modules.
 
 ## What This Formalization Proves
 
@@ -332,6 +332,7 @@ Modules registered in `lakefile.lean` after the thematic groups above, in build 
 | [QLF_NonAbelianField.lean](QLF_NonAbelianField.lean) | **The lattice Yang–Mills equation as stationarity** ([Closure_Unitarity.md](../Closure_Unitarity.md) §31, issue #207). On distinct directions each plaquette holds a link once, so Wilson's action is affine in each link and its variation is exact: moving `U_k(y)` by `εD` changes the action by `−(ε/2) Re tr(D·M)`, `M` the staple sum. The action is unchanged along every tangent direction `U X` (`X` anti-Hermitian) iff `M U − (M U)ᴴ = 0`. No axioms. | `wilson_eq_off`, `hol_bump`, `wilsonOff_bump`, `force_eq`, `stationary_iff`, `yang_mills_iff` |
 | [QLF_Courant.lean](QLF_Courant.lean) | **The Courant bound `nτ² ≤ 1`** ([Closure_Unitarity.md](../Closure_Unitarity.md) §32, issue #207). The lattice Weitzenböck identity `⟨A, K A⟩ + Σ(div A)² = Σ|∇A|²` gives `⟨A, K A⟩ ≤ 4n|A|²` and `|K A|² ≤ 4n⟨A, K A⟩`; so `½(1 − nτ²)` times either the magnetic or the electric energy is at most the field energy, and for `nτ² < 1` the free leapfrog keeps both bounded for all time. `4n` is the largest eigenvalue (computed), so the constant is sharp. No axioms. | `swap_diff`, `weitzenboeck`, `K_le`, `K_sq_le_sharp`, `energy_lower_sharp`, `energy_nonneg_sharp`, `free_bounded_sharp` |
 | [QLF_CompactBound.lean](QLF_CompactBound.lean) | **Compact links cannot blow up** ([Closure_Unitarity.md](../Closure_Unitarity.md) §33, issue #207). The Wilson force `curl(sin F)` is at most `2n` per component, so for **every** time step, with currents bounded by `j`, the electric field grows at most linearly and the link phase at most quadratically — no Courant condition, unlike the linear field. No axioms. | `force_le`, `cstep`, `cevolve`, `E_bound`, `A_bound` |
+| [QLF_OpticalTheorem.lean](QLF_OpticalTheorem.lean) | **The finite optical theorem (U3b)** ([Closure_Unitarity.md](../Closure_Unitarity.md) §34, issue #207). With `S = 1 + iT`, `SᴴS − 1 = TᴴT + i(T − Tᴴ)`, so `S` is unitary iff `2 Im T = T†T`; forward, `2 Im Tₐₐ = Σ_c \|T_ca\|²` over intermediate channels. Holds for every twist history, the realizable walk and the light-cone step; the raw census step violates it by exactly `2/3`. No axioms. | `defect_eq`, `tmat`, `optical_iff`, `forward_defect`, `optical_forward`, `history_optical`, `realWalk_optical`, `coneStep_optical`, `raw_optical_defect` |
 
 ---
 

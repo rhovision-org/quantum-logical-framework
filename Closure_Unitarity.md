@@ -1125,3 +1125,27 @@ quadratically, link by link. The walk's current obeys such a bound, `|J| ≤ Q` 
 Compactness, which §28 introduced to make the action periodic, also removes the runaway: a
 bounded phase cannot push arbitrarily hard. Open: an exactly conserved energy for the compact
 leapfrog (the force is not linear) and bounds uniform in time.
+
+## 34. The optical theorem (U3b)
+
+[`QLF_OpticalTheorem`](lean/QLF_OpticalTheorem.lean) writes a channel matrix as `S = 1 + iT`:
+
+```text
+defect_eq        :  SᴴS − 1 = TᴴT + i(T − Tᴴ)                          (any finite channel set)
+optical_iff      :  S unitary  ⟺  TᴴT = −i(T − Tᴴ)                      (2 Im T = T†T)
+forward_defect   :  Re(SᴴS)ₐₐ − 1 = Σ_c |T_ca|² − 2 Im Tₐₐ
+optical_forward  :  S unitary  ⟹  2 Im Tₐₐ = Σ_c |T_ca|²                (sum over intermediate channels)
+history_optical, realWalk_optical, coneStep_optical :  every twist history, the realizable walk at
+                    every momentum, and the light-cone step satisfy it
+raw_optical_defect :  the raw census step violates it:  Σ_c |T_c0|² − 2 Im T₀₀ = 2/3
+```
+
+The identity is algebra; what QLF supplies is which channel matrices obey it. Those built from
+realizable histories do, because they are unitary (§12, #208). The raw coherent census step
+(§12) does not, and the forward defect `2/3` is exactly the norm it creates. So the optical theorem
+fails in the same place unitarity does, and for the same reason. The momentum-space walk is one
+block of the translation-invariant position-space walk, so the theorem holds block by block; a
+statement on the full position-space channel space is open (it goes with U2).
+
+**Credit.** Bohr, Peierls and Placzek (1939), after Feenberg (1932); Cutkosky's cutting rules
+(*J. Math. Phys.* **1**, 429 (1960)) are its diagrammatic form.
