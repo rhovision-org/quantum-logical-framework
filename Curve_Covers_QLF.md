@@ -167,3 +167,39 @@ circulation. That is where a closure derivation would have to start.
   hand" from first closure on the fatgraph, rather than reading it off the paper.
 * **One loop (G4b).** Extend the enumerator to the punctured disk and test the closed-curve exponent
   `1 − D` against a pre-registered reading of `D` as the four twist axes.
+
+---
+
+## 7. Pre-registration, round 2: one loop (G4b) and eight gluons
+
+Committed before any of the runs below. Script: [`curve_cover_loop.py`](curve_cover_loop.py).
+
+**The loop enumerator.** On the punctured disk there is no chord-crossing code to compare against, so the
+curve side is built from the dictionary of §5: a curve is a walk read by handedness, its core and
+extensions read from the turn word, a curve into the puncture spirals at constant hand, and the closed curve
+`Δ` around the puncture covers every loop propagator (paper eq. 14), with `Δ = 1 − D` for the planar
+one-loop case. Curves whose kinematic variable vanishes are dropped: tadpoles, massless neighbours,
+on-shell scaffolds, loop propagators. Two checks were run before this commit:
+
+* the walker, run on full leg-to-leg walks of every tree fatgraph through `n = 6`, reproduces the
+  eq. (13) polynomial on all 22 graphs;
+* on the one-loop bubble it gives `LS = (D − 2) X_{2,p} X_{4,p}` from 4 configurations (the closed curve
+  plus three extension fillings), with no `X_{2,4}` term: paper eqs. (17)–(21) exactly.
+
+So the dictionary already reproduces the one published loop example. Predictions for the planar one-loop
+triangle, box and pentagon (`n = 3, 4, 5`):
+
+| | Prediction | Kill condition |
+|---|---|---|
+| **L1** | The coefficient of `∏ᵢ X_{2i,p}` is `(−1)ⁿ (D − 2)`: the paper's eq. (68), so a check of the code. | Any other coefficient. |
+| **L2** | **Every coefficient that depends on `D` is a multiple of `D − 2`.** `D` enters only as the count of polarizations transverse to propagation, which is the reading in which QLF's four axes give 2. | Any `D`-dependent coefficient whose root is not `D = 2`. |
+
+The paper proves L1 for the one monomial. L2 is not stated there, and nothing in the construction forces
+it: the closed curve also multiplies monomials in which fewer than `n` curves end on the puncture, and for
+those the extension sum that turns `1 − D` into `2 − D` need not appear.
+
+**Eight gluons (tree), from the post hoc observation in §5.** All 132 scaffolded tree fatgraphs at `n = 8`:
+
+| | Prediction | Kill condition |
+|---|---|---|
+| **H5** | Every coefficient of the pure Yang–Mills part (lowest degree) is `±1`. | Any pure-YM coefficient of magnitude 2 or more. |
