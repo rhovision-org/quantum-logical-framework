@@ -678,5 +678,37 @@ physical content. That is the Aharonov–Bohm phase (*Phys. Rev.* **115**, 485 (
 **Credit and scope.** The gauge principle is Weyl's (*Z. Phys.* **56**, 330 (1929)), and link phases
 with their holonomies are Wilson's lattice form (*Phys. Rev. D* **10**, 2445 (1974)). What QLF adds is
 where the pieces come from: each hop is a realizable twist step (§12), and the phase on it is the
-gauge axis (§17). The ring is one-dimensional, so its only loop is the ring itself. Plaquettes,
-field strength and Maxwell dynamics need a two- or three-dimensional lattice and are open.
+gauge axis (§17). The ring is one-dimensional, so its only loop is the ring itself; plaquettes
+and field strength are §19.
+
+## 19. Plaquettes, field strength and the Bianchi identity
+
+The ring of §18 has one loop. [`QLF_LatticeGauge`](lean/QLF_LatticeGauge.lean) puts the walk on any
+finite lattice of sites (any finite abelian group, such as the 3-torus `ZMod N × ZMod N × ZMod N`),
+with a phase on every link along every axis. The smallest loops are now the plaquettes.
+
+```text
+axisStep_norm, twoAxis_norm      :  a step along any axis, and any product of them, is unitary
+axisStep_covariant               :  W_{e, a'} (e^{iθ} ψ) = e^{iθ} (W_{e, a} ψ),  a'(x) = a(x) + θ(x+e) − θ(x)
+plaquette                        :  F_ef(x) = a_e(x) + a_f(x+e) − a_e(x+f) − a_f(x)
+plaquette_invariant              :  every local phase change leaves every F unchanged
+pure_gauge_no_field              :  a link field that is only a phase change has F = 0
+plaquette_antisymm               :  F_fe = −F_ef
+bianchi                          :  Δ_e F_fg + Δ_f F_ge + Δ_g F_ef = 0          on every cube
+total_plaquette_zero             :  Σₓ F_ef(x) = 0                                on a closed lattice
+```
+
+The reading. The phase around a plaquette is the field strength. It is what survives every local
+phase change, and a link field that is only a phase change carries none. On every cube the six
+oriented faces cancel (`bianchi`): that is the discrete `dF = 0`, the source-free half of Maxwell's
+equations, which says there are no magnetic monopoles and gives Faraday's law. It is an identity of
+the links, not a law put in. On a closed lattice the total flux through any plane is zero.
+
+The substrate already carries one such link field: the fold sign is the ℤ₂ edge-sign connection of
+[`QLF_EdgeSign`](lean/QLF_EdgeSign.lean), with flux `π` through every mixed spatial plaquette. So the
+twist algebra comes with a fixed background field, and a gauge phase on the gauge axis adds to it.
+
+**Credit and scope.** Link phases, plaquettes and the lattice Bianchi identity are Wilson's lattice
+gauge theory (*Phys. Rev. D* **10**, 2445 (1974)). What QLF adds is the hop and the phase. Not here:
+the other half of Maxwell's equations (Gauss and Ampère), which needs a dynamics for the links, and
+non-abelian link fields.
