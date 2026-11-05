@@ -240,3 +240,33 @@ What a pass would and would not mean, stated now: S2 is the known theorem, so a 
 Gaussian-integer spinors realize every hidden zero through seven points with finite propagators, the gap
 rounds 2 and 3 left. It is still the standard amplitude, and still not a number the standard theory
 lacks.
+
+---
+
+## 10. Results, round 4: every hidden zero through seven points on spinor momenta
+
+Run with `python3 hidden_zero_spinors.py --max-n 7 --points 20` (about 2 s, exact arithmetic).
+
+| `n` | Locus points built | Singular | Non-singular | `A^{W0} = 0` | Control points | Control zeros |
+|---|---|---|---|---|---|---|
+| 5 | 100 | 2 | 98 | 98/98 | 100 | 0 |
+| 6 | 180 | 2 | 178 | 178/178 | 180 (2 singular skipped) | 0 |
+| 7 | 279 | 1 | 278 | 278/278 | 280 (2 singular skipped) | 0 |
+
+(At `n = 7` one locus point could not be built because the conservation solve was degenerate; it is
+counted as missing, not as a pass.)
+
+**S1 passes.** Non-singular locus points exist at every `n`, and they are almost all of them: 1–2
+singular points per `n`, against 97–99 % in round 2 and every six-point locus point in round 3.
+
+**S2 passes.** The amplitude vanishes at all 554 non-singular locus points.
+
+**S3 passes.** No generic point gives a zero, so the vanishing on the loci is not a degeneracy of the
+construction.
+
+**What this settles, and what it does not.** Complex momenta built from Gaussian-integer spinors, the
+ring of QLF's Pauli phases, reach every hidden zero through seven points with finite propagators. That
+closes the gap rounds 2 and 3 left: the obstruction at six points was real four-dimensional kinematics,
+not the closure sum. As stated in §9 before the run, S2 is the known theorem, so this is the standard
+`Tr(φ³)` amplitude evaluated on QLF-built momenta. The propagator `1/X` is still inserted (§4), and no
+closure count has yet produced a number the standard amplitude lacks.
