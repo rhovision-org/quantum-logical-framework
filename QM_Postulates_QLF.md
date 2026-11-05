@@ -191,6 +191,33 @@ should be computed next. (3) A lattice picks a rest frame and an orientation of 
 says neither, so a directional search has no predicted axes yet. (4) Only time-of-flight bounds are
 checked here, not threshold effects such as photon decay.
 
+### 5b. The realizable walk itself: a linear term, and how time symmetry removes it
+
+The rows above use the scalar walk. QLF's own spin-½ walk is the realizable Weyl walk of
+[`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean), `realWalk = step_y · step_x · step_z` with each
+step `exp(i k σ)`: every spin component moves at `c` along one axis per sub-step. Solving it exactly
+([`liv_dispersion.py`](liv_dispersion.py)):
+
+| Ordering | Along an axis | Body diagonal | Leading term |
+|---|---|---|---|
+| The Lean order `y, x, z` | exact, `E = k` | `E = k ± k²/(3√3)`, sign set by the octant | **linear**: `cos E = Π cos k_i − Π sin k_i`, so `E ≈ k + k_x k_y k_z / k` |
+| Palindromic (a half step in each order, `y x z` then `z x y`) | exact, `E = k` | `E = k − k³/18` | quadratic, `ξ = 1/9`, `E_QG,2 = 3.0 E_P`, subluminal |
+
+The fixed order breaks time reversal and parity, and that leaves a term **linear** in energy. Its sign
+flips between octants and between the two chiralities (the Dirac walk runs the other chirality at
+`−k`), and its size is `|v − 1| ≤ (2/(3√3)) E/E_P`, so `E_QG,1 = 2.6 E_P`. **If photons propagated with
+this dispersion, it would be excluded**: LHAASO's linear bound is `E_QG,1 > 10 E_P`. Two qualifications
+stop that being a refutation of QLF. The walk is a spin-½ walk, and nothing yet shows a photon inherits
+its dispersion. And the term comes from the order of the sub-steps, not from the walk: the palindromic
+ordering, which is time-symmetric, cancels it exactly and leaves only the quadratic term, allowed by
+about `5 × 10⁷`.
+
+So the data already **select** something: at Planck spacing, a realizable walk must be time-symmetric
+within each tick, or its linear term must be shown not to reach photons. The Lean `realWalk` uses the
+asymmetric order. Its unitarity and its generator (`realWalk_unitary`, `realWalk_generator`) hold for
+either order, so moving the definition to the palindromic form costs those theorems nothing, but it is a
+change to a Lean module and has not been made.
+
 ---
 
 ## 6. References
