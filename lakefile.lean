@@ -311,5 +311,6 @@ lean_lib QLF where
     `QLF_MixingUnitarity,
     `QLF_SharedClosure,
     `QLF_PolaronBranches,
-    `QLF_NonAbelianGauss
+    `QLF_NonAbelianGauss,
+    `QLF_HiddenZeros
   ]

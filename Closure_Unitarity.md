@@ -1445,3 +1445,27 @@ matrix links, and the walk's colour current as the source.
 
 **Credit.** The lattice Noether identity of gauge invariance; Creutz, *Quarks, Gluons and Lattices*
 (Cambridge, 1983); Kogut and Susskind (*Phys. Rev. D* **11**, 395 (1975)).
+
+## 46. The first hidden-zero benchmark (PZ4)
+
+PZ4 asks for the first hidden-zero benchmark of Arkani-Hamed, Cao, Dong, Figueiredo and He to be
+implemented, so that a closure construction has a fixed target.
+[`QLF_HiddenZeros`](lean/QLF_HiddenZeros.lean) states it exactly for `Tr(φ³)` at four and five
+points. Planar variables `X_{ij}` sit on the diagonals of the `n`-gon, mesh variables are
+`c_{ij} = X_{ij} + X_{i+1,j+1} − X_{i,j+1} − X_{i+1,j}`, and the amplitude sums `Π 1/X` over
+triangulations, one term per planar cubic gluing (the kinematic counterpart of §38's channels).
+
+```text
+A4_eq         :  A₄ = 1/X₁₃ + 1/X₂₄ = c₁₃ / (X₁₃ X₂₄)
+A4_zero       :  c₁₃ = 0  ⟹  A₄ = 0
+A5_zero       :  c₁₃ = c₁₄ = 0  ⟹  A₅ = 0                        (generic X)
+A5_near_zero  :  c₁₃ = 0  ⟹  A₅ = c₁₄ · A₄(X₂₄, X₃₅) / (X₁₃ X₂₅)
+```
+
+The zero belongs to the sum of channels, not to any one of them, and near it the amplitude factors
+through the four-point amplitude of the quadrilateral `(2, 3, 4, 5)`, away from any pole. This is
+the target, not the result: G2c asks for these zeros to come out of the closure kernel's phase or
+structural cancellations without being inserted, and the issue's kill condition is that they must.
+
+**Credit.** Arkani-Hamed, Cao, Dong, Figueiredo and He, arXiv:2312.16282 (*JHEP* **10** (2024) 231);
+Arkani-Hamed, Bai, He and Yan (*JHEP* **05** (2018) 096).

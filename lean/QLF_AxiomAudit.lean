@@ -99,6 +99,7 @@ import QLF_MixingUnitarity
 import QLF_SharedClosure
 import QLF_PolaronBranches
 import QLF_NonAbelianGauss
+import QLF_HiddenZeros
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -410,3 +411,6 @@ import QLF_NonAbelianGauss
 #print axioms QLF.PolaronBranches.f_deriv
 #print axioms QLF.NonAbelianGauss.noether
 #print axioms QLF.NonAbelianGauss.gauss_covariant
+#print axioms QLF.HiddenZeros.A4_zero
+#print axioms QLF.HiddenZeros.A5_zero
+#print axioms QLF.HiddenZeros.A5_near_zero
