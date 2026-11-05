@@ -305,5 +305,6 @@ lean_lib QLF where
     `QLF_PoleFactorization,
     `QLF_GluonVertex,
     `QLF_GluonGluing,
-    `QLF_Resonance
+    `QLF_Resonance,
+    `QLF_JointClosure
   ]

@@ -1286,3 +1286,25 @@ Resonances are closures that leak.
 
 **Credit.** Gamow (1928), Weisskopf and Wigner (1930); the projection picture is Feshbach's
 (*Ann. Phys.* **5**, 357 (1958)).
+
+## 40. The joint closure is the singlet, and it saturates Tsirelson
+
+§13 proved the CHSH bound `|⟨C⟩| ≤ 2√2` for every state and found one state of a twist pair that
+reaches it. [`QLF_JointClosure`](lean/QLF_JointClosure.lean) says which state that is, and why. Call
+a two-site state a **joint closure** when the two sites' actions cancel on every axis,
+`(σₐ ⊗ 1 + 1 ⊗ σₐ) ψ = 0`: zero net action on each axis, ZFA for a pair.
+
+```text
+singlet_trace       :  (X ⊗ 1 + 1 ⊗ X) s = tr X · s          for every 2×2 X,  s = |01⟩ − |10⟩
+closed_iff_singlet  :  x and z actions cancel on ψ  ⟺  ψ = ψ₀₁ · s
+singlet_corr        :  ⟨s| X ⊗ Y |s⟩ = tr X tr Y − tr(XY)
+singlet_saturates   :  a = σz, σx;  b = −(σz ± σx)/√2  ⟹  Re⟨s|C|s⟩ = 2√2 ⟨s, s⟩
+```
+
+The joint closure is unique up to a factor: it is the singlet. On traceless observables its
+correlation is `−tr(XY)`, perfect anticorrelation along any shared axis, and the CHSH expectation
+reaches the bound with equality. So the state that carries the quantum excess over Bell's `2` is
+not chosen: it is the only state whose halves close together on every axis.
+
+**Credit.** Bell (*Physics* **1**, 195 (1964)); Clauser, Horne, Shimony and Holt (*Phys. Rev. Lett.*
+**23**, 880 (1969)); Cirel'son (*Lett. Math. Phys.* **4**, 93 (1980)).

@@ -93,6 +93,7 @@ import QLF_PoleFactorization
 import QLF_GluonVertex
 import QLF_GluonGluing
 import QLF_Resonance
+import QLF_JointClosure
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -385,3 +386,6 @@ import QLF_Resonance
 #print axioms QLF.Resonance.resonance_balance
 #print axioms QLF.Resonance.resonance_le_one
 #print axioms QLF.Resonance.stable_iff_no_leak
+#print axioms QLF.JointClosure.closed_iff_singlet
+#print axioms QLF.JointClosure.singlet_corr
+#print axioms QLF.JointClosure.singlet_saturates
