@@ -798,5 +798,35 @@ and the update keeps Gauss's law.
 standard (Yee 1966, *IEEE Trans. Antennas Propag.* **14**, 302; Kogut and Susskind 1975, *Phys. Rev.
 D* **11**, 395, for the Hamiltonian lattice form). Gauss's law itself is the equation of the
 time-link phase; in temporal gauge it is a constraint that the update keeps, not one the variation
-produces. Not included: the walk's own action coupled to the links, and compact or non-abelian
-links.
+produces (§23 derives it). Not included: the walk's own action coupled to the links, and compact or
+non-abelian links.
+
+## 23. Gauss's law is the equation of the time-link phase
+
+[`QLF_GaussLaw`](lean/QLF_GaussLaw.lean) puts a phase `φ_τ(x)` on the time links that §22 left
+bare. The electric field becomes the time–space plaquette, `E = −Δ_t A − ∇φ`, and the charge couples
+to it:
+
+```text
+E_τ,i(x) = −(A_{τ+1,i}(x) − A_τ,i(x)) − (φ_τ(x + e_i) − φ_τ(x))
+S[A, φ]  = ½ Σ E² − Σ_τ S_link[A_τ] − Σ_τ Σₓ ρ_τ(x) φ_τ(x)
+
+gauss_variation                 :  (S[φ + εδ_{σ,y}] − S[φ − εδ_{σ,y}]) / 2ε = div E_σ(y) − ρ_σ(y)   every ε ≠ 0
+stationary_iff_gauss            :  stationary under every time-link variation  ⟺  div E = ρ
+stationary_iff_ampere           :  stationary under every space-link variation ⟺  E_σ = E_{σ−1} + curl F − J_σ
+stationary_forces_continuity    :  both  ⟹  ρ_σ − ρ_{σ−1} + div J_σ = 0
+gauge_invariant_iff_continuity  :  S invariant under every spacetime phase θ  ⟺  ρ_σ − ρ_{σ−1} + div J_σ = 0
+```
+
+The reading. Each kind of link has its own equation: the space links give Ampère–Maxwell and the
+time links give Gauss. Neither is put in. The two are compatible only if charge is conserved, and
+the same condition is what makes the coupling gauge invariant. This is the condition the walk
+already satisfies, site by site, from the realizability of each step (§20, `continuity`). So the
+whole set of lattice Maxwell equations, both halves, now rests on finite identities: Bianchi (§19)
+from the links alone, Gauss and Ampère–Maxwell from one finite action, and the source's
+conservation from the walk.
+
+**Credit and scope.** `E = −∂_t A − ∇φ` and Gauss's law as the `φ` equation are Maxwell's; the
+lattice form is standard (Kogut and Susskind 1975). Not included: the walk's own action coupled to
+the links (here `ρ`, `J` are given, and the walk is shown to supply ones that qualify), and compact
+or non-abelian links.

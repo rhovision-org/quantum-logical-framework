@@ -27,7 +27,8 @@ kinetic electric energy minus, at each time, the link action of `QLF_LinkAction`
   action selects.
 
 **Not here.** Gauss's law itself is the equation of a phase on the time links; in temporal gauge it
-is a constraint the update keeps (above), not one the variation produces. The links are non-compact
+is a constraint the update keeps (above), not one the variation produces; with the time-link
+phase restored, [`QLF_GaussLaw`](QLF_GaussLaw.lean) derives it. The links are non-compact
 (the weak-coupling, quadratic form); compact and non-abelian links, and the walk's own action, are
 not included. No axioms.
 

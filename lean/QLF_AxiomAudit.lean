@@ -76,6 +76,7 @@ import QLF_LatticeGauge
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
+import QLF_GaussLaw
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -290,3 +291,6 @@ import QLF_MaxwellTime
 #print axioms QLF.MaxwellTime.first_variation
 #print axioms QLF.MaxwellTime.stationary_iff_update
 #print axioms QLF.MaxwellTime.gauss_from_action
+#print axioms QLF.GaussLaw.stationary_iff_gauss
+#print axioms QLF.GaussLaw.stationary_forces_continuity
+#print axioms QLF.GaussLaw.gauge_invariant_iff_continuity
