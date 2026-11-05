@@ -1176,3 +1176,32 @@ one that closes it; and the channel kernel composes over intermediate channels o
 centre `{±1}`; the history category itself is not a groupoid, because `h ≫ h†` is a closure, not
 the empty history. That distinction is the content: an inverse in QLF is a history that closes,
 and closing is an event.
+
+## 36. Poles and factorized residues (PZ2)
+
+The resolvent of a channel matrix `K` is `G(z) = (1 − zK)⁻¹ = Σ zⁿ Kⁿ`, the generating function of
+`n`-fold propagation. [`QLF_PoleFactorization`](lean/QLF_PoleFactorization.lean) proves the
+finite form of PZ2:
+
+```text
+pole_part, regular_part :  K P = P K = λP, P² = P  ⟹  G = P/(1 − zλ) + (1 − P) G (1 − P)
+                           (the whole λ-pole is P/(1 − zλ); the rest inverts 1 − zK off P)
+residue_through_channels :  P_if = Σ_c P_ic P_cf                  (factorization through channels)
+rankOne_projector        :  simple eigenvalue, K r = λr, ℓK = λℓ, ℓ·r = 1  ⟹  P_if = r_i ℓ_f
+
+for a 2 × 2 channel step W with eigenvalues μ₁ ≠ μ₂ (exists_eigs):
+resolvent_partial :  (1 − zW)(P₁/(1 − zμ₁) + P₂/(1 − zμ₂)) = 1      (poles at μ₁⁻¹, μ₂⁻¹ only)
+proj_idem, proj_det :  each residue is idempotent with determinant 0  (rank one)
+eig_unit          :  W unitary  ⟹  |μ| = 1                            (poles on the unit circle)
+realWalk_poles    :  so for the realizable walk at every momentum
+```
+
+So the residue at a simple pole is the amplitude into the intermediate mode times the amplitude
+out of it, `r_i ℓ_f`, and it is idempotent, so it factors through intermediate channels. For the
+realizable walk the poles sit on the unit circle, `z = e^{−iω}`, at the walk's dispersion relation:
+a pole is a mode that propagates without decaying, the finite form of a particle on shell. The
+open part of PZ2 is the analytic rendering: reading `z` as `e^{−iω}` with `ω` the energy, and the
+continuum limit of the pole into a Feynman propagator.
+
+**Credit.** Riesz projectors are standard; pole factorization is the analytic S-matrix's (Eden,
+Landshoff, Olive and Polkinghorne, *The Analytic S-Matrix*, 1966).

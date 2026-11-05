@@ -89,6 +89,7 @@ import QLF_Courant
 import QLF_CompactBound
 import QLF_OpticalTheorem
 import QLF_ChannelGroupoid
+import QLF_PoleFactorization
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -363,3 +364,8 @@ import QLF_ChannelGroupoid
 #print axioms QLF.ChannelGroupoid.endo_closure
 #print axioms QLF.ChannelGroupoid.kernel_compose
 #print axioms QLF.ChannelGroupoid.kernel_dagger
+#print axioms QLF.PoleFactorization.regular_part
+#print axioms QLF.PoleFactorization.rankOne_projector
+#print axioms QLF.PoleFactorization.resolvent_partial
+#print axioms QLF.PoleFactorization.eig_unit
+#print axioms QLF.PoleFactorization.realWalk_poles

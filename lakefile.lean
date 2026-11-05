@@ -301,5 +301,6 @@ lean_lib QLF where
     `QLF_Courant,
     `QLF_CompactBound,
     `QLF_OpticalTheorem,
-    `QLF_ChannelGroupoid
+    `QLF_ChannelGroupoid,
+    `QLF_PoleFactorization
   ]
