@@ -1056,7 +1056,30 @@ holonomy_abelian, wilson_abelian :  N = 1, U = e^{ia}  gives W = e^{iF} and S = 
 So the matrix action is bounded below, its minimum is reached exactly on the flat links, and pure
 gauge configurations are among them. The `N = 1` case is not a new action: it is §28's term by term.
 
-**Scope.** This is the action, not its dynamics. Open: its variation (the non-abelian field
-equation, which needs a derivative along the unitary group rather than §28's derivative in `a`), an
-energy and leapfrog for matrix links, the non-abelian Gauss law, and which colour group the twists
-select.
+**Scope.** This is the action, not its dynamics; its variation is §31. Open: an energy and leapfrog
+for matrix links, the non-abelian Gauss law, and which colour group the twists select.
+
+## 31. The lattice Yang–Mills equation
+
+[`QLF_NonAbelianField`](lean/QLF_NonAbelianField.lean) varies §30's action. In a plaquette with two
+distinct directions a given link appears once, as `U` or as `Uᴴ`, so the action is **affine in each
+link** and its variation is exact:
+
+```text
+hol_bump        :  U_k(y) → U_k(y) + εD  changes each holonomy by exactly ε · dHol   (needs e_i ≠ 0)
+wilsonOff_bump  :  S → S − (ε/2) · force,      force_eq :  force = Re tr(D · M_k(y))
+                   M_k(y) = Wilson's staple sum, the three-link products closing each plaquette
+stationary_iff  :  Re tr(V X M) = 0 for every anti-Hermitian X   ⟺   M V is Hermitian
+yang_mills_iff  :  S unchanged along every tangent direction U_k(y) X of the unitary group
+                   ⟺   M_k(y) U_k(y) − (M_k(y) U_k(y))ᴴ = 0
+wilson_eq_off   :  for unitary links the diagonal plaquettes contribute nothing
+```
+
+The last condition is the lattice Yang–Mills equation at the link: the anti-Hermitian part of the
+link times its staple sum vanishes. Here it is the stationarity of a finite action, not an
+equation posited for a field. The direction `U X` is tangent to the unitary group at `U`; because
+the action is affine in the link, "unchanged to first order" and "unchanged" along this line agree.
+
+**Credit and scope.** Standard lattice gauge theory after Wilson (1974); see Creutz, *Quarks,
+Gluons and Lattices* (Cambridge, 1983). Open: a time step and energy for matrix links, the walk's
+colour current as a source, the non-abelian Gauss law, and which colour group the twists select.

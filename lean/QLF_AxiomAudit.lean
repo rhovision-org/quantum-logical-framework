@@ -84,6 +84,7 @@ import QLF_FieldEnergy
 import QLF_CompactLinks
 import QLF_NonAbelian
 import QLF_NonAbelianAction
+import QLF_NonAbelianField
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -337,3 +338,7 @@ import QLF_NonAbelianAction
 #print axioms QLF.NonAbelianAction.wilson_eq_zero_iff
 #print axioms QLF.NonAbelianAction.pure_gauge_action
 #print axioms QLF.NonAbelianAction.wilson_abelian
+#print axioms QLF.NonAbelianField.wilsonOff_bump
+#print axioms QLF.NonAbelianField.force_eq
+#print axioms QLF.NonAbelianField.stationary_iff
+#print axioms QLF.NonAbelianField.yang_mills_iff
