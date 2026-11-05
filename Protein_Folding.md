@@ -365,7 +365,7 @@ Stated first, per [`ScientificApproach.md`](ScientificApproach.md) R7:
 
 ---
 
-**See also:** [`Chemistry.md`](Chemistry.md) (the rung below) ·
+**See also:** [`Chemistry.md`](Chemistry.md) (the rung below) · [`Polarons_QLF.md`](Polarons_QLF.md) (another emergent-matter closure census: impurity + bath) ·
 [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`protein_census.py`](protein_census.py) ·
 [`Fredkin_QLF.md`](Fredkin_QLF.md) (the same plaquette, as a billiard ball) ·
 [`Evolution.md`](Evolution.md) (why a possible fold can stay unreached) ·

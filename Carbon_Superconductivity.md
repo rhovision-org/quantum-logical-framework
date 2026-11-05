@@ -2,6 +2,8 @@
 
 # Carbon Superconductivity: the ZFA DNA of Graphene
 
+> Part of the [**Quantum Logical Framework (QLF)**](README.md). This document develops QLF closure tests for graphene and related carbon systems; new readers can start with [`README.md`](README.md).
+
 *The superconductivity thread: the carbon lattices written in the twist alphabet, the substitution rules that grow
 graphene and its twisted stacks, and a series of tests on superconducting graphene, each pre-registered before its
 data was read.*
