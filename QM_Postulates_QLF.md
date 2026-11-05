@@ -212,8 +212,18 @@ its dispersion. And the term comes from the order of the sub-steps, not from the
 ordering, which is time-symmetric, cancels it exactly and leaves only the quadratic term, allowed by
 about `5 × 10⁷`.
 
+**The electron closes the loophole.** In QLF the interaction is between electrons, which are spin-½,
+and the photon has no properties apart from the electrons it connects
+([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §40). So the first qualification does not
+help: the spin-½ walk is the electron's, and electrons have their own bound. In the convention
+`E² = p² + m² + η p³/E_P`, the Lean order gives `η = 2 n_x n_y n_z` per chirality, up to `±0.385` with
+both signs occurring. The Crab nebula's synchrotron emission requires `η > −7 × 10⁻⁸` for electrons, and
+vacuum Čerenkov radiation `η < 0.01` (Jacobson, Liberati and Mattingly, *Nature* 424, 1019, 2003). So
+**the Lean-order walk at Planck spacing is excluded for electrons, by about `5 × 10⁶`**, whatever the
+photon is. The palindromic order has no linear term and survives.
+
 So the data already **select** something: at Planck spacing, a realizable walk must be time-symmetric
-within each tick, or its linear term must be shown not to reach photons. The Lean `realWalk` uses the
+within each tick. The Lean `realWalk` uses the
 asymmetric order. Its unitarity and its generator (`realWalk_unitary`, `realWalk_generator`) hold for
 either order, so moving the definition to the palindromic form costs those theorems nothing, but it is a
 change to a Lean module and has not been made.
@@ -233,6 +243,8 @@ change to a Lean module and has not been made.
 - Sorkin, R. D. (1994). Quantum mechanics as quantum measure theory. *Mod. Phys. Lett. A* 9, 3119.
 - Zurek, W. H. (2003). Decoherence, einselection, and the quantum origins of the classical. *Rev. Mod.
   Phys.* 75, 715.
+- Jacobson, T., Liberati, S. and Mattingly, D. (2003). A strong astrophysical constraint on the violation
+  of special relativity by quantum gravity. *Nature* 424, 1019. arXiv:astro-ph/0212190.
 - LHAASO Collaboration (2024). Stringent tests of Lorentz invariance violation from LHAASO observations
   of GRB 221009A. *Phys. Rev. Lett.* 133, 071501. arXiv:2402.06009.
 - Zurek, W. H. (2005). Probabilities from entanglement, Born's rule from envariance. *Phys. Rev. A* 71,
