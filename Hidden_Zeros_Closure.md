@@ -90,3 +90,34 @@ closure language. Kill condition 2 is met for the zero itself, which was never i
 the kinematics. G2c in full needs `X_{ij}` from closures, and that is still the open step. The negative
 result (Z1, Z2) is the new information: it rules out the two natural ways of letting closure multiplicity
 into the amplitude.
+
+---
+
+## 5. Pre-registration, round 2: kinematics from twists
+
+Committed before the run. Script: [`hidden_zero_kinematics.py`](hidden_zero_kinematics.py).
+
+§4 left `X_{ij}` inserted. This round takes it from closure data instead of choosing it freely.
+
+**Momenta.** Each of the six spatial twists `t = (axis a, sign s)` carries the null momentum
+`k(t) = (1, s·e_a)`, twice its realizable projector `(1 + M(t))/2` from
+[`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean), read as a Minkowski vector through
+[`QLF_Minkowski`](lean/QLF_Minkowski.lean) (`det Form` = interval). Odd steps are kets (incoming,
+`η = +1`), even steps are bras (outgoing, `η = −1`): `p_k = η_k k(t_k)`, the scaffold's Hermitian pairing.
+Momentum conservation `Σ p_k = 0` is then exactly **ZFA count balance of the history with every bra
+conjugated**. `X_{ij} = (p_i + … + p_{j−1})²`. A history is *singular* if some planar `X_{ij}` vanishes; those
+are skipped.
+
+**What follows algebraically, before any run.** `p_a · p_b = η_a η_b (1 − s_a s_b δ_{a_a a_b})`, so for
+non-adjacent steps `c_{ab} = −2 p_a·p_b` vanishes **exactly when the two twists are identical**. A
+hidden-zero locus (all `c_{ab} = 0` on a rectangle of the mesh) is therefore a history in which **one twist
+repeats across the whole rectangle**.
+
+| | Prediction | Kill condition |
+|---|---|---|
+| **K1** | `c_{ab} = −2 p_a·p_b` on every history (code check). | Any mismatch. |
+| **K2** | `A^{W0}` vanishes on every non-singular history lying on a hidden-zero locus, i.e. with one twist repeated across a rectangle. | Any nonzero value there. |
+| **K3** | **Every** zero of `A^{W0}` on non-singular twist kinematics lies on some hidden-zero locus: the amplitude has no other zeros on the closure lattice. | One zero off every locus. |
+
+Scope: all histories of 6 spatial twists of length `n = 4, 6, 8` satisfying conservation. (`n` must be even,
+since kets and bras pair.) K3 is automatic at `n = 4`, where `A₄ = c₁₃/(X₁₃X₂₄)`; it has content from `n = 6`.
