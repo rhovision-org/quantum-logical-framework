@@ -1149,3 +1149,30 @@ statement on the full position-space channel space is open (it goes with U2).
 
 **Credit.** Bohr, Peierls and Placzek (1939), after Feenberg (1932); Cutkosky's cutting rules
 (*J. Math. Phys.* **1**, 429 (1960)) are its diagrammatic form.
+
+## 35. The channel category (U2)
+
+[`QLF_ChannelGroupoid`](lean/QLF_ChannelGroupoid.lean) builds the boundary-labeled dagger category
+the issue asks for, on the full channel space. An object is a label `v ∈ ℤ⁴`, the signed action
+vector (one coordinate per conjugate pair; the position of the closed walk of
+[Closure_Walk.md](Closure_Walk.md)). A morphism `v ⟶ w` is a twist history whose signed action
+carries `v` to `w`.
+
+```text
+act_append, act_dagger, act_eq_zero_iff :  action adds, the dagger negates it, zero ⟺ count balanced
+comp_assoc, id_comp, comp_id            :  concatenation is a category, the empty history the identity
+dag_dag, dag_comp, dag_id               :  conjugate-and-reverse is a dagger, reversing order
+hol_comp, hol_id                        :  the ordered fold is a functor
+hol_dag                                 :  hol(h†) = (−1)^|h| hol(h)ᴴ      (a dagger functor up to the centre)
+hol_comp_dag                            :  hol(h ≫ h†) = (−1)^|h|           (inverse modulo {±1})
+endo_closure                            :  every endomorphism v ⟶ v is a closure, holonomy ±1
+kernel_compose :  K_{L₁+L₂}(v, w) = Σ_u K_{L₁}(v, u) K_{L₂}(u, w)      (sum over intermediate channels)
+kernel_dagger  :  K_L(w, v) = (−1)^L K_L(v, w)ᴴ
+```
+
+So the closures are exactly the endomorphisms, at every label; the dagger sends every history to
+one that closes it; and the channel kernel composes over intermediate channels on the whole of
+`ℤ⁴`, extending §17's light-cone `shellKernel_compose`. The holonomy image is a groupoid modulo the
+centre `{±1}`; the history category itself is not a groupoid, because `h ≫ h†` is a closure, not
+the empty history. That distinction is the content: an inverse in QLF is a history that closes,
+and closing is an event.

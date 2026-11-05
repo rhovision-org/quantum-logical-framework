@@ -88,6 +88,7 @@ import QLF_NonAbelianField
 import QLF_Courant
 import QLF_CompactBound
 import QLF_OpticalTheorem
+import QLF_ChannelGroupoid
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -357,3 +358,8 @@ import QLF_OpticalTheorem
 #print axioms QLF.OpticalTheorem.history_optical
 #print axioms QLF.OpticalTheorem.realWalk_optical
 #print axioms QLF.OpticalTheorem.raw_optical_defect
+#print axioms QLF.ChannelGroupoid.dag_comp
+#print axioms QLF.ChannelGroupoid.hol_dag
+#print axioms QLF.ChannelGroupoid.endo_closure
+#print axioms QLF.ChannelGroupoid.kernel_compose
+#print axioms QLF.ChannelGroupoid.kernel_dagger

@@ -300,5 +300,6 @@ lean_lib QLF where
     `QLF_NonAbelianField,
     `QLF_Courant,
     `QLF_CompactBound,
-    `QLF_OpticalTheorem
+    `QLF_OpticalTheorem,
+    `QLF_ChannelGroupoid
   ]
