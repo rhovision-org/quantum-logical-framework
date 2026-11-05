@@ -91,6 +91,7 @@ import QLF_OpticalTheorem
 import QLF_ChannelGroupoid
 import QLF_PoleFactorization
 import QLF_GluonVertex
+import QLF_GluonGluing
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -376,3 +377,7 @@ import QLF_GluonVertex
 #print axioms QLF.GluonVertex.gluon_vertex_iff
 #print axioms QLF.GluonVertex.two_gluon_commute
 #print axioms QLF.GluonVertex.vertex_count
+#print axioms QLF.GluonGluing.comm_eq_zero_iff
+#print axioms QLF.GluonGluing.chan_ne_zero_iff
+#print axioms QLF.GluonGluing.gluing
+#print axioms QLF.GluonGluing.jacobi

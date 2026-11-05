@@ -303,5 +303,6 @@ lean_lib QLF where
     `QLF_OpticalTheorem,
     `QLF_ChannelGroupoid,
     `QLF_PoleFactorization,
-    `QLF_GluonVertex
+    `QLF_GluonVertex,
+    `QLF_GluonGluing
   ]

@@ -1236,3 +1236,30 @@ colour factor, and G2's gluing into four-gluon amplitudes are open.
 
 **Credit.** The clock-and-shift basis of `sl(N)` and its sine structure constants are Fairlie,
 Fletcher and Zachos's (*Phys. Lett. B* **218**, 203 (1989)).
+
+## 38. Four-gluon colour factors by gluing (G2, colour part)
+
+[`QLF_GluonGluing`](lean/QLF_GluonGluing.lean) glues two of §37's vertices:
+
+```text
+comm_eq, comm_eq_zero_iff :  [W(p), W(q)] = (ω^{p₂q₁} − ω^{q₂p₁}) W(p + q),  zero ⟺ ⟨p, q⟩ = 0
+chan_ne_zero_iff :  c_s = tr([W(p),W(q)][W(r),W(s)]) ≠ 0  ⟺  p+q+r+s = 0, ⟨p,q⟩ ≠ 0, ⟨r,s⟩ ≠ 0
+gluing           :  tr(W(−e) W(e)) · c_s = V(−e, p, q) · V(e, r, s),   e = p + q,   tr(W(−e)W(e)) ≠ 0
+jacobi           :  c_s + c_t + c_u = 0
+chan_count       :  288 of the 456 colour-balanced twist quadruples have c_s ≠ 0
+```
+
+A bracket of two gluons is one gluon labelled by the sum, so the intermediate state of the `s`
+channel is forced: `e = p + q`. The four-gluon colour factor is then the product of two
+three-gluon vertices divided by the intermediate gluon's norm, which is the colour form of "the
+residue factors into lower-point kernels". Where a pair is collinear the channel vanishes
+structurally: there is no bracket to glue through, a structural zero in §11's taxonomy. The
+Jacobi relation ties the three channels together.
+
+**Scope.** Colour only. The kinematic numerators, and with them the four-gluon amplitude's
+residues in the Mandelstam variables (G2b) and its hidden zeros (G2c), are open: hidden zeros
+are kinematic, and QLF has no momentum-space vertex yet.
+
+**Credit.** Colour decomposition: Dixon, TASI 1995 (hep-ph/9601359). The relation `c_s + c_t + c_u = 0`
+is the colour side of Bern, Carrasco and Johansson's colour–kinematics duality
+(*Phys. Rev. D* **78**, 085011 (2008)).
