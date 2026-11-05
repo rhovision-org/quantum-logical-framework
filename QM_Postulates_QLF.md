@@ -152,15 +152,44 @@ candidates below has passed yet; each is stated with its kill condition.
 
 | Candidate | QLF prediction | Standard expectation | Kill condition | State |
 |---|---|---|---|---|
-| **B-LIV: axis-aligned dispersion** | The walk's dispersion carries the anisotropic correction `a² Σ_a k_a⁴/12` along the four twist axes ([`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md) §12): a direction-dependent, energy-quadratic Lorentz violation. | Exact Lorentz invariance. | A bound on quadratic, direction-dependent Lorentz violation that excludes it at QLF's lattice scale. | **Not yet a prediction.** It needs the lattice spacing in physical units and the Lorentzian walk rather than the Wick-rotated one, and must be checked against the realizable walk's own dispersion. The most direct next computation. |
+| **B-LIV: axis-aligned dispersion** | At Planck spacing the photon dispersion is `E² = k²[1 − ξ(n)(ℓ_P k)²]`, with `ξ` set by the direction `n` relative to the twist axes, so `E_QG,2 ≈ 2.4–5 E_P` (§5a). | Exact Lorentz invariance. | A bound on quadratic Lorentz violation above `E_QG,2 ≈ 2.4 E_P` (or, for the real-time walk, a sign opposite to the one it predicts). | **A number, but untestable now.** It is allowed by the best time-of-flight bound (`E_QG,2 > 6 × 10⁻⁸ E_P`, LHAASO 2024) by a factor of `4–8 × 10⁷`. Its sign depends on how the time axis is discretized, which is not yet fixed (§5a). |
 | **No α drift** | `α` cannot vary in time (`alpha_cannot_drift`). | The Standard Model allows no drift either; many extensions do. | A confirmed drift, for instance in thorium-229 nuclear clocks. | Distinguishes QLF from drift models, **not** from the Standard Model. |
 | **Predicted absences** | No supersymmetric partners, axion, WIMP, magnetic monopole, proton decay or light sterile `ν_R` ([`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §6). | The Standard Model has none of these either. | Discovery of any one. | Distinguishes QLF from extensions, **not** from the Standard Model. |
 | **`α⁻¹` from the census** | `137.032` structural ([`Alpha_Residual.md`](Alpha_Residual.md)). | Measured `137.035999…`. | Already a miss by `0.004`, attributed to continuum running. | **Not a pass.** Listed so it is not hidden. |
 
 So the honest position is: QLF reorganizes quantum mechanics onto combinatorial primitives and removes
 the collapse and fixed-background assumptions, but it does not yet have a benchmark that separates it
-from the Standard Model. B-LIV is the nearest candidate, and the next piece of work is to turn it into a
-number with a stated scale.
+from the Standard Model. B-LIV is now a number (§5a), but one that present experiments cannot reach.
+
+### 5a. B-LIV at Planck spacing
+
+Setting the lattice spacing to the Planck length `ℓ_P` fixes the scale with no free parameter. A massless
+mode is a zero of the walk's inverse propagator `Σ_a (1 − cos a K_a)` ([`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md)
+§11). The script [`liv_dispersion.py`](liv_dispersion.py) solves it exactly and reads off
+`E² = k²[1 − ξ(n)(ℓ_P k)²]`, checking each `ξ` against its series formula.
+
+How the time axis is continued decides the result, and QLF has not fixed it:
+
+| Time axis | Exact dispersion | `ξ(n)`, with `s₄ = Σ_i n_i⁴` | Along an axis | Body diagonal | Character |
+|---|---|---|---|---|---|
+| Wick-rotated Euclidean walk (round 8) | `cosh(ℓ_P E) = 1 + Σ_i 2 sin²(ℓ_P k_i/2)` | `(1 + s₄)/12` | `1/6`, `E_QG,2 = 2.45 E_P` | `1/9`, `E_QG,2 = 3.00 E_P` | subluminal, anisotropic |
+| Time on the lattice directly | `cos(ℓ_P E) = 1 − Σ_i 2 sin²(ℓ_P k_i/2)` | `(s₄ − 1)/12` | `0` (no quadratic term) | `−1/18`, `E_QG,2 = 4.24 E_P` | superluminal off-axis, anisotropic |
+
+`E_QG,2` is quoted in the convention `E² = p²[1 − s(p/E_QG,2)²]`, so `E_QG,2 = E_P/√|ξ|`; the bound's own
+convention may differ by a factor of order one, which does not affect the conclusion. The group velocity
+differs from `c` by `(3/2)ξ(E/E_P)²`, about `10⁻³¹` at 10 TeV.
+
+**What this settles.** Planck's constant is enough to turn B-LIV into a parameter-free prediction:
+quadratic, direction-dependent Lorentz violation at `E_QG,2 ≈ 2.4–5 E_P`. It is consistent with the
+strongest time-of-flight bound, `E_QG,2 > 6 × 10⁻⁸ E_P` from LHAASO's observation of GRB 221009A
+(*Phys. Rev. Lett.* 133, 071501, 2024), by more than seven orders of magnitude.
+
+**What it does not.** (1) It is not testable now: a seven-order gap is far beyond any planned
+time-of-flight improvement. (2) The sign is not a prediction until the Lorentzian walk is fixed; the
+realizable Dirac walk ([`QLF_DiracWalk`](lean/QLF_DiracWalk.lean)) is the candidate, and its dispersion
+should be computed next. (3) A lattice picks a rest frame and an orientation of its axes in the sky; QLF
+says neither, so a directional search has no predicted axes yet. (4) Only time-of-flight bounds are
+checked here, not threshold effects such as photon decay.
 
 ---
 
@@ -177,5 +206,7 @@ number with a stated scale.
 - Sorkin, R. D. (1994). Quantum mechanics as quantum measure theory. *Mod. Phys. Lett. A* 9, 3119.
 - Zurek, W. H. (2003). Decoherence, einselection, and the quantum origins of the classical. *Rev. Mod.
   Phys.* 75, 715.
+- LHAASO Collaboration (2024). Stringent tests of Lorentz invariance violation from LHAASO observations
+  of GRB 221009A. *Phys. Rev. Lett.* 133, 071501. arXiv:2402.06009.
 - Zurek, W. H. (2005). Probabilities from entanglement, Born's rule from envariance. *Phys. Rev. A* 71,
   052105.
