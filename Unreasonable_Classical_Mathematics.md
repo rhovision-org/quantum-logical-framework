@@ -74,19 +74,21 @@ chain:
 \boxed{\text{equal and opposite logical action}
 \;\longrightarrow\;
 \text{Zero Free Action}
-\;\longrightarrow\;
+\;\xrightarrow{\text{proposed continuum bridge (open)}}\;
 \text{stationary action}.}
 \]
 
 Equal and opposite logical action is the primitive. Exact cancellation is ZFA: no free action remains
-in the completed event. In the continuum rendering, that same balance appears as the requirement that
-the physical history be stationary under variation. On this reading, stationary action works because
-it is the macroscopic mathematical expression of closure, not because the continuum itself is
-fundamental.
+in the completed event. **QLF conjectures that this balance is represented by stationarity under
+admissible continuum variations.** That last arrow is an open bridge: a closure condition fixes the
+value at a history, while `δS = 0` fixes its response to variations, and the map between them is not
+yet built ([`Stationary_Action.md`](Stationary_Action.md) lists what it would take). If it holds,
+stationary action works because it is the macroscopic mathematical expression of closure, not because
+the continuum itself is fundamental.
 
 First closure and multiplicity answer different questions downstream: first closure orders events;
-multiplicity gives their frequency. Neither is the source of stationary action. The source is the
-equal-and-opposite balance that defines ZFA.
+multiplicity gives their frequency. Neither is the source of stationary action. On the proposed
+reading, the source is the equal-and-opposite balance that defines ZFA.
 
 ---
 
