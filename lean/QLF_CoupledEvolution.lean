@@ -12,8 +12,12 @@ step along axis `k` with twist `t` is the leapfrog update of
 [`QLF_MaxwellTime`](QLF_MaxwellTime.lean) driven by the walk itself:
 
   `ψ' = U_{A_k} ψ`  (the walk moves on the *current* links),
-  `E' = E + curl F(A) − J(ψ)`  (the field is pushed by the walk's current),
-  `A' = A − E'`  (so `E' = −(A' − A)`, the electric field of the time link).
+  `E' = E + τ curl F(A) − J(ψ)`  (the field is pushed by the walk's current),
+  `A' = A − τ E'`  (so `τ E' = −(A' − A)`, the electric field of the time link).
+
+The field's time step `τ` is a parameter. Gauss's law, the norm and gauge covariance hold for every
+`τ`; the field is stable only for small `τ` ([`QLF_FieldEnergy`](QLF_FieldEnergy.lean):
+`4nτ² ≤ 1` suffices, and `τ = 1` is unstable for `n ≥ 2`).
 
 Iterating, the links the walk sees at step `m + 1` already carry the current it made at step `m`:
 the back-reaction.
@@ -69,26 +73,27 @@ noncomputable def J (e : Fin n → S) (k : Fin n) (t : Twist) (ψ : S → V) : F
   fun i y => if i = k then (Maxwell.current t (e k) ψ y).re else 0
 
 /-- The field after one step: pushed by the curl of the links and by the walk's current. -/
-noncomputable def newE (e : Fin n → S) (k : Fin n) (t : Twist) (s : State S n) :
+noncomputable def newE (e : Fin n → S) (τ : ℝ) (k : Fin n) (t : Twist) (s : State S n) :
     Fin n → S → ℝ :=
-  fun i y => s.E i y + Maxwell.curl e (LinkAction.F e s.A) i y - J e k t s.ψ i y
+  fun i y => s.E i y + τ * Maxwell.curl e (LinkAction.F e s.A) i y - J e k t s.ψ i y
 
 /-- **One coupled step** along axis `k` with twist `t`. -/
-noncomputable def step (e : Fin n → S) (k : Fin n) (t : Twist) (s : State S n) : State S n where
+noncomputable def step (e : Fin n → S) (τ : ℝ) (k : Fin n) (t : Twist) (s : State S n) :
+    State S n where
   ψ := axisStep t (e k) (s.A k) s.ψ
-  A := fun i y => s.A i y - newE e k t s i y
-  E := newE e k t s
+  A := fun i y => s.A i y - τ * newE e τ k t s i y
+  E := newE e τ k t s
 
 /-- The coupled evolution under a schedule of axes and twists. -/
-noncomputable def evolve (e : Fin n → S) (ax : ℕ → Fin n) (tw : ℕ → Twist) (s₀ : State S n) :
-    ℕ → State S n
+noncomputable def evolve (e : Fin n → S) (τ : ℝ) (ax : ℕ → Fin n) (tw : ℕ → Twist)
+    (s₀ : State S n) : ℕ → State S n
   | 0 => s₀
-  | m + 1 => step e (ax m) (tw m) (evolve e ax tw s₀ m)
+  | m + 1 => step e τ (ax m) (tw m) (evolve e τ ax tw s₀ m)
 
 omit [Fintype S] in
-/-- The new field is the electric field of the time link: `E' = −(A' − A)`. -/
-theorem step_elec (e : Fin n → S) (k : Fin n) (t : Twist) (s : State S n) (i : Fin n) (y : S) :
-    (step e k t s).E i y = -((step e k t s).A i y - s.A i y) := by
+/-- The new field is the electric field of the time link: `τ E' = −(A' − A)`. -/
+theorem step_elec (e : Fin n → S) (τ : ℝ) (k : Fin n) (t : Twist) (s : State S n) (i : Fin n)
+    (y : S) : τ * (step e τ k t s).E i y = -((step e τ k t s).A i y - s.A i y) := by
   simp only [step]; ring
 
 /-- Gauss's law for a coupled state with a static background charge `b`:
@@ -177,42 +182,50 @@ lemma div_J (e : Fin n → S) (k : Fin n) (t : Twist) (ψ : S → V) (x : S) :
 
 omit [Fintype S] in
 /-- **One coupled step keeps Gauss's law.** -/
-theorem step_gauss (e : Fin n → S) (b : S → ℝ) (k : Fin n) (t : Twist) (s : State S n)
-    (h : Gauss e b s) : Gauss e b (step e k t s) := by
+theorem step_gauss (e : Fin n → S) (τ : ℝ) (b : S → ℝ) (k : Fin n) (t : Twist) (s : State S n)
+    (h : Gauss e b s) : Gauss e b (step e τ k t s) := by
   intro x
   have hcont := congrArg Complex.re (Maxwell.continuity t (e k) (s.A k) s.ψ x)
   simp only [Complex.add_re, Complex.sub_re, Complex.zero_re] at hcont
-  have hc : (nsq ((step e k t s).ψ x)).re - (nsq (s.ψ x)).re +
+  have hc : (nsq ((step e τ k t s).ψ x)).re - (nsq (s.ψ x)).re +
       Maxwell.div e (J e k t s.ψ) x = 0 := by
     rw [div_J]; simpa [step, Maxwell.rho] using hcont
-  exact Maxwell.gauss_preserved e s.E (J e k t s.ψ) (LinkAction.F e s.A)
-    (fun i j y => LinkAction.F_antisymm e s.A i j y) (fun x => (nsq (s.ψ x)).re - b x)
-    (fun x => (nsq ((step e k t s).ψ x)).re - b x) x (h x) (by linear_combination hc)
+  have hτ : (step e τ k t s).E = fun i y =>
+      s.E i y + Maxwell.curl e (fun i j y => τ * LinkAction.F e s.A i j y) i y - J e k t s.ψ i y := by
+    funext i y
+    simp only [step, newE, Maxwell.curl, Finset.mul_sum, mul_sub]
+  show Maxwell.div e (step e τ k t s).E x = _
+  rw [hτ]
+  exact Maxwell.gauss_preserved e s.E (J e k t s.ψ) (fun i j y => τ * LinkAction.F e s.A i j y)
+    (fun i j y => by simp only [LinkAction.F_antisymm e s.A i j y]; ring)
+    (fun x => (nsq (s.ψ x)).re - b x)
+    (fun x => (nsq ((step e τ k t s).ψ x)).re - b x) x (h x) (by linear_combination hc)
 
 /-- **One coupled step conserves the walk's norm.** -/
-theorem step_norm (e : Fin n → S) (k : Fin n) (t : Twist) (s : State S n) :
-    total (step e k t s).ψ = total s.ψ :=
+theorem step_norm (e : Fin n → S) (τ : ℝ) (k : Fin n) (t : Twist) (s : State S n) :
+    total (step e τ k t s).ψ = total s.ψ :=
   LatticeGauge.axisStep_norm t (e k) (s.A k) s.ψ
 
 omit [Fintype S] in
 /-- **Gauss's law holds at every step of the coupled evolution.** -/
-theorem evolve_gauss (e : Fin n → S) (b : S → ℝ) (ax : ℕ → Fin n) (tw : ℕ → Twist)
-    (s₀ : State S n) (h : Gauss e b s₀) (m : ℕ) : Gauss e b (evolve e ax tw s₀ m) := by
+theorem evolve_gauss (e : Fin n → S) (τ : ℝ) (b : S → ℝ) (ax : ℕ → Fin n) (tw : ℕ → Twist)
+    (s₀ : State S n) (h : Gauss e b s₀) (m : ℕ) : Gauss e b (evolve e τ ax tw s₀ m) := by
   induction m with
   | zero => exact h
-  | succ m ih => exact step_gauss e b (ax m) (tw m) _ ih
+  | succ m ih => exact step_gauss e τ b (ax m) (tw m) _ ih
 
 omit [Fintype S] in
 /-- **Non-trivial back-reaction**: from any walk against its neutralizing background, Gauss's law
     holds at every step of the coupled evolution. -/
-theorem evolve_gauss_neutral (e : Fin n → S) (ax : ℕ → Fin n) (tw : ℕ → Twist) (ψ : S → V)
-    (A : Fin n → S → ℝ) (m : ℕ) :
-    Gauss e (fun x => (nsq (ψ x)).re) (evolve e ax tw ⟨ψ, A, fun _ _ => 0⟩ m) :=
-  evolve_gauss e _ ax tw _ (neutral_admissible e ψ A) m
+theorem evolve_gauss_neutral (e : Fin n → S) (τ : ℝ) (ax : ℕ → Fin n) (tw : ℕ → Twist)
+    (ψ : S → V) (A : Fin n → S → ℝ) (m : ℕ) :
+    Gauss e (fun x => (nsq (ψ x)).re) (evolve e τ ax tw ⟨ψ, A, fun _ _ => 0⟩ m) :=
+  evolve_gauss e τ _ ax tw _ (neutral_admissible e ψ A) m
 
 /-- **The walk's norm is conserved at every step**, whatever the links have become. -/
-theorem evolve_norm (e : Fin n → S) (ax : ℕ → Fin n) (tw : ℕ → Twist) (s₀ : State S n) (m : ℕ) :
-    total (evolve e ax tw s₀ m).ψ = total s₀.ψ := by
+theorem evolve_norm (e : Fin n → S) (τ : ℝ) (ax : ℕ → Fin n) (tw : ℕ → Twist) (s₀ : State S n)
+    (m : ℕ) :
+    total (evolve e τ ax tw s₀ m).ψ = total s₀.ψ := by
   induction m with
   | zero => rfl
   | succ m ih => rw [evolve, step_norm, ih]
@@ -226,27 +239,29 @@ noncomputable def gauge (e : Fin n → S) (θ : S → ℝ) (s : State S n) : Sta
   E := s.E
 
 omit [Fintype S] in
-lemma newE_gauge (e : Fin n → S) (k : Fin n) (t : Twist) (θ : S → ℝ) (s : State S n) :
-    newE e k t (gauge e θ s) = newE e k t s := by
+lemma newE_gauge (e : Fin n → S) (τ : ℝ) (k : Fin n) (t : Twist) (θ : S → ℝ)
+    (s : State S n) :
+    newE e τ k t (gauge e θ s) = newE e τ k t s := by
   funext i y
   simp only [newE, gauge, J, Maxwell.curl, LinkAction.F_gauge, Maxwell.current_invariant]
 
 omit [Fintype S] in
 /-- **One coupled step is gauge covariant.** -/
-theorem step_covariant (e : Fin n → S) (k : Fin n) (t : Twist) (θ : S → ℝ) (s : State S n) :
-    step e k t (gauge e θ s) = gauge e θ (step e k t s) := by
+theorem step_covariant (e : Fin n → S) (τ : ℝ) (k : Fin n) (t : Twist) (θ : S → ℝ)
+    (s : State S n) :
+    step e τ k t (gauge e θ s) = gauge e θ (step e τ k t s) := by
   ext1
   · exact LatticeGauge.axisStep_covariant t (e k) (s.A k) θ s.ψ
   · funext i y
     simp only [step, newE_gauge]
     simp only [gauge, LinkAction.gaugeShift]; ring
-  · exact newE_gauge e k t θ s
+  · exact newE_gauge e τ k t θ s
 
 omit [Fintype S] in
 /-- **The whole coupled history is gauge covariant.** -/
-theorem evolve_covariant (e : Fin n → S) (ax : ℕ → Fin n) (tw : ℕ → Twist) (θ : S → ℝ)
+theorem evolve_covariant (e : Fin n → S) (τ : ℝ) (ax : ℕ → Fin n) (tw : ℕ → Twist) (θ : S → ℝ)
     (s₀ : State S n) (m : ℕ) :
-    evolve e ax tw (gauge e θ s₀) m = gauge e θ (evolve e ax tw s₀ m) := by
+    evolve e τ ax tw (gauge e θ s₀) m = gauge e θ (evolve e τ ax tw s₀ m) := by
   induction m with
   | zero => rfl
   | succ m ih => rw [evolve, evolve, ih, step_covariant]

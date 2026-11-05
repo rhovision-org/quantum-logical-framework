@@ -878,8 +878,8 @@ walk `ψ`, link phases `A` and an electric field `E`. One coupled step along axi
 
 ```text
 ψ' = U_{A_k} ψ                       the walk moves on the current links
-E' = E + curl F(A) − J(ψ)            the field is pushed by the walk's own current
-A' = A − E'                          so E' = −(A' − A), the time-link field   (step_elec)
+E' = E + τ curl F(A) − J(ψ)          the field is pushed by the walk's own current
+A' = A − τE'                         so τE' = −(A' − A), the time-link field  (step_elec)
 
 gauss_neutral          :  div E = ‖ψ‖² − b  ⟹  Σ‖ψ‖² = Σ b           (a closed lattice forces neutrality)
 no_background_no_walk  :  div E = ‖ψ‖²  ⟹  ψ = 0                     (so a background is needed)
@@ -933,14 +933,14 @@ axioms.
 
 ```text
 ip_K             :  ⟨B, K A⟩ = ½ Σ F(A)·F(B)                (summation by parts; K is symmetric)
-energy_eq        :  H(A, E) = ½|E|² + ½⟨E, K A⟩ + ¼ΣF²
-energy_balance   :  E' = E + K A − J,  A' = A − E'   ⟹   H' − H = −⟨J, (E + E')/2⟩
+energy_eq        :  H(A, E) = ½|E|² + (τ/2)⟨E, K A⟩ + ¼ΣF²
+energy_balance   :  E' = E + τK A − J,  A' = A − τE'   ⟹   H' − H = −⟨J, (E + E')/2⟩
 energy_conserved :  J = 0   ⟹   H' = H
 step_energy      :  in the coupled evolution, the field loses exactly −⟨J(ψ), (E + E')/2⟩ per step
 ```
 
 The middle term of `H` is what makes the conservation exact rather than approximate. It is
-`½⟨E, E⁺⟩ + ¼ΣF²` with `E⁺ = E + K A` the next free field, so the electric energy is read across
+`½⟨E, E⁺⟩ + ¼ΣF²` with `E⁺ = E + τK A` the next free field, so the electric energy is read across
 the time step, as in Yee's staggered scheme. `energy_balance` is Poynting's theorem on the lattice
 with no error term: the field gives up exactly the work it does on the current, with the field
 taken at the midpoint of the step.
@@ -948,5 +948,23 @@ taken at the midpoint of the step.
 **Credit and scope.** Yee (1966) and Poynting (1884); the Hamiltonian `½ΣE² + ¼ΣF²` is
 Kogut–Susskind's. Open: the walk's side. The walk is a unitary step, so its natural energy is a
 quasi-energy, and no exact walk energy absorbing `⟨J, Ē⟩` is proved, so a conserved total energy of
-the coupled system is still open. Positivity of `H` needs a step-size (CFL) bound on `K`, also not
-proved.
+the coupled system is still open.
+
+**Stability needs a small field step.** `H` is only an energy if it is positive, and that depends on
+the field's time step `τ` (now a parameter of §25's step; Gauss's law, the norm and gauge
+covariance hold for every `τ`):
+
+```text
+K_sq_le        :  |K A|² ≤ 8n ⟨A, K A⟩                     (each curl component sums n plaquette differences)
+energy_lower   :  2nτ² ≤ 1  ⟹  H ≥ ½(1 − 2nτ²)⟨A, K A⟩ ≥ 0
+energy_bounds  :  4nτ² ≤ 1  ⟹  ⟨A, K A⟩ ≤ 4H  and  |E|² ≤ 8H
+free_stable    :  4nτ² ≤ 1  ⟹  the free field stays below those bounds at every step
+```
+
+This is a sufficient Courant–Friedrichs–Lewy condition (*Math. Ann.* **100**, 32 (1928)), not the
+sharp one. Computed, not proved: the largest eigenvalue of `K` on a periodic lattice is `4n` (8 for
+`n = 2`, 12 for `n = 3`), so the sharp condition is `nτ² < 1`, and with `τ = 1`, the step §25 first
+used, a random field grows to `10¹⁵²` in 200 steps for `n = 2`. With `τ = 1/n` it stays bounded.
+One reading, not yet a theorem: a walk that moves along one axis per step needs `n` steps to cross
+a cell in every direction, so `τ = 1/n` is the field's share of one walk step. Boundedness of the
+coupled field (with the walk's current) is open.
