@@ -32,9 +32,14 @@ The proof is counting. Refining to unit ways turns every register into the all-o
 completely, so it is neither empty nor free: it excludes every other rule, including the modulus
 `|ψᵢ|` and every `|ψᵢ|^q` with `q ≠ 2` (`modulus_rule_excluded` is the worked case).
 
-**Classical credit.** This is Zurek's envariance argument (*Phys. Rev. A* **71**, 052105 (2005)) in
-finite form; Deutsch's decision-theoretic derivation (*Proc. R. Soc. A* **455**, 3129 (1999)) reaches
-the same rule.
+**Scope.** This is a finite *uniqueness characterization under refinement additivity*. `refine` is
+a premise: `exists_refinement` constructs the unit-way partition mathematically, but no theorem here
+shows that QLF dynamics performs an amplitude-preserving refinement physically.
+
+**Classical credit.** The strategy follows Zurek's envariance argument (*Phys. Rev. A* **71**, 052105
+(2005)) and Deutsch's decision-theoretic derivation (*Proc. R. Soc. A* **455**, 3129 (1999)); it is
+not a formalization of envariance (no system–environment entanglement or swap symmetry is used, only
+relabeling symmetry on the equal-weight register and the refinement premise).
 Zurek's argument needs a continuity step to reach irrational weights. Here none is needed, and that
 is the QLF contribution: amplitudes are Gaussian integers, so every Born weight is a ratio of whole
 counts, and the rational case is the only case. No continuum enters at any step.

@@ -1,7 +1,7 @@
 import QLF_DiracWalk
 
 /-!
-# QLF_GaugeAxis — the gauge axis is the clock, and closure puts the walk on the mass shell
+# QLF_GaugeAxis — the gauge axis is the clock, and the generator's zeros are on the mass shell
 
 Issue #207. The realizable walks of [`QLF_RealizableWalk`](QLF_RealizableWalk.lean) and
 [`QLF_DiracWalk`](QLF_DiracWalk.lean) used the three spatial axes and left the fourth, gauge, axis
@@ -19,7 +19,10 @@ out. This module puts it back.
   action per step, lie on the mass shell. With no mass, **`light_cone`** gives `ω² = k²` on two
   components.
 
-The mass shell is not put in: it comes from the Clifford square `dirac_sq` and nothing else. No
+The mass shell is not put in: it comes from the Clifford square `dirac_sq` and nothing else.
+`mass_shell` is a conditional spectral identity. Reading its hypothesis as closure (zero net phase
+per step, zero free action) is a proposed identification: that a ZFA or first-return closure implies
+`(ω + k·α + mβ)ψ = 0` is not proved here. No
 axioms, and no continuum beyond the derivative in the momentum label that reads off a generator.
 -/
 
@@ -94,7 +97,7 @@ theorem spacetimeWalk_generator (w ay ax az m : ℝ) :
   simp only [zero_mul, Complex.ofReal_zero, Complex.exp_zero, one_smul]
   rw [smul_add, smul_smul, mul_comm, add_comm]
 
-/-- **Closure lies on the mass shell.** A non-zero state annihilated by `ω + k·α + mβ` has
+/-- **The generator's zeros lie on the mass shell.** A non-zero state annihilated by `ω + k·α + mβ` has
     `ω² = k² + m²`. -/
 theorem mass_shell (w ky kx kz m : ℂ) (ψ : Fin 2 × Fin 2 → ℂ) (hψ : ψ ≠ 0)
     (h : (w • (1 : Q) + Mass.dirac ky kx kz m) *ᵥ ψ = 0) :

@@ -18,8 +18,8 @@ So everything depends on whether each site's two observables commute:
 
 * **`chsh_classical`** — if they commute (a joint value exists), `C² = 4`, so `|C| ≤ 2`: Bell's bound.
 * **`chsh_anti`**, **`chsh_tsirelson`** — if they anticommute, `(C² − 4)² = 16`, so
-  `C²(C² − 8) = 0` and every eigenvalue of `C` lies in `{0, ±2√2}`: Tsirelson's bound
-  (Cirel'son, Lett. Math. Phys. 4, 93 (1980)).
+  `C²(C² − 8) = 0` and every eigenvalue of `C` lies in `{0, ±2√2}`: Tsirelson's value
+  (Cirel'son, Lett. Math. Phys. 4, 93 (1980)) in the maximal, anticommuting case.
 
 Twists on different spatial axes anticommute (the Clifford relation behind the light-cone zeros,
 `QLF_LightCone`). Taking `up` and `left` on each of two sites:
@@ -27,7 +27,15 @@ Twists on different spatial axes anticommute (the Clifford relation behind the l
 * **`twist_bell_pair`** — they form a Bell pair (each squares to `1`, sites commute);
 * **`twistChsh_herm`** — the CHSH operator is Hermitian;
 * **`twistChsh_tsirelson`** — `C²(C² − 8) = 0`;
-* **`twistChsh_sq_e00`** — `C²|00⟩ = 8|00⟩`, so `2√2` is attained.
+* **`twistChsh_sq_e00`** — `C²|00⟩ = 8|00⟩` (a statement about `C²`; `|00⟩` itself has zero CHSH
+  expectation);
+* **`twistChsh_saturates`** — the explicit state `v = C|00⟩ + 2√2|00⟩` is non-zero and
+  `Cv = 2√2·v`, so the value `2√2` is attained by a state.
+
+**Scope.** `chsh_tsirelson` is the *maximal, anticommuting* case: it fixes the spectrum when both
+sites' observables anticommute exactly. It is not the general Tsirelson bound `‖C‖ ≤ 2√2` for
+arbitrary Hermitian `±1` observables; observables that fail to commute without anticommuting give
+intermediate CHSH values, and that general operator-norm bound is not proved here.
 
 The reading: a twist pair that cannot be given joint values *is* a pair that does not commute, and
 that is the whole of the quantum excess over Bell. No continuum, no Hilbert-space postulate beyond
@@ -191,6 +199,36 @@ theorem twistChsh_sq_e00 : (twistChsh * twistChsh) *ᵥ e00 = (8 : ℂ) • e00 
     simp [e00, onA, onB, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
       Matrix.sub_apply, Matrix.mul_apply, kroneckerMap_apply, Pi.single_apply, Matrix.one_apply, Matrix.ofNat_apply]
   all_goals ring_nf; simp [Complex.I_sq]; norm_num
+
+/-- `C|00⟩` has no `|00⟩` component. -/
+theorem twistChsh_e00_00 : (twistChsh *ᵥ e00) (0, 0) = 0 := by
+  simp [twistChsh, chsh, e00, onA, onB, Matrix.mulVec, dotProduct, Fintype.sum_prod_type,
+    Matrix.add_apply, Matrix.sub_apply, Matrix.mul_apply, kroneckerMap_apply,
+    Pi.single_apply, Matrix.one_apply, Twist.toMatrix, σx, σy]
+
+/-- The saturating state: `v = C|00⟩ + 2√2 |00⟩`. -/
+noncomputable def tsirelsonState : Fin 2 × Fin 2 → ℂ :=
+  twistChsh *ᵥ e00 + (2 * (Real.sqrt 2 : ℂ)) • e00
+
+/-- **Tsirelson's value is attained by an explicit state:** `v ≠ 0` and `C v = 2√2 v`. -/
+theorem twistChsh_saturates :
+    tsirelsonState ≠ 0 ∧
+      twistChsh *ᵥ tsirelsonState = (2 * (Real.sqrt 2 : ℂ)) • tsirelsonState := by
+  have hs : (2 * (Real.sqrt 2 : ℂ)) * (2 * (Real.sqrt 2 : ℂ)) = 8 := by
+    have h2 : ((Real.sqrt 2 : ℝ) : ℂ) * ((Real.sqrt 2 : ℝ) : ℂ) = 2 := by
+      rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num)]; norm_num
+    linear_combination 4 * h2
+  constructor
+  · intro h
+    have h0 := congrFun h (0, 0)
+    simp only [tsirelsonState, Pi.add_apply, Pi.smul_apply, twistChsh_e00_00, Pi.zero_apply,
+      zero_add] at h0
+    simp only [e00, Pi.single_eq_same, smul_eq_mul, mul_one] at h0
+    have : (Real.sqrt 2 : ℂ) ≠ 0 := by
+      exact_mod_cast (Real.sqrt_pos.mpr (by norm_num : (0 : ℝ) < 2)).ne'
+    exact mul_ne_zero two_ne_zero this h0
+  · rw [tsirelsonState, Matrix.mulVec_add, Matrix.mulVec_smul, Matrix.mulVec_mulVec,
+      twistChsh_sq_e00, smul_add, smul_smul, hs, add_comm]
 
 end Twists
 end QLF.Tsirelson

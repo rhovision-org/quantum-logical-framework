@@ -479,12 +479,15 @@ different sites commute. The CHSH combination (Clauser, Horne, Shimony and Holt,
 ```text
 chsh_sq        :  C² = 4 − [a₀, a₁]·[b₀, b₁]
 chsh_classical :  a₀a₁ = a₁a₀            ⟹  C² = 4               (|C| ≤ 2, Bell)
-chsh_tsirelson :  a₀a₁ = −a₁a₀, b₀b₁ = −b₁b₀  ⟹  C²(C² − 8) = 0  (|C| ≤ 2√2, Tsirelson)
+chsh_tsirelson :  a₀a₁ = −a₁a₀, b₀b₁ = −b₁b₀  ⟹  C²(C² − 8) = 0  (spectrum in {0, ±2√2})
 ```
 
 So the whole gap between Bell's bound and Tsirelson's (Cirel'son, Lett. Math. Phys. 4 (1980) 93)
 is whether a site's two observables commute. Commuting observables can be given joint values, and
-then the bound is 2. Anticommuting ones cannot, and the bound is `2√2`, no more.
+then the bound is 2. Anticommuting ones cannot, and then the spectrum is `{0, ±2√2}`. **Scope:** this
+is the maximal, exactly anticommuting case. Observables that fail to commute without anticommuting
+give intermediate values, and the general Tsirelson bound `‖C‖ ≤ 2√2` for arbitrary Hermitian `±1`
+observables is not proved here.
 
 **Twists supply exactly that.** Twists on different spatial axes anticommute, the same Clifford
 relation that makes the light-cone zeros exact (§11). With `up` and `left` on each of two sites:
@@ -493,7 +496,8 @@ relation that makes the light-cone zeros exact (§11). With `up` and `left` on e
 twist_bell_pair      :  each squares to 1, the sites commute
 twistChsh_herm       :  the CHSH operator is Hermitian
 twistChsh_tsirelson  :  C²(C² − 8) = 0
-twistChsh_sq_e00     :  C²|00⟩ = 8|00⟩         so 2√2 is attained
+twistChsh_sq_e00     :  C²|00⟩ = 8|00⟩         (|00⟩ itself has CHSH expectation 0)
+twistChsh_saturates  :  v = C|00⟩ + 2√2|00⟩ ≠ 0  and  Cv = 2√2 · v      2√2 is attained by a state
 ```
 
 The reading: two measurements on one site that cannot share a value are two twists on different
@@ -613,15 +617,24 @@ is there because a way is a closed ket–bra pair.
 (`assignment_unique`). So they are neither empty nor free; they exclude the modulus rule and every
 `|ψ|^q` with `q ≠ 2`.
 
-**Credit and status.** This is Zurek's envariance argument (*Phys. Rev. A* **71**, 052105 (2005)) in
-finite form, and Deutsch's decision-theoretic derivation (*Proc. R. Soc. A* **455**, 3129 (1999)) reaches
-the same rule. Zurek's version needs a continuity step to reach irrational weights. QLF needs none,
+**What this is, and what it assumes.** It is a finite *uniqueness characterization under refinement
+additivity*: given the three rules, the Born rule is the only assignment. The third rule is a
+premise. `exists_refinement` constructs the unit-way partition mathematically; it does not show that
+QLF dynamics carries out an amplitude-preserving refinement physically, and no theorem here does.
+So the result says what probability must be *if* probability adds over refined ways, not yet that
+the substrate refines.
+
+**Credit and status.** The strategy follows Zurek's envariance argument (*Phys. Rev. A* **71**,
+052105 (2005)) and Deutsch's decision-theoretic derivation (*Proc. R. Soc. A* **455**, 3129 (1999)),
+but it is not a formalization of envariance: there is no system–environment entanglement and no
+swap symmetry here, only relabeling symmetry on the equal-weight register plus the refinement
+premise. Zurek's version needs a continuity step to reach irrational weights. This one needs none,
 because its amplitudes are Gaussian integers: every Born weight is a ratio of whole counts, so the
 rational case is the only case. No continuum enters. Still open, as before: why nature's weight has
 no third-order interference ([`Interference_NoGo.md`](Interference_NoGo.md) §6, the three-slit
 bound), and which census quantity is the register `ψ`.
 
-## 17. The gauge axis is the clock, and closure is on the mass shell
+## 17. The gauge axis is the clock, and the generator's zeros are on the mass shell
 
 The walks of §12–§15 used the three spatial axes and left the gauge axis out. Put it back and it turns
 out to have one job ([`QLF_GaugeAxis`](lean/QLF_GaugeAxis.lean)). The gauge twists `+` and `−` map to
@@ -638,10 +651,12 @@ mass_shell              :  (ω + k·α + mβ) ψ = 0,  ψ ≠ 0   ⟹   ω² = k
 light_cone              :  (ω + k·σ) ψ = 0,  ψ ≠ 0         ⟹   ω² = k²
 ```
 
-The reading. A state whose tick exactly cancels its spatial phase has zero net phase per step, which
-is zero free action. `mass_shell` says those states satisfy `ω² = k² + m²`: closure puts the walk on
-the mass shell, and without mass, on the light cone. The shell is not put in by hand. It comes from
-the Clifford square `dirac_sq` and nothing else. The gauge axis carries the frequency because it is
+The reading. `mass_shell` is a conditional spectral identity: a non-zero state annihilated by
+`ω + k·α + mβ` satisfies `ω² = k² + m²`, and without mass `light_cone` gives `ω² = k²`. The shell is
+not put in by hand; it comes from the Clifford square `dirac_sq` and nothing else. **The link to
+closure is a proposed identification, not a theorem:** such a state's tick exactly cancels its
+spatial phase, so it has zero net phase per step, which we read as zero free action. That a QLF ZFA
+or first-return closure *implies* the annihilation condition is not proved here. The gauge axis carries the frequency because it is
 the only axis with no spin direction, which fits the QLF reading of time as the rate of closure
 ([`Philosophy.md`](Philosophy.md)).
 

@@ -262,6 +262,7 @@ import QLF_CoupledEvolution
 #print axioms QLF.Tsirelson.chsh_tsirelson
 #print axioms QLF.Tsirelson.twistChsh_tsirelson
 #print axioms QLF.Tsirelson.twistChsh_sq_e00
+#print axioms QLF.Tsirelson.twistChsh_saturates
 #print axioms QLF.Mass.weyl_sq
 #print axioms QLF.Mass.no_weyl_mass
 #print axioms QLF.Mass.dirac_sq
