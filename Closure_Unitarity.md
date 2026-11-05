@@ -1308,3 +1308,36 @@ not chosen: it is the only state whose halves close together on every axis.
 
 **Credit.** Bell (*Physics* **1**, 195 (1964)); Clauser, Horne, Shimony and Holt (*Phys. Rev. Lett.*
 **23**, 880 (1969)); Cirel'son (*Lett. Math. Phys.* **4**, 93 (1980)).
+
+## 41. Vacuum polarization resummed through renewal
+
+Issue #207 §10.1 asks for QED's vacuum-polarization insertions through renewal, with running from
+capacity and no divergent subtraction. [`QLF_VacuumResolvent`](lean/QLF_VacuumResolvent.lean) does
+that on top of the octave tower of
+[`QLF_VacuumPolarizationTower`](lean/QLF_VacuumPolarizationTower.lean).
+
+```text
+chain_succ         :  D_{n+1} = D₀ + D₀ Π D_n                 (D_n = Σ_{k<n} (D₀Π)^k D₀, any ring)
+chain_telescope    :  (1 − D₀Π) D_n = D₀ − (D₀Π)^n D₀
+dyson_exists/unique:  1 − D₀Π invertible  ⟹  D = (1 − D₀Π)⁻¹ D₀ is the one solution of D = D₀ + D₀ΠD
+dyson_of_nilpotent :  (D₀Π)^n = 0  ⟹  D_n is exact
+dressed_inv        :  g = g₀/(1 − g₀Π)  ⟹  1/g = 1/g₀ − Π
+chain_tendsto      :  |g₀Π| < 1  ⟹  D_n → g
+resummed_is_tower  :  Π = Σ octave towers  ⟹  1/g = towerRunning
+counterterm_finite :  Π(k+1) − Π(k) = per-octave increment
+landau_capacity    :  Q_f ≠ 0  ⟹  the tower passes any bound at a finite octave count
+```
+
+The insertion chain is the same renewal as every closure channel (§7), and its resolvent is the
+dressed propagator. For the coupling, resummation makes the inverse coupling subtract the
+polarization linearly, and with the octave tower as the polarization that is exactly the running
+`α⁻¹(Q²)` the tower already gave. Renormalization is a finite difference: raising the capacity by
+one octave changes `Π` by one finite, octave-independent increment. The price is the Landau pole:
+a charged closure's tower grows without bound, so at some finite capacity `1 − g₀Π` vanishes.
+Below it the dressed coupling is finite and positive (`dressed_pos`). Where that capacity sits
+relative to the Planck floor is a value question this module does not settle. The prime
+electromagnetic closure kernel, which closures are the insertions with which charges and
+thresholds, stays the tower's input.
+
+**Credit.** Dyson (*Phys. Rev.* **75**, 1736 (1949)); Landau, Abrikosov and Khalatnikov (*Dokl. Akad.
+Nauk SSSR* **95**, 497 (1954)).

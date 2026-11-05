@@ -94,6 +94,7 @@ import QLF_GluonVertex
 import QLF_GluonGluing
 import QLF_Resonance
 import QLF_JointClosure
+import QLF_VacuumResolvent
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -389,3 +390,7 @@ import QLF_JointClosure
 #print axioms QLF.JointClosure.closed_iff_singlet
 #print axioms QLF.JointClosure.singlet_corr
 #print axioms QLF.JointClosure.singlet_saturates
+#print axioms QLF.VacuumResolvent.dyson_unique
+#print axioms QLF.VacuumResolvent.chain_tendsto
+#print axioms QLF.VacuumResolvent.resummed_is_tower
+#print axioms QLF.VacuumResolvent.landau_capacity
