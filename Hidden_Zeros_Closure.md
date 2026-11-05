@@ -312,3 +312,46 @@ are then a continuum property, broken at finite spacing as `a²`. Two things sta
 Euclidean and the complex momenta enter through the Wick rotation `K₄ = i t`; and for complex `k` the sum
 is the analytic continuation of `1/(1 − φ)`, since `|φ|` can exceed one there. No new number is
 expected.
+
+---
+
+## 12. Results, round 5: the summed walk gives `1/X`, and the zeros break as `a²`
+
+Run with `python3 hidden_zero_propagator.py --max-n 7 --points 20` (about 2 s).
+
+**D1 passes.** Enumerating all `8^L` histories through `L = 6` matches `Σ φ^L` to `6.7 × 10^{−16}`.
+
+**D2 passes.** `(X_der − X)/a²` matches `Σ_a K_a⁴/12` to a relative `2.5 × 10^{−6}` at `a = 10^{−3}`.
+
+| `n` | Locus points | Median slope of `R(a)` (range) | Smallest `R` | Generic points | Median `R(0)` (smallest) | Median slope of `R − R(0)` (range) |
+|---|---|---|---|---|---|---|
+| 5 | 99 | 2.000 (1.980–2.017) | `3.3 × 10^{−9}` | 100 | 0.261 (0.014) | 2.000 (1.887–2.016) |
+| 6 | 180 | 2.000 (1.930–2.230) | `4.5 × 10^{−10}` | 180 | 0.148 (0.0035) | 2.000 (1.971–2.061) |
+| 7 | 278 | 2.000 (1.871–2.027) | `1.1 × 10^{−9}` | 280 | 0.074 (0.0028) | 2.000 (1.902–2.166) |
+
+**D3 passes.** On every locus the derived amplitude vanishes as `a²`, median slope 2.000 at each `n`.
+
+**D4 passes.** At generic points the derived amplitude tends to the nonzero continuum value, and the
+difference also shrinks as `a²`.
+
+**D5 passes, with a thin margin.** No locus point reaches an exact zero at finite spacing. The smallest
+ratio, `4.5 × 10^{−10}` at `a = 10^{−3}`, is within a factor of five of the `10^{−10}` threshold; it is a
+point whose `a²` coefficient happens to be small, and it scales like the others.
+
+One departure from §11: the sanity check D1 draws from the random generator first, so the locus and
+generic points are new draws from round 4's construction rather than round 4's exact points. The
+construction and the counts are the same.
+
+**What this settles.** The propagator no longer has to be inserted. Summing every twist history under its
+own Kraft measure, phased by its net displacement, gives `1/(1 − φ(k))`, which is `8/k²` at long
+wavelength, so `1/X` up to a constant. With it, the hidden zeros of §4 come out of the closure sum in the
+continuum limit and are broken at finite spacing by exactly the `a²` lattice correction
+`Σ_a K_a⁴/12`, which is anisotropic (it singles out the four twist axes).
+
+**What it does not.** As stated before the run, this is the random-walk representation of lattice field
+theory (Symanzik 1969), and `a²` is its ordinary artifact. Two steps remain assumed rather than derived:
+the walk is Euclidean, with the Lorentzian momenta entering through the Wick rotation `K₄ = i t`; and for
+complex momenta `G` is the analytic continuation of the geometric series. The amplitude is still the
+standard `Tr(φ³)` one, and no number the standard theory lacks has appeared. The one QLF-specific
+prediction is the shape of the breaking: if spacetime is this lattice, the hidden zeros fail at short
+distance by `Σ_a K_a⁴/12` along the twist axes, which is far below any measurable scale.
