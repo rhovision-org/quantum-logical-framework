@@ -277,3 +277,31 @@ and the handedness reading of the annulus needs checking before anything is conc
 is a statement about standard Yang–Mills leading singularities and cannot by itself be physics beyond
 the Standard Model; L4 passing would make "only transverse polarizations circulate" a property of the
 closure reading at one loop, planar and non-planar alike.
+
+## 10. Results, round 3 (after commit `460c8b2`)
+
+`python3 curve_cover_nonplanar.py --all 4` (under a second).
+
+| split | configurations | monomials | carrying the closed curve | its coefficient |
+|---|---|---|---|---|
+| `oi` | 26 | 20 | 1 | `D` |
+| `ooi`, `oio`, `oii` | 138 each | 101 each | 1 each | `−D` |
+| six four-gluon splits | 1377–1521 | 894–963 | 1 each | `D` |
+
+* **L4, the transverse reading: killed.** Every coefficient carrying the closed curve has its root at
+  `D = 0`, not `D = 2`.
+* **L5: pass.** The open fillings never reach the closed curve's monomial (`c₀ = 0` in all ten splits), so
+  the coefficient is `∓Δ = ±D`, exactly the paper's `Δ_non-planar = −D` with nothing added.
+
+**What this settles.** The hook "`D − 2` counts the axes transverse to propagation, so QLF's four axes give
+2" does not survive the non-planar loop. `D − 2` is specific to the planar case. In the handedness
+vocabulary the two cases separate cleanly:
+
+* a **one-handed** closed circulation (planar: the loop runs alongside one boundary) gets `1 − D` from the
+  closed curve and `+1` from the partial circulations, total `2 − D`;
+* a **mixed-handed** closed circulation (non-planar: the loop must turn both ways) has no partial
+  circulations reaching its monomial, total `−D`.
+
+That is the paper's own rule ("purely left-turning or not") restated, now checked on ten splits. It is a
+rule about where the ghost-like `+1` lives, not a count of physical polarizations. The polarization-count
+reading of `D − 2` is recorded as a **rejected route**, and the dictionary itself survives.
