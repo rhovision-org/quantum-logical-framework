@@ -981,3 +981,31 @@ From the Poynting balance, Cauchy–Schwarz and `|E|² ≤ 8H`, one step gives
 `H' ≤ H + √2·Q(√H + √H')`, which is `√H' ≤ √H + √2·Q`. So the coupled field grows at most
 quadratically in the number of steps, never exponentially. A bound that does not grow with time
 needs the walk's side of the energy, which is open.
+
+## 28. Compact links: the Wilson action
+
+The walk sees a link phase only through `e^{ia}`, so for the walk `a` and `a + 2π` are the same
+link. The quadratic action `¼ΣF²` of §21 does not share that. [`QLF_CompactLinks`](lean/QLF_CompactLinks.lean)
+uses Wilson's compact action `W(a) = ½Σ(1 − cos F)` over ordered plaquettes, which does:
+
+```text
+wilson_periodic    :  W is unchanged when one link moves by 2π
+walk_periodic      :  so is the walk's step
+wilson_gauge       :  W is gauge invariant
+F_bump_cases       :  (axis steps non-zero)  a link enters each plaquette at most once: F(δ) ∈ {−1, 0, 1}
+wilson_variation   :  W(a + εδ) − W(a − εδ) = 2 sin ε · curl(sin F)(k, y)          every ε
+walk_response_sin  :  ⟨U_a ψ, U_{a+εδ} ψ⟩ − ⟨U_a ψ, U_{a−εδ} ψ⟩ = 2i sin ε · J(y)  every ε
+compact_conserves_current :  curl(sin F) = J  ⟹  div J = 0
+compact_gauss_preserved   :  E' = E + τ curl(sin F) − J keeps Gauss's law
+```
+
+The quadratic action had an exact first variation because it is quadratic. The compact one is not,
+yet its symmetric difference is still exact, because a single link enters each plaquette once and
+`cos(F − ε) − cos(F + ε) = 2 sin F sin ε`. The walk responds to the same change with the same factor
+`sin ε` (§24's `e^{iε} − e^{−iε}`). So the compact Ampère law `curl(sin F) = J` is where the field's
+and the walk's responses balance at every `ε`, with no small-angle step. For small plaquettes
+`1 − cos F = F²/2 − …`, and the quadratic theory of §21–§27 is its weak-field form.
+
+**Credit and scope.** Wilson (*Phys. Rev. D* **10**, 2445 (1974)); Kogut–Susskind (1975) for the
+Hamiltonian form. Open: the compact field's energy and stability (`sin F` is not linear, so §27's
+argument does not carry over as it stands) and non-abelian links.

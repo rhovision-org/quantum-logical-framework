@@ -81,6 +81,7 @@ import QLF_WalkCoupling
 import QLF_CoupledEvolution
 import QLF_TsirelsonBound
 import QLF_FieldEnergy
+import QLF_CompactLinks
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -321,3 +322,8 @@ import QLF_FieldEnergy
 #print axioms QLF.FieldEnergy.J_sq_le
 #print axioms QLF.FieldEnergy.evolve_sqrt_energy
 #print axioms QLF.FieldEnergy.evolve_field_bound
+#print axioms QLF.CompactLinks.wilson_variation
+#print axioms QLF.CompactLinks.walk_response_sin
+#print axioms QLF.CompactLinks.wilson_periodic
+#print axioms QLF.CompactLinks.walk_periodic
+#print axioms QLF.CompactLinks.compact_gauss_preserved
