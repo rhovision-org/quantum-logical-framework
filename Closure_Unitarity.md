@@ -966,5 +966,18 @@ sharp one. Computed, not proved: the largest eigenvalue of `K` on a periodic lat
 `n = 2`, 12 for `n = 3`), so the sharp condition is `nτ² < 1`, and with `τ = 1`, the step §25 first
 used, a random field grows to `10¹⁵²` in 200 steps for `n = 2`. With `τ = 1/n` it stays bounded.
 One reading, not yet a theorem: a walk that moves along one axis per step needs `n` steps to cross
-a cell in every direction, so `τ = 1/n` is the field's share of one walk step. Boundedness of the
-coupled field (with the walk's current) is open.
+a cell in every direction, so `τ = 1/n` is the field's share of one walk step.
+
+**With the walk switched on, the field still cannot blow up.** The walk's current is bounded by its
+charge, and the charge is conserved:
+
+```text
+J_sq_le             :  |J(ψ)|² ≤ Q²,   Q = Σ‖ψ‖²       (the two hops across a link carry the charge once)
+evolve_sqrt_energy  :  4nτ² ≤ 1  ⟹  √H_m ≤ √H_0 + √2·Q·m
+evolve_field_bound  :  4nτ² ≤ 1  ⟹  |E_m|² ≤ 8(√H_0 + √2·Q·m)²
+```
+
+From the Poynting balance, Cauchy–Schwarz and `|E|² ≤ 8H`, one step gives
+`H' ≤ H + √2·Q(√H + √H')`, which is `√H' ≤ √H + √2·Q`. So the coupled field grows at most
+quadratically in the number of steps, never exponentially. A bound that does not grow with time
+needs the walk's side of the energy, which is open.

@@ -318,3 +318,6 @@ import QLF_FieldEnergy
 #print axioms QLF.FieldEnergy.K_sq_le
 #print axioms QLF.FieldEnergy.energy_lower
 #print axioms QLF.FieldEnergy.free_stable
+#print axioms QLF.FieldEnergy.J_sq_le
+#print axioms QLF.FieldEnergy.evolve_sqrt_energy
+#print axioms QLF.FieldEnergy.evolve_field_bound

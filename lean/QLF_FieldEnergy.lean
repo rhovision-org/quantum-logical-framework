@@ -26,13 +26,18 @@ Write `K A = curl F(A)` for the magnetic restoring force and `⟨X, Y⟩ = Σᵢ
   free field stays bounded at every step. A sufficient Courant condition, not the sharp one:
   numerically the largest eigenvalue of `K` is `4n` (8 for `n = 2`, 12 for `n = 3`), so the sharp
   condition is `nτ² < 1`, and `τ = 1` grows without bound for `n ≥ 2`.
+* **`J_sq_le`.** The walk's current is bounded by its charge: `|J(ψ)|² ≤ Q²`, `Q = Σ‖ψ‖²`, because the
+  two hops across each link carry the charge once (`hops_total`).
+* **`evolve_sqrt_energy`, `evolve_field_bound`.** With the walk coupled and `4nτ² ≤ 1`,
+  `√H_m ≤ √H_0 + √2·Q·m` and `|E_m|² ≤ 8(√H_0 + √2·Q·m)²`. The walk's charge is conserved, so the
+  coupled field can grow at most quadratically in the number of steps, never exponentially.
 * **`step_energy`.** In the coupled evolution the field energy changes at every step by exactly
   `−⟨J(ψ), (E + E')/2⟩`, the work done on the walk's current along the step's axis.
 
 **Not here.** The walk's own energy. The walk is a unitary step, so its natural "energy" is a
 quasi-energy (a phase), and no exact walk energy that absorbs this work is proved. So a conserved
-total energy for the coupled system, and boundedness of the coupled field, are still open. The
-sharp Courant bound is not proved. No axioms.
+total energy for the coupled system is still open, and with it a bound on the coupled field that
+does not grow with time. The sharp Courant bound is not proved. No axioms.
 
 **Credit.** The staggered leapfrog and its conserved discrete energy are Yee's (*IEEE Trans.
 Antennas Propag.* **14**, 302 (1966)); the stability condition is Courant, Friedrichs and Lewy's
@@ -280,5 +285,147 @@ theorem step_energy (e : Fin n → S) (τ : ℝ) (k : Fin n) (t : QLF.Twist) (s 
     energy e τ (step e τ k t s).A (step e τ k t s).E - energy e τ s.A s.E =
       -((1 / 2) * (ip (J e k t s.ψ) s.E + ip (J e k t s.ψ) (step e τ k t s).E)) :=
   energy_balance e τ s.A s.E _ _ _ (fun _ _ => rfl) (fun _ _ => rfl)
+
+/-! ## The coupled field cannot blow up -/
+
+section Coupled
+
+open Matrix QLF.CoupledEvolution QLF.ClosureChannels
+open QLF.LocalGauge (nsq V)
+
+omit [AddCommGroup S] in
+/-- **Cauchy–Schwarz** for the link pairing. -/
+lemma ip_le_sqrt (X Y : Fin n → S → ℝ) : ip X Y ≤ √(ip X X) * √(ip Y Y) := by
+  have h := Real.sum_mul_le_sqrt_mul_sqrt (Finset.univ : Finset (Fin n × S))
+    (fun p => X p.1 p.2) (fun p => Y p.1 p.2)
+  simp only [Fintype.sum_prod_type, sq] at h
+  exact h
+
+omit [AddCommGroup S] in
+lemma neg_ip_le_sqrt (X Y : Fin n → S → ℝ) : -ip X Y ≤ √(ip X X) * √(ip Y Y) := by
+  have h := ip_le_sqrt X (fun i y => -Y i y)
+  have h1 : ip X (fun i y => -Y i y) = -ip X Y := by
+    unfold ip; simp only [mul_neg, Finset.sum_neg_distrib]
+  have h2 : ip (fun i y => -Y i y) (fun i y => -Y i y) = ip Y Y := by
+    unfold ip; simp only [neg_mul_neg]
+  rwa [h1, h2] at h
+
+/-- The walk's charge `Q = Σ‖ψ‖²`. -/
+noncomputable def charge (ψ : S → V) : ℝ := ∑ x, (nsq (ψ x)).re
+
+omit [AddCommGroup S] in
+lemma charge_nonneg (ψ : S → V) : 0 ≤ charge ψ :=
+  Finset.sum_nonneg (fun x _ => nsq_re_nonneg (ψ x))
+
+/-- The two hops across every link carry the whole charge once. -/
+lemma hops_total (t : QLF.Twist) (e : S) (ψ : S → V) :
+    ∑ y, ((nsq (fix t *ᵥ ψ y)).re + (nsq (fix t.conj *ᵥ ψ (y + e))).re) = charge ψ := by
+  have hs : ∑ y, (nsq (fix t.conj *ᵥ ψ (y + e))).re = ∑ y, (nsq (fix t.conj *ᵥ ψ y)).re :=
+    Fintype.sum_equiv (Equiv.addRight e) _ (fun y => (nsq (fix t.conj *ᵥ ψ y)).re) (fun _ => rfl)
+  rw [Finset.sum_add_distrib, hs, ← Finset.sum_add_distrib]
+  unfold charge
+  refine Finset.sum_congr rfl (fun y _ => ?_)
+  rw [LocalGauge.nsq_split t (ψ y), Complex.add_re]
+
+/-- **The walk's current is bounded by its charge**: `|J(ψ)|² ≤ Q²`. -/
+theorem J_sq_le (e : Fin n → S) (k : Fin n) (t : QLF.Twist) (ψ : S → V) :
+    ip (CoupledEvolution.J e k t ψ) (CoupledEvolution.J e k t ψ) ≤ charge ψ ^ 2 := by
+  set c : S → ℝ := fun y => (Maxwell.current t (e k) ψ y).re
+  set w : S → ℝ := fun y => (nsq (fix t *ᵥ ψ y)).re + (nsq (fix t.conj *ᵥ ψ (y + e k))).re
+  have hJ : ip (CoupledEvolution.J e k t ψ) (CoupledEvolution.J e k t ψ) = ∑ y, c y * c y := by
+    unfold ip CoupledEvolution.J
+    have : ∀ i, ∑ y, (if i = k then c y else 0) * (if i = k then c y else 0) =
+        if i = k then ∑ y, c y * c y else 0 := by
+      intro i; by_cases h : i = k
+      · simp [h]
+      · simp [h]
+    simp only [this, Finset.sum_ite_eq', Finset.mem_univ, ite_true, c]
+  have hcw : ∀ y, |c y| ≤ w y := by
+    intro y
+    have h1 := nsq_re_nonneg (fix t *ᵥ ψ y)
+    have h2 := nsq_re_nonneg (fix t.conj *ᵥ ψ (y + e k))
+    simp only [c, w, Maxwell.current, Complex.sub_re]
+    exact abs_le.mpr ⟨by linarith, by linarith⟩
+  have hw0 : ∀ y, 0 ≤ w y := fun y => (abs_nonneg _).trans (hcw y)
+  have hwQ : ∑ y, w y = charge ψ := hops_total t (e k) ψ
+  have hwle : ∀ y, w y ≤ charge ψ := fun y => by
+    rw [← hwQ]; exact Finset.single_le_sum (fun z _ => hw0 z) (Finset.mem_univ y)
+  rw [hJ]
+  calc ∑ y, c y * c y ≤ ∑ y, w y * charge ψ := by
+        refine Finset.sum_le_sum (fun y _ => ?_)
+        rw [← abs_mul_abs_self]
+        exact mul_le_mul (hcw y) ((hcw y).trans (hwle y)) (abs_nonneg _) (hw0 y)
+    _ = charge ψ ^ 2 := by rw [← Finset.sum_mul, hwQ, sq]
+
+/-- **One coupled step raises `√H` by at most `√2·Q`** when `4nτ² ≤ 1`. -/
+theorem step_sqrt_energy (e : Fin n → S) (τ : ℝ) (hτ : 4 * n * τ ^ 2 ≤ 1) (k : Fin n)
+    (t : QLF.Twist) (s : State S n) :
+    √(energy e τ (step e τ k t s).A (step e τ k t s).E) ≤
+      √(energy e τ s.A s.E) + √2 * charge s.ψ := by
+  set H := energy e τ s.A s.E
+  set H' := energy e τ (step e τ k t s).A (step e τ k t s).E
+  set Q := charge s.ψ
+  have hQ := charge_nonneg s.ψ
+  have hH := (energy_lower e τ s.A s.E (by nlinarith [sq_nonneg τ])).2
+  have hH' := (energy_lower e τ (step e τ k t s).A (step e τ k t s).E (by nlinarith [sq_nonneg τ])).2
+  have hb := (energy_bounds e τ s.A s.E hτ).2
+  have hb' := (energy_bounds e τ (step e τ k t s).A (step e τ k t s).E hτ).2
+  have hbal := step_energy e τ k t s
+  have hJ : √(ip (CoupledEvolution.J e k t s.ψ) (CoupledEvolution.J e k t s.ψ)) ≤ Q := by
+    rw [show Q = √(Q ^ 2) from (Real.sqrt_sq (hQ : 0 ≤ Q)).symm]
+    exact Real.sqrt_le_sqrt (J_sq_le e k t s.ψ)
+  have h8 : √8 = 2 * √2 := by
+    rw [show (8 : ℝ) = 2 ^ 2 * 2 by norm_num, Real.sqrt_mul (by norm_num), Real.sqrt_sq (by norm_num)]
+  have hE : √(ip s.E s.E) ≤ 2 * √2 * √H := by
+    rw [← h8, ← Real.sqrt_mul (by norm_num)]; exact Real.sqrt_le_sqrt hb
+  have hE' : √(ip (step e τ k t s).E (step e τ k t s).E) ≤ 2 * √2 * √H' := by
+    rw [← h8, ← Real.sqrt_mul (by norm_num)]; exact Real.sqrt_le_sqrt hb'
+  have c1 := neg_ip_le_sqrt (CoupledEvolution.J e k t s.ψ) s.E
+  have c2 := neg_ip_le_sqrt (CoupledEvolution.J e k t s.ψ) (step e τ k t s).E
+  have s1 : √(ip (CoupledEvolution.J e k t s.ψ) (CoupledEvolution.J e k t s.ψ)) * √(ip s.E s.E) ≤ Q * (2 * √2 * √H) :=
+    mul_le_mul hJ hE (Real.sqrt_nonneg _) hQ
+  have s2 : √(ip (CoupledEvolution.J e k t s.ψ) (CoupledEvolution.J e k t s.ψ)) * √(ip (step e τ k t s).E (step e τ k t s).E) ≤
+      Q * (2 * √2 * √H') := mul_le_mul hJ hE' (Real.sqrt_nonneg _) hQ
+  have hsq : √H' ^ 2 ≤ √H ^ 2 + √2 * Q * (√H + √H') := by
+    rw [Real.sq_sqrt hH, Real.sq_sqrt hH']
+    linarith
+  have h0 := Real.sqrt_nonneg H
+  have h0' := Real.sqrt_nonneg H'
+  have h2 : 0 ≤ √2 * Q := mul_nonneg (Real.sqrt_nonneg 2) hQ
+  nlinarith [mul_nonneg h0 h0', mul_nonneg h2 h0, mul_nonneg h2 h0']
+
+/-- **The coupled field cannot blow up**: when `4nτ² ≤ 1`, `√H` grows at most linearly,
+    `√H_m ≤ √H_0 + √2·Q·m`, with `Q` the walk's conserved charge. -/
+theorem evolve_sqrt_energy (e : Fin n → S) (τ : ℝ) (hτ : 4 * n * τ ^ 2 ≤ 1) (ax : ℕ → Fin n)
+    (tw : ℕ → QLF.Twist) (s₀ : State S n) (m : ℕ) :
+    √(energy e τ (evolve e τ ax tw s₀ m).A (evolve e τ ax tw s₀ m).E) ≤
+      √(energy e τ s₀.A s₀.E) + √2 * charge s₀.ψ * m := by
+  induction m with
+  | zero => simp [evolve]
+  | succ m ih =>
+    have hQ : charge (evolve e τ ax tw s₀ m).ψ = charge s₀.ψ := by
+      have := congrArg Complex.re (evolve_norm e τ ax tw s₀ m)
+      simpa [charge, LatticeGauge.total, Complex.re_sum] using this
+    have := step_sqrt_energy e τ hτ (ax m) (tw m) (evolve e τ ax tw s₀ m)
+    rw [hQ] at this
+    simp only [evolve]
+    push_cast
+    linarith
+
+/-- **The coupled electric field stays bounded at every step**: `|E_m|² ≤ 8(√H_0 + √2·Q·m)²`.
+    It can grow at most quadratically in the number of steps, never exponentially. -/
+theorem evolve_field_bound (e : Fin n → S) (τ : ℝ) (hτ : 4 * n * τ ^ 2 ≤ 1) (ax : ℕ → Fin n)
+    (tw : ℕ → QLF.Twist) (s₀ : State S n) (m : ℕ) :
+    ip (evolve e τ ax tw s₀ m).E (evolve e τ ax tw s₀ m).E ≤
+      8 * (√(energy e τ s₀.A s₀.E) + √2 * charge s₀.ψ * m) ^ 2 := by
+  have hb := (energy_bounds e τ (evolve e τ ax tw s₀ m).A (evolve e τ ax tw s₀ m).E hτ).2
+  have hH := (energy_lower e τ (evolve e τ ax tw s₀ m).A (evolve e τ ax tw s₀ m).E
+    (by nlinarith [sq_nonneg τ])).2
+  have hg := evolve_sqrt_energy e τ hτ ax tw s₀ m
+  have h0 := Real.sqrt_nonneg (energy e τ (evolve e τ ax tw s₀ m).A (evolve e τ ax tw s₀ m).E)
+  have hsq := Real.sq_sqrt hH
+  nlinarith [mul_le_mul hg hg h0 (h0.trans hg)]
+
+end Coupled
 
 end QLF.FieldEnergy
