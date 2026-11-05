@@ -86,6 +86,7 @@ import QLF_NonAbelian
 import QLF_NonAbelianAction
 import QLF_NonAbelianField
 import QLF_Courant
+import QLF_CompactBound
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -347,3 +348,6 @@ import QLF_Courant
 #print axioms QLF.Courant.K_sq_le_sharp
 #print axioms QLF.Courant.energy_lower_sharp
 #print axioms QLF.Courant.free_bounded_sharp
+#print axioms QLF.CompactBound.force_le
+#print axioms QLF.CompactBound.E_bound
+#print axioms QLF.CompactBound.A_bound

@@ -298,5 +298,6 @@ lean_lib QLF where
     `QLF_NonAbelian,
     `QLF_NonAbelianAction,
     `QLF_NonAbelianField,
-    `QLF_Courant
+    `QLF_Courant,
+    `QLF_CompactBound
   ]

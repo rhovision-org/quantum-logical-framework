@@ -1107,3 +1107,21 @@ most twice the sum of the two squares. The force bound follows by applying `K_le
 still stated under `4nτ² ≤ 1`.
 
 **Credit.** Courant, Friedrichs and Lewy (1928).
+
+## 33. Compact links cannot blow up
+
+The linear field is stable only under the Courant condition (§32); past it the staggered mode grows
+exponentially. [`QLF_CompactBound`](lean/QLF_CompactBound.lean) shows that compact links (§28) have
+no such threshold. The Wilson force is `curl(sin F)`, and `|sin| ≤ 1` caps it:
+
+```text
+force_le :  |curl(sin F)ᵢ(x)| ≤ 2n
+E_bound  :  |Jₘ| ≤ j  ⟹  |Eₘ| ≤ |E₀| + m(2n|τ| + j)                     (every τ)
+A_bound  :  |Aₘ| ≤ |A₀| + m|τ|(|E₀| + m(2n|τ| + j))                      (every τ)
+```
+
+So, for every time step, the electric field grows at most linearly and the link phase at most
+quadratically, link by link. The walk's current obeys such a bound, `|J| ≤ Q` (`J_sq_le`, §27).
+Compactness, which §28 introduced to make the action periodic, also removes the runaway: a
+bounded phase cannot push arbitrarily hard. Open: an exactly conserved energy for the compact
+leapfrog (the force is not linear) and bounds uniform in time.
