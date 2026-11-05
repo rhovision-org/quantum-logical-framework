@@ -64,6 +64,42 @@ import QLF_ClosureKernel
 import QLF_ClosureLeakage
 import QLF_ClosureChannels
 import QLF_ChannelZeros
+import QLF_LightCone
+import QLF_RealizableWalk
+import QLF_Tsirelson
+import QLF_Mass
+import QLF_DiracWalk
+import QLF_BornFromWays
+import QLF_GaugeAxis
+import QLF_LocalGauge
+import QLF_LatticeGauge
+import QLF_Maxwell
+import QLF_LinkAction
+import QLF_MaxwellTime
+import QLF_GaussLaw
+import QLF_WalkCoupling
+import QLF_CoupledEvolution
+import QLF_TsirelsonBound
+import QLF_FieldEnergy
+import QLF_CompactLinks
+import QLF_NonAbelian
+import QLF_NonAbelianAction
+import QLF_NonAbelianField
+import QLF_Courant
+import QLF_CompactBound
+import QLF_OpticalTheorem
+import QLF_ChannelGroupoid
+import QLF_PoleFactorization
+import QLF_GluonVertex
+import QLF_GluonGluing
+import QLF_Resonance
+import QLF_JointClosure
+import QLF_VacuumResolvent
+import QLF_MixingUnitarity
+import QLF_SharedClosure
+import QLF_PolaronBranches
+import QLF_NonAbelianGauss
+import QLF_HiddenZeros
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -234,3 +270,147 @@ import QLF_ChannelZeros
 #print axioms QLF.ClosureChannels.mixed_channel_zero
 #print axioms QLF.ClosureChannels.mixed_open_zero
 #print axioms QLF.ClosureChannels.channel_two_sided
+#print axioms QLF.ClosureChannels.cone_amplitude
+#print axioms QLF.ClosureChannels.cone_zero_iff
+#print axioms QLF.ClosureChannels.shellKernel_compose
+#print axioms QLF.ClosureChannels.coneStep_unitary
+#print axioms QLF.ClosureChannels.shell_total_unitary
+#print axioms QLF.ClosureChannels.rawStep_not_unitary
+#print axioms QLF.ClosureChannels.realStep_unitary
+#print axioms QLF.ClosureChannels.realWalk_unitary
+#print axioms QLF.Tsirelson.chsh_sq
+#print axioms QLF.Tsirelson.chsh_classical
+#print axioms QLF.Tsirelson.chsh_tsirelson
+#print axioms QLF.Tsirelson.twistChsh_tsirelson
+#print axioms QLF.Tsirelson.twistChsh_sq_e00
+#print axioms QLF.Tsirelson.twistChsh_saturates
+#print axioms QLF.Mass.weyl_sq
+#print axioms QLF.Mass.no_weyl_mass
+#print axioms QLF.Mass.dirac_sq
+#print axioms QLF.Mass.chirality_comm_dirac
+#print axioms QLF.Mass.massStep_unitary
+#print axioms QLF.DiracWalk.realWalk_generator
+#print axioms QLF.DiracWalk.handed_unitary
+#print axioms QLF.DiracWalk.diracWalk_unitary
+#print axioms QLF.DiracWalk.diracWalk_generator
+#print axioms QLF.BornFromWays.born_from_ways
+#print axioms QLF.BornFromWays.assignment_unique
+#print axioms QLF.GaugeAxis.spacetimeWalk_unitary
+#print axioms QLF.GaugeAxis.spacetimeWalk_generator
+#print axioms QLF.GaugeAxis.mass_shell
+#print axioms QLF.LocalGauge.ringWalk_norm
+#print axioms QLF.LocalGauge.ringWalk_covariant
+#print axioms QLF.LocalGauge.flux_invariant
+#print axioms QLF.LocalGauge.gauge_equiv_of_flux_eq
+#print axioms QLF.LatticeGauge.axisStep_norm
+#print axioms QLF.LatticeGauge.plaquette_invariant
+#print axioms QLF.LatticeGauge.bianchi
+#print axioms QLF.LatticeGauge.total_plaquette_zero
+#print axioms QLF.Maxwell.continuity
+#print axioms QLF.Maxwell.div_curl
+#print axioms QLF.Maxwell.gauss_preserved_by_walk
+#print axioms QLF.LinkAction.first_variation
+#print axioms QLF.LinkAction.stationary_iff_ampere
+#print axioms QLF.LinkAction.gauge_invariant_iff_conserved
+#print axioms QLF.MaxwellTime.first_variation
+#print axioms QLF.MaxwellTime.stationary_iff_update
+#print axioms QLF.MaxwellTime.gauss_from_action
+#print axioms QLF.GaussLaw.stationary_iff_gauss
+#print axioms QLF.GaussLaw.stationary_forces_continuity
+#print axioms QLF.GaussLaw.gauge_invariant_iff_continuity
+#print axioms QLF.WalkCoupling.link_overlap
+#print axioms QLF.WalkCoupling.link_response
+#print axioms QLF.CoupledEvolution.evolve_gauss
+#print axioms QLF.CoupledEvolution.evolve_norm
+#print axioms QLF.CoupledEvolution.evolve_covariant
+#print axioms QLF.CoupledEvolution.gauss_neutral
+#print axioms QLF.CoupledEvolution.no_background_no_walk
+#print axioms QLF.CoupledEvolution.exists_nonzero_admissible
+#print axioms QLF.CoupledEvolution.evolve_gauss_neutral
+#print axioms QLF.TsirelsonBound.chsh_sos
+#print axioms QLF.TsirelsonBound.tsirelson_bound
+#print axioms QLF.TsirelsonBound.tsirelson_bound_neg
+#print axioms QLF.FieldEnergy.ip_K
+#print axioms QLF.FieldEnergy.energy_balance
+#print axioms QLF.FieldEnergy.energy_conserved
+#print axioms QLF.FieldEnergy.step_energy
+#print axioms QLF.FieldEnergy.K_sq_le
+#print axioms QLF.FieldEnergy.energy_lower
+#print axioms QLF.FieldEnergy.free_stable
+#print axioms QLF.FieldEnergy.J_sq_le
+#print axioms QLF.FieldEnergy.evolve_sqrt_energy
+#print axioms QLF.FieldEnergy.evolve_field_bound
+#print axioms QLF.CompactLinks.wilson_variation
+#print axioms QLF.CompactLinks.walk_response_sin
+#print axioms QLF.CompactLinks.wilson_periodic
+#print axioms QLF.CompactLinks.walk_periodic
+#print axioms QLF.CompactLinks.compact_gauss_preserved
+#print axioms QLF.NonAbelian.step_norm
+#print axioms QLF.NonAbelian.step_covariant
+#print axioms QLF.NonAbelian.wilson_loop_invariant
+#print axioms QLF.NonAbelianAction.plaq_eq_zero_iff
+#print axioms QLF.NonAbelianAction.wilson_gauge
+#print axioms QLF.NonAbelianAction.wilson_eq_zero_iff
+#print axioms QLF.NonAbelianAction.pure_gauge_action
+#print axioms QLF.NonAbelianAction.wilson_abelian
+#print axioms QLF.NonAbelianField.wilsonOff_bump
+#print axioms QLF.NonAbelianField.force_eq
+#print axioms QLF.NonAbelianField.stationary_iff
+#print axioms QLF.NonAbelianField.yang_mills_iff
+#print axioms QLF.Courant.weitzenboeck
+#print axioms QLF.Courant.K_sq_le_sharp
+#print axioms QLF.Courant.energy_lower_sharp
+#print axioms QLF.Courant.free_bounded_sharp
+#print axioms QLF.CompactBound.force_le
+#print axioms QLF.CompactBound.E_bound
+#print axioms QLF.CompactBound.A_bound
+#print axioms QLF.OpticalTheorem.optical_iff
+#print axioms QLF.OpticalTheorem.optical_forward
+#print axioms QLF.OpticalTheorem.history_optical
+#print axioms QLF.OpticalTheorem.realWalk_optical
+#print axioms QLF.OpticalTheorem.raw_optical_defect
+#print axioms QLF.ChannelGroupoid.dag_comp
+#print axioms QLF.ChannelGroupoid.hol_dag
+#print axioms QLF.ChannelGroupoid.endo_closure
+#print axioms QLF.ChannelGroupoid.kernel_compose
+#print axioms QLF.ChannelGroupoid.kernel_dagger
+#print axioms QLF.PoleFactorization.regular_part
+#print axioms QLF.PoleFactorization.rankOne_projector
+#print axioms QLF.PoleFactorization.resolvent_partial
+#print axioms QLF.PoleFactorization.eig_unit
+#print axioms QLF.PoleFactorization.realWalk_poles
+#print axioms QLF.GluonVertex.W_mul
+#print axioms QLF.GluonVertex.trace_W
+#print axioms QLF.GluonVertex.vertex_ne_zero_iff
+#print axioms QLF.GluonVertex.gluon_vertex_iff
+#print axioms QLF.GluonVertex.two_gluon_commute
+#print axioms QLF.GluonVertex.vertex_count
+#print axioms QLF.GluonGluing.comm_eq_zero_iff
+#print axioms QLF.GluonGluing.chan_ne_zero_iff
+#print axioms QLF.GluonGluing.gluing
+#print axioms QLF.GluonGluing.jacobi
+#print axioms QLF.Resonance.resonance_balance
+#print axioms QLF.Resonance.resonance_le_one
+#print axioms QLF.Resonance.stable_iff_no_leak
+#print axioms QLF.JointClosure.closed_iff_singlet
+#print axioms QLF.JointClosure.singlet_corr
+#print axioms QLF.JointClosure.singlet_saturates
+#print axioms QLF.VacuumResolvent.dyson_unique
+#print axioms QLF.VacuumResolvent.chain_tendsto
+#print axioms QLF.VacuumResolvent.resummed_is_tower
+#print axioms QLF.VacuumResolvent.landau_capacity
+#print axioms QLF.MixingUnitarity.block_unitary_iff
+#print axioms QLF.MixingUnitarity.triangle_closes
+#print axioms QLF.MixingUnitarity.jarlskog_invariant
+#print axioms QLF.SharedClosure.bonding_above
+#print axioms QLF.SharedClosure.symmetric_split
+#print axioms QLF.SharedClosure.feshbach_entry
+#print axioms QLF.PolaronBranches.branch_iff
+#print axioms QLF.PolaronBranches.attractive_exists
+#print axioms QLF.PolaronBranches.zero_at_bath
+#print axioms QLF.PolaronBranches.f_deriv
+#print axioms QLF.NonAbelianGauss.noether
+#print axioms QLF.NonAbelianGauss.gauss_covariant
+#print axioms QLF.HiddenZeros.A4_zero
+#print axioms QLF.HiddenZeros.A5_zero
+#print axioms QLF.HiddenZeros.A5_near_zero
