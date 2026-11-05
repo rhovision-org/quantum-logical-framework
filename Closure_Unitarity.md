@@ -739,3 +739,35 @@ scheme (*IEEE Trans. Antennas Propag.* **14**, 302 (1966)). What QLF supplies is
 from the realizability of each step. What is **not** derived is the update `E' = E + curl B − J`
 itself, which is taken as the form; deriving it needs an action or dynamics for the links, which is
 open. Reading the walk's norm density as electric charge is also a reading, not a theorem.
+
+## 21. A finite action for the links, and Ampère's law as its stationarity
+
+§20 took the Ampère–Maxwell update as given. [`QLF_LinkAction`](lean/QLF_LinkAction.lean) derives the
+static Ampère law from a finite action for the link phases. With `F` the plaquette field of §19 and
+`J` a current on the links,
+
+```text
+S[a] = ¼ Σₓ Σᵢ Σⱼ F_ij(x)² − Σₓ Σᵢ J_i(x) a_i(x)
+
+first_variation                 :  (S[a + εδ_{k,y}] − S[a − εδ_{k,y}]) / 2ε = (curl F)_k(y) − J_k(y)   every ε ≠ 0
+stationary_iff_ampere           :  S stationary under every link variation  ⟺  curl F = J
+stationary_conserves_current    :  curl F = J  ⟹  div J = 0
+action_gauge_shift              :  S[a + Δθ] = S[a] + Σₓ θ(x) · div J(x)
+gauge_invariant_iff_conserved   :  S gauge invariant for every θ  ⟺  div J = 0
+```
+
+The reading. The action is quadratic, so its symmetric finite difference *is* its first variation:
+no derivative and no limit are needed, and the static Ampère law is exactly the condition that no
+single link can lower or raise it to first order. The current must then be conserved, and a
+conserved current is also exactly what makes the coupling gauge invariant: Noether's link between
+the gauge symmetry of §18 and the continuity equation of §20, here as a finite identity.
+
+This is a worked instance, in the link sector, of the bridge contract in
+[`Stationary_Action.md`](Stationary_Action.md): an explicit action, explicit admissible variations
+(one link at a time), and an exact first-variation identity. It does not settle that bridge, which
+is about the substrate's own closure condition and gravity.
+
+**Credit and scope.** This is the standard non-compact (weak-coupling) Wilson action, whose
+Euler–Lagrange equations are the lattice Maxwell equations, and the gauge/conservation link is
+Noether's (1918). Not included: the time direction (the electric term and the full update), the
+walk's own action coupled to the links, and the compact (cosine) action.

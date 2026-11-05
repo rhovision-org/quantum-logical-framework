@@ -74,6 +74,7 @@ import QLF_GaugeAxis
 import QLF_LocalGauge
 import QLF_LatticeGauge
 import QLF_Maxwell
+import QLF_LinkAction
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -282,3 +283,6 @@ import QLF_Maxwell
 #print axioms QLF.Maxwell.continuity
 #print axioms QLF.Maxwell.div_curl
 #print axioms QLF.Maxwell.gauss_preserved_by_walk
+#print axioms QLF.LinkAction.first_variation
+#print axioms QLF.LinkAction.stationary_iff_ampere
+#print axioms QLF.LinkAction.gauge_invariant_iff_conserved
