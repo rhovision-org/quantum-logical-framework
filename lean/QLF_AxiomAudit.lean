@@ -79,6 +79,7 @@ import QLF_MaxwellTime
 import QLF_GaussLaw
 import QLF_WalkCoupling
 import QLF_CoupledEvolution
+import QLF_TsirelsonBound
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -302,3 +303,6 @@ import QLF_CoupledEvolution
 #print axioms QLF.CoupledEvolution.evolve_gauss
 #print axioms QLF.CoupledEvolution.evolve_norm
 #print axioms QLF.CoupledEvolution.evolve_covariant
+#print axioms QLF.TsirelsonBound.chsh_sos
+#print axioms QLF.TsirelsonBound.tsirelson_bound
+#print axioms QLF.TsirelsonBound.tsirelson_bound_neg

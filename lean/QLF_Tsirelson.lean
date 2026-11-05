@@ -35,7 +35,9 @@ Twists on different spatial axes anticommute (the Clifford relation behind the l
 **Scope.** `chsh_tsirelson` is the *maximal, anticommuting* case: it fixes the spectrum when both
 sites' observables anticommute exactly. It is not the general Tsirelson bound `‖C‖ ≤ 2√2` for
 arbitrary Hermitian `±1` observables; observables that fail to commute without anticommuting give
-intermediate CHSH values, and that general operator-norm bound is not proved here.
+intermediate CHSH values. That general bound, `|⟨C⟩| ≤ 2√2` for every state and every Hermitian
+`±1` observables, is proved by a sum-of-squares certificate in
+[`QLF_TsirelsonBound`](QLF_TsirelsonBound.lean) (`tsirelson_bound`, `tsirelson_bound_neg`).
 
 The reading: a twist pair that cannot be given joint values *is* a pair that does not commute, and
 that is the whole of the quantum excess over Bell. No continuum, no Hilbert-space postulate beyond

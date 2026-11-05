@@ -486,8 +486,7 @@ So the whole gap between Bell's bound and Tsirelson's (Cirel'son, Lett. Math. Ph
 is whether a site's two observables commute. Commuting observables can be given joint values, and
 then the bound is 2. Anticommuting ones cannot, and then the spectrum is `{0, ±2√2}`. **Scope:** this
 is the maximal, exactly anticommuting case. Observables that fail to commute without anticommuting
-give intermediate values, and the general Tsirelson bound `‖C‖ ≤ 2√2` for arbitrary Hermitian `±1`
-observables is not proved here.
+give intermediate values; the general bound for arbitrary Hermitian `±1` observables is §26.
 
 **Twists supply exactly that.** Twists on different spatial axes anticommute, the same Clifford
 relation that makes the light-cone zeros exact (§11). With `up` and `left` on each of two sites:
@@ -898,3 +897,23 @@ are. These are three separate finite facts, and each is used exactly once.
 field is Kogut–Susskind Hamiltonian lattice gauge theory (1975), and as a leapfrog scheme Yee's
 (1966). Not included: conservation of a coupled energy, compact links, non-abelian links. The
 field is real and the current enters through its real part (it is `‖·‖²`-valued, carried in `ℂ`).
+
+## 26. Tsirelson's bound for every pair of observables
+
+§13 settled the maximal case. [`QLF_TsirelsonBound`](lean/QLF_TsirelsonBound.lean) proves the bound
+for observables that need not anticommute. With two-outcome observables (each squares to `1`), the
+sites commuting and `s² = 2`, in any `ℂ`-algebra:
+
+```text
+chsh_sos            :  (s a₀ − b₀ − b₁)² + (s a₁ − b₀ + b₁)² = 8 − 2s · C
+tsirelson_bound     :  Re⟨v, C v⟩ ≤ 2√2 ⟨v, v⟩         every state, every Hermitian ±1 observables
+tsirelson_bound_neg :  −2√2 ⟨v, v⟩ ≤ Re⟨v, C v⟩
+```
+
+The left side of `chsh_sos` is a sum of two squares of Hermitian matrices, so its expectation is
+non-negative, and that is the whole proof: `2√2 ⟨C⟩ ≤ 8`. No commutation or anticommutation within
+a site is assumed, so every quantum assignment obeys `|⟨C⟩| ≤ 2√2`, and with `twistChsh_saturates`
+(§13) twists on two spatial axes reach it. The certificate is the standard one (it is how the bound
+is used in self-testing; Šupić and Bowles, *Quantum* **4**, 337 (2020)); the bound is Cirel'son's
+(*Lett. Math. Phys.* **4**, 93 (1980)). Finite matrices of any size, no operator-norm theory, no
+axioms.
