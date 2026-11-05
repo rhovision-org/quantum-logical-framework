@@ -203,3 +203,42 @@ those the extension sum that turns `1 − D` into `2 − D` need not appear.
 | | Prediction | Kill condition |
 |---|---|---|
 | **H5** | Every coefficient of the pure Yang–Mills part (lowest degree) is `±1`. | Any pure-YM coefficient of magnitude 2 or more. |
+
+## 8. Results, round 2 (after commit `48f2154`)
+
+`python3 curve_cover_loop.py --ngon 5` (under a second).
+
+| `n` (planar one-loop) | configurations | coefficient of `∏ᵢ X_{2i,p}` | other `D`-dependent coefficients |
+|---|---|---|---|
+| 1 (tadpole) | 2 | `2 − D` | none |
+| 2 (bubble) | 4 | `D − 2` | none |
+| 3 (triangle) | 22 | `2 − D` | none |
+| 4 (box) | 1072 | `D − 2` | none |
+| 5 (pentagon) | 8636 | `2 − D` | none |
+
+* **L1: pass.** The coefficient is `(−1)ⁿ (D − 2)` at every `n`, the paper's eq. (68), reached by reading
+  curves on the punctured disk by handedness alone.
+* **L2: pass, but weaker than it looked.** In every planar `n`-gon the closed curve multiplies exactly one
+  monomial, `∏ᵢ X_{2i,p}`. That is structural, not a coincidence: a monomial with the closed curve must
+  cover each scaffold `s_i` by a curve whose core is that single edge and that does not use a loop
+  propagator, and the only such curves with non-zero `X` are the ones ending on the puncture. So L2
+  reduces to L1 for the planar one loop. The pre-registration did not see this; the kill condition was
+  real, but it could not have fired here. A test of whether `D` only ever enters as `D − 2` needs the
+  non-planar case, where the closed curve's exponent is `−D` with no extension correction (paper §4.2).
+
+**What this establishes.** The handedness dictionary extends to the planar one loop. The extension rule,
+the spiral into the puncture at constant hand, and the closed curve as the full one-handed circulation
+together give the paper's `(2 − D)`: the circulation contributes `1 − D` and the partial circulations
+(extensions) contribute `+1`. In this vocabulary the "ghost" subtraction that turns `D` polarizations into
+`D − 2` is the sum over partial circulations.
+
+**What is not validated.** The other monomials of the triangle, box and pentagon — with coefficients up to
+±4, from distinct curves that share a kinematic variable — have no published counterpart to check against,
+and they depend on how far the walker lets a curve wind (here: no internal edge more than twice, against
+the paper's "at most one self-intersection per puncture"). Treat them as computed, not checked.
+
+**H5: pass.** On all 132 eight-gluon tree fatgraphs (64,443–66,724 configurations each; 10,429 to 10,989
+pure-YM monomials), every pure Yang–Mills coefficient is ±1. Coefficients of magnitude 2, 4 and 8 occur,
+but only with at least one `F³` insertion. So the pure-gluon leading singularity has unit multiplicity
+through eight gluons: its cancellations are equal-and-opposite pairs. This is now a prediction that
+survived one blind round. It is not proved for all `n`, and no mechanism is given here.
