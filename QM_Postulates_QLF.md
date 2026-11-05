@@ -1,0 +1,181 @@
+# Radical Simplification of Quantum Mechanics in QLF: the postulate ledger
+
+Part of the [Quantum Logical Framework (QLF)](README.md). Tracking issue:
+[#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207).
+
+ZFA is equal and opposite quantum logical action with zero free energy, the principle of QLF.
+
+**The claim, and how to check it.** QLF says the postulates of quantum mechanics are not primitive. Each
+is either derived from finite twist histories and ZFA closure, replaced by something simpler, or still
+open. "Radical" means *at the root*: the simplification changes the primitives, not the bookkeeping. A
+claim like that is only worth something if it can be checked row by row, so this document is a ledger,
+not an argument. Every row gives:
+
+- the Lean theorem, if there is one, and the premises it actually uses;
+- what the theorem establishes physically, which is often less than its name;
+- what would count against the reading.
+
+The ledger audits **both sides**. Standard quantum mechanics is empirically successful, and none of its
+postulates is falsified in its domain; what is in question is whether they are fundamental. QLF has
+primitives of its own, listed in §3, and the test of the whole programme is §4: does QLF remove an
+assumption, or does the assumption come back in through a definition, a premise, a normalization or a
+rendering map?
+
+The three layers are kept apart on purpose, because mixing them makes an argument look stronger than it
+is:
+
+- **Layer A** (§1): the postulates of quantum mechanics itself.
+- **Layer B** (§2): what quantum field theory and its spacetime models add.
+- **Layer C** (§3): the primitives QLF needs.
+
+Status labels follow [`ScientificApproach.md`](ScientificApproach.md) §3: **proved** (a Lean theorem,
+premises as stated), **exact computation**, **numerical**, **conditional** (proved from a premise that is
+not itself derived), **reading** (an interpretation resting on named theorems), **open**, **assumed**.
+
+---
+
+## 1. Layer A: the postulates of quantum mechanics
+
+The formulation compared against is Nielsen and Chuang's four postulates (*Quantum Computation and
+Quantum Information*, 2000, §2.2), with measurement split into its three parts and observables and
+superposition listed separately, since textbooks differ on whether those are postulates.
+
+| # | Standard postulate | QLF replacement | Lean anchor and premises | Status | What would count against it |
+|---|---|---|---|---|---|
+| A1 | **State space.** A system is a ray in a complex Hilbert space. | A state is a 2×2 Hermitian `Form`, built from the eight twists. The eight-element alphabet is forced once two spatial axes are distinguishable. | `alphabet_eight_of_two_spatial_axes`, `noncommuting_iff_eight`, `no_six_twist_alphabet` ([`QLF_AlphabetNecessity`](lean/QLF_AlphabetNecessity.lean)). **Premise:** the candidate axes are the Klein four-group `{I, X, Y, Z}` of the Pauli matrices. | **Conditional.** The size is derived; the complex numbers are not (they arrive with `σ_y`). | A system whose states need more than finite tensor products of the spin-½ space. |
+| A2 | **Observables** are Hermitian operators; outcomes are eigenvalues. | Every twist is a Hermitian involution, so its outcomes are `±1`. | `twist_unitary` (Hermitian and squares to `I`), [`QLF_ClosureUnitarity`](lean/QLF_ClosureUnitarity.lean). | **Proved for twists**; general observables are assumed Hermitian wherever they appear (e.g. `tsirelson_bound`). | An observable outcome that is not a sum of twist outcomes. |
+| A3 | **Dynamics is unitary** (Schrödinger, or Dirac). | Every finite history is unitary. The realizable walk is unitary at every momentum, and its generators are the Weyl and Dirac operators. | `history_unitary`; `realStep_unitary`, `realWalk_unitary`, `rawStep_not_unitary` ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean)); `realWalk_generator`, `diracWalk_generator` ([`QLF_DiracWalk`](lean/QLF_DiracWalk.lean)). **Premises:** each twist is unitary; the step keeps only the projector `(1 + M(t))/2`. | **Proved**, with the caveat in §4a. The walk-to-Dirac route is Bialynicki-Birula (1994) and Meyer (1996). | A finite history, or a realizable step, that is not unitary. |
+| A4 | **Superposition.** Amplitudes of alternatives add linearly. | Amplitudes are signed sums over histories. Interference zeros are then theorems: structural, or exact cancellations. | `zero_taxonomy`, `antiHermitian_seed_forbidden`; `mixed_channel_zero` ([`QLF_ChannelZeros`](lean/QLF_ChannelZeros.lean)); `cone_amplitude`, `cone_zero_iff` ([`QLF_LightCone`](lean/QLF_LightCone.lean)). **Premise:** the sum over histories is the definition of an amplitude. | **Proved** consequences of a **defined** linearity. | An interference pattern not expressible as a signed sum over finite histories. |
+| A5 | **Born rule.** Probability is `\|amplitude\|²`. | Probability counts equal ways: an outcome of norm `m` is `m` unit ways. Separately, a measure with no third-order interference is a squared vector amplitude. | `born_from_ways` ([`QLF_BornFromWays`](lean/QLF_BornFromWays.lean)): **premise** `refine`, that an outcome of norm `m` splits into `m` equal ways. `quadratic_of_third_order_free`, `vector_amplitude_iff` ([`QLF_InterferenceNoGo`](lean/QLF_InterferenceNoGo.lean)): **premise** Sorkin's `I₃ = 0` (Sorkin 1994). | **Conditional.** Both routes are uniqueness theorems; neither premise is yet derived from dynamics. Close in spirit to Zurek's envariance (2005). | A ways-refinement rule other than `\|ψ\|²` that matches experiment, or a measured `I₃ ≠ 0`. |
+| A6 | **Measurement** yields one outcome (collapse, or a projection postulate). | A measurement is a closure: a count-balanced history folds to the central point `±I` of its unitary path. No extra collapse dynamics. | `closure_on_unitary_path`, `unitary_history_not_closure` ([`QLF_ClosureUnitarity`](lean/QLF_ClosureUnitarity.lean)). | **Proved** structure; that a closure *is* the measurement event is a **reading** (compare Zurek's decoherence, 2003). | A recorded measurement outcome with no corresponding closure. |
+| A7 | **State update** after measurement (Lüders rule). | Not yet stated. | None. | **Open.** | n/a until stated. |
+| A8 | **Composition** is the tensor product. | Two histories close jointly; the closed two-spin state is exactly the singlet, and it saturates Tsirelson's bound. | `closed_iff_singlet`, `singlet_saturates` ([`QLF_JointClosure`](lean/QLF_JointClosure.lean)); `chsh_tsirelson`, `tsirelson_bound` ([`QLF_Tsirelson`](lean/QLF_Tsirelson.lean), [`QLF_TsirelsonBound`](lean/QLF_TsirelsonBound.lean)). **Premise:** the two-site space is the tensor product. | **Assumed.** The tensor product is used, not derived; what is proved inside it (the singlet as the closure, `2√2`) is standard quantum mechanics. | Correlations beyond `2√2`, or a composite whose joint closures do not match its tensor-product states. |
+
+**Layer A tally.** One row is derived outright (A3, unitary dynamics, given unitary twists). Three are
+proved consequences of a definition or a structure (A2, A4, A6). Two are conditional on a premise not yet
+derived (A1's complex numbers, A5's refinement). One is assumed (A8) and one is open (A7).
+
+---
+
+## 2. Layer B: what quantum field theory and its spacetime models add
+
+These are not postulates of quantum mechanics. Several are where QLF's challenge is sharpest, and the
+challenge is not new in any of them; the classical source is credited first.
+
+| # | Assumption | Who questioned it first | QLF replacement | Lean anchor and premises | Status | What would count against it |
+|---|---|---|---|---|---|---|
+| B1 | **A fixed background spacetime.** | General relativity (Einstein 1915): spacetime is dynamical, so a fixed background is in tension with gravity. This is a QFT assumption, not a QM one. | Spacetime is synthesized from closures. The interval is the determinant of the state. | `det_toMatrix_eq_interval`, `lorentz_preserves_interval` ([`QLF_Minkowski`](lean/QLF_Minkowski.lean)); curvature through the bridge axiom `benincasa_dowker_limit` ([`QLF_CausalContinuum`](lean/QLF_CausalContinuum.lean)) and the metric through `order_metric_continuum_limit` ([`QLF_OrderMetric`](lean/QLF_OrderMetric.lean)). | **Proved** for the interval; Einstein's equations **open** (one bridge each). | A gravitational observation that requires a background. |
+| B2 | **A continuum of points.** | Planck-scale arguments; Bekenstein (1972) for finite information. | Finite histories. A finite-information region cannot hold a continuum faithfully. | `no_continuum_in_finite_region` ([`QLF_Realizability`](lean/QLF_Realizability.lean)). **Premise:** the region holds finitely many distinguishable states (Bekenstein, assumed). | **Proved** given that premise. No experiment has resolved a continuum, but absence of evidence is not evidence of falsity; the case is the five strikes in [`TheContinuum.md`](TheContinuum.md) §2. | A measurement that resolves more distinguishable states than the bound allows. |
+| B3 | **Exact Lorentz invariance.** | None: it is extremely well tested. | Lorentz symmetry from the spinor double cover; on the lattice it is broken at order `a²` and restored in the continuum. | `spinor_hom` ([`QLF_LorentzCover`](lean/QLF_LorentzCover.lean)); surjectivity through the bridge axiom `lorentz_generated_by_boosts_rotations`. The `a²` breaking: [`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md) §12. | **Proved** homomorphism, one bridge for surjectivity; the breaking is an **exact computation**. | See benchmark §5 (B-LIV). |
+| B4 | **The propagator `1/p²`** is put into perturbation theory. | Symanzik (1969): it is the sum over random walks. | The resolvent of the eight-twist walk under the Kraft measure, `1/(1 − φ(k))`, which is `8/k²` at long wavelength. | `twist_kraft` ([`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)); the propagator itself is an **exact computation** ([`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md) §11–§12). | **Exact computation**; the Wick rotation from Euclidean to Lorentzian is **assumed**. | A Lorentzian walk whose resolvent is not `1/p²` at long wavelength. |
+| B5 | **Renormalization** subtracts infinities. | Wilson (1971): renormalization is a flow over scales. | Every counterterm is finite, one per octave of capacity; no infinity is ever subtracted. | `counterterm_finite`, `dyson_unique`, `landau_capacity` ([`QLF_VacuumResolvent`](lean/QLF_VacuumResolvent.lean)); finite flow in [`QLF_ExactRG`](lean/QLF_ExactRG.lean). | **Proved** finite core; the prime electromagnetic kernel **open**. | A physical divergence that no finite capacity absorbs. |
+| B6 | **The gauge group** `SU(3)×SU(2)×U(1)` is postulated. | Unexplained in the Standard Model. | The groups come from the axis algebra: the τ subalgebra is weak isospin; colour is the ℤ₃ relabeling. | `weak_isospin_su2` ([`BraKetRhoQuCalc`](lean/BraKetRhoQuCalc.lean)); `baryon_cyc_invariant` ([`QLF_BaryonWinding`](lean/QLF_BaryonWinding.lean)); `yang_mills_iff` ([`QLF_NonAbelianField`](lean/QLF_NonAbelianField.lean)). | **Proved** algebras and lattice field equations; couplings **open**. | A gauge structure the axis algebra cannot generate. |
+| B7 | **Locality and microcausality.** | Built into QFT. | Histories compose only along shared closures; the shell kernel composes over intermediate shells. | `shellKernel_compose` ([`QLF_LightCone`](lean/QLF_LightCone.lean)); `kernel_compose`, `kernel_dagger` ([`QLF_ChannelGroupoid`](lean/QLF_ChannelGroupoid.lean)). | **Proved** composition; microcausality of operators **open**. | A spacelike correlation that is not a joint closure. |
+| B8 | **The S-matrix is unitary**, and the optical theorem holds. | Standard. | The optical theorem as a sum over intermediate channels, for every history and the realizable walk; the raw census violates it by exactly `2/3`. | `optical_forward`, `raw_optical_defect` ([`QLF_OpticalTheorem`](lean/QLF_OpticalTheorem.lean)). | **Proved** for the realizable walk; a normalized `S` on boundary states with `S†S = I` **open**. | An unnormalizable channel operator. |
+
+---
+
+## 3. Layer C: QLF's own primitives
+
+QLF is not postulate-free. These are its primitives, stated as plainly as the standard ones, each marked
+**forced** (derived from something weaker), **chosen**, or **bridge** (an explicit axiom).
+
+| # | Primitive | Forced, chosen, or bridge | Where |
+|---|---|---|---|
+| C1 | **Logic only.** Records persist (weakening). | Chosen as the floor: "we can only assume nature is logical." Persistence and no time loops follow from weakening. | `weakening_iff_persistence` ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)); [`Philosophy.md`](Philosophy.md) §3d |
+| C2 | **Possibilism.** Every generable history exists as possibility. | Chosen: the founding commitment, not a theorem. | [`Philosophy.md`](Philosophy.md) |
+| C3 | **The alphabet.** Distinctions are signed axes, represented by the Pauli matrices. | The **size** is forced (eight, given two spatial axes); the **Pauli representation**, and with it the complex numbers, is **chosen**. | [`QLF_AlphabetNecessity`](lean/QLF_AlphabetNecessity.lean) |
+| C4 | **Histories** are finite words; composition is concatenation. | Chosen. | [`QLF_Axioms`](lean/QLF_Axioms.lean) |
+| C5 | **ZFA selection.** A history is an event when it is count-balanced on every axis. | Chosen as the selection rule. Pauli closure then follows. | `count_balanced_pauli_closed` ([`QLF_TwistAlphabet`](lean/QLF_TwistAlphabet.lean)) |
+| C6 | **The measure.** A history of length `L` carries weight `8^{−L}`. | Forced by prefix-freeness once closures are events, but the choice of a cylinder measure itself is a premise. | `twist_kraft` ([`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)) |
+| C7 | **Finite information** in a bounded region. | Assumed (Bekenstein). | Premise of `no_continuum_in_finite_region` |
+| C8 | **Rendering bridges** to the continuum. | **Bridge**: each is an explicit axiom, listed with its strength in [`CLAUDE.md`](CLAUDE.md)'s axiom inventory and [`Open_Problems.md`](Open_Problems.md). | e.g. `lorentz_generated_by_boosts_rotations`, `benincasa_dowker_limit`, `order_metric_continuum_limit` |
+
+**The count.** Standard quantum mechanics with QFT needs eight postulates in Layer A and eight more
+assumptions in Layer B. QLF needs seven primitives (C1–C7) plus the bridges (C8). That is not yet a
+smaller number of assumptions, so the simplification claim has to rest on their *kind*: C1–C7 are
+combinatorial and logical, where Layer A's are analytic (Hilbert space, a probability rule, a measurement
+postulate). Whether that counts as simpler is a judgement the ledger makes visible but cannot make for the
+reader.
+
+---
+
+## 4. The reintroduction audit
+
+The question that decides the programme: where does a removed assumption come back? Each entry names the
+place it re-enters.
+
+**a. Unitarity re-enters through the alphabet.** `history_unitary` is closure of the unitary group under
+multiplication, given that each twist is a Pauli matrix. So A3 removes the postulate that *evolution* is
+unitary, by moving it into C3, the choice of unitary primitives. That is a genuine reduction (one
+postulate about primitives in place of one about dynamics), not a derivation from nothing. The
+realizable step adds a second choice, the projector `(1 + M(t))/2`, justified by the raw step's failure
+(`rawStep_not_unitary`).
+
+**b. The Born weight re-enters through the refinement premise.** `born_from_ways` assumes that an outcome
+of Gaussian norm `m` is `m` equal ways. The norm *is* `|ψ|²`, so the theorem shows that `|ψ|²` is the
+**only** consistent assignment once ways are counted that way. It does not show that dynamics produces
+that count. A5 stays conditional until the refinement is derived from the closure census.
+
+**c. Universality is true by encoding.** `qlf_universality` encodes each edge (gate) of a finite computation as
+a balanced pair (`[+, −]` or `[−, +]`), so the encoded string is ZFA whatever the computation does; the
+theorem never uses termination. The statement "every terminating computation is a ZFA string" is
+therefore a property of the encoding, not evidence that ZFA tracks termination. The framing that
+non-terminating computations are what ZFA prunes needs a separate theorem.
+
+**d. The complex numbers re-enter through `σ_y`.** The alphabet's size is forced, but the step from the
+Klein four-group to complex 2×2 matrices is a choice (C3). A1 is conditional on it.
+
+**e. Lorentz symmetry and Lorentzian signature re-enter through a bridge and a rotation.** The double
+cover's surjectivity is the axiom `lorentz_generated_by_boosts_rotations`, and the derived propagator
+(B4) is Euclidean, reaching Lorentzian momenta by an assumed Wick rotation.
+
+**f. One anchor is empty.** `qlf_state_is_minkowski` in [`QLF_Minkowski`](lean/QLF_Minkowski.lean) is
+`True := trivial`. It anchors nothing; the real content is `det_toMatrix_eq_interval` and
+`lorentz_preserves_interval`, which this ledger cites instead.
+
+**g. The tensor product is assumed** (A8), and every two-particle result inherits that.
+
+**What survives the audit.** Unitary dynamics (moved to the primitives, not removed), measurement as
+closure with no collapse dynamics, interference zeros as theorems, the Minkowski interval as a
+determinant, finite renormalization, the propagator as a sum over histories, and the gauge algebras. What
+does not survive as a derivation: the Born rule, the complex numbers, the tensor product, universality as
+a statement about termination, and Lorentzian signature.
+
+---
+
+## 5. The distinguishing benchmark
+
+Everything in §1–§2 reproduces standard physics. A defensible "radical simplification" also needs at
+least one quantitative prediction, fixed in advance, that standard physics does not make. None of the
+candidates below has passed yet; each is stated with its kill condition.
+
+| Candidate | QLF prediction | Standard expectation | Kill condition | State |
+|---|---|---|---|---|
+| **B-LIV: axis-aligned dispersion** | The walk's dispersion carries the anisotropic correction `a² Σ_a k_a⁴/12` along the four twist axes ([`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md) §12): a direction-dependent, energy-quadratic Lorentz violation. | Exact Lorentz invariance. | A bound on quadratic, direction-dependent Lorentz violation that excludes it at QLF's lattice scale. | **Not yet a prediction.** It needs the lattice spacing in physical units and the Lorentzian walk rather than the Wick-rotated one, and must be checked against the realizable walk's own dispersion. The most direct next computation. |
+| **No α drift** | `α` cannot vary in time (`alpha_cannot_drift`). | The Standard Model allows no drift either; many extensions do. | A confirmed drift, for instance in thorium-229 nuclear clocks. | Distinguishes QLF from drift models, **not** from the Standard Model. |
+| **Predicted absences** | No supersymmetric partners, axion, WIMP, magnetic monopole, proton decay or light sterile `ν_R` ([`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §6). | The Standard Model has none of these either. | Discovery of any one. | Distinguishes QLF from extensions, **not** from the Standard Model. |
+| **`α⁻¹` from the census** | `137.032` structural ([`Alpha_Residual.md`](Alpha_Residual.md)). | Measured `137.035999…`. | Already a miss by `0.004`, attributed to continuum running. | **Not a pass.** Listed so it is not hidden. |
+
+So the honest position is: QLF reorganizes quantum mechanics onto combinatorial primitives and removes
+the collapse and fixed-background assumptions, but it does not yet have a benchmark that separates it
+from the Standard Model. B-LIV is the nearest candidate, and the next piece of work is to turn it into a
+number with a stated scale.
+
+---
+
+## 6. References
+
+- Nielsen, M. A. and Chuang, I. L. (2000). *Quantum Computation and Quantum Information*, §2.2.
+- Einstein, A. (1915). Die Feldgleichungen der Gravitation. *Sitzungsber. Preuss. Akad. Wiss.*
+- Bekenstein, J. D. (1972). Black holes and the second law. *Lett. Nuovo Cimento* 4, 737.
+- Symanzik, K. (1969). Euclidean quantum field theory. In *Local Quantum Theory*, ed. R. Jost.
+- Wilson, K. G. (1971). Renormalization group and critical phenomena. *Phys. Rev. B* 4, 3174.
+- Bialynicki-Birula, I. (1994). Weyl, Dirac, and Maxwell equations on a lattice as unitary cellular
+  automata. *Phys. Rev. D* 49, 6920.
+- Meyer, D. A. (1996). From quantum cellular automata to quantum lattice gases. *J. Stat. Phys.* 85, 551.
+- Sorkin, R. D. (1994). Quantum mechanics as quantum measure theory. *Mod. Phys. Lett. A* 9, 3119.
+- Zurek, W. H. (2003). Decoherence, einselection, and the quantum origins of the classical. *Rev. Mod.
+  Phys.* 75, 715.
+- Zurek, W. H. (2005). Probabilities from entanglement, Born's rule from envariance. *Phys. Rev. A* 71,
+  052105.
