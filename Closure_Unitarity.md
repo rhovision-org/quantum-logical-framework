@@ -452,8 +452,8 @@ for; the realizable step averages it with the bare displacement, which removes e
 
 **What it renders.** The step moves along its axis in the direction of the spin's sign on that axis.
 To first order in `k` the walk is `1 + i(k_y σ_y − k_x σ_x + k_z σ_z)`, the Weyl operator of a
-massless spin-½ particle. That expansion is checked numerically to `10⁻³` at `|k| ~ 10⁻⁴` and is not
-proved in Lean; it is a reading of the finite walk, not a continuum assumption.
+massless spin-½ particle. This is now a theorem (`realWalk_generator`, §15); it is a reading of the
+finite walk, not a continuum assumption.
 
 **Credit and status.** This walk has the form of the split-step Weyl walk of the quantum-walk
 literature: Bialynicki-Birula, *Weyl, Dirac, and Maxwell equations on a lattice as unitary cellular
@@ -542,7 +542,39 @@ and only the zigzag between handednesses keeps the particle in place on average.
 
 **Credit and status.** The algebra is the chiral (Weyl) representation of the Dirac matrices,
 standard physics. What QLF supplies is that every generator is a twist, and that the second factor is
-the handedness the framework already has. Still open: assembling the full Dirac walk (mass step
-times a handedness-labelled realizable shift) and showing it renders the Dirac equation; and whether
-the handedness factor is forced, or one choice of second factor among several.
+the handedness the framework already has. The full Dirac walk is assembled in §15. Still open:
+whether the handedness factor is forced, or one choice of second factor among several.
+
+## 15. The walks generate the Weyl and Dirac operators
+
+A unitary step `W(k)` at momentum `k` has a **generator**, its derivative at `k = 0`, so that for
+small momenta `W(k) ≈ 1 + i·H(k)`. The generators are computed exactly in
+[`QLF_DiracWalk`](lean/QLF_DiracWalk.lean):
+
+```text
+realStep_generator  :  d/ds realStep t (s·a) |₀ = i·a·M(t)            a step generates its twist
+realWalk_generator  :  d/ds realWalk (s·a)   |₀ = i·(a_y up + a_x left + a_z slash)      Weyl
+```
+
+The Dirac walk is assembled from pieces already proved unitary. The handedness label of §14 splits
+the walk: the right-handed part walks at `k`, the left-handed part at `−k`, and the mass step mixes
+them.
+
+```text
+handed k        = fix slash ⊗ W(k) + fix slash̄ ⊗ W(−k)       handed_unitary
+diracWalk k m   = massStep m · handed k                        diracWalk_unitary
+diracWalk_generator :  d/ds diracWalk (s·a) (s·m) |₀ = i·(a_y α_y + a_x α_x + a_z α_z + m β)
+```
+
+That generator is the Dirac operator of §14, whose square is `a² + m²` (`dirac_sq`). So the walk
+is unitary at every step, and what it generates is exactly the Dirac operator: the Dirac equation
+is the small-momentum reading of a finite unitary walk of realizable twist steps. The derivative in
+the momentum label is the only continuum notion used; it reads off the generator of a finite step
+and assumes nothing about space.
+
+**Credit and status.** Dirac quantum walks with this structure are known (Bialynicki-Birula 1994;
+Arrighi, Nesme and Forets 2014; D'Ariano and Perinotti 2014). What QLF supplies is the derivation of
+each piece: unitarity from realizability (§12), the second factor as handedness (§14), and every
+generator a twist. Still open: a convergence theorem for long walks (the generator is first order
+only), and the gauge axis.
 

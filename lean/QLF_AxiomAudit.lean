@@ -68,6 +68,7 @@ import QLF_LightCone
 import QLF_RealizableWalk
 import QLF_Tsirelson
 import QLF_Mass
+import QLF_DiracWalk
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -256,3 +257,7 @@ import QLF_Mass
 #print axioms QLF.Mass.dirac_sq
 #print axioms QLF.Mass.chirality_comm_dirac
 #print axioms QLF.Mass.massStep_unitary
+#print axioms QLF.DiracWalk.realWalk_generator
+#print axioms QLF.DiracWalk.handed_unitary
+#print axioms QLF.DiracWalk.diracWalk_unitary
+#print axioms QLF.DiracWalk.diracWalk_generator
