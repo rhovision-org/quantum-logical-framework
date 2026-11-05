@@ -740,7 +740,7 @@ def normalized_event_weights(prep: str, branches: list[str], R: int, dmax: int) 
 
         B(c) = sum_d  A_c(d)^2 / (W_c(d) . 8^d)
              = sum_d  (W_c(d)/8^d) . (A_c(d)/W_c(d))^2
-               \_____________/   \________________/
+               \\_____________/   \\________________/
                 multiplicity mass   coherence fraction
 
     -- frequency from how many ways the event happens, interference from how coherently those

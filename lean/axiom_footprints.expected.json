@@ -1,0 +1,265 @@
+{
+  "QLF.AlphaBound.censusTail_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.channel_last_exit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.channel_series": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.channel_two_sided": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.mixed_channel_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.mixed_open_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureKernel.channel_factorization": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureKernel.closure_factorization": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureKernel.kernel_zero_of_amplitude_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureKernel.vacuum_resolvent_inverse": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureLeakage.leakage_identity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureLeakage.openMass_ge_quarter": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureLeakage.open_amplitude": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUnitarity.antiHermitian_seed_forbidden": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUnitarity.closure_by_dagger": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUnitarity.history_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUnitarity.upLeft_forbidden_all_orders": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUnitarity.zero_taxonomy": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Fredkin.fredkin_bijective": [],
+  "QLF.Fredkin.fredkin_preserves_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HorizonBasis.horizon_rebasis_is_closure_order_iso": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HorizonBasis.reachable_rebased_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeCalculus.field_equations_hold_on_the_lattice": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LawOfExceptions.law_of_exceptions": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzCover.properOrthochronous_id": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PhaseRule.phase_rule": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Realizability.no_continuum_in_finite_region": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.StationaryAction.balance_is_stationary_mode": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.StationaryPhase.signed_stationary_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.StationaryPhase.ways_mode_at_balance": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.algebraicityBridge_nonempty": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.bsd_rank_equals_order": [
+    "QLF.bsd_multiplicity"
+  ],
+  "QLF.capture_changes_exactly_one_slot": [],
+  "QLF.census_no_triangles": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.continuumClaim_nonempty": [],
+  "QLF.continuumGap_gap_unique": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.continuumGap_nonempty": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.costModel_nonempty": [
+    "propext"
+  ],
+  "QLF.count_balanced_pauli_closed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.electron_capture_charge_balanced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.electron_capture_factors_through_wminus": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.hodge_realized_on_substrate": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.local_capture_charge_conserved": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.mass_gap_quantum_pos": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.mellinFactorization_iff_rh": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.mellinFactorization_independent_of_generator": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.mirrorInvariant_iff_perspectives_agree": [],
+  "QLF.mirrorMultiplicity_nonempty": [],
+  "QLF.p_vs_np_in_qlf": [
+    "QLF.qlf_cost_model",
+    "propext"
+  ],
+  "QLF.qlf_universality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.realized_count_eq_central_binomial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.realized_flow_achieves_zfa": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.riemann_hypothesis_in_qlf": [
+    "Classical.choice",
+    "QLF.resonant_computation_for",
+    "QLF.spectral_hilbert_polya",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.riemann_hypothesis_in_qlf_via_MRE": [
+    "Classical.choice",
+    "QLF.mre_factorization",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.transportCurvature_nonempty": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.trivial_zero_not_nonTrivial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.twist_kraft": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "double_fold_identity": [
+    "propext"
+  ]
+}

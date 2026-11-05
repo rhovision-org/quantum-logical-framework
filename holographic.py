@@ -17,9 +17,9 @@ with
 The three observable spatial coordinates are then the standard real bilinear
 projections
 
-    X = psi^\dagger sigma_x psi
-    Y = psi^\dagger sigma_y psi
-    Z = psi^\dagger sigma_z psi
+    X = psi^\\dagger sigma_x psi
+    Y = psi^\\dagger sigma_y psi
+    Z = psi^\\dagger sigma_z psi
 
 This expresses the core claim:
 
