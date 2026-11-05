@@ -174,3 +174,38 @@ parallel, so the loci are collinear configurations (at four points, forward scat
 K4 and K2′ means the closure lattice reaches the hidden zeros with finite propagators. It is standard
 kinematics on a QLF-generated momentum set, not new physics. K3′ is the part that could surprise: zeros
 off the loci would be zeros the continuum theory does not name, special to the lattice.
+
+## 8. Results, round 3 (after commit `1772059`)
+
+`python3 hidden_zero_words.py` (about 75 s).
+
+| `n` | conserving histories | singular | on a locus (any) | on a locus, non-singular | zeros of `A` | zeros off every locus |
+|---|---|---|---|---|---|---|
+| 4 | 39,396 (all) | 14,364 | — | 6,744 | 6,744 | 0 |
+| 6 | 200,000 (sample) | 113,058 | 2,496 | **0** | 972 | **972** |
+
+* **K1′: pass.**
+* **K4: pass at four points, fail at six.** At four points the long-word momenta reach the hidden zero
+  6,744 times with finite propagators (forward configurations `p₃ = −p₁`), where single twists reached it
+  never. At six points the sample hits a zero locus 2,496 times, and every one is singular again.
+* **K2′: pass where it applies.** All 6,744 four-point locus points give `A = 0`.
+* **K3′: fails, but the prediction was ill-posed, and I should have seen that.** At six points 972
+  non-singular histories have `A = 0` off every hidden-zero locus (example: momenta
+  `(3,0,0,3), (−3,3,0,0), (−3,1,−2,−2), (3,−2,1,−2), (3,−2,−2,1), (−3,0,3,0)`). A rational function of the
+  `X` vanishes on a whole hypersurface, so lattice points with `A = 0` are expected at any `n ≥ 5`. Hidden
+  zeros are special because they are *loci where the amplitude vanishes identically*, not because they
+  are the only zeros. At four points the zero set is exactly `c₁₃ = 0`, which is why K3′ held there.
+  These 972 points are ordinary zeros of `A₆`, not new physics, and K3′ is withdrawn as a test.
+
+**What this settles.** Momenta from long words fix the degeneracy of single twists at four points and
+reach a genuine hidden zero with finite propagators. At six points real null momenta on the loci are
+collinear enough to make a planar propagator vanish, so the six-point hidden zero is not reached on this
+lattice either. That is a property of real four-dimensional null kinematics (on the locus, `p_a·p_b = 0`
+forces parallel momenta), not of QLF: the literature studies hidden zeros in general `X` space, where the
+`X` are independent, which real 4-D momenta at six points are not.
+
+**Where this leaves G2c.** The zero itself emerges from the closure sum (§4). The kinematics can be taken
+from closures at four points (§8), and the four-point hidden zero is then reached on QLF momenta without
+being imposed. Six points and beyond need either complex momenta (spinors, which QLF has) or the
+`X`-space reading of §4. Neither changes the verdict from §4: this is the standard amplitude in closure
+language, and no closure has yet predicted a number the standard amplitude does not.
