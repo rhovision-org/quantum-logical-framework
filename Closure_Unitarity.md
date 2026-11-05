@@ -1083,3 +1083,27 @@ the action is affine in the link, "unchanged to first order" and "unchanged" alo
 **Credit and scope.** Standard lattice gauge theory after Wilson (1974); see Creutz, *Quarks,
 Gluons and Lattices* (Cambridge, 1983). Open: a time step and energy for matrix links, the walk's
 colour current as a source, the non-abelian Gauss law, and which colour group the twists select.
+
+## 32. The Courant bound
+
+§27 proved the field energy positive for `2nτ² ≤ 1`, from the crude bound `|K A|² ≤ 8n⟨A, K A⟩`.
+The largest eigenvalue of `K = curl F` is `4n`, so the right condition is `nτ² ≤ 1`.
+[`QLF_Courant`](lean/QLF_Courant.lean) proves it:
+
+```text
+swap_diff        :  Σ ∂_a f · ∂_b g = Σ ∂*_b f · ∂*_a g        (summation by parts twice)
+weitzenboeck     :  ⟨A, K A⟩ + Σ (div A)² = Σᵢⱼₓ (Aᵢ(x+eⱼ) − Aᵢ(x))²
+K_le             :  ⟨A, K A⟩ ≤ 4n |A|²
+K_sq_le_sharp    :  |K A|² ≤ 4n ⟨A, K A⟩
+energy_lower_sharp :  ½(1 − nτ²)⟨A, K A⟩ ≤ H   and   ½(1 − nτ²)|E|² ≤ H     (every τ)
+free_bounded_sharp :  nτ² < 1  ⟹  both fields bounded by 2H₀/(1 − nτ²) for all time
+```
+
+The identity is the lattice form of `curl curl = grad div − Δ`: curl energy plus divergence energy
+is gradient energy, and gradient energy is at most `4n|A|²` because each squared difference is at
+most twice the sum of the two squares. The force bound follows by applying `K_le` to
+`A − K A/(4n)`. The constant cannot be improved, because `4n` is attained by the staggered mode
+(§27, computed); Lean proves sufficiency, not the eigenvalue. The coupled growth bound of §27 is
+still stated under `4nτ² ≤ 1`.
+
+**Credit.** Courant, Friedrichs and Lewy (1928).
