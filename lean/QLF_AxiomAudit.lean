@@ -80,6 +80,7 @@ import QLF_GaussLaw
 import QLF_WalkCoupling
 import QLF_CoupledEvolution
 import QLF_TsirelsonBound
+import QLF_FieldEnergy
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -310,3 +311,7 @@ import QLF_TsirelsonBound
 #print axioms QLF.TsirelsonBound.chsh_sos
 #print axioms QLF.TsirelsonBound.tsirelson_bound
 #print axioms QLF.TsirelsonBound.tsirelson_bound_neg
+#print axioms QLF.FieldEnergy.ip_K
+#print axioms QLF.FieldEnergy.energy_balance
+#print axioms QLF.FieldEnergy.energy_conserved
+#print axioms QLF.FieldEnergy.step_energy

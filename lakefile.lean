@@ -292,5 +292,6 @@ lean_lib QLF where
     `QLF_GaussLaw,
     `QLF_WalkCoupling,
     `QLF_CoupledEvolution,
-    `QLF_TsirelsonBound
+    `QLF_TsirelsonBound,
+    `QLF_FieldEnergy
   ]

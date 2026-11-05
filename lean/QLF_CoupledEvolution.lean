@@ -37,7 +37,8 @@ the back-reaction.
 **Not here.** The background is static (fixed ions, not a second dynamical species). The update is
 the non-compact (quadratic) one, and the field `E` is real while the
 walk's current is read through its real part (it is real, `‖·‖²`-valued, but carried in `ℂ`).
-Energy conservation of the coupled system, compact links and non-abelian links are not included.
+The field's energy balance is [`QLF_FieldEnergy`](QLF_FieldEnergy.lean); a conserved total
+energy of the coupled system, compact links and non-abelian links are not included.
 No axioms.
 
 **Credit.** Self-consistent evolution of a charged lattice field with a dynamical lattice gauge

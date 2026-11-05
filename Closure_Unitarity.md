@@ -903,7 +903,7 @@ are. These are three separate finite facts, and each is used exactly once.
 
 **Credit and scope.** Self-consistent evolution of charged matter with a dynamical lattice gauge
 field is Kogut–Susskind Hamiltonian lattice gauge theory (1975), and as a leapfrog scheme Yee's
-(1966). Not included: a dynamical background (a second species), conservation of a coupled energy, compact links, non-abelian links. The
+(1966). Not included: a dynamical background (a second species), conservation of a total coupled energy (the field's side is §27), compact links, non-abelian links. The
 field is real and the current enters through its real part (it is `‖·‖²`-valued, carried in `ℂ`).
 
 ## 26. Tsirelson's bound for every pair of observables
@@ -925,3 +925,28 @@ a site is assumed, so every quantum assignment obeys `|⟨C⟩| ≤ 2√2`, and 
 is used in self-testing; Šupić and Bowles, *Quantum* **4**, 337 (2020)); the bound is Cirel'son's
 (*Lett. Math. Phys.* **4**, 93 (1980)). Finite matrices of any size, no operator-norm theory, no
 axioms.
+
+## 27. The field's energy and the work the walk does on it
+
+[`QLF_FieldEnergy`](lean/QLF_FieldEnergy.lean) finds the energy the leapfrog of §25 conserves. Write
+`K A = curl F(A)` and `⟨X, Y⟩ = Σᵢ Σₓ Xᵢ(x) Yᵢ(x)`:
+
+```text
+ip_K             :  ⟨B, K A⟩ = ½ Σ F(A)·F(B)                (summation by parts; K is symmetric)
+energy_eq        :  H(A, E) = ½|E|² + ½⟨E, K A⟩ + ¼ΣF²
+energy_balance   :  E' = E + K A − J,  A' = A − E'   ⟹   H' − H = −⟨J, (E + E')/2⟩
+energy_conserved :  J = 0   ⟹   H' = H
+step_energy      :  in the coupled evolution, the field loses exactly −⟨J(ψ), (E + E')/2⟩ per step
+```
+
+The middle term of `H` is what makes the conservation exact rather than approximate. It is
+`½⟨E, E⁺⟩ + ¼ΣF²` with `E⁺ = E + K A` the next free field, so the electric energy is read across
+the time step, as in Yee's staggered scheme. `energy_balance` is Poynting's theorem on the lattice
+with no error term: the field gives up exactly the work it does on the current, with the field
+taken at the midpoint of the step.
+
+**Credit and scope.** Yee (1966) and Poynting (1884); the Hamiltonian `½ΣE² + ¼ΣF²` is
+Kogut–Susskind's. Open: the walk's side. The walk is a unitary step, so its natural energy is a
+quasi-energy, and no exact walk energy absorbing `⟨J, Ē⟩` is proved, so a conserved total energy of
+the coupled system is still open. Positivity of `H` needs a step-size (CFL) bound on `K`, also not
+proved.
