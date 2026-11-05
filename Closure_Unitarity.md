@@ -1391,3 +1391,33 @@ reduction of §39's closed sector. The values of `a`, `b` and `g` for real atoms
 multiple bonds are not here.
 
 **Credit.** Heitler and London (*Z. Phys.* **44**, 455 (1927)); Feshbach (*Ann. Phys.* **5**, 357 (1958)).
+
+## 44. Polaron branches as poles, absent branches as zeros
+
+Issue #207 §10.5 asks the closure resolvent to organize the polaron:
+branches as poles, absent branches as zeros, broadening as weight spread over channels.
+[`QLF_PolaronBranches`](lean/QLF_PolaronBranches.lean) gives
+[`QLF_Polarons`](lean/QLF_Polarons.lean)' shared closure its resolvent. An impurity level `ε`
+shares a closure of amplitude `g_k` with each bath mode `ω_k`, and the impurity's resolvent is
+`1/f(E)` with `f(E) = E − ε − Σ_k g_k²/(E − ω_k)`, the many-mode form of §43's Feshbach entry.
+
+```text
+branch_iff         :  E off the bath modes:  an eigenstate at E  ⟺  f(E) = 0
+attractive_exists  :  lowest mode ω_j coupled  ⟹  some E < ω_j has f(E) = 0
+attractive_below   :  f(E) = 0, E below every mode, some g ≠ 0  ⟹  E < ε
+repulsive_above    :  f(E) = 0, E above every mode, some g ≠ 0  ⟹  E > ε
+resolvent_eq       :  1/f = N/D,  N = Π(E − ω_k)
+zero_at_bath       :  g_j ≠ 0, distinct modes  ⟹  N(ω_j) = 0 and D(ω_j) ≠ 0
+residue_lt_one_iff :  Z = 1/(1 + Σ g_k²/(E − ω_k)²) < 1  ⟺  some g_k ≠ 0
+f_deriv            :  f′(E) = 1 + Σ g_k²/(E − ω_k)²,   so Z = 1/f′ is the residue
+```
+
+The branches are the poles; a coupled lowest mode forces the attractive polaron below it and
+below the bare impurity, and a branch above the band is pushed above it, the sign fixed by the
+round trip. At each coupled bath energy the resolvent has a true zero (numerator zero, denominator
+not): the impurity cannot appear there. A branch carries weight `Z`, the impurity's share of its
+eigenstate, below one exactly when the impurity is coupled; the rest is spread over the bath
+modes. The effective mass needs a momentum-labelled bath and is not here.
+
+**Credit.** Fano (*Phys. Rev.* **124**, 1866 (1961)); Anderson (*Phys. Rev.* **124**, 41 (1961));
+Massignan, Zaccanti and Bruun (*Rep. Prog. Phys.* **77**, 034401 (2014)).

@@ -479,6 +479,7 @@ This page sits at the intersection of several existing QLF threads:
 - [`README.md`](README.md) — QLF overview and proof-status conventions.
 - [`QuCalc.md`](QuCalc.md) — the eight-twist history language and composite closures.
 - [`QLF_Polarons`](lean/QLF_Polarons.lean) — polaron-specific shared-closure, compensation, Pauli and prime-first-closure theorems.
+- [`QLF_PolaronBranches`](lean/QLF_PolaronBranches.lean) — the shared closure's resolvent: attractive and repulsive branches as poles, coupled bath energies as zeros, branch weight `Z = 1/f′` ([Closure_Unitarity.md](Closure_Unitarity.md) §44).
 - [`QLF_Discoveries2026`](lean/QLF_Discoveries2026.lean) — exact opposite-action condition for joint closure.
 - [`QLF_IndexedFactors`](lean/QLF_IndexedFactors.lean) — product versus coupled sectors and non-factorizable shared closure.
 - [`QLF_TwistAlphabet`](lean/QLF_TwistAlphabet.lean) — count balance implies Pauli closure.

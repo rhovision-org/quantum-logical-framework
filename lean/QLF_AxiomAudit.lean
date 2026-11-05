@@ -97,6 +97,7 @@ import QLF_JointClosure
 import QLF_VacuumResolvent
 import QLF_MixingUnitarity
 import QLF_SharedClosure
+import QLF_PolaronBranches
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -402,3 +403,7 @@ import QLF_SharedClosure
 #print axioms QLF.SharedClosure.bonding_above
 #print axioms QLF.SharedClosure.symmetric_split
 #print axioms QLF.SharedClosure.feshbach_entry
+#print axioms QLF.PolaronBranches.branch_iff
+#print axioms QLF.PolaronBranches.attractive_exists
+#print axioms QLF.PolaronBranches.zero_at_bath
+#print axioms QLF.PolaronBranches.f_deriv
