@@ -270,3 +270,45 @@ closes the gap rounds 2 and 3 left: the obstruction at six points was real four-
 not the closure sum. As stated in §9 before the run, S2 is the known theorem, so this is the standard
 `Tr(φ³)` amplitude evaluated on QLF-built momenta. The propagator `1/X` is still inserted (§4), and no
 closure count has yet produced a number the standard amplitude lacks.
+
+---
+
+## 11. Pre-registration, round 5: the propagator from summed twist histories
+
+Committed before the run. Script: [`hidden_zero_propagator.py`](hidden_zero_propagator.py).
+
+Rounds 1–4 inserted the propagator `1/X`. Here it is computed instead, as a sum over twist histories.
+Take every history of every length, weight it by its cylinder measure `8^{−L}`
+([`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)), and give it the phase `e^{i k·d}` of its net
+displacement `d` on `ℤ⁴` (the walk of [`Closure_Walk.md`](Closure_Walk.md)). One step averages to
+`φ(k) = ¼ Σ_a cos k_a`, so the sum is the geometric series
+
+`G(k) = Σ_L φ(k)^L = 1 / (1 − φ(k))`,   with   `1 − φ(k) = k²/8 − Σ_a k_a⁴/96 + …`.
+
+The pole at `k = 0` is the statement that every history continues. Rescaled to lattice spacing `a`, the
+derived inverse propagator is `X_der(P) = −8(1 − φ(aK))/a²`, where `K` is the Euclidean image of the
+spinor momentum `P` (`K = (x, y, z, i t)`, so `−K² = det P = X`). Then `X_der = X + a² Σ_a K_a⁴/12 + O(a⁴)`.
+
+The amplitude is the round-1 sum over triangulations with `1/X_der` in place of `1/X`. The momenta are
+round 4's: the same locus points and generic control points at `n = 5, 6, 7`, converted to floating
+point and rescaled so that the largest `|K_a|` over all chords of a point is `1` (the amplitude is
+homogeneous, so this changes no zero). `1 − cos u` is computed as `2 sin²(u/2)` to avoid cancellation.
+The measure of vanishing is `R(a) = |Σ_T ∏ 1/X_der| / Σ_T |∏ 1/X_der|`, which is `0` for an exact
+zero and of order one for a generic sum. The spacing runs over `a = 10^{−1}, 10^{−1.5}, …, 10^{−3}`.
+
+| | Prediction | Kill condition |
+|---|---|---|
+| **D1** (sanity) | Enumerating all `8^L` histories for `L ≤ 6` reproduces `Σ_{L≤6} φ^L` to `10^{−12}` at random real `k`. | Any mismatch: the walk sum is not the geometric series. |
+| **D2** | `(X_der − X)/a² → Σ_a K_a⁴/12` (relative error under 1 % at the smallest `a`). | Otherwise: the expansion above is wrong. |
+| **D3** | On the loci, `R(a) ∝ a²`. The median log–log slope over all locus points lies in `[1.8, 2.2]` at each `n`. | Median slope outside `[1.5, 2.5]`, or `R` not decreasing as `a → 0`. |
+| **D4** (control) | At generic points `R(a)` tends to a nonzero limit, and `R(a) − R(0)` also shrinks as `a²`. | `R(a) → 0` at generic points, or a slope outside `[1.5, 2.5]`. |
+| **D5** | At finite `a` the derived amplitude has **no** exact zero on the continuum locus (`R(a) > 10^{−10}` at every point and every `a`). | `R(a)` below `10^{−10}` at a positive fraction of points: the walk carries its own hidden zero. |
+
+What a pass would and would not mean, stated now. The propagator as the resolvent of a random walk is
+standard: it is the random-walk representation of lattice field theory (Symanzik 1969), and the `a²`
+breaking is the ordinary lattice artifact. A pass shows that QLF's eight-twist walk, under its own Kraft
+measure and with no inserted propagator, gives `1/X` in the continuum limit, and that the hidden zeros
+are then a continuum property, broken at finite spacing as `a²`. Two things stay assumed: the walk is
+Euclidean and the complex momenta enter through the Wick rotation `K₄ = i t`; and for complex `k` the sum
+is the analytic continuation of `1/(1 − φ)`, since `|φ|` can exceed one there. No new number is
+expected.
