@@ -200,7 +200,7 @@ step `exp(i k σ)`: every spin component moves at `c` along one axis per sub-ste
 
 | Ordering | Along an axis | Body diagonal | Leading term |
 |---|---|---|---|
-| The Lean order `y, x, z` | exact, `E = k` | `E = k ± k²/(3√3)`, sign set by the octant | **linear**: `cos E = Π cos k_i − Π sin k_i`, so `E ≈ k + k_x k_y k_z / k` |
+| The one-way order `y, x, z` (the Lean order before this change) | exact, `E = k` | `E = k ± k²/(3√3)`, sign set by the octant | **linear**: `cos E = Π cos k_i − Π sin k_i`, so `E ≈ k + k_x k_y k_z / k` |
 | Palindromic (a half step in each order, `y x z` then `z x y`) | exact, `E = k` | `E = k − k³/18` | quadratic, `ξ = 1/9`, `E_QG,2 = 3.0 E_P`, subluminal |
 
 The fixed order breaks time reversal and parity, and that leaves a term **linear** in energy. Its sign
@@ -216,17 +216,17 @@ about `5 × 10⁷`.
 and the photon has no properties apart from the electrons it connects
 ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §40). So the first qualification does not
 help: the spin-½ walk is the electron's, and electrons have their own bound. In the convention
-`E² = p² + m² + η p³/E_P`, the Lean order gives `η = 2 n_x n_y n_z` per chirality, up to `±0.385` with
+`E² = p² + m² + η p³/E_P`, the one-way order gives `η = 2 n_x n_y n_z` per chirality, up to `±0.385` with
 both signs occurring. The Crab nebula's synchrotron emission requires `η > −7 × 10⁻⁸` for electrons, and
 vacuum Čerenkov radiation `η < 0.01` (Jacobson, Liberati and Mattingly, *Nature* 424, 1019, 2003). So
-**the Lean-order walk at Planck spacing is excluded for electrons, by about `5 × 10⁶`**, whatever the
+**the one-way walk at Planck spacing is excluded for electrons, by about `5 × 10⁶`**, whatever the
 photon is. The palindromic order has no linear term and survives.
 
 So the data already **select** something: at Planck spacing, a realizable walk must be time-symmetric
-within each tick. The Lean `realWalk` uses the
-asymmetric order. Its unitarity and its generator (`realWalk_unitary`, `realWalk_generator`) hold for
-either order, so moving the definition to the palindromic form costs those theorems nothing, but it is a
-change to a Lean module and has not been made.
+within each tick. The Lean `realWalk` ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean)) now uses the
+palindromic order. Its unitarity and its generator (`realWalk_unitary`, `realWalk_generator`) carry over
+unchanged in statement, so everything built on them (the Dirac walk, the optical theorem, the poles) is
+unaffected.
 
 ---
 

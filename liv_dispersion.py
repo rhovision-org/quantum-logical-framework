@@ -17,7 +17,7 @@ Matching to the convention E^2 = p^2 [1 - s (p / E_QG2)^2] gives
 E_QG2 = E_P / sqrt(|xi|) when a is the Planck length.
 
 The realizable Weyl walk (QLF_RealizableWalk: realWalk = step_y step_x step_z,
-each step exp(i k sigma)) is also solved, in its Lean order and in the
+each step exp(i k sigma)) is also solved, in the one-way order y,x,z (Lean before the palindrome) and in the
 palindromic (half step in each order) form.
 
 Usage:
@@ -85,7 +85,7 @@ def walk_omega(k, palindromic):
 def walk_report():
     diag = (1 / math.sqrt(3),) * 3
     for pal in (False, True):
-        name = 'palindromic' if pal else 'Lean order y,x,z'
+        name = 'palindromic' if pal else 'one-way order y,x,z'
         rows = []
         for label, n in (('axis', (1.0, 0.0, 0.0)), ('(+,+,+)', diag),
                          ('(-,-,-)', tuple(-c for c in diag))):
@@ -95,7 +95,7 @@ def walk_report():
         print(f'[walk, {name}]  ' + '; '.join(rows))
     # linear term: w = k + k^2 n_x n_y n_z, so v - 1 = 2 k n_x n_y n_z, max |.| = 2/(3 sqrt 3)
     lin = 2 / (3 * math.sqrt(3))
-    print(f'  Lean order: linear term |v - 1| <= {lin:.4f} (E/E_P), E_QG1 = {1 / lin:.2f} E_P '
+    print(f'  one-way order: linear term |v - 1| <= {lin:.4f} (E/E_P), E_QG1 = {1 / lin:.2f} E_P '
           f'(LHAASO E_QG1 > 10 E_P for photons)')
 
 

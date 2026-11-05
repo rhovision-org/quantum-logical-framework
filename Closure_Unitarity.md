@@ -443,7 +443,7 @@ realizable parts, is unitary at every momentum, and so is the walk over the thre
 
 ```text
 realStep_unitary :  e^{ik}·fix t + e^{−ik}·fix t̄   is unitary for every real k
-realWalk_unitary :  the up · left · slash walk is unitary for every (k_y, k_x, k_z)
+realWalk_unitary :  the palindromic walk (half steps up · left · slash · slash · left · up) is unitary for every (k_y, k_x, k_z)
 realStep_eq_half :  realizable step = ½(bare displacement + raw twist step)
 ```
 
