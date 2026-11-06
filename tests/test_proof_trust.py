@@ -19,16 +19,22 @@ class ProofTrustTests(unittest.TestCase):
             {"QLF.a": ["Quot.sound", "propext"], "QLF.b": []},
         )
 
-    def test_github_duplicate_and_wrapped(self):
+    def test_github_wrapped_report(self):
         prefix = "build\tstep\t2026-11-05T11:17:19.000Z "
         data = (
             prefix + "'QLF.a' depends on axioms: [propext,\n"
             + prefix + "Classical.choice]\n"
-            + prefix + "'QLF.a' depends on axioms: [propext, Classical.choice]"
         )
         self.assertEqual(
             footprints_from_log(data), {"QLF.a": ["Classical.choice", "propext"]}
         )
+
+    def test_identical_duplicates_rejected(self):
+        with self.assertRaisesRegex(ValueError, "duplicate axiom report"):
+            footprints_from_log(
+                "'QLF.a' depends on axioms: [propext]\n"
+                "'QLF.a' depends on axioms: [propext]"
+            )
 
     def test_conflicting_duplicates_rejected(self):
         with self.assertRaises(ValueError):
@@ -51,6 +57,9 @@ class ProofTrustTests(unittest.TestCase):
         self.assertTrue(check_footprints(anchors, {"QLF.a": ["propext"]}, baseline))
         self.assertTrue(
             check_footprints(anchors, {"QLF.a": ["propext"], "QLF.b": []}, {"QLF.a": ["propext"]})
+        )
+        self.assertTrue(
+            check_footprints(anchors, {"QLF.a": ["propext"], "QLF.b": [], "QLF.extra": []}, baseline)
         )
 
     def test_duplicate_anchors_rejected(self):

@@ -1,8 +1,10 @@
-# The Born Rule, Derived from ZFA
+# The Born Rule from ZFA
 
 **Standard QM postulates the Born rule** — the probability of observing outcome $\varphi$ given state $\psi$ is $|\langle \varphi | \psi \rangle|^2$. This single postulate, added on top of unitary evolution, is the **measurement axiom** that connects the deterministic Schrödinger equation to probabilistic experimental outcomes. In standard QM no derivation from more fundamental principles is generally accepted; the rule is empirical input.
 
-**QLF derives the Born rule** as a consequence of (a) the uniform-prior structure of the possibility tree, (b) the binary-partition information-gain bound of [MRE.md](MRE.md), (c) the multiplicity principle of [BayesianMechanics.md](BayesianMechanics.md), and (d) the local-ZFA-closure framing of [Measurement_Problem.md](Measurement_Problem.md). The Born rule is not a postulate — it is what the QLF algebra produces when an observer asks "what is the probability that the next ZFA closure yields branch $\varphi$ given the current state $\psi$?"
+**QLF's route to the Born rule** combines (a) the uniform-prior structure of the possibility tree, (b) the binary-partition information-gain bound of [MRE.md](MRE.md), (c) the multiplicity principle of [BayesianMechanics.md](BayesianMechanics.md), and (d) the local-ZFA-closure framing of [Measurement_Problem.md](Measurement_Problem.md). The aim is to show the Born rule is what the QLF algebra produces when an observer asks "what is the probability that the next ZFA closure yields branch $\varphi$ given the current state $\psi$?"
+
+**Status.** What is proved is a finite uniqueness characterization: on a Gaussian-integer register, relabeling symmetry, normalization and additivity under refinement into unit ways force the weights $|\psi_i|^2/\sum_j|\psi_j|^2$ ([`QLF_BornFromWays`](lean/QLF_BornFromWays.lean), §8 below). The refinement is a premise, not yet derived from QLF dynamics, and which census quantity is the register is open. The sections below are the derivation programme; read them as a route, with that theorem as its proved step.
 
 ## 1. The possibility tree and uniform prior
 
@@ -76,6 +78,8 @@ This is exactly the [Measurement_Problem.md §4a](Measurement_Problem.md) framin
 ## 6. The Gleason-theorem connection
 
 Gleason's theorem (1957) shows that for Hilbert spaces of dimension $\geq 3$, the **only** probability measure on the lattice of projection operators that satisfies countable additivity is the Born rule $P(\varphi) = \text{Tr}(\rho \, \Pi_\varphi)$. This is often cited as a derivation of the Born rule from first principles in standard QM.
+
+Gleason needs dimension ≥ 3 and countable additivity. The finite counting route in [`QLF_BornFromWays`](lean/QLF_BornFromWays.lean) needs neither, and works in dimension 2 (§8).
 
 The QLF construction in §3–4 is consistent with Gleason but goes further: it identifies **what is being assigned probability** (admissible ZFA-closed leaves of the local possibility tree) and **why** (the uniform prior over admissible micro-paths follows from the multiplicity principle and the algebra's Hermitian symmetry). Gleason fixes the form $|\langle \varphi | \psi \rangle|^2$; QLF fixes the underlying ensemble.
 
@@ -400,7 +404,7 @@ QLF reading: the path-integral sum gives $\cos(\theta/2)$ as the constructively-
     integers.
 - **Remaining canonical cases** — two-spin singlet, Mach–Zehnder, three-path interference — still to be
   run, and to be run **blind**, with the symmetry-lock check above applied to every agreement.
-- **Gleason-theorem connection in Lean**: formalize the QLF-side of Gleason's uniqueness — given the uniform prior and the Pauli algebra, $|A|^2$ is the unique probability functional.
+- **Uniqueness of the probability functional — delivered by counting, not Gleason.** [`QLF_BornFromWays`](lean/QLF_BornFromWays.lean) proves that any probability assignment on a Gaussian-integer register that is symmetric under relabeling, normalized, and additive over unit ways is the Born rule (`born_from_ways`, `assignment_unique`). It is a finite uniqueness characterization under refinement additivity, following the strategy of Zurek's envariance argument (not a formalization of it); because amplitudes are Gaussian integers, every weight is rational and no continuity step is needed. Additivity over refined ways is a premise: the unit-way partition is constructed mathematically (`exists_refinement`), not yet shown to be a physical, amplitude-preserving refinement carried out by QLF dynamics. Write-up: [`Closure_Unitarity.md`](Closure_Unitarity.md) §16. What it does not settle is which census quantity is the register, and whether the substrate refines.
 - **Quantum contextuality**: Bell-Kochen-Specker theorem is the constraint that probability assignments must be consistent across measurement contexts. QLF's per-context possibility trees should derive this consistency automatically.
 
 ## References

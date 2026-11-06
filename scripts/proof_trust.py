@@ -114,8 +114,8 @@ def footprints_from_log(text: str) -> dict[str, list[str]]:
     for match in REPORT.finditer(normalize_gha_log(text)):
         name = match.group("name")
         deps = sorted(x.strip() for x in (match.group("deps") or "").split(",") if x.strip())
-        if name in found and found[name] != deps:
-            raise ValueError(f"conflicting axiom reports for {name}: {found[name]} vs {deps}")
+        if name in found:
+            raise ValueError(f"duplicate axiom report for {name}: first {found[name]}, next {deps}")
         found[name] = deps
     if not found:
         raise ValueError("no #print axioms results found; refusing to pass an empty log")
@@ -134,6 +134,8 @@ def check_footprints(
         )
     if not want.issubset(observed):
         errors.append(f"missing Lean reports: {sorted(want - set(observed))}")
+    if not set(observed).issubset(want):
+        errors.append(f"unexpected Lean reports: {sorted(set(observed) - want)}")
     for name in anchors:
         if name in observed and name in expected and observed[name] != expected[name]:
             errors.append(
@@ -165,8 +167,11 @@ def main() -> int:
         anchors = anchors_from_source(args.source.read_text(encoding="utf-8"))
         observed = footprints_from_log(args.log.read_text(encoding="utf-8"))
         if args.record:
-            if not set(anchors).issubset(observed):
-                raise ValueError(f"cannot record: missing anchors {sorted(set(anchors)-set(observed))}")
+            if set(anchors) != set(observed):
+                raise ValueError(
+                    f"cannot record: missing anchors {sorted(set(anchors)-set(observed))}; "
+                    f"unexpected reports {sorted(set(observed)-set(anchors))}"
+                )
             expected = {name: observed[name] for name in sorted(anchors)}
             args.manifest.write_text(json.dumps(expected, indent=2, ensure_ascii=False) + "\n")
             print(f"recorded {len(expected)} reviewed axiom footprints in {args.manifest}")

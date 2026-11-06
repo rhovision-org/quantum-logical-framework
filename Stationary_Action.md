@@ -35,6 +35,11 @@ is formalized yet:
 4. convergence of the **variations**, not merely of the values, of the causal-set action to the
    Einstein–Hilbert variational problem, boundary terms included.
 
+A worked instance of items 2 and 3 in the gauge-link sector, finite and exact, is
+[`QLF_LinkAction`](lean/QLF_LinkAction.lean) ([`Closure_Unitarity.md`](Closure_Unitarity.md) §21): the
+link action's first variation is `curl F − J`, so stationarity is Ampère's law. It does not supply
+items 1 or 4 for gravity.
+
 Lean: [`lean/QLF_StationaryAction.lean`](lean/QLF_StationaryAction.lean) (one axis), and
 [`lean/QLF_StationaryPhase.lean`](lean/QLF_StationaryPhase.lean) for the signed phase and all four
 axes (§5a). No axioms.

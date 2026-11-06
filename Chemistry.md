@@ -44,6 +44,11 @@ rest. Everything below is that one rule playing out.
 
 ## 3. Molecules — shared closures
 
+The resolvent of one shared closure is worked out in [`QLF_SharedClosure`](lean/QLF_SharedClosure.lean)
+([Closure_Unitarity.md](Closure_Unitarity.md) §43): two sites with closure kernels `a`, `b` sharing
+amplitude `g` have a bonding level above both and an antibonding level below both, and equal sites
+split by `2|g|`.
+
 - **Hydrogen, H₂** — H(1)+H(1), valence-saturated. The canonical covalent shared closure.
   [▶ see](https://rhovision-org.github.io/quantum-logical-framework/spacetime_constructor.html#qc=H%20%40%20-2%2C0%2C0%0AH%20%40%202%2C0%2C0)
 - **Water, H₂O** — O(2) shares one closure with each of two H (via the OH intermediate).
