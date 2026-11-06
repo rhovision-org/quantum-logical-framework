@@ -306,7 +306,7 @@ class ConstantsMapper:
 
     def gauge_spatial_count_ratio(self) -> Optional[float]:
         """
-        Count ratio of gauge twists (+/-) to spatial twists (^v<>/\) in the
+        Count ratio of gauge twists (+/-) to spatial twists (^v<>/\\) in the
         stable-history ensemble. This is NOT the fine-structure constant α;
         it is a structural observable about the ensemble's twist composition.
 
