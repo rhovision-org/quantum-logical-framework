@@ -9,6 +9,8 @@ on:
       - 'lean-toolchain'
       - 'lake-manifest.json'
       - 'scripts/axiom_audit.sh'
+      - 'scripts/proof_trust.py'
+      - 'tests/test_proof_trust.py'
       - '.github/workflows/lean-verify.yml'
 
   pull_request:
@@ -19,6 +21,8 @@ on:
       - 'lean-toolchain'
       - 'lake-manifest.json'
       - 'scripts/axiom_audit.sh'
+      - 'scripts/proof_trust.py'
+      - 'tests/test_proof_trust.py'
       - '.github/workflows/lean-verify.yml'
 
 jobs:
@@ -33,6 +37,11 @@ jobs:
       # spending six minutes building. See scripts/axiom_audit.sh.
       - name: Audit declared axioms
         run: ./scripts/axiom_audit.sh
+
+      - name: Reject proof placeholders and test the trust gate
+        run: |
+          python3 scripts/proof_trust.py --scan-only
+          python3 -m unittest discover -s tests -p 'test_proof_trust.py' -v
 
       - name: Install elan (Lean version manager)
         run: |
@@ -74,5 +83,8 @@ jobs:
       # actually used, printed by lean/QLF_AxiomAudit.lean. Re-elaborated on its own so
       # the report is one contiguous block in the log rather than scattered through the
       # build. See that file for how to read it.
-      - name: Report axiom footprint of the anchor theorems
-        run: lake env lean lean/QLF_AxiomAudit.lean
+      - name: Verify exact anchor axiom footprints
+        run: |
+          set -euo pipefail
+          lake env lean lean/QLF_AxiomAudit.lean | tee /tmp/qlf_axiom_footprints.log
+          python3 scripts/proof_trust.py --log /tmp/qlf_axiom_footprints.log

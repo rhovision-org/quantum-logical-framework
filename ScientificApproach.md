@@ -6,9 +6,11 @@ This document is about *method*, not results. It states the rules by which the
 [Quantum Logical Framework](README.md) decides what it knows, what it merely suspects, and what it
 has ruled out. The evidence ledger lives in
 [`Experimental_Consistency.md`](Experimental_Consistency.md), the unresolved questions in
-[`Open_Problems.md`](Open_Problems.md), the ontology in [`Philosophy.md`](Philosophy.md), and the
-domain derivations in their own documents. Keeping those separate is itself part of the method: a
-file that mixes protocol with claims will always end up grading its own work.
+[`Open_Problems.md`](Open_Problems.md), the ontology in [`Philosophy.md`](Philosophy.md), the
+kernel audit in [`Proof_Trust.md`](Proof_Trust.md), the evidence registry in
+[`Proof_to_Physics.md`](Proof_to_Physics.md), and the domain derivations in their own
+files. Keeping those separate is itself part of the method: a file that mixes
+protocol with claims will always end up grading its own work.
 
 > **The point of this file:** QLF should document not merely why it might be right, but exactly how
 > it permits itself to be wrong.
