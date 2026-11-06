@@ -67,7 +67,7 @@ challenge is not new in any of them; the classical source is credited first.
 | B1 | **A fixed background spacetime.** | General relativity (Einstein 1915): spacetime is dynamical, so a fixed background is in tension with gravity. This is a QFT assumption, not a QM one. | Spacetime is synthesized from closures. The interval is the determinant of the state. | `det_toMatrix_eq_interval`, `lorentz_preserves_interval` ([`QLF_Minkowski`](lean/QLF_Minkowski.lean)); curvature through the bridge axiom `benincasa_dowker_limit` ([`QLF_CausalContinuum`](lean/QLF_CausalContinuum.lean)) and the metric through `order_metric_continuum_limit` ([`QLF_OrderMetric`](lean/QLF_OrderMetric.lean)). | **Proved** for the interval; Einstein's equations **open** (one bridge each). | A gravitational observation that requires a background. |
 | B2 | **A continuum of points.** | Planck-scale arguments; Bekenstein (1972) for finite information. | Finite histories. A finite-information region cannot hold a continuum faithfully. | `no_continuum_in_finite_region` ([`QLF_Realizability`](lean/QLF_Realizability.lean)). **Premise:** the region holds finitely many distinguishable states (Bekenstein, assumed). | **Proved** given that premise. No experiment has resolved a continuum, but absence of evidence is not evidence of falsity; the case is the five strikes in [`TheContinuum.md`](TheContinuum.md) §2. | A measurement that resolves more distinguishable states than the bound allows. |
 | B3 | **Exact Lorentz invariance.** | None: it is extremely well tested. | Lorentz symmetry from the spinor double cover; on the lattice it is broken at order `a²` and restored in the continuum. | `spinor_hom` ([`QLF_LorentzCover`](lean/QLF_LorentzCover.lean)); surjectivity through the bridge axiom `lorentz_generated_by_boosts_rotations`. The `a²` breaking: [`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md) §12. | **Proved** homomorphism, one bridge for surjectivity; the breaking is an **exact computation**. | See benchmark §5 (B-LIV). |
-| B4 | **The propagator `1/p²`** is put into perturbation theory. | Symanzik (1969): it is the sum over random walks. | The resolvent of the eight-twist walk under the Kraft measure, `1/(1 − φ(k))`, which is `8/k²` at long wavelength. | `twist_kraft` ([`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)); the propagator itself is an **exact computation** ([`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md) §11–§12). | **Exact computation**; the Wick rotation from Euclidean to Lorentzian is **assumed**. | A Lorentzian walk whose resolvent is not `1/p²` at long wavelength. |
+| B4 | **The propagator `1/p²`** is put into perturbation theory. | Symanzik (1969): it is the sum over random walks. | The resolvent of the eight-twist walk under the Kraft measure, `1/(1 − φ(k))`, which is `8/k²` at long wavelength. | `twist_kraft` ([`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)); the propagator itself is an **exact computation** ([`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md) §11–§12). | **Exact computation** of a scalar walk; **open bridge** from closures: the sum runs over all unconstrained histories by net displacement, with no ZFA selection and no Pauli fold, so the projection from closure histories to this scalar walk is **assumed** ([`Hidden_Zeros_Closure.md`](Hidden_Zeros_Closure.md) §12). The Wick rotation is also **assumed**. | A Lorentzian walk whose resolvent is not `1/p²` at long wavelength, or a closure-selected, fold-weighted sum that does not reduce to it. |
 | B5 | **Renormalization** subtracts infinities. | Wilson (1971): renormalization is a flow over scales. | Every counterterm is finite, one per octave of capacity; no infinity is ever subtracted. | `counterterm_finite`, `dyson_unique`, `landau_capacity` ([`QLF_VacuumResolvent`](lean/QLF_VacuumResolvent.lean)); finite flow in [`QLF_ExactRG`](lean/QLF_ExactRG.lean). | **Proved** finite core; the prime electromagnetic kernel **open**. | A physical divergence that no finite capacity absorbs. |
 | B6 | **The gauge group** `SU(3)×SU(2)×U(1)` is postulated. | Unexplained in the Standard Model. | The groups come from the axis algebra: the τ subalgebra is weak isospin; colour is the ℤ₃ relabeling. | `weak_isospin_su2` ([`BraKetRhoQuCalc`](lean/BraKetRhoQuCalc.lean)); `baryon_cyc_invariant` ([`QLF_BaryonWinding`](lean/QLF_BaryonWinding.lean)); `yang_mills_iff` ([`QLF_NonAbelianField`](lean/QLF_NonAbelianField.lean)). | **Proved** algebras and lattice field equations; couplings **open**. | A gauge structure the axis algebra cannot generate. |
 | B7 | **Locality and microcausality.** | Built into QFT. | Histories compose only along shared closures; the shell kernel composes over intermediate shells. | `shellKernel_compose` ([`QLF_LightCone`](lean/QLF_LightCone.lean)); `kernel_compose`, `kernel_dagger` ([`QLF_ChannelGroupoid`](lean/QLF_ChannelGroupoid.lean)). | **Proved** composition; microcausality of operators **open**. | A spacelike correlation that is not a joint closure. |
@@ -138,7 +138,7 @@ cover's surjectivity is the axiom `lorentz_generated_by_boosts_rotations`, and t
 
 **What survives the audit.** Unitary dynamics (moved to the primitives, not removed), measurement as
 closure with no collapse dynamics, interference zeros as theorems, the Minkowski interval as a
-determinant, finite renormalization, the propagator as a sum over histories, and the gauge algebras. What
+determinant, finite renormalization, the propagator as a sum over (unselected, fold-free) histories, and the gauge algebras. What
 does not survive as a derivation: the Born rule, the complex numbers, the tensor product, universality as
 a statement about termination, and Lorentzian signature.
 
@@ -201,7 +201,14 @@ step `exp(i k σ)`: every spin component moves at `c` along one axis per sub-ste
 | Ordering | Along an axis | Body diagonal | Leading term |
 |---|---|---|---|
 | The one-way order `y, x, z` (the Lean order before this change) | exact, `E = k` | `E = k ± k²/(3√3)`, sign set by the octant | **linear**: `cos E = Π cos k_i − Π sin k_i`, so `E ≈ k + k_x k_y k_z / k` |
-| Palindromic (a half step in each order, `y x z` then `z x y`) | exact, `E = k` | `E = k − k³/18` | quadratic, `ξ = 1/9`, `E_QG,2 = 3.0 E_P`, subluminal |
+| Palindromic (a half step in each order, `y x z` then `z x y`) | exact, `E = k` | `E = k − k³/18` | quadratic: `cos E = Π cos k_i` exactly, so no odd term in any direction; `ξ = 1/9` on the body diagonal, `E_QG,2 = 3.0 E_P`, subluminal |
+
+Both trace identities hold at **arbitrary** momenta, not only along the sampled directions:
+`Re tr(realWalk)/2 = cos k_y cos k_x cos k_z` for the palindrome, and `Π cos k_i − Π sin k_i` for the
+one-way order. Since `cos E` is then even in every `k_i`, the palindrome's dispersion has no odd
+(linear-in-energy) term in any direction. They are checked numerically at 2,000 random momenta to
+`10⁻¹⁵` ([`liv_dispersion.py`](liv_dispersion.py), run in CI by
+[`scripts/amplitude_regression.py`](scripts/amplitude_regression.py)); a Lean proof is not yet written.
 
 The fixed order breaks time reversal and parity, and that leaves a term **linear** in energy. Its sign
 flips between octants and between the two chiralities (the Dirac walk runs the other chirality at
@@ -212,18 +219,22 @@ its dispersion. And the term comes from the order of the sub-steps, not from the
 ordering, which is time-symmetric, cancels it exactly and leaves only the quadratic term, allowed by
 about `5 × 10⁷`.
 
-**The electron closes the loophole.** In QLF the interaction is between electrons, which are spin-½,
-and the photon has no properties apart from the electrons it connects
-([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §40). So the first qualification does not
-help: the spin-½ walk is the electron's, and electrons have their own bound. In the convention
+**The electron bound, and the assumption it needs.** In QLF the interaction is between electrons, which
+are spin-½, and the photon has no properties apart from the electrons it connects
+([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §40). If the spin-½ walk describes the
+electron's propagation, the first qualification does not help, because electrons have their own bound.
+That identification is an **additional physical assumption**, not a consequence of the Lean results: the
+walk is massless and free, while the bound concerns the measured, massive and interacting electron, and
+`realWalk_unitary` and `realWalk_generator` establish unitarity and the first-order generator only, not
+the finite-momentum dispersion or physical time-reversal invariance. Granting it: In the convention
 `E² = p² + m² + η p³/E_P`, the one-way order gives `η = 2 n_x n_y n_z` per chirality, up to `±0.385` with
 both signs occurring. The Crab nebula's synchrotron emission requires `η > −7 × 10⁻⁸` for electrons, and
 vacuum Čerenkov radiation `η < 0.01` (Jacobson, Liberati and Mattingly, *Nature* 424, 1019, 2003). So
-**the one-way walk at Planck spacing is excluded for electrons, by about `5 × 10⁶`**, whatever the
-photon is. The palindromic order has no linear term and survives.
+**the one-way walk at Planck spacing, read as the electron, is excluded by about `5 × 10⁶`**, whatever
+the photon is. The palindromic order has no linear term and survives.
 
-So the data already **select** something: at Planck spacing, a realizable walk must be time-symmetric
-within each tick. The Lean `realWalk` ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean)) now uses the
+So, under that identification, the data **select** something: at Planck spacing, a realizable walk must
+be time-symmetric within each tick. The Lean `realWalk` ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean)) now uses the
 palindromic order. Its unitarity and its generator (`realWalk_unitary`, `realWalk_generator`) carry over
 unchanged in statement, so everything built on them (the Dirac walk, the optical theorem, the poles) is
 unaffected.

@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import cmath
 import math
+import random
 
 E_PLANCK_GEV = 1.220890e19          # Planck energy, CODATA 2018 value
 LHAASO_EQG2 = 6e-8                  # lower limit, units of E_P (LHAASO, PRL 133, 071501, 2024)
@@ -93,6 +94,17 @@ def walk_report():
             w = walk_omega([eps * c for c in n], pal)
             rows.append(f'{label}: (w-k)/k^2 = {(w - eps) / eps ** 2:+.4f}, (w-k)/k^3 = {(w - eps) / eps ** 3:+.3e}')
         print(f'[walk, {name}]  ' + '; '.join(rows))
+    # exact trace identities at arbitrary momenta (not only sampled directions)
+    rng = random.Random(207)
+    worst_pal = worst_one = 0.0
+    for _ in range(2000):
+        ky, kx, kz = (rng.uniform(-math.pi, math.pi) for _ in range(3))
+        cc = math.cos(ky) * math.cos(kx) * math.cos(kz)
+        ss = math.sin(ky) * math.sin(kx) * math.sin(kz)
+        worst_pal = max(worst_pal, abs(math.cos(walk_omega([ky, kx, kz], True)) - cc))
+        worst_one = max(worst_one, abs(math.cos(walk_omega([ky, kx, kz], False)) - (cc - ss)))
+    print(f'  trace identities over 2000 random momenta: palindromic cos E = prod cos k_i '
+          f'(max err {worst_pal:.1e}); one-way cos E = prod cos - prod sin (max err {worst_one:.1e})')
     # linear term: w = k + k^2 n_x n_y n_z, so v - 1 = 2 k n_x n_y n_z, max |.| = 2/(3 sqrt 3)
     lin = 2 / (3 * math.sqrt(3))
     print(f'  one-way order: linear term |v - 1| <= {lin:.4f} (E/E_P), E_QG1 = {1 / lin:.2f} E_P '

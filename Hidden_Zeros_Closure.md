@@ -342,14 +342,27 @@ One departure from §11: the sanity check D1 draws from the random generator fir
 generic points are new draws from round 4's construction rather than round 4's exact points. The
 construction and the counts are the same.
 
-**What this settles.** The propagator no longer has to be inserted. Summing every twist history under its
-own Kraft measure, phased by its net displacement, gives `1/(1 − φ(k))`, which is `8/k²` at long
+**What this settles.** The propagator no longer has to be inserted by hand. Summing every twist history
+under its own Kraft measure, phased by its net displacement, gives `1/(1 − φ(k))`, which is `8/k²` at long
 wavelength, so `1/X` up to a constant. With it, the hidden zeros of §4 come out of the closure sum in the
 continuum limit and are broken at finite spacing by exactly the `a²` lattice correction
 `Σ_a K_a⁴/12`, which is anisotropic (it singles out the four twist axes).
 
 **What it does not.** As stated before the run, this is the random-walk representation of lattice field
-theory (Symanzik 1969), and `a²` is its ordinary artifact. Two steps remain assumed rather than derived:
+theory (Symanzik 1969), and `a²` is its ordinary artifact.
+
+**The open bridge: from closure histories to the scalar walk** (review of PR #212). The sum behind
+`φ(k)` runs over *all* unconstrained histories, each read only by its net displacement on `ℤ⁴`. It
+imposes no ZFA selection (no first-closure or prime-closure condition), and it drops each history's
+non-commuting Pauli fold, keeping only the commuting displacement. So `1/(1 − φ)` is the standard
+scalar random-walk resolvent built from QLF's alphabet and measure; it is **not yet** a propagator
+derived from closures. The projection from twist and closure histories to this scalar walk is an
+assumption, and deriving it, or showing which closure-selected, fold-weighted sum reduces to it, is
+open. The closure-channel factorization `G(v) = G_∅ · O(v)`
+([`QLF_ClosureChannels`](lean/QLF_ClosureChannels.lean)) is the natural starting point, since it
+already splits every history into a closed part and an open part with the fold kept.
+
+Two further steps remain assumed rather than derived:
 the walk is Euclidean, with the Lorentzian momenta entering through the Wick rotation `K₄ = i t`; and for
 complex momenta `G` is the analytic continuation of the geometric series. The amplitude is still the
 standard `Tr(φ³)` one, and no number the standard theory lacks has appeared. The one QLF-specific
