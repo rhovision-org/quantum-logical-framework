@@ -261,6 +261,27 @@ exact dispersion is now proved in Lean, with no axioms:
 So the palindromic electron walk passes the electron bound by proof rather than by sampling. What
 stays assumed is the identification itself: that the electron propagates by this walk.
 
+**The walk is forced, not chosen.** The identification can be narrowed to premises QLF already has.
+Take any nearest-neighbour step along one axis: it sends the spin one site forward with some matrix
+`A` and one site back with some `B`, so at momentum `k` it is `e^{ik} A + e^{−ik} B`. In
+[`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean) §6, with no axioms:
+
+* `step_forced`: if the step is unitary at every momentum, then `A = U P` and `B = U (1 − P)`, with
+  `U = A + B` a unitary coin and `P` an orthogonal projector. Unitarity alone forces the realizable
+  form.
+* `coinless_step_forced`: with no coin (`A + B = 1`, the free step), it is a projector step
+  `e^{ik} P + e^{−ik}(1 − P)`.
+* `coinless_twist_step`, `fix_iff_generator`: if, in addition, the step's spin generator `2P − 1` is the
+  twist `t` (the spin component along the axis moves at `c`), the step **is** `realStep t` at every
+  momentum.
+
+So the electron's free step follows from four things: one site per tick, unitarity at every momentum,
+no coin at zero momentum, and the twist as the spin generator. The last is QLF's realizability premise
+(§1, row A3). The coin `U` is where mass enters. That the coin is the handedness flip `β`, and that
+the three axes are composed in the palindromic order (time symmetry, `realWalk_neg`), are still
+choices rather than theorems. Two things remain physical identifications: that the electron is a
+spin-½ closure that moves this way, and that the lattice tick is the Planck time.
+
 
 ### 5c. Forecasts, pre-registered 2026-11-07
 

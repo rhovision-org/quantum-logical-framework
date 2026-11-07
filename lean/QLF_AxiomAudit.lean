@@ -283,6 +283,10 @@ import QLF_HiddenZeros
 #print axioms QLF.ClosureChannels.realWalk_trace_even
 #print axioms QLF.ClosureChannels.realWalk_neg
 #print axioms QLF.ClosureChannels.realWalk_add_star
+#print axioms QLF.ClosureChannels.step_forced
+#print axioms QLF.ClosureChannels.coinless_step_forced
+#print axioms QLF.ClosureChannels.fix_iff_generator
+#print axioms QLF.ClosureChannels.coinless_twist_step
 #print axioms QLF.Tsirelson.chsh_sq
 #print axioms QLF.Tsirelson.chsh_classical
 #print axioms QLF.Tsirelson.chsh_tsirelson

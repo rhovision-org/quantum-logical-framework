@@ -290,4 +290,167 @@ theorem realWalk_add_star (ky kx kz : ℝ) :
   simp only [h4, h6, h8, Complex.I_sq] <;>
   ring
 
+/-! ## 6. The realizable step is forced
+
+A nearest-neighbour step along one axis moves the spin state one site forward with some matrix `A`
+and one site back with some `B`, so at momentum phase `a` (a unit complex number, `a = e^{ik}`) it is
+`a • A + a̅ • B`. Unitarity at every phase alone forces it into the realizable form: a fixed unitary
+coin `U = A + B` (the step at zero momentum) times `a • P + a̅ • (1 − P)` for an orthogonal projector
+`P` (`step_forced`). With no coin (`A + B = 1`) the step is exactly a projector step
+(`coinless_step_forced`), and `realStep` is the case `P = fix t`, the states the twist fixes. -/
+
+/-- A nearest-neighbour step at unit phase `a`. -/
+def nnStep (A B : M) (a : ℂ) : M := a • A + star a • B
+
+/-- `star (nnStep) * nnStep` at a unit phase. -/
+theorem nnStep_gram (A B : M) (a : ℂ) (ha : star a * a = 1) :
+    star (nnStep A B a) * nnStep A B a =
+      star A * A + star B * B + (star a ^ 2) • (star A * B) + (a ^ 2) • (star B * A) := by
+  have ha' : a * star a = 1 := by rw [mul_comm]; exact ha
+  simp only [nnStep, star_add, star_smul, star_star, add_mul, mul_add, smul_mul_smul_comm, ha, ha',
+    one_smul, sq]
+  abel
+
+/-- `nnStep * star (nnStep)` at a unit phase. -/
+theorem nnStep_gram' (A B : M) (a : ℂ) (ha : star a * a = 1) :
+    nnStep A B a * star (nnStep A B a) =
+      A * star A + B * star B + (star a ^ 2) • (B * star A) + (a ^ 2) • (A * star B) := by
+  have ha' : a * star a = 1 := by rw [mul_comm]; exact ha
+  simp only [nnStep, star_add, star_smul, star_star, add_mul, mul_add, smul_mul_smul_comm, ha, ha',
+    one_smul, sq]
+  abel
+
+/-- Three unit phases `1, i, (3 + 4i)/5` separate the three terms of `C + w̄ X + w Y = 1`. -/
+private theorem separate (C X Y : M)
+    (h : ∀ a : ℂ, star a * a = 1 → C + (star a ^ 2) • X + (a ^ 2) • Y = 1) :
+    C = 1 ∧ X = 0 ∧ Y = 0 := by
+  have h1 := h 1 (by simp)
+  have h2 := h Complex.I (by rw [Complex.star_def, Complex.conj_I, neg_mul, Complex.I_mul_I, neg_neg])
+  set z : ℂ := ⟨3 / 5, 4 / 5⟩
+  have hz : star z * z = 1 := by
+    apply Complex.ext <;> simp [z] <;> norm_num
+  have h3 := h z hz
+  have hzs : star z ^ 2 = ⟨-7 / 25, -24 / 25⟩ := by
+    apply Complex.ext <;> simp [z, sq] <;> norm_num
+  have hzz : z ^ 2 = ⟨-7 / 25, 24 / 25⟩ := by
+    apply Complex.ext <;> simp [z, sq] <;> norm_num
+  have hIs : star Complex.I ^ 2 = -1 := by
+    rw [Complex.star_def, Complex.conj_I, neg_sq, Complex.I_sq]
+  simp only [star_one, one_pow, one_smul] at h1
+  rw [hIs, Complex.I_sq, neg_one_smul, neg_one_smul] at h2
+  rw [hzs, hzz] at h3
+  -- h1: C + X + Y = 1;  h2: C - X - Y = 1
+  have hC : C = 1 := by
+    have : (2 : ℂ) • C = (2 : ℂ) • 1 := by
+      rw [two_smul, two_smul]
+      calc C + C = (C + X + Y) + (C + -X + -Y) := by abel
+        _ = 1 + 1 := by rw [h1, h2]
+    exact smul_right_injective M two_ne_zero this
+  have hXY : X + Y = 0 := by
+    have := h1; rw [hC] at this
+    calc X + Y = (1 + X + Y) - 1 := by abel
+      _ = 0 := by rw [this, sub_self]
+  have hY : Y = -X := eq_neg_of_add_eq_zero_right hXY
+  rw [hC, hY, smul_neg] at h3
+  have h4 : ((⟨-7 / 25, -24 / 25⟩ : ℂ) - ⟨-7 / 25, 24 / 25⟩) • X = 0 := by
+    rw [sub_smul]
+    calc _ = (1 + (⟨-7 / 25, -24 / 25⟩ : ℂ) • X + -((⟨-7 / 25, 24 / 25⟩ : ℂ) • X)) - 1 := by abel
+      _ = 0 := by rw [h3, sub_self]
+  have hne : ((⟨-7 / 25, -24 / 25⟩ : ℂ) - ⟨-7 / 25, 24 / 25⟩) ≠ 0 := by
+    intro h0
+    have := congrArg Complex.im h0
+    norm_num at this
+  have hX : X = 0 := (smul_eq_zero.mp h4).resolve_left hne
+  exact ⟨hC, hX, by rw [hY, hX, neg_zero]⟩
+
+/-- **Unitarity forces the realizable form.** If a nearest-neighbour step `a • A + a̅ • B` is
+unitary at every unit phase, then `A = U P` and `B = U (1 − P)`, where `U = A + B` is unitary and
+`P` is an orthogonal projector. -/
+theorem step_forced (A B : M)
+    (h : ∀ a : ℂ, star a * a = 1 → nnStep A B a ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    ∃ U P : M, U ∈ Matrix.unitaryGroup (Fin 2) ℂ ∧ star P = P ∧ P * P = P ∧
+      A = U * P ∧ B = U * (1 - P) := by
+  obtain ⟨hC, hX, hY⟩ := separate (star A * A + star B * B) (star A * B) (star B * A) (fun a ha => by
+    rw [← nnStep_gram A B a ha]; exact Matrix.mem_unitaryGroup_iff'.mp (h a ha))
+  obtain ⟨hC', hX', hY'⟩ := separate (A * star A + B * star B) (B * star A) (A * star B)
+    (fun a ha => by
+      rw [← nnStep_gram' A B a ha]; exact Matrix.mem_unitaryGroup_iff.mp (h a ha))
+  have hP1 : 1 - star A * A = star B * B := by rw [← hC]; abel
+  refine ⟨A + B, star A * A, ?_, ?_, ?_, ?_, ?_⟩
+  · have := h 1 (by simp)
+    simpa [nnStep] using this
+  · rw [star_mul, star_star]
+  · calc star A * A * (star A * A) = star A * (A * star A) * A := by noncomm_ring
+      _ = star A * (1 - B * star B) * A := by rw [← hC']; abel_nf
+      _ = star A * A - (star A * B) * (star B * A) := by noncomm_ring
+      _ = star A * A := by rw [hX, zero_mul, sub_zero]
+  · calc A = (A * star A + B * star B) * A := by rw [hC', one_mul]
+      _ = A * star A * A + B * (star B * A) := by noncomm_ring
+      _ = A * star A * A + B * star A * A := by rw [hY, hX', mul_zero, zero_mul]
+      _ = (A + B) * (star A * A) := by noncomm_ring
+  · rw [hP1]
+    calc B = (A * star A + B * star B) * B := by rw [hC', one_mul]
+      _ = A * (star A * B) + B * star B * B := by noncomm_ring
+      _ = A * star B * B + B * star B * B := by rw [hX, hY', mul_zero, zero_mul]
+      _ = (A + B) * (star B * B) := by noncomm_ring
+
+/-- **With no coin the step is a projector step.** If the step at zero momentum is the identity
+(`A + B = 1`), unitarity at every phase forces `nnStep A B a = a • P + a̅ • (1 − P)` with `P` an
+orthogonal projector. `realStep t` is the case `P = fix t`. -/
+theorem coinless_step_forced (A B : M) (hc : A + B = 1)
+    (h : ∀ a : ℂ, star a * a = 1 → nnStep A B a ∈ Matrix.unitaryGroup (Fin 2) ℂ) :
+    ∃ P : M, star P = P ∧ P * P = P ∧ ∀ a : ℂ, nnStep A B a = a • P + star a • (1 - P) := by
+  obtain ⟨U, P, -, hs, hp, hA, hB⟩ := step_forced A B h
+  have hU : U = 1 := by
+    have : A + B = U * P + U * (1 - P) := by rw [← hA, ← hB]
+    rw [hc, ← mul_add, add_sub_cancel, mul_one] at this
+    exact this.symm
+  refine ⟨P, hs, hp, fun a => ?_⟩
+  rw [nnStep, hA, hB, hU, one_mul, one_mul]
+
+/-- `realStep` is a nearest-neighbour step at the phase `e^{ik}`, with no coin. -/
+theorem realStep_eq_nnStep (t : Twist) (k : ℝ) :
+    realStep t k = nnStep (fix t) (fix t.conj) (Complex.exp (k * Complex.I)) := by
+  rw [realStep, nnStep, star_exp_kI]
+
+theorem realStep_coinless (t : Twist) : fix t + fix t.conj = 1 := fix_add_conj t
+
+/-- A projector step `a • P + a̅ • (1 − P)` has spin generator `2P − 1`; it is the twist exactly
+when `P = fix t`. -/
+theorem fix_iff_generator (t : Twist) (P : M) : P = fix t ↔ (2 : ℂ) • P - 1 = t.toMatrix := by
+  constructor
+  · rintro rfl
+    unfold fix
+    rw [smul_smul]
+    norm_num
+  · intro h
+    have hP : P = (1 / 2 : ℂ) • ((2 : ℂ) • P) := by rw [smul_smul]; norm_num
+    rw [hP, fix, ← h]
+    congr 1
+    abel
+
+/-- **The realizable step is forced.** A coinless nearest-neighbour step that is unitary at every
+phase, and whose spin generator is the twist `t`, is `realStep t` at every momentum. -/
+theorem coinless_twist_step (t : Twist) (A B : M) (hc : A + B = 1)
+    (h : ∀ a : ℂ, star a * a = 1 → nnStep A B a ∈ Matrix.unitaryGroup (Fin 2) ℂ)
+    (hgen : (2 : ℂ) • A - 1 = t.toMatrix) :
+    ∀ k : ℝ, nnStep A B (Complex.exp (k * Complex.I)) = realStep t k := by
+  obtain ⟨P, -, -, hstep⟩ := coinless_step_forced A B hc h
+  have hA : A = P := by
+    have h2 := hstep Complex.I
+    simp only [nnStep, Complex.star_def, Complex.conj_I, neg_smul] at h2
+    have hd : Complex.I • (A - B) = Complex.I • (P - (1 - P)) := by
+      rw [smul_sub, smul_sub, sub_eq_add_neg, h2, ← sub_eq_add_neg]
+    have hd' : A - B = P - (1 - P) := smul_right_injective M Complex.I_ne_zero hd
+    have h2A : (2 : ℂ) • A = (2 : ℂ) • P := by
+      rw [two_smul, two_smul]
+      calc A + A = (A + B) + (A - B) := by abel
+        _ = 1 + (P - (1 - P)) := by rw [hc, hd']
+        _ = P + P := by abel
+    exact smul_right_injective M two_ne_zero h2A
+  have hB : B = 1 - P := by rw [← hA, ← hc]; abel
+  have hfix : P = fix t := (fix_iff_generator t P).mpr (hA ▸ hgen)
+  intro k
+  rw [realStep_eq_nnStep, hA, hB, hfix, ← fix_add_conj t, add_sub_cancel_left]
+
 end QLF.ClosureChannels

@@ -53,6 +53,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureChannels.coinless_step_forced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.coinless_twist_step": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureChannels.coneStep_unitary": [
     "Classical.choice",
     "Quot.sound",
@@ -64,6 +74,11 @@
     "propext"
   ],
   "QLF.ClosureChannels.cone_zero_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.fix_iff_generator": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -124,6 +139,11 @@
     "propext"
   ],
   "QLF.ClosureChannels.shell_total_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.step_forced": [
     "Classical.choice",
     "Quot.sound",
     "propext"
