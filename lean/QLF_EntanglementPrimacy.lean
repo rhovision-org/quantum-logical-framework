@@ -1,6 +1,7 @@
 import QLF_TwistAlphabet
 import QLF_PhaseRule
 import RhoQuCalc
+import QLF_JointClosure
 import Mathlib
 
 set_option linter.unusedVariables false
@@ -9,7 +10,7 @@ set_option linter.unusedVariables false
 # QLF_EntanglementPrimacy — every closure is made of entanglements
 
 Jim's thesis (2026-11-07): *the logical entanglement is responsible for all other results.* This module
-proves five rungs of that thesis for the twist layer and names exactly what is still missing.
+proves six rungs of that thesis for the twist layer and names exactly what is still missing.
 
 The primordial entanglement is the **conjugate pair** `[t, t†]`: a twist and its Hermitian conjugate
 (`^v`, `<>`, `/\`, `+−`). Each half is open on its own and the pair closes. That is the `[pos, neg]` event
@@ -91,6 +92,16 @@ So the strong sentence "only entanglements are real" is true on the spatial sect
 exactly one kind of pair, the gauge pair, whose open half carries only the `t` coordinate of the
 Form (rung 3). The exception is located, not hidden.
 
+## Rung 6: from one pair to two bodies (no axioms)
+
+Read a pair `[t, t†]` as the twist's axis acting on both sites of a two-body state
+(`QLF_JointClosure.joint`), so the two sites must carry opposite values for the action to cancel.
+
+* **`singlet_cancels_iff_strong`**: the singlet absorbs a pair's axis (net action zero) **exactly**
+  when the pair is strongly entangled. The gauge pair acts on the singlet as the scalar `±2`.
+* **`strong_pairs_cancel_iff_singlet`**: the singlet is the **unique** two-body state on which every
+  strong pair cancels. Rung 5's per-pair notion and the two-body joint closure pick out one state.
+
 ## What is still NOT proved (stated so nobody overclaims)
 
 1. **Irrational Forms.** A pure state whose Bloch vector is irrational is the frequency of no finite
@@ -99,14 +110,15 @@ Form (rung 3). The exception is located, not hidden.
    expect no more than rationals in a finite region; linking the two is open.
 2. **Why the window is `N`.** Rung 4 shows that `t = ½` is reached by choosing the window; it does
    not derive that the physical window is the one that makes the gauge net half of it.
-3. **Strong entanglement is per pair here.** Rung 5 is a statement about a single conjugate pair. The
-   two-body tensor statement (a closed two-site state is the singlet) is `QLF_JointClosure`; tying
-   the two together is open.
+3. **The two-body reading is a choice.** Rung 6 maps a pair to the joint action of its axis on two
+   sites. That map is the natural one (each site holds one half), but it is chosen, not derived from
+   the twist histories; deriving the tensor product itself stays open (`closed_iff_singlet` already
+   assumes it).
 
-Rungs 1–5 of "the logical entanglement is responsible for all other results" are proved here for the
+Rungs 1–6 of "the logical entanglement is responsible for all other results" are proved here for the
 twist layer: what closes (pairs), its phase (pairs × crossings), its Form (the open half), every
-rational Form and pure state (frequencies of strands), and which pairs are entangled in the strong
-sense (exactly the spatial ones).
+rational Form and pure state (frequencies of strands), which pairs are entangled in the strong
+sense (exactly the spatial ones), and that those pairs single out the two-body singlet.
 -/
 
 namespace QLF.EntanglementPrimacy
@@ -592,10 +604,51 @@ theorem no_gauge_all_strongly_entangled (ts : List Twist) (hplus : ts.count Twis
   rw [stronglyEntangled_iff_spatial]
   cases t <;> simp [canonicalPairs, hplus, axisOf] at ht ⊢
 
+-- ==========================================
+-- Rung 6: a strong pair is an axis that cancels on the singlet
+-- ==========================================
+
+/-- Spatial twists are traceless. -/
+theorem trace_spatial (t : Twist) (ht : axisOf t ≠ Axis.I) : Matrix.trace t.toMatrix = 0 := by
+  cases t <;> simp [axisOf] at ht <;> simp [Twist.toMatrix, σx, σy, σz, Matrix.trace, Fin.sum_univ_two]
+
+/-- **Rung 6: a pair is strongly entangled exactly when its axis cancels on the two-body singlet.**
+    Reading the pair `[t, t†]` as the twist's axis acting on both sites of a two-body state
+    (`QLF_JointClosure.joint`), the singlet absorbs it (net action zero) iff the pair is strong. The
+    gauge pair does not cancel: it acts on the singlet as the scalar `±2`. -/
+theorem singlet_cancels_iff_strong (t : Twist) :
+    Matrix.mulVec (JointClosure.joint t.toMatrix) JointClosure.s = 0 ↔ StronglyEntangled t := by
+  rw [stronglyEntangled_iff_spatial, JointClosure.singlet_trace]
+  constructor
+  · intro h hI
+    have hg : t = Twist.plus ∨ t = Twist.minus := by
+      cases t <;> simp [axisOf] at hI ⊢
+    have h01 := congrFun h (0, 1)
+    rcases hg with rfl | rfl <;>
+      norm_num [JointClosure.s, Twist.toMatrix, Matrix.trace, Fin.sum_univ_two] at h01
+  · intro ht
+    rw [trace_spatial t ht, zero_smul]
+
+/-- **The singlet is the unique two-body state on which every strong pair cancels.** Strong pairs
+    (rung 5) and the joint closure (`closed_iff_singlet`) pick out the same state. -/
+theorem strong_pairs_cancel_iff_singlet (ψ : Fin 2 × Fin 2 → ℂ) :
+    (∀ t : Twist, StronglyEntangled t →
+        Matrix.mulVec (JointClosure.joint t.toMatrix) ψ = 0) ↔
+      ψ = ψ (0, 1) • JointClosure.s := by
+  constructor
+  · intro h
+    apply (JointClosure.closed_iff_singlet ψ).1
+    exact ⟨h Twist.right ((stronglyEntangled_iff_spatial _).2 (by simp [axisOf])),
+      h Twist.slash ((stronglyEntangled_iff_spatial _).2 (by simp [axisOf]))⟩
+  · intro hψ t ht
+    rw [hψ, Matrix.mulVec_smul, (singlet_cancels_iff_strong t).2 ht, smul_zero]
+
 /-- Summary: closure = a reordering of conjugate pairs (rung 1); phase = pairs × crossings (rung 2);
     Form = the open half's net signed count, zero exactly on closures (rung 3); every rational Form,
     and every rational pure state, is a frequency of a strand (rung 4); under the strong reading, exactly the
-    spatial pairs are entangled and the gauge pair is a product (rung 5). See the module note for what
+    spatial pairs are entangled and the gauge pair is a product (rung 5); a strong pair is exactly an
+    axis that cancels on the singlet, and the singlet is the one state all strong pairs cancel on
+    (rung 6). See the module note for what
     stays open. -/
 theorem entanglement_primacy_status : True := trivial
 
