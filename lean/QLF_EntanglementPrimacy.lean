@@ -9,7 +9,7 @@ set_option linter.unusedVariables false
 # QLF_EntanglementPrimacy — every closure is made of entanglements
 
 Jim's thesis (2026-11-07): *the logical entanglement is responsible for all other results.* This module
-proves four rungs of that thesis for the twist layer and names exactly what is still missing.
+proves five rungs of that thesis for the twist layer and names exactly what is still missing.
 
 The primordial entanglement is the **conjugate pair** `[t, t†]`: a twist and its Hermitian conjugate
 (`^v`, `<>`, `/\`, `+−`). Each half is open on its own and the pair closes. That is the `[pos, neg]` event
@@ -76,6 +76,21 @@ creation operator creates only entanglements.
 So the real numbers in a Form enter only as ratios of counts to a window. Pure-state normalisation
 `t = ½` is a choice of window (the gauge net is half the events), not an extra postulate.
 
+## Rung 5: the strong reading (no axioms)
+
+Strong entanglement of a pair `[t, t†]` means neither half folds to a scalar alone, so the pair has
+no product form.
+
+* **`stronglyEntangled_iff_spatial`**: a pair is strongly entangled **exactly** when it is spatial.
+  The six spatial letters (`^v`, `<>`, `/\`) give non-factorizable pairs; the gauge pair `+−` is a
+  product, because each half folds to `±I` on its own.
+* **`no_gauge_all_strongly_entangled`**: a closure with no gauge twists is made only of strong
+  entanglements.
+
+So the strong sentence "only entanglements are real" is true on the spatial sector and false on
+exactly one kind of pair, the gauge pair, whose open half carries only the `t` coordinate of the
+Form (rung 3). The exception is located, not hidden.
+
 ## What is still NOT proved (stated so nobody overclaims)
 
 1. **Irrational Forms.** A pure state whose Bloch vector is irrational is the frequency of no finite
@@ -84,15 +99,14 @@ So the real numbers in a Form enter only as ratios of counts to a window. Pure-s
    expect no more than rationals in a finite region; linking the two is open.
 2. **Why the window is `N`.** Rung 4 shows that `t = ½` is reached by choosing the window; it does
    not derive that the physical window is the one that makes the gauge net half of it.
-3. **Product closures.** `QLF_IndexedFactors.gauge_pair_is_product_sector` shows some pairs close
-   with each half scalar on its own. Under the strong reading of entanglement (non-factorizable),
-   those pairs are real but not entangled. This module uses the weak reading (a pair whose halves
-   cancel), and says so.
+3. **Strong entanglement is per pair here.** Rung 5 is a statement about a single conjugate pair. The
+   two-body tensor statement (a closed two-site state is the singlet) is `QLF_JointClosure`; tying
+   the two together is open.
 
-Rungs 1–4 of "the logical entanglement is responsible for all other results" are proved here for the
-twist layer: what closes (pairs), its phase (pairs × crossings), its Form (the open half), and every
-rational Form and pure state (frequencies of strands). Results that use irrational Forms or the
-strong reading of entanglement do not yet inherit the reading.
+Rungs 1–5 of "the logical entanglement is responsible for all other results" are proved here for the
+twist layer: what closes (pairs), its phase (pairs × crossings), its Form (the open half), every
+rational Form and pure state (frequencies of strands), and which pairs are entangled in the strong
+sense (exactly the spatial ones).
 -/
 
 namespace QLF.EntanglementPrimacy
@@ -520,9 +534,68 @@ theorem rational_pure_state_is_frequency (a b c d : ℤ) (N : ℕ)
   rw [hts]
   exact hpure
 
+-- ==========================================
+-- Rung 5: the strong reading — which pairs cannot be split
+-- ==========================================
+
+/-- A twist is **half-open** when, folded alone, it is not a scalar: it cannot stand as a closure on
+    its own. -/
+def HalfOpen (t : Twist) : Prop := ∀ c : ℂ, twistMatrixFold [t] ≠ c • (1 : M)
+
+/-- **Strong entanglement** of the pair `[t, t†]`: neither half closes alone, so the pair has no
+    product form (the reading of `QLF_IndexedFactors.shared_closure_not_factorizable`). -/
+def StronglyEntangled (t : Twist) : Prop := HalfOpen t ∧ HalfOpen t.conj
+
+private theorem scalar_entries {A : M} {c : ℂ} (h : A = c • (1 : M)) :
+    A 0 1 = 0 ∧ A 0 0 = A 1 1 := by
+  subst h
+  simp [Matrix.smul_apply, Matrix.one_apply]
+
+private theorem fold_single (t : Twist) : twistMatrixFold [t] = t.toMatrix := by
+  show t.toMatrix * 1 = t.toMatrix
+  rw [mul_one]
+
+/-- A spatial twist folded alone is never a scalar. -/
+theorem spatial_half_open (t : Twist) (ht : axisOf t ≠ Axis.I) : HalfOpen t := by
+  intro c hc
+  rw [fold_single] at hc
+  obtain ⟨h01, hd⟩ := scalar_entries hc
+  cases t <;> simp [axisOf] at ht <;> norm_num [Twist.toMatrix, σx, σy, σz] at h01 hd
+
+theorem plus_not_half_open : ¬ HalfOpen Twist.plus := fun h =>
+  h 1 (by rw [fold_single]; simp [Twist.toMatrix])
+
+theorem minus_not_half_open : ¬ HalfOpen Twist.minus := fun h =>
+  h (-1) (by rw [fold_single]; simp [Twist.toMatrix])
+
+/-- **Rung 5: a pair is strongly entangled exactly when it is spatial.** The six spatial pairs
+    (`^v`, `<>`, `/\`) cannot be split into independent halves; the gauge pair `+−` can, because each
+    half folds to `±I` on its own. -/
+theorem stronglyEntangled_iff_spatial (t : Twist) :
+    StronglyEntangled t ↔ axisOf t ≠ Axis.I := by
+  constructor
+  · intro h hI
+    have hg : t = Twist.plus ∨ t = Twist.minus := by
+      cases t <;> simp [axisOf] at hI ⊢
+    rcases hg with rfl | rfl
+    · exact plus_not_half_open h.1
+    · exact minus_not_half_open h.1
+  · intro ht
+    refine ⟨spatial_half_open t ht, spatial_half_open t.conj ?_⟩
+    cases t <;> simp [axisOf, Twist.conj] at ht ⊢
+
+/-- **A closure with no gauge twists is made only of strong entanglements.** Every pair in its
+    canonical decomposition (`closure_is_pairs`) is non-factorizable. -/
+theorem no_gauge_all_strongly_entangled (ts : List Twist) (hplus : ts.count Twist.plus = 0) :
+    ∀ t ∈ canonicalPairs ts, StronglyEntangled t := by
+  intro t ht
+  rw [stronglyEntangled_iff_spatial]
+  cases t <;> simp [canonicalPairs, hplus, axisOf] at ht ⊢
+
 /-- Summary: closure = a reordering of conjugate pairs (rung 1); phase = pairs × crossings (rung 2);
     Form = the open half's net signed count, zero exactly on closures (rung 3); every rational Form,
-    and every rational pure state, is a frequency of a strand (rung 4). See the module note for what
+    and every rational pure state, is a frequency of a strand (rung 4); under the strong reading, exactly the
+    spatial pairs are entangled and the gauge pair is a product (rung 5). See the module note for what
     stays open. -/
 theorem entanglement_primacy_status : True := trivial
 
