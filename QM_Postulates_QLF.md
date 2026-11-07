@@ -208,7 +208,12 @@ Both trace identities hold at **arbitrary** momenta, not only along the sampled 
 one-way order. Since `cos E` is then even in every `k_i`, the palindrome's dispersion has no odd
 (linear-in-energy) term in any direction. They are checked numerically at 2,000 random momenta to
 `10⁻¹⁵` ([`liv_dispersion.py`](liv_dispersion.py), run in CI by
-[`scripts/amplitude_regression.py`](scripts/amplitude_regression.py)); a Lean proof is not yet written.
+[`scripts/amplitude_regression.py`](scripts/amplitude_regression.py)). The palindrome's identity is now
+**proved** in Lean ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean), no axioms): `realStep_eq_cos_sin`
+writes each realizable step as `cos k · 1 + i sin k · M(t)`, `realWalk_trace` proves the full complex
+trace is `2 cos k_y cos k_x cos k_z` (so its imaginary part vanishes too), and `realWalk_trace_even`
+proves it is even in each `k_i`. The one-way identity stays numerical, since that order is no longer the
+Lean walk.
 
 The fixed order breaks time reversal and parity, and that leaves a term **linear** in energy. Its sign
 flips between octants and between the two chiralities (the Dirac walk runs the other chirality at
@@ -223,10 +228,9 @@ about `5 × 10⁷`.
 are spin-½, and the photon has no properties apart from the electrons it connects
 ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §40). If the spin-½ walk describes the
 electron's propagation, the first qualification does not help, because electrons have their own bound.
-That identification is an **additional physical assumption**, not a consequence of the Lean results: the
-walk is massless and free, while the bound concerns the measured, massive and interacting electron, and
-`realWalk_unitary` and `realWalk_generator` establish unitarity and the first-order generator only, not
-the finite-momentum dispersion or physical time-reversal invariance. Granting it: In the convention
+That identification is an **additional physical assumption**, not a consequence of the Lean results:
+the bound concerns the measured, interacting electron, and no theorem shows that it propagates by this
+walk or that the walk's time ordering is physical time reversal. Granting it: In the convention
 `E² = p² + m² + η p³/E_P`, the one-way order gives `η = 2 n_x n_y n_z` per chirality, up to `±0.385` with
 both signs occurring. The Crab nebula's synchrotron emission requires `η > −7 × 10⁻⁸` for electrons, and
 vacuum Čerenkov radiation `η < 0.01` (Jacobson, Liberati and Mattingly, *Nature* 424, 1019, 2003). So
@@ -239,6 +243,68 @@ palindromic order. Its unitarity and its generator (`realWalk_unitary`, `realWal
 unchanged in statement, so everything built on them (the Dirac walk, the optical theorem, the poles) is
 unaffected.
 
+**The massive walk, proved.** The electron is massive, so the identification needs the Dirac walk
+`D = massStep m · handed k` of [`QLF_DiracWalk`](lean/QLF_DiracWalk.lean), not the massless Weyl walk. Its
+exact dispersion is now proved in Lean, with no axioms:
+
+* `realWalk_neg`: the palindromic walk at `−k` is the adjoint of the walk at `k`, and `realWalk_add_star`
+  gives `W + W† = 2 Π cos k_i · 1`.
+* `beta_handed_beta`: the mass generator `β` swaps the two handednesses, so `β H β = H†`. That makes the
+  `β` part of the mass coin cancel against its adjoint, and `diracWalk_add_star` gives
+  `D + D† = 2 cos m cos k_y cos k_x cos k_z · 1` at every momentum and mass.
+* `diracWalk_eigen`, `diracWalk_dispersion`: so every eigenvalue `e^{iE}` of the Dirac walk obeys
+  **`cos E = cos m · cos k_y cos k_x cos k_z`**. The relation is even in every `k_i` and in `m`, so the
+  massive walk has no `η p³` term (`η = 0`, inside the Crab bound) in any direction. At small momentum
+  and mass it gives `E² = m² + k²`, with corrections of relative order `k²` and `m²`, which is the
+  quadratic term above.
+
+So this is a **conditional consistency result**, not an experimental validation by proof: the defined
+Dirac walk has `η = 0` exactly, and it satisfies the electron bound *if* the electron propagates by this
+walk. That identification stays assumed. Also, `realWalk_neg` is a reversal identity,
+`W(−k) = W(k)†`. It is what the algebra needs, but physical time-reversal invariance would be a
+separate statement about an antiunitary symmetry, which is not proved here.
+
+**The walk is forced, not chosen.** The identification can be narrowed to premises QLF already has.
+Take any nearest-neighbour step along one axis: it sends the spin one site forward with some matrix
+`A` and one site back with some `B`, so at momentum `k` it is `e^{ik} A + e^{−ik} B`. In
+[`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean) §6, with no axioms:
+
+* `step_forced`: if the step is unitary at every momentum, then `A = U P` and `B = U (1 − P)`, with
+  `U = A + B` a unitary coin and `P` an orthogonal projector. Unitarity alone forces the realizable
+  form.
+* `coinless_step_forced`: with no coin (`A + B = 1`, the free step), it is a projector step
+  `e^{ik} P + e^{−ik}(1 − P)`.
+* `coinless_twist_step`, `fix_iff_generator`: if, in addition, the step's spin generator `2P − 1` is the
+  twist `t` (the spin component along the axis moves at `c`), the step **is** `realStep t` at every
+  momentum.
+
+So the electron's free step follows from four things: one site per tick, unitarity at every momentum,
+no coin at zero momentum, and the twist as the spin generator. The last is QLF's realizability premise
+(§1, row A3). The coin `U` is where mass enters. That the coin is the handedness flip `β`, and that
+the three axes are composed in the palindromic order (the reversal identity `realWalk_neg`), are still
+choices rather than theorems. Two things remain physical identifications: that the electron is a
+spin-½ closure that moves this way, and that the lattice tick is the Planck time.
+
+
+### 5c. Forecasts, pre-registered 2026-11-07
+
+This section records what the proved dispersion anticipates, before any further data is read. Each
+forecast assumes two things that are **not** theorems: the lattice spacing is the Planck length (§5a),
+and the electron propagates by the palindromic Dirac walk (§5b). Where a forecast is about photons, it
+also assumes that photons inherit the walk's dispersion. The Lean anchor fixes the formula, and the
+assumptions fix what it is a forecast about.
+
+| # | Forecast | Lean anchor | Kill condition | Status, 2026-11-07 |
+|---|---|---|---|---|
+| F1 | **No linear Planck-scale term**: `η = 0` exactly for electrons, in `E² = p² + m² + η p³/E_P`, in every direction. | `diracWalk_dispersion`: `cos E = cos m · Π cos k_i` is even in every `k_i`. | Any measured nonzero `η` for electrons, of either sign. For photons (with the extra assumption), any nonzero linear time-of-flight term. | **Consistent.** The Crab bound `η > −7 × 10⁻⁸` and the vacuum-Čerenkov bound `η < 0.01` (Jacobson, Liberati and Mattingly 2003). |
+| F2 | **A fixed quadratic term**: `E² = k² − (k⁴/3)(n_x²n_y² + n_y²n_z² + n_z²n_x²)` in Planck units, where `n` is the direction relative to the lattice axes. It is subluminal, exactly zero along the three axes, and largest on the body diagonal (`ξ = 1/9`, `E_QG,2 = 3.0 E_P`). There is no free coefficient. | The exact relation `cos E = Π cos k_i` is proved (`realWalk_trace`, `diracWalk_dispersion`). The fourth-order coefficient is a Taylor expansion of it, checked numerically, **not** a Lean theorem. | A quadratic effect that is superluminal, isotropic, or nonzero along every direction. Or a bound `E_QG,2 > 3.0 E_P` in every direction. | **Untestable now.** The best time-of-flight bound is `E_QG,2 > 6 × 10⁻⁸ E_P` (LHAASO 2024), about `5 × 10⁷` short. |
+| F3 | **Dirac physics at every reachable energy.** Mass and momentum corrections enter only at relative order `(m/E_P)²` and `(k/E_P)²`, which is about `10⁻⁴⁵` for an electron at rest. | `diracWalk_generator`, `diracWalk_dispersion`; the size of the corrections is a low-energy expansion, not a Lean theorem. | Any electron dispersion anomaly at accessible energies attributable to the walk. | **Consistent, but not distinguishing**: the Standard Model forecasts the same. |
+
+**What is not fixed.** F2's direction is measured from the lattice axes, and nothing yet says how those
+axes are oriented in the sky. Until a rule fixes them, for example alignment with the CMB rest frame, F2
+can be tested only as a pattern: the ratio between directions, and the zeros along three orthogonal
+axes. A fixed direction cannot be tested. **What would separate QLF from the Standard Model** is a
+consequence at reachable energies, and none of F1–F3 is one. That is the open item.
 ---
 
 ## 6. References

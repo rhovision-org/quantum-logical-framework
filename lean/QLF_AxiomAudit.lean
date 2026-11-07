@@ -278,6 +278,15 @@ import QLF_HiddenZeros
 #print axioms QLF.ClosureChannels.rawStep_not_unitary
 #print axioms QLF.ClosureChannels.realStep_unitary
 #print axioms QLF.ClosureChannels.realWalk_unitary
+#print axioms QLF.ClosureChannels.realStep_eq_cos_sin
+#print axioms QLF.ClosureChannels.realWalk_trace
+#print axioms QLF.ClosureChannels.realWalk_trace_even
+#print axioms QLF.ClosureChannels.realWalk_neg
+#print axioms QLF.ClosureChannels.realWalk_add_star
+#print axioms QLF.ClosureChannels.step_forced
+#print axioms QLF.ClosureChannels.coinless_step_forced
+#print axioms QLF.ClosureChannels.fix_iff_generator
+#print axioms QLF.ClosureChannels.coinless_twist_step
 #print axioms QLF.Tsirelson.chsh_sq
 #print axioms QLF.Tsirelson.chsh_classical
 #print axioms QLF.Tsirelson.chsh_tsirelson
@@ -293,6 +302,10 @@ import QLF_HiddenZeros
 #print axioms QLF.DiracWalk.handed_unitary
 #print axioms QLF.DiracWalk.diracWalk_unitary
 #print axioms QLF.DiracWalk.diracWalk_generator
+#print axioms QLF.DiracWalk.beta_handed_beta
+#print axioms QLF.DiracWalk.diracWalk_add_star
+#print axioms QLF.DiracWalk.diracWalk_eigen
+#print axioms QLF.DiracWalk.diracWalk_dispersion
 #print axioms QLF.BornFromWays.born_from_ways
 #print axioms QLF.BornFromWays.assignment_unique
 #print axioms QLF.GaugeAxis.spacetimeWalk_unitary
