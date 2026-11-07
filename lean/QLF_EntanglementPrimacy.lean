@@ -268,8 +268,8 @@ theorem form_toMatrix_decomp (f : Form) :
   apply Matrix.ext; intro i j
   fin_cases i <;> fin_cases j <;>
     simp only [Form.toMatrix, σx, σy, σz, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
-      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
-      Matrix.head_fin_const] <;>
+      Matrix.of_apply, Fin.isValue, Fin.zero_eta, Fin.mk_one, Matrix.cons_val_zero,
+      Matrix.cons_val_one, Matrix.head_cons, Matrix.head_fin_const] <;>
     ring
 
 /-- Each twist is one signed unit on one axis. -/
