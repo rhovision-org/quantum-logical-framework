@@ -312,5 +312,6 @@ lean_lib QLF where
     `QLF_SharedClosure,
     `QLF_PolaronBranches,
     `QLF_NonAbelianGauss,
-    `QLF_HiddenZeros
+    `QLF_HiddenZeros,
+    `QLF_EntanglementPrimacy
   ]
