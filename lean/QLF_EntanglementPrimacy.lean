@@ -1,5 +1,6 @@
 import QLF_TwistAlphabet
 import QLF_PhaseRule
+import RhoQuCalc
 import Mathlib
 
 set_option linter.unusedVariables false
@@ -8,14 +9,14 @@ set_option linter.unusedVariables false
 # QLF_EntanglementPrimacy — every closure is made of entanglements
 
 Jim's thesis (2026-11-07): *the logical entanglement is responsible for all other results.* This module
-proves the first rung of that thesis and names exactly what is still missing.
+proves three rungs of that thesis for the twist layer and names exactly what is still missing.
 
 The primordial entanglement is the **conjugate pair** `[t, t†]`: a twist and its Hermitian conjugate
 (`^v`, `<>`, `/\`, `+−`). Each half is open on its own and the pair closes. That is the `[pos, neg]` event
 which `RhoProcess.action` creates, and the pair `ER_EPR_QLF.primordial_wormhole` proves is a shared
 closure between spacelike events.
 
-## What is proved (no axioms)
+## Rung 1: what closes (no axioms)
 
 * **`closure_is_pairs`**: a twist history is count-balanced **iff** it holds, letter for letter, the
   same twists as a list of conjugate pairs. Equal counts of every letter is exactly a permutation
@@ -45,19 +46,37 @@ Honest scope for rung 2: the arithmetic was already in `phase_rule`. What is new
 which is now a theorem: the first factor counts entanglements, and the order contributes nothing
 but a crossing sign.
 
-## What is NOT proved (the open rung, stated so nobody overclaims)
+## Rung 3: the Form (no axioms)
 
-1. **The Form.** `RhoProcess.action f` carries a `Form (t, x, y, z)` that `toTopoString` discards, so
-   no balance proof ever uses it. Until the Form is derived from the pair structure (for example as a
-   census frequency of how pairs fold), the geometric and amplitude content of a creation is an
-   input, not a consequence of entanglement.
+Kill condition, stated before CI ran: rung 3 fails if a creation's `Form` cannot be written as a
+function of twist counts, or if the Form of a closure can be non-zero.
+
+* **`parallelSum_eq_strandForm`**: a strand's parallel composition is exactly the `Form` whose
+  coordinates are its net signed twist counts `(#+ − #−, #> − #<, #^ − #v, #/ − #\)`. So
+  `action (strandForm ts)` creates nothing the twists did not already supply (`action_strandForm`).
+* **`countBalanced_iff_strandForm_zero`**: the Form is zero **exactly** on closures. A closed
+  entanglement carries no Form at all.
+* **`halves_cancel`**: a strand and its conjugate carry opposite Forms and add to zero.
+
+So the Form is not extra stuff created beside the entanglement. It is the signed record of the
+**unpaired half**: which side of each pair a strand holds. That is the precise sense in which the
+creation operator creates only entanglements.
+
+## What is still NOT proved (stated so nobody overclaims)
+
+1. **Real coordinates.** Derived Forms have integer coordinates. `action f` accepts any real `f`;
+   real values enter only as ratios (frequencies over a census), and the normalisation of a pure
+   state (`t = ½`, `x² + y² + z² = ¼`) is not derived here. `QLF_Realizability` is the reason to
+   expect no more than rationals in a finite region, but that link is not formalised in this module.
 2. **Product closures.** `QLF_IndexedFactors.gauge_pair_is_product_sector` shows some pairs close
    with each half scalar on its own. Under the strong reading of entanglement (non-factorizable),
    those pairs are real but not entangled. This module uses the weak reading (a pair whose halves
    cancel), and says so.
 
-"Responsible for all other results" is a programme: rungs 1 (closure = pairs) and 2 (phase = pairs ×
-crossings) are proved here. Rung 3, the Form, is the open one.
+Rungs 1–3 of "the logical entanglement is responsible for all other results" are proved here for the
+twist layer: what closes (pairs), its phase (pairs × crossings) and its Form (the open half). Every
+result built on those three inherits the reading; results that use real-valued Forms or the strong
+reading of entanglement do not yet.
 -/
 
 namespace QLF.EntanglementPrimacy
@@ -201,8 +220,155 @@ theorem reorder_is_crossing_sign {ts : List Twist} (ps : List Twist)
     twistMatrixFold ts = ((-1 : ℂ) ^ invCount (axisWord ts)) • twistMatrixFold (pairs ps) := by
   rw [closure_phase_from_pairs ps h, fold_pairs, smul_smul, mul_comm]
 
+-- ==========================================
+-- Rung 3: the Form is the open half of an entanglement
+-- ==========================================
+
+/-- Gauge coordinate of a twist: `+ ↦ 1`, `− ↦ −1`, else `0`. -/
+def twT : Twist → ℤ
+  | Twist.plus => 1
+  | Twist.minus => -1
+  | _ => 0
+
+/-- `σx` coordinate: `> ↦ 1`, `< ↦ −1`, else `0`. -/
+def twX : Twist → ℤ
+  | Twist.right => 1
+  | Twist.left => -1
+  | _ => 0
+
+/-- `σy` coordinate: `^ ↦ 1`, `v ↦ −1`, else `0`. -/
+def twY : Twist → ℤ
+  | Twist.up => 1
+  | Twist.down => -1
+  | _ => 0
+
+/-- `σz` coordinate: `/ ↦ 1`, `\ ↦ −1`, else `0`. -/
+def twZ : Twist → ℤ
+  | Twist.slash => 1
+  | Twist.backslash => -1
+  | _ => 0
+
+/-- Net signed count of a strand on each axis. -/
+def netT (ts : List Twist) : ℤ := (ts.map twT).sum
+def netX (ts : List Twist) : ℤ := (ts.map twX).sum
+def netY (ts : List Twist) : ℤ := (ts.map twY).sum
+def netZ (ts : List Twist) : ℤ := (ts.map twZ).sum
+
+/-- **The Form of a strand**: its net signed twist count on each axis. -/
+noncomputable def strandForm (ts : List Twist) : Form :=
+  ⟨(netT ts : ℝ), (netX ts : ℝ), (netY ts : ℝ), (netZ ts : ℝ)⟩
+
+/-- The parallel composition of a strand's twists (`RhoProcess.parallel` evaluates to a sum). -/
+noncomputable def parallelSum (ts : List Twist) : M := (ts.map Twist.toMatrix).sum
+
+/-- `Form.toMatrix` is the Pauli expansion `t·I + x·σx + y·σy + z·σz`. -/
+theorem form_toMatrix_decomp (f : Form) :
+    f.toMatrix = (f.t : ℂ) • (1 : M) + (f.x : ℂ) • σx + (f.y : ℂ) • σy + (f.z : ℂ) • σz := by
+  rw [Matrix.one_fin_two]
+  apply Matrix.ext; intro i j
+  fin_cases i <;> fin_cases j <;>
+    simp only [Form.toMatrix, σx, σy, σz, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul,
+      Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons,
+      Matrix.head_fin_const] <;>
+    ring
+
+/-- Each twist is one signed unit on one axis. -/
+theorem toMatrix_decomp (t : Twist) :
+    t.toMatrix = ((twT t : ℤ) : ℂ) • (1 : M) + ((twX t : ℤ) : ℂ) • σx +
+      ((twY t : ℤ) : ℂ) • σy + ((twZ t : ℤ) : ℂ) • σz := by
+  cases t <;> simp [Twist.toMatrix, twT, twX, twY, twZ]
+
+theorem parallelSum_decomp (ts : List Twist) :
+    parallelSum ts = ((netT ts : ℤ) : ℂ) • (1 : M) + ((netX ts : ℤ) : ℂ) • σx +
+      ((netY ts : ℤ) : ℂ) • σy + ((netZ ts : ℤ) : ℂ) • σz := by
+  induction ts with
+  | nil => simp [parallelSum, netT, netX, netY, netZ]
+  | cons t ts ih =>
+      simp only [parallelSum, netT, netX, netY, netZ, List.map_cons, List.sum_cons] at ih ⊢
+      rw [ih, toMatrix_decomp t]
+      push_cast
+      simp only [add_smul]
+      abel
+
+/-- **The Form is read off the twists.** A strand's parallel composition is exactly the `Form` whose
+    coordinates are its net signed twist counts. Nothing is handed in: `action (strandForm ts)`
+    creates the matrix the strand's own twists add up to (`action_strandForm`). -/
+theorem parallelSum_eq_strandForm (ts : List Twist) :
+    parallelSum ts = (strandForm ts).toMatrix := by
+  rw [parallelSum_decomp, form_toMatrix_decomp]
+  simp only [strandForm, Complex.ofReal_intCast]
+
+theorem action_strandForm (ts : List Twist) :
+    (RhoProcess.action (strandForm ts)).eval = parallelSum ts := by
+  simp only [RhoProcess.eval, parallelSum_eq_strandForm]
+
+private theorem netT_eq (ts : List Twist) :
+    netT ts = (ts.count Twist.plus : ℤ) - ts.count Twist.minus := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih =>
+      simp only [netT] at ih ⊢
+      simp only [List.map_cons, List.sum_cons, List.count_cons, ih]
+      cases t <;> simp +decide [twT] <;> omega
+
+private theorem netX_eq (ts : List Twist) :
+    netX ts = (ts.count Twist.right : ℤ) - ts.count Twist.left := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih =>
+      simp only [netX] at ih ⊢
+      simp only [List.map_cons, List.sum_cons, List.count_cons, ih]
+      cases t <;> simp +decide [twX] <;> omega
+
+private theorem netY_eq (ts : List Twist) :
+    netY ts = (ts.count Twist.up : ℤ) - ts.count Twist.down := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih =>
+      simp only [netY] at ih ⊢
+      simp only [List.map_cons, List.sum_cons, List.count_cons, ih]
+      cases t <;> simp +decide [twY] <;> omega
+
+private theorem netZ_eq (ts : List Twist) :
+    netZ ts = (ts.count Twist.slash : ℤ) - ts.count Twist.backslash := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih =>
+      simp only [netZ] at ih ⊢
+      simp only [List.map_cons, List.sum_cons, List.count_cons, ih]
+      cases t <;> simp +decide [twZ] <;> omega
+
+/-- **A closure carries no Form.** A strand is a closure exactly when its Form is zero, so the Form is
+    nothing but the record of what is still unpaired. -/
+theorem countBalanced_iff_strandForm_zero (ts : List Twist) :
+    countBalanced ts ↔ strandForm ts = ⟨0, 0, 0, 0⟩ := by
+  simp only [strandForm, Form.mk.injEq, Int.cast_eq_zero, netT_eq, netX_eq, netY_eq, netZ_eq]
+  constructor
+  · rintro ⟨hUD, hLR, hSB, hPM⟩
+    refine ⟨?_, ?_, ?_, ?_⟩ <;> omega
+  · rintro ⟨h1, h2, h3, h4⟩
+    exact ⟨by omega, by omega, by omega, by omega⟩
+
+/-- Conjugation reverses each twist's matrix. -/
+theorem toMatrix_conj (t : Twist) : t.conj.toMatrix = -t.toMatrix := by
+  cases t <;> simp [Twist.conj, Twist.toMatrix]
+
+private theorem sum_map_conj (ts : List Twist) :
+    ((ts.map Twist.conj).map Twist.toMatrix).sum = -(ts.map Twist.toMatrix).sum := by
+  induction ts with
+  | nil => simp
+  | cons t ts ih =>
+      simp only [List.map_cons, List.sum_cons, toMatrix_conj, ih, neg_add]
+
+/-- **The two halves of an entanglement carry opposite Forms.** A strand and its conjugate add to
+    zero, so a creation's Form is the half it holds, and the other half holds the negative. -/
+theorem halves_cancel (ts : List Twist) : parallelSum (ts ++ ts.map Twist.conj) = 0 := by
+  simp only [parallelSum, List.map_append, List.sum_append, sum_map_conj]
+  abel
+
 /-- Summary: closure = a reordering of conjugate pairs (rung 1); phase = pairs × crossings (rung 2);
-    the Form stays open (see the module note). -/
+    Form = the open half's net signed count, zero exactly on closures (rung 3). See the module note
+    for what stays open. -/
 theorem entanglement_primacy_status : True := trivial
 
 end QLF.EntanglementPrimacy
