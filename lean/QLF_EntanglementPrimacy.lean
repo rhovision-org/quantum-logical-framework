@@ -559,8 +559,8 @@ private theorem fold_single (t : Twist) : twistMatrixFold [t] = t.toMatrix := by
 theorem spatial_half_open (t : Twist) (ht : axisOf t ≠ Axis.I) : HalfOpen t := by
   intro c hc
   rw [fold_single] at hc
-  obtain ⟨h01, hd⟩ := scalar_entries hc
-  cases t <;> simp [axisOf] at ht <;> norm_num [Twist.toMatrix, σx, σy, σz] at h01 hd
+  have h := scalar_entries hc
+  cases t <;> simp [axisOf] at ht <;> norm_num [Twist.toMatrix, σx, σy, σz] at h
 
 theorem plus_not_half_open : ¬ HalfOpen Twist.plus := fun h =>
   h 1 (by rw [fold_single]; simp [Twist.toMatrix])
