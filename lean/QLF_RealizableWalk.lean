@@ -453,4 +453,167 @@ theorem coinless_twist_step (t : Twist) (A B : M) (hc : A + B = 1)
   intro k
   rw [realStep_eq_nnStep, hA, hB, hfix, ← fix_add_conj t, add_sub_cancel_left]
 
+/-! ## 7. The quadratic term, as a theorem (forecast F2)
+
+`realWalk_trace` gives `cos E = cos k_y cos k_x cos k_z` exactly. Here its fourth-order content is
+proved with an explicit remainder: `walk_cos_taylor` expands `Π cos k_i` to fourth order with error at
+most `(|k_x| + |k_y| + |k_z|)⁶ · 7/4320`, and `walk_dispersion_quadratic` shows that `cos E` agrees
+with `cos E_pred`, where `E_pred² = k² − (k_x²k_y² + k_y²k_z² + k_z²k_x²)/3`, to within
+`(|k_x| + |k_y| + |k_z|)⁶ / 50`. That is forecast F2 of `QM_Postulates_QLF.md` §5c: subluminal, zero
+along the axes, `ξ = 1/9` on the body diagonal. Momenta are in lattice units and need
+`|k_x| + |k_y| + |k_z| ≤ 1`. Turning the agreement of `cos E` into one of `E` itself uses only that
+`cos` is invertible near `0`, which is not formalized here. -/
+
+section QuadraticTerm
+
+open Complex Finset
+
+
+/-- Sixth-order Taylor bound for the complex cosine (Mathlib's `Complex.cos_bound`, two orders
+further). -/
+theorem cos_bound6 {x : ℂ} (hx : ‖x‖ ≤ 1) :
+    ‖cos x - (1 - x ^ 2 / 2 + x ^ 4 / 24)‖ ≤ ‖x‖ ^ 6 * (7 / 4320) :=
+  calc
+    ‖cos x - (1 - x ^ 2 / 2 + x ^ 4 / 24)‖ =
+        ‖(exp (-x * I) - ∑ m ∈ range 6, (-x * I) ^ m / m.factorial) / 2 +
+         (exp (x * I) - ∑ m ∈ range 6, (x * I) ^ m / m.factorial) / 2‖ := by
+      simp [cos, field, Finset.sum_range_succ, Nat.factorial]
+      grind [I_sq, two_ne_zero]
+    _ ≤ ‖exp (-x * I) - ∑ m ∈ range 6, (-x * I) ^ m / m.factorial‖ / 2 +
+        ‖exp (x * I) - ∑ m ∈ range 6, (x * I) ^ m / m.factorial‖ / 2 := by
+      grw [norm_add_le]
+      simp
+    _ ≤ ‖-x * I‖ ^ 6 * (Nat.succ 6 * (Nat.factorial 6 * (6 : ℕ) : ℝ)⁻¹) / 2 +
+        ‖x * I‖ ^ 6 * (Nat.succ 6 * (Nat.factorial 6 * (6 : ℕ) : ℝ)⁻¹) / 2 := by
+      grw [exp_bound (by simpa) (by simp), exp_bound (by simpa) (by simp)]
+    _ ≤ ‖x‖ ^ 6 * (7 / 4320) := by norm_num [Nat.factorial]
+
+/-- The real form of `cos_bound6`. -/
+theorem rcos_bound6 {x : ℝ} (hx : |x| ≤ 1) :
+    |Real.cos x - (1 - x ^ 2 / 2 + x ^ 4 / 24)| ≤ |x| ^ 6 * (7 / 4320) := by
+  have h := cos_bound6 (x := (x : ℂ)) (by simpa using hx)
+  have e : Complex.cos (x : ℂ) - (1 - (x : ℂ) ^ 2 / 2 + (x : ℂ) ^ 4 / 24) =
+      ((Real.cos x - (1 - x ^ 2 / 2 + x ^ 4 / 24) : ℝ) : ℂ) := by
+    push_cast [Complex.ofReal_cos]; ring
+  rw [e, Complex.norm_real, Real.norm_eq_abs, Complex.norm_real, Real.norm_eq_abs] at h
+  exact h
+
+/-- Product to sum: `cos a cos b cos c` is the average of four cosines. -/
+theorem cos_prod_three (a b c : ℝ) :
+    Real.cos a * Real.cos b * Real.cos c =
+      (Real.cos (a + b + c) + Real.cos (a + b - c) + Real.cos (a - b + c) + Real.cos (-a + b + c)) / 4 := by
+  have e1 : -a + b + c = (b + c) - a := by ring
+  have e2 : a - b + c = a - (b - c) := by ring
+  have e3 : a + b + c = a + (b + c) := by ring
+  have e4 : a + b - c = a + (b - c) := by ring
+  rw [e1, e2, e3, e4]
+  simp only [Real.cos_add, Real.cos_sub, Real.sin_add, Real.sin_sub]
+  ring
+
+/-- The walk's `Π cos k_i` to fourth order, with an explicit sixth-order remainder. -/
+theorem walk_cos_taylor (a b c : ℝ) (h : |a| + |b| + |c| ≤ 1) :
+    |Real.cos a * Real.cos b * Real.cos c -
+      (1 - (a ^ 2 + b ^ 2 + c ^ 2) / 2 + (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 / 24 +
+        (a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2) / 6)| ≤
+      (|a| + |b| + |c|) ^ 6 * (7 / 4320) := by
+  set T := |a| + |b| + |c|
+  have hT0 : 0 ≤ T := by positivity
+  have hs : ∀ s : ℝ, |s| ≤ T → |Real.cos s - (1 - s ^ 2 / 2 + s ^ 4 / 24)| ≤ T ^ 6 * (7 / 4320) :=
+    fun s hs => (rcos_bound6 (hs.trans h)).trans (by gcongr)
+  have h1 := hs (a + b + c) (by
+    calc |a + b + c| ≤ |a + b| + |c| := abs_add_le _ _
+      _ ≤ T := by linarith [abs_add_le a b])
+  have h2 := hs (a + b - c) (by
+    calc |a + b - c| ≤ |a + b| + |c| := abs_sub _ _
+      _ ≤ T := by linarith [abs_add_le a b])
+  have h3 := hs (a - b + c) (by
+    calc |a - b + c| ≤ |a - b| + |c| := abs_add_le _ _
+      _ ≤ T := by linarith [abs_sub a b])
+  have h4 := hs (-a + b + c) (by
+    calc |-a + b + c| ≤ |-a + b| + |c| := abs_add_le _ _
+      _ ≤ |-a| + |b| + |c| := by linarith [abs_add_le (-a) b]
+      _ = T := by rw [abs_neg])
+  rw [cos_prod_three]
+  have key : (Real.cos (a + b + c) + Real.cos (a + b - c) + Real.cos (a - b + c) +
+      Real.cos (-a + b + c)) / 4 -
+      (1 - (a ^ 2 + b ^ 2 + c ^ 2) / 2 + (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 / 24 +
+        (a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2) / 6) =
+      ((Real.cos (a + b + c) - (1 - (a + b + c) ^ 2 / 2 + (a + b + c) ^ 4 / 24)) +
+       (Real.cos (a + b - c) - (1 - (a + b - c) ^ 2 / 2 + (a + b - c) ^ 4 / 24)) +
+       (Real.cos (a - b + c) - (1 - (a - b + c) ^ 2 / 2 + (a - b + c) ^ 4 / 24)) +
+       (Real.cos (-a + b + c) - (1 - (-a + b + c) ^ 2 / 2 + (-a + b + c) ^ 4 / 24))) / 4 := by
+    ring
+  rw [key, abs_div, abs_of_pos (by norm_num : (0:ℝ) < 4)]
+  have := (abs_add_le _ _).trans (add_le_add ((abs_add_le _ _).trans (add_le_add
+    ((abs_add_le _ _).trans (add_le_add h1 h2)) h3)) h4)
+  linarith
+
+private theorem poly_gap (r S : ℝ) (hS0 : 0 ≤ S) (hSr : 3 * S ≤ r ^ 2) (hr0 : 0 ≤ r) (hr1 : r ≤ 1) :
+    0 ≤ r - S / 3 ∧ r - S / 3 ≤ r ∧
+    |(1 - r / 2 + r ^ 2 / 24 + S / 6) - (1 - (r - S / 3) / 2 + (r - S / 3) ^ 2 / 24)| ≤ r ^ 3 / 108 := by
+  have hrr : r ^ 2 ≤ r := by nlinarith
+  refine ⟨by linarith, by linarith, ?_⟩
+  have hd : (1 - r / 2 + r ^ 2 / 24 + S / 6) - (1 - (r - S / 3) / 2 + (r - S / 3) ^ 2 / 24) =
+      r * S / 36 - S ^ 2 / 216 := by ring
+  rw [hd, abs_le]
+  constructor
+  · nlinarith [mul_nonneg hr0 hS0]
+  · nlinarith [mul_nonneg hr0 hS0, mul_nonneg hr0 hr0]
+
+/-- **F2 as a theorem.** The walk's `cos E = Π cos k_i` agrees with `cos E_pred`, where
+`E_pred² = k² − (k_x²k_y² + k_y²k_z² + k_z²k_x²)/3`, up to `(|k_x| + |k_y| + |k_z|)⁶ / 50`. -/
+theorem walk_dispersion_quadratic (a b c : ℝ) (h : |a| + |b| + |c| ≤ 1) :
+    |Real.cos a * Real.cos b * Real.cos c -
+      Real.cos (Real.sqrt ((a ^ 2 + b ^ 2 + c ^ 2) -
+        (a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2) / 3))| ≤
+      (|a| + |b| + |c|) ^ 6 / 50 := by
+  have hW := walk_cos_taylor a b c h
+  have hrT : a ^ 2 + b ^ 2 + c ^ 2 ≤ (|a| + |b| + |c|) ^ 2 := by
+    have ha := sq_abs a; have hb := sq_abs b; have hc := sq_abs c
+    nlinarith [abs_nonneg a, abs_nonneg b, abs_nonneg c, mul_nonneg (abs_nonneg a) (abs_nonneg b),
+      mul_nonneg (abs_nonneg b) (abs_nonneg c), mul_nonneg (abs_nonneg c) (abs_nonneg a)]
+  have hT0 : 0 ≤ |a| + |b| + |c| := by positivity
+  have hSr : 3 * (a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2) ≤ (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 := by
+    nlinarith [sq_nonneg (a ^ 2 - b ^ 2), sq_nonneg (b ^ 2 - c ^ 2), sq_nonneg (c ^ 2 - a ^ 2)]
+  have hS0 : 0 ≤ a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2 := by positivity
+  have hr0 : 0 ≤ a ^ 2 + b ^ 2 + c ^ 2 := by positivity
+  generalize |a| + |b| + |c| = T at h hW hrT hT0 ⊢
+  generalize a ^ 2 + b ^ 2 + c ^ 2 = r at hW hrT hSr hr0 ⊢
+  generalize a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2 = S at hW hSr hS0 ⊢
+  generalize Real.cos a * Real.cos b * Real.cos c = P at hW ⊢
+  have hT1 : T ^ 2 ≤ 1 := by nlinarith
+  obtain ⟨hu0, hur, hgap⟩ := poly_gap r S hS0 hSr hr0 (by linarith)
+  generalize r - S / 3 = u at hu0 hur hgap ⊢
+  have hsq : Real.sqrt u ^ 2 = u := Real.sq_sqrt hu0
+  have hx : |Real.sqrt u| ≤ 1 := by
+    rw [abs_of_nonneg (Real.sqrt_nonneg u)]
+    calc Real.sqrt u ≤ Real.sqrt 1 := Real.sqrt_le_sqrt (by linarith)
+      _ = 1 := Real.sqrt_one
+  have hE := rcos_bound6 hx
+  have h4 : Real.sqrt u ^ 4 = u ^ 2 := by rw [show (4 : ℕ) = 2 * 2 from rfl, pow_mul, hsq]
+  have h6 : |Real.sqrt u| ^ 6 = u ^ 3 := by
+    rw [abs_of_nonneg (Real.sqrt_nonneg u), show (6 : ℕ) = 2 * 3 from rfl, pow_mul, hsq]
+  rw [hsq, h4, h6] at hE
+  have hu3 : u ^ 3 ≤ T ^ 6 := by
+    calc u ^ 3 ≤ r ^ 3 := by gcongr
+      _ ≤ (T ^ 2) ^ 3 := by gcongr
+      _ = T ^ 6 := by ring
+  have hr3 : r ^ 3 ≤ T ^ 6 := by
+    calc r ^ 3 ≤ (T ^ 2) ^ 3 := by gcongr
+      _ = T ^ 6 := by ring
+  have hsplit : P - Real.cos (Real.sqrt u) =
+      (P - (1 - r / 2 + r ^ 2 / 24 + S / 6)) +
+      ((1 - r / 2 + r ^ 2 / 24 + S / 6) - (1 - u / 2 + u ^ 2 / 24)) -
+      (Real.cos (Real.sqrt u) - (1 - u / 2 + u ^ 2 / 24)) := by ring
+  rw [hsplit]
+  have htri : ∀ x y z : ℝ, |x + y - z| ≤ |x| + |y| + |z| := fun x y z =>
+    (abs_sub _ _).trans (by linarith [abs_add_le x y])
+  have := htri (P - (1 - r / 2 + r ^ 2 / 24 + S / 6))
+    ((1 - r / 2 + r ^ 2 / 24 + S / 6) - (1 - u / 2 + u ^ 2 / 24))
+    (Real.cos (Real.sqrt u) - (1 - u / 2 + u ^ 2 / 24))
+  refine this.trans ((add_le_add (add_le_add hW hgap) hE).trans ?_)
+  linarith [pow_nonneg hT0 6]
+
+end QuadraticTerm
+
 end QLF.ClosureChannels

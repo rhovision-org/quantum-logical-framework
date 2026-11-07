@@ -287,6 +287,8 @@ import QLF_HiddenZeros
 #print axioms QLF.ClosureChannels.coinless_step_forced
 #print axioms QLF.ClosureChannels.fix_iff_generator
 #print axioms QLF.ClosureChannels.coinless_twist_step
+#print axioms QLF.ClosureChannels.walk_cos_taylor
+#print axioms QLF.ClosureChannels.walk_dispersion_quadratic
 #print axioms QLF.Tsirelson.chsh_sq
 #print axioms QLF.Tsirelson.chsh_classical
 #print axioms QLF.Tsirelson.chsh_tsirelson
