@@ -35,6 +35,10 @@ must live. This design turns those results into a data model:
    The base computes that fold rather than storing a table. It refuses to conjoin incompatible
    propositions instead of answering ⊥.
 
+6. **It shards without coordination.** All of its state only grows, and every query is a set size or
+   a minimum under a fixed order. Record shards keyed by content id and index shards keyed by name then
+   accept writes in any order, more than once, with no cross-shard transaction (§6).
+
 Multiplicity, redundancy and priority are three different statistics. The base keeps all three and
 reports which one an answer is (§4), as the method's rule 3 requires.
 
@@ -173,7 +177,65 @@ What is proved and what is not:
 
 ---
 
-## 6. What would make it a result
+## 6. Decentralizing it: sharding
+
+Everything the base stores only grows. Attester sets, the ways under a name and the answers to a
+question are all sets that are only ever added to, and every query is a count of a set or the minimum
+of a set under a fixed total order. Union and minimum are commutative, associative and idempotent. So
+shards can accept writes independently, in any order and more than once, and still agree. **No
+cross-shard transaction is needed**, so rholo's two-phase commit
+([`cross-shard-transactions.md`](https://github.com/rhovision-org/rholo/blob/dev/docs/src/formal/cross-shard-transactions.md),
+Laws 26–29) is not used. The idempotent single legs of Law 28 are enough.
+
+**Two shard roles, two shard keys.**
+
+| Role | Sharded by | Holds | Answers |
+|---|---|---|---|
+| record shard | content id (blake2b of the twists) | `id → (twists, attesters)` | `redundancy` |
+| index shard | name or question | `name → {(key, id)}`, `q → seed` | `ways`, `first`, `solve` |
+
+`key` is the `/solve` cascade key: (excursion, length, phase rank, history). It is computed from the
+closure alone, so storing it beside the id makes `ways`, `first` and `solve` local to **one** index
+shard. `redundancy` is local to one record shard. No query fans out.
+
+**A write is two legs**, to the record shard and then the name's index shard. Each leg is an ordinary
+signed deploy and is idempotent. Re-delivery adds nothing, and the legs commute. If a writer crashes
+between them, the result is an orphan record: it is held but has no name, and the next write that
+names it heals that. There is never a name pointing at nothing. If the legs arrive out of order, an
+index entry can briefly come before its record. Only `redundancy` waits for the record leg.
+
+**Two properties come from the substrate rather than from engineering:**
+
+- **The gate needs no state.** Per-axis balance is a property of the twists alone, so any shard and any
+  reader can check a record, and nobody has to trust the shard that stored it. Content addressing means
+  two shards that admit the same closure produce the same id.
+- **Redundancy counts holders, not copies.** `deployerId` is the same account on every shard
+  ([rholo `shard-invoke.md`](https://github.com/rhovision-org/rholo/blob/dev/docs/src/node/shard-invoke.md)),
+  so one party attesting a closure on two shards counts once. A replica's R is the size of the union
+  of attester sets, never their sum. Summing them would let one party fake a meme by repeating itself.
+
+Self-check (f) in [`qkb_reference.py`](qkb_reference.py) runs this model with 1 to 7 shards. It uses
+717 writes, delivered in shuffled order across shards, with a third of them delivered twice. Every
+`ways`, `redundancy`, `first` and `solve` agrees with the single store, and so does a full merge of the
+shards. Summed attesters or an order that was not total would fail it.
+
+**Not covered, and why it is not needed yet.** There is no retraction. Deleting would break the
+grow-only property and need tombstones (a two-phase set) or a coordinated decision. In QLF a closure
+cannot un-close (`closedAtHorizon_mono`), so a base whose records are closures never needs to delete
+one. A party that stops holding a record is a different matter: it would need a signed withdrawal set
+beside each attester set. Hot names can be split further by `(name, hash(id) mod m)`, at the cost of an
+`m`-way fan-out for `ways` and `first`, where `first` is still a minimum of minimums. An alternative
+placement for record shards is by excursion band, which would let a capacity-`R` reader query only
+the bands `≤ R`. It is listed as an option, not chosen. Hashing balances load, and the index already
+makes priority queries local.
+
+In Rholang, each shard runs [`QKB.rho`](rholang/QKB.rho) in one role. A client routes each leg with
+the cross-shard invoke primitive, using `$at(shard, …)` as
+[`shard_exchange.rho`](https://github.com/rhovision-org/rholo/blob/dev/qucalc/examples/shard_exchange.rho)
+does. Splitting the contract into the two roles, and storing `key` in the name index, are the
+contract-side changes. They are not written yet.
+
+## 7. What would make it a result
 
 Rule 4 asks what distribution over ways a claim would be false for. A store that admits only closures
 makes no claim by itself. The base earns content when it makes a measured quantity available that the
@@ -182,13 +244,14 @@ Memetics §10 with real, independent attesters on a rholo devnet, and record whi
 holders. Memetics T4 predicts R follows priority (`first`), not multiplicity (`ways`). If R tracks
 `ways` instead, that prediction fails. Pre-register the test before running it, as §8 there did.
 
-## 7. Next steps
+## 8. Next steps
 
-1. Deploy [`QKB.rho`](rholang/QKB.rho) on a local rholo devnet. Port the five self-checks as deploys
+1. Deploy [`QKB.rho`](rholang/QKB.rho) on a local rholo devnet. Port the self-checks as deploys
    and read their results with the node's exploratory deploy.
 2. File an issue on rholo about the aggregate gate in `achieves_zfa` (after Jim agrees to filing it).
 3. Add `QLF_QuantumLogic3` (MO3 by `decide`).
-4. Pre-register and run the redundancy-against-priority test (§6).
+4. Pre-register and run the redundancy-against-priority test (§7).
+5. Split `QKB.rho` into record and index roles (§6) and run two shards on a devnet.
 
 ## References
 

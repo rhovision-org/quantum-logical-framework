@@ -206,7 +206,7 @@ In memetic terms: a meme spreads by redundancy and changes by complementary bind
    already differ at the substrate (`depth_one_not_modal`), so the two hypotheses can disagree. Pre-registered
    as T4 (§8); result in §9: records follow priority.
    The same question with real, independent holders is the proposed first test of the Rholang knowledge base
-   ([`Quantum_Knowledge_Base.md`](Quantum_Knowledge_Base.md) §6), whose attester sets measure `R` directly.
+   ([`Quantum_Knowledge_Base.md`](Quantum_Knowledge_Base.md) §7), whose attester sets measure `R` directly.
 5. **No new physics prediction.** At the level of measured physics this reproduces quantum Darwinism, so
    the NV-centre redundancy data agree with it but do not discriminate it from standard quantum mechanics.
 

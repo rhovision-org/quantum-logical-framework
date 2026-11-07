@@ -264,6 +264,107 @@ class KB:
 
 
 # --------------------------------------------------------------------------- #
+# sharding: two roles, grow-only state, no cross-shard transaction
+# --------------------------------------------------------------------------- #
+def cascade_key(ts: list[int]) -> tuple:
+    """The /solve total order, computable from the closure alone."""
+    return (excursion(ts), len(ts), PHASE_RANK[phase(ts)], to_str(ts))
+
+
+def shard_of(key: str, k: int) -> int:
+    return int(hashlib.blake2b(key.encode(), digest_size=8).hexdigest(), 16) % k
+
+
+class RecordShard:
+    """Holds closures by content id: id -> (twists, attesters). Grow-only."""
+    def __init__(self) -> None:
+        self.recs: dict[str, tuple[list[int], set]] = {}
+
+    def put(self, cid: str, ts: list[int], attester) -> None:      # idempotent
+        self.recs.setdefault(cid, (list(ts), set()))[1].add(attester)
+
+
+class IndexShard:
+    """Holds name -> {(cascade_key, id)} and question -> seed. Grow-only.
+    Carrying the key beside the id makes ways / first / solve local to one shard."""
+    def __init__(self) -> None:
+        self.names: dict[str, set] = {}
+        self.seeds: dict[str, list[int]] = {}
+
+    def put(self, name: str, key: tuple, cid: str) -> None:        # idempotent
+        self.names.setdefault(name, set()).add((key, cid))
+
+
+class ShardedKB:
+    """k record shards (by content id) + k index shards (by name).
+
+    A write is two idempotent legs, record first, then index. Every piece of
+    state is a grow-only set, so legs commute, re-delivery is harmless, and
+    shards never need to agree on an order (no 2PC). A crash between the legs
+    leaves an orphan record (held, unnamed), never a dangling name: the index
+    only ever points at a record that already exists. (Delivered out of order,
+    an index entry can briefly precede its record; ways / first / solve read
+    the index alone, so only redundancy waits for the record leg.)"""
+    def __init__(self, k: int) -> None:
+        self.k = k
+        self.rec = [RecordShard() for _ in range(k)]
+        self.idx = [IndexShard() for _ in range(k)]
+
+    # legs, exposed separately so a test can deliver them in any order, twice
+    def legs(self, name: str, ts: list[int], attester):
+        if not is_closure(ts):            # the gate is stateless: any shard checks it
+            return []
+        cid = content_id(ts)
+        r = self.rec[shard_of(cid, self.k)]
+        i = self.idx[shard_of(name, self.k)]
+        return [lambda: r.put(cid, ts, attester),
+                lambda: i.put(name, cascade_key(ts), cid)]
+
+    def assert_closure(self, name, ts, attester) -> None:
+        for leg in self.legs(name, ts, attester):
+            leg()
+
+    def ways(self, name: str) -> int:
+        return len(self.idx[shard_of(name, self.k)].names.get(name, ()))
+
+    def redundancy(self, cid: str) -> int:
+        r = self.rec[shard_of(cid, self.k)].recs.get(cid)
+        return len(r[1]) if r else 0
+
+    def first(self, name: str) -> Optional[str]:
+        e = self.idx[shard_of(name, self.k)].names.get(name)
+        return min(e)[1] if e else None
+
+    def ask(self, q: str, seed: list[int]) -> None:
+        self.idx[shard_of(q, self.k)].seeds[q] = list(seed)
+
+    def answer_legs(self, q: str, cont: list[int], attester):
+        return self.legs(q, self.idx[shard_of(q, self.k)].seeds[q] + cont, attester)
+
+    def solve(self, q: str) -> Optional[list[int]]:
+        i = self.idx[shard_of(q, self.k)]
+        e = i.names.get(q)
+        if not e:
+            return None
+        key, _ = min(e)                  # the key carries the history: no record-shard read
+        return from_str(key[3])[len(i.seeds[q]):]
+
+    def merged(self) -> "ShardedKB":
+        """Union of all shards into one: what a full replica would hold."""
+        m = ShardedKB(1)
+        for r in self.rec:
+            for cid, (ts, att) in r.recs.items():
+                for a in att:
+                    m.rec[0].put(cid, ts, a)
+        for i in self.idx:
+            for n, es in i.names.items():
+                for key, cid in es:
+                    m.idx[0].put(n, key, cid)
+            m.idx[0].seeds.update(i.seeds)
+        return m
+
+
+# --------------------------------------------------------------------------- #
 # self-checks — each one is a check the construction could fail
 # --------------------------------------------------------------------------- #
 def _selfcheck() -> None:
@@ -323,6 +424,45 @@ def _selfcheck() -> None:
         got = kb2.solve("q")
         assert ref["solved"] and to_str(got) == ref["cont"], (seed, got, ref["cont"])
     print("(e) solve over all possibilities (non-events included) matches qucalc_search.solve on 5 seeds")
+
+    # (f) sharding: random workload, legs delivered shuffled and duplicated, k = 1..7 shards;
+    #     every query equals the single-store KB, and a full merge of the shards equals k = 1.
+    import random
+    rng = random.Random(20261107)
+    people = [object() for _ in range(6)]
+    pool = [list(t) for t in itertools.product(range(8), repeat=4) if is_closure(list(t))]
+    seeds = ["^", "^>", "+^", "^<", "/+"]
+    work = [("n%d" % rng.randrange(12), rng.choice(pool), rng.choice(people)) for _ in range(400)]
+    answers = []
+    for sd in seeds:
+        for rec in qs.search(sd, max_depth=4, limit=None, absorbing=False):
+            answers.append((sd, from_str(rec["cont"]), rng.choice(people)))
+    ref = KB()
+    for n, ts, a in work:
+        ref.assert_closure(n, ts, a)
+    for sd in seeds:
+        ref.ask("q" + sd, from_str(sd), 0)
+    for sd, c, a in answers:
+        ref.answer("q" + sd, c, a)
+    for k in range(1, 8):
+        kb3 = ShardedKB(k)
+        for sd in seeds:
+            kb3.ask("q" + sd, from_str(sd))
+        legs = [l for n, ts, a in work for l in kb3.legs(n, ts, a)]
+        legs += [l for sd, c, a in answers for l in kb3.answer_legs("q" + sd, c, a)]
+        legs = legs + rng.sample(legs, len(legs) // 3)            # re-delivery
+        rng.shuffle(legs)                                          # any order across shards
+        for leg in legs:
+            leg()
+        for kbx in (kb3, kb3.merged()):
+            for n in ref.names:
+                assert kbx.ways(n) == ref.ways(n) and kbx.first(n) == ref.first(n), (k, n)
+            for cid in ref.records:
+                assert kbx.redundancy(cid) == ref.redundancy(cid), (k, cid)
+            for sd in seeds:
+                assert kbx.solve("q" + sd) == ref.solve("q" + sd), (k, sd)
+    print(f"(f) sharded k=1..7, {len(work) + len(answers)} writes shuffled + 1/3 re-delivered: "
+          f"ways, redundancy, first, solve all equal the single store")
     print("all self-checks passed")
 
 
