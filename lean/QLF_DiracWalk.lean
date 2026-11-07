@@ -75,18 +75,23 @@ the massless Weyl generator of [`QLF_Mass`](QLF_Mass.lean). -/
 theorem realWalk_generator (ay ax az : ℝ) :
     HasDerivAt (fun s : ℝ => realWalk (s * ay) (s * ax) (s * az))
       (Complex.I • Mass.weyl ay ax az) 0 := by
-  have hy := realStep_generator Twist.up ay
-  have hx := realStep_generator Twist.left ax
-  have hz := realStep_generator Twist.slash az
+  have hy := realStep_generator Twist.up (ay / 2)
+  have hx := realStep_generator Twist.left (ax / 2)
+  have hz := realStep_generator Twist.slash (az / 2)
   have e : (fun s : ℝ => realWalk (s * ay) (s * ax) (s * az)) =
-      (fun s : ℝ => realStep Twist.up (s * ay)) * (fun s : ℝ => realStep Twist.left (s * ax)) *
-        (fun s : ℝ => realStep Twist.slash (s * az)) := by
-    funext s; simp [realWalk]
+      (fun s : ℝ => realStep Twist.up (s * (ay / 2))) *
+        (fun s : ℝ => realStep Twist.left (s * (ax / 2))) *
+        (fun s : ℝ => realStep Twist.slash (s * (az / 2))) *
+        (fun s : ℝ => realStep Twist.slash (s * (az / 2))) *
+        (fun s : ℝ => realStep Twist.left (s * (ax / 2))) *
+        (fun s : ℝ => realStep Twist.up (s * (ay / 2))) := by
+    funext s; simp only [realWalk, Pi.mul_apply, mul_div_assoc]
   rw [e]
-  refine ((hy.mul hx).mul hz).congr_deriv ?_
+  refine (((((hy.mul hx).mul hz).mul hz).mul hx).mul hy).congr_deriv ?_
   simp only [Pi.mul_apply, zero_mul, realStep_zero, one_mul, mul_one, Mass.weyl, smul_add,
     smul_smul]
-  ring_nf
+  push_cast
+  module
 
 /-! ## The Dirac walk -/
 

@@ -1,0 +1,43 @@
+name: Amplitude benchmarks (#207)
+
+# Fast regression suite for the curve-cover, hidden-zero and dispersion scripts.
+# Each script runs on a small fixed input (fixed seeds) and its results are
+# asserted, not only its exit code: G3 polynomial equality on trees, the planar
+# (-1)^n (D-2) and non-planar +-D loop coefficients, exact hidden-zero and control
+# counts, the a^2 breaking slope of the derived propagator, and the walk trace
+# identities behind the Planck-spacing dispersion. Standard library only; about
+# two seconds. The full 7/8-point sweeps stay optional.
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'curve_cover_*.py'
+      - 'hidden_zero_*.py'
+      - 'liv_dispersion.py'
+      - 'scripts/amplitude_regression.py'
+      - '.github/workflows/amplitude-benchmarks.yml'
+
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'curve_cover_*.py'
+      - 'hidden_zero_*.py'
+      - 'liv_dispersion.py'
+      - 'scripts/amplitude_regression.py'
+      - '.github/workflows/amplitude-benchmarks.yml'
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run the amplitude regression suite
+        run: python3 scripts/amplitude_regression.py

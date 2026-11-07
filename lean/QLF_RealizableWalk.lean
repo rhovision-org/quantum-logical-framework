@@ -158,15 +158,28 @@ theorem realStep_eq_half (t : Twist) (k : ℝ) :
   rw [← sub_eq_zero]
   module
 
-/-- **The three-axis walk of realizable steps.** Up, then left, then slash. -/
+/-- **The three-axis walk of realizable steps, time-symmetric within the tick.** A half step up,
+left, slash, then a half step slash, left, up. The order is a palindrome, so the tick reads the same
+forwards and backwards.
+
+Why the palindrome: with the one-way order up, left, slash the walk's dispersion is
+`cos E = Π cos k_i − Π sin k_i`, which carries a term linear in energy, `E ≈ k + k_y k_x k_z / k`. At
+Planck spacing, and if this walk describes the electron (an extra physical assumption, not proved
+here), that is `η` up to `±0.385`, against the Crab synchrotron bound `η > −7 × 10⁻⁸` (Jacobson,
+Liberati and Mattingly 2003). The palindrome has `cos E = Π cos k_i`, with no odd term, and leaves
+`E = k − k³/18` on the body diagonal. Both trace identities are checked numerically
+(`liv_dispersion.py`), not proved here; the theorems below are unitarity and the generator only. See
+`QM_Postulates_QLF.md` §5b. -/
 noncomputable def realWalk (ky kx kz : ℝ) : M :=
-  realStep Twist.up ky * realStep Twist.left kx * realStep Twist.slash kz
+  realStep Twist.up (ky / 2) * realStep Twist.left (kx / 2) * realStep Twist.slash (kz / 2) *
+    realStep Twist.slash (kz / 2) * realStep Twist.left (kx / 2) * realStep Twist.up (ky / 2)
 
 /-- **The walk of realizable steps is unitary at every momentum.** -/
 theorem realWalk_unitary (ky kx kz : ℝ) :
     realWalk ky kx kz ∈ Matrix.unitaryGroup (Fin 2) ℂ :=
-  Submonoid.mul_mem _ (Submonoid.mul_mem _ (realStep_unitary _ _) (realStep_unitary _ _))
-    (realStep_unitary _ _)
+  Submonoid.mul_mem _ (Submonoid.mul_mem _ (Submonoid.mul_mem _ (Submonoid.mul_mem _
+    (Submonoid.mul_mem _ (realStep_unitary _ _) (realStep_unitary _ _)) (realStep_unitary _ _))
+    (realStep_unitary _ _)) (realStep_unitary _ _)) (realStep_unitary _ _)
 
 /-- At zero momentum the walk is the identity. -/
 theorem realWalk_zero : realWalk 0 0 0 = 1 := by
