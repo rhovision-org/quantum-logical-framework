@@ -9,7 +9,7 @@ set_option linter.unusedVariables false
 # QLF_EntanglementPrimacy — every closure is made of entanglements
 
 Jim's thesis (2026-11-07): *the logical entanglement is responsible for all other results.* This module
-proves three rungs of that thesis for the twist layer and names exactly what is still missing.
+proves four rungs of that thesis for the twist layer and names exactly what is still missing.
 
 The primordial entanglement is the **conjugate pair** `[t, t†]`: a twist and its Hermitian conjugate
 (`^v`, `<>`, `/\`, `+−`). Each half is open on its own and the pair closes. That is the `[pos, neg]` event
@@ -62,21 +62,37 @@ So the Form is not extra stuff created beside the entanglement. It is the signed
 **unpaired half**: which side of each pair a strand holds. That is the precise sense in which the
 creation operator creates only entanglements.
 
+## Rung 4: real Forms and pure states (no axioms)
+
+* **`strand_realizes`**: every integer vector `(a, b, c, d) ∈ ℤ⁴` is the net signed count of some
+  strand, so derived Forms fill the whole integer lattice.
+* **`rational_form_is_frequency`**: every Form with rational coordinates is the **frequency** of a
+  strand (`freqForm`: net counts per event over a window of `N` events).
+* **`pure_state_plus_up`**: the two-twist strand `+^` read over its own two events is the pure state
+  `(½, 0, ½, 0)`.
+* **`rational_pure_state_is_frequency`**: every pure qubit state with a rational Bloch vector is a
+  frequency of a strand.
+
+So the real numbers in a Form enter only as ratios of counts to a window. Pure-state normalisation
+`t = ½` is a choice of window (the gauge net is half the events), not an extra postulate.
+
 ## What is still NOT proved (stated so nobody overclaims)
 
-1. **Real coordinates.** Derived Forms have integer coordinates. `action f` accepts any real `f`;
-   real values enter only as ratios (frequencies over a census), and the normalisation of a pure
-   state (`t = ½`, `x² + y² + z² = ¼`) is not derived here. `QLF_Realizability` is the reason to
-   expect no more than rationals in a finite region, but that link is not formalised in this module.
-2. **Product closures.** `QLF_IndexedFactors.gauge_pair_is_product_sector` shows some pairs close
+1. **Irrational Forms.** A pure state whose Bloch vector is irrational is the frequency of no finite
+   strand. Rational points are dense on the sphere (classical), so each such state is a limit of
+   strand frequencies, but that limit is not formalised here. `QLF_Realizability` is the reason to
+   expect no more than rationals in a finite region; linking the two is open.
+2. **Why the window is `N`.** Rung 4 shows that `t = ½` is reached by choosing the window; it does
+   not derive that the physical window is the one that makes the gauge net half of it.
+3. **Product closures.** `QLF_IndexedFactors.gauge_pair_is_product_sector` shows some pairs close
    with each half scalar on its own. Under the strong reading of entanglement (non-factorizable),
    those pairs are real but not entangled. This module uses the weak reading (a pair whose halves
    cancel), and says so.
 
-Rungs 1–3 of "the logical entanglement is responsible for all other results" are proved here for the
-twist layer: what closes (pairs), its phase (pairs × crossings) and its Form (the open half). Every
-result built on those three inherits the reading; results that use real-valued Forms or the strong
-reading of entanglement do not yet.
+Rungs 1–4 of "the logical entanglement is responsible for all other results" are proved here for the
+twist layer: what closes (pairs), its phase (pairs × crossings), its Form (the open half), and every
+rational Form and pure state (frequencies of strands). Results that use irrational Forms or the
+strong reading of entanglement do not yet inherit the reading.
 -/
 
 namespace QLF.EntanglementPrimacy
@@ -226,27 +242,47 @@ theorem reorder_is_crossing_sign {ts : List Twist} (ps : List Twist)
 
 /-- Gauge coordinate of a twist: `+ ↦ 1`, `− ↦ −1`, else `0`. -/
 def twT : Twist → ℤ
+  | Twist.up => 0
+  | Twist.down => 0
+  | Twist.left => 0
+  | Twist.right => 0
+  | Twist.slash => 0
+  | Twist.backslash => 0
   | Twist.plus => 1
   | Twist.minus => -1
-  | _ => 0
 
 /-- `σx` coordinate: `> ↦ 1`, `< ↦ −1`, else `0`. -/
 def twX : Twist → ℤ
-  | Twist.right => 1
+  | Twist.up => 0
+  | Twist.down => 0
   | Twist.left => -1
-  | _ => 0
+  | Twist.right => 1
+  | Twist.slash => 0
+  | Twist.backslash => 0
+  | Twist.plus => 0
+  | Twist.minus => 0
 
 /-- `σy` coordinate: `^ ↦ 1`, `v ↦ −1`, else `0`. -/
 def twY : Twist → ℤ
   | Twist.up => 1
   | Twist.down => -1
-  | _ => 0
+  | Twist.left => 0
+  | Twist.right => 0
+  | Twist.slash => 0
+  | Twist.backslash => 0
+  | Twist.plus => 0
+  | Twist.minus => 0
 
 /-- `σz` coordinate: `/ ↦ 1`, `\ ↦ −1`, else `0`. -/
 def twZ : Twist → ℤ
+  | Twist.up => 0
+  | Twist.down => 0
+  | Twist.left => 0
+  | Twist.right => 0
   | Twist.slash => 1
   | Twist.backslash => -1
-  | _ => 0
+  | Twist.plus => 0
+  | Twist.minus => 0
 
 /-- Net signed count of a strand on each axis. -/
 def netT (ts : List Twist) : ℤ := (ts.map twT).sum
@@ -366,9 +402,128 @@ theorem halves_cancel (ts : List Twist) : parallelSum (ts ++ ts.map Twist.conj) 
   simp only [parallelSum, List.map_append, List.sum_append, sum_map_conj]
   abel
 
+-- ==========================================
+-- Rung 4: real Forms and pure states as frequencies
+-- ==========================================
+
+theorem netT_cons (t : Twist) (ts : List Twist) : netT (t :: ts) = twT t + netT ts := by
+  simp [netT]
+theorem netX_cons (t : Twist) (ts : List Twist) : netX (t :: ts) = twX t + netX ts := by
+  simp [netX]
+theorem netY_cons (t : Twist) (ts : List Twist) : netY (t :: ts) = twY t + netY ts := by
+  simp [netY]
+theorem netZ_cons (t : Twist) (ts : List Twist) : netZ (t :: ts) = twZ t + netZ ts := by
+  simp [netZ]
+
+theorem netT_append (l₁ l₂ : List Twist) : netT (l₁ ++ l₂) = netT l₁ + netT l₂ := by
+  simp [netT]
+theorem netX_append (l₁ l₂ : List Twist) : netX (l₁ ++ l₂) = netX l₁ + netX l₂ := by
+  simp [netX]
+theorem netY_append (l₁ l₂ : List Twist) : netY (l₁ ++ l₂) = netY l₁ + netY l₂ := by
+  simp [netY]
+theorem netZ_append (l₁ l₂ : List Twist) : netZ (l₁ ++ l₂) = netZ l₁ + netZ l₂ := by
+  simp [netZ]
+
+/-- One axis at a time: a strand with any integer net on a chosen axis and zero on the others. The
+    twist pair `(p, n)` is the axis's positive and negative letter. -/
+private theorem exists_on_axis (p n : Twist) (f : List Twist → ℤ)
+    (hp : ∀ ts, f (p :: ts) = f ts + 1) (hn : ∀ ts, f (n :: ts) = f ts - 1)
+    (g₁ g₂ g₃ : List Twist → ℤ)
+    (hg₁ : ∀ ts, g₁ (p :: ts) = g₁ ts ∧ g₁ (n :: ts) = g₁ ts)
+    (hg₂ : ∀ ts, g₂ (p :: ts) = g₂ ts ∧ g₂ (n :: ts) = g₂ ts)
+    (hg₃ : ∀ ts, g₃ (p :: ts) = g₃ ts ∧ g₃ (n :: ts) = g₃ ts)
+    (h0 : f [] = 0 ∧ g₁ [] = 0 ∧ g₂ [] = 0 ∧ g₃ [] = 0) (k : ℤ) :
+    ∃ ts : List Twist, f ts = k ∧ g₁ ts = 0 ∧ g₂ ts = 0 ∧ g₃ ts = 0 := by
+  refine Int.induction_on k ⟨[], h0⟩ ?_ ?_
+  · rintro i ⟨ts, h1, h2, h3, h4⟩
+    refine ⟨p :: ts, ?_, ?_, ?_, ?_⟩
+    · rw [hp, h1]
+    · rw [(hg₁ ts).1, h2]
+    · rw [(hg₂ ts).1, h3]
+    · rw [(hg₃ ts).1, h4]
+  · rintro i ⟨ts, h1, h2, h3, h4⟩
+    refine ⟨n :: ts, ?_, ?_, ?_, ?_⟩
+    · rw [hn, h1]
+    · rw [(hg₁ ts).2, h2]
+    · rw [(hg₂ ts).2, h3]
+    · rw [(hg₃ ts).2, h4]
+
+/-- **Every integer Form is a strand.** For any `(a, b, c, d) ∈ ℤ⁴` some strand has exactly those net
+    signed counts, so derived Forms fill the whole integer lattice. -/
+theorem strand_realizes (a b c d : ℤ) :
+    ∃ ts : List Twist, netT ts = a ∧ netX ts = b ∧ netY ts = c ∧ netZ ts = d := by
+  obtain ⟨l₁, h₁, h₁x, h₁y, h₁z⟩ := exists_on_axis Twist.plus Twist.minus netT
+    (fun ts => by rw [netT_cons]; simp only [twT]; ring)
+    (fun ts => by rw [netT_cons]; simp only [twT]; ring)
+    netX netY netZ
+    (fun ts => by simp [netX_cons, twX])
+    (fun ts => by simp [netY_cons, twY])
+    (fun ts => by simp [netZ_cons, twZ])
+    ⟨rfl, rfl, rfl, rfl⟩ a
+  obtain ⟨l₂, h₂, h₂t, h₂y, h₂z⟩ := exists_on_axis Twist.right Twist.left netX
+    (fun ts => by rw [netX_cons]; simp only [twX]; ring)
+    (fun ts => by rw [netX_cons]; simp only [twX]; ring)
+    netT netY netZ
+    (fun ts => by simp [netT_cons, twT])
+    (fun ts => by simp [netY_cons, twY])
+    (fun ts => by simp [netZ_cons, twZ])
+    ⟨rfl, rfl, rfl, rfl⟩ b
+  obtain ⟨l₃, h₃, h₃t, h₃x, h₃z⟩ := exists_on_axis Twist.up Twist.down netY
+    (fun ts => by rw [netY_cons]; simp only [twY]; ring)
+    (fun ts => by rw [netY_cons]; simp only [twY]; ring)
+    netT netX netZ
+    (fun ts => by simp [netT_cons, twT])
+    (fun ts => by simp [netX_cons, twX])
+    (fun ts => by simp [netZ_cons, twZ])
+    ⟨rfl, rfl, rfl, rfl⟩ c
+  obtain ⟨l₄, h₄, h₄t, h₄x, h₄y⟩ := exists_on_axis Twist.slash Twist.backslash netZ
+    (fun ts => by rw [netZ_cons]; simp only [twZ]; ring)
+    (fun ts => by rw [netZ_cons]; simp only [twZ]; ring)
+    netT netX netY
+    (fun ts => by simp [netT_cons, twT])
+    (fun ts => by simp [netX_cons, twX])
+    (fun ts => by simp [netY_cons, twY])
+    ⟨rfl, rfl, rfl, rfl⟩ d
+  refine ⟨l₁ ++ l₂ ++ l₃ ++ l₄, ?_, ?_, ?_, ?_⟩ <;>
+    simp only [netT_append, netX_append, netY_append, netZ_append] <;> omega
+
+/-- **The frequency Form** of a strand read over a window of `N` events: net signed counts per event. -/
+noncomputable def freqForm (ts : List Twist) (N : ℕ) : Form :=
+  ⟨(netT ts : ℝ) / N, (netX ts : ℝ) / N, (netY ts : ℝ) / N, (netZ ts : ℝ) / N⟩
+
+/-- **Every rational Form is a frequency of a strand.** Real values enter the Form only as ratios of
+    net counts to a window, and every ratio is reached. -/
+theorem rational_form_is_frequency (a b c d : ℤ) (N : ℕ) :
+    ∃ ts : List Twist,
+      freqForm ts N = ⟨(a : ℝ) / N, (b : ℝ) / N, (c : ℝ) / N, (d : ℝ) / N⟩ := by
+  obtain ⟨ts, h1, h2, h3, h4⟩ := strand_realizes a b c d
+  exact ⟨ts, by simp only [freqForm, h1, h2, h3, h4]⟩
+
+/-- A Form is a **pure qubit state** when `t = ½` and its Bloch vector has length `½`. -/
+noncomputable def IsPure (f : Form) : Prop := f.t = 1 / 2 ∧ f.x ^ 2 + f.y ^ 2 + f.z ^ 2 = 1 / 4
+
+/-- **A pure state from two twists.** The strand `+^` read over its own two events is the pure state
+    `(½, 0, ½, 0)`: half a gauge unit and half a `σy` unit per event. -/
+theorem pure_state_plus_up : IsPure (freqForm [Twist.plus, Twist.up] 2) := by
+  unfold IsPure
+  norm_num [freqForm, netT, netX, netY, netZ, twT, twX, twY, twZ]
+
+/-- **Every pure state with a rational Bloch vector is a frequency of a strand.** Write the vector
+    over a common denominator `N` (so `t = ½` means the gauge net is `N/2`): some strand has exactly
+    those nets. -/
+theorem rational_pure_state_is_frequency (a b c d : ℤ) (N : ℕ)
+    (hpure : IsPure ⟨(a : ℝ) / N, (b : ℝ) / N, (c : ℝ) / N, (d : ℝ) / N⟩) :
+    ∃ ts : List Twist, IsPure (freqForm ts N) ∧
+      freqForm ts N = ⟨(a : ℝ) / N, (b : ℝ) / N, (c : ℝ) / N, (d : ℝ) / N⟩ := by
+  obtain ⟨ts, hts⟩ := rational_form_is_frequency a b c d N
+  refine ⟨ts, ?_, hts⟩
+  rw [hts]
+  exact hpure
+
 /-- Summary: closure = a reordering of conjugate pairs (rung 1); phase = pairs × crossings (rung 2);
-    Form = the open half's net signed count, zero exactly on closures (rung 3). See the module note
-    for what stays open. -/
+    Form = the open half's net signed count, zero exactly on closures (rung 3); every rational Form,
+    and every rational pure state, is a frequency of a strand (rung 4). See the module note for what
+    stays open. -/
 theorem entanglement_primacy_status : True := trivial
 
 end QLF.EntanglementPrimacy
