@@ -261,6 +261,26 @@ exact dispersion is now proved in Lean, with no axioms:
 So the palindromic electron walk passes the electron bound by proof rather than by sampling. What
 stays assumed is the identification itself: that the electron propagates by this walk.
 
+
+### 5c. Forecasts, pre-registered 2026-11-07
+
+This section records what the proved dispersion anticipates, before any further data is read. Each
+forecast assumes two things that are **not** theorems: the lattice spacing is the Planck length (§5a),
+and the electron propagates by the palindromic Dirac walk (§5b). Where a forecast is about photons, it
+also assumes that photons inherit the walk's dispersion. The Lean anchor fixes the formula, and the
+assumptions fix what it is a forecast about.
+
+| # | Forecast | Lean anchor | Kill condition | Status, 2026-11-07 |
+|---|---|---|---|---|
+| F1 | **No linear Planck-scale term**: `η = 0` exactly for electrons, in `E² = p² + m² + η p³/E_P`, in every direction. | `diracWalk_dispersion`: `cos E = cos m · Π cos k_i` is even in every `k_i`. | Any measured nonzero `η` for electrons, of either sign. For photons (with the extra assumption), any nonzero linear time-of-flight term. | **Consistent.** The Crab bound `η > −7 × 10⁻⁸` and the vacuum-Čerenkov bound `η < 0.01` (Jacobson, Liberati and Mattingly 2003). |
+| F2 | **A fixed quadratic term**: `E² = k² − (k⁴/3)(n_x²n_y² + n_y²n_z² + n_z²n_x²)` in Planck units, where `n` is the direction relative to the lattice axes. It is subluminal, exactly zero along the three axes, and largest on the body diagonal (`ξ = 1/9`, `E_QG,2 = 3.0 E_P`). There is no free coefficient. | `realWalk_trace` / `diracWalk_dispersion`, expanded to fourth order (checked numerically). | A quadratic effect that is superluminal, isotropic, or nonzero along every direction. Or a bound `E_QG,2 > 3.0 E_P` in every direction. | **Untestable now.** The best time-of-flight bound is `E_QG,2 > 6 × 10⁻⁸ E_P` (LHAASO 2024), about `5 × 10⁷` short. |
+| F3 | **Dirac physics at every reachable energy.** Mass and momentum corrections enter only at relative order `(m/E_P)²` and `(k/E_P)²`, which is about `10⁻⁴⁵` for an electron at rest. | `diracWalk_generator`, `diracWalk_dispersion`. | Any electron dispersion anomaly at accessible energies attributable to the walk. | **Consistent, but not distinguishing**: the Standard Model forecasts the same. |
+
+**What is not fixed.** F2's direction is measured from the lattice axes, and nothing yet says how those
+axes are oriented in the sky. Until a rule fixes them, for example alignment with the CMB rest frame, F2
+can be tested only as a pattern: the ratio between directions, and the zeros along three orthogonal
+axes. A fixed direction cannot be tested. **What would separate QLF from the Standard Model** is a
+consequence at reachable energies, and none of F1–F3 is one. That is the open item.
 ---
 
 ## 6. References
