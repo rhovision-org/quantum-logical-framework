@@ -148,6 +148,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureChannels.walk_cos_taylor": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.walk_dispersion_quadratic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureKernel.channel_factorization": [
     "Classical.choice",
     "Quot.sound",
