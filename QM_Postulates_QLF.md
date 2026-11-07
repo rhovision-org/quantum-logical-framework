@@ -208,7 +208,12 @@ Both trace identities hold at **arbitrary** momenta, not only along the sampled 
 one-way order. Since `cos E` is then even in every `k_i`, the palindrome's dispersion has no odd
 (linear-in-energy) term in any direction. They are checked numerically at 2,000 random momenta to
 `10⁻¹⁵` ([`liv_dispersion.py`](liv_dispersion.py), run in CI by
-[`scripts/amplitude_regression.py`](scripts/amplitude_regression.py)); a Lean proof is not yet written.
+[`scripts/amplitude_regression.py`](scripts/amplitude_regression.py)). The palindrome's identity is now
+**proved** in Lean ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean), no axioms): `realStep_eq_cos_sin`
+writes each realizable step as `cos k · 1 + i sin k · M(t)`, `realWalk_trace` proves the full complex
+trace is `2 cos k_y cos k_x cos k_z` (so its imaginary part vanishes too), and `realWalk_trace_even`
+proves it is even in each `k_i`. The one-way identity stays numerical, since that order is no longer the
+Lean walk.
 
 The fixed order breaks time reversal and parity, and that leaves a term **linear** in energy. Its sign
 flips between octants and between the two chiralities (the Dirac walk runs the other chirality at
@@ -225,8 +230,9 @@ are spin-½, and the photon has no properties apart from the electrons it connec
 electron's propagation, the first qualification does not help, because electrons have their own bound.
 That identification is an **additional physical assumption**, not a consequence of the Lean results: the
 walk is massless and free, while the bound concerns the measured, massive and interacting electron, and
-`realWalk_unitary` and `realWalk_generator` establish unitarity and the first-order generator only, not
-the finite-momentum dispersion or physical time-reversal invariance. Granting it: In the convention
+`realWalk_unitary` and `realWalk_generator` establish unitarity and the first-order generator, and
+`realWalk_trace` the walk's own finite-momentum dispersion, but none of them establishes physical
+time-reversal invariance or that the electron propagates by this walk. Granting it: In the convention
 `E² = p² + m² + η p³/E_P`, the one-way order gives `η = 2 n_x n_y n_z` per chirality, up to `±0.385` with
 both signs occurring. The Crab nebula's synchrotron emission requires `η > −7 × 10⁻⁸` for electrons, and
 vacuum Čerenkov radiation `η < 0.01` (Jacobson, Liberati and Mattingly, *Nature* 424, 1019, 2003). So

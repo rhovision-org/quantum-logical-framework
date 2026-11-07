@@ -185,4 +185,63 @@ theorem realWalk_unitary (ky kx kz : ℝ) :
 theorem realWalk_zero : realWalk 0 0 0 = 1 := by
   simp [realWalk, realStep, fix_add_conj]
 
+-- ==========================================
+-- §5  The palindromic walk's dispersion
+-- ==========================================
+
+/-- **A realizable step is a rotation**: `cos k + i sin k · M(t)`. -/
+theorem realStep_eq_cos_sin (t : Twist) (k : ℝ) :
+    realStep t k = ((Real.cos k : ℝ) : ℂ) • (1 : M) + (((Real.sin k : ℝ) : ℂ) * Complex.I) • t.toMatrix := by
+  unfold realStep fix
+  rw [ClosureUnitarity.conj_toMatrix]
+  have h1 : Complex.exp (↑k * Complex.I) = ((Real.cos k : ℝ) : ℂ) + ((Real.sin k : ℝ) : ℂ) * Complex.I := by
+    rw [Complex.exp_mul_I, Complex.ofReal_cos, Complex.ofReal_sin]
+  have h2 : Complex.exp (-(↑k * Complex.I)) =
+      ((Real.cos k : ℝ) : ℂ) - ((Real.sin k : ℝ) : ℂ) * Complex.I := by
+    rw [← neg_mul, ← Complex.ofReal_neg, Complex.exp_mul_I, Complex.ofReal_cos, Complex.ofReal_sin,
+      Complex.ofReal_neg, Complex.cos_neg, Complex.sin_neg]
+    ring
+  rw [h1, h2]
+  module
+
+/-- **The palindromic walk's dispersion: `cos E = cos k_y cos k_x cos k_z`.** The walk is in `SU(2)`,
+so its eigenvalues are `e^{±iE}` with `tr = 2 cos E`, and the trace is exactly this product at every
+momentum. `cos E` is therefore even in each `k_i`: the dispersion has no odd term, in particular no
+term linear in energy, in any direction. (The one-way order `up · left · slash` gives
+`Π cos k_i − Π sin k_i` instead, whose odd part is the linear term; see `QM_Postulates_QLF.md` §5b.)
+This is the finite-momentum dispersion of the walk; reading it as a particle's physical dispersion is
+a separate assumption. -/
+theorem realWalk_trace (ky kx kz : ℝ) :
+    Matrix.trace (realWalk ky kx kz) =
+      2 * ((Real.cos ky * Real.cos kx * Real.cos kz : ℝ) : ℂ) := by
+  have hy : ky = 2 * (ky / 2) := by ring
+  have hx : kx = 2 * (kx / 2) := by ring
+  have hz : kz = 2 * (kz / 2) := by ring
+  conv_rhs => rw [hy, hx, hz]
+  simp only [realWalk, realStep_eq_cos_sin, Twist.toMatrix, σx, σy, σz, Real.cos_two_mul']
+  generalize ky / 2 = a
+  generalize kx / 2 = b
+  generalize kz / 2 = c
+  simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag, Matrix.mul_apply, Matrix.add_apply,
+    Matrix.smul_apply, Matrix.one_apply, Matrix.neg_apply, Matrix.of_apply, Matrix.cons_val',
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one,
+    Fin.isValue, smul_eq_mul]
+  push_cast
+  have h4 : Complex.I ^ 4 = 1 := Complex.I_pow_four
+  have h6 : Complex.I ^ 6 = -1 := by
+    rw [show (6 : ℕ) = 4 + 2 from rfl, pow_add, h4, Complex.I_sq, one_mul]
+  have h8 : Complex.I ^ 8 = 1 := by
+    rw [show (8 : ℕ) = 4 + 4 from rfl, pow_add, h4, one_mul]
+  ring_nf
+  simp only [h4, h6, h8, Complex.I_sq]
+  ring
+
+/-- **No odd term in any direction.** Reversing any one momentum component leaves `tr = 2 cos E`
+unchanged, so the dispersion is even in each `k_i` separately. -/
+theorem realWalk_trace_even (ky kx kz : ℝ) :
+    Matrix.trace (realWalk (-ky) kx kz) = Matrix.trace (realWalk ky kx kz) ∧
+    Matrix.trace (realWalk ky (-kx) kz) = Matrix.trace (realWalk ky kx kz) ∧
+    Matrix.trace (realWalk ky kx (-kz)) = Matrix.trace (realWalk ky kx kz) := by
+  simp only [realWalk_trace, Real.cos_neg, and_self]
+
 end QLF.ClosureChannels

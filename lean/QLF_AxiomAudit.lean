@@ -278,6 +278,9 @@ import QLF_HiddenZeros
 #print axioms QLF.ClosureChannels.rawStep_not_unitary
 #print axioms QLF.ClosureChannels.realStep_unitary
 #print axioms QLF.ClosureChannels.realWalk_unitary
+#print axioms QLF.ClosureChannels.realStep_eq_cos_sin
+#print axioms QLF.ClosureChannels.realWalk_trace
+#print axioms QLF.ClosureChannels.realWalk_trace_even
 #print axioms QLF.Tsirelson.chsh_sq
 #print axioms QLF.Tsirelson.chsh_classical
 #print axioms QLF.Tsirelson.chsh_tsirelson

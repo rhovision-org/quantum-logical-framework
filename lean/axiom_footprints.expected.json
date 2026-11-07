@@ -83,7 +83,22 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureChannels.realStep_eq_cos_sin": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureChannels.realStep_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.realWalk_trace": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.realWalk_trace_even": [
     "Classical.choice",
     "Quot.sound",
     "propext"
