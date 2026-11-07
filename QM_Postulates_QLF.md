@@ -228,11 +228,9 @@ about `5 × 10⁷`.
 are spin-½, and the photon has no properties apart from the electrons it connects
 ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §40). If the spin-½ walk describes the
 electron's propagation, the first qualification does not help, because electrons have their own bound.
-That identification is an **additional physical assumption**, not a consequence of the Lean results: the
-walk is massless and free, while the bound concerns the measured, massive and interacting electron, and
-`realWalk_unitary` and `realWalk_generator` establish unitarity and the first-order generator, and
-`realWalk_trace` the walk's own finite-momentum dispersion, but none of them establishes physical
-time-reversal invariance or that the electron propagates by this walk. Granting it: In the convention
+That identification is an **additional physical assumption**, not a consequence of the Lean results:
+the bound concerns the measured, interacting electron, and no theorem shows that it propagates by this
+walk or that the walk's time ordering is physical time reversal. Granting it: In the convention
 `E² = p² + m² + η p³/E_P`, the one-way order gives `η = 2 n_x n_y n_z` per chirality, up to `±0.385` with
 both signs occurring. The Crab nebula's synchrotron emission requires `η > −7 × 10⁻⁸` for electrons, and
 vacuum Čerenkov radiation `η < 0.01` (Jacobson, Liberati and Mattingly, *Nature* 424, 1019, 2003). So
@@ -244,6 +242,24 @@ be time-symmetric within each tick. The Lean `realWalk` ([`QLF_RealizableWalk`](
 palindromic order. Its unitarity and its generator (`realWalk_unitary`, `realWalk_generator`) carry over
 unchanged in statement, so everything built on them (the Dirac walk, the optical theorem, the poles) is
 unaffected.
+
+**The massive walk, proved.** The electron is massive, so the identification needs the Dirac walk
+`D = massStep m · handed k` of [`QLF_DiracWalk`](lean/QLF_DiracWalk.lean), not the massless Weyl walk. Its
+exact dispersion is now proved in Lean, with no axioms:
+
+* `realWalk_neg`: the palindromic walk at `−k` is the adjoint of the walk at `k`, and `realWalk_add_star`
+  gives `W + W† = 2 Π cos k_i · 1`.
+* `beta_handed_beta`: the mass generator `β` swaps the two handednesses, so `β H β = H†`. That makes the
+  `β` part of the mass coin cancel against its adjoint, and `diracWalk_add_star` gives
+  `D + D† = 2 cos m cos k_y cos k_x cos k_z · 1` at every momentum and mass.
+* `diracWalk_eigen`, `diracWalk_dispersion`: so every eigenvalue `e^{iE}` of the Dirac walk obeys
+  **`cos E = cos m · cos k_y cos k_x cos k_z`**. The relation is even in every `k_i` and in `m`, so the
+  massive walk has no `η p³` term (`η = 0`, inside the Crab bound) in any direction. At small momentum
+  and mass it gives `E² = m² + k²`, with corrections of relative order `k²` and `m²`, which is the
+  quadratic term above.
+
+So the palindromic electron walk passes the electron bound by proof rather than by sampling. What
+stays assumed is the identification itself: that the electron propagates by this walk.
 
 ---
 

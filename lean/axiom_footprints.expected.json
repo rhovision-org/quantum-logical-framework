@@ -93,6 +93,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureChannels.realWalk_add_star": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.realWalk_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureChannels.realWalk_trace": [
     "Classical.choice",
     "Quot.sound",
@@ -269,6 +279,26 @@
     "propext"
   ],
   "QLF.Courant.weitzenboeck": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiracWalk.beta_handed_beta": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiracWalk.diracWalk_add_star": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiracWalk.diracWalk_dispersion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiracWalk.diracWalk_eigen": [
     "Classical.choice",
     "Quot.sound",
     "propext"

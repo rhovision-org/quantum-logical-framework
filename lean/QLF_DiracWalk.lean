@@ -187,4 +187,127 @@ theorem diracWalk_generator (ay ax az m : ℝ) :
   ring_nf
   abel
 
+
+/-! ## The Dirac walk's exact dispersion
+
+The generator fixes the walk only to first order. At finite momentum and mass the whole step is fixed
+by one identity: `D + D† = 2 cos m cos k_y cos k_x cos k_z · 1`. So every eigenvalue `λ = e^{iE}`
+obeys `cos E = cos m · Π cos k_i`, which is even in every `k_i` and in `m`: the massive walk has no
+odd, linear-in-energy term in any direction (`QM_Postulates_QLF.md` §5b). -/
+
+theorem sigmaX_fix_slash :
+    Twist.right.toMatrix * fix Twist.slash * Twist.right.toMatrix = fix Twist.slash.conj := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+  simp [fix, Twist.toMatrix, Twist.conj, σx, σz, Matrix.mul_apply, Fin.sum_univ_two, Matrix.vecMul,
+    dotProduct]
+  all_goals norm_num
+
+theorem sigmaX_fix_slash_conj :
+    Twist.right.toMatrix * fix Twist.slash.conj * Twist.right.toMatrix = fix Twist.slash := by
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+  simp [fix, Twist.toMatrix, Twist.conj, σx, σz, Matrix.mul_apply, Fin.sum_univ_two, Matrix.vecMul,
+    dotProduct]
+  all_goals norm_num
+
+theorem beta_kron (A B : M) :
+    Mass.beta * (A ⊗ₖ B) * Mass.beta = (Twist.right.toMatrix * A * Twist.right.toMatrix) ⊗ₖ B := by
+  rw [Mass.beta, ← mul_kronecker_mul, ← mul_kronecker_mul, one_mul, mul_one]
+
+theorem handed_star (ky kx kz : ℝ) :
+    star (handed ky kx kz) =
+      fix Twist.slash ⊗ₖ realWalk (-ky) (-kx) (-kz) + fix Twist.slash.conj ⊗ₖ realWalk ky kx kz := by
+  have h2 : star (realWalk (-ky) (-kx) (-kz)) = realWalk ky kx kz := by
+    rw [realWalk_neg, star_star]
+  rw [handed, star_add, Matrix.star_eq_conjTranspose, Matrix.star_eq_conjTranspose,
+    conjTranspose_kronecker, conjTranspose_kronecker, fix_herm, fix_herm,
+    ← Matrix.star_eq_conjTranspose, ← Matrix.star_eq_conjTranspose, h2, realWalk_neg]
+
+/-- **The mass generator swaps the two handednesses**: conjugating by `β` reverses the momentum,
+which is the adjoint. -/
+theorem beta_handed_beta (ky kx kz : ℝ) :
+    Mass.beta * handed ky kx kz * Mass.beta = star (handed ky kx kz) := by
+  rw [handed_star, handed, mul_add, add_mul, beta_kron, beta_kron, sigmaX_fix_slash,
+    sigmaX_fix_slash_conj, add_comm]
+
+theorem handed_add_star (ky kx kz : ℝ) :
+    handed ky kx kz + star (handed ky kx kz) =
+      (2 * ((Real.cos ky * Real.cos kx * Real.cos kz : ℝ) : ℂ)) • (1 : Q) := by
+  have hW : realWalk (-ky) (-kx) (-kz) + realWalk ky kx kz =
+      (2 * ((Real.cos ky * Real.cos kx * Real.cos kz : ℝ) : ℂ)) • (1 : M) := by
+    rw [add_comm, realWalk_neg, realWalk_add_star]
+  rw [handed_star, handed]
+  calc fix Twist.slash ⊗ₖ realWalk ky kx kz + fix Twist.slash.conj ⊗ₖ realWalk (-ky) (-kx) (-kz) +
+        (fix Twist.slash ⊗ₖ realWalk (-ky) (-kx) (-kz) + fix Twist.slash.conj ⊗ₖ realWalk ky kx kz)
+      = fix Twist.slash ⊗ₖ (realWalk (-ky) (-kx) (-kz) + realWalk ky kx kz) +
+        fix Twist.slash.conj ⊗ₖ (realWalk (-ky) (-kx) (-kz) + realWalk ky kx kz) := by
+        rw [kronecker_add, kronecker_add]; abel
+    _ = _ := by
+        rw [← add_kronecker, fix_add_conj, hW, kronecker_smul, one_kronecker_one]
+
+/-- **`D + D† = 2 cos m cos k_y cos k_x cos k_z · 1`** for the Dirac walk, at every momentum and
+mass. The mass coin's `β` part cancels against its adjoint because `β` swaps the handednesses. -/
+theorem diracWalk_add_star (ky kx kz m : ℝ) :
+    diracWalk ky kx kz m + star (diracWalk ky kx kz m) =
+      ((2 * Real.cos m * Real.cos ky * Real.cos kx * Real.cos kz : ℝ) : ℂ) • (1 : Q) := by
+  have hb : star Mass.beta = Mass.beta := by rw [Matrix.star_eq_conjTranspose, Mass.beta_herm]
+  have hsH : star (handed ky kx kz) * Mass.beta = Mass.beta * handed ky kx kz := by
+    rw [← beta_handed_beta, mul_assoc, Mass.beta_sq, mul_one]
+  have hc : star (Complex.I * ((Real.sin m : ℝ) : ℂ)) = -(Complex.I * ((Real.sin m : ℝ) : ℂ)) := by
+    rw [Complex.star_def, map_mul, Complex.conj_I, Complex.conj_ofReal, neg_mul]
+  have hr : star ((Real.cos m : ℝ) : ℂ) = ((Real.cos m : ℝ) : ℂ) := by
+    rw [Complex.star_def, Complex.conj_ofReal]
+  rw [diracWalk, Mass.massStep, Mass.coin, star_mul, star_add, star_smul, star_smul, star_one, hb,
+    hc, hr, add_mul, mul_add, smul_mul_assoc, one_mul, mul_smul_comm, mul_one, smul_mul_assoc,
+    mul_smul_comm, hsH]
+  have key : ((Real.cos m : ℝ) : ℂ) • handed ky kx kz +
+      (Complex.I * ((Real.sin m : ℝ) : ℂ)) • (Mass.beta * handed ky kx kz) +
+      (((Real.cos m : ℝ) : ℂ) • star (handed ky kx kz) +
+        (-(Complex.I * ((Real.sin m : ℝ) : ℂ))) • (Mass.beta * handed ky kx kz)) =
+      ((Real.cos m : ℝ) : ℂ) • (handed ky kx kz + star (handed ky kx kz)) := by
+    rw [smul_add, neg_smul]; abel
+  rw [key, handed_add_star, smul_smul]
+  congr 1
+  push_cast
+  ring
+
+/-- **The Dirac walk's exact dispersion.** If `D v = λ v` with `v ≠ 0`, then `λ ≠ 0` and
+`λ + λ⁻¹ = 2 cos m Π cos k_i`. Every eigenvalue of a unitary is `e^{iE}`, so `cos E = cos m Π cos k_i`
+(`diracWalk_dispersion`). -/
+theorem diracWalk_eigen (ky kx kz m : ℝ) (v : Fin 2 × Fin 2 → ℂ) (lam : ℂ) (hv : v ≠ 0)
+    (h : diracWalk ky kx kz m *ᵥ v = lam • v) :
+    lam ≠ 0 ∧
+      lam + lam⁻¹ = ((2 * Real.cos m * Real.cos ky * Real.cos kx * Real.cos kz : ℝ) : ℂ) := by
+  set D := diracWalk ky kx kz m
+  have hU : star D * D = 1 := Matrix.mem_unitaryGroup_iff'.mp (diracWalk_unitary ky kx kz m)
+  have hback : lam • (star D *ᵥ v) = v := by
+    rw [← Matrix.mulVec_smul, ← h, Matrix.mulVec_mulVec, hU, Matrix.one_mulVec]
+  have hlam : lam ≠ 0 := by
+    rintro rfl
+    rw [zero_smul] at hback
+    exact hv hback.symm
+  have hstar : star D *ᵥ v = lam⁻¹ • v := by
+    rw [← hback, smul_smul, inv_mul_cancel₀ hlam, one_smul, hback]
+  refine ⟨hlam, ?_⟩
+  have hsum := congrArg (· *ᵥ v) (diracWalk_add_star ky kx kz m)
+  simp only [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec] at hsum
+  change D *ᵥ v + star D *ᵥ v = _ at hsum
+  rw [h, hstar, ← add_smul] at hsum
+  have hz : (lam + lam⁻¹ - ((2 * Real.cos m * Real.cos ky * Real.cos kx * Real.cos kz : ℝ) : ℂ)) • v
+      = 0 := by rw [sub_smul, hsum, sub_self]
+  rcases smul_eq_zero.mp hz with hz | hz
+  · exact sub_eq_zero.mp hz
+  · exact absurd hz hv
+
+/-- **`cos E = cos m · cos k_y cos k_x cos k_z`** for every eigenvalue `e^{iE}` of the Dirac walk. -/
+theorem diracWalk_dispersion (ky kx kz m E : ℝ) (v : Fin 2 × Fin 2 → ℂ) (hv : v ≠ 0)
+    (h : diracWalk ky kx kz m *ᵥ v = Complex.exp (E * Complex.I) • v) :
+    Real.cos E = Real.cos m * (Real.cos ky * Real.cos kx * Real.cos kz) := by
+  have h2 := (diracWalk_eigen ky kx kz m v _ hv h).2
+  rw [← Complex.exp_neg, ← neg_mul, ← Complex.two_cos, ← Complex.ofReal_cos] at h2
+  have h3 : 2 * Real.cos E = 2 * Real.cos m * Real.cos ky * Real.cos kx * Real.cos kz := by
+    exact_mod_cast h2
+  linear_combination h3 / 2
+
 end QLF.DiracWalk

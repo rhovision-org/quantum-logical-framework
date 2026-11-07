@@ -244,4 +244,50 @@ theorem realWalk_trace_even (ky kx kz : ℝ) :
     Matrix.trace (realWalk ky kx (-kz)) = Matrix.trace (realWalk ky kx kz) := by
   simp only [realWalk_trace, Real.cos_neg, and_self]
 
+/-- **Reversing the momentum is the adjoint**: `realStep t (−k) = realStep t k†`. -/
+theorem realStep_neg (t : Twist) (k : ℝ) : realStep t (-k) = star (realStep t k) := by
+  have h2 : star (Complex.exp (-(↑k * Complex.I))) = Complex.exp (↑k * Complex.I) := by
+    rw [← star_exp_kI k, star_star]
+  rw [realStep, realStep, star_add, star_smul, star_smul, Matrix.star_eq_conjTranspose,
+    Matrix.star_eq_conjTranspose, fix_herm, fix_herm, star_exp_kI, h2]
+  push_cast
+  rw [neg_mul, neg_neg]
+
+/-- **The palindromic walk at `−k` is its own adjoint at `k`**, because the reversed product of
+adjoints is the same palindrome. -/
+theorem realWalk_neg (ky kx kz : ℝ) :
+    realWalk (-ky) (-kx) (-kz) = star (realWalk ky kx kz) := by
+  simp only [realWalk, neg_div, realStep_neg, star_mul, mul_assoc]
+
+/-- **`W(k) + W(k)† = 2 cos k_y cos k_x cos k_z · 1`** at every momentum: both eigenvalues
+`e^{±iE}` obey `cos E = Π cos k_i`. -/
+theorem realWalk_add_star (ky kx kz : ℝ) :
+    realWalk ky kx kz + star (realWalk ky kx kz) =
+      (2 * ((Real.cos ky * Real.cos kx * Real.cos kz : ℝ) : ℂ)) • (1 : M) := by
+  rw [← realWalk_neg]
+  have hy : ky = 2 * (ky / 2) := by ring
+  have hx : kx = 2 * (kx / 2) := by ring
+  have hz : kz = 2 * (kz / 2) := by ring
+  conv_rhs => rw [hy, hx, hz]
+  simp only [realWalk, neg_div, realStep_eq_cos_sin, Real.cos_neg, Real.sin_neg, Twist.toMatrix,
+    σx, σy, σz, Real.cos_two_mul']
+  generalize ky / 2 = a
+  generalize kx / 2 = b
+  generalize kz / 2 = c
+  have h4 : Complex.I ^ 4 = 1 := Complex.I_pow_four
+  have h6 : Complex.I ^ 6 = -1 := by
+    rw [show (6 : ℕ) = 4 + 2 from rfl, pow_add, h4, Complex.I_sq, one_mul]
+  have h8 : Complex.I ^ 8 = 1 := by
+    rw [show (8 : ℕ) = 4 + 4 from rfl, pow_add, h4, one_mul]
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+  simp only [Matrix.mul_apply, Matrix.add_apply, Fin.sum_univ_two,
+    Matrix.smul_apply, Matrix.one_apply, Matrix.neg_apply, Matrix.of_apply, Matrix.cons_val',
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one,
+    Fin.isValue, smul_eq_mul, Fin.zero_eta, Fin.mk_one, ite_true] <;>
+  norm_num <;>
+  ring_nf <;>
+  simp only [h4, h6, h8, Complex.I_sq] <;>
+  ring
+
 end QLF.ClosureChannels
