@@ -24,8 +24,10 @@ exhibits the failure with `^` and `>`.
 
 ## But the flat model is not simply wrong — the two are different sectors
 
-A Kronecker product is a scalar exactly when both factors are, so **a joint closure of independent
-factors requires each factor to close on its own**. In the flat model a factor may stay *open* and be
+A Kronecker product is a (non-zero) scalar exactly when both factors are, so **a joint closure of
+independent factors requires each factor to close on its own**. That is now a theorem,
+`kron_scalar_iff` in [`QLF_TensorFromClosure`](QLF_TensorFromClosure.lean), which also derives the
+Kronecker form of independent bodies from interleaving invariance. In the flat model a factor may stay *open* and be
 balanced by the other — and that is precisely `SharedClosure` ([`ER_EPR_QLF`](ER_EPR_QLF.lean)),
 QLF's entanglement. Hence the split:
 

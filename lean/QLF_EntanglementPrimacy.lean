@@ -112,8 +112,9 @@ Read a pair `[t, t†]` as the twist's axis acting on both sites of a two-body s
    not derive that the physical window is the one that makes the gauge net half of it.
 3. **The two-body reading is a choice.** Rung 6 maps a pair to the joint action of its axis on two
    sites. That map is the natural one (each site holds one half), but it is chosen, not derived from
-   the twist histories; deriving the tensor product itself stays open (`closed_iff_singlet` already
-   assumes it).
+   the twist histories. The tensor product itself, which `closed_iff_singlet` used, is now derived
+   for two bodies in [`QLF_TensorFromClosure`](QLF_TensorFromClosure.lean): interleaving invariance
+   forces commuting bodies, and every such composite factors uniquely through `M ⊗ M ≅ Mat₄(ℂ)`.
 
 Rungs 1–6 of "the logical entanglement is responsible for all other results" are proved here for the
 twist layer: what closes (pairs), its phase (pairs × crossings), its Form (the open half), every
