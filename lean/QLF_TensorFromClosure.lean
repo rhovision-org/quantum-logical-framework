@@ -153,8 +153,10 @@ theorem step_proj {w w' : List Tok} (h : Step w w') :
 
 /-- Interleaving moves lift under a common first event. -/
 theorem rtg_cons (z : Tok) {w w' : List Tok} (h : Relation.ReflTransGen Step w w') :
-    Relation.ReflTransGen Step (z :: w) (z :: w') :=
-  Relation.ReflTransGen.lift (fun l => z :: l) (fun _ _ hs => Step.cons z hs) h
+    Relation.ReflTransGen Step (z :: w) (z :: w') := by
+  induction h with
+  | refl => exact Relation.ReflTransGen.refl
+  | tail _ hbc ih => exact ih.tail (Step.cons z hbc)
 
 theorem rtg_symm {w w' : List Tok} (h : Relation.ReflTransGen Step w w') :
     Relation.ReflTransGen Step w' w := by
@@ -175,7 +177,7 @@ theorem pass (t : Twist) (a : List Twist) (r : List Tok) :
   | cons s a ih =>
       show Relation.ReflTransGen Step ((true, t) :: (false, s) :: (tagA a ++ r))
         ((false, s) :: (tagA a ++ (true, t) :: r))
-      exact Relation.ReflTransGen.head (Step.swap _ _ _ (by decide)) (rtg_cons _ ih)
+      exact Relation.ReflTransGen.head (Step.swap _ _ _ (by simp)) (rtg_cons _ ih)
 
 /-- **Normal form**: every two-body word is an interleaving of "all of `A`, then all of `B`". -/
 theorem to_normal (w : List Tok) :
@@ -249,7 +251,7 @@ theorem interleaving_invariant_iff :
       ∀ s t : Twist, Commute (ρA s.toMatrix) (ρB t.toMatrix) := by
   constructor
   · intro h s t
-    have e := h _ _ (Step.swap (false, s) (true, t) [] (by decide))
+    have e := h _ _ (Step.swap (false, s) (true, t) [] (by simp))
     show ρA s.toMatrix * ρB t.toMatrix = ρB t.toMatrix * ρA s.toMatrix
     have e' : ρA s.toMatrix * (ρB t.toMatrix * 1) = ρB t.toMatrix * (ρA s.toMatrix * 1) := e
     rwa [mul_one, mul_one] at e'
@@ -326,12 +328,18 @@ theorem E11_twists :
 theorem E01_twists :
     E 0 1 = (1 / 2 : ℂ) • Twist.right.toMatrix + (Complex.I / 2) • Twist.up.toMatrix := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [E, Twist.toMatrix, σx, σy]
+  fin_cases i <;> fin_cases j <;> norm_num [E, Twist.toMatrix, σx, σy] <;>
+    first
+    | linear_combination (1 / 2 : ℂ) * Complex.I_mul_I
+    | linear_combination (-1 / 2 : ℂ) * Complex.I_mul_I
 
 theorem E10_twists :
     E 1 0 = (1 / 2 : ℂ) • Twist.right.toMatrix + (-Complex.I / 2) • Twist.up.toMatrix := by
   ext i j
-  fin_cases i <;> fin_cases j <;> norm_num [E, Twist.toMatrix, σx, σy]
+  fin_cases i <;> fin_cases j <;> norm_num [E, Twist.toMatrix, σx, σy] <;>
+    first
+    | linear_combination (1 / 2 : ℂ) * Complex.I_mul_I
+    | linear_combination (-1 / 2 : ℂ) * Complex.I_mul_I
 
 section Extend
 
@@ -350,15 +358,16 @@ private lemma comm_comb4_left {u₁ u₂ u₃ u₄ w : J} (a b c d : ℂ) (h₁ 
 /-- Commutation with every twist extends to commutation with every operator, by linearity. -/
 theorem commute_of_twists (ρ : M →ₐ[ℂ] J) (w : J) (h : ∀ t : Twist, Commute (ρ t.toMatrix) w)
     (X : M) : Commute (ρ X) w := by
-  have hE : ∀ i k : Fin 2, Commute (ρ (E i k)) w := by
-    intro i k
-    fin_cases i <;> fin_cases k
-    · rw [E00_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
-    · rw [E01_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
-    · rw [E10_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
-    · rw [E11_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
+  have h00 : Commute (ρ (E 0 0)) w := by
+    rw [E00_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
+  have h01 : Commute (ρ (E 0 1)) w := by
+    rw [E01_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
+  have h10 : Commute (ρ (E 1 0)) w := by
+    rw [E10_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
+  have h11 : Commute (ρ (E 1 1)) w := by
+    rw [E11_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
   rw [decomp_E X, map_add, map_add, map_add, map_smul, map_smul, map_smul, map_smul]
-  exact comm_comb4_left _ _ _ _ (hE 0 0) (hE 0 1) (hE 1 0) (hE 1 1)
+  exact comm_comb4_left _ _ _ _ h00 h01 h10 h11
 
 /-- **Letter commutation is full commutation**: if every twist on `A` commutes with every twist on
     `B`, the two bodies' whole operator algebras commute. -/
@@ -417,10 +426,10 @@ noncomputable def embA : M →ₐ[ℂ] Q where
   toFun := onA
   map_one' := onA_one
   map_mul' X Y := (onA_mul X Y).symm
-  map_zero' := by simp [onA, Matrix.zero_kronecker]
+  map_zero' := by simp [onA]
   map_add' X Y := by simp [onA, Matrix.add_kronecker]
   commutes' c := by
-    simp [onA, Algebra.algebraMap_eq_smul_one, Matrix.smul_kronecker, Matrix.one_kronecker_one]
+    simp [onA, Algebra.algebraMap_eq_smul_one, Matrix.smul_kronecker]
 
 open QLF.Tsirelson in
 /-- Body `B` acting on four-component states. -/
@@ -428,10 +437,10 @@ noncomputable def embB : M →ₐ[ℂ] Q where
   toFun := onB
   map_one' := onB_one
   map_mul' X Y := (onB_mul X Y).symm
-  map_zero' := by simp [onB, Matrix.kronecker_zero]
+  map_zero' := by simp [onB]
   map_add' X Y := by simp [onB, Matrix.kronecker_add]
   commutes' c := by
-    simp [onB, Algebra.algebraMap_eq_smul_one, Matrix.kronecker_smul, Matrix.one_kronecker_one]
+    simp [onB, Algebra.algebraMap_eq_smul_one, Matrix.kronecker_smul]
 
 lemma embA_apply (X : M) : embA X = QLF.Tsirelson.onA X := rfl
 lemma embB_apply (Y : M) : embB Y = QLF.Tsirelson.onB Y := rfl
