@@ -57,6 +57,10 @@ Only what a "body" means in QLF:
    `ℂ² ⊗ ℂ² = ℂ⁴` is sent to every other by some joint operator, so a subspace invariant under the
    derived composite and holding one non-zero state is everything. The tensor-product state space
    is irreducible for the composite of two independent bodies.
+8. **Any number of bodies (`n_interleaving_invariant_iff`, `nstep_proj`, `ncfold_eq`).** With
+   labels from any type, interleaving invariance holds exactly when every pair of distinct bodies
+   commutes, interleaving preserves each body's history, and the joint fold is the ordered product
+   of the bodies' own folds, `∏ᵢ ρᵢ(fold wᵢ)`.
 
 ## The two sectors
 
@@ -87,8 +91,10 @@ representation that no factorization reaches.
 2. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
    sites ([`EntanglementPrimacy`](QLF_EntanglementPrimacy.lean), rung 6) is still a reading. What is
    now derived is the space it lands in.
-3. **More than two bodies.** The proofs are for two labels. `N` bodies should iterate, giving
-   `M^{⊗N}`; that is not written out.
+3. **The `N`-fold tensor object.** For `N` bodies the interleaving rule, pairwise commutation and
+   the body-by-body factorization are proved (point 8). Packaging the ordered product as an algebra
+   map out of `⨂ᵢ M` (Mathlib's `PiTensorProduct`), and the converse that equal projections imply
+   interleaving-equivalence for `N > 2`, are not written out.
 
 **Credit.** The universal property of the tensor product of algebras is standard (Mathlib's
 `Algebra.TensorProduct.lift`). Deriving the composite of independent systems from local structure is
@@ -578,6 +584,124 @@ theorem two_body_states_irreducible (W : Submodule ℂ (Fin 2 × Fin 2 → ℂ))
   obtain ⟨t, rfl⟩ := kronLift_surjective X
   rw [← hX]
   exact hW t v hvW
+
+-- ==========================================
+-- §5d. Any number of bodies
+-- ==========================================
+
+section NBody
+
+variable {ι : Type*} [DecidableEq ι] {J : Type*} [Ring J] [Algebra ℂ J]
+
+/-- **One interleaving move among `N` bodies**: swap two adjacent events carried by different
+    labels. -/
+inductive NStep : List (ι × Twist) → List (ι × Twist) → Prop
+  | swap (x y : ι × Twist) (v : List (ι × Twist)) (h : x.1 ≠ y.1) : NStep (x :: y :: v) (y :: x :: v)
+  | cons (z : ι × Twist) {w w' : List (ι × Twist)} : NStep w w' → NStep (z :: w) (z :: w')
+
+/-- Body `i`'s history inside an `N`-body word. -/
+def nproj (i : ι) : List (ι × Twist) → List Twist
+  | [] => []
+  | x :: w => if x.1 = i then x.2 :: nproj i w else nproj i w
+
+lemma nproj_cons_self (i : ι) (t : Twist) (w : List (ι × Twist)) :
+    nproj i ((i, t) :: w) = t :: nproj i w := by simp [nproj]
+
+lemma nproj_cons_ne {i j : ι} (h : i ≠ j) (t : Twist) (w : List (ι × Twist)) :
+    nproj j ((i, t) :: w) = nproj j w := by simp [nproj, h]
+
+/-- An interleaving move changes no body's history. -/
+theorem nstep_proj {w w' : List (ι × Twist)} (h : NStep w w') (i : ι) : nproj i w = nproj i w' := by
+  induction h with
+  | swap x y v h =>
+      by_cases hx : x.1 = i
+      · have hy : y.1 ≠ i := fun hy => h (hx.trans hy.symm)
+        simp [nproj, hx, hy]
+      · by_cases hy : y.1 = i
+        · simp [nproj, hx, hy]
+        · simp [nproj, hx, hy]
+  | cons z _ ih => simp [nproj, ih]
+
+variable (ρ : ι → M →ₐ[ℂ] J)
+
+/-- The joint fold of an `N`-body word: each event acts through its own body's map. -/
+noncomputable def ncfold : List (ι × Twist) → J
+  | [] => 1
+  | x :: w => ρ x.1 x.2.toMatrix * ncfold w
+
+/-- **Independence of `N` bodies is pairwise commutation.** The joint fold ignores interleaving
+    exactly when every twist on one body commutes with every twist on every other body. -/
+theorem n_interleaving_invariant_iff :
+    (∀ w w', NStep w w' → ncfold ρ w = ncfold ρ w') ↔
+      ∀ i j : ι, i ≠ j → ∀ s t : Twist, Commute (ρ i s.toMatrix) (ρ j t.toMatrix) := by
+  constructor
+  · intro h i j hij s t
+    have e := h _ _ (NStep.swap (i, s) (j, t) [] hij)
+    have e' : ρ i s.toMatrix * (ρ j t.toMatrix * 1) = ρ j t.toMatrix * (ρ i s.toMatrix * 1) := e
+    show ρ i s.toMatrix * ρ j t.toMatrix = ρ j t.toMatrix * ρ i s.toMatrix
+    rwa [mul_one, mul_one] at e'
+  · intro hc w w' hs
+    induction hs with
+    | swap x y v h =>
+        show ρ x.1 x.2.toMatrix * (ρ y.1 y.2.toMatrix * ncfold ρ v)
+            = ρ y.1 y.2.toMatrix * (ρ x.1 x.2.toMatrix * ncfold ρ v)
+        rw [← mul_assoc, (hc x.1 y.1 h x.2 y.2).eq, mul_assoc]
+    | cons z _ ih =>
+        show ρ z.1 z.2.toMatrix * ncfold ρ _ = ρ z.1 z.2.toMatrix * ncfold ρ _
+        rw [ih]
+
+/-- Slot an operator into an ordered product past factors it commutes with. -/
+theorem insert_prod (X : J) (g : ι → J) (i : ι) :
+    ∀ L : List ι, L.Nodup → i ∈ L → (∀ j ∈ L, j ≠ i → Commute X (g j)) →
+      X * (L.map g).prod = (L.map (fun j => if j = i then X * g j else g j)).prod
+  | [], _, hi, _ => by simp at hi
+  | j :: L, hnd, hi, hc => by
+      rw [List.nodup_cons] at hnd
+      by_cases hji : j = i
+      · have hiL' : i ∉ L := hji ▸ hnd.1
+        have hrest : L.map (fun k => if k = i then X * g k else g k) = L.map g := by
+          apply List.map_congr_left
+          intro k hk
+          have hki : k ≠ i := fun h => hiL' (h ▸ hk)
+          simp [hki]
+        rw [List.map_cons, List.map_cons, List.prod_cons, List.prod_cons, hrest, if_pos hji,
+          mul_assoc]
+      · have hiL : i ∈ L := by
+          rcases List.mem_cons.1 hi with h | h
+          · exact absurd h.symm hji
+          · exact h
+        have ih := insert_prod X g i L hnd.2 hiL (fun k hk hki => hc k (by simp [hk]) hki)
+        rw [List.map_cons, List.map_cons, List.prod_cons, List.prod_cons, if_neg hji, ← mul_assoc,
+          (hc j (by simp) hji).eq, mul_assoc, ih]
+
+/-- **The `N`-body joint fold factors body by body.** For any duplicate-free list `L` of the bodies
+    a word uses, and pairwise-commuting bodies, the joint fold is the ordered product of each body's
+    own fold: `ncfold w = ∏_{i ∈ L} ρ i (fold w_i)`. This is the `N`-fold tensor product's universal
+    map evaluated on `⊗ᵢ fold w_i`. -/
+theorem ncfold_eq (hc : ∀ i j : ι, i ≠ j → ∀ s t : Twist, Commute (ρ i s.toMatrix) (ρ j t.toMatrix))
+    (L : List ι) (hL : L.Nodup) :
+    ∀ w : List (ι × Twist), (∀ x ∈ w, x.1 ∈ L) →
+      ncfold ρ w = (L.map fun i => ρ i (twistMatrixFold (nproj i w))).prod
+  | [], _ => by
+      show (1 : J) = (L.map fun i => ρ i (twistMatrixFold [])).prod
+      have h1 : ∀ i, ρ i (twistMatrixFold []) = 1 := fun i => map_one (ρ i)
+      simp [h1]
+  | (i, t) :: w, hw => by
+      have hi : i ∈ L := hw (i, t) (by simp)
+      have ih := ncfold_eq hc L hL w (fun x hx => hw x (by simp [hx]))
+      show ρ i t.toMatrix * ncfold ρ w = _
+      rw [ih, insert_prod (ρ i t.toMatrix) (fun j => ρ j (twistMatrixFold (nproj j w))) i L hL hi
+        (fun j _ hji =>
+        (commute_fold (ρ j) (ρ i) (fun s u => hc j i hji s u) (nproj j w) t).symm)]
+      congr 1
+      apply List.map_congr_left
+      intro j _
+      by_cases hji : j = i
+      · rw [if_pos hji, hji, nproj_cons_self, ← map_mul]
+        rfl
+      · rw [if_neg hji, nproj_cons_ne (Ne.symm hji)]
+
+end NBody
 
 -- ==========================================
 -- §6. The two sectors
