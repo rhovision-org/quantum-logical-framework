@@ -937,7 +937,8 @@ noncomputable def slotOp (i : Fin n) (X : M) : Module.End ℂ (Cfg n → ℂ) wh
     simp [mul_add, Finset.sum_add_distrib]
   map_smul' c ψ := by
     funext a
-    simp [Finset.mul_sum, mul_left_comm]
+    simp
+    ring
 
 theorem slotOp_apply (i : Fin n) (X : M) (ψ : Cfg n → ℂ) (a : Cfg n) :
     slotOp i X ψ a = ∑ k : Fin 2, X (a i) k * ψ (Function.update a i k) := rfl
@@ -1006,14 +1007,14 @@ theorem partOp_insert (a b : Cfg n) {i : Fin n} {T : Finset (Fin n)} (hi : i ∉
       rw [Matrix.single_apply_of_col_ne _ _ (Ne.symm hk), zero_mul]),
     partOp_apply]
   have hupd : ∀ m ∈ T, Function.update x i (b i) m = x m := fun m hm =>
-    Function.update_of_ne (fun e => hi (e ▸ hm)) _ _
+    Function.update_of_ne (show m ≠ i from fun e => hi (e ▸ hm)) _ _
   have hfun : (fun m => if m ∈ T then b m else Function.update x i (b i) m) =
       (fun m => if m ∈ insert i T then b m else x m) := by
     funext m
     by_cases hm : m = i
     · rw [hm]
       simp [hi]
-    · simp [hm, Finset.mem_insert, Function.update_of_ne hm]
+    · simp [hm, Finset.mem_insert]
   simp only [hfun]
   by_cases hx : x i = a i
   · have hiff : (∀ m ∈ insert i T, x m = a m) ↔ (∀ m ∈ T, Function.update x i (b i) m = a m) :=
@@ -1034,7 +1035,7 @@ theorem partOp_mem (a b : Cfg n) (T : Finset (Fin n)) : partOp a b T ∈ (slotLi
       exact Subalgebra.one_mem _
   | insert i T hi ih =>
       rw [partOp_insert a b hi]
-      refine Subalgebra.mul_mem _ ((AlgHom.mem_range _).2 ⟨PiTensorProduct.singleAlgHom i _, ?_⟩) ih
+      refine Subalgebra.mul_mem _ ((AlgHom.mem_range _).2 ⟨PiTensorProduct.singleAlgHom i (Matrix.single (a i) (b i) 1), ?_⟩) ih
       exact nTensorLift_single _ _ i _
 
 theorem partOp_univ_apply (a b : Cfg n) (ψ : Cfg n → ℂ) (x : Cfg n) :
@@ -1048,7 +1049,7 @@ theorem partOp_univ_apply (a b : Cfg n) (ψ : Cfg n → ℂ) (x : Cfg n) :
 theorem end_eq_sum (f : Module.End ℂ (Cfg n → ℂ)) :
     f = ∑ a, ∑ b, (LinearMap.toMatrix' f a b) • partOp a b Finset.univ := by
   apply LinearMap.ext; intro ψ; funext x
-  simp only [LinearMap.coeFn_sum, Finset.sum_apply, LinearMap.smul_apply, Pi.smul_apply,
+  simp only [LinearMap.sum_apply, Finset.sum_apply, LinearMap.smul_apply, Pi.smul_apply,
     smul_eq_mul, partOp_univ_apply, mul_ite, mul_zero]
   rw [Fintype.sum_eq_single x (fun a ha => Finset.sum_eq_zero fun b _ => if_neg (Ne.symm ha))]
   simp only [if_true]
