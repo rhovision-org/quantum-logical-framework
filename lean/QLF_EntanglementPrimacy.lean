@@ -73,6 +73,8 @@ creation operator creates only entanglements.
   `(½, 0, ½, 0)`.
 * **`rational_pure_state_is_frequency`**: every pure qubit state with a rational Bloch vector is a
   frequency of a strand.
+* **`form_approximated`**: every real Form, irrational coordinates included, is within `1/N` of a
+  strand frequency at window `N`, so it is a limit of strand frequencies.
 
 So the real numbers in a Form enter only as ratios of counts to a window. Pure-state normalisation
 `t = ½` is a choice of window (the gauge net is half the events), not an extra postulate.
@@ -104,10 +106,12 @@ Read a pair `[t, t†]` as the twist's axis acting on both sites of a two-body s
 
 ## What is still NOT proved (stated so nobody overclaims)
 
-1. **Irrational Forms.** A pure state whose Bloch vector is irrational is the frequency of no finite
-   strand. Rational points are dense on the sphere (classical), so each such state is a limit of
-   strand frequencies, but that limit is not formalised here. `QLF_Realizability` is the reason to
-   expect no more than rationals in a finite region; linking the two is open.
+1. **Irrational Forms are limits, not frequencies.** A Form with an irrational coordinate is the
+   frequency of no finite strand, but `form_approximated` puts some strand's frequency within `1/N`
+   of it at every window `N`, so it is a limit of strand frequencies. What is not shown: that the
+   approximants can be chosen **pure** when the target is pure (that needs density of rational
+   points on the sphere), and the link to `QLF_Realizability`, which is the reason to expect no more
+   than rationals in a finite region.
 2. **Why the window is `N`.** Rung 4 shows that `t = ½` is reached by choosing the window; it does
    not derive that the physical window is the one that makes the gauge net half of it.
 3. **The two-body reading is a choice.** Rung 6 maps a pair to the joint action of its axis on two
@@ -545,6 +549,34 @@ theorem rational_pure_state_is_frequency (a b c d : ℤ) (N : ℕ)
   refine ⟨ts, ?_, hts⟩
   rw [hts]
   exact hpure
+
+/-- **Every real Form is approached by strand frequencies.** For any Form `f` and any window `N`, some
+    strand's net counts sit within one unit of `N · f` on every axis, so its frequency
+    (`freqForm`, nets divided by `N`) is within `1/N` of `f`. As the window grows the frequencies
+    converge to `f`, irrational coordinates included. -/
+theorem form_approximated (f : Form) (N : ℕ) :
+    ∃ ts : List Twist,
+      |(netT ts : ℝ) - N * f.t| ≤ 1 ∧ |(netX ts : ℝ) - N * f.x| ≤ 1 ∧
+      |(netY ts : ℝ) - N * f.y| ≤ 1 ∧ |(netZ ts : ℝ) - N * f.z| ≤ 1 := by
+  obtain ⟨ts, h1, h2, h3, h4⟩ :=
+    strand_realizes ⌊(N : ℝ) * f.t⌋ ⌊(N : ℝ) * f.x⌋ ⌊(N : ℝ) * f.y⌋ ⌊(N : ℝ) * f.z⌋
+  refine ⟨ts, ?_, ?_, ?_, ?_⟩
+  · rw [h1, abs_le]
+    have := Int.floor_le ((N : ℝ) * f.t)
+    have := Int.lt_floor_add_one ((N : ℝ) * f.t)
+    constructor <;> linarith
+  · rw [h2, abs_le]
+    have := Int.floor_le ((N : ℝ) * f.x)
+    have := Int.lt_floor_add_one ((N : ℝ) * f.x)
+    constructor <;> linarith
+  · rw [h3, abs_le]
+    have := Int.floor_le ((N : ℝ) * f.y)
+    have := Int.lt_floor_add_one ((N : ℝ) * f.y)
+    constructor <;> linarith
+  · rw [h4, abs_le]
+    have := Int.floor_le ((N : ℝ) * f.z)
+    have := Int.lt_floor_add_one ((N : ℝ) * f.z)
+    constructor <;> linarith
 
 -- ==========================================
 -- Rung 5: the strong reading — which pairs cannot be split
