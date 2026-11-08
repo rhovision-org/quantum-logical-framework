@@ -60,7 +60,9 @@ Only what a "body" means in QLF:
 8. **Any number of bodies (`n_interleaving_invariant_iff`, `nstep_proj`, `ncfold_eq`).** With
    labels from any type, interleaving invariance holds exactly when every pair of distinct bodies
    commutes, interleaving preserves each body's history, and the joint fold is the ordered product
-   of the bodies' own folds, `∏ᵢ ρᵢ(fold wᵢ)`.
+   of the bodies' own folds, `∏ᵢ ρᵢ(fold wᵢ)`. Two `N`-body words are interleavings of each other
+   exactly when they agree on every body (`n_same_composite_iff`), so the composite history monoid
+   of `N` independent bodies is `H^N`.
 
 ## The two sectors
 
@@ -93,8 +95,7 @@ representation that no factorization reaches.
    now derived is the space it lands in.
 3. **The `N`-fold tensor object.** For `N` bodies the interleaving rule, pairwise commutation and
    the body-by-body factorization are proved (point 8). Packaging the ordered product as an algebra
-   map out of `⨂ᵢ M` (Mathlib's `PiTensorProduct`), and the converse that equal projections imply
-   interleaving-equivalence for `N > 2`, are not written out.
+   map out of `⨂ᵢ M` (Mathlib's `PiTensorProduct`) is not written out.
 
 **Credit.** The universal property of the tensor product of algebras is standard (Mathlib's
 `Algebra.TensorProduct.lift`). Deriving the composite of independent systems from local structure is
@@ -621,6 +622,64 @@ theorem nstep_proj {w w' : List (ι × Twist)} (h : NStep w w') (i : ι) : nproj
         · simp [nproj, hx, hy]
         · simp [nproj, hx, hy]
   | cons z _ ih => simp [nproj, ih]
+
+theorem n_rtg_cons (z : ι × Twist) {w w' : List (ι × Twist)} (h : Relation.ReflTransGen NStep w w') :
+    Relation.ReflTransGen NStep (z :: w) (z :: w') := by
+  induction h with
+  | refl => exact Relation.ReflTransGen.refl
+  | tail _ hbc ih => exact ih.tail (NStep.cons z hbc)
+
+/-- Pull the first body-`i` event to the front of a word, past events of other bodies. -/
+theorem extract (i : ι) (t : Twist) (l : List Twist) :
+    ∀ w : List (ι × Twist), nproj i w = t :: l →
+      ∃ r, Relation.ReflTransGen NStep w ((i, t) :: r) ∧ nproj i r = l ∧
+        ∀ j, j ≠ i → nproj j r = nproj j w
+  | [], h => by simp [nproj] at h
+  | y :: w, h => by
+      by_cases hy : y.1 = i
+      · rcases y with ⟨a, s⟩
+        simp only at hy
+        subst hy
+        rw [nproj_cons_self] at h
+        obtain ⟨rfl, rfl⟩ := List.cons.inj h
+        refine ⟨w, Relation.ReflTransGen.refl, rfl, fun j hj => ?_⟩
+        rw [nproj_cons_ne (Ne.symm hj)]
+      · have h' : nproj i w = t :: l := by simpa [nproj, hy] using h
+        obtain ⟨r, hr, hri, hrj⟩ := extract i t l w h'
+        refine ⟨y :: r, ?_, ?_, fun j hj => ?_⟩
+        · exact (n_rtg_cons y hr).tail (NStep.swap y (i, t) r hy)
+        · simp [nproj, hy, hri]
+        · simp [nproj, hrj j hj]
+
+/-- **The `N`-body composite is the tuple of body histories.** Two `N`-body words are interleavings
+    of each other exactly when they agree on every body. -/
+theorem n_same_composite_iff :
+    ∀ w w' : List (ι × Twist),
+      Relation.ReflTransGen NStep w w' ↔ ∀ i, nproj i w = nproj i w' := by
+  intro w w'
+  constructor
+  · intro h i
+    induction h with
+    | refl => rfl
+    | tail _ hbc ih => exact ih.trans (nstep_proj hbc i)
+  · intro h
+    induction w' generalizing w with
+    | nil =>
+        cases w with
+        | nil => exact Relation.ReflTransGen.refl
+        | cons y w =>
+            have := h y.1
+            simp [nproj] at this
+    | cons x v ih =>
+        rcases x with ⟨i, t⟩
+        have hx : nproj i w = t :: nproj i v := by rw [h i, nproj_cons_self]
+        obtain ⟨r, hr, hri, hrj⟩ := extract i t (nproj i v) w hx
+        have hrv : ∀ j, nproj j r = nproj j v := by
+          intro j
+          by_cases hj : j = i
+          · rw [hj, hri]
+          · rw [hrj j hj, h j, nproj_cons_ne (Ne.symm hj)]
+        exact hr.trans (n_rtg_cons _ (ih r hrv))
 
 variable (ρ : ι → M →ₐ[ℂ] J)
 
