@@ -63,6 +63,10 @@ Only what a "body" means in QLF:
    of the bodies' own folds, `∏ᵢ ρᵢ(fold wᵢ)`. Two `N`-body words are interleavings of each other
    exactly when they agree on every body (`n_same_composite_iff`), so the composite history monoid
    of `N` independent bodies is `H^N`.
+9. **The `N`-fold tensor object (`nTensorLift`, `nTensorLift_unique`, `n_composite_is_tensor`).**
+   For bodies labelled `0, …, N−1`, the ordered product of commuting body actions is an algebra map
+   out of Mathlib's `⨂[ℂ] i, M`, it is the only one restricting to each body on its own slot, and
+   every joint fold is that map applied to `fold w₀ ⊗ ⋯ ⊗ fold w_{N−1}`.
 
 ## The two sectors
 
@@ -93,9 +97,9 @@ representation that no factorization reaches.
 2. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
    sites ([`EntanglementPrimacy`](QLF_EntanglementPrimacy.lean), rung 6) is still a reading. What is
    now derived is the space it lands in.
-3. **The `N`-fold tensor object.** For `N` bodies the interleaving rule, pairwise commutation and
-   the body-by-body factorization are proved (point 8). Packaging the ordered product as an algebra
-   map out of `⨂ᵢ M` (Mathlib's `PiTensorProduct`) is not written out.
+3. **`N`-body faithfulness and isomorphism.** Point 9 gives the factoring map out of `⨂ᵢ M`. That
+   it is injective, and an isomorphism onto `Mat_{2^N}(ℂ)` for the twist realization, is proved
+   only for `N = 2` (`composite_faithful`, `tensorEquiv`).
 
 **Credit.** The universal property of the tensor product of algebras is standard (Mathlib's
 `Algebra.TensorProduct.lift`). Deriving the composite of independent systems from local structure is
@@ -761,6 +765,103 @@ theorem ncfold_eq (hc : ∀ i j : ι, i ≠ j → ∀ s t : Twist, Commute (ρ i
       · rw [if_neg hji, nproj_cons_ne (Ne.symm hji)]
 
 end NBody
+
+-- ==========================================
+-- §5e. The N-fold tensor object
+-- ==========================================
+
+section NTensor
+
+variable {J : Type*} [Ring J] [Algebra ℂ J]
+
+/-- An ordered product of entries that are all `1` is `1`. -/
+theorem ofFn_prod_ones {n : ℕ} (g : Fin n → J) (h : ∀ j, g j = 1) : (List.ofFn g).prod = 1 := by
+  rw [show g = fun _ => 1 from funext h]
+  simp
+
+/-- An ordered product whose entries are `1` away from position `i` is its `i`-th entry. -/
+theorem ofFn_single_prod : ∀ {n : ℕ} (i : Fin n) (g : Fin n → J), (∀ j, j ≠ i → g j = 1) →
+    (List.ofFn g).prod = g i
+  | 0, i, _, _ => i.elim0
+  | n + 1, i, g, h => by
+      rw [List.ofFn_succ, List.prod_cons]
+      cases i using Fin.cases with
+      | zero =>
+          rw [ofFn_prod_ones (fun j => g j.succ) (fun j => h _ (Fin.succ_ne_zero j)), mul_one]
+      | succ k =>
+          rw [h 0 (Fin.succ_ne_zero k).symm, one_mul]
+          exact ofFn_single_prod k (fun j => g j.succ)
+            (fun j hj => h _ (fun e => hj (Fin.succ_injective _ e)))
+
+/-- **Ordered products split when later factors of one kind commute past earlier ones of the
+other.** `∏ (aᵢ bᵢ) = (∏ aᵢ)(∏ bᵢ)` once every `bᵢ` commutes with every `aⱼ`, `j ≠ i`. -/
+theorem ofFn_prod_mul : ∀ {n : ℕ} (a b : Fin n → J), (∀ i j, i ≠ j → Commute (b i) (a j)) →
+    (List.ofFn fun i => a i * b i).prod = (List.ofFn a).prod * (List.ofFn b).prod
+  | 0, _, _, _ => by simp
+  | n + 1, a, b, h => by
+      simp only [List.ofFn_succ, List.prod_cons]
+      rw [ofFn_prod_mul (fun i => a i.succ) (fun i => b i.succ)
+        (fun i j hij => h _ _ (fun e => hij (Fin.succ_injective _ e)))]
+      have hc : Commute (b 0) (List.ofFn fun i => a i.succ).prod := by
+        apply Commute.list_prod_right
+        intro c hcm
+        simp only [List.mem_ofFn] at hcm
+        obtain ⟨j, rfl⟩ := hcm
+        exact h 0 j.succ (Fin.succ_ne_zero j).symm
+      simp only [mul_assoc]
+      rw [← mul_assoc (b 0), hc.eq]
+      simp only [mul_assoc]
+
+variable {n : ℕ} (ρ : Fin n → M →ₐ[ℂ] J)
+
+/-- The ordered product `(Xᵢ)ᵢ ↦ ρ₀ X₀ · ρ₁ X₁ ⋯`, multilinear in the bodies' operators. -/
+noncomputable def nMulti : MultilinearMap ℂ (fun _ : Fin n => M) J :=
+  (MultilinearMap.mkPiAlgebraFin ℂ n J).compLinearMap (fun i => (ρ i).toLinearMap)
+
+theorem nMulti_apply (x : Fin n → M) : nMulti ρ x = (List.ofFn fun i => ρ i (x i)).prod := by
+  simp [nMulti, MultilinearMap.mkPiAlgebraFin_apply]
+
+variable (hc : ∀ i j : Fin n, i ≠ j → ∀ X Y : M, Commute (ρ i X) (ρ j Y))
+
+/-- **The factoring map out of the `N`-fold tensor product `⨂ᵢ M`.** When distinct bodies commute
+(which interleaving invariance forces, `n_interleaving_invariant_iff`), the ordered product of the
+bodies' actions is an algebra map out of `⨂[ℂ] i, M`. -/
+noncomputable def nTensorLift : (⨂[ℂ] _ : Fin n, M) →ₐ[ℂ] J :=
+  PiTensorProduct.liftAlgHom (nMulti ρ) (by rw [nMulti_apply]; simp) (fun x y => by
+    rw [nMulti_apply, nMulti_apply, nMulti_apply]
+    simp only [Pi.mul_apply, map_mul]
+    exact ofFn_prod_mul _ _ (fun i j hij => hc i j hij _ _))
+
+theorem nTensorLift_tprod (x : Fin n → M) :
+    nTensorLift ρ hc (PiTensorProduct.tprod ℂ x) = (List.ofFn fun i => ρ i (x i)).prod := by
+  simp [nTensorLift, nMulti_apply]
+
+/-- On `1 ⊗ ⋯ ⊗ X ⊗ ⋯ ⊗ 1` (`X` in slot `i`) the factoring map is body `i`'s own action. -/
+theorem nTensorLift_single (i : Fin n) (X : M) :
+    nTensorLift ρ hc (PiTensorProduct.singleAlgHom i X) = ρ i X := by
+  simp only [PiTensorProduct.singleAlgHom_apply, MonoidHom.mulSingle_apply, nTensorLift_tprod]
+  rw [ofFn_single_prod i _ (fun j hj => by simp [Pi.mulSingle_eq_of_ne hj])]
+  simp
+
+/-- **Uniqueness: the universal property of `⨂ᵢ M`.** Any algebra map out of `⨂ᵢ M` that restricts
+to each body's action on its own slot is `nTensorLift`. -/
+theorem nTensorLift_unique (Φ : (⨂[ℂ] _ : Fin n, M) →ₐ[ℂ] J)
+    (h : ∀ i X, Φ (PiTensorProduct.singleAlgHom i X) = ρ i X) : Φ = nTensorLift ρ hc :=
+  PiTensorProduct.algHom_ext fun i => AlgHom.ext fun X => by
+    rw [AlgHom.comp_apply, AlgHom.comp_apply, h, nTensorLift_single]
+
+/-- **Every `N`-body joint fold factors through `⨂ᵢ M`.** If distinct bodies' twists commute, the
+joint fold of any word is the factoring map applied to `fold w₀ ⊗ fold w₁ ⊗ ⋯`. This is the
+`N`-body form of `composite_is_tensor`. -/
+theorem n_composite_is_tensor
+    (ht : ∀ i j : Fin n, i ≠ j → ∀ s t : Twist, Commute (ρ i s.toMatrix) (ρ j t.toMatrix))
+    (w : List (Fin n × Twist)) :
+    ncfold ρ w = nTensorLift ρ (fun i j hij => commute_all (ρ i) (ρ j) (ht i j hij))
+      (PiTensorProduct.tprod ℂ fun i => twistMatrixFold (nproj i w)) := by
+  rw [nTensorLift_tprod, ncfold_eq ρ ht (List.finRange n) (by first | exact List.nodup_finRange n | exact List.nodup_finRange) w
+    (fun x _ => by simp), List.ofFn_eq_map]
+
+end NTensor
 
 -- ==========================================
 -- §6. The two sectors
