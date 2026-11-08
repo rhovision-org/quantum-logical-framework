@@ -42,6 +42,7 @@ from twist_core import pauli_fold
 SYMBOLS = "^v></\\+-"          # rholo integer t -> symbol SYMBOLS[t]
 AXES = ("y", "x", "z", "g")    # axis index 0..3
 MIN_LEN = 4                    # length-2 closures t t† all fold to -I: no bit to record
+MAX_LEN = 64                   # bound on any submitted history (seed ++ continuation)
 PHASE_RANK = {"+1": 0, "-1": 1, "+i": 2, "-i": 3}   # qucalc_search._PHASE_RANK
 
 
@@ -73,6 +74,20 @@ def phase(ts: list[int]) -> Optional[str]:
         if abs(a - z) < 1e-9:
             return name
     return None
+
+
+def valid_twists(ts) -> bool:
+    """Fail closed: a list of plain ints in 0..7, at most MAX_LEN long.
+    (bool is excluded explicitly: Python's True is an int, Rholang's is not.)"""
+    return (isinstance(ts, list) and len(ts) <= MAX_LEN
+            and all(type(t) is int and 0 <= t <= 7 for t in ts))
+
+
+def question_id(seed: list[int], context: int) -> tuple:
+    """A question IS its (seed, context): content-addressed, so re-asking it is a
+    no-op and no two parties can bind one id to different questions. The contract
+    uses the pair itself as the map key."""
+    return (tuple(seed), context)
 
 
 def is_closure(ts: list[int]) -> bool:
@@ -203,6 +218,8 @@ class KB:
 
     # -- layer 1–3 ----------------------------------------------------------
     def assert_closure(self, name: str, ts: list[int], attester) -> dict:
+        if not valid_twists(ts):
+            return {"ok": False, "error": "invalid twists"}
         if not is_closure(ts):
             return {"ok": False, "residual": tuple(-x for x in action(ts))}
         cid = content_id(ts)
@@ -240,12 +257,21 @@ class KB:
         return max(sorted(c), key=lambda x: len(self.records[x].attesters))
 
     # -- layer 4 ------------------------------------------------------------
-    def ask(self, q: str, seed: list[int], context: int) -> dict:
-        self.questions[q] = Question(list(seed), context)
-        return {"residual": tuple(-x for x in action(seed))}
+    def ask(self, seed: list[int], context: int) -> dict:
+        """Grow-only: the id is the question's content, so a replayed ask finds
+        the same entry and leaves its answers alone."""
+        if not valid_twists(seed) or type(context) is not int or not 0 <= context <= 3:
+            return {"ok": False, "error": "invalid question"}
+        q = question_id(seed, context)
+        self.questions.setdefault(q, Question(list(seed), context))
+        return {"ok": True, "q": q, "residual": tuple(-x for x in action(seed))}
 
-    def answer(self, q: str, cont: list[int], attester) -> dict:
-        qq = self.questions[q]
+    def answer(self, q, cont: list[int], attester) -> dict:
+        qq = self.questions.get(q)
+        if qq is None:
+            return {"ok": False, "error": "no such question"}
+        if not valid_twists(cont):
+            return {"ok": False, "error": "invalid twists"}
         res = self.assert_closure(q, qq.seed + cont, attester)
         if res["ok"]:
             qq.answers.add(res["id"])
@@ -258,7 +284,9 @@ class KB:
         has a recorded closing prefix, that prefix has excursion <= and length <,
         so the cascade already ranks it first. The minimum over all answers is
         the minimum over events (qucalc_search mode=events)."""
-        qq = self.questions[q]
+        qq = self.questions.get(q)
+        if qq is None:
+            return None
         best = self._cascade(qq.answers)
         return self.records[best[0]].twists[len(qq.seed):] if best else None
 
@@ -271,7 +299,8 @@ def cascade_key(ts: list[int]) -> tuple:
     return (excursion(ts), len(ts), PHASE_RANK[phase(ts)], to_str(ts))
 
 
-def shard_of(key: str, k: int) -> int:
+def shard_of(key, k: int) -> int:
+    key = key if isinstance(key, str) else repr(key)
     return int(hashlib.blake2b(key.encode(), digest_size=8).hexdigest(), 16) % k
 
 
@@ -311,8 +340,8 @@ class ShardedKB:
         self.idx = [IndexShard() for _ in range(k)]
 
     # legs, exposed separately so a test can deliver them in any order, twice
-    def legs(self, name: str, ts: list[int], attester):
-        if not is_closure(ts):            # the gate is stateless: any shard checks it
+    def legs(self, name, ts: list[int], attester):
+        if not valid_twists(ts) or not is_closure(ts):            # the gate is stateless: any shard checks it
             return []
         cid = content_id(ts)
         r = self.rec[shard_of(cid, self.k)]
@@ -335,11 +364,15 @@ class ShardedKB:
         e = self.idx[shard_of(name, self.k)].names.get(name)
         return min(e)[1] if e else None
 
-    def ask(self, q: str, seed: list[int]) -> None:
-        self.idx[shard_of(q, self.k)].seeds[q] = list(seed)
+    def ask(self, seed: list[int], context: int):
+        q = question_id(seed, context)
+        self.idx[shard_of(repr(q), self.k)].seeds.setdefault(q, list(seed))
+        return q
 
-    def answer_legs(self, q: str, cont: list[int], attester):
-        return self.legs(q, self.idx[shard_of(q, self.k)].seeds[q] + cont, attester)
+    def answer_legs(self, q, cont: list[int], attester):
+        if not valid_twists(cont):
+            return []
+        return self.legs(q, list(q[0]) + list(cont), attester)
 
     def solve(self, q: str) -> Optional[list[int]]:
         i = self.idx[shard_of(q, self.k)]
@@ -417,11 +450,11 @@ def _selfcheck() -> None:
     # (e) solve agrees with qucalc_search.solve when every short event is recorded
     for seed in ["^", "^>", "+^", "^<", "/+"]:
         kb2 = KB()
-        kb2.ask("q", from_str(seed), context=0)
+        q = kb2.ask(from_str(seed), 0)["q"]
         for rec in qs.search(seed, max_depth=5, limit=None, absorbing=False):
-            kb2.answer("q", from_str(rec["cont"]), alice)
+            kb2.answer(q, from_str(rec["cont"]), alice)
         ref = qs.solve(seed, max_depth=4)
-        got = kb2.solve("q")
+        got = kb2.solve(q)
         assert ref["solved"] and to_str(got) == ref["cont"], (seed, got, ref["cont"])
     print("(e) solve over all possibilities (non-events included) matches qucalc_search.solve on 5 seeds")
 
@@ -441,15 +474,15 @@ def _selfcheck() -> None:
     for n, ts, a in work:
         ref.assert_closure(n, ts, a)
     for sd in seeds:
-        ref.ask("q" + sd, from_str(sd), 0)
+        ref.ask(from_str(sd), 0)
     for sd, c, a in answers:
-        ref.answer("q" + sd, c, a)
+        ref.answer(question_id(from_str(sd), 0), c, a)
     for k in range(1, 8):
         kb3 = ShardedKB(k)
         for sd in seeds:
-            kb3.ask("q" + sd, from_str(sd))
+            kb3.ask(from_str(sd), 0)
         legs = [l for n, ts, a in work for l in kb3.legs(n, ts, a)]
-        legs += [l for sd, c, a in answers for l in kb3.answer_legs("q" + sd, c, a)]
+        legs += [l for sd, c, a in answers for l in kb3.answer_legs(question_id(from_str(sd), 0), c, a)]
         legs = legs + rng.sample(legs, len(legs) // 3)            # re-delivery
         rng.shuffle(legs)                                          # any order across shards
         for leg in legs:
@@ -460,9 +493,33 @@ def _selfcheck() -> None:
             for cid in ref.records:
                 assert kbx.redundancy(cid) == ref.redundancy(cid), (k, cid)
             for sd in seeds:
-                assert kbx.solve("q" + sd) == ref.solve("q" + sd), (k, sd)
+                qid = question_id(from_str(sd), 0)
+                assert kbx.solve(qid) == ref.solve(qid), (k, sd)
     print(f"(f) sharded k=1..7, {len(work) + len(answers)} writes shuffled + 1/3 re-delivered: "
           f"ways, redundancy, first, solve all equal the single store")
+
+    # (g) review fixes: questions are grow-only, malformed input fails closed with an answer.
+    kb4 = KB()
+    seed = from_str("^>")
+    q = kb4.ask(seed, 0)["q"]
+    kb4.answer(q, from_str("<v"), alice)
+    before = kb4.solve(q)
+    again = kb4.ask(seed, 0)                                   # replayed ask
+    assert again["q"] == q and kb4.solve(q) == before and len(kb4.questions[q].answers) == 1
+    q2 = kb4.ask(seed, 1)["q"]                                 # same seed, other context:
+    assert q2 != q and kb4.solve(q2) is None and kb4.solve(q) == before   # a different question
+    bad = [[8], [-1], [0, 1, True, 2], [0.0, 1, 2, 3], "^v<>", None, (0, 1, 2, 3),
+           [0, 1] * (MAX_LEN // 2) + [0, 1]]
+    for b in bad:
+        r = kb4.assert_closure("x", b, alice)
+        assert r == {"ok": False, "error": "invalid twists"}, (b, r)
+        assert kb4.answer(q, b, alice)["ok"] is False
+        assert kb4.ask(b, 0)["ok"] is False
+    assert kb4.ask(seed, 4)["ok"] is False and kb4.ask(seed, "0")["ok"] is False
+    assert kb4.answer(("nope",), from_str("<v"), alice)["error"] == "no such question"
+    assert kb4.solve(q) == before and "x" not in kb4.names
+    print(f"(g) replayed ask keeps its answers; {len(bad)} malformed inputs refused on "
+          f"assert/ask/answer; state unchanged")
     print("all self-checks passed")
 
 

@@ -16,11 +16,16 @@
 //   QKB!("ways",       name, ret)                     -> Int   distinct closures filed under name
 //   QKB!("redundancy", id, ret)                       -> Int   independent holders of one closure
 //   QKB!("first",      name, ret)                     -> id | Nil   first-reached closure (priority)
-//   QKB!("ask",        q, seed, context, ret)         -> residual   what any answer must supply
+//   QKB!("ask",        seed, context, ret)            -> {ok, q, residual}   q = (seed, context)
 //   QKB!("answer",     q, cont, *attester, ret)       -> as "assert", for seed ++ cont
 //   QKB!("solve",      q, ret)                        -> cont | Nil   the first-reached recorded answer
 //   QKB!("compatible", p, q, ret)                     -> Bool  read from the plaquette fold
 //   QKB!("conjoin",    p, q, ret)                     -> prop | "incompatible"
+//
+// A question IS its (seed, context): the pair is the map key, so re-asking is a no-op that
+// cannot discard answers, and no one can bind an existing id to a different question.
+// Every list of twists is validated first (a list of Int in 0..7, length <= 64); anything
+// else is refused with {ok: false, error: "invalid twists"} before it reaches scan or a native.
 //
 // Propositions: "bot", "top", or (axis, sign) with sign 1 / -1.
 // `attester` is the caller's own unforgeable name (e.g. its deployerId). Only its holder can
@@ -30,13 +35,30 @@ new QKB,
     zfaNative(`rho:qucalc:zfa`),     // -> (Bool, phase)  phase: 1 +I, -1 -I, 2 +iI, -2 -iI, 0 none
     grant(`rho:qucalc:grant`),       // -> content-addressed uri (blake2b of the twists), persisted
     stateCh,
-    scan, absOf, abs4, rankKey, lexLess, keyLess, argmin
+    scan, absOf, abs4, lexLess, keyLess, argmin, validTwists, allTwists
 in {
 
   // One linear cell, consumed and restored (MasterDictionary requirement 9).
   stateCh!({ "records": {}, "names": {}, "questions": {} }) |
 
   // ---------------------------------------------------------------- helpers
+
+  // Fail closed: true iff `ts` is a list of Int in 0..7 with length <= 64.
+  contract validTwists(@ts, ret) = {
+    match ts {
+      [..._] => { if (ts.length() > 64) { ret!(false) } else { allTwists!(ts, 0, *ret) } }
+      _      => ret!(false)
+    }
+  } |
+
+  contract allTwists(@ts, @i, ret) = {
+    if (i == ts.length()) { ret!(true) } else {
+      match ts.nth(i) {
+        t /\ Int => { if (t >= 0 and t <= 7) { allTwists!(ts, i + 1, *ret) } else { ret!(false) } }
+        _        => ret!(false)
+      }
+    }
+  } |
 
   contract absOf(@x, ret) = { if (x < 0) { ret!(0 - x) } else { ret!(x) } } |
 
@@ -121,27 +143,32 @@ in {
   // it checks #even == #odd in aggregate, which admits e.g. ^^<< (y = +2, x = -2).
   // Its phase is used, and is never 0 on an admitted history (count_balanced_pauli_closed).
   contract QKB(@"assert", @name, @ts, attester, ret) = {
-    new avCh, zCh, gCh in {
-      scan!(ts, 0, [0, 0, 0, 0], 0, *avCh) | zfaNative!(ts, *zCh) |
-      for (@(v, peak) <- avCh & @(_, ph) <- zCh) {
-        if (ts.length() >= 4 and v == [0, 0, 0, 0] and ph != 0) {
-          grant!(ts, *gCh) |
-          for (@cid <- gCh; @st <- stateCh) {
-            let @rec <- st.get("records").getOrElse(cid,
-                          {"twists": ts, "phase": ph, "excursion": peak, "attesters": Set()}) in {
-              let @rec2 <- rec.set("attesters", rec.get("attesters").add(*attester)) in {
-                let @ways <- st.get("names").getOrElse(name, Set()).add(cid) in {
-                  stateCh!(st.set("records", st.get("records").set(cid, rec2))
-                             .set("names", st.get("names").set(name, ways))) |
-                  ret!({"ok": true, "id": cid, "ways": ways.size(),
-                        "redundancy": rec2.get("attesters").size()})
+    new okCh, avCh, zCh, gCh in {
+      validTwists!(ts, *okCh) |
+      for (@valid <- okCh) {
+        if (not valid) { ret!({"ok": false, "error": "invalid twists"}) } else {
+          scan!(ts, 0, [0, 0, 0, 0], 0, *avCh) | zfaNative!(ts, *zCh) |
+          for (@(v, peak) <- avCh & @(_, ph) <- zCh) {
+            if (ts.length() >= 4 and v == [0, 0, 0, 0] and ph != 0) {
+              grant!(ts, *gCh) |
+              for (@cid <- gCh; @st <- stateCh) {
+                let @rec <- st.get("records").getOrElse(cid,
+                              {"twists": ts, "phase": ph, "excursion": peak, "attesters": Set()}) in {
+                  let @rec2 <- rec.set("attesters", rec.get("attesters").add(*attester)) in {
+                    let @ways <- st.get("names").getOrElse(name, Set()).add(cid) in {
+                      stateCh!(st.set("records", st.get("records").set(cid, rec2))
+                                 .set("names", st.get("names").set(name, ways))) |
+                      ret!({"ok": true, "id": cid, "ways": ways.size(),
+                            "redundancy": rec2.get("attesters").size()})
+                    }
+                  }
                 }
               }
+            } else {
+              ret!({"ok": false,
+                    "residual": [0 - v.nth(0), 0 - v.nth(1), 0 - v.nth(2), 0 - v.nth(3)]})
             }
           }
-        } else {
-          ret!({"ok": false,
-                "residual": [0 - v.nth(0), 0 - v.nth(1), 0 - v.nth(2), 0 - v.nth(3)]})
         }
       }
     }
@@ -165,23 +192,42 @@ in {
 
   // ---------------------------------------------------------------- layer 4
 
-  contract QKB(@"ask", @q, @seed, @context, ret) = {
-    new avCh in {
-      scan!(seed, 0, [0, 0, 0, 0], 0, *avCh) |
-      for (@(v, _) <- avCh; @st <- stateCh) {
-        stateCh!(st.set("questions", st.get("questions").set(q,
-                   {"seed": seed, "context": context, "answers": Set()}))) |
-        ret!([0 - v.nth(0), 0 - v.nth(1), 0 - v.nth(2), 0 - v.nth(3)])
+  // Grow-only: an existing entry is kept as it is (its answers survive a replayed ask).
+  contract QKB(@"ask", @seed, @context, ret) = {
+    new okCh, avCh in {
+      validTwists!(seed, *okCh) |
+      for (@valid <- okCh) {
+        match (valid, context) {
+          (true, c /\ Int) => {
+            if (c < 0 or c > 3) { ret!({"ok": false, "error": "invalid question"}) } else {
+              scan!(seed, 0, [0, 0, 0, 0], 0, *avCh) |
+              for (@(v, _) <- avCh; @st <- stateCh) {
+                let @q <- (seed, context) in {
+                  match st.get("questions").get(q) {
+                    Nil => stateCh!(st.set("questions", st.get("questions").set(q,
+                             {"seed": seed, "context": context, "answers": Set()})))
+                    _   => stateCh!(st)
+                  } |
+                  ret!({"ok": true, "q": q,
+                        "residual": [0 - v.nth(0), 0 - v.nth(1), 0 - v.nth(2), 0 - v.nth(3)]})
+                }
+              }
+            }
+          }
+          _ => ret!({"ok": false, "error": "invalid question"})
+        }
       }
     }
   } |
 
   contract QKB(@"answer", @q, @cont, attester, ret) = {
-    new resCh in {
-      for (@st <<- stateCh) {
-        match st.get("questions").get(q) {
-          Nil => ret!({"ok": false, "error": "no such question"})
-          qq  => {
+    new okCh, resCh in {
+      validTwists!(cont, *okCh) |
+      for (@valid <- okCh; @st <<- stateCh) {
+        match (valid, st.get("questions").get(q)) {
+          (false, _) => ret!({"ok": false, "error": "invalid twists"})
+          (_, Nil)   => ret!({"ok": false, "error": "no such question"})
+          (_, qq)    => {
             QKB!("assert", q, qq.get("seed") ++ cont, *attester, *resCh) |
             for (@res <- resCh) {
               if (res.get("ok")) {

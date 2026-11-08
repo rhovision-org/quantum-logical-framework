@@ -4,8 +4,10 @@
 every rule below and checks them against the repo's canonical engines ([`twist_core.py`](twist_core.py),
 [`qucalc_search.py`](qucalc_search.py)); it runs in under a second and passes. The Rholang contract
 [`rholang/QKB.rho`](rholang/QKB.rho) is the same design written for
-[rholo](https://github.com/rhovision-org/rholo) and its `rho:qucalc:*` natives. **It has not yet been
-deployed on a node.** Part of the [Quantum Logical Framework (QLF)](README.md).
+[rholo](https://github.com/rhovision-org/rholo) and its `rho:qucalc:*` natives. **It has not been
+parsed or run by rholo, nor deployed on a node.** Until a pinned parser check and an isolated-node
+acceptance run exist, it is a specification, not an accepted implementation. Part of the
+[Quantum Logical Framework (QLF)](README.md).
 
 ZFA here means what it means everywhere in QLF: equal and opposite quantum logical action, with zero
 free energy left over.
@@ -116,11 +118,11 @@ not a change made from here.
 
 | Query | Returns | Statistic |
 |---|---|---|
-| `assert(name, twists, attester)` | `{ok, id, ways, redundancy}` or `{ok: false, residual}` | a refusal carries the action vector still owed, so it is never silent |
+| `assert(name, twists, attester)` | `{ok, id, ways, redundancy}`, or `{ok: false, residual}`, or `{ok: false, error: "invalid twists"}` | a refusal carries the action vector still owed, so it is never silent |
 | `ways(name)` | number of distinct closures under `name` | **multiplicity**, a count that is absolute, not capacity-relative |
 | `redundancy(id)` | number of independent holders | **R**, how much of a meme the record is |
 | `first(name)` | the closure under `name` reached first | **priority**: least excursion, then shortest, then phase, then lexicographic |
-| `ask(q, seed, context)` | the residual action vector | what any answer must supply |
+| `ask(seed, context)` | `{ok, q, residual}` with `q = (seed, context)` | what any answer must supply |
 | `answer(q, cont, attester)` | as `assert`, for `seed ++ cont` | |
 | `solve(q)` | the continuation of the first-reached recorded answer | priority, the same cascade as `/solve` |
 | `compatible(p, q)` / `conjoin(p, q)` | Bool / proposition or `"incompatible"` | the logic layer, §5 |
@@ -136,6 +138,17 @@ Three things to keep straight:
   has no larger excursion and is shorter, so the cascade ranks it first anyway. Check (e) feeds every
   closure within depth 5, events and non-events alike, for five seeds. It recovers `qucalc_search.solve`
   each time. That check could have failed if the argument were wrong.
+- **A question is its content.** Its id is the pair `(seed, context)`, which the contract uses directly
+  as the map key. Asking it again is a no-op that keeps its answers, and nobody can rebind an existing
+  id to a different question, so the question state stays grow-only like everything else. The same seed
+  in another context is a different question. Check (g) replays an `ask` after an answer and finds the
+  answer still there. The first version keyed questions by a caller-chosen name and overwrote them,
+  which Aria caught in review.
+- **Malformed input fails closed, with an answer.** Every twist list (a record, a seed, a continuation)
+  must be a list of integers `0..7` no longer than 64. Anything else gets
+  `{ok: false, error: "invalid twists"}` before it reaches `scan` or a native call. Check (g) sends
+  eight malformed inputs (out of range, a Boolean, a float, a string, a tuple, `None`, too long)
+  through `assert`, `ask` and `answer`. Every one is refused and the state is unchanged.
 
 Composition is deliberately absent. Two closures concatenated are a closure (balance adds), so a
 "compose" query would be true for every input. By rule 4 that is bookkeeping and would add nothing. For
@@ -246,8 +259,12 @@ holders. Memetics T4 predicts R follows priority (`first`), not multiplicity (`w
 
 ## 8. Next steps
 
-1. Deploy [`QKB.rho`](rholang/QKB.rho) on a local rholo devnet. Port the self-checks as deploys
-   and read their results with the node's exploratory deploy.
+1. **The merge gate (from review):** parse [`QKB.rho`](rholang/QKB.rho) with rholo's parser at a
+   pinned commit, then run an isolated-node acceptance test. It should cover assert and refusal,
+   repeat attestation, duplicate questions, malformed input, solve and compatibility, by porting
+   self-checks (a)–(g) as deploys and reading their results with the node's exploratory deploy.
+   Running rholo's code was not permitted in this session. Either a session that may build rholo
+   or a pinned CI job (it would be this repo's first non-Lean CI job) has to do it.
 2. File an issue on rholo about the aggregate gate in `achieves_zfa` (after Jim agrees to filing it).
 3. Add `QLF_QuantumLogic3` (MO3 by `decide`).
 4. Pre-register and run the redundancy-against-priority test (§7).
