@@ -49,6 +49,10 @@ Only what a "body" means in QLF:
    `M ⊗ M`, no bigger and no smaller. The flat model fails the premise
    (`flat_not_independent`): one undivided word puts both bodies in one Pauli algebra, where `^`
    and `>` anticommute.
+6. **Faithful in every joint algebra (`composite_faithful`).** In any non-trivial `J`, the factoring
+   map `M ⊗ M → J` is injective: `M ⊗ M ≅ Mat₄(ℂ)` is simple (Mathlib's `IsSimpleRing.matrix`), so a
+   ring map out of it has zero kernel. Every independent composite contains an exact copy of the
+   tensor product, and its joint fold remembers both bodies (`joint_fold_determines_pair`).
 
 ## The two sectors
 
@@ -73,15 +77,12 @@ representation that no factorization reaches.
 
 ## What is still NOT proved
 
-1. **Faithfulness for an arbitrary joint algebra.** For the twist realization, `M ⊗ M → Mat₄` is an
-   isomorphism (point 5). For an abstract `J`, the factoring map is unique but its injectivity
-   needs `M ⊗ M ≅ Mat₄(ℂ)` to be simple (Wedderburn), which is classical and not formalized here.
-2. **States, not only operators.** Point 5 derives the joint *operator* algebra. That its state
+1. **States, not only operators.** Point 5 derives the joint *operator* algebra. That its state
    space is `ℂ⁴ = ℂ² ⊗ ℂ²` uses the classical fact that `Mat₄(ℂ)` has one irreducible module.
-3. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
+2. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
    sites ([`EntanglementPrimacy`](QLF_EntanglementPrimacy.lean), rung 6) is still a reading. What is
    now derived is the space it lands in.
-4. **More than two bodies.** The proofs are for two labels. `N` bodies should iterate, giving
+3. **More than two bodies.** The proofs are for two labels. `N` bodies should iterate, giving
    `M^{⊗N}`; that is not written out.
 
 **Credit.** The universal property of the tensor product of algebras is standard (Mathlib's
@@ -497,6 +498,49 @@ theorem flat_not_independent :
     ¬ ∀ s t : Twist, Commute ((AlgHom.id ℂ M) s.toMatrix) ((AlgHom.id ℂ M) t.toMatrix) := by
   intro h
   exact QLF.IndexedFactors.not_all_flat_pairs_commute (h Twist.up Twist.right)
+
+-- ==========================================
+-- §5b. Faithfulness in every joint algebra
+-- ==========================================
+
+section Faithful
+
+variable {J : Type*} [Ring J] [Algebra ℂ J] [Nontrivial J]
+
+/-- **Every independent composite is faithful.** In any non-trivial joint algebra `J`, the unique
+    factoring map `Ψ : M ⊗[ℂ] M → J` of `composite_is_tensor` is injective. Reason: `M ⊗ M ≅ Mat₄(ℂ)`
+    (`tensorEquiv`), a matrix ring over a field is simple, and a ring map out of a simple ring into a
+    non-trivial ring has zero kernel. So no independent composition of two QLF bodies loses
+    information: its joint algebra contains an exact copy of the tensor product. -/
+theorem composite_faithful (ρA ρB : M →ₐ[ℂ] J)
+    (hc : ∀ s t : Twist, Commute (ρA s.toMatrix) (ρB t.toMatrix)) :
+    Function.Injective (Algebra.TensorProduct.lift ρA ρB (commute_all ρA ρB hc)) := by
+  set Ψ := Algebra.TensorProduct.lift ρA ρB (commute_all ρA ρB hc)
+  let Ψ' : QLF.Tsirelson.Q →ₐ[ℂ] J := Ψ.comp (tensorEquiv.symm : QLF.Tsirelson.Q →ₐ[ℂ] M ⊗[ℂ] M)
+  have hφ : Function.Injective (Ψ'.toRingHom) := RingHom.injective _
+  have key : ∀ z, Ψ' (tensorEquiv z) = Ψ z := fun z => by
+    simp [Ψ', AlgHom.comp_apply]
+  intro x y hxy
+  apply tensorEquiv.injective
+  apply hφ
+  show Ψ' (tensorEquiv x) = Ψ' (tensorEquiv y)
+  rw [key, key]
+  exact hxy
+
+/-- **The joint fold remembers both bodies.** In any non-trivial joint algebra, two two-body words
+    with the same joint fold have the same pair of body folds in `M ⊗ M`. -/
+theorem joint_fold_determines_pair (ρA ρB : M →ₐ[ℂ] J)
+    (hinv : ∀ w w', Step w w' → cfold ρA ρB w = cfold ρA ρB w') (w w' : List Tok)
+    (h : cfold ρA ρB w = cfold ρA ρB w') :
+    twistMatrixFold (projA w) ⊗ₜ[ℂ] twistMatrixFold (projB w) =
+      twistMatrixFold (projA w') ⊗ₜ[ℂ] twistMatrixFold (projB w') := by
+  have hc := (interleaving_invariant_iff ρA ρB).1 hinv
+  apply composite_faithful ρA ρB hc
+  rw [Algebra.TensorProduct.lift_tmul, Algebra.TensorProduct.lift_tmul, ← cfold_eq ρA ρB hc,
+    ← cfold_eq ρA ρB hc]
+  exact h
+
+end Faithful
 
 -- ==========================================
 -- §6. The two sectors
