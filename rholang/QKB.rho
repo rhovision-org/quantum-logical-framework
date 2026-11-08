@@ -4,38 +4,44 @@
 // Design: ../Quantum_Knowledge_Base.md.  Executable specification (same rules, checked
 // against twist_core.py and qucalc_search.py): ../qkb_reference.py.
 //
-// STATUS: written against rholo's documented surface and its rho:qucalc:* natives, NOT yet
-// deployed on a node. The Python reference is what has been run.
+// STATUS: written against rholo's documented surface and its rho:qucalc:* natives. It has NOT
+// been parsed or run by rholo, nor deployed. The Python reference is what has been run.
 //
 // Twists are rholo's integers:  0 ^  1 v  2 >  3 <  4 /  5 \  6 +  7 -
 // axis(t) = t / 2  (0 y, 1 x, 2 z, 3 gauge);  sign(t) = + iff t % 2 == 0.
 //
 // Surface (every call answers on `ret`; a refusal is an answer, never silence):
 //
-//   QKB!("assert",     name, twists, *attester, ret) -> {ok, id, ways, redundancy} | {ok:false, residual}
+//   QKB!("assert",     name, twists, *deployerId, ret) -> {ok, id, ways, redundancy} | {ok:false, residual | error}
 //   QKB!("ways",       name, ret)                     -> Int   distinct closures filed under name
-//   QKB!("redundancy", id, ret)                       -> Int   independent holders of one closure
+//   QKB!("redundancy", id, ret)                       -> Int   distinct signing keys holding one closure
 //   QKB!("first",      name, ret)                     -> id | Nil   first-reached closure (priority)
 //   QKB!("ask",        seed, context, ret)            -> {ok, q, residual}   q = (seed, context)
-//   QKB!("answer",     q, cont, *attester, ret)       -> as "assert", for seed ++ cont
+//   QKB!("answer",     q, cont, *deployerId, ret)     -> as "assert", for seed ++ cont
 //   QKB!("solve",      q, ret)                        -> cont | Nil   the first-reached recorded answer
-//   QKB!("compatible", p, q, ret)                     -> Bool  read from the plaquette fold
-//   QKB!("conjoin",    p, q, ret)                     -> prop | "incompatible"
+//   QKB!("compatible", p, q, ret)                     -> Bool | "invalid proposition"
+//   QKB!("conjoin",    p, q, ret)                     -> prop | "incompatible" | "invalid proposition"
 //
 // A question IS its (seed, context): the pair is the map key, so re-asking is a no-op that
 // cannot discard answers, and no one can bind an existing id to a different question.
 // Every list of twists is validated first (a list of Int in 0..7, length <= 64); anything
 // else is refused with {ok: false, error: "invalid twists"} before it reaches scan or a native.
 //
-// Propositions: "bot", "top", or (axis, sign) with sign 1 / -1.
-// `attester` is the caller's own unforgeable name (e.g. its deployerId). Only its holder can
-// pass it, so a redundancy count cannot be inflated by naming someone else.
+// Propositions: "bot", "top", or (axis, sign) with axis an Int in 0..3 and sign 1 / -1,
+// validated before the plaquette is built (an axis of 4 would make twist 8).
+//
+// Attesters are authenticated: the caller passes its own *deployerId, and the contract asks
+// rho:rchain:deployerId:ops for its public key. A fresh `new` name gets Nil and is refused, so
+// one deployer cannot inflate R by minting names. Attester sets store the key bytes, so R is
+// the number of distinct signing keys. (Many keys held by one person is a Sybil question no
+// contract settles; the design doc §3a states that trust assumption.)
 
 new QKB,
     zfaNative(`rho:qucalc:zfa`),     // -> (Bool, phase)  phase: 1 +I, -1 -I, 2 +iI, -2 -iI, 0 none
     grant(`rho:qucalc:grant`),       // -> content-addressed uri (blake2b of the twists), persisted
+    idOps(`rho:rchain:deployerId:ops`), // "pubKeyBytes": key bytes for a deployerId, Nil otherwise
     stateCh,
-    scan, absOf, abs4, lexLess, keyLess, argmin, validTwists, allTwists
+    scan, absOf, abs4, lexLess, keyLess, argmin, validTwists, allTwists, validProp
 in {
 
   // One linear cell, consumed and restored (MasterDictionary requirement 9).
@@ -57,6 +63,16 @@ in {
         t /\ Int => { if (t >= 0 and t <= 7) { allTwists!(ts, i + 1, *ret) } else { ret!(false) } }
         _        => ret!(false)
       }
+    }
+  } |
+
+  // "bot" | "top" | (axis: Int 0..3, sign: 1 | -1)
+  contract validProp(@p, ret) = {
+    match p {
+      "bot" => ret!(true)
+      "top" => ret!(true)
+      (a /\ Int, s /\ Int) => { ret!(a >= 0 and a <= 3 and (s == 1 or s == -1)) }
+      _ => ret!(false)
     }
   } |
 
@@ -143,30 +159,35 @@ in {
   // it checks #even == #odd in aggregate, which admits e.g. ^^<< (y = +2, x = -2).
   // Its phase is used, and is never 0 on an admitted history (count_balanced_pauli_closed).
   contract QKB(@"assert", @name, @ts, attester, ret) = {
-    new okCh, avCh, zCh, gCh in {
-      validTwists!(ts, *okCh) |
-      for (@valid <- okCh) {
+    new okCh, pkCh, avCh, zCh, gCh in {
+      validTwists!(ts, *okCh) | idOps!("pubKeyBytes", *attester, *pkCh) |
+      for (@valid <- okCh & @pk <- pkCh) {
         if (not valid) { ret!({"ok": false, "error": "invalid twists"}) } else {
-          scan!(ts, 0, [0, 0, 0, 0], 0, *avCh) | zfaNative!(ts, *zCh) |
-          for (@(v, peak) <- avCh & @(_, ph) <- zCh) {
-            if (ts.length() >= 4 and v == [0, 0, 0, 0] and ph != 0) {
-              grant!(ts, *gCh) |
-              for (@cid <- gCh; @st <- stateCh) {
-                let @rec <- st.get("records").getOrElse(cid,
-                              {"twists": ts, "phase": ph, "excursion": peak, "attesters": Set()}) in {
-                  let @rec2 <- rec.set("attesters", rec.get("attesters").add(*attester)) in {
-                    let @ways <- st.get("names").getOrElse(name, Set()).add(cid) in {
-                      stateCh!(st.set("records", st.get("records").set(cid, rec2))
-                                 .set("names", st.get("names").set(name, ways))) |
-                      ret!({"ok": true, "id": cid, "ways": ways.size(),
-                            "redundancy": rec2.get("attesters").size()})
+          match pk {
+            Nil => ret!({"ok": false, "error": "attester is not a deployerId"})
+            _ => {
+              scan!(ts, 0, [0, 0, 0, 0], 0, *avCh) | zfaNative!(ts, *zCh) |
+              for (@(v, peak) <- avCh & @(_, ph) <- zCh) {
+                if (ts.length() >= 4 and v == [0, 0, 0, 0] and ph != 0) {
+                  grant!(ts, *gCh) |
+                  for (@cid <- gCh; @st <- stateCh) {
+                    let @rec <- st.get("records").getOrElse(cid,
+                                  {"twists": ts, "phase": ph, "excursion": peak, "attesters": Set()}) in {
+                      let @rec2 <- rec.set("attesters", rec.get("attesters").add(pk)) in {
+                        let @ways <- st.get("names").getOrElse(name, Set()).add(cid) in {
+                          stateCh!(st.set("records", st.get("records").set(cid, rec2))
+                                     .set("names", st.get("names").set(name, ways))) |
+                          ret!({"ok": true, "id": cid, "ways": ways.size(),
+                                "redundancy": rec2.get("attesters").size()})
+                        }
+                      }
                     }
                   }
+                } else {
+                  ret!({"ok": false,
+                        "residual": [0 - v.nth(0), 0 - v.nth(1), 0 - v.nth(2), 0 - v.nth(3)]})
                 }
               }
-            } else {
-              ret!({"ok": false,
-                    "residual": [0 - v.nth(0), 0 - v.nth(1), 0 - v.nth(2), 0 - v.nth(3)]})
             }
           }
         }
@@ -276,14 +297,21 @@ in {
   // Two contexts commute iff the plaquette a b a† b† folds to +I (one native call).
   // Spatial pairs fold to -I (π flux): incompatible. The gauge axis commutes with all.
   contract QKB(@"compatible", @p, @q, ret) = {
-    match (p, q) {
-      ((a, _), (b, _)) => {
-        new zCh in {
-          zfaNative!([2 * a, 2 * b, 2 * a + 1, 2 * b + 1], *zCh) |
-          for (@(_, ph) <- zCh) { ret!(ph == 1) }
+    new vp, vq in {
+      validProp!(p, *vp) | validProp!(q, *vq) |
+      for (@okP <- vp & @okQ <- vq) {
+        if (not (okP and okQ)) { ret!("invalid proposition") } else {
+          match (p, q) {
+            ((a, _), (b, _)) => {
+              new zCh in {
+                zfaNative!([2 * a, 2 * b, 2 * a + 1, 2 * b + 1], *zCh) |
+                for (@(_, ph) <- zCh) { ret!(ph == 1) }
+              }
+            }
+            _ => ret!(true)                 // "bot" / "top" are compatible with everything
+          }
         }
       }
-      _ => ret!(true)                       // "bot" / "top" are compatible with everything
     }
   } |
 
@@ -293,15 +321,19 @@ in {
     new cCh in {
       QKB!("compatible", p, q, *cCh) |
       for (@ok <- cCh) {
-        if (not ok) { ret!("incompatible") } else {
-          match (p, q) {
-            ("top", _) => ret!(q)
-            (_, "top") => ret!(p)
-            ("bot", _) => ret!("bot")
-            (_, "bot") => ret!("bot")
-            ((a, s), (b, t)) => {
-              if (a != b) { ret!(("and", p, q)) }       // commuting blocks: Boolean pair
-              else { if (s == t) { ret!(p) } else { ret!("bot") } }
+        match ok {
+          "invalid proposition" => ret!(ok)
+          false => ret!("incompatible")
+          _ => {
+            match (p, q) {
+              ("top", _) => ret!(q)
+              (_, "top") => ret!(p)
+              ("bot", _) => ret!("bot")
+              (_, "bot") => ret!("bot")
+              ((a, s), (b, t)) => {
+                if (a != b) { ret!(("and", p, q)) }     // commuting blocks: Boolean pair
+                else { if (s == t) { ret!(p) } else { ret!("bot") } }
+              }
             }
           }
         }

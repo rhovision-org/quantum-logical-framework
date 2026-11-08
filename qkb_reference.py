@@ -170,7 +170,21 @@ def commute_matrix(a: int, b: int) -> bool:
     return pauli_fold(SYMBOLS[2 * a] + SYMBOLS[2 * b]) == pauli_fold(SYMBOLS[2 * b] + SYMBOLS[2 * a])
 
 
-def compatible(p, q) -> bool:
+def valid_prop(p) -> bool:
+    """'bot', 'top', or (axis, sign) with axis an int in 0..3 and sign in {1, -1}.
+    Checked before any native call: an axis of 4 would build twist 8."""
+    if p in (BOT, TOP):
+        return True
+    return (isinstance(p, tuple) and len(p) == 2
+            and type(p[0]) is int and 0 <= p[0] <= 3
+            and type(p[1]) is int and p[1] in (1, -1))
+
+
+def compatible(p, q) -> Optional[bool]:
+    """True / False, or None for a malformed proposition (the contract answers
+    "invalid proposition")."""
+    if not (valid_prop(p) and valid_prop(q)):
+        return None
     if p in (BOT, TOP) or q in (BOT, TOP):
         return True
     return commute(p[0], q[0])
@@ -178,11 +192,14 @@ def compatible(p, q) -> bool:
 
 def conjoin(p, q):
     """Conjunction the KB will actually assert. Same-context atoms use the
-    lattice meet; incompatible atoms are refused (None), never silently ⊥ —
+    lattice meet; incompatible atoms are refused ("incompatible"), never silently ⊥ —
     a client must not read 'incompatible' as 'contradictory'. A gauge atom is
     compatible with everything, so its conjunction is the classical pair."""
-    if not compatible(p, q):
-        return None
+    c = compatible(p, q)
+    if c is None:
+        return "invalid proposition"
+    if not c:
+        return "incompatible"
     if p in (BOT, TOP) or q in (BOT, TOP) or p[0] == q[0]:
         return meet(p, q)
     return ("and", p, q)        # commuting, different blocks: Boolean product
@@ -195,6 +212,24 @@ MO3 = [BOT, TOP] + SPATIAL_ATOMS
 # --------------------------------------------------------------------------- #
 # 2–4. the store
 # --------------------------------------------------------------------------- #
+class DeployerId:
+    """Model of rho:rchain:deployerId: an unforgeable name that the node binds to
+    the deploy's verified secp256k1 key. Client code cannot construct one; a
+    fresh `new` name is a different kind of name."""
+    __slots__ = ("_pk",)
+
+    def __init__(self, pk: bytes) -> None:
+        self._pk = pk
+
+
+def pub_key_bytes(attester) -> Optional[bytes]:
+    """rho:rchain:deployerId:ops "pubKeyBytes": the signing key of a genuine
+    deployerId, Nil for any other name. Attester sets hold these keys, so R
+    counts distinct signing keys. (One person holding many funded keys is a
+    Sybil question that no contract can settle; see the design doc §3a.)"""
+    return attester._pk if isinstance(attester, DeployerId) else None
+
+
 @dataclass
 class Record:
     twists: list[int]
@@ -220,13 +255,16 @@ class KB:
     def assert_closure(self, name: str, ts: list[int], attester) -> dict:
         if not valid_twists(ts):
             return {"ok": False, "error": "invalid twists"}
+        pk = pub_key_bytes(attester)
+        if pk is None:
+            return {"ok": False, "error": "attester is not a deployerId"}
         if not is_closure(ts):
             return {"ok": False, "residual": tuple(-x for x in action(ts))}
         cid = content_id(ts)
         rec = self.records.get(cid)
         if rec is None:
             rec = self.records[cid] = Record(list(ts), phase(ts), excursion(ts))
-        rec.attesters.add(attester)
+        rec.attesters.add(pk)
         self.names.setdefault(name, set()).add(cid)
         return {"ok": True, "id": cid, "ways": len(self.names[name]),
                 "redundancy": len(rec.attesters)}
@@ -341,12 +379,13 @@ class ShardedKB:
 
     # legs, exposed separately so a test can deliver them in any order, twice
     def legs(self, name, ts: list[int], attester):
-        if not valid_twists(ts) or not is_closure(ts):            # the gate is stateless: any shard checks it
+        pk = pub_key_bytes(attester)
+        if not valid_twists(ts) or pk is None or not is_closure(ts):            # the gate is stateless: any shard checks it
             return []
         cid = content_id(ts)
         r = self.rec[shard_of(cid, self.k)]
         i = self.idx[shard_of(name, self.k)]
-        return [lambda: r.put(cid, ts, attester),
+        return [lambda: r.put(cid, ts, pk),
                 lambda: i.put(name, cascade_key(ts), cid)]
 
     def assert_closure(self, name, ts, attester) -> None:
@@ -433,12 +472,12 @@ def _selfcheck() -> None:
     assert all(commute(a, b) == commute_matrix(a, b) for a in range(4) for b in range(4))
     print(f"(c) MO3 orthomodular; {len(bad)} distributivity failures; "
           f"spatial axes pairwise non-commuting, gauge commutes with all (read from the fold)")
-    assert conjoin((0, 1), (1, 1)) is None
+    assert conjoin((0, 1), (1, 1)) == "incompatible"
     assert conjoin((0, 1), (3, 1)) == ("and", (0, 1), (3, 1))
 
     # (d) ways and redundancy are different statistics
     kb = KB()
-    alice, bob, carol = object(), object(), object()
+    alice, bob, carol = DeployerId(b"A" * 33), DeployerId(b"B" * 33), DeployerId(b"C" * 33)
     r1 = kb.assert_closure("plaquette", from_str("^<v>"), alice)
     kb.assert_closure("plaquette", from_str("^<v>"), bob)      # same closure, new holder
     kb.assert_closure("plaquette", from_str("^>v<"), carol)    # a second way
@@ -462,7 +501,7 @@ def _selfcheck() -> None:
     #     every query equals the single-store KB, and a full merge of the shards equals k = 1.
     import random
     rng = random.Random(20261107)
-    people = [object() for _ in range(6)]
+    people = [DeployerId(bytes([i]) * 33) for i in range(6)]
     pool = [list(t) for t in itertools.product(range(8), repeat=4) if is_closure(list(t))]
     seeds = ["^", "^>", "+^", "^<", "/+"]
     work = [("n%d" % rng.randrange(12), rng.choice(pool), rng.choice(people)) for _ in range(400)]
@@ -520,6 +559,34 @@ def _selfcheck() -> None:
     assert kb4.solve(q) == before and "x" not in kb4.names
     print(f"(g) replayed ask keeps its answers; {len(bad)} malformed inputs refused on "
           f"assert/ask/answer; state unchanged")
+
+    # (h) second review: attesters are signing keys; propositions are validated.
+    kb5 = KB()
+    plaq = from_str("^<v>")
+    fresh = [object() for _ in range(5)]                  # names a single caller can mint
+    for f in fresh:
+        r = kb5.assert_closure("p", plaq, f)
+        assert r == {"ok": False, "error": "attester is not a deployerId"}, r
+    assert kb5.records == {} and kb5.names == {}
+    r = None
+    for _ in range(5):                                     # one deployer, five attestations
+        r = kb5.assert_closure("p", plaq, alice)
+    assert r["redundancy"] == 1
+    assert kb5.assert_closure("p", plaq, DeployerId(b"A" * 33))["redundancy"] == 1  # same key
+    assert kb5.assert_closure("p", plaq, bob)["redundancy"] == 2
+    sh = ShardedKB(3)
+    for f in fresh:
+        assert sh.legs("p", plaq, f) == []
+    bad_props = [(4, 1), (-1, 1), (0, 0), (0, 2), (0, True), (True, 1), (0.0, 1),
+                 (0, 1, 2), [0, 1], "x", None, (0,)]
+    for b in bad_props:
+        for p_, q_ in ((b, (0, 1)), ((0, 1), b), (b, b)):
+            assert compatible(p_, q_) is None, (p_, q_)
+            assert conjoin(p_, q_) == "invalid proposition", (p_, q_)
+    assert all(compatible(p_, q_) is not None for p_ in MO3 + [(3, 1), (3, -1)]
+               for q_ in MO3 + [(3, 1), (3, -1)])
+    print(f"(h) 5 fresh names refused as attesters, 5 repeats by one key give R=1; "
+          f"{len(bad_props)} malformed propositions refused before any fold")
     print("all self-checks passed")
 
 

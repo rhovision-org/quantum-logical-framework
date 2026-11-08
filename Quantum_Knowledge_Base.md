@@ -88,8 +88,7 @@ Everything lives in one linear cell, which is consumed and restored on every wri
   record it is always ±1, because count balance implies the fold is `±I`.
 - **`excursion`** is the peak total free action along the history, `max_prefix(|y|+|x|+|z|+|g|)`. That
   is the capacity a horizon needs to hear the closure (`closedAtHorizon_iff_maxExcursion_le`).
-- **`attesters`** holds unforgeable names. A caller passes its own (its `deployerId`). Only the holder
-  of a name can pass it, so nobody can inflate R by naming someone else.
+- **`attesters`** holds signing keys (public-key bytes), not names. §3a explains why.
 
 ---
 
@@ -111,6 +110,26 @@ So [`QKB.rho`](rholang/QKB.rho) computes the per-axis vector in Rholang (the `sc
 which also yields the excursion). It takes only the phase from `rho:qucalc:zfa`. The native should
 probably be fixed upstream. Per this project's rule for other repos, that would be an issue on rholo,
 not a change made from here.
+
+### 3a. Who counts as a holder
+
+R is only worth measuring if it counts independent holders. An unforgeable name does not establish
+that: any caller can run `new a, b, c in { … }` and pass three fresh names. The first version of the
+contract stored whatever name it was given, and Aria caught that in review. So `assert` now
+**authenticates** the attester. The caller passes its own `*deployerId`. rholo's node binds that name
+to the deploy's verified secp256k1 key, and client code cannot construct one. The contract asks
+`rho:rchain:deployerId:ops` for `"pubKeyBytes"`. It gets the key for a genuine deployerId and `Nil`
+for any other name, and a `Nil` is refused with `{ok: false, error: "attester is not a deployerId"}`.
+The attester set stores the key bytes, so repeating an attestation adds nothing.
+
+**What R therefore measures:** the number of distinct secp256k1 keys that signed a deploy attesting the
+closure. It does not measure persons. One person with several keys counts several times. Every
+key-based system has this Sybil limit, and no contract can close it alone. If the statistic must
+count people, weight attesters by an external trust measure: rhogov's trust levels are the obvious
+one in this ecosystem. That would be a separate, stated assumption, not a property of QKB.
+
+Self-check (h) tests this. Five fresh names are refused and leave the store empty. Five attestations
+by one key give R = 1, and a second key makes it 2. The sharded model refuses fresh names too.
 
 ---
 
@@ -178,6 +197,12 @@ distributivity fails. So `conjoin` returns `"incompatible"` for spatial atoms on
 gauge atom with a spatial atom gives the Boolean pair, and two atoms in one context use the lattice
 meet.
 
+**Malformed propositions are refused before any fold.** A proposition must be `"bot"`, `"top"` or
+`(axis, sign)`, with the axis an integer `0..3` and the sign `1` or `−1`. Anything else gets
+`"invalid proposition"`. Without this check an axis of 4 would build twist 8 and the native call would
+fail instead of answering. Check (h) tries 12 malformed propositions in either position and in
+both, and confirms that every well-formed pair still gets an answer.
+
 What is proved and what is not:
 
 - **Proved in Lean:** MO2 is orthomodular and not distributive (`orthomodular`, `not_distributive`), and
@@ -222,7 +247,7 @@ index entry can briefly come before its record. Only `redundancy` waits for the 
 - **The gate needs no state.** Per-axis balance is a property of the twists alone, so any shard and any
   reader can check a record, and nobody has to trust the shard that stored it. Content addressing means
   two shards that admit the same closure produce the same id.
-- **Redundancy counts holders, not copies.** `deployerId` is the same account on every shard
+- **Redundancy counts keys, not copies.** `deployerId` is the same key on every shard
   ([rholo `shard-invoke.md`](https://github.com/rhovision-org/rholo/blob/dev/docs/src/node/shard-invoke.md)),
   so one party attesting a closure on two shards counts once. A replica's R is the size of the union
   of attester sets, never their sum. Summing them would let one party fake a meme by repeating itself.
@@ -246,7 +271,8 @@ In Rholang, each shard runs [`QKB.rho`](rholang/QKB.rho) in one role. A client r
 the cross-shard invoke primitive, using `$at(shard, …)` as
 [`shard_exchange.rho`](https://github.com/rhovision-org/rholo/blob/dev/qucalc/examples/shard_exchange.rho)
 does. Splitting the contract into the two roles, and storing `key` in the name index, are the
-contract-side changes. They are not written yet.
+contract-side changes. They are not written yet. **So this section is a design checked in a
+simulation. The current `QKB.rho` is a single-cell contract and is not decentralized.**
 
 ## 7. What would make it a result
 
