@@ -53,6 +53,10 @@ Only what a "body" means in QLF:
    map `M ⊗ M → J` is injective: `M ⊗ M ≅ Mat₄(ℂ)` is simple (Mathlib's `IsSimpleRing.matrix`), so a
    ring map out of it has zero kernel. Every independent composite contains an exact copy of the
    tensor product, and its joint fold remembers both bodies (`joint_fold_determines_pair`).
+7. **The state space (`state_cyclic`, `two_body_states_irreducible`).** Every non-zero state of
+   `ℂ² ⊗ ℂ² = ℂ⁴` is sent to every other by some joint operator, so a subspace invariant under the
+   derived composite and holding one non-zero state is everything. The tensor-product state space
+   is irreducible for the composite of two independent bodies.
 
 ## The two sectors
 
@@ -77,8 +81,9 @@ representation that no factorization reaches.
 
 ## What is still NOT proved
 
-1. **States, not only operators.** Point 5 derives the joint *operator* algebra. That its state
-   space is `ℂ⁴ = ℂ² ⊗ ℂ²` uses the classical fact that `Mat₄(ℂ)` has one irreducible module.
+1. **Uniqueness of the state space.** `two_body_states_irreducible` proves `ℂ² ⊗ ℂ² = ℂ⁴` is an
+   irreducible module of the derived composite. That every module of `Mat₄(ℂ)` is a sum of copies of
+   it (so `ℂ⁴` is the only irreducible one) is classical Wedderburn theory, not formalized here.
 2. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
    sites ([`EntanglementPrimacy`](QLF_EntanglementPrimacy.lean), rung 6) is still a reading. What is
    now derived is the space it lands in.
@@ -541,6 +546,38 @@ theorem joint_fold_determines_pair (ρA ρB : M →ₐ[ℂ] J)
   exact h
 
 end Faithful
+
+-- ==========================================
+-- §5c. States: ℂ² ⊗ ℂ² is irreducible for the derived composite
+-- ==========================================
+
+/-- **Every non-zero two-body state is cyclic.** For any non-zero `v ∈ ℂ⁴` and any target `u`,
+    some joint operator sends `v` to `u`. -/
+theorem state_cyclic (v u : Fin 2 × Fin 2 → ℂ) (hv : v ≠ 0) :
+    ∃ X : QLF.Tsirelson.Q, X *ᵥ v = u := by
+  obtain ⟨q, hq⟩ : ∃ q, v q ≠ 0 := by
+    by_contra h
+    push_neg at h
+    exact hv (funext h)
+  refine ⟨Matrix.of fun a b => if b = q then u a / v q else 0, ?_⟩
+  funext a
+  simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, ite_mul, zero_mul]
+  rw [Fintype.sum_eq_single q (fun b hb => by simp [hb]), if_pos rfl]
+  exact div_mul_cancel₀ _ hq
+
+/-- **The two-body state space is irreducible.** A subspace of `ℂ² ⊗ ℂ² = ℂ⁴` that every joint
+    operator maps into itself, and that holds one non-zero state, is the whole space. Every joint
+    operator is the image of the derived tensor product (`kronLift_surjective`), so no smaller state
+    space carries the composite of two independent bodies. -/
+theorem two_body_states_irreducible (W : Submodule ℂ (Fin 2 × Fin 2 → ℂ))
+    (hW : ∀ t : M ⊗[ℂ] M, ∀ v ∈ W, kronLift t *ᵥ v ∈ W) (hne : ∃ v ∈ W, v ≠ 0) : W = ⊤ := by
+  obtain ⟨v, hvW, hv0⟩ := hne
+  rw [Submodule.eq_top_iff']
+  intro u
+  obtain ⟨X, hX⟩ := state_cyclic v u hv0
+  obtain ⟨t, rfl⟩ := kronLift_surjective X
+  rw [← hX]
+  exact hW t v hvW
 
 -- ==========================================
 -- §6. The two sectors
