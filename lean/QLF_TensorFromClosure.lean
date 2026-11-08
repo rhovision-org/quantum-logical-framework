@@ -71,6 +71,11 @@ Only what a "body" means in QLF:
    is a simple module of the joint algebra, and every simple module is isomorphic to it: `Mat₄(ℂ)`
    is simple and Artinian, so its simple modules are all one type (Wedderburn, via Mathlib's
    `IsSimpleRing.isIsotypic`).
+11. **`N`-body realization and faithfulness (`slot_commute`, `nTensorEquiv`, `n_composite_faithful`).**
+   Body `i` acting on slot `i` of `(ℂ²)^{⊗N}` gives commuting copies of `M`; the factoring map out of
+   `⨂ᵢ M` is onto every operator (elementary operators are ordered products of slot moves) and the
+   dimensions agree (`4^N`), so `⨂ᵢ M ≅ End((ℂ²)^{⊗N})`. Hence, in every non-trivial joint algebra,
+   the `N`-body factoring map is injective.
 
 ## The two sectors
 
@@ -95,14 +100,11 @@ representation that no factorization reaches.
 
 ## What is still NOT proved
 
-1. **Uniqueness of the `N`-body state space.** For two bodies, `ℂ⁴` is the only simple module
-   (`simple_module_is_twoBodyState`). The `N`-body analogue waits on point 3.
-2. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
+1. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
    sites ([`EntanglementPrimacy`](QLF_EntanglementPrimacy.lean), rung 6) is still a reading. What is
    now derived is the space it lands in.
-3. **`N`-body faithfulness and isomorphism.** Point 9 gives the factoring map out of `⨂ᵢ M`. That
-   it is injective, and an isomorphism onto `Mat_{2^N}(ℂ)` for the twist realization, is proved
-   only for `N = 2` (`composite_faithful`, `tensorEquiv`).
+2. **The `N`-body state space.** `⨂ᵢ M ≅ End((ℂ²)^{⊗N})` is proved (point 11), so Wedderburn
+   applies as it does for two bodies; the `N`-body uniqueness statement is not written out.
 
 **Credit.** The universal property of the tensor product of algebras is standard (Mathlib's
 `Algebra.TensorProduct.lift`). Deriving the composite of independent systems from local structure is
@@ -926,6 +928,192 @@ theorem n_composite_is_tensor
     (fun x _ => by simp), List.ofFn_eq_map]
 
 end NTensor
+
+-- ==========================================
+-- §5f. N-body realization and faithfulness
+-- ==========================================
+
+section NFaithful
+
+variable {n : ℕ}
+
+/-- Configurations of `N` qubit bodies: a basis state of `(ℂ²)^{⊗N}`. -/
+abbrev Cfg (n : ℕ) := Fin n → Fin 2
+
+/-- Body `i` acting on `2^N`-component states: it moves slot `i` only. -/
+noncomputable def slotOp (i : Fin n) (X : M) : Module.End ℂ (Cfg n → ℂ) where
+  toFun ψ a := ∑ k : Fin 2, X (a i) k * ψ (Function.update a i k)
+  map_add' ψ φ := by
+    funext a
+    simp [mul_add, Finset.sum_add_distrib]
+  map_smul' c ψ := by
+    funext a
+    simp [Finset.mul_sum, mul_left_comm]
+
+theorem slotOp_apply (i : Fin n) (X : M) (ψ : Cfg n → ℂ) (a : Cfg n) :
+    slotOp i X ψ a = ∑ k : Fin 2, X (a i) k * ψ (Function.update a i k) := rfl
+
+/-- `slotOp i` is an algebra map: body `i` alone is a copy of `M`. -/
+noncomputable def slot (i : Fin n) : M →ₐ[ℂ] Module.End ℂ (Cfg n → ℂ) where
+  toFun := slotOp i
+  map_one' := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply, Matrix.one_apply]
+  map_mul' X Y := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply, Matrix.mul_apply, Fin.sum_univ_two]
+    ring
+  map_zero' := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply]
+  map_add' X Y := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply, add_mul, Finset.sum_add_distrib]
+  commutes' c := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply, Algebra.algebraMap_eq_smul_one, Matrix.one_apply]
+
+/-- **Distinct slots commute.** -/
+theorem slot_commute (i j : Fin n) (hij : i ≠ j) (X Y : M) : Commute (slot i X) (slot j Y) := by
+  show slot i X * slot j Y = slot j Y * slot i X
+  apply LinearMap.ext; intro ψ; funext a
+  show slotOp i X (slotOp j Y ψ) a = slotOp j Y (slotOp i X ψ) a
+  simp only [slotOp_apply, Function.update_of_ne hij, Function.update_of_ne hij.symm,
+    Function.update_comm hij]
+  simp only [Fin.sum_univ_two]
+  ring
+
+/-- The `N`-body twist realization, as a map out of `⨂ᵢ M`. -/
+noncomputable def slotLift : (⨂[ℂ] _ : Fin n, M) →ₐ[ℂ] Module.End ℂ (Cfg n → ℂ) :=
+  nTensorLift slot (fun i j hij X Y => slot_commute i j hij X Y)
+
+/-- The operator fixing slots `T` from `b` to `a` and leaving the rest alone. On `T = univ` it is
+the elementary operator `|a⟩⟨b|`. -/
+noncomputable def partOp (a b : Cfg n) (T : Finset (Fin n)) : Module.End ℂ (Cfg n → ℂ) where
+  toFun ψ x := if (∀ k ∈ T, x k = a k) then ψ (fun k => if k ∈ T then b k else x k) else 0
+  map_add' ψ φ := by
+    funext x
+    simp only [Pi.add_apply]
+    split_ifs <;> simp
+  map_smul' c ψ := by
+    funext x
+    simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
+    split_ifs <;> simp
+
+theorem partOp_apply (a b : Cfg n) (T : Finset (Fin n)) (ψ : Cfg n → ℂ) (x : Cfg n) :
+    partOp a b T ψ x =
+      if (∀ k ∈ T, x k = a k) then ψ (fun k => if k ∈ T then b k else x k) else 0 := rfl
+
+theorem partOp_empty (a b : Cfg n) : partOp a b ∅ = 1 := by
+  apply LinearMap.ext; intro ψ; funext x
+  simp [partOp_apply]
+
+theorem partOp_insert (a b : Cfg n) {i : Fin n} {T : Finset (Fin n)} (hi : i ∉ T) :
+    partOp a b (insert i T) = slot i (Matrix.single (a i) (b i) 1) * partOp a b T := by
+  apply LinearMap.ext; intro ψ; funext x
+  show partOp a b (insert i T) ψ x = slotOp i (Matrix.single (a i) (b i) 1) (partOp a b T ψ) x
+  rw [partOp_apply, slotOp_apply,
+    Fintype.sum_eq_single (b i) (fun k hk => by
+      rw [Matrix.single_apply_of_col_ne _ _ (Ne.symm hk), zero_mul]),
+    partOp_apply]
+  have hupd : ∀ m ∈ T, Function.update x i (b i) m = x m := fun m hm =>
+    Function.update_of_ne (fun e => hi (e ▸ hm)) _ _
+  have hfun : (fun m => if m ∈ T then b m else Function.update x i (b i) m) =
+      (fun m => if m ∈ insert i T then b m else x m) := by
+    funext m
+    by_cases hm : m = i
+    · rw [hm]
+      simp [hi]
+    · simp [hm, Finset.mem_insert, Function.update_of_ne hm]
+  simp only [hfun]
+  by_cases hx : x i = a i
+  · have hiff : (∀ m ∈ insert i T, x m = a m) ↔ (∀ m ∈ T, Function.update x i (b i) m = a m) :=
+      ⟨fun h m hm => by rw [hupd m hm]; exact h m (Finset.mem_insert_of_mem hm),
+       fun h m hm => by
+        rcases Finset.mem_insert.mp hm with hmi | hm'
+        · rw [hmi]; exact hx
+        · rw [← hupd m hm']; exact h m hm'⟩
+    rw [hx, Matrix.single_apply_same, one_mul]
+    simp only [hiff]
+  · rw [if_neg (fun h => hx (h i (Finset.mem_insert_self i T))),
+      Matrix.single_apply_of_row_ne (Ne.symm hx), zero_mul]
+
+theorem partOp_mem (a b : Cfg n) (T : Finset (Fin n)) : partOp a b T ∈ (slotLift (n := n)).range := by
+  induction T using Finset.induction_on with
+  | empty =>
+      rw [partOp_empty]
+      exact Subalgebra.one_mem _
+  | insert i T hi ih =>
+      rw [partOp_insert a b hi]
+      refine Subalgebra.mul_mem _ ((AlgHom.mem_range _).2 ⟨PiTensorProduct.singleAlgHom i _, ?_⟩) ih
+      exact nTensorLift_single _ _ i _
+
+theorem partOp_univ_apply (a b : Cfg n) (ψ : Cfg n → ℂ) (x : Cfg n) :
+    partOp a b Finset.univ ψ x = if x = a then ψ b else 0 := by
+  by_cases h : x = a
+  · rw [partOp_apply, if_pos (fun k _ => by rw [h]), if_pos h]
+    simp
+  · rw [partOp_apply, if_neg (fun hall => h (funext fun k => hall k (Finset.mem_univ k))), if_neg h]
+
+/-- Every operator on `2^N`-component states is a combination of elementary operators. -/
+theorem end_eq_sum (f : Module.End ℂ (Cfg n → ℂ)) :
+    f = ∑ a, ∑ b, (LinearMap.toMatrix' f a b) • partOp a b Finset.univ := by
+  apply LinearMap.ext; intro ψ; funext x
+  simp only [LinearMap.coeFn_sum, Finset.sum_apply, LinearMap.smul_apply, Pi.smul_apply,
+    smul_eq_mul, partOp_univ_apply, mul_ite, mul_zero]
+  rw [Fintype.sum_eq_single x (fun a ha => Finset.sum_eq_zero fun b _ => if_neg (Ne.symm ha))]
+  simp only [if_true]
+  conv_lhs => rw [← Matrix.toLin'_toMatrix' f]
+  rw [Matrix.toLin'_apply]
+  simp [Matrix.mulVec, dotProduct]
+
+theorem slotLift_surjective : Function.Surjective (slotLift (n := n)) := by
+  intro f
+  have hf : f ∈ (slotLift (n := n)).range := by
+    rw [end_eq_sum f]
+    exact Subalgebra.sum_mem _ fun a _ => Subalgebra.sum_mem _ fun b _ =>
+      Subalgebra.smul_mem _ (partOp_mem a b Finset.univ) _
+  exact (AlgHom.mem_range _).1 hf
+
+theorem slotLift_bijective : Function.Bijective (slotLift (n := n)) := by
+  have h1 : Module.finrank ℂ (⨂[ℂ] _ : Fin n, M) = (2 * 2) ^ n := by
+    rw [Module.finrank_eq_card_basis (Basis.piTensorProduct fun _ : Fin n => Module.finBasis ℂ M)]
+    simp [Fintype.card_fun, Module.finrank_matrix]
+  have h2 : Module.finrank ℂ (Module.End ℂ (Cfg n → ℂ)) = 2 ^ n * 2 ^ n := by
+    rw [Module.finrank_linearMap, Module.finrank_fintype_fun_eq_card]
+    simp [Fintype.card_fun]
+  have hs : Function.Surjective (slotLift (n := n)).toLinearMap := slotLift_surjective
+  have hi : Function.Injective (slotLift (n := n)).toLinearMap :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
+      (h1.trans (by rw [h2, mul_pow]))).2 hs
+  exact ⟨hi, slotLift_surjective⟩
+
+/-- **`⨂ᵢ M ≅ End((ℂ²)^{⊗N})`, as algebras.** The joint algebra of `N` qubit bodies is exactly the
+`N`-fold tensor product, no bigger and no smaller. -/
+noncomputable def nTensorEquiv : (⨂[ℂ] _ : Fin n, M) ≃ₐ[ℂ] Module.End ℂ (Cfg n → ℂ) :=
+  AlgEquiv.ofBijective slotLift slotLift_bijective
+
+/-- **`N`-body faithfulness.** In any non-trivial joint algebra, the factoring map out of `⨂ᵢ M` is
+injective: `⨂ᵢ M` is a matrix algebra (`nTensorEquiv`), hence simple, so a ring map out of it has
+zero kernel. -/
+theorem n_composite_faithful {J : Type*} [Ring J] [Algebra ℂ J] [Nontrivial J]
+    (ρ : Fin n → M →ₐ[ℂ] J) (hc : ∀ i j : Fin n, i ≠ j → ∀ X Y : M, Commute (ρ i X) (ρ j Y)) :
+    Function.Injective (nTensorLift ρ hc) := by
+  let E : Matrix (Cfg n) (Cfg n) ℂ ≃ₐ[ℂ] (⨂[ℂ] _ : Fin n, M) :=
+    Matrix.toLinAlgEquiv'.trans nTensorEquiv.symm
+  let Ψ' : Matrix (Cfg n) (Cfg n) ℂ →ₐ[ℂ] J :=
+    (nTensorLift ρ hc).comp (E : Matrix (Cfg n) (Cfg n) ℂ →ₐ[ℂ] (⨂[ℂ] _ : Fin n, M))
+  have hφ : Function.Injective (Ψ'.toRingHom) := RingHom.injective _
+  have key : ∀ z, Ψ' (E.symm z) = nTensorLift ρ hc z := fun z => by
+    simp [Ψ', AlgHom.comp_apply]
+  intro x y hxy
+  apply E.symm.injective
+  apply hφ
+  show Ψ' (E.symm x) = Ψ' (E.symm y)
+  rw [key, key]
+  exact hxy
+
+end NFaithful
 
 -- ==========================================
 -- §6. The two sectors
