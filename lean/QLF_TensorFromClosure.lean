@@ -75,7 +75,8 @@ Only what a "body" means in QLF:
    Body `i` acting on slot `i` of `(ℂ²)^{⊗N}` gives commuting copies of `M`; the factoring map out of
    `⨂ᵢ M` is onto every operator (elementary operators are ordered products of slot moves) and the
    dimensions agree (`4^N`), so `⨂ᵢ M ≅ End((ℂ²)^{⊗N})`. Hence, in every non-trivial joint algebra,
-   the `N`-body factoring map is injective.
+   the `N`-body factoring map is injective. `(ℂ²)^{⊗N}` is a simple module of that algebra and the only one up to
+   isomorphism (`cfgState_simple`, `simple_module_is_cfgState`).
 
 ## The two sectors
 
@@ -103,8 +104,7 @@ representation that no factorization reaches.
 1. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
    sites ([`EntanglementPrimacy`](QLF_EntanglementPrimacy.lean), rung 6) is still a reading. What is
    now derived is the space it lands in.
-2. **The `N`-body state space.** `⨂ᵢ M ≅ End((ℂ²)^{⊗N})` is proved (point 11), so Wedderburn
-   applies as it does for two bodies; the `N`-body uniqueness statement is not written out.
+
 
 **Credit.** The universal property of the tensor product of algebras is standard (Mathlib's
 `Algebra.TensorProduct.lift`). Deriving the composite of independent systems from local structure is
@@ -1102,6 +1102,53 @@ theorem n_composite_faithful {J : Type*} [Ring J] [Algebra ℂ J] [Nontrivial J]
   show Ψ' (E.symm x) = Ψ' (E.symm y)
   rw [key, key]
   exact hxy
+
+/-- The joint operator algebra of `N` qubit bodies is simple (it is a matrix algebra). -/
+instance cfgEnd_simple : IsSimpleRing (Module.End ℂ (Cfg n → ℂ)) := by
+  rw [IsSimpleRing.iff_injective_ringHom]
+  intro S _ _ f
+  let E : Matrix (Cfg n) (Cfg n) ℂ ≃ₐ[ℂ] Module.End ℂ (Cfg n → ℂ) := Matrix.toLinAlgEquiv'
+  have h : Function.Injective (f.comp (E : Matrix (Cfg n) (Cfg n) ℂ →+* Module.End ℂ (Cfg n → ℂ))) :=
+    RingHom.injective _
+  intro x y hxy
+  have hxy' : (f.comp (E : Matrix (Cfg n) (Cfg n) ℂ →+* Module.End ℂ (Cfg n → ℂ))) (E.symm x) =
+      (f.comp (E : Matrix (Cfg n) (Cfg n) ℂ →+* Module.End ℂ (Cfg n → ℂ))) (E.symm y) := by
+    simpa using hxy
+  simpa using h hxy'
+
+instance cfgEnd_artinian : IsArtinianRing (Module.End ℂ (Cfg n → ℂ)) :=
+  IsArtinianRing.of_finite ℂ _
+
+/-- **`(ℂ²)^{⊗N}` is a simple module of the `N`-body joint algebra.** -/
+instance cfgState_simple : IsSimpleModule (Module.End ℂ (Cfg n → ℂ)) (Cfg n → ℂ) := by
+  rw [isSimpleModule_iff_toSpanSingleton_surjective]
+  refine ⟨inferInstance, fun v hv u => ?_⟩
+  obtain ⟨q, hq⟩ : ∃ q, v q ≠ 0 := by
+    by_contra h
+    push_neg at h
+    exact hv (funext h)
+  refine ⟨(v q)⁻¹ • (LinearMap.proj q : (Cfg n → ℂ) →ₗ[ℂ] ℂ).smulRight u, ?_⟩
+  rw [LinearMap.toSpanSingleton_apply]
+  change ((v q)⁻¹ • (LinearMap.proj q : (Cfg n → ℂ) →ₗ[ℂ] ℂ).smulRight u) v = u
+  simp [smul_smul, hq]
+
+/-- **Uniqueness of the `N`-body state space (Wedderburn).** Every simple module of the `N`-body
+joint algebra `⨂ᵢ M ≅ End((ℂ²)^{⊗N})` is isomorphic to `(ℂ²)^{⊗N}`. Same argument as
+`simple_module_is_twoBodyState`. -/
+theorem simple_module_is_cfgState (N : Type*) [AddCommGroup N]
+    [Module (Module.End ℂ (Cfg n → ℂ)) N] [IsSimpleModule (Module.End ℂ (Cfg n → ℂ)) N] :
+    Nonempty (N ≃ₗ[Module.End ℂ (Cfg n → ℂ)] (Cfg n → ℂ)) := by
+  let R := Module.End ℂ (Cfg n → ℂ)
+  let e₁ := LinearEquiv.ofInjective (LinearMap.inl R N (Cfg n → ℂ)) LinearMap.inl_injective
+  let e₂ := LinearEquiv.ofInjective (LinearMap.inr R N (Cfg n → ℂ)) LinearMap.inr_injective
+  have : IsSimpleModule R (LinearMap.range (LinearMap.inl R N (Cfg n → ℂ))) :=
+    IsSimpleModule.congr e₁.symm
+  have : IsSimpleModule R (LinearMap.range (LinearMap.inr R N (Cfg n → ℂ))) :=
+    IsSimpleModule.congr e₂.symm
+  obtain ⟨f⟩ := IsSimpleRing.isIsotypic R (N × (Cfg n → ℂ))
+    (LinearMap.range (LinearMap.inr R N (Cfg n → ℂ)))
+    (LinearMap.range (LinearMap.inl R N (Cfg n → ℂ)))
+  exact ⟨e₁.trans (f.trans e₂.symm)⟩
 
 end NFaithful
 
