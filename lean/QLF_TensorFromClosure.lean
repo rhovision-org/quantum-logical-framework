@@ -67,6 +67,10 @@ Only what a "body" means in QLF:
    For bodies labelled `0, …, N−1`, the ordered product of commuting body actions is an algebra map
    out of Mathlib's `⨂[ℂ] i, M`, it is the only one restricting to each body on its own slot, and
    every joint fold is that map applied to `fold w₀ ⊗ ⋯ ⊗ fold w_{N−1}`.
+10. **The state space is unique (`twoBodyState_simple`, `simple_module_is_twoBodyState`).** `ℂ⁴`
+   is a simple module of the joint algebra, and every simple module is isomorphic to it: `Mat₄(ℂ)`
+   is simple and Artinian, so its simple modules are all one type (Wedderburn, via Mathlib's
+   `IsSimpleRing.isIsotypic`).
 
 ## The two sectors
 
@@ -91,9 +95,8 @@ representation that no factorization reaches.
 
 ## What is still NOT proved
 
-1. **Uniqueness of the state space.** `two_body_states_irreducible` proves `ℂ² ⊗ ℂ² = ℂ⁴` is an
-   irreducible module of the derived composite. That every module of `Mat₄(ℂ)` is a sum of copies of
-   it (so `ℂ⁴` is the only irreducible one) is classical Wedderburn theory, not formalized here.
+1. **Uniqueness of the `N`-body state space.** For two bodies, `ℂ⁴` is the only simple module
+   (`simple_module_is_twoBodyState`). The `N`-body analogue waits on point 3.
 2. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
    sites ([`EntanglementPrimacy`](QLF_EntanglementPrimacy.lean), rung 6) is still a reading. What is
    now derived is the space it lands in.
@@ -589,6 +592,67 @@ theorem two_body_states_irreducible (W : Submodule ℂ (Fin 2 × Fin 2 → ℂ))
   obtain ⟨t, rfl⟩ := kronLift_surjective X
   rw [← hX]
   exact hW t v hvW
+
+/-- The two-body state space `ℂ² ⊗ ℂ² = ℂ⁴`, as a module of the joint algebra
+`Q = Mat₄(ℂ) ≅ M ⊗ M` (`tensorEquiv`) acting by matrix-vector product. -/
+def TwoBodyState : Type := Fin 2 × Fin 2 → ℂ
+
+noncomputable instance : AddCommGroup TwoBodyState :=
+  inferInstanceAs (AddCommGroup (Fin 2 × Fin 2 → ℂ))
+
+noncomputable instance : Module QLF.Tsirelson.Q TwoBodyState where
+  smul X v := (X *ᵥ (v : Fin 2 × Fin 2 → ℂ) : Fin 2 × Fin 2 → ℂ)
+  one_smul v := by
+    show (1 : QLF.Tsirelson.Q) *ᵥ (v : Fin 2 × Fin 2 → ℂ) = v
+    simp
+  mul_smul X Y v := by
+    show (X * Y) *ᵥ (v : Fin 2 × Fin 2 → ℂ) = X *ᵥ (Y *ᵥ (v : Fin 2 × Fin 2 → ℂ))
+    simp [Matrix.mulVec_mulVec]
+  smul_zero X := by
+    show X *ᵥ (0 : Fin 2 × Fin 2 → ℂ) = 0
+    simp
+  smul_add X v w := by
+    show X *ᵥ ((v : Fin 2 × Fin 2 → ℂ) + w) = X *ᵥ (v : Fin 2 × Fin 2 → ℂ) + X *ᵥ w
+    simp [Matrix.mulVec_add]
+  add_smul X Y v := by
+    show (X + Y) *ᵥ (v : Fin 2 × Fin 2 → ℂ) = X *ᵥ (v : Fin 2 × Fin 2 → ℂ) + Y *ᵥ v
+    simp [Matrix.add_mulVec]
+  zero_smul v := by
+    show (0 : QLF.Tsirelson.Q) *ᵥ (v : Fin 2 × Fin 2 → ℂ) = 0
+    simp
+
+theorem twoBodyState_smul (X : QLF.Tsirelson.Q) (v : TwoBodyState) :
+    X • v = (X *ᵥ (v : Fin 2 × Fin 2 → ℂ) : Fin 2 × Fin 2 → ℂ) := rfl
+
+/-- **`ℂ⁴` is a simple module of the joint algebra** (`state_cyclic` in module language). -/
+instance twoBodyState_simple : IsSimpleModule QLF.Tsirelson.Q TwoBodyState := by
+  rw [isSimpleModule_iff_toSpanSingleton_surjective]
+  refine ⟨inferInstanceAs (Nontrivial (Fin 2 × Fin 2 → ℂ)), fun v hv u => ?_⟩
+  obtain ⟨X, hX⟩ := state_cyclic v u hv
+  refine ⟨X, ?_⟩
+  rw [LinearMap.toSpanSingleton_apply, twoBodyState_smul]
+  exact hX
+
+/-- **Uniqueness of the two-body state space (Wedderburn).** Every simple module of the joint
+algebra is isomorphic to `ℂ² ⊗ ℂ² = ℂ⁴`. `Q` is simple and Artinian, so all its simple modules are
+isotypic (Mathlib's `IsSimpleRing.isIsotypic`); put `N` and `ℂ⁴` side by side in `N × ℂ⁴` and read
+off the isomorphism between the two simple summands. -/
+theorem simple_module_is_twoBodyState (N : Type*) [AddCommGroup N] [Module QLF.Tsirelson.Q N]
+    [IsSimpleModule QLF.Tsirelson.Q N] : Nonempty (N ≃ₗ[QLF.Tsirelson.Q] TwoBodyState) := by
+  let e₁ := LinearEquiv.ofInjective (LinearMap.inl QLF.Tsirelson.Q N TwoBodyState)
+    LinearMap.inl_injective
+  let e₂ := LinearEquiv.ofInjective (LinearMap.inr QLF.Tsirelson.Q N TwoBodyState)
+    LinearMap.inr_injective
+  haveI : IsSimpleModule QLF.Tsirelson.Q
+      (LinearMap.range (LinearMap.inl QLF.Tsirelson.Q N TwoBodyState)) :=
+    IsSimpleModule.congr e₁.symm
+  haveI : IsSimpleModule QLF.Tsirelson.Q
+      (LinearMap.range (LinearMap.inr QLF.Tsirelson.Q N TwoBodyState)) :=
+    IsSimpleModule.congr e₂.symm
+  obtain ⟨f⟩ := IsSimpleRing.isIsotypic QLF.Tsirelson.Q (N × TwoBodyState)
+    (LinearMap.range (LinearMap.inr QLF.Tsirelson.Q N TwoBodyState))
+    (LinearMap.range (LinearMap.inl QLF.Tsirelson.Q N TwoBodyState))
+  exact ⟨e₁.trans (f.trans e₂.symm)⟩
 
 -- ==========================================
 -- §5d. Any number of bodies
