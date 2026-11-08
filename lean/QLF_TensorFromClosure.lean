@@ -604,24 +604,13 @@ noncomputable instance : AddCommGroup TwoBodyState :=
 
 noncomputable instance : Module QLF.Tsirelson.Q TwoBodyState where
   smul X v := (X *ᵥ (v : Fin 2 × Fin 2 → ℂ) : Fin 2 × Fin 2 → ℂ)
-  one_smul v := by
-    show (1 : QLF.Tsirelson.Q) *ᵥ (v : Fin 2 × Fin 2 → ℂ) = v
-    simp
-  mul_smul X Y v := by
-    show (X * Y) *ᵥ (v : Fin 2 × Fin 2 → ℂ) = X *ᵥ (Y *ᵥ (v : Fin 2 × Fin 2 → ℂ))
-    simp [Matrix.mulVec_mulVec]
-  smul_zero X := by
-    show X *ᵥ (0 : Fin 2 × Fin 2 → ℂ) = 0
-    simp
-  smul_add X v w := by
-    show X *ᵥ ((v : Fin 2 × Fin 2 → ℂ) + w) = X *ᵥ (v : Fin 2 × Fin 2 → ℂ) + X *ᵥ w
-    simp [Matrix.mulVec_add]
-  add_smul X Y v := by
-    show (X + Y) *ᵥ (v : Fin 2 × Fin 2 → ℂ) = X *ᵥ (v : Fin 2 × Fin 2 → ℂ) + Y *ᵥ v
-    simp [Matrix.add_mulVec]
-  zero_smul v := by
-    show (0 : QLF.Tsirelson.Q) *ᵥ (v : Fin 2 × Fin 2 → ℂ) = 0
-    simp
+  one_smul v := Matrix.one_mulVec (show Fin 2 × Fin 2 → ℂ from v)
+  mul_smul X Y v := (Matrix.mulVec_mulVec (show Fin 2 × Fin 2 → ℂ from v) X Y).symm
+  smul_zero X := Matrix.mulVec_zero X
+  smul_add X v w :=
+    Matrix.mulVec_add X (show Fin 2 × Fin 2 → ℂ from v) (show Fin 2 × Fin 2 → ℂ from w)
+  add_smul X Y v := Matrix.add_mulVec X Y (show Fin 2 × Fin 2 → ℂ from v)
+  zero_smul v := Matrix.zero_mulVec (show Fin 2 × Fin 2 → ℂ from v)
 
 theorem twoBodyState_smul (X : QLF.Tsirelson.Q) (v : TwoBodyState) :
     X • v = (X *ᵥ (v : Fin 2 × Fin 2 → ℂ) : Fin 2 × Fin 2 → ℂ) := rfl
@@ -645,10 +634,10 @@ theorem simple_module_is_twoBodyState (N : Type*) [AddCommGroup N] [Module QLF.T
     LinearMap.inl_injective
   let e₂ := LinearEquiv.ofInjective (LinearMap.inr QLF.Tsirelson.Q N TwoBodyState)
     LinearMap.inr_injective
-  haveI : IsSimpleModule QLF.Tsirelson.Q
+  have : IsSimpleModule QLF.Tsirelson.Q
       (LinearMap.range (LinearMap.inl QLF.Tsirelson.Q N TwoBodyState)) :=
     IsSimpleModule.congr e₁.symm
-  haveI : IsSimpleModule QLF.Tsirelson.Q
+  have : IsSimpleModule QLF.Tsirelson.Q
       (LinearMap.range (LinearMap.inr QLF.Tsirelson.Q N TwoBodyState)) :=
     IsSimpleModule.congr e₂.symm
   obtain ⟨f⟩ := IsSimpleRing.isIsotypic QLF.Tsirelson.Q (N × TwoBodyState)
