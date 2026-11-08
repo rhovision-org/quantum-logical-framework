@@ -75,6 +75,8 @@ creation operator creates only entanglements.
   frequency of a strand.
 * **`form_approximated`**: every real Form, irrational coordinates included, is within `1/N` of a
   strand frequency at window `N`, so it is a limit of strand frequencies.
+* **`pure_state_family`**: for integers `m, n, k`, the strand with nets
+  `(m²+n²+k², 2mk, 2nk, m²+n²−k²)` over the window `2(m²+n²+k²)` is a pure state.
 
 So the real numbers in a Form enter only as ratios of counts to a window. Pure-state normalisation
 `t = ½` is a choice of window (the gauge net is half the events), not an extra postulate.
@@ -108,10 +110,12 @@ Read a pair `[t, t†]` as the twist's axis acting on both sites of a two-body s
 
 1. **Irrational Forms are limits, not frequencies.** A Form with an irrational coordinate is the
    frequency of no finite strand, but `form_approximated` puts some strand's frequency within `1/N`
-   of it at every window `N`, so it is a limit of strand frequencies. What is not shown: that the
-   approximants can be chosen **pure** when the target is pure (that needs density of rational
-   points on the sphere), and the link to `QLF_Realizability`, which is the reason to expect no more
-   than rationals in a finite region.
+   of it at every window `N`, so it is a limit of strand frequencies. `pure_state_family` gives an
+   explicit three-parameter family of **pure** strand frequencies (the inverse stereographic image
+   of rational points). What is cited, not formalised: that this family reaches every rational point
+   of the sphere and that those points are dense, which together make every pure state a limit of
+   pure strand frequencies; and the link to `QLF_Realizability`, which is the reason to expect no
+   more than rationals in a finite region.
 2. **Why the window is `N`.** Rung 4 shows that `t = ½` is reached by choosing the window; it does
    not derive that the physical window is the one that makes the gauge net half of it.
 3. **The two-body reading is a choice.** Rung 6 maps a pair to the joint action of its axis on two
@@ -577,6 +581,37 @@ theorem form_approximated (f : Form) (N : ℕ) :
     have := Int.floor_le ((N : ℝ) * f.z)
     have := Int.lt_floor_add_one ((N : ℝ) * f.z)
     constructor <;> linarith
+
+/-- **A family of pure states made of strands.** For integers `m, n, k` (not all zero), the strand
+    with nets `(m² + n² + k², 2mk, 2nk, m² + n² − k²)`, read over the window `N = 2(m² + n² + k²)`,
+    is a pure qubit state. Its Bloch vector is the inverse stereographic image of the rational point
+    `(m/k, n/k)`, which is why the four nets satisfy `(2mk)² + (2nk)² + (m² + n² − k²)² =
+    (m² + n² + k²)²`. Classically this parametrisation reaches every rational point of the sphere,
+    and those points are dense, so pure states are limits of *pure* strand frequencies; those two
+    classical facts are cited, not formalised here. -/
+theorem pure_state_family (m n k : ℤ) (N : ℕ) (hN : (N : ℤ) = 2 * (m ^ 2 + n ^ 2 + k ^ 2))
+    (hN0 : N ≠ 0) :
+    ∃ ts : List Twist, IsPure (freqForm ts N) := by
+  obtain ⟨ts, h1, h2, h3, h4⟩ :=
+    strand_realizes (m ^ 2 + n ^ 2 + k ^ 2) (2 * m * k) (2 * n * k) (m ^ 2 + n ^ 2 - k ^ 2)
+  refine ⟨ts, ?_⟩
+  have hNR : (N : ℝ) = 2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2) := by exact_mod_cast hN
+  have hD : (m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2 ≠ 0 := by
+    intro h0
+    apply hN0
+    have : (N : ℝ) = 0 := by rw [hNR, h0, mul_zero]
+    exact_mod_cast this
+  have hi : (2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2)) *
+      (2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2))⁻¹ = 1 :=
+    mul_inv_cancel₀ (mul_ne_zero two_ne_zero hD)
+  unfold IsPure
+  simp only [freqForm, h1, h2, h3, h4]
+  push_cast
+  rw [hNR]
+  constructor
+  · linear_combination (1 / 2 : ℝ) * hi
+  · linear_combination (1 / 4 * (2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2) *
+      (2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2))⁻¹ + 1)) * hi
 
 -- ==========================================
 -- Rung 5: the strong reading — which pairs cannot be split
