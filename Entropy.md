@@ -36,7 +36,7 @@ Every 1/2-spin ZFA atom contributes exactly $\log 2$ nats to the entropy budget.
 
 The maximally mixed reduced density matrix $\rho = I/2$ after a single 1/2-spin closure has von Neumann entropy $S(\rho) = -\mathrm{Tr}(\rho \ln \rho) = \log 2$, in agreement with the §1 formula. The two halves agree because the 1/2-spin atom is one principle (half-spin Hermitian closure) decomposed into three algebraic faces — set-theoretic minimality ([HALF-SPIN-ZFA-EMBEDDING.md](HALF-SPIN-ZFA-EMBEDDING.md)), algebraic Pauli closure ([Experimental_Consistency.md §2.1](Experimental_Consistency.md)), and information-theoretic MRE saturation ([MRE.md](MRE.md)) — all projections of the same bra-ket-of-a-spin-1/2-spinor structure.
 
-This gives QLF entropy a **constructive microscopic foundation**: the $\log 2$ values appearing throughout this document (per gauge-folded loop, per minimal closure, per Planck area) are not coincidences but consequences of the per-event optimum. Multi-atom structures inherit the rate: a Pauli-closed history of length $2k$ carries $\log \binom{2k}{k}$ nats, recovering $\log 2$ for $k=1$ and the area law in the large-$k$ asymptotic.
+This gives QLF entropy a **constructive microscopic foundation**: the $\log 2$ values appearing throughout this document (per gauge-folded loop, per minimal closure, per Planck area) are not coincidences but consequences of the per-event optimum. Multi-atom structures inherit the rate: a Pauli-closed history of length $2k$ carries $\log \binom{2k}{k}$ nats, recovering $\log 2$ for $k=1$. (This is linear in length, $2k\log 2 - \tfrac12\log(\pi k)$, so it is extensive and not an area law. The area law needs locality of shared closures; see [Holography_Audit.md](Holography_Audit.md).)
 
 ## 1b. Inventory: the ways `log 2` arises
 
@@ -102,7 +102,7 @@ One bit of entropy requires **exactly four orthogonal twists** to close a stable
 \[
 S_{\rm BH} = \frac{A}{4\ell_P^2}
 \]
-This holds at both microscopic (particle) and macroscopic (black-hole) scales because the same QuCalc rules apply. The factor \(1/4\) is not inserted by hand; it is the minimal number of gauge twists needed for ZFA closure in the 8-axis alphabet.
+This holds at both microscopic (particle) and macroscopic (black-hole) scales because the same QuCalc rules apply. **Correction (2026-11-09 audit):** the factor \(1/4\) is *not* derived here. [`QLF_HolographicDensity`](lean/QLF_HolographicDensity.lean) proves QLF's one-bit-per-patch count exceeds \(A/4\ell_P^2\) by exactly \(4\log 2\), and that residual is open. The area law itself follows from locality of shared closures (`cutEntropy_le_area`, [`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean)); see [Holography_Audit.md](Holography_Audit.md).
 
 ## 4. Logical-Density-Dependent Space/Time Role Swap
 
