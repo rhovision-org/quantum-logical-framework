@@ -94,6 +94,7 @@ import QLF_GluonVertex
 import QLF_GluonGluing
 import QLF_Resonance
 import QLF_JointClosure
+import QLF_TensorFromClosure
 import QLF_VacuumResolvent
 import QLF_MixingUnitarity
 import QLF_SharedClosure
@@ -410,6 +411,18 @@ import QLF_HiddenZeros
 #print axioms QLF.JointClosure.closed_iff_singlet
 #print axioms QLF.JointClosure.singlet_corr
 #print axioms QLF.JointClosure.singlet_saturates
+#print axioms QLF.TensorFromClosure.composite_is_tensor
+#print axioms QLF.TensorFromClosure.composite_faithful
+#print axioms QLF.TensorFromClosure.joint_fold_determines_pair
+#print axioms QLF.TensorFromClosure.pair_scalar_ambiguity
+#print axioms QLF.TensorFromClosure.independent_closure_factors
+#print axioms QLF.TensorFromClosure.scalar_fold_not_zfa
+#print axioms QLF.TensorFromClosure.shared_closure_not_independent
+#print axioms QLF.TensorFromClosure.simple_module_is_twoBodyState
+#print axioms QLF.TensorFromClosure.n_composite_is_tensor
+#print axioms QLF.TensorFromClosure.n_composite_faithful
+#print axioms QLF.TensorFromClosure.simple_module_is_cfgState
+#print axioms QLF.TensorFromClosure.split_strong_iff_singlet
 #print axioms QLF.VacuumResolvent.dyson_unique
 #print axioms QLF.VacuumResolvent.chain_tendsto
 #print axioms QLF.VacuumResolvent.resummed_is_tower

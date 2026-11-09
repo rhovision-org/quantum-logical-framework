@@ -53,7 +53,9 @@ Only what a "body" means in QLF:
 6. **Faithful in every joint algebra (`composite_faithful`).** In any non-trivial `J`, the factoring
    map `M ⊗ M → J` is injective: `M ⊗ M ≅ Mat₄(ℂ)` is simple (Mathlib's `IsSimpleRing.matrix`), so a
    ring map out of it has zero kernel. Every independent composite contains an exact copy of the
-   tensor product, and its joint fold remembers both bodies (`joint_fold_determines_pair`).
+   tensor product, and its joint fold determines the tensor element `fold w_A ⊗ fold w_B`
+   (`joint_fold_determines_pair`). It does **not** determine the two folds separately: a scalar can
+   move between the factors, `(−I) ⊗ I = I ⊗ (−I)` (`pair_scalar_ambiguity`).
 7. **The state space (`state_cyclic`, `two_body_states_irreducible`).** Every non-zero state of
    `ℂ² ⊗ ℂ² = ℂ⁴` is sent to every other by some joint operator, so a subspace invariant under the
    derived composite and holding one non-zero state is everything. The tensor-product state space
@@ -83,12 +85,19 @@ Only what a "body" means in QLF:
     fixes, a shared gauge pair is the scalar `−1` on every state (`split_gauge_scalar`), and this
     picks the same state as rung 6's chosen sum reading (`split_reading_agrees`).
 
+**Scope.** Everything above is derived *from the stated premises*: each body acts through its own
+fold, the joint fold is multiplicative, and separate bodies' events have no relative order
+(interleaving invariance). That bodies are independent in this sense is a premise, not something
+derived here from ZFA alone.
+
 ## The two sectors
 
 * **Product sector (`kron_scalar_iff`, `independent_closure_factors`).** A Kronecker product is a
-  non-zero scalar exactly when both factors are scalars. So a joint closure of independent bodies is
-  always two separate closures. [`IndexedFactors`](QLF_IndexedFactors.lean) stated this in prose;
-  it is now a theorem.
+  non-zero scalar exactly when both factors are scalars. So a scalar joint fold of independent
+  bodies is two scalar body folds. This is Pauli closure, not ZFA: a scalar fold need not be count
+  balanced (`scalar_fold_not_zfa`: `^^` folds to `I`), so the theorem does not say that each body is
+  a ZFA closure. [`IndexedFactors`](QLF_IndexedFactors.lean) stated the scalar version in prose; it
+  is now a theorem.
 * **Coupled sector (`open_factor_never_closes_jointly`, `shared_closure_not_independent`).** If one
   body's history is open, no history on the other body closes it as an independent factor. The
   primordial shared closure `^ | v` closes as one word and **cannot** close as a product. Shared
@@ -554,8 +563,10 @@ theorem composite_faithful (ρA ρB : M →ₐ[ℂ] J)
   rw [key, key]
   exact hxy
 
-/-- **The joint fold remembers both bodies.** In any non-trivial joint algebra, two two-body words
-    with the same joint fold have the same pair of body folds in `M ⊗ M`. -/
+/-- **The joint fold determines the tensor element.** In any non-trivial joint algebra, two two-body
+    words with the same joint fold have the same element `fold w_A ⊗ fold w_B` of `M ⊗ M`. The
+    separate folds are fixed only up to a scalar moved between the factors
+    (`pair_scalar_ambiguity`). -/
 theorem joint_fold_determines_pair (ρA ρB : M →ₐ[ℂ] J)
     (hinv : ∀ w w', Step w w' → cfold ρA ρB w = cfold ρA ρB w') (w w' : List Tok)
     (h : cfold ρA ρB w = cfold ρA ρB w') :
@@ -568,6 +579,17 @@ theorem joint_fold_determines_pair (ρA ρB : M →ₐ[ℂ] J)
   exact h
 
 end Faithful
+
+/-- **The tensor element does not fix the separate folds.** `−I ⊗ I = I ⊗ −I` while `−I ≠ I`, and both
+    sides are composite folds (body `A` runs `−` and body `B` nothing, or the reverse). -/
+theorem pair_scalar_ambiguity :
+    twistMatrixFold [Twist.minus] ⊗ₜ[ℂ] twistMatrixFold [] =
+        twistMatrixFold [] ⊗ₜ[ℂ] twistMatrixFold [Twist.minus] ∧
+      twistMatrixFold [Twist.minus] ≠ twistMatrixFold [] := by
+  refine ⟨?_, fun h => ?_⟩
+  · simp [twistMatrixFold, Twist.toMatrix, TensorProduct.neg_tmul, TensorProduct.tmul_neg]
+  · have h00 := congrFun (congrFun h 0) 0
+    norm_num [twistMatrixFold, Twist.toMatrix] at h00
 
 -- ==========================================
 -- §5c. States: ℂ² ⊗ ℂ² is irreducible for the derived composite
@@ -1203,8 +1225,9 @@ theorem fold_mul_reverse (a : List Twist) : twistMatrixFold a * twistMatrixFold 
       rw [mul_one, mul_assoc, ← mul_assoc (twistMatrixFold a), ih, one_mul,
         QLF.ClosureUnitarity.twist_sq]
 
-/-- **Product sector: a joint closure of independent bodies is two separate closures.** If the
-    composite fold `fold a ⊗ fold b` is a scalar, each body's own fold is a scalar. -/
+/-- **Product sector: a scalar joint fold of independent bodies is two scalar body folds.** If the
+    composite fold `fold a ⊗ fold b` is a scalar, each body's own fold is a scalar. This is Pauli
+    closure of each factor, not ZFA closure (`scalar_fold_not_zfa`). -/
 theorem independent_closure_factors (a b : List Twist) {c : ℂ}
     (h : twistMatrixFold a ⊗ₖ twistMatrixFold b = c • (1 : QLF.Tsirelson.Q)) :
     (∃ x : ℂ, twistMatrixFold a = x • (1 : M)) ∧ (∃ y : ℂ, twistMatrixFold b = y • (1 : M)) := by
@@ -1218,6 +1241,17 @@ theorem independent_closure_factors (a b : List Twist) {c : ℂ}
     exact zero_ne_one hinv
   obtain ⟨x, y, hx, hy, _⟩ := (kron_scalar_iff _ _ hc).1 h
   exact ⟨⟨x, hx⟩, ⟨y, hy⟩⟩
+
+/-- **A scalar fold need not be a ZFA closure.** `^^` folds to `I` (`σy² = I`) but is not count
+    balanced. So the product sector's conclusion is scalar (Pauli) closure of each factor, and
+    reading it as two ZFA closures needs count balance as a separate hypothesis. -/
+theorem scalar_fold_not_zfa :
+    twistMatrixFold [Twist.up, Twist.up] = 1 ∧ ¬ countBalanced [Twist.up, Twist.up] := by
+  refine ⟨?_, ?_⟩
+  · show Twist.up.toMatrix * (Twist.up.toMatrix * 1) = 1
+    rw [mul_one, QLF.ClosureUnitarity.twist_sq]
+  · unfold countBalanced
+    decide
 
 /-- **Coupled sector: an open body is never closed by an independent partner.** If body `A`'s
     history is open (its fold is no scalar), then for every history on body `B` the composite
