@@ -93,6 +93,29 @@ What survives is the standard spinor fact that a 2-component state carries a 3-v
 | "AdS/CFT is a provable identity / machine-verified" | **No** | The provable content is §0 rows 1–2. de Sitter / AdS readings stay prose |
 | Holographic QEC: "`full_zeno_prune` is the machine-verified boundary decoder" | **Not attempted** | Would need a code property (distance, recovery map). Open |
 
+### 4a. What a closure carries across a boundary: one bit per enclosed cell
+
+Jim asked (2026-11-09) whether an up/down entanglement teams with a left/right one to make a
+closure. It does, and the team carries a quantity neither pair has on its own: enclosed area.
+[`QLF_PlaquetteArea`](lean/QLF_PlaquetteArea.lean) proves the lattice Green's theorem for the
+edge-sign connection of [`QLF_EdgeSign`](lean/QLF_EdgeSign.lean). For any history with no `Z`
+twist, the holonomy is the enclosed area mod 2 (`holonomy_eq_area_parity`). So the phase is
+`(−1)^{#neg} · (−1)^{area}`, and for a balanced history that scalar is the Pauli fold
+(`fold_eq_area_phase`). A single-axis closure encloses nothing (`area_zero_of_no_X`). The decided
+squares explain the `QLF_EdgeSign` examples: `^>v<` has area `−1`, `^><v` has area `0`, and twice
+round has area `−2`. The same four twists in a different order give a different sign *because*
+they bound a different area. Numerically: 0 mismatches over the 68,844 planar closures of
+length ≤ 10.
+
+For holography this is the precise sense in which a closure's phase is a **boundary** quantity: it
+is a flux, read entirely off the loop, and it equals one bit per cell of the surface the loop
+bounds. That is Stokes' theorem, which is bookkeeping in the method's sense (rule 4): it holds for
+every loop. What it settles is *where* the phase lives (on the enclosed surface, at one bit per
+cell), not a new count. Non-planar loops are checked but not yet proved: for spatial closures of
+length ≤ 8 (46,686 of them) the holonomy is the parity of the sum of the three projected areas
+(`XY`, `YZ`, `XZ`), with 0 mismatches. That is the same statement with π flux through every
+spatial cell, and the Lean proof would follow the planar one.
+
 ## 5. How to talk about holography in QLF now
 
 * Say: **closure is a boundary property** (`closure_iff_boundary_silent`); **the horizon has `Θ(R²)` sites** (`horizon_area_law`); **shared pairs born at one event stay within the light cone** (`pair_range_le`), so **the area law follows** (`cutEntropy_le_area`). All proved; the one premise left is that a shared pair is born at one event.
