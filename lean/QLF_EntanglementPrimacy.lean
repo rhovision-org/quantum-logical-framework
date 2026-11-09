@@ -895,7 +895,7 @@ theorem pure_strand_frequencies_dense (f : Form) (hf : IsPure f) (ε : ℝ) (hε
     obtain ⟨n, hn⟩ : ∃ n : ℤ, (n : ℝ) = r * ((q.den : ℝ) * r.den) :=
       ⟨r.num * q.den, by push_cast; rw [← hr]; ring⟩
     obtain ⟨k, hk⟩ : ∃ k : ℤ, (k : ℝ) = (q.den : ℝ) * r.den :=
-      ⟨q.den * r.den, by push_cast⟩
+      ⟨q.den * r.den, by push_cast; ring⟩
     obtain ⟨ts, h1, h2, h3, h4⟩ :=
       strand_realizes (m ^ 2 + n ^ 2 + k ^ 2) (2 * m * k) (2 * n * k) (m ^ 2 + n ^ 2 - k ^ 2)
     obtain ⟨N, hN⟩ : ∃ N : ℕ, (N : ℤ) = 2 * (m ^ 2 + n ^ 2 + k ^ 2) :=
