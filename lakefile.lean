@@ -313,5 +313,6 @@ lean_lib QLF where
     `QLF_PolaronBranches,
     `QLF_NonAbelianGauss,
     `QLF_HiddenZeros,
-    `QLF_EntanglementPrimacy
+    `QLF_EntanglementPrimacy,
+    `QLF_HolographicBoundary
   ]
