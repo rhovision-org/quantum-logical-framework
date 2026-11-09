@@ -107,48 +107,97 @@ theorem shell_card_le (R d : ℕ) : (shell R d).card ≤ 2 * d * (2 * R + 1) ^ 2
           Finset.card_range, Finset.card_univ, Fintype.card_bool]
         ring
 
+/-- The `ℓ¹` triangle inequality for an offset. -/
+theorem n1_le_add (u v : Site) : n1 v ≤ n1 u + n1 (off u v) := by
+  obtain ⟨a, b, c⟩ := u
+  obtain ⟨x, y, z⟩ := v
+  have h1 : x.natAbs ≤ a.natAbs + (x - a).natAbs := by simpa using Int.natAbs_add_le a (x - a)
+  have h2 : y.natAbs ≤ b.natAbs + (y - b).natAbs := by simpa using Int.natAbs_add_le b (y - b)
+  have h3 : z.natAbs ≤ c.natAbs + (z - c).natAbs := by simpa using Int.natAbs_add_le c (z - c)
+  simp only [n1, off]
+  linarith
+
+/-- Step distance is symmetric. -/
+theorem n1_off_symm (u v : Site) : n1 (off v u) = n1 (off u v) := by
+  obtain ⟨a, b, c⟩ := u
+  obtain ⟨x, y, z⟩ := v
+  simp only [n1, off]
+  omega
+
+/-- An offset is fixed by its endpoints. -/
+theorem off_inj {u v w : Site} (h : off u v = off u w) : v = w := by
+  obtain ⟨a, b, c⟩ := u
+  obtain ⟨x, y, z⟩ := v
+  obtain ⟨x', y', z'⟩ := w
+  simp only [off, Prod.mk.injEq] at h ⊢
+  omega
+
+theorem mem_shell_of {R d : ℕ} {p : Site} (h1 : n1 p ≤ R) (h2 : R < n1 p + d) : p ∈ shell R d := by
+  unfold shell
+  rw [Finset.mem_filter]
+  refine ⟨?_, h1, h2⟩
+  obtain ⟨x, y, z⟩ := p
+  simp only [n1] at h1
+  simp only [Finset.mem_product, Finset.mem_Icc]
+  omega
+
+theorem mem_box_of {d : ℕ} {q : Site} (h : n1 q ≤ d) : q ∈ box d := by
+  obtain ⟨x, y, z⟩ := q
+  simp only [n1] at h
+  simp only [box, Finset.mem_product, Finset.mem_Icc]
+  omega
+
+/-- A local cut pair lands in (shell) × (offset box) × (which end was inner). -/
+theorem cutMap_mem (R d : ℕ) (e : Site × Site) (hc : Cut R e) (hl : n1 (off e.1 e.2) ≤ d) :
+    cutMap R e ∈ shell R d ×ˢ (box d ×ˢ (Finset.univ : Finset Bool)) := by
+  have t1 := n1_le_add e.1 e.2
+  have t2 := n1_le_add e.2 e.1
+  have hs := n1_off_symm e.1 e.2
+  unfold Cut at hc
+  unfold cutMap
+  split_ifs with h
+  · exact Finset.mem_product.mpr
+      ⟨mem_shell_of h (by omega), Finset.mem_product.mpr ⟨mem_box_of hl, Finset.mem_univ _⟩⟩
+  · exact Finset.mem_product.mpr
+      ⟨mem_shell_of (by omega) (by omega),
+        Finset.mem_product.mpr ⟨mem_box_of (by omega), Finset.mem_univ _⟩⟩
+
+/-- `cutMap` loses nothing: a pair is recovered from its record. -/
+theorem cutMap_inj (R : ℕ) {e1 e2 : Site × Site} (h : cutMap R e1 = cutMap R e2) : e1 = e2 := by
+  unfold cutMap at h
+  split_ifs at h
+  · have ha : e1.1 = e2.1 := congrArg Prod.fst h
+    have hb : off e1.1 e1.2 = off e2.1 e2.2 := congrArg (fun x : Site × Site × Bool => x.2.1) h
+    rw [ha] at hb
+    exact Prod.ext_iff.mpr ⟨ha, off_inj hb⟩
+  · have hb : true = false := congrArg (fun x : Site × Site × Bool => x.2.2) h
+    exact absurd hb (by decide)
+  · have hb : false = true := congrArg (fun x : Site × Site × Bool => x.2.2) h
+    exact absurd hb (by decide)
+  · have ha : e1.2 = e2.2 := congrArg Prod.fst h
+    have hb : off e1.2 e1.1 = off e2.2 e2.1 := congrArg (fun x : Site × Site × Bool => x.2.1) h
+    rw [ha] at hb
+    exact Prod.ext_iff.mpr ⟨off_inj hb, ha⟩
+
 /-- **The local area law.** If every shared pair links sites within step distance `d` (only local
     information has effect), the pairs cut by the boundary of the `ℓ¹` ball of radius `R` number at
     most `4d(2d+1)³(2R+1)²`: `O(R²)` with a coefficient fixed by the range `d` alone. -/
 theorem local_area_law (R d : ℕ) (P : Finset (Site × Site))
     (hloc : ∀ e ∈ P, n1 (off e.1 e.2) ≤ d) :
     (cutPairs R P).card ≤ 4 * d * (2 * d + 1) ^ 3 * (2 * R + 1) ^ 2 := by
-  calc (cutPairs R P).card
-      ≤ (shell R d ×ˢ (box d ×ˢ (Finset.univ : Finset Bool))).card := by
-        apply Finset.card_le_card_of_injOn (cutMap R)
-        · intro e he
-          have he' : e ∈ cutPairs R P := by simpa using he
-          simp only [cutPairs, Finset.mem_filter] at he'
-          have hl := hloc e he'.1
-          obtain ⟨⟨a, b, c⟩, ⟨x, y, z⟩⟩ := e
-          simp only [Cut, n1, off] at he' hl
-          simp only [Finset.mem_coe]
-          unfold cutMap
-          split_ifs with h
-          · simp only [n1] at h
-            simp only [shell, box, Finset.mem_product, Finset.mem_filter, Finset.mem_Icc,
-              Finset.mem_univ, and_true]
-            simp only [n1, off]
-            omega
-          · simp only [n1] at h
-            simp only [shell, box, Finset.mem_product, Finset.mem_filter, Finset.mem_Icc,
-              Finset.mem_univ, and_true]
-            simp only [n1, off]
-            omega
-        · intro e1 he1 e2 he2 h
-          obtain ⟨⟨a1, b1, c1⟩, ⟨x1, y1, z1⟩⟩ := e1
-          obtain ⟨⟨a2, b2, c2⟩, ⟨x2, y2, z2⟩⟩ := e2
-          unfold cutMap at h
-          split_ifs at h <;>
-            simp only [off, Prod.mk.injEq, Bool.true_eq_false, Bool.false_eq_true, and_false,
-              and_true] at h <;>
-            simp only [Prod.mk.injEq] <;>
-            omega
-    _ = (shell R d).card * ((box d).card * 2) := by
-        rw [Finset.card_product, Finset.card_product, Finset.card_univ, Fintype.card_bool]
-    _ ≤ (2 * d * (2 * R + 1) ^ 2) * ((2 * d + 1) ^ 3 * 2) := by
-        rw [box_card]
-        exact Nat.mul_le_mul (shell_card_le R d) le_rfl
+  have hmaps : ∀ e ∈ cutPairs R P,
+      cutMap R e ∈ shell R d ×ˢ (box d ×ˢ (Finset.univ : Finset Bool)) := by
+    intro e he
+    rw [cutPairs, Finset.mem_filter] at he
+    exact cutMap_mem R d e he.2 (hloc e he.1)
+  have hcard : (cutPairs R P).card ≤ (shell R d ×ˢ (box d ×ˢ (Finset.univ : Finset Bool))).card :=
+    Finset.card_le_card_of_injOn (cutMap R) (fun e he => hmaps e (by simpa using he))
+      (fun e1 _ e2 _ h => cutMap_inj R h)
+  rw [Finset.card_product, Finset.card_product, Finset.card_univ, Fintype.card_bool,
+    box_card] at hcard
+  have hs := shell_card_le R d
+  calc (cutPairs R P).card ≤ (shell R d).card * ((2 * d + 1) ^ 3 * 2) := hcard
+    _ ≤ (2 * d * (2 * R + 1) ^ 2) * ((2 * d + 1) ^ 3 * 2) := Nat.mul_le_mul hs le_rfl
     _ = 4 * d * (2 * d + 1) ^ 3 * (2 * R + 1) ^ 2 := by ring
 
 /-- **The local entropy law**: at `log 2` per cut pair, the entropy the ball shares with its outside
@@ -158,7 +207,8 @@ theorem local_entropy_law (R d : ℕ) (P : Finset (Site × Site))
     ((cutPairs R P).card : ℝ) * per_event_entropy
       ≤ ((4 * d * (2 * d + 1) ^ 3 * (2 * R + 1) ^ 2 : ℕ) : ℝ) * per_event_entropy := by
   apply mul_le_mul_of_nonneg_right
-  · exact_mod_cast local_area_law R d P hloc
+  · have h := local_area_law R d P hloc
+    exact_mod_cast h
   · unfold per_event_entropy
     exact Real.log_nonneg (by norm_num)
 
