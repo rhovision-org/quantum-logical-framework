@@ -1,6 +1,7 @@
 import QLF_IndexedFactors
 import QLF_JointClosure
 import QLF_ClosureUnitarity
+import QLF_EntanglementPrimacy
 import Mathlib
 
 set_option linter.unusedVariables false
@@ -77,6 +78,10 @@ Only what a "body" means in QLF:
    dimensions agree (`4^N`), so `⨂ᵢ M ≅ End((ℂ²)^{⊗N})`. Hence, in every non-trivial joint algebra,
    the `N`-body factoring map is injective. `(ℂ²)^{⊗N}` is a simple module of that algebra and the only one up to
    isomorphism (`cfgState_simple`, `simple_module_is_cfgState`).
+12. **Rung 6 from the composite (`splitPair_fold`, `split_strong_iff_singlet`).** A pair shared
+    between two bodies folds to `t ⊗ t†`. The singlet is the unique state every shared strong pair
+    fixes, a shared gauge pair is the scalar `−1` on every state (`split_gauge_scalar`), and this
+    picks the same state as rung 6's chosen sum reading (`split_reading_agrees`).
 
 ## The two sectors
 
@@ -101,9 +106,10 @@ representation that no factorization reaches.
 
 ## What is still NOT proved
 
-1. **The rung-6 reading.** The map from a flat pair `[t, t†]` to the joint action of its axis on two
-   sites ([`EntanglementPrimacy`](QLF_EntanglementPrimacy.lean), rung 6) is still a reading. What is
-   now derived is the space it lands in.
+1. **Which body holds which half.** §8 derives rung 6's action from the composite fold: a pair
+   shared as `t` on body `A` and `t†` on body `B` folds to `t ⊗ t†` (`splitPair_fold`). What is still
+   posited is that a shared pair puts one half on each body; that is the definition of sharing, not
+   a reading of the action.
 
 
 **Credit.** The universal property of the tensor product of algebras is standard (Mathlib's
@@ -1290,5 +1296,88 @@ theorem tensor_space_sectors :
   have := congrFun h (0, 1)
   rw [s_01] at this
   exact one_ne_zero this
+
+-- ==========================================
+-- §8. Rung 6 from the derived composite fold
+-- ==========================================
+
+/-- A pair `[t, t†]` shared between two bodies: body `A` performs `t`, body `B` performs `t†`. -/
+def splitPair (t : Twist) : List Tok := [(false, t), (true, t.conj)]
+
+/-- **The shared pair's joint fold, read off the derived composite** (`twist_cfold`): `t ⊗ t†`.
+    No reading of the action is chosen; only which body holds which half. -/
+theorem splitPair_fold (t : Twist) :
+    cfold embA embB (splitPair t) = t.toMatrix ⊗ₖ t.conj.toMatrix := by
+  rw [twist_cfold]
+  simp [splitPair, projA, projB, twistMatrixFold]
+
+/-- **A shared strong pair fixes the singlet.** -/
+theorem split_strong_fixes_singlet (t : Twist) (ht : EntanglementPrimacy.StronglyEntangled t) :
+    cfold embA embB (splitPair t) *ᵥ JointClosure.s = JointClosure.s := by
+  rw [EntanglementPrimacy.stronglyEntangled_iff_spatial] at ht
+  rw [splitPair_fold]
+  cases t <;> simp [axisOf] at ht
+  all_goals
+    funext ⟨i, j⟩
+    fin_cases i <;> fin_cases j <;>
+      simp [Twist.toMatrix, Twist.conj, σx, σy, σz, JointClosure.s, mulVec, dotProduct,
+        Fintype.sum_prod_type, Fin.sum_univ_two, kroneckerMap_apply] <;>
+      (try ring_nf) <;> (try simp [Complex.I_sq])
+
+/-- **A shared gauge pair is a product:** it acts as the scalar `−1` on every two-body state, the
+    same as the unshared pair `t t† = −1`, so sharing it constrains nothing (rung 5). -/
+theorem split_gauge_scalar (ψ : Fin 2 × Fin 2 → ℂ) :
+    cfold embA embB (splitPair Twist.plus) *ᵥ ψ = -ψ := by
+  rw [splitPair_fold]
+  funext ⟨i, j⟩
+  fin_cases i <;> fin_cases j <;>
+    simp [Twist.toMatrix, Twist.conj, mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
+      kroneckerMap_apply, Matrix.one_apply]
+
+/-- **Rung 6, derived.** The singlet is the unique two-body state fixed by every shared strong pair,
+    where the pair's action is the derived composite fold `t ⊗ t†`, not a chosen reading. -/
+theorem split_strong_iff_singlet (ψ : Fin 2 × Fin 2 → ℂ) :
+    (∀ t : Twist, EntanglementPrimacy.StronglyEntangled t →
+        cfold embA embB (splitPair t) *ᵥ ψ = ψ) ↔ ψ = ψ (0, 1) • JointClosure.s := by
+  constructor
+  · intro h
+    have hx := h Twist.right ((EntanglementPrimacy.stronglyEntangled_iff_spatial _).2
+      (by simp [axisOf]))
+    have hz := h Twist.slash ((EntanglementPrimacy.stronglyEntangled_iff_spatial _).2
+      (by simp [axisOf]))
+    rw [splitPair_fold] at hx hz
+    have z00 := congrFun hz (0, 0)
+    have z11 := congrFun hz (1, 1)
+    have x01 := congrFun hx (0, 1)
+    simp [Twist.toMatrix, Twist.conj, σx, σz, mulVec, dotProduct, Fintype.sum_prod_type,
+      Fin.sum_univ_two, kroneckerMap_apply] at z00 z11 x01
+    have a00 : ψ (0, 0) = 0 := by
+      first
+        | exact z00
+        | linear_combination (-1/2 : ℂ) * z00
+        | linear_combination (1/2 : ℂ) * z00
+    have a11 : ψ (1, 1) = 0 := by
+      first
+        | exact z11
+        | linear_combination (-1/2 : ℂ) * z11
+        | linear_combination (1/2 : ℂ) * z11
+    have b10 : ψ (1, 0) = -ψ (0, 1) := by
+      first
+        | linear_combination x01
+        | linear_combination -x01
+        | linear_combination (-1 : ℂ) * x01
+    funext ⟨i, j⟩
+    fin_cases i <;> fin_cases j <;> simp [JointClosure.s, a00, a11, b10]
+  · intro hψ t ht
+    rw [hψ, mulVec_smul, split_strong_fixes_singlet t ht]
+
+/-- **The chosen reading and the derived one pick the same state.** Rung 6 read a pair as the sum
+    `X ⊗ 1 + 1 ⊗ X` (`JointClosure.joint`); the composite of independent bodies gives `t ⊗ t†`.
+    Both select exactly the singlet. -/
+theorem split_reading_agrees (ψ : Fin 2 × Fin 2 → ℂ) :
+    (∀ t : Twist, EntanglementPrimacy.StronglyEntangled t →
+        cfold embA embB (splitPair t) *ᵥ ψ = ψ) ↔
+      (JointClosure.joint σx *ᵥ ψ = 0 ∧ JointClosure.joint σz *ᵥ ψ = 0) :=
+  (split_strong_iff_singlet ψ).trans (JointClosure.closed_iff_singlet ψ).symm
 
 end QLF.TensorFromClosure
