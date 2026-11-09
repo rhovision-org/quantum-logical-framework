@@ -135,7 +135,7 @@ theorem pair_local_of_age (x₀ : Axis → ℤ) (ts us : List Twist) (k : ℕ)
 -- ==========================================
 
 /-- The spatial `ℓ¹` sphere of radius `R` in `ℤ³`: the sites a capacity-`R` horizon consists of. -/
-def sphere3 (R : ℕ) : Finset (ℤ × ℤ × ℤ) :=
+noncomputable def sphere3 (R : ℕ) : Finset (ℤ × ℤ × ℤ) :=
   (Finset.Icc (-(R : ℤ)) R ×ˢ (Finset.Icc (-(R : ℤ)) R ×ˢ Finset.Icc (-(R : ℤ)) R)).filter
     (fun p => p.1.natAbs + p.2.1.natAbs + p.2.2.natAbs = R)
 
