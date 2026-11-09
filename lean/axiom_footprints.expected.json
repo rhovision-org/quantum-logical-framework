@@ -504,6 +504,40 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.HolographicArea.horizon_area_law": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicArea.light_cone": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicArea.pair_range_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicBoundary.closure_iff_boundary_silent": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicBoundary.cutEntropy_le_area": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicBoundary.every_prefix_closes": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicBoundary.nonlocal_pairs_break_area_law": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.HorizonBasis.horizon_rebasis_is_closure_order_iso": [
     "Classical.choice",
     "Quot.sound",
@@ -764,6 +798,21 @@
     "propext"
   ],
   "QLF.PhaseRule.phase_rule": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PlaquetteArea.fold_eq_projected_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PlaquetteArea.holonomy_eq_area_parity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PlaquetteArea.holonomy_eq_projected_areas": [
     "Classical.choice",
     "Quot.sound",
     "propext"
