@@ -78,7 +78,9 @@ theorem shell_card_le (R d : ℕ) : (shell R d).card ≤ 2 * d * (2 * R + 1) ^ 2
         · intro p hp
           have hp' : p ∈ shell R d := by simpa using hp
           obtain ⟨x, y, z⟩ := p
-          simp only [shell, n1, Finset.mem_filter, Finset.mem_product, Finset.mem_Icc] at hp'
+          replace hp' := Finset.mem_filter.mp hp'
+          simp only [Finset.mem_product, Finset.mem_Icc] at hp'
+          simp only [n1] at hp'
           simp only [n1, Finset.mem_coe, Finset.mem_product, Finset.mem_Icc, Finset.mem_range,
             Finset.mem_univ, and_true]
           omega
@@ -87,7 +89,9 @@ theorem shell_card_le (R d : ℕ) : (shell R d).card ≤ 2 * d * (2 * R + 1) ^ 2
           have hq' : q ∈ shell R d := by simpa using hq
           obtain ⟨x1, y1, z1⟩ := p
           obtain ⟨x2, y2, z2⟩ := q
-          simp only [shell, n1, Finset.mem_filter] at hp' hq'
+          replace hp' := Finset.mem_filter.mp hp'
+          replace hq' := Finset.mem_filter.mp hq'
+          simp only [n1] at hp' hq'
           simp only [n1, Prod.mk.injEq] at hpq
           obtain ⟨⟨hx, hy⟩, hr, hz⟩ := hpq
           have hz' : (0 ≤ z1 ↔ 0 ≤ z2) := by simpa using hz
@@ -122,12 +126,14 @@ theorem local_area_law (R d : ℕ) (P : Finset (Site × Site))
           unfold cutMap
           split_ifs with h
           · simp only [n1] at h
-            simp only [shell, box, n1, off, Finset.mem_product, Finset.mem_filter, Finset.mem_Icc,
+            simp only [shell, box, Finset.mem_product, Finset.mem_filter, Finset.mem_Icc,
               Finset.mem_univ, and_true]
+            simp only [n1, off]
             omega
           · simp only [n1] at h
-            simp only [shell, box, n1, off, Finset.mem_product, Finset.mem_filter, Finset.mem_Icc,
+            simp only [shell, box, Finset.mem_product, Finset.mem_filter, Finset.mem_Icc,
               Finset.mem_univ, and_true]
+            simp only [n1, off]
             omega
         · intro e1 he1 e2 he2 h
           obtain ⟨⟨a1, b1, c1⟩, ⟨x1, y1, z1⟩⟩ := e1
@@ -135,7 +141,7 @@ theorem local_area_law (R d : ℕ) (P : Finset (Site × Site))
           unfold cutMap at h
           split_ifs at h <;>
             simp only [off, Prod.mk.injEq, Bool.true_eq_false, Bool.false_eq_true, and_false,
-              and_true, eq_self_iff_true] at h <;>
+              and_true] at h <;>
             simp only [Prod.mk.injEq] <;>
             omega
     _ = (shell R d).card * ((box d).card * 2) := by
