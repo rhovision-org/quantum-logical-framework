@@ -156,17 +156,22 @@ theorem cutMap_mem (R d : ℕ) (e : Site × Site) (hc : Cut R e) (hl : n1 (off e
   unfold Cut at hc
   unfold cutMap
   split_ifs with h
-  · exact Finset.mem_product.mpr
-      ⟨mem_shell_of h (by omega), Finset.mem_product.mpr ⟨mem_box_of hl, Finset.mem_univ _⟩⟩
-  · exact Finset.mem_product.mpr
-      ⟨mem_shell_of (by omega) (by omega),
-        Finset.mem_product.mpr ⟨mem_box_of (by omega), Finset.mem_univ _⟩⟩
+  · have s1 : R < n1 e.1 + d := by omega
+    exact Finset.mem_product.mpr
+      ⟨mem_shell_of (p := e.1) h s1,
+        Finset.mem_product.mpr ⟨mem_box_of (q := off e.1 e.2) hl, Finset.mem_univ _⟩⟩
+  · have s0 : n1 e.2 ≤ R := by omega
+    have s1 : R < n1 e.2 + d := by omega
+    have s2 : n1 (off e.2 e.1) ≤ d := by omega
+    exact Finset.mem_product.mpr
+      ⟨mem_shell_of (p := e.2) s0 s1,
+        Finset.mem_product.mpr ⟨mem_box_of (q := off e.2 e.1) s2, Finset.mem_univ _⟩⟩
 
 /-- `cutMap` loses nothing: a pair is recovered from its record. -/
 theorem cutMap_inj (R : ℕ) {e1 e2 : Site × Site} (h : cutMap R e1 = cutMap R e2) : e1 = e2 := by
   unfold cutMap at h
   split_ifs at h
-  · have ha : e1.1 = e2.1 := congrArg Prod.fst h
+  · have ha : e1.1 = e2.1 := congrArg (fun x : Site × Site × Bool => x.1) h
     have hb : off e1.1 e1.2 = off e2.1 e2.2 := congrArg (fun x : Site × Site × Bool => x.2.1) h
     rw [ha] at hb
     exact Prod.ext_iff.mpr ⟨ha, off_inj hb⟩
@@ -174,7 +179,7 @@ theorem cutMap_inj (R : ℕ) {e1 e2 : Site × Site} (h : cutMap R e1 = cutMap R 
     exact absurd hb (by decide)
   · have hb : false = true := congrArg (fun x : Site × Site × Bool => x.2.2) h
     exact absurd hb (by decide)
-  · have ha : e1.2 = e2.2 := congrArg Prod.fst h
+  · have ha : e1.2 = e2.2 := congrArg (fun x : Site × Site × Bool => x.1) h
     have hb : off e1.2 e1.1 = off e2.2 e2.1 := congrArg (fun x : Site × Site × Bool => x.2.1) h
     rw [ha] at hb
     exact Prod.ext_iff.mpr ⟨off_inj hb, ha⟩
