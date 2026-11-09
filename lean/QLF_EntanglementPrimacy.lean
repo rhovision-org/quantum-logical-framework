@@ -73,6 +73,8 @@ creation operator creates only entanglements.
   `(½, 0, ½, 0)`.
 * **`rational_pure_state_is_frequency`**: every pure qubit state with a rational Bloch vector is a
   frequency of a strand.
+* **`form_is_limit_of_frequencies`**: every real Form, irrational included, is the limit of strand
+  frequencies over growing windows (net counts `⌊f · n⌋` over `n` events).
 
 So the real numbers in a Form enter only as ratios of counts to a window. Pure-state normalisation
 `t = ½` is a choice of window (the gauge net is half the events), not an extra postulate.
@@ -104,10 +106,10 @@ Read a pair `[t, t†]` as the twist's axis acting on both sites of a two-body s
 
 ## What is still NOT proved (stated so nobody overclaims)
 
-1. **Irrational Forms.** A pure state whose Bloch vector is irrational is the frequency of no finite
-   strand. Rational points are dense on the sphere (classical), so each such state is a limit of
-   strand frequencies, but that limit is not formalised here. `QLF_Realizability` is the reason to
-   expect no more than rationals in a finite region; linking the two is open.
+1. **Irrational pure states on the sphere.** Every real Form, irrational included, is a limit of
+   strand frequencies (`form_is_limit_of_frequencies`). The approximants are not required to be pure
+   themselves; approximating a pure state by pure frequency states (rational points on the sphere)
+   is not formalised.
 2. **Why the window is `N`.** Rung 4 shows that `t = ½` is reached by choosing the window; it does
    not derive that the physical window is the one that makes the gauge net half of it.
 3. **The two-body reading.** Rung 6 maps a pair to the joint action of its axis on two sites, a
@@ -548,6 +550,43 @@ theorem rational_pure_state_is_frequency (a b c d : ℤ) (N : ℕ)
   refine ⟨ts, ?_, hts⟩
   rw [hts]
   exact hpure
+
+/-- `⌊a n⌋ / n → a` along the windows `n = N + 1`. -/
+theorem floor_div_tendsto (a : ℝ) :
+    Filter.Tendsto (fun N : ℕ => (⌊a * ((N : ℝ) + 1)⌋ : ℝ) / ((N : ℝ) + 1)) Filter.atTop
+      (nhds a) := by
+  have h1 : Filter.Tendsto (fun N : ℕ => a - 1 / ((N : ℝ) + 1)) Filter.atTop (nhds a) := by
+    simpa using (tendsto_const_nhds (x := a)).sub tendsto_one_div_add_atTop_nhds_zero_nat
+  refine tendsto_of_tendsto_of_tendsto_of_le_of_le h1 tendsto_const_nhds (fun N => ?_) (fun N => ?_)
+  · have hpos : (0 : ℝ) < (N : ℝ) + 1 := by positivity
+    show a - 1 / ((N : ℝ) + 1) ≤ (⌊a * ((N : ℝ) + 1)⌋ : ℝ) / ((N : ℝ) + 1)
+    rw [le_div_iff₀ hpos, sub_mul, one_div, inv_mul_cancel₀ hpos.ne']
+    linarith [Int.lt_floor_add_one (a * ((N : ℝ) + 1))]
+  · have hpos : (0 : ℝ) < (N : ℝ) + 1 := by positivity
+    show (⌊a * ((N : ℝ) + 1)⌋ : ℝ) / ((N : ℝ) + 1) ≤ a
+    rw [div_le_iff₀ hpos]
+    exact Int.floor_le _
+
+/-- **Every real Form is a limit of strand frequencies.** Over windows of `N + 1` events, the strands
+    whose net counts are `⌊f · (N + 1)⌋` have frequency Forms converging to `f` in every coordinate.
+    So irrational Forms are not new objects: each is the limit of finite strands, which is all a
+    finite region can hold (`QLF_Realizability`). -/
+theorem form_is_limit_of_frequencies (f : Form) :
+    ∃ ts : ℕ → List Twist,
+      Filter.Tendsto (fun N => (freqForm (ts N) (N + 1)).t) Filter.atTop (nhds f.t) ∧
+      Filter.Tendsto (fun N => (freqForm (ts N) (N + 1)).x) Filter.atTop (nhds f.x) ∧
+      Filter.Tendsto (fun N => (freqForm (ts N) (N + 1)).y) Filter.atTop (nhds f.y) ∧
+      Filter.Tendsto (fun N => (freqForm (ts N) (N + 1)).z) Filter.atTop (nhds f.z) := by
+  choose ts hts using fun N : ℕ =>
+    strand_realizes ⌊f.t * ((N : ℝ) + 1)⌋ ⌊f.x * ((N : ℝ) + 1)⌋ ⌊f.y * ((N : ℝ) + 1)⌋
+      ⌊f.z * ((N : ℝ) + 1)⌋
+  refine ⟨ts, ?_, ?_, ?_, ?_⟩
+  · exact Filter.Tendsto.congr (fun N => by simp [freqForm, (hts N).1]) (floor_div_tendsto f.t)
+  · exact Filter.Tendsto.congr (fun N => by simp [freqForm, (hts N).2.1]) (floor_div_tendsto f.x)
+  · exact Filter.Tendsto.congr (fun N => by simp [freqForm, (hts N).2.2.1])
+      (floor_div_tendsto f.y)
+  · exact Filter.Tendsto.congr (fun N => by simp [freqForm, (hts N).2.2.2])
+      (floor_div_tendsto f.z)
 
 -- ==========================================
 -- Rung 5: the strong reading — which pairs cannot be split
