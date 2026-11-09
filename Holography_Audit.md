@@ -3,7 +3,7 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and opposite quantum logical action with zero free energy, the principle of QLF.
 
 **Status labels** follow [`ScientificApproach.md`](ScientificApproach.md): *proved*, *exact computational*, *definition*, *cited*, *prose only*, *incorrect*.
-**Lean anchor:** [`lean/QLF_HolographicBoundary.lean`](lean/QLF_HolographicBoundary.lean) (no axioms).
+**Lean anchors:** [`lean/QLF_HolographicBoundary.lean`](lean/QLF_HolographicBoundary.lean) and [`lean/QLF_HolographicArea.lean`](lean/QLF_HolographicArea.lean) (no axioms). §5 records the follow-up pass that resolved two of the gaps.
 
 ## 0. Verdict
 
@@ -80,10 +80,23 @@ What survives is the standard spinor fact that a 2-component state carries a 3-v
 4. **The Bekenstein–Hawking ¼.** It is still the `4 log 2` residual of [`QLF_HolographicDensity`](lean/QLF_HolographicDensity.lean), and is not derived.
 5. **A bulk reconstruction theorem** (entanglement wedge, QEC distance) is absent. Row 2 shows that the generator-tree reading cannot supply one, since it constrains nothing at finite length.
 
+## 5. Resolution pass: which overclaims could be made true
+
+| Overclaim | Resolved? | How |
+|---|---|---|
+| Area law `∝ R²` (was `holographic_event_count := 4πR²`, a definition) | **Yes, proved** | `horizon_area_law`: the capacity-`R` horizon (the spatial `ℓ¹` sphere) has between `(⌊R/2⌋+1)²` and `2(2R+1)²` sites. Enumeration gives exactly `4R²+2`. The `R²` is now a theorem; `4` vs `4π` is the ℓ¹-vs-Euclidean geometric factor of the continuum rendering, a named factor next to `4 log 2` |
+| Locality of shared closures (the premise of the area law) | **Yes, conditionally** | `light_cone`: `L` twists move the walker at most `ℓ¹` distance `L`. `pair_range_le` / `pair_local_of_age`: two halves of a pair that leave one event and are each carried `k` steps end within `2k`. So `area_law_of_local_pairs` applies with adjacency "within `2k`", giving an area law with a boundary layer of width `2k`. This is the light-cone argument for area laws (the Lieb–Robinson route), here on the substrate. **Still posited:** that a shared pair is born at one event (the open item of `QLF_TensorFromClosure`, PR #219) |
+| "The bulk is identical to the sum of its boundary states" | **Yes, in its precise form** (§0 rows 1–2) | The stronger reading, that the boundary *constrains* the bulk, is false at finite length (`every_prefix_closes`), so it should not be restated |
+| `holographic.py` as a faithful encoding | **Yes, by switching the carrier** | The faithful carrier is the unnormalized `Form` of the open half: `countBalanced_iff_strandForm_zero` ([`QLF_EntanglementPrimacy`](lean/QLF_EntanglementPrimacy.lean)) proves it is zero **exactly** on closures. The normalized Bloch reading is a lossy view of it, and is documented as such in `holographic.py` |
+| Bekenstein–Hawking ¼ "derived" | **No** | Still the measured `4 log 2` residual. The new geometric factor (`4` vs `4π`) does not remove it: `4R²·log 2` vs `πR²` per Planck patch is a ratio `(4/π)·log 2·…` that depends on how a lattice site maps to a Planck area, which nothing fixes yet |
+| "`log C(2k,k)` gives the area law" | **No; it is false** | `log C(2k,k) ≈ 2k log 2` is extensive in a history's length. It cannot be repaired, only withdrawn |
+| "AdS/CFT is a provable identity / machine-verified" | **No** | The provable content is §0 rows 1–2. de Sitter / AdS readings stay prose |
+| Holographic QEC: "`full_zeno_prune` is the machine-verified boundary decoder" | **Not attempted** | Would need a code property (distance, recovery map). Open |
+
 ## 4. How to talk about holography in QLF now
 
-* Say: **closure is a boundary property** (`closure_iff_boundary_silent`), and **the area law follows from locality of shared closures** (`cutEntropy_le_area`). Both are proved.
-* Say: the `4πR²` count is an *identification*, and the `4 log 2` gap to Bekenstein–Hawking is measured exactly.
+* Say: **closure is a boundary property** (`closure_iff_boundary_silent`); **the horizon has `Θ(R²)` sites** (`horizon_area_law`); **shared pairs born at one event stay within the light cone** (`pair_range_le`), so **the area law follows** (`cutEntropy_le_area`). All proved; the one premise left is that a shared pair is born at one event.
+* Say: `4πR²` is the continuum rendering of the substrate's `4R²+2`, and the `4 log 2` gap to Bekenstein–Hawking is measured exactly, not derived.
 * Do not say: AdS/CFT is "a provable identity", "machine-verified", or "the area law follows automatically". The first two are false as citations, and the third needs the locality premise.
 
 See also: [`Holographic.md`](Holographic.md), [`Entropy.md`](Entropy.md), [`Quantum_Gravity.md`](Quantum_Gravity.md), [`Open_Problems.md`](Open_Problems.md), [`Closure_Walk.md`](Closure_Walk.md).

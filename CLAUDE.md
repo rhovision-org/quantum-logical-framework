@@ -181,6 +181,12 @@ for some time, and two rules had gone stale unnoticed.
     (Also on this toolchain: **`List.length_map` takes one explicit argument**, so
     `List.length_map _ _` is *function expected*. `by simp` is the safe spelling.)
 
+19. ✅ **Under `import Mathlib`, a `def` built from `Finset.Icc` on `ℤ` must be `noncomputable`.**
+    Instance resolution picks `Int.instConditionallyCompleteLinearOrder`'s order, so the compiler
+    rejects it (*failed to compile definition … consider marking it as 'noncomputable'*). The
+    theorems about it are unaffected. Write `noncomputable def` up front. Cost one CI cycle in
+    `QLF_HolographicArea`.
+
 ---
 
 ## Proof patterns
@@ -374,7 +380,7 @@ There is no background absolute time. There is no fixed external geometry. Gravi
 
 The holographic principle (Bekenstein 1972, 't Hooft 1993, Susskind 1995) and AdS/CFT correspondence are not separate conjectures in QLF — they are direct consequences of ZFA closure. The bulk spacetime (AdS interior) is the space of unresolved internal nodes of the QuCalc generator tree. The boundary (CFT) consists of the terminal leaves that satisfy exact ZFA balance.
 
-Because a bulk path only persists if it terminates in a ZFA-stable boundary, the entire bulk is mathematically identical to the sum of its boundary states. **Audited 2026-11-09 ([`Holography_Audit.md`](Holography_Audit.md)): state this precisely.** Proved in [`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean): closure is a boundary property (`closure_iff_boundary_silent`, which telescopes and so is bookkeeping); the bulk is the prefix closure of the boundary because *every* prefix closes (`every_prefix_closes`), so it constrains no finite path; and the **area law follows from locality of shared closures** (`cutEntropy_le_area`; `nonlocal_pairs_break_area_law` shows locality is necessary). `holographic_event_count := 4πR²` is a *definition*. Locality is the open premise. Do not call AdS/CFT "machine-verified" or the area law "automatic".
+Because a bulk path only persists if it terminates in a ZFA-stable boundary, the entire bulk is mathematically identical to the sum of its boundary states. **Audited 2026-11-09 ([`Holography_Audit.md`](Holography_Audit.md)): state this precisely.** Proved in [`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean): closure is a boundary property (`closure_iff_boundary_silent`, which telescopes and so is bookkeeping); the bulk is the prefix closure of the boundary because *every* prefix closes (`every_prefix_closes`), so it constrains no finite path; and the **area law follows from locality of shared closures** (`cutEntropy_le_area`; `nonlocal_pairs_break_area_law` shows locality is necessary). `holographic_event_count := 4πR²` is a *definition*, but its `R²` is now proved for the substrate horizon (`horizon_area_law`, [`QLF_HolographicArea`](lean/QLF_HolographicArea.lean): `Θ(R²)` sites, exactly `4R²+2` by enumeration), and locality follows from the light cone (`pair_range_le`). The remaining premise is that a shared pair is born at one event. Do not call AdS/CFT "machine-verified" or the area law "automatic".
 
 Modern sharpening: Almheiri, Dong, Harlow (2015) and the HaPPY code (Pastawski et al. 2015) show that bulk spacetime geometry IS a quantum error-correcting code on the boundary. In QLF, `full_zeno_prune` is the machine-verified boundary decoder — it filters the event stream to those whose boundary information is logically self-consistent.
 
