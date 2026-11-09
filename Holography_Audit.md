@@ -3,7 +3,7 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and opposite quantum logical action with zero free energy, the principle of QLF.
 
 **Status labels** follow [`ScientificApproach.md`](ScientificApproach.md): *proved*, *exact computational*, *definition*, *cited*, *prose only*, *incorrect*.
-**Lean anchors:** [`lean/QLF_HolographicBoundary.lean`](lean/QLF_HolographicBoundary.lean) and [`lean/QLF_HolographicArea.lean`](lean/QLF_HolographicArea.lean) (no axioms). §5 records the follow-up pass that resolved two of the gaps.
+**Lean anchors:** [`lean/QLF_HolographicBoundary.lean`](lean/QLF_HolographicBoundary.lean) and [`lean/QLF_HolographicArea.lean`](lean/QLF_HolographicArea.lean) (no axioms). §4 records the follow-up pass that resolved two of the gaps.
 
 ## 0. Verdict
 
@@ -80,7 +80,7 @@ What survives is the standard spinor fact that a 2-component state carries a 3-v
 4. **The Bekenstein–Hawking ¼.** It is still the `4 log 2` residual of [`QLF_HolographicDensity`](lean/QLF_HolographicDensity.lean), and is not derived.
 5. **A bulk reconstruction theorem** (entanglement wedge, QEC distance) is absent. Row 2 shows that the generator-tree reading cannot supply one, since it constrains nothing at finite length.
 
-## 5. Resolution pass: which overclaims could be made true
+## 4. Resolution pass: which overclaims could be made true
 
 | Overclaim | Resolved? | How |
 |---|---|---|
@@ -93,7 +93,7 @@ What survives is the standard spinor fact that a 2-component state carries a 3-v
 | "AdS/CFT is a provable identity / machine-verified" | **No** | The provable content is §0 rows 1–2. de Sitter / AdS readings stay prose |
 | Holographic QEC: "`full_zeno_prune` is the machine-verified boundary decoder" | **Not attempted** | Would need a code property (distance, recovery map). Open |
 
-## 4. How to talk about holography in QLF now
+## 5. How to talk about holography in QLF now
 
 * Say: **closure is a boundary property** (`closure_iff_boundary_silent`); **the horizon has `Θ(R²)` sites** (`horizon_area_law`); **shared pairs born at one event stay within the light cone** (`pair_range_le`), so **the area law follows** (`cutEntropy_le_area`). All proved; the one premise left is that a shared pair is born at one event.
 * Say: `4πR²` is the continuum rendering of the substrate's `4R²+2`, and the `4 log 2` gap to Bekenstein–Hawking is measured exactly, not derived.
