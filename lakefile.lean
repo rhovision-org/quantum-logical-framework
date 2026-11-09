@@ -314,5 +314,6 @@ lean_lib QLF where
     `QLF_NonAbelianGauss,
     `QLF_HiddenZeros,
     `QLF_EntanglementPrimacy,
-    `QLF_HolographicBoundary
+    `QLF_HolographicBoundary,
+    `QLF_HolographicArea
   ]
