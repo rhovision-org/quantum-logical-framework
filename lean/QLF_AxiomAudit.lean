@@ -103,6 +103,7 @@ import QLF_HiddenZeros
 import QLF_HolographicBoundary
 import QLF_HolographicArea
 import QLF_PlaquetteArea
+import QLF_LocalAreaLaw
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -442,3 +443,4 @@ import QLF_PlaquetteArea
 #print axioms QLF.PlaquetteArea.holonomy_eq_area_parity
 #print axioms QLF.PlaquetteArea.holonomy_eq_projected_areas
 #print axioms QLF.PlaquetteArea.fold_eq_projected_phase
+#print axioms QLF.LocalAreaLaw.local_area_law

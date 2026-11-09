@@ -121,8 +121,9 @@ theorem pair_range_le (x₀ : Axis → ℤ) (ts us : List Twist) :
     (positionFrom (fun _ => 0) us Axis.Z)
   linarith
 
-/-- **Locality from the light cone.** Halves carried `k` steps each end within `2k`. -/
-theorem pair_local_of_age (x₀ : Axis → ℤ) (ts us : List Twist) (k : ℕ)
+/-- **Locality from the light cone.** Halves carried `k` steps each end within `2k`. (`k` counts steps
+    of history, not time.) -/
+theorem pair_local_of_steps (x₀ : Axis → ℤ) (ts us : List Twist) (k : ℕ)
     (hts : ts.length ≤ k) (hus : us.length ≤ k) :
     dist1 (positionFrom x₀ ts) (positionFrom x₀ us) ≤ 2 * (k : ℤ) := by
   have h := pair_range_le x₀ ts us

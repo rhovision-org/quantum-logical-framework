@@ -607,6 +607,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LocalAreaLaw.local_area_law": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LocalGauge.flux_invariant": [
     "Classical.choice",
     "Quot.sound",
