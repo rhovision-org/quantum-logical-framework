@@ -405,7 +405,7 @@ at the multi-event level.
 
 ## Holographic Emergence: de Sitter Expansion and Anti-de Sitter Stability
 
-In the Quantum Logical Framework, the holographic principle is not a duality between two separate theories — it is an **identity** between the internal branching logic of the QuCalc tree and the boundary closures that survive Zero Free Action.
+In the Quantum Logical Framework, the holographic principle is *read* as a relation between the internal branching logic of the QuCalc tree and the boundary closures that survive Zero Free Action. What of it is proved is stated in the AdS/CFT section below; the rest of this section is interpretation.
 
 **de Sitter space** arises naturally as the geometry of **possibilist expansion**. When independent replication processes (`*P`) dominate, each new distinction increases the event density outward. The positive cosmological constant emerges directly from the imbalance of unresolved twists: the manifold expands because more logical possibilities are continuously being generated than can be immediately closed.
 
@@ -417,9 +417,9 @@ In classical physics the AdS/CFT correspondence is a conjectured duality. In QLF
 
 - The **bulk** (AdS interior) is the space of unresolved internal nodes of the QuCalc generator tree.
 - The **boundary** (CFT) consists of the terminal leaves that satisfy the ZFA condition (exact phase balance, `sum imbalance = 0`).
-- Because a bulk path only persists if it terminates in a ZFA-stable boundary, the entire bulk is mathematically identical to the sum of its boundary states. The holographic principle is therefore a topological necessity of closure, not an extra assumption.
+- The proposed reading: because a bulk path only persists if it terminates in a ZFA-stable boundary, the bulk is determined by its boundary states. As proved (next paragraph) this is weaker than an identity: every prefix closes, so the boundary does not constrain the bulk.
 
-**What is proved** ([`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean), correcting an earlier citation of `RhoQuCalc.lean` / `ZFAEventDynamics.lean`, which contain nothing on bulk or boundary): every bulk path does reach a ZFA boundary (`every_prefix_closes`), so the bulk is the prefix closure of the boundary. This holds because *every* prefix closes, so it constrains no path. Closure itself is a boundary property (`closure_iff_boundary_silent`). An area law follows once shared closures are local (`cutEntropy_le_area`), and locality is the open premise. The de Sitter / AdS readings in this section are prose and have no Lean anchor.
+**What is proved** ([`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean), correcting an earlier citation of `RhoQuCalc.lean` / `ZFAEventDynamics.lean`, which contain nothing on bulk or boundary): every bulk path does reach a ZFA boundary (`every_prefix_closes`), so the bulk is the prefix closure of the boundary. This holds because *every* prefix closes, so it constrains no path. Closure itself is a boundary property (`closure_iff_boundary_silent`). An area law follows once shared closures are local (`cutEntropy_le_area`); [`QLF_HolographicArea`](lean/QLF_HolographicArea.lean) gives that locality only for pairs born at one event with bounded age, so the area law stays conditional. The de Sitter / AdS readings in this section are prose and have no Lean anchor.
 
 ### Solving the Ultraviolet Catastrophe
 

@@ -100,6 +100,9 @@ import QLF_SharedClosure
 import QLF_PolaronBranches
 import QLF_NonAbelianGauss
 import QLF_HiddenZeros
+import QLF_HolographicBoundary
+import QLF_HolographicArea
+import QLF_PlaquetteArea
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -429,3 +432,13 @@ import QLF_HiddenZeros
 #print axioms QLF.HiddenZeros.A4_zero
 #print axioms QLF.HiddenZeros.A5_zero
 #print axioms QLF.HiddenZeros.A5_near_zero
+#print axioms QLF.HolographicBoundary.closure_iff_boundary_silent
+#print axioms QLF.HolographicBoundary.every_prefix_closes
+#print axioms QLF.HolographicBoundary.cutEntropy_le_area
+#print axioms QLF.HolographicBoundary.nonlocal_pairs_break_area_law
+#print axioms QLF.HolographicArea.light_cone
+#print axioms QLF.HolographicArea.pair_range_le
+#print axioms QLF.HolographicArea.horizon_area_law
+#print axioms QLF.PlaquetteArea.holonomy_eq_area_parity
+#print axioms QLF.PlaquetteArea.holonomy_eq_projected_areas
+#print axioms QLF.PlaquetteArea.fold_eq_projected_phase
