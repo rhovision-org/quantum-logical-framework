@@ -111,10 +111,17 @@ For holography this is the precise sense in which a closure's phase is a **bound
 is a flux, read entirely off the loop, and it equals one bit per cell of the surface the loop
 bounds. That is Stokes' theorem, which is bookkeeping in the method's sense (rule 4): it holds for
 every loop. What it settles is *where* the phase lives (on the enclosed surface, at one bit per
-cell), not a new count. Non-planar loops are checked but not yet proved: for spatial closures of
-length ≤ 8 (46,686 of them) the holonomy is the parity of the sum of the three projected areas
-(`XY`, `YZ`, `XZ`), with 0 mismatches. That is the same statement with π flux through every
-spatial cell, and the Lean proof would follow the planar one.
+cell), not a new count.
+
+**Three dimensions are encoded in two.** The same module proves the general case
+(`holonomy_eq_projected_areas`): for *every* history, in any axes and closed or not, the holonomy
+is the parity of the sum of its three shadows, the areas it projects on the `XY`, `XZ` and `YZ`
+planes. For a closure each shadow is an integer area (`shoelace_eq_two_projArea`), and the sum
+fixes the fold's sign (`fold_eq_projected_phase`). A skew hexagon `^>/v<\` round a cube's corner
+lies in no plane, but its shadows are `−1`, `1`, `1`, so it carries one π quantum. So the phase of a
+3-D closure is entirely a 2-D quantity: what its loop casts on the coordinate planes. Before the
+proof this was checked on all 299,593 histories of length ≤ 6 (gauge twists included) with 0
+mismatches.
 
 ## 5. How to talk about holography in QLF now
 

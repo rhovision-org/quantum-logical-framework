@@ -28,10 +28,17 @@ neither pair has.
   allowed), the holonomy is `enclosedArea` mod 2.
 * **`connectionPhase_planar`** / **`fold_eq_area_phase`** — so the phase is
   `(−1)^{#neg} · (−1)^{area}`, and for a balanced planar history that scalar *is* the Pauli fold.
+* **`holonomy_eq_projected_areas`** — **three dimensions are encoded in two.** For *every* history
+  (any axes, closed or not) the holonomy is the parity of the sum of its three shadows: the areas
+  it projects on the `XY`, `XZ` and `YZ` planes (`projArea`). By `shoelace_eq_two_projArea` each
+  shadow of a closure is an integer area, and `fold_eq_projected_phase` makes the sum the fold's
+  sign. A skew hexagon round a cube corner lies in no plane, yet its shadows sum to `1`: π flux.
 * **`area_zero_of_no_X`** — a loop with no left/right twist encloses nothing: a single-axis
   closure carries no area bit.
 
-`closure_walk.py`'s data agree: 0 mismatches over the 68,844 planar closures of length `≤ 10`.
+Checked numerically before proving: 0 mismatches over the 68,844 planar closures of length `≤ 10`,
+and over all 299,593 histories (gauge twists included, open or closed) of length `≤ 6` for the
+three-shadow form.
 
 No axioms.
 -/
@@ -193,6 +200,142 @@ theorem area_twice :
 /-- A `2×1` rectangle `^^>vv<`: area `−2`, so two cells' flux cancel. -/
 theorem area_rectangle :
     enclosedArea [Twist.up, Twist.up, Twist.right, Twist.down, Twist.down, Twist.left] = -2 := by
+  decide
+
+-- ==========================================
+-- Three dimensions: the phase is the sum of three plane shadows
+-- ==========================================
+
+/-- `∮ x_b dx_a` along a walk from `x`: each step on axis `a` contributes the current `x_b` times
+    its sign. `yDxAux` is `lineInt X Y`; this is the same integral for any pair of axes. -/
+def lineInt (a b : Axis) (x : Axis → ℤ) : List Twist → ℤ
+  | [] => 0
+  | t :: ts => (if axisOf t = a then x b * twistStep t else 0) + lineInt a b (stepPos x t) ts
+
+/-- **The projected area** of a history's walk on the `(a, b)` coordinate plane: `−∮ x_b dx_a`
+    from the origin — the area of its shadow on that plane. -/
+def projArea (a b : Axis) (ts : List Twist) : ℤ := -lineInt a b (fun _ => 0) ts
+
+/-- A step on its own axis moves that coordinate by its sign. -/
+theorem stepPos_self (x : Axis → ℤ) (t : Twist) :
+    stepPos x t (axisOf t) = x (axisOf t) + twistStep t := by
+  simp [stepPos]
+
+/-- One step of the product rule on the `(a, b)` plane. -/
+theorem lineInt_step (x : Axis → ℤ) (t : Twist) {a b : Axis} (hab : a ≠ b) :
+    (if axisOf t = a then x b * twistStep t else 0)
+      + (if axisOf t = b then x a * twistStep t else 0)
+      = stepPos x t a * stepPos x t b - x a * x b := by
+  by_cases ha : axisOf t = a
+  · subst ha
+    rw [if_pos (rfl : axisOf t = axisOf t), if_neg hab, stepPos_self, stepPos_of_ne x t hab]
+    ring
+  · by_cases hb : axisOf t = b
+    · subst hb
+      rw [if_neg ha, if_pos (rfl : axisOf t = axisOf t), stepPos_of_ne x t ha, stepPos_self]
+      ring
+    · rw [if_neg ha, if_neg hb, stepPos_of_ne x t ha, stepPos_of_ne x t hb]
+      ring
+
+/-- **The product rule on any coordinate plane**: `∮x_b dx_a + ∮x_a dx_b = Δ(x_a x_b)`. -/
+theorem lineInt_add_swap (ts : List Twist) {a b : Axis} (hab : a ≠ b) : ∀ x : Axis → ℤ,
+    lineInt a b x ts + lineInt b a x ts
+      = positionFrom x ts a * positionFrom x ts b - x a * x b := by
+  induction ts with
+  | nil => intro x; simp [lineInt, positionFrom]
+  | cons t ts ih =>
+      intro x
+      have h1 := ih (stepPos x t)
+      have h2 := lineInt_step x t hab
+      simp only [lineInt, positionFrom]
+      linarith
+
+/-- **Each shadow is an honest area.** Once the walk is back to `0` on axis `a`, the shoelace sum
+    on the `(a, b)` plane is twice `projArea a b`. For a closure every coordinate returns, so all
+    three shadows are integer areas. -/
+theorem shoelace_eq_two_projArea (ts : List Twist) {a b : Axis} (hab : a ≠ b)
+    (h : position ts a = 0) :
+    lineInt b a (fun _ => 0) ts - lineInt a b (fun _ => 0) ts = 2 * projArea a b ts := by
+  have hp := lineInt_add_swap ts hab (fun _ => 0)
+  simp only [mul_zero, sub_zero] at hp
+  unfold position at h
+  rw [h, zero_mul] at hp
+  unfold projArea
+  linarith
+
+/-- The connection increment is the sum of the three shadow increments mod 2 — at every node of
+    `ℤ⁴`, for every twist (gauge twists add nothing to either side). -/
+theorem step_parity3 (x : Axis → ℤ) (t : Twist) :
+    edgeParity (posMod x) (axisOf t)
+      = (((if axisOf t = Axis.X then x Axis.Y * twistStep t else 0)
+          + (if axisOf t = Axis.X then x Axis.Z * twistStep t else 0)
+          + (if axisOf t = Axis.Y then x Axis.Z * twistStep t else 0) : ℤ) : ZMod 2) := by
+  cases t <;> simp [axisOf, edgeParity, posMod, twistStep_cast]
+
+/-- The walk's holonomy from any node is the sum of the three line integrals mod 2. -/
+theorem holAux_eq_lineInts (ts : List Twist) : ∀ x : Axis → ℤ,
+    holAux x ts = ((lineInt Axis.X Axis.Y x ts + lineInt Axis.X Axis.Z x ts
+                    + lineInt Axis.Y Axis.Z x ts : ℤ) : ZMod 2) := by
+  induction ts with
+  | nil => intro x; simp [holAux, lineInt]
+  | cons t ts ih =>
+      intro x
+      simp only [holAux, lineInt]
+      rw [step_parity3 x t, ih (stepPos x t), ← Int.cast_add]
+      congr 1
+      ring
+
+/-- **Three dimensions are encoded in two.** For every history, the ℤ₂ holonomy of its walk is the
+    parity of the sum of its three projected areas — its shadows on the `XY`, `XZ` and `YZ` planes.
+    No planarity, no closure, no restriction on the alphabet: the gauge axis casts no shadow. -/
+theorem holonomy_eq_projected_areas (ts : List Twist) :
+    holonomy ts = ((projArea Axis.X Axis.Y ts + projArea Axis.X Axis.Z ts
+                    + projArea Axis.Y Axis.Z ts : ℤ) : ZMod 2) := by
+  unfold holonomy projArea
+  rw [holAux_eq_lineInts]
+  simp only [Int.cast_add, Int.cast_neg, zmod2_neg]
+
+/-- **The phase in three dimensions**: `(−1)^{#neg} · (−1)^{A_XY + A_XZ + A_YZ}`. -/
+theorem connectionPhase_eq_projected (ts : List Twist) :
+    connectionPhase ts = (-1 : ℤ) ^ negCount ts
+      * sgn ((projArea Axis.X Axis.Y ts + projArea Axis.X Axis.Z ts
+              + projArea Axis.Y Axis.Z ts : ℤ) : ZMod 2) := by
+  have h := holonomy_eq_projected_areas ts
+  unfold holonomy at h
+  unfold connectionPhase
+  rw [connAux_eq, h]
+
+/-- **The fold of every closure is read off its three shadows.** For a balanced history the `2×2`
+    Pauli product is `(−1)^{#neg} · (−1)^{A_XY + A_XZ + A_YZ}` times the identity, and by
+    `shoelace_eq_two_projArea` each `A` is the integer area of a closed plane loop. -/
+theorem fold_eq_projected_phase {ts : List Twist} (h : countBalanced ts) :
+    twistMatrixFold ts
+      = ((((-1 : ℤ) ^ negCount ts
+            * sgn ((projArea Axis.X Axis.Y ts + projArea Axis.X Axis.Z ts
+                    + projArea Axis.Y Axis.Z ts : ℤ) : ZMod 2) : ℤ)) : ℂ) • (1 : M) := by
+  rw [fold_eq_connectionPhase h, connectionPhase_eq_projected]
+
+/-- A `YZ` square `^/v\` casts area `1` on the `YZ` plane and nothing elsewhere. -/
+theorem projArea_yz_square :
+    projArea Axis.Y Axis.Z [Twist.up, Twist.slash, Twist.down, Twist.backslash] = 1
+      ∧ projArea Axis.X Axis.Y [Twist.up, Twist.slash, Twist.down, Twist.backslash] = 0
+      ∧ projArea Axis.X Axis.Z [Twist.up, Twist.slash, Twist.down, Twist.backslash] = 0 := by
+  decide
+
+/-- …so it carries π flux: phase `−1`, like the `XY` square. -/
+theorem plaquette_yz :
+    connectionPhase [Twist.up, Twist.slash, Twist.down, Twist.backslash] = -1 := by decide
+
+/-- A loop round a cube's corner, `^>/v<\`, is a skew hexagon. Its three shadows: `XY` area `−1`,
+    `XZ` area `1`, `YZ` area `1`. The sum `1` is odd, so the holonomy is `1`: one π quantum,
+    though the loop lies in no plane. -/
+theorem projArea_skew_hexagon :
+    projArea Axis.X Axis.Y [Twist.up, Twist.right, Twist.slash, Twist.down, Twist.left,
+                            Twist.backslash] = -1
+      ∧ projArea Axis.X Axis.Z [Twist.up, Twist.right, Twist.slash, Twist.down, Twist.left,
+                                Twist.backslash] = 1
+      ∧ projArea Axis.Y Axis.Z [Twist.up, Twist.right, Twist.slash, Twist.down, Twist.left,
+                                Twist.backslash] = 1 := by
   decide
 
 end QLF.PlaquetteArea
