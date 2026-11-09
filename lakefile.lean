@@ -315,5 +315,6 @@ lean_lib QLF where
     `QLF_HiddenZeros,
     `QLF_EntanglementPrimacy,
     `QLF_HolographicBoundary,
-    `QLF_HolographicArea
+    `QLF_HolographicArea,
+    `QLF_PlaquetteArea
   ]
