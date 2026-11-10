@@ -54,6 +54,29 @@ Commit the manifest change together with the theorem change. Never run
 automatically a defect, but it must not be silently reclassified as
 assumption-free.
 
+## Paper I v0.3 — MO2/QuantumLogic coverage
+
+At the source revision used by Paper I v0.3 (`06a99e7`), the reviewed baseline
+contains 229 anchors. Twelve are for `QLF.TensorFromClosure`; there are **zero**
+anchors for `QLF.MO2` or `QLF.QuantumLogic`. The paper's formal case study is
+therefore `F-CANDIDATE`, not `F`, until the anchors in
+`QLF_AxiomAudit.lean` are run against the original build and the resulting
+footprints are reviewed into `lean/axiom_footprints.expected.json`.
+
+The v0.3 PR adds:
+
+- the eight lub/glb/absorption lemmas to both `QLF_MO2.lean` and
+  `QLF_QuantumLogic.lean`;
+- the 35 MO2/QuantumLogic anchors plus the headline-claim anchors in
+  `lean/QLF_AxiomAudit.lean`;
+- the pre-registered kill-condition record in
+  [`claim_records/kill_conditions.json`](claim_records/kill_conditions.json);
+- the claim-status index in [`Claim_Status.md`](Claim_Status.md).
+
+The baseline must be updated only after a successful original `lake build` and
+a reviewed `python3 scripts/proof_trust.py --log <log> --record` run. CI must
+never auto-record it.
+
 ## Limits of this gate
 
 - Exact axiom-footprint enforcement covers the explicit audit anchors, not

@@ -15,7 +15,7 @@ The **Quantum Logical Framework (QLF)** is a new, constructive **foundation for 
 
 In one line: **the universe is logical, its logic is constructive and sufficient-for-physics, we build it from the bottom up and check it in Lean — and we publish what would refute it.**
 
-**Verification and evidence:** [Proof trust and CI gates](Proof_Trust.md) · [Proof-to-physics registry](Proof_to_Physics.md) · [Scientific method](ScientificApproach.md).
+**Verification and evidence:** [Proof trust and CI gates](Proof_Trust.md) · [Proof-to-physics registry](Proof_to_Physics.md) · [Scientific method](ScientificApproach.md) · [Claim status](Claim_Status.md).
 
 > **New to QLF? Read [Introducing_QLF.md →](Introducing_QLF.md)** — a short, link-rich introduction for the general reader (the one idea, the headline results, the frontiers, honest scope). Then **start the deep dive: the [flow chart →](FlowChart.md)** — the whole framework as a linked index (one substrate → five families → twelve domains → the individual results). For the rendered, clickable diagrams + a printable PDF, open the live page on GitHub Pages: [`FlowChart.html`](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html).
 

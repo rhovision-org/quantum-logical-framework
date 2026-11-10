@@ -290,6 +290,13 @@ is where circularity enters if it enters at all.
 The issue is never the theorem. It is whether the physical interpretation was fixed independently of
 the result it is used to support.
 
+The implementation of this rule is indexed in [`Claim_Status.md`](Claim_Status.md) and
+[`claim_records/kill_conditions.json`](claim_records/kill_conditions.json). Each claim record states
+the approximation/regime, the input provenance (derived / declared / fitted / external), the
+comparator, the reported agreement, and the bridge/evidence status. The kill-condition record is the
+pre-registered null side of the same ledger. The records are schema-checked by
+`scripts/validate_claim_records.py`; they are not a substitute for the observation.
+
 **R0a — The discovery/confirmation firewall.** Anything constructed while the target number was in
 view is a **retrodiction**, permanently, and is labelled so on the physical axis of §3 — however
 exact, however natural the construction looks. A construction becomes capable of *prediction* only

@@ -1,0 +1,63 @@
+{
+  "record_id": "QLF-KILL-001",
+  "version": "0.3-draft",
+  "source_revision": "06a99e792a50eafa51e1a19d6d1ab8cc0724580c",
+  "reviewer": "Aria (technical reviewer)",
+  "purpose": "Pre-registered null predictions and kill conditions. Each entry names the formal anchor (where one exists), the comparator, the observation that would end the claim, and the current status. A kill condition is not evidence for the claim; it is the observation that would count against it.",
+  "entries": [
+    {
+      "id": "alpha_drift",
+      "claim": "alpha has no time argument and cannot drift; a continuous history of values in {1/(128 + d^2) : d in N} is constant.",
+      "anchor": "QLF.Discoveries2026.alpha_cannot_drift",
+      "comparator": "nuclear-clock alpha-drift bounds (e.g. Th-229, Yb+/Sr comparisons)",
+      "kill_condition": "A confirmed, calibrated time variation of alpha.",
+      "status": "pre-registered null; pending data",
+      "source": "Discoveries_2026.md V8; lean/QLF_Discoveries2026.lean"
+    },
+    {
+      "id": "axion",
+      "claim": "Strong CP is solved by ZFA closure; no axion is required.",
+      "anchor": "QLF.theta_zero_on_closure",
+      "comparator": "axion haloscope/helioscope and ADMX-like searches",
+      "kill_condition": "A confirmed axion detection.",
+      "status": "predicted absence",
+      "source": "Completeness_Evidence.md; Mysteries_Of_Physics.md; lean/QLF_StrongCP.lean"
+    },
+    {
+      "id": "cpt_proton_antiproton",
+      "claim": "The antiparticle is the time-mirror: same length (mass proxy), opposite charge and opposite junction baryon number.",
+      "anchor": "QLF.Discoveries2026.antiparticle_length; QLF.Discoveries2026.charge3W_antiparticle",
+      "comparator": "BASE proton/antiproton mass and charge-to-mass comparisons",
+      "kill_condition": "A confirmed CPT-violating mass or charge-to-mass difference.",
+      "status": "predicted null; pending data",
+      "source": "Discoveries_2026.md V1; lean/QLF_Majorana.lean"
+    },
+    {
+      "id": "0nubb",
+      "claim": "The nu1-only Majorana refinement predicts m_betabeta approximately 0.25 meV.",
+      "anchor": "QLF.Majorana.neutrino_majorana",
+      "comparator": "LEGEND-1000 / nEXO reach",
+      "kill_condition": "The published defeater is a 0nubb signal at the LEGEND-1000/nEXO reach of approximately 10 meV, inconsistent with the QLF window; the exact window logic is to be finalized with the collaboration.",
+      "status": "prediction; mass-window anchor pending",
+      "source": "Discoveries_2026.md; lean/QLF_Majorana.lean; Open_Problems.md"
+    },
+    {
+      "id": "qrng_deviation",
+      "claim": "QRNG streams match the ZFA-closure null.",
+      "anchor": null,
+      "comparator": "predeclared QRNG sieve",
+      "kill_condition": "A predeclared, calibrated deviation from the closure null.",
+      "status": "null test; formal anchor pending",
+      "source": "QRNG_Closure_Observatory.md; Completeness_Evidence.md"
+    },
+    {
+      "id": "objective_collapse_jitter",
+      "claim": "No objective-collapse time jitter.",
+      "anchor": null,
+      "comparator": "objective-collapse noise bounds",
+      "kill_condition": "A confirmed objective-collapse signal.",
+      "status": "predicted absence; formal anchor pending",
+      "source": "Discoveries_2026.md"
+    }
+  ]
+}
