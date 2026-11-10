@@ -279,6 +279,7 @@ lean_lib QLF where
     `QLF_ChannelZeros,
     `QLF_LightCone,
     `QLF_RelativityScale,
+    `QLF_LorentzSymbol,
     `QLF_RealizableWalk,
     `QLF_Tsirelson,
     `QLF_Mass,

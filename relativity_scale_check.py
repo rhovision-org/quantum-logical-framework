@@ -12,7 +12,8 @@ closed forms the Lean module proves:
   anisotropy ratio      = 4 / (3L + 1)                (anisotropy_ratio)
 
 and the step-level no-go: the gamma = 3 integer boost preserves the interval and sends e_t
-(1 step) to (3,2,2,0) (7 steps). See Relativity_Principle.md.
+(1 step) to (3,2,2,0) (7 steps); and lean/QLF_LorentzSymbol.lean: the matrix census
+is H(k)^L with H = 2i*Form(sin k), det H = -4*interval(sin k). See Relativity_Principle.md.
 
 Usage: python3 relativity_scale_check.py [--max-len 6]
 """
@@ -76,9 +77,49 @@ def check_moments(max_len):
               + (f", anisotropy ratio = {ratio}" if L else ""))
 
 
+def check_matrix_symbol(max_len=4, trials=3):
+    """census_symbol / symbol_eq_form / symbol_det of lean/QLF_LorentzSymbol.lean."""
+    import cmath
+    import math
+    import random
+    I2 = [[1, 0], [0, 1]]
+    sx = [[0, 1], [1, 0]]
+    sy = [[0, -1j], [1j, 0]]
+    sz = [[1, 0], [0, -1]]
+    neg = lambda A: [[-a for a in r] for r in A]
+    MAT = {"+": I2, "-": neg(I2), ">": sx, "<": neg(sx), "^": sy, "v": neg(sy),
+           "/": sz, "\\": neg(sz)}
+    mul = lambda A, B: [[sum(A[i][k] * B[k][j] for k in range(2)) for j in range(2)] for i in range(2)]
+    rng = random.Random(1)
+    for _ in range(trials):
+        k = [rng.uniform(-3, 3) for _ in range(4)]
+        st = [math.sin(c) for c in k]
+        H = [[2j * (st[0] + st[3]), 2j * (st[1] - 1j * st[2])],
+             [2j * (st[1] + 1j * st[2]), 2j * (st[0] - st[3])]]
+        det = H[0][0] * H[1][1] - H[0][1] * H[1][0]
+        assert abs(det + 4 * (st[0] ** 2 - st[1] ** 2 - st[2] ** 2 - st[3] ** 2)) < 1e-9
+        P = [[1, 0], [0, 1]]
+        for L in range(max_len + 1):
+            S = [[0j, 0j], [0j, 0j]]
+            for word in itertools.product(STEP.keys(), repeat=L):
+                d = [sum(STEP[t][i] for t in word) for i in range(4)]
+                ph = cmath.exp(1j * sum(k[i] * d[i] for i in range(4)))
+                F = [[1, 0], [0, 1]]
+                for t in reversed(word):
+                    F = mul(MAT[t], F)
+                for i in range(2):
+                    for j in range(2):
+                        S[i][j] += ph * F[i][j]
+            assert all(abs(S[i][j] - P[i][j]) < 1e-6 for i in range(2) for j in range(2)), (L, k)
+            P = mul(H, P)
+    print(f"matrix census = H(k)^L with H = 2i*Form(sin k), det H = -4*interval(sin k): "
+          f"checked to L={max_len} at {trials} random momenta")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-len", type=int, default=6)
     args = ap.parse_args()
     check_no_go()
     check_moments(args.max_len)
+    check_matrix_symbol()

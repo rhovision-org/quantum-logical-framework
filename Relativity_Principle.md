@@ -3,10 +3,11 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
 
-**Epistemic status: proved (Lean, no axioms) for the unsigned census, with one cited bridge to
-Lorentz signature named below.** Module: [`lean/QLF_RelativityScale.lean`](lean/QLF_RelativityScale.lean).
-Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py) (every history to
-length 6).
+**Epistemic status: proved in Lean, no axioms, including Lorentz signature.** Modules:
+[`lean/QLF_RelativityScale.lean`](lean/QLF_RelativityScale.lean) (the unsigned census) and
+[`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean) (the signed census and the Lorentz
+signature). Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py). One
+question remains open, reduced to a single number (§5).
 
 Einstein's first postulate says the laws of physics are the same for every observer in uniform
 motion. QLF does not assume it. It proves two things about the census of histories instead: the
@@ -90,27 +91,55 @@ bounded only at `E_QG,2 > 6×10⁻⁸ E_P` (same LHAASO paper), so a Planck-scal
 about seven orders of magnitude. The full list of bounds is
 [Kostelecký & Russell, *Data Tables for Lorentz and CPT Violation*](https://arxiv.org/pdf/0801.0287).
 
-## 5. What is not proven
+## 5. Lorentz signature: the phases carry it
 
-1. **Lorentz signature.** The theorems show isotropy across time and space together, which is the
-   Euclidean (`O(4)`) form of the symmetry. Turning Euclidean rotation invariance into Lorentz boost
-   invariance is the Wick rotation of Osterwalder–Schrader reconstruction, which is how lattice field
-   theory recovers Lorentz invariance. It is cited here, not formalized, and needs reflection
-   positivity of the census transfer matrix, which is not yet proven.
-2. **The signed census.** These results are for the unsigned census (counts of ways). The
-   phase-weighted census carries π flux on spatial plaquettes and none on time–space plaquettes
-   ([`lean/QLF_EdgeSign.lean`](lean/QLF_EdgeSign.lean), [`Closure_Walk.md`](Closure_Walk.md) §3), an
-   asymmetry between time and space that may survive in the large. Its dispersion relation is the next
-   test, to be pre-registered before it is computed.
-3. **Loop leakage.** [Collins, Perez, Sudarsky, Urrutia & Vucetich, *PRL* 93, 191301 (2004)](https://arxiv.org/abs/gr-qc/0403053)
-   show that a Planck-scale preferred frame feeds into low-energy physics through quantum loops at
-   about the percent level unless something cancels it. The census anisotropy here is a tree-level
-   statement. Why the leak cancels in QLF, if it does, is open, and it is the strongest known
-   objection to any discrete spacetime.
-4. **Higher moments.** Only moments up to fourth order are proven. That the whole distribution
-   becomes isotropic is the central limit theorem, cited rather than formalized.
+Sections 2 and 3 count ways, and counting treats time and space alike: the momentum symbol of the
+unsigned census is `2 Σ_μ cos k_μ`, a Euclidean form. The whole distribution becomes isotropic in
+that Euclidean sense, not just its moments: at the diffusive scale `k = q/√L` its characteristic
+function tends to `exp(−|q|²/8)`, a function of `|q|²` alone (`characteristic_isotropic`).
 
-## 6. How this fits the rest
+Lorentz signature comes from the amplitudes. Weight each history by a plane wave and keep its
+Pauli fold, the amplitude QLF gives it. Then the census is a power of a one-step symbol
+(`census_symbol`), and that symbol is
+
+```
+H(k) = 2i · Form(sin k₀, sin k₁, sin k₂, sin k₃)        (symbol_eq_form)
+```
+
+the Hermitian `Form` of the lattice momentum, time on the identity and space on the Pauli
+matrices, because the gauge twists are `±I` and the spatial twists `±σ`. Its determinant is the
+Minkowski interval of the momentum, by `det_toMatrix_eq_interval`:
+
+```
+det H(k) = −4 (sin²k₀ − sin²k₁ − sin²k₂ − sin²k₃)        (symbol_det)
+```
+
+and it is singular exactly on the lattice light cone `sin²k₀ = Σ sin²k_a` (`symbol_light_cone`):
+the census's massless modes travel at `c = 1`. For small `k`, `H(k) ≈ 2i · Form(k) = 2i σ^μ k_μ`,
+the Weyl operator, which `SL(2,ℂ)` transforms covariantly
+([`lean/QLF_LorentzCover.lean`](lean/QLF_LorentzCover.lean)). Each component deviates from the
+covariant `k_μ` by at most `|k|³/6 + |k|⁵/100` (`symbol_deviation`), a relative correction
+quadratic in `k`, the same `(L_P/r)²` as §3. So **no Wick rotation is needed**: counting ways is
+Euclidean, and the phases make it Lorentzian. The zeros of `sin` at `k = π` are the lattice
+doublers, as in lattice fermions.
+
+## 6. What remains open: one number
+
+[Collins, Perez, Sudarsky, Urrutia & Vucetich, *PRL* 93, 191301 (2004)](https://arxiv.org/abs/gr-qc/0403053)
+showed that a Planck-scale preferred frame leaks into low-energy physics through quantum loops at
+about the percent level unless something forbids it. Everything above is free propagation. The
+question is whether interactions undo it.
+
+`quadratic_form_frame_invariant` reduces that question to one number. Any quadratic form on
+momentum space that the substrate's frame group leaves invariant is `diag(a, b, b, b)`, so the only
+Lorentz violation the symmetry allows at that order is the ratio `b/a`, the speed of light in each
+species. The census sets it to `1` for free propagation (`light_speed_from_spread`,
+`symbol_eq_form`). If interactions shift it differently for different species, QLF has Collins's
+problem. If something holds it at `1`, the problem is absent. The frame group alone does not hold
+it, because it never mixes time with space. Settling it needs the interacting census: joint
+closures of two or more histories ([`MultiParticle.md`](MultiParticle.md)).
+
+## 7. How this fits the rest
 
 - The state-space side of relativity was already proven: the interval is `det(Form)`
   ([`lean/QLF_Minkowski.lean`](lean/QLF_Minkowski.lean)), `SL(2,ℂ)` acts as the Lorentz group

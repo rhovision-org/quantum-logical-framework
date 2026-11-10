@@ -47,10 +47,10 @@ LHAASO GRB 221009A bound. See [`Relativity_Principle.md`](../Relativity_Principl
 
 ## What this does not cover
 
-Isotropy across the time and space axes is the Euclidean (`O(4)`) form of the symmetry. Turning it
-into Lorentz invariance is the Wick rotation of Osterwalder–Schrader reconstruction, cited and not
-formalized here. The census here is the unsigned one; the signed (phase-weighted) census carries
-π flux on spatial plaquettes only (`QLF_EdgeSign`) and is not covered.
+Isotropy across the time and space axes is the Euclidean (`O(4)`) form of the symmetry: counting
+ways treats time like space. The Lorentz signature comes from the phases, in
+[`QLF_LorentzSymbol`](QLF_LorentzSymbol.lean): keeping each history's Pauli fold, the census's
+momentum symbol is `2i·Form(sin k)`, whose determinant is the Minkowski interval.
 -/
 
 namespace QLF.RelativityScale
