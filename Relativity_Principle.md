@@ -136,8 +136,17 @@ Lorentz violation the symmetry allows at that order is the ratio `b/a`, the spee
 species. The census sets it to `1` for free propagation (`light_speed_from_spread`,
 `symbol_eq_form`). If interactions shift it differently for different species, QLF has Collins's
 problem. If something holds it at `1`, the problem is absent. The frame group alone does not hold
-it, because it never mixes time with space. Settling it needs the interacting census: joint
-closures of two or more histories ([`MultiParticle.md`](MultiParticle.md)).
+it, because it never mixes time with space.
+
+Joint closures themselves are already proven: the two-spin joint closure is the singlet
+([`lean/QLF_JointClosure.lean`](lean/QLF_JointClosure.lean)), the composite fold of `N` bodies is the
+tensor product, and a shared pair folds to `t ⊗ t†`
+([`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean)). Those are the joint
+*states* and their algebra. What this question needs is their *momentum-space* side: the census
+symbol of two histories that share pairs, and whether the shared pairs move the time/space ratio.
+One structural fact points the right way: a shared pair puts `t` on one body and `t†` on the
+other, so its net displacement is zero and it cannot depend on the total momentum. That is a lead,
+not yet a theorem.
 
 ## 7. How this fits the rest
 
