@@ -87,7 +87,7 @@ def expect2 (M : Op2) (a b : ℂ) : ℂ :=
   ∑ p, ∑ q, star (![a, b] p.1 * ![a, b] p.2) * M p q * (![a, b] q.1 * ![a, b] q.2)
 
 /-- **The null vector of a qubit**: `k^a = ⟨ψ|σ_a|ψ⟩ / 2`, written in real coordinates. -/
-def kForm (a b : ℂ) : Form :=
+noncomputable def kForm (a b : ℂ) : Form :=
   ⟨(a.re ^ 2 + a.im ^ 2 + b.re ^ 2 + b.im ^ 2) / 2,
    a.re * b.re + a.im * b.im,
    a.re * b.im - a.im * b.re,
@@ -132,7 +132,7 @@ theorem expect2_sym (A B : Op) (a b : ℂ) :
 
 theorem expect1_s0 (a b : ℂ) : expect1 s0 a b = 2 * ((kForm a b).t : ℂ) := by
   simp only [expect1, s0, kForm, Fin.sum_univ_two]
-  apply Complex.ext <;> simp <;> ring
+  apply Complex.ext <;> simp [pow_two] <;> ring
 
 theorem expect1_sx (a b : ℂ) : expect1 sx a b = 2 * ((kForm a b).x : ℂ) := by
   simp only [expect1, sx, kForm, Fin.sum_univ_two]
@@ -144,7 +144,7 @@ theorem expect1_sy (a b : ℂ) : expect1 sy a b = 2 * ((kForm a b).y : ℂ) := b
 
 theorem expect1_sz (a b : ℂ) : expect1 sz a b = 2 * ((kForm a b).z : ℂ) := by
   simp only [expect1, sz, kForm, Fin.sum_univ_two]
-  apply Complex.ext <;> simp <;> ring
+  apply Complex.ext <;> simp [pow_two] <;> ring
 
 /-- **A product state reads the tensor on its null vector**:
     `⟨ψψ| Ŝ |ψψ⟩ = 4 · S_ab k^a k^b` with `k = k(ψ)`. -/
@@ -174,7 +174,7 @@ theorem product_orthogonal_singlet (c : ℂ) (a b : ℂ) :
     expect2 (c • singletOuter) a b = 0 := by
   have h0 : expect2 singletOuter a b = 0 := by
     simp only [expect2, singletOuter, sv, Fintype.sum_prod_type, Fin.sum_univ_two,
-      Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, star_zero, star_neg, star_one]
+      Matrix.cons_val_zero, Matrix.cons_val_one, star_zero, star_neg, star_one]
     ring
   rw [expect2_smul, h0, mul_zero]
 
