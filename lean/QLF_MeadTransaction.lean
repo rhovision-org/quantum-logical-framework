@@ -31,6 +31,10 @@ as a **matched pair**: a forward (retarded, "offer") half on `fix t` and a backw
 >
 > **`electric_eq_magnetic_iff`** — time–space (electric) planes equal space–space (magnetic) planes,
 > `d = d(d−1)/2`, only for `d = 3` spatial axes: half and half is a three-dimensional fact.
+>
+> **`equal_split_iff_null`, `closure_equal_split`** — a transverse mode puts equal action on the
+> electric and magnetic planes iff it is null; a massless closure (`GaugeAxis.light_cone`) is null, so
+> its action splits evenly, `|E| = c|B|`.
 
 Since the generator of the step is `i·M(t)` (`DiracWalk.realStep_generator`), `M(t)` is the step's
 velocity in lattice units, and the halves are its eigenspaces with velocity `+1` and `−1`. The two
@@ -136,5 +140,61 @@ theorem electric_eq_magnetic_iff (d : ℕ) : 2 * d = d * (d - 1) ↔ d = 0 ∨ d
       rw [e] at h
       nlinarith
   · rintro (rfl | rfl) <;> norm_num
+
+-- ==========================================
+-- §5  A massless closure splits its action evenly: |E| = c|B|
+-- ==========================================
+
+/-- **Electric action** of a plane-wave mode `F = K ∧ ε` in temporal gauge (`ε₀ = 0`): the
+time–space components `F₀ᵢ = K₀ εᵢ`, squared and summed. -/
+noncomputable def electricAction (K0 ex ey ez : ℝ) : ℝ :=
+  (K0 * ex) ^ 2 + (K0 * ey) ^ 2 + (K0 * ez) ^ 2
+
+/-- **Magnetic action** of the same mode: the space–space components `Fᵢⱼ = Kᵢ εⱼ − Kⱼ εᵢ`, squared and
+summed over the three magnetic planes. -/
+noncomputable def magneticAction (Kx Ky Kz ex ey ez : ℝ) : ℝ :=
+  (Kx * ey - Ky * ex) ^ 2 + (Ky * ez - Kz * ey) ^ 2 + (Kz * ex - Kx * ez) ^ 2
+
+/-- **Electric minus magnetic** is the mode's mass shell times its amplitude, plus its longitudinal
+part: `E² − B² = (K₀² − |K|²)|ε|² + (K·ε)²` (Lagrange's identity). -/
+theorem electric_sub_magnetic (K0 Kx Ky Kz ex ey ez : ℝ) :
+    electricAction K0 ex ey ez - magneticAction Kx Ky Kz ex ey ez =
+      (K0 ^ 2 - (Kx ^ 2 + Ky ^ 2 + Kz ^ 2)) * (ex ^ 2 + ey ^ 2 + ez ^ 2) +
+        (Kx * ex + Ky * ey + Kz * ez) ^ 2 := by
+  unfold electricAction magneticAction
+  ring
+
+/-- **Half electric, half magnetic exactly on the light cone.** For a transverse mode
+(`K·ε = 0`) of non-zero amplitude, the electric and magnetic actions are equal if and only if the mode
+is null, `K₀² = |K|²`. -/
+theorem equal_split_iff_null (K0 Kx Ky Kz ex ey ez : ℝ)
+    (ht : Kx * ex + Ky * ey + Kz * ez = 0) (hε : ex ^ 2 + ey ^ 2 + ez ^ 2 ≠ 0) :
+    electricAction K0 ex ey ez = magneticAction Kx Ky Kz ex ey ez ↔
+      K0 ^ 2 = Kx ^ 2 + Ky ^ 2 + Kz ^ 2 := by
+  have h := electric_sub_magnetic K0 Kx Ky Kz ex ey ez
+  constructor
+  · intro hEB
+    have h0 : (K0 ^ 2 - (Kx ^ 2 + Ky ^ 2 + Kz ^ 2)) * (ex ^ 2 + ey ^ 2 + ez ^ 2) = 0 := by
+      linear_combination hEB - h - (Kx * ex + Ky * ey + Kz * ez) * ht
+    rcases mul_eq_zero.mp h0 with h1 | h1
+    · linarith
+    · exact absurd h1 hε
+  · intro hK
+    linear_combination h + (ex ^ 2 + ey ^ 2 + ez ^ 2) * hK + (Kx * ex + Ky * ey + Kz * ez) * ht
+
+/-- **A massless closure carries equal electric and magnetic action.** If the clock phase `ω` cancels
+the spatial phase on a non-zero state (zero free action per step, `GaugeAxis.light_cone`), then every
+transverse mode at that `(ω, k)` puts the same action on the electric (time–space) planes as on the
+magnetic (space–space) ones: `|E| = c|B|`. Mead's "half lateral, half transverse", read as Jim reads
+it, holds exactly for the closure and fails off it. -/
+theorem closure_equal_split (w ky kx kz ex ey ez : ℝ) (ψ : Fin 2 → ℂ) (hψ : ψ ≠ 0)
+    (hclose : ((w : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) +
+      Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ)) *ᵥ ψ = 0)
+    (ht : kx * ex + ky * ey + kz * ez = 0) :
+    electricAction w ex ey ez = magneticAction kx ky kz ex ey ez := by
+  have hl := GaugeAxis.light_cone (w : ℂ) (ky : ℂ) (kx : ℂ) (kz : ℂ) ψ hψ hclose
+  have hr : w ^ 2 = ky ^ 2 + kx ^ 2 + kz ^ 2 := by exact_mod_cast hl
+  have h := electric_sub_magnetic w kx ky kz ex ey ez
+  linear_combination h + (ex ^ 2 + ey ^ 2 + ez ^ 2) * hr + (kx * ex + ky * ey + kz * ez) * ht
 
 end QLF.MeadTransaction

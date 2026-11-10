@@ -75,6 +75,7 @@ a forward phase on one half and a backward phase on the conjugate half. [`QLF_Me
 | time-symmetric equations | `gauge_no_split` ([`QLF_GaugeAxis`](lean/QLF_GaugeAxis.lean)) | on the gauge (time) axis there is no split: one half is everything and the other nothing, so the gauge step is a pure clock phase. Only space is split half and half |
 | a null exchange | `GaugeAxis.light_cone` | when the clock phase cancels the spatial phase (zero free action per step), `ω² = k²`: a light-like step carries equal parts time and space |
 | electric = magnetic | `electric_eq_magnetic_iff` | time–space and space–space plane counts are equal only for three spatial axes |
+| `\|E\| = c\|B\|` | `equal_split_iff_null`, `closure_equal_split` | a transverse mode splits its action evenly between electric and magnetic planes iff it is null; a massless closure is null |
 | the fluxoid | `EdgeSign.plaquette_yx`, `plaquette_twice` ([`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)) | one spatial ZFA loop `^>v<` has holonomy `−1` and two loops `+1` |
 
 **A correction to §3.** §3 says one ZFA loop is a `2π` phase. The proven holonomy is `−1`, which is `π`. That fits the superconducting fluxoid better than `2π` would: the flux quantum is `h/2e`, and an electron of charge `e` taken round it picks up Aharonov–Bohm phase `e·(h/2e)/ħ = π`, while the Cooper pair (charge `2e`) picks up `2π`. So one ZFA loop is half a turn for one electron and a full turn for the pair. That is the same `−1`/`+1` as §4's `720°`.
@@ -85,7 +86,12 @@ a forward phase on one half and a backward phase on the conjugate half. [`QLF_Me
 - **`EdgeSign.plaquette_gauge`** and **`plaquette_yx`**: the bare vacuum is not symmetric between the halves. An electric plaquette `^+v−` carries no flux, and a magnetic plaquette `^>v<` carries π.
 - The per-axis forward/backward split (`trace_fix_spatial`) and the null step (`GaugeAxis.light_cone`) are the other two halves that §6b proves; neither is the electric/magnetic split itself.
 
-Open: that a *null* closure (a photon exchange) puts equal action on its electric and magnetic plaquettes, the substrate form of `|E| = c|B|` in a light wave. The plane counts make it possible; it is not yet proved.
+- **`equal_split_iff_null`**: for a plane-wave mode `F = K ∧ ε` that is transverse (`K·ε = 0`), the electric action `Σᵢ F₀ᵢ²` equals the magnetic action `Σ_{i<j} Fᵢⱼ²` **if and only if** the mode is null, `K₀² = |K|²`. The identity behind it is `E² − B² = (K₀² − |K|²)|ε|² + (K·ε)²` (`electric_sub_magnetic`, Lagrange's identity).
+- **`closure_equal_split`**: a massless closure, a non-zero state on which the clock phase cancels the spatial phase (`GaugeAxis.light_cone`, zero free action per step), is null, so every transverse mode at its `(ω, k)` splits its action evenly between the electric and magnetic planes: `|E| = c|B|`.
+
+So "half lateral, half transverse" holds **exactly at closure and nowhere else**: a mode with `ω² > k²` (massive, off the light cone) carries more electric than magnetic action, and one with `ω² < k²` more magnetic. The classical fact (a plane wave in vacuum has `|E| = c|B|`) is textbook electrodynamics; what QLF adds is that the closure condition is what puts the mode on the light cone. On the lattice, the momentum entering `F` is the retarded-minus-advanced coefficient `sin k` of `realStep_sub_neg`, so the same statement holds with `K = sin k` once the census light cone `sin²ω = Σ sin²kₐ` is in Lean.
+
+Still assumed: transversality, `K·ε = 0`. It is the gauge condition of free radiation and the far-field cancellation Cramer and Mead describe (§6a); deriving it from closures is the remaining step. And the result is an identity about a mode, not a count of ways (method rule 4).
 
 **Scope (method rule 4).** Every row above is an identity about one step or one loop. None changes a count of ways, so together they show that QLF's step *has* Mead's structure. They are not evidence that Mead's transaction is the physics.
 
