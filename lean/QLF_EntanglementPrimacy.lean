@@ -141,10 +141,12 @@ Read a pair `[t, t†]` as the twist's axis acting on both sites of a two-body s
    only pure frequencies are the six axis states. Off-axis pure states need `N` below the strand's
    length (several twists per event, or a normalisation that is not an event count), and which of
    those is physical is open.
-3. **The two-body reading is a choice.** Rung 6 maps a pair to the joint action of its axis on two
-   sites. That map is the natural one (each site holds one half), but it is chosen, not derived from
-   the twist histories; deriving the tensor product itself stays open (`closed_iff_singlet` already
-   assumes it).
+3. **The two-body reading.** Rung 6 maps a pair to the joint action of its axis on two sites, a
+   chosen reading. [`QLF_TensorFromClosure`](QLF_TensorFromClosure.lean) §8 now derives the action
+   instead: a pair shared as `t` on one body and `t†` on the other folds to `t ⊗ t†`, the singlet is
+   the unique state every shared strong pair fixes (`split_strong_iff_singlet`), and it agrees with
+   this reading (`split_reading_agrees`). Still posited: a shared pair puts one half on each body.
+   The tensor product itself, which `closed_iff_singlet` uses, is derived there too.
 
 Rungs 1–6 of "the logical entanglement is responsible for all other results" are proved here for the
 twist layer: what closes (pairs), its phase (pairs × crossings), its Form (the open half), every

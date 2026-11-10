@@ -1,0 +1,1417 @@
+import QLF_IndexedFactors
+import QLF_JointClosure
+import QLF_ClosureUnitarity
+import QLF_EntanglementPrimacy
+import Mathlib
+
+set_option linter.unusedVariables false
+
+/-!
+# QLF_TensorFromClosure — the tensor product, derived from closure composition
+
+[`QLF_EntanglementPrimacy`](QLF_EntanglementPrimacy.lean) left one gap open: the two-body reading
+of a pair used the Kronecker product `A ⊗ I`, `I ⊗ B` as given, so *deriving the tensor product
+itself stayed open*. This module closes that gap for two bodies. The tensor product is not
+assumed anywhere below; it is the output.
+
+## What is assumed
+
+Only what a "body" means in QLF:
+
+* **Each body is a QLF body.** Its histories act through their own fold, so the joint fold sees body
+  `A` through an algebra map `ρA : M → J` and body `B` through `ρB : M → J`, for an arbitrary
+  `ℂ`-algebra `J` of joint operations. `M` is the `2 × 2` twist algebra. Nothing says what `J` is.
+* **The joint fold is multiplicative.** A two-body history is a word of labelled twists
+  (`Tok = Bool × Twist`, the [`IndexedFactors`](QLF_IndexedFactors.lean) token with two labels), and
+  its fold is the ordered product of its letters (`cfold`), as for one body.
+* **Distinct bodies have no relative order.** Swapping two adjacent events of *different* bodies
+  (`Step`) does not change the joint fold. This is what makes two bodies two bodies: nothing fixes
+  which of two separate events came first.
+
+## What is derived (no axioms)
+
+1. **The composite is the pair (`same_composite_iff`).** Two-body words are interleaving-equivalent
+   exactly when they have the same history on each body. The composite history monoid of two
+   independent bodies is `H × H`, not the free monoid on both alphabets.
+2. **Independence is commutation (`interleaving_invariant_iff`).** The joint fold ignores
+   interleaving exactly when every twist on `A` commutes with every twist on `B`. Commutation is
+   *derived* from "no relative order", not posited.
+3. **The joint fold is a product of the two body folds (`cfold_eq`):**
+   `cfold w = ρA (fold w_A) · ρB (fold w_B)`.
+4. **The universal property (`composite_is_tensor`).** There is exactly one algebra map
+   `Ψ : M ⊗[ℂ] M → J` with `Ψ (X ⊗ 1) = ρA X` and `Ψ (1 ⊗ Y) = ρB Y`, and every joint fold is
+   `Ψ (fold w_A ⊗ₜ fold w_B)`. So **every** independent composition of two QLF bodies, in whatever
+   joint algebra, factors through the tensor product `M ⊗ M`. That is the characterization of the
+   tensor product, and here it is a consequence of closure composition.
+5. **The twist realization is the tensor product (`tensorEquiv`).** Realized on four-component
+   states (`onA`, `onB`), the factoring map `M ⊗[ℂ] M → Mat₄(ℂ)` is an isomorphism: it is onto
+   (every `4 × 4` matrix is a combination of composite elementary moves, `kronLift_surjective`), and
+   both sides have dimension `16 = 4 · 4`. The joint algebra of two qubit bodies is exactly
+   `M ⊗ M`, no bigger and no smaller. The flat model fails the premise
+   (`flat_not_independent`): one undivided word puts both bodies in one Pauli algebra, where `^`
+   and `>` anticommute.
+6. **Faithful in every joint algebra (`composite_faithful`).** In any non-trivial `J`, the factoring
+   map `M ⊗ M → J` is injective: `M ⊗ M ≅ Mat₄(ℂ)` is simple (Mathlib's `IsSimpleRing.matrix`), so a
+   ring map out of it has zero kernel. Every independent composite contains an exact copy of the
+   tensor product, and its joint fold determines the tensor element `fold w_A ⊗ fold w_B`
+   (`joint_fold_determines_pair`). It does **not** determine the two folds separately: a scalar can
+   move between the factors, `(−I) ⊗ I = I ⊗ (−I)` (`pair_scalar_ambiguity`).
+7. **The state space (`state_cyclic`, `two_body_states_irreducible`).** Every non-zero state of
+   `ℂ² ⊗ ℂ² = ℂ⁴` is sent to every other by some joint operator, so a subspace invariant under the
+   derived composite and holding one non-zero state is everything. The tensor-product state space
+   is irreducible for the composite of two independent bodies.
+8. **Any number of bodies (`n_interleaving_invariant_iff`, `nstep_proj`, `ncfold_eq`).** With
+   labels from any type, interleaving invariance holds exactly when every pair of distinct bodies
+   commutes, interleaving preserves each body's history, and the joint fold is the ordered product
+   of the bodies' own folds, `∏ᵢ ρᵢ(fold wᵢ)`. Two `N`-body words are interleavings of each other
+   exactly when they agree on every body (`n_same_composite_iff`), so the composite history monoid
+   of `N` independent bodies is `H^N`.
+9. **The `N`-fold tensor object (`nTensorLift`, `nTensorLift_unique`, `n_composite_is_tensor`).**
+   For bodies labelled `0, …, N−1`, the ordered product of commuting body actions is an algebra map
+   out of Mathlib's `⨂[ℂ] i, M`, it is the only one restricting to each body on its own slot, and
+   every joint fold is that map applied to `fold w₀ ⊗ ⋯ ⊗ fold w_{N−1}`.
+10. **The state space is unique (`twoBodyState_simple`, `simple_module_is_twoBodyState`).** `ℂ⁴`
+   is a simple module of the joint algebra, and every simple module is isomorphic to it: `Mat₄(ℂ)`
+   is simple and Artinian, so its simple modules are all one type (Wedderburn, via Mathlib's
+   `IsSimpleRing.isIsotypic`).
+11. **`N`-body realization and faithfulness (`slot_commute`, `nTensorEquiv`, `n_composite_faithful`).**
+   Body `i` acting on slot `i` of `(ℂ²)^{⊗N}` gives commuting copies of `M`; the factoring map out of
+   `⨂ᵢ M` is onto every operator (elementary operators are ordered products of slot moves) and the
+   dimensions agree (`4^N`), so `⨂ᵢ M ≅ End((ℂ²)^{⊗N})`. Hence, in every non-trivial joint algebra,
+   the `N`-body factoring map is injective. `(ℂ²)^{⊗N}` is a simple module of that algebra and the only one up to
+   isomorphism (`cfgState_simple`, `simple_module_is_cfgState`).
+12. **Rung 6 from the composite (`splitPair_fold`, `split_strong_iff_singlet`).** A pair shared
+    between two bodies folds to `t ⊗ t†`. The singlet is the unique state every shared strong pair
+    fixes, a shared gauge pair is the scalar `−1` on every state (`split_gauge_scalar`), and this
+    picks the same state as rung 6's chosen sum reading (`split_reading_agrees`).
+
+**Scope.** Everything above is derived *from the stated premises*: each body acts through its own
+fold, the joint fold is multiplicative, and separate bodies' events have no relative order
+(interleaving invariance). That bodies are independent in this sense is a premise, not something
+derived here from ZFA alone.
+
+## The two sectors
+
+* **Product sector (`kron_scalar_iff`, `independent_closure_factors`).** A Kronecker product is a
+  non-zero scalar exactly when both factors are scalars. So a scalar joint fold of independent
+  bodies is two scalar body folds. This is Pauli closure, not ZFA: a scalar fold need not be count
+  balanced (`scalar_fold_not_zfa`: `^^` folds to `I`), so the theorem does not say that each body is
+  a ZFA closure. [`IndexedFactors`](QLF_IndexedFactors.lean) stated the scalar version in prose; it
+  is now a theorem.
+* **Coupled sector (`open_factor_never_closes_jointly`, `shared_closure_not_independent`).** If one
+  body's history is open, no history on the other body closes it as an independent factor. The
+  primordial shared closure `^ | v` closes as one word and **cannot** close as a product. Shared
+  closure is not a property of independent factors.
+* **Entanglement lives inside the tensor space (`product_never_joint_closure`,
+  `singlet_not_product`, `tensor_space_sectors`).** The state space of the derived composite is
+  `ℂ² ⊗ ℂ²`. No non-zero product vector `u ⊗ v` is a joint closure, while the singlet, which is in
+  the same space, is one, and it is not a product.
+
+So the right sentence is **not** "tensor products cannot represent entanglement". They do: the singlet
+is a vector of the tensor space. The precise claim is: **a product of independently closed factors
+cannot produce a shared closure.** Closure composition is primitive; the tensor product is the
+representation of its factorized limit, and the entangled vectors are the part of that
+representation that no factorization reaches.
+
+## What is still NOT proved
+
+1. **Which body holds which half.** §8 derives rung 6's action from the composite fold: a pair
+   shared as `t` on body `A` and `t†` on body `B` folds to `t ⊗ t†` (`splitPair_fold`). What is still
+   posited is that a shared pair puts one half on each body; that is the definition of sharing, not
+   a reading of the action.
+
+
+**Credit.** The universal property of the tensor product of algebras is standard (Mathlib's
+`Algebra.TensorProduct.lift`). Deriving the composite of independent systems from local structure is
+the operational-reconstruction programme: local tomography in Hardy, *Quantum theory from five
+reasonable axioms* (arXiv:quant-ph/0101012), and Chiribella, D'Ariano and Perinotti, *Phys. Rev. A*
+**84**, 012311 (2011). The step specific to QLF is that commutation of distinct bodies follows from
+interleaving invariance of the fold. The trace monoid of commuting letters is Cartier and Foata's
+(1969). Part of the [Quantum Logical Framework (QLF)](../README.md).
+-/
+
+namespace QLF.TensorFromClosure
+
+open QLF QLF.PhaseRule Matrix
+open scoped Kronecker TensorProduct
+
+-- ==========================================
+-- §1. Two-body histories and their interleavings
+-- ==========================================
+
+/-- A two-body token: a twist labelled by its body (`false` = body `A`, `true` = body `B`). -/
+abbrev Tok := Bool × Twist
+
+/-- Body `A`'s history inside a two-body word. -/
+def projA : List Tok → List Twist
+  | [] => []
+  | (false, t) :: w => t :: projA w
+  | (true, _) :: w => projA w
+
+/-- Body `B`'s history inside a two-body word. -/
+def projB : List Tok → List Twist
+  | [] => []
+  | (false, _) :: w => projB w
+  | (true, t) :: w => t :: projB w
+
+@[simp] lemma projA_nil : projA [] = [] := rfl
+@[simp] lemma projB_nil : projB [] = [] := rfl
+@[simp] lemma projA_consA (t : Twist) (w : List Tok) : projA ((false, t) :: w) = t :: projA w := rfl
+@[simp] lemma projA_consB (t : Twist) (w : List Tok) : projA ((true, t) :: w) = projA w := rfl
+@[simp] lemma projB_consA (t : Twist) (w : List Tok) : projB ((false, t) :: w) = projB w := rfl
+@[simp] lemma projB_consB (t : Twist) (w : List Tok) : projB ((true, t) :: w) = t :: projB w := rfl
+
+/-- **One interleaving move**: swap two adjacent events of *different* bodies, anywhere in the word.
+    Nothing fixes which of two separate bodies' events came first. -/
+inductive Step : List Tok → List Tok → Prop
+  | swap (x y : Tok) (v : List Tok) (h : x.1 ≠ y.1) : Step (x :: y :: v) (y :: x :: v)
+  | cons (z : Tok) {w w' : List Tok} : Step w w' → Step (z :: w) (z :: w')
+
+theorem Step.symm {w w' : List Tok} (h : Step w w') : Step w' w := by
+  induction h with
+  | swap x y v h => exact Step.swap y x v (Ne.symm h)
+  | cons z _ ih => exact Step.cons z ih
+
+/-- An interleaving move changes neither body's history. -/
+theorem step_proj {w w' : List Tok} (h : Step w w') :
+    projA w = projA w' ∧ projB w = projB w' := by
+  induction h with
+  | swap x y v h =>
+      rcases x with ⟨b₁, s⟩
+      rcases y with ⟨b₂, t⟩
+      cases b₁ <;> cases b₂
+      · exact absurd rfl h
+      · exact ⟨rfl, rfl⟩
+      · exact ⟨rfl, rfl⟩
+      · exact absurd rfl h
+  | cons z _ ih =>
+      rcases z with ⟨b, t⟩
+      cases b <;> simp [ih.1, ih.2]
+
+/-- Interleaving moves lift under a common first event. -/
+theorem rtg_cons (z : Tok) {w w' : List Tok} (h : Relation.ReflTransGen Step w w') :
+    Relation.ReflTransGen Step (z :: w) (z :: w') := by
+  induction h with
+  | refl => exact Relation.ReflTransGen.refl
+  | tail _ hbc ih => exact ih.tail (Step.cons z hbc)
+
+theorem rtg_symm {w w' : List Tok} (h : Relation.ReflTransGen Step w w') :
+    Relation.ReflTransGen Step w' w := by
+  induction h with
+  | refl => exact Relation.ReflTransGen.refl
+  | tail _ hbc ih => exact Relation.ReflTransGen.head (Step.symm hbc) ih
+
+/-- Label a one-body history as body `A`. -/
+def tagA (a : List Twist) : List Tok := a.map (fun t => (false, t))
+/-- Label a one-body history as body `B`. -/
+def tagB (b : List Twist) : List Tok := b.map (fun t => (true, t))
+
+/-- A `B` event passes freely through any run of `A` events. -/
+theorem pass (t : Twist) (a : List Twist) (r : List Tok) :
+    Relation.ReflTransGen Step ((true, t) :: (tagA a ++ r)) (tagA a ++ (true, t) :: r) := by
+  induction a with
+  | nil => exact Relation.ReflTransGen.refl
+  | cons s a ih =>
+      show Relation.ReflTransGen Step ((true, t) :: (false, s) :: (tagA a ++ r))
+        ((false, s) :: (tagA a ++ (true, t) :: r))
+      exact Relation.ReflTransGen.head (Step.swap _ _ _ (by simp)) (rtg_cons _ ih)
+
+/-- **Normal form**: every two-body word is an interleaving of "all of `A`, then all of `B`". -/
+theorem to_normal (w : List Tok) :
+    Relation.ReflTransGen Step w (tagA (projA w) ++ tagB (projB w)) := by
+  induction w with
+  | nil => exact Relation.ReflTransGen.refl
+  | cons x w ih =>
+      rcases x with ⟨b, t⟩
+      cases b
+      · rw [projA_consA, projB_consA]
+        exact rtg_cons _ ih
+      · rw [projA_consB, projB_consB]
+        show Relation.ReflTransGen Step ((true, t) :: w)
+          (tagA (projA w) ++ (true, t) :: tagB (projB w))
+        exact (rtg_cons _ ih).trans (pass t _ _)
+
+theorem projA_normal (a b : List Twist) : projA (tagA a ++ tagB b) = a := by
+  induction a with
+  | nil =>
+      induction b with
+      | nil => rfl
+      | cons t b ih => exact ih
+  | cons s a ih => exact congrArg (s :: ·) ih
+
+theorem projB_normal (a b : List Twist) : projB (tagA a ++ tagB b) = b := by
+  induction a with
+  | nil =>
+      induction b with
+      | nil => rfl
+      | cons t b ih => exact congrArg (t :: ·) ih
+  | cons s a ih => exact ih
+
+/-- **The composite of two independent bodies is the pair of their histories.** Two two-body words
+    are interleavings of each other exactly when they agree on each body. So the composite history
+    monoid is `H × H`. -/
+theorem same_composite_iff (w w' : List Tok) :
+    Relation.ReflTransGen Step w w' ↔ (projA w = projA w' ∧ projB w = projB w') := by
+  constructor
+  · intro h
+    induction h with
+    | refl => exact ⟨rfl, rfl⟩
+    | tail _ hbc ih => exact ⟨ih.1.trans (step_proj hbc).1, ih.2.trans (step_proj hbc).2⟩
+  · rintro ⟨hA, hB⟩
+    have h1 := to_normal w
+    have h2 := rtg_symm (to_normal w')
+    rw [hA, hB] at h1
+    exact h1.trans h2
+
+-- ==========================================
+-- §2. The joint fold, in an arbitrary joint algebra
+-- ==========================================
+
+section Abstract
+
+variable {J : Type*} [Ring J] [Algebra ℂ J] (ρA ρB : M →ₐ[ℂ] J)
+
+/-- One event of the joint fold: a twist acts through its own body's map. -/
+noncomputable def letter : Tok → J
+  | (false, t) => ρA t.toMatrix
+  | (true, t) => ρB t.toMatrix
+
+/-- **The joint fold** of a two-body word: the ordered product of its events. -/
+noncomputable def cfold : List Tok → J
+  | [] => 1
+  | x :: w => letter ρA ρB x * cfold w
+
+/-- **Independence is commutation.** The joint fold ignores the interleaving of the two bodies
+    exactly when every twist on `A` commutes with every twist on `B`. -/
+theorem interleaving_invariant_iff :
+    (∀ w w', Step w w' → cfold ρA ρB w = cfold ρA ρB w') ↔
+      ∀ s t : Twist, Commute (ρA s.toMatrix) (ρB t.toMatrix) := by
+  constructor
+  · intro h s t
+    have e := h _ _ (Step.swap (false, s) (true, t) [] (by simp))
+    show ρA s.toMatrix * ρB t.toMatrix = ρB t.toMatrix * ρA s.toMatrix
+    have e' : ρA s.toMatrix * (ρB t.toMatrix * 1) = ρB t.toMatrix * (ρA s.toMatrix * 1) := e
+    rwa [mul_one, mul_one] at e'
+  · intro hc w w' hs
+    induction hs with
+    | swap x y v h =>
+        rcases x with ⟨b₁, s⟩
+        rcases y with ⟨b₂, t⟩
+        cases b₁ <;> cases b₂
+        · exact absurd rfl h
+        · show ρA s.toMatrix * (ρB t.toMatrix * cfold ρA ρB v)
+              = ρB t.toMatrix * (ρA s.toMatrix * cfold ρA ρB v)
+          rw [← mul_assoc, (hc s t).eq, mul_assoc]
+        · show ρB s.toMatrix * (ρA t.toMatrix * cfold ρA ρB v)
+              = ρA t.toMatrix * (ρB s.toMatrix * cfold ρA ρB v)
+          rw [← mul_assoc, ← (hc t s).eq, mul_assoc]
+        · exact absurd rfl h
+    | cons z _ ih =>
+        show letter ρA ρB z * cfold ρA ρB _ = letter ρA ρB z * cfold ρA ρB _
+        rw [ih]
+
+/-- A body-`A` fold commutes with every body-`B` twist, given letter commutation. -/
+theorem commute_fold (hc : ∀ s t : Twist, Commute (ρA s.toMatrix) (ρB t.toMatrix))
+    (a : List Twist) (t : Twist) : Commute (ρA (twistMatrixFold a)) (ρB t.toMatrix) := by
+  induction a with
+  | nil =>
+      show Commute (ρA 1) (ρB t.toMatrix)
+      rw [map_one]; exact Commute.one_left _
+  | cons s a ih =>
+      show Commute (ρA (s.toMatrix * twistMatrixFold a)) (ρB t.toMatrix)
+      rw [map_mul]; exact (hc s t).mul_left ih
+
+/-- **The joint fold is the product of the two body folds.** -/
+theorem cfold_eq (hc : ∀ s t : Twist, Commute (ρA s.toMatrix) (ρB t.toMatrix)) (w : List Tok) :
+    cfold ρA ρB w = ρA (twistMatrixFold (projA w)) * ρB (twistMatrixFold (projB w)) := by
+  induction w with
+  | nil =>
+      show (1 : J) = ρA 1 * ρB 1
+      rw [map_one, map_one, mul_one]
+  | cons x w ih =>
+      rcases x with ⟨b, t⟩
+      cases b
+      · show ρA t.toMatrix * cfold ρA ρB w
+            = ρA (t.toMatrix * twistMatrixFold (projA w)) * ρB (twistMatrixFold (projB w))
+        rw [ih, map_mul, mul_assoc]
+      · show ρB t.toMatrix * cfold ρA ρB w
+            = ρA (twistMatrixFold (projA w)) * ρB (t.toMatrix * twistMatrixFold (projB w))
+        rw [ih, map_mul, ← mul_assoc, ← (commute_fold ρA ρB hc (projA w) t).eq, mul_assoc]
+
+end Abstract
+
+-- ==========================================
+-- §3. The twists span the one-body algebra
+-- ==========================================
+
+/-- The elementary `2 × 2` matrix with a single `1` at `(i, k)`. -/
+def E (i k : Fin 2) : M := Matrix.of fun a c => if a = i ∧ c = k then 1 else 0
+
+/-- Every one-body operator is a combination of the four elementary moves. -/
+theorem decomp_E (X : M) :
+    X = X 0 0 • E 0 0 + X 0 1 • E 0 1 + X 1 0 • E 1 0 + X 1 1 • E 1 1 := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> simp [E]
+
+theorem E00_twists : E 0 0 = (1 / 2 : ℂ) • Twist.plus.toMatrix + (1 / 2 : ℂ) • Twist.slash.toMatrix := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> norm_num [E, Twist.toMatrix, σz]
+
+theorem E11_twists :
+    E 1 1 = (1 / 2 : ℂ) • Twist.plus.toMatrix + (-1 / 2 : ℂ) • Twist.slash.toMatrix := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> norm_num [E, Twist.toMatrix, σz]
+
+theorem E01_twists :
+    E 0 1 = (1 / 2 : ℂ) • Twist.right.toMatrix + (Complex.I / 2) • Twist.up.toMatrix := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> norm_num [E, Twist.toMatrix, σx, σy] <;>
+    first
+    | linear_combination (1 / 2 : ℂ) * Complex.I_mul_I
+    | linear_combination (-1 / 2 : ℂ) * Complex.I_mul_I
+
+theorem E10_twists :
+    E 1 0 = (1 / 2 : ℂ) • Twist.right.toMatrix + (-Complex.I / 2) • Twist.up.toMatrix := by
+  ext i j
+  fin_cases i <;> fin_cases j <;> norm_num [E, Twist.toMatrix, σx, σy] <;>
+    first
+    | linear_combination (1 / 2 : ℂ) * Complex.I_mul_I
+    | linear_combination (-1 / 2 : ℂ) * Complex.I_mul_I
+
+section Extend
+
+variable {J : Type*} [Ring J] [Algebra ℂ J]
+
+private lemma comm_comb_left {u v w : J} (a b : ℂ) (hu : Commute u w) (hv : Commute v w) :
+    Commute (a • u + b • v) w :=
+  (hu.smul_left a).add_left (hv.smul_left b)
+
+private lemma comm_comb4_left {u₁ u₂ u₃ u₄ w : J} (a b c d : ℂ) (h₁ : Commute u₁ w)
+    (h₂ : Commute u₂ w) (h₃ : Commute u₃ w) (h₄ : Commute u₄ w) :
+    Commute (a • u₁ + b • u₂ + c • u₃ + d • u₄) w :=
+  (((h₁.smul_left a).add_left (h₂.smul_left b)).add_left (h₃.smul_left c)).add_left
+    (h₄.smul_left d)
+
+/-- Commutation with every twist extends to commutation with every operator, by linearity. -/
+theorem commute_of_twists (ρ : M →ₐ[ℂ] J) (w : J) (h : ∀ t : Twist, Commute (ρ t.toMatrix) w)
+    (X : M) : Commute (ρ X) w := by
+  have h00 : Commute (ρ (E 0 0)) w := by
+    rw [E00_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
+  have h01 : Commute (ρ (E 0 1)) w := by
+    rw [E01_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
+  have h10 : Commute (ρ (E 1 0)) w := by
+    rw [E10_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
+  have h11 : Commute (ρ (E 1 1)) w := by
+    rw [E11_twists, map_add, map_smul, map_smul]; exact comm_comb_left _ _ (h _) (h _)
+  rw [decomp_E X, map_add, map_add, map_add, map_smul, map_smul, map_smul, map_smul]
+  exact comm_comb4_left _ _ _ _ h00 h01 h10 h11
+
+/-- **Letter commutation is full commutation**: if every twist on `A` commutes with every twist on
+    `B`, the two bodies' whole operator algebras commute. -/
+theorem commute_all (ρA ρB : M →ₐ[ℂ] J)
+    (hc : ∀ s t : Twist, Commute (ρA s.toMatrix) (ρB t.toMatrix)) (X Y : M) :
+    Commute (ρA X) (ρB Y) := by
+  have hY : ∀ t : Twist, Commute (ρA X) (ρB t.toMatrix) := fun t =>
+    commute_of_twists ρA _ (fun s => hc s t) X
+  exact (commute_of_twists ρB (ρA X) (fun t => (hY t).symm) Y).symm
+
+-- ==========================================
+-- §4. The universal property: every independent composite factors through M ⊗ M
+-- ==========================================
+
+/-- **The tensor product, derived.** Let two QLF bodies act in any joint algebra `J`, with a joint
+    fold that ignores interleaving of their events. Then there is an algebra map
+    `Ψ : M ⊗[ℂ] M → J` through which every joint fold factors,
+    `cfold w = Ψ (fold w_A ⊗ₜ fold w_B)`, and it is the **only** algebra map extending the two
+    bodies' own maps. -/
+theorem composite_is_tensor (ρA ρB : M →ₐ[ℂ] J)
+    (hinv : ∀ w w', Step w w' → cfold ρA ρB w = cfold ρA ρB w') :
+    ∃ Ψ : M ⊗[ℂ] M →ₐ[ℂ] J,
+      (∀ w, cfold ρA ρB w = Ψ (twistMatrixFold (projA w) ⊗ₜ twistMatrixFold (projB w))) ∧
+      (∀ X, Ψ (X ⊗ₜ 1) = ρA X) ∧ (∀ Y, Ψ (1 ⊗ₜ Y) = ρB Y) ∧
+      ∀ Ψ' : M ⊗[ℂ] M →ₐ[ℂ] J, (∀ X, Ψ' (X ⊗ₜ 1) = ρA X) → (∀ Y, Ψ' (1 ⊗ₜ Y) = ρB Y) →
+        Ψ' = Ψ := by
+  have hc := (interleaving_invariant_iff ρA ρB).1 hinv
+  refine ⟨Algebra.TensorProduct.lift ρA ρB (commute_all ρA ρB hc), ?_, ?_, ?_, ?_⟩
+  · intro w
+    rw [Algebra.TensorProduct.lift_tmul, cfold_eq ρA ρB hc]
+  · intro X
+    rw [Algebra.TensorProduct.lift_tmul, map_one, mul_one]
+  · intro Y
+    rw [Algebra.TensorProduct.lift_tmul, map_one, one_mul]
+  · intro Ψ' hA hB
+    apply AlgHom.ext
+    intro x
+    induction x using TensorProduct.induction_on with
+    | zero => rw [map_zero, map_zero]
+    | tmul X Y =>
+        have hsplit : X ⊗ₜ[ℂ] Y = (X ⊗ₜ[ℂ] (1 : M)) * ((1 : M) ⊗ₜ[ℂ] Y) := by
+          rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
+        rw [hsplit, map_mul, hA, hB, map_mul, Algebra.TensorProduct.lift_tmul,
+          Algebra.TensorProduct.lift_tmul, map_one, map_one, mul_one, one_mul]
+    | add x y hx hy => rw [map_add, map_add, hx, hy]
+
+end Extend
+
+-- ==========================================
+-- §5. The twist realization: M ⊗ M ≅ Mat₄(ℂ)
+-- ==========================================
+
+open QLF.Tsirelson in
+/-- Body `A` acting on four-component states. -/
+noncomputable def embA : M →ₐ[ℂ] Q where
+  toFun := onA
+  map_one' := onA_one
+  map_mul' X Y := (onA_mul X Y).symm
+  map_zero' := by simp [onA]
+  map_add' X Y := by simp [onA, Matrix.add_kronecker]
+  commutes' c := by
+    simp [onA, Algebra.algebraMap_eq_smul_one, Matrix.smul_kronecker]
+
+open QLF.Tsirelson in
+/-- Body `B` acting on four-component states. -/
+noncomputable def embB : M →ₐ[ℂ] Q where
+  toFun := onB
+  map_one' := onB_one
+  map_mul' X Y := (onB_mul X Y).symm
+  map_zero' := by simp [onB]
+  map_add' X Y := by simp [onB, Matrix.kronecker_add]
+  commutes' c := by
+    simp [onB, Algebra.algebraMap_eq_smul_one, Matrix.kronecker_smul]
+
+lemma embA_apply (X : M) : embA X = QLF.Tsirelson.onA X := rfl
+lemma embB_apply (Y : M) : embB Y = QLF.Tsirelson.onB Y := rfl
+
+/-- The two embedded bodies commute (`indexed_factors_commute`'s content). -/
+theorem emb_commute (X Y : M) : Commute (embA X) (embB Y) := QLF.Tsirelson.onA_onB X Y
+
+lemma onA_mul_onB (X Y : M) : QLF.Tsirelson.onA X * QLF.Tsirelson.onB Y = X ⊗ₖ Y := by
+  rw [QLF.Tsirelson.onA, QLF.Tsirelson.onB, ← Matrix.mul_kronecker_mul, mul_one, one_mul]
+
+/-- The factoring map of the twist realization. -/
+noncomputable def kronLift : M ⊗[ℂ] M →ₐ[ℂ] QLF.Tsirelson.Q :=
+  Algebra.TensorProduct.lift embA embB emb_commute
+
+theorem kronLift_tmul (X Y : M) : kronLift (X ⊗ₜ Y) = X ⊗ₖ Y := by
+  rw [kronLift, Algebra.TensorProduct.lift_tmul, embA_apply, embB_apply, onA_mul_onB]
+
+/-- **Onto**: every `4 × 4` operator is a combination of composite elementary moves. -/
+theorem kronLift_surjective : Function.Surjective kronLift := by
+  intro X
+  refine ⟨∑ i : Fin 2, ∑ j : Fin 2, ∑ k : Fin 2, ∑ l : Fin 2,
+    X (i, j) (k, l) • (E i k ⊗ₜ[ℂ] E j l), ?_⟩
+  simp only [map_sum, map_smul, kronLift_tmul]
+  ext ⟨a, b⟩ ⟨c, d⟩
+  fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
+    simp [Matrix.sum_apply, Matrix.smul_apply, Matrix.kroneckerMap_apply, E, Fin.sum_univ_two]
+
+/-- **The joint algebra of two twist bodies is exactly the tensor product.** The factoring map
+    `M ⊗[ℂ] M → Mat₄(ℂ)` is bijective: onto by `kronLift_surjective`, and both sides have dimension
+    `16 = 4 · 4`. -/
+theorem kronLift_bijective : Function.Bijective kronLift := by
+  have h1 : Module.finrank ℂ (M ⊗[ℂ] M) = 16 := by
+    simp [Module.finrank_tensorProduct, Module.finrank_matrix]
+  have h2 : Module.finrank ℂ QLF.Tsirelson.Q = 16 := by
+    simp [Module.finrank_matrix]
+  have hs : Function.Surjective kronLift.toLinearMap := kronLift_surjective
+  have hi : Function.Injective kronLift.toLinearMap :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank (h1.trans h2.symm)).2 hs
+  exact ⟨hi, kronLift_surjective⟩
+
+/-- `M ⊗[ℂ] M ≃ Mat₄(ℂ)`, as algebras. -/
+noncomputable def tensorEquiv : M ⊗[ℂ] M ≃ₐ[ℂ] QLF.Tsirelson.Q :=
+  AlgEquiv.ofBijective kronLift kronLift_bijective
+
+/-- In the twist realization the joint fold is the Kronecker product of the body folds. -/
+theorem twist_cfold (w : List Tok) :
+    cfold embA embB w = twistMatrixFold (projA w) ⊗ₖ twistMatrixFold (projB w) := by
+  rw [cfold_eq embA embB (fun s t => emb_commute _ _), embA_apply, embB_apply, onA_mul_onB]
+
+/-- **The flat model is not a composite of independent bodies.** Reading both bodies in one Pauli
+    algebra (`ρA = ρB = id`), `^` and `>` do not commute, so the flat fold depends on the
+    interleaving. That is where shared closures live (§6). -/
+theorem flat_not_independent :
+    ¬ ∀ s t : Twist, Commute ((AlgHom.id ℂ M) s.toMatrix) ((AlgHom.id ℂ M) t.toMatrix) := by
+  intro h
+  exact QLF.IndexedFactors.not_all_flat_pairs_commute (h Twist.up Twist.right)
+
+-- ==========================================
+-- §5b. Faithfulness in every joint algebra
+-- ==========================================
+
+section Faithful
+
+variable {J : Type*} [Ring J] [Algebra ℂ J] [Nontrivial J]
+
+/-- **Every independent composite is faithful.** In any non-trivial joint algebra `J`, the unique
+    factoring map `Ψ : M ⊗[ℂ] M → J` of `composite_is_tensor` is injective. Reason: `M ⊗ M ≅ Mat₄(ℂ)`
+    (`tensorEquiv`), a matrix ring over a field is simple, and a ring map out of a simple ring into a
+    non-trivial ring has zero kernel. So no independent composition of two QLF bodies loses
+    information: its joint algebra contains an exact copy of the tensor product. -/
+theorem composite_faithful (ρA ρB : M →ₐ[ℂ] J)
+    (hc : ∀ s t : Twist, Commute (ρA s.toMatrix) (ρB t.toMatrix)) :
+    Function.Injective (Algebra.TensorProduct.lift ρA ρB (commute_all ρA ρB hc)) := by
+  set Ψ := Algebra.TensorProduct.lift ρA ρB (commute_all ρA ρB hc)
+  let Ψ' : QLF.Tsirelson.Q →ₐ[ℂ] J := Ψ.comp (tensorEquiv.symm : QLF.Tsirelson.Q →ₐ[ℂ] M ⊗[ℂ] M)
+  have hφ : Function.Injective (Ψ'.toRingHom) := RingHom.injective _
+  have key : ∀ z, Ψ' (tensorEquiv z) = Ψ z := fun z => by
+    simp [Ψ', AlgHom.comp_apply]
+  intro x y hxy
+  apply tensorEquiv.injective
+  apply hφ
+  show Ψ' (tensorEquiv x) = Ψ' (tensorEquiv y)
+  rw [key, key]
+  exact hxy
+
+/-- **The joint fold determines the tensor element.** In any non-trivial joint algebra, two two-body
+    words with the same joint fold have the same element `fold w_A ⊗ fold w_B` of `M ⊗ M`. The
+    separate folds are fixed only up to a scalar moved between the factors
+    (`pair_scalar_ambiguity`). -/
+theorem joint_fold_determines_pair (ρA ρB : M →ₐ[ℂ] J)
+    (hinv : ∀ w w', Step w w' → cfold ρA ρB w = cfold ρA ρB w') (w w' : List Tok)
+    (h : cfold ρA ρB w = cfold ρA ρB w') :
+    twistMatrixFold (projA w) ⊗ₜ[ℂ] twistMatrixFold (projB w) =
+      twistMatrixFold (projA w') ⊗ₜ[ℂ] twistMatrixFold (projB w') := by
+  have hc := (interleaving_invariant_iff ρA ρB).1 hinv
+  apply composite_faithful ρA ρB hc
+  rw [Algebra.TensorProduct.lift_tmul, Algebra.TensorProduct.lift_tmul, ← cfold_eq ρA ρB hc,
+    ← cfold_eq ρA ρB hc]
+  exact h
+
+end Faithful
+
+/-- **The tensor element does not fix the separate folds.** `−I ⊗ I = I ⊗ −I` while `−I ≠ I`, and both
+    sides are composite folds (body `A` runs `−` and body `B` nothing, or the reverse). -/
+theorem pair_scalar_ambiguity :
+    twistMatrixFold [Twist.minus] ⊗ₜ[ℂ] twistMatrixFold [] =
+        twistMatrixFold [] ⊗ₜ[ℂ] twistMatrixFold [Twist.minus] ∧
+      twistMatrixFold [Twist.minus] ≠ twistMatrixFold [] := by
+  refine ⟨?_, fun h => ?_⟩
+  · simp [twistMatrixFold, Twist.toMatrix, TensorProduct.neg_tmul, TensorProduct.tmul_neg]
+  · have h00 := congrFun (congrFun h 0) 0
+    norm_num [twistMatrixFold, Twist.toMatrix] at h00
+
+-- ==========================================
+-- §5c. States: ℂ² ⊗ ℂ² is irreducible for the derived composite
+-- ==========================================
+
+/-- **Every non-zero two-body state is cyclic.** For any non-zero `v ∈ ℂ⁴` and any target `u`,
+    some joint operator sends `v` to `u`. -/
+theorem state_cyclic (v u : Fin 2 × Fin 2 → ℂ) (hv : v ≠ 0) :
+    ∃ X : QLF.Tsirelson.Q, X *ᵥ v = u := by
+  obtain ⟨q, hq⟩ : ∃ q, v q ≠ 0 := by
+    by_contra h
+    push_neg at h
+    exact hv (funext h)
+  refine ⟨Matrix.of fun a b => if b = q then u a / v q else 0, ?_⟩
+  funext a
+  simp only [Matrix.mulVec, dotProduct, Matrix.of_apply, ite_mul, zero_mul]
+  rw [Fintype.sum_eq_single q (fun b hb => by simp [hb]), if_pos rfl]
+  exact div_mul_cancel₀ _ hq
+
+/-- **The two-body state space is irreducible.** A subspace of `ℂ² ⊗ ℂ² = ℂ⁴` that every joint
+    operator maps into itself, and that holds one non-zero state, is the whole space. Every joint
+    operator is the image of the derived tensor product (`kronLift_surjective`), so no smaller state
+    space carries the composite of two independent bodies. -/
+theorem two_body_states_irreducible (W : Submodule ℂ (Fin 2 × Fin 2 → ℂ))
+    (hW : ∀ t : M ⊗[ℂ] M, ∀ v ∈ W, kronLift t *ᵥ v ∈ W) (hne : ∃ v ∈ W, v ≠ 0) : W = ⊤ := by
+  obtain ⟨v, hvW, hv0⟩ := hne
+  rw [Submodule.eq_top_iff']
+  intro u
+  obtain ⟨X, hX⟩ := state_cyclic v u hv0
+  obtain ⟨t, rfl⟩ := kronLift_surjective X
+  rw [← hX]
+  exact hW t v hvW
+
+/-- The two-body state space `ℂ² ⊗ ℂ² = ℂ⁴`, as a module of the joint algebra
+`Q = Mat₄(ℂ) ≅ M ⊗ M` (`tensorEquiv`) acting by matrix-vector product. -/
+def TwoBodyState : Type := Fin 2 × Fin 2 → ℂ
+
+noncomputable instance : AddCommGroup TwoBodyState :=
+  inferInstanceAs (AddCommGroup (Fin 2 × Fin 2 → ℂ))
+
+noncomputable instance : Module QLF.Tsirelson.Q TwoBodyState where
+  smul X v := (X *ᵥ (v : Fin 2 × Fin 2 → ℂ) : Fin 2 × Fin 2 → ℂ)
+  one_smul v := Matrix.one_mulVec (show Fin 2 × Fin 2 → ℂ from v)
+  mul_smul X Y v := (Matrix.mulVec_mulVec (show Fin 2 × Fin 2 → ℂ from v) X Y).symm
+  smul_zero X := Matrix.mulVec_zero X
+  smul_add X v w :=
+    Matrix.mulVec_add X (show Fin 2 × Fin 2 → ℂ from v) (show Fin 2 × Fin 2 → ℂ from w)
+  add_smul X Y v := Matrix.add_mulVec X Y (show Fin 2 × Fin 2 → ℂ from v)
+  zero_smul v := Matrix.zero_mulVec (show Fin 2 × Fin 2 → ℂ from v)
+
+theorem twoBodyState_smul (X : QLF.Tsirelson.Q) (v : TwoBodyState) :
+    X • v = (X *ᵥ (v : Fin 2 × Fin 2 → ℂ) : Fin 2 × Fin 2 → ℂ) := rfl
+
+/-- **`ℂ⁴` is a simple module of the joint algebra** (`state_cyclic` in module language). -/
+instance twoBodyState_simple : IsSimpleModule QLF.Tsirelson.Q TwoBodyState := by
+  rw [isSimpleModule_iff_toSpanSingleton_surjective]
+  refine ⟨inferInstanceAs (Nontrivial (Fin 2 × Fin 2 → ℂ)), fun v hv u => ?_⟩
+  obtain ⟨X, hX⟩ := state_cyclic v u hv
+  refine ⟨X, ?_⟩
+  rw [LinearMap.toSpanSingleton_apply, twoBodyState_smul]
+  exact hX
+
+/-- **Uniqueness of the two-body state space (Wedderburn).** Every simple module of the joint
+algebra is isomorphic to `ℂ² ⊗ ℂ² = ℂ⁴`. `Q` is simple and Artinian, so all its simple modules are
+isotypic (Mathlib's `IsSimpleRing.isIsotypic`); put `N` and `ℂ⁴` side by side in `N × ℂ⁴` and read
+off the isomorphism between the two simple summands. -/
+theorem simple_module_is_twoBodyState (N : Type*) [AddCommGroup N] [Module QLF.Tsirelson.Q N]
+    [IsSimpleModule QLF.Tsirelson.Q N] : Nonempty (N ≃ₗ[QLF.Tsirelson.Q] TwoBodyState) := by
+  let e₁ := LinearEquiv.ofInjective (LinearMap.inl QLF.Tsirelson.Q N TwoBodyState)
+    LinearMap.inl_injective
+  let e₂ := LinearEquiv.ofInjective (LinearMap.inr QLF.Tsirelson.Q N TwoBodyState)
+    LinearMap.inr_injective
+  have : IsSimpleModule QLF.Tsirelson.Q
+      (LinearMap.range (LinearMap.inl QLF.Tsirelson.Q N TwoBodyState)) :=
+    IsSimpleModule.congr e₁.symm
+  have : IsSimpleModule QLF.Tsirelson.Q
+      (LinearMap.range (LinearMap.inr QLF.Tsirelson.Q N TwoBodyState)) :=
+    IsSimpleModule.congr e₂.symm
+  obtain ⟨f⟩ := IsSimpleRing.isIsotypic QLF.Tsirelson.Q (N × TwoBodyState)
+    (LinearMap.range (LinearMap.inr QLF.Tsirelson.Q N TwoBodyState))
+    (LinearMap.range (LinearMap.inl QLF.Tsirelson.Q N TwoBodyState))
+  exact ⟨e₁.trans (f.trans e₂.symm)⟩
+
+-- ==========================================
+-- §5d. Any number of bodies
+-- ==========================================
+
+section NBody
+
+variable {ι : Type*} [DecidableEq ι] {J : Type*} [Ring J] [Algebra ℂ J]
+
+/-- **One interleaving move among `N` bodies**: swap two adjacent events carried by different
+    labels. -/
+inductive NStep : List (ι × Twist) → List (ι × Twist) → Prop
+  | swap (x y : ι × Twist) (v : List (ι × Twist)) (h : x.1 ≠ y.1) : NStep (x :: y :: v) (y :: x :: v)
+  | cons (z : ι × Twist) {w w' : List (ι × Twist)} : NStep w w' → NStep (z :: w) (z :: w')
+
+/-- Body `i`'s history inside an `N`-body word. -/
+def nproj (i : ι) : List (ι × Twist) → List Twist
+  | [] => []
+  | x :: w => if x.1 = i then x.2 :: nproj i w else nproj i w
+
+lemma nproj_cons_self (i : ι) (t : Twist) (w : List (ι × Twist)) :
+    nproj i ((i, t) :: w) = t :: nproj i w := by simp [nproj]
+
+lemma nproj_cons_ne {i j : ι} (h : i ≠ j) (t : Twist) (w : List (ι × Twist)) :
+    nproj j ((i, t) :: w) = nproj j w := by simp [nproj, h]
+
+/-- An interleaving move changes no body's history. -/
+theorem nstep_proj {w w' : List (ι × Twist)} (h : NStep w w') (i : ι) : nproj i w = nproj i w' := by
+  induction h with
+  | swap x y v h =>
+      by_cases hx : x.1 = i
+      · have hy : y.1 ≠ i := fun hy => h (hx.trans hy.symm)
+        simp [nproj, hx, hy]
+      · by_cases hy : y.1 = i
+        · simp [nproj, hx, hy]
+        · simp [nproj, hx, hy]
+  | cons z _ ih => simp [nproj, ih]
+
+theorem n_rtg_cons (z : ι × Twist) {w w' : List (ι × Twist)} (h : Relation.ReflTransGen NStep w w') :
+    Relation.ReflTransGen NStep (z :: w) (z :: w') := by
+  induction h with
+  | refl => exact Relation.ReflTransGen.refl
+  | tail _ hbc ih => exact ih.tail (NStep.cons z hbc)
+
+/-- Pull the first body-`i` event to the front of a word, past events of other bodies. -/
+theorem extract (i : ι) (t : Twist) (l : List Twist) :
+    ∀ w : List (ι × Twist), nproj i w = t :: l →
+      ∃ r, Relation.ReflTransGen NStep w ((i, t) :: r) ∧ nproj i r = l ∧
+        ∀ j, j ≠ i → nproj j r = nproj j w
+  | [], h => by simp [nproj] at h
+  | y :: w, h => by
+      by_cases hy : y.1 = i
+      · rcases y with ⟨a, s⟩
+        simp only at hy
+        subst hy
+        rw [nproj_cons_self] at h
+        obtain ⟨rfl, rfl⟩ := List.cons.inj h
+        refine ⟨w, Relation.ReflTransGen.refl, rfl, fun j hj => ?_⟩
+        rw [nproj_cons_ne (Ne.symm hj)]
+      · have h' : nproj i w = t :: l := by simpa [nproj, hy] using h
+        obtain ⟨r, hr, hri, hrj⟩ := extract i t l w h'
+        refine ⟨y :: r, ?_, ?_, fun j hj => ?_⟩
+        · exact (n_rtg_cons y hr).tail (NStep.swap y (i, t) r hy)
+        · simp [nproj, hy, hri]
+        · simp [nproj, hrj j hj]
+
+/-- **The `N`-body composite is the tuple of body histories.** Two `N`-body words are interleavings
+    of each other exactly when they agree on every body. -/
+theorem n_same_composite_iff :
+    ∀ w w' : List (ι × Twist),
+      Relation.ReflTransGen NStep w w' ↔ ∀ i, nproj i w = nproj i w' := by
+  intro w w'
+  constructor
+  · intro h i
+    induction h with
+    | refl => rfl
+    | tail _ hbc ih => exact ih.trans (nstep_proj hbc i)
+  · intro h
+    induction w' generalizing w with
+    | nil =>
+        cases w with
+        | nil => exact Relation.ReflTransGen.refl
+        | cons y w =>
+            have := h y.1
+            simp [nproj] at this
+    | cons x v ih =>
+        rcases x with ⟨i, t⟩
+        have hx : nproj i w = t :: nproj i v := by rw [h i, nproj_cons_self]
+        obtain ⟨r, hr, hri, hrj⟩ := extract i t (nproj i v) w hx
+        have hrv : ∀ j, nproj j r = nproj j v := by
+          intro j
+          by_cases hj : j = i
+          · rw [hj, hri]
+          · rw [hrj j hj, h j, nproj_cons_ne (Ne.symm hj)]
+        exact hr.trans (n_rtg_cons _ (ih r hrv))
+
+variable (ρ : ι → M →ₐ[ℂ] J)
+
+/-- The joint fold of an `N`-body word: each event acts through its own body's map. -/
+noncomputable def ncfold : List (ι × Twist) → J
+  | [] => 1
+  | x :: w => ρ x.1 x.2.toMatrix * ncfold w
+
+/-- **Independence of `N` bodies is pairwise commutation.** The joint fold ignores interleaving
+    exactly when every twist on one body commutes with every twist on every other body. -/
+theorem n_interleaving_invariant_iff :
+    (∀ w w', NStep w w' → ncfold ρ w = ncfold ρ w') ↔
+      ∀ i j : ι, i ≠ j → ∀ s t : Twist, Commute (ρ i s.toMatrix) (ρ j t.toMatrix) := by
+  constructor
+  · intro h i j hij s t
+    have e := h _ _ (NStep.swap (i, s) (j, t) [] hij)
+    have e' : ρ i s.toMatrix * (ρ j t.toMatrix * 1) = ρ j t.toMatrix * (ρ i s.toMatrix * 1) := e
+    show ρ i s.toMatrix * ρ j t.toMatrix = ρ j t.toMatrix * ρ i s.toMatrix
+    rwa [mul_one, mul_one] at e'
+  · intro hc w w' hs
+    induction hs with
+    | swap x y v h =>
+        show ρ x.1 x.2.toMatrix * (ρ y.1 y.2.toMatrix * ncfold ρ v)
+            = ρ y.1 y.2.toMatrix * (ρ x.1 x.2.toMatrix * ncfold ρ v)
+        rw [← mul_assoc, (hc x.1 y.1 h x.2 y.2).eq, mul_assoc]
+    | cons z _ ih =>
+        show ρ z.1 z.2.toMatrix * ncfold ρ _ = ρ z.1 z.2.toMatrix * ncfold ρ _
+        rw [ih]
+
+/-- Slot an operator into an ordered product past factors it commutes with. -/
+theorem insert_prod (X : J) (g : ι → J) (i : ι) :
+    ∀ L : List ι, L.Nodup → i ∈ L → (∀ j ∈ L, j ≠ i → Commute X (g j)) →
+      X * (L.map g).prod = (L.map (fun j => if j = i then X * g j else g j)).prod
+  | [], _, hi, _ => by simp at hi
+  | j :: L, hnd, hi, hc => by
+      rw [List.nodup_cons] at hnd
+      by_cases hji : j = i
+      · have hiL' : i ∉ L := hji ▸ hnd.1
+        have hrest : L.map (fun k => if k = i then X * g k else g k) = L.map g := by
+          apply List.map_congr_left
+          intro k hk
+          have hki : k ≠ i := fun h => hiL' (h ▸ hk)
+          simp [hki]
+        rw [List.map_cons, List.map_cons, List.prod_cons, List.prod_cons, hrest, if_pos hji,
+          mul_assoc]
+      · have hiL : i ∈ L := by
+          rcases List.mem_cons.1 hi with h | h
+          · exact absurd h.symm hji
+          · exact h
+        have ih := insert_prod X g i L hnd.2 hiL (fun k hk hki => hc k (by simp [hk]) hki)
+        rw [List.map_cons, List.map_cons, List.prod_cons, List.prod_cons, if_neg hji, ← mul_assoc,
+          (hc j (by simp) hji).eq, mul_assoc, ih]
+
+/-- **The `N`-body joint fold factors body by body.** For any duplicate-free list `L` of the bodies
+    a word uses, and pairwise-commuting bodies, the joint fold is the ordered product of each body's
+    own fold: `ncfold w = ∏_{i ∈ L} ρ i (fold w_i)`. This is the `N`-fold tensor product's universal
+    map evaluated on `⊗ᵢ fold w_i`. -/
+theorem ncfold_eq (hc : ∀ i j : ι, i ≠ j → ∀ s t : Twist, Commute (ρ i s.toMatrix) (ρ j t.toMatrix))
+    (L : List ι) (hL : L.Nodup) :
+    ∀ w : List (ι × Twist), (∀ x ∈ w, x.1 ∈ L) →
+      ncfold ρ w = (L.map fun i => ρ i (twistMatrixFold (nproj i w))).prod
+  | [], _ => by
+      show (1 : J) = (L.map fun i => ρ i (twistMatrixFold [])).prod
+      have h1 : ∀ i, ρ i (twistMatrixFold []) = 1 := fun i => map_one (ρ i)
+      simp [h1]
+  | (i, t) :: w, hw => by
+      have hi : i ∈ L := hw (i, t) (by simp)
+      have ih := ncfold_eq hc L hL w (fun x hx => hw x (by simp [hx]))
+      show ρ i t.toMatrix * ncfold ρ w = _
+      rw [ih, insert_prod (ρ i t.toMatrix) (fun j => ρ j (twistMatrixFold (nproj j w))) i L hL hi
+        (fun j _ hji =>
+        (commute_fold (ρ j) (ρ i) (fun s u => hc j i hji s u) (nproj j w) t).symm)]
+      congr 1
+      apply List.map_congr_left
+      intro j _
+      by_cases hji : j = i
+      · rw [if_pos hji, hji, nproj_cons_self, ← map_mul]
+        rfl
+      · rw [if_neg hji, nproj_cons_ne (Ne.symm hji)]
+
+end NBody
+
+-- ==========================================
+-- §5e. The N-fold tensor object
+-- ==========================================
+
+section NTensor
+
+variable {J : Type*} [Ring J] [Algebra ℂ J]
+
+/-- An ordered product of entries that are all `1` is `1`. -/
+theorem ofFn_prod_ones {n : ℕ} (g : Fin n → J) (h : ∀ j, g j = 1) : (List.ofFn g).prod = 1 := by
+  rw [show g = fun _ => 1 from funext h]
+  simp
+
+/-- An ordered product whose entries are `1` away from position `i` is its `i`-th entry. -/
+theorem ofFn_single_prod : ∀ {n : ℕ} (i : Fin n) (g : Fin n → J), (∀ j, j ≠ i → g j = 1) →
+    (List.ofFn g).prod = g i
+  | 0, i, _, _ => i.elim0
+  | n + 1, i, g, h => by
+      rw [List.ofFn_succ, List.prod_cons]
+      cases i using Fin.cases with
+      | zero =>
+          rw [ofFn_prod_ones (fun j => g j.succ) (fun j => h _ (Fin.succ_ne_zero j)), mul_one]
+      | succ k =>
+          rw [h 0 (Fin.succ_ne_zero k).symm, one_mul]
+          exact ofFn_single_prod k (fun j => g j.succ)
+            (fun j hj => h _ (fun e => hj (Fin.succ_injective _ e)))
+
+/-- **Ordered products split when later factors of one kind commute past earlier ones of the
+other.** `∏ (aᵢ bᵢ) = (∏ aᵢ)(∏ bᵢ)` once every `bᵢ` commutes with every `aⱼ`, `j ≠ i`. -/
+theorem ofFn_prod_mul : ∀ {n : ℕ} (a b : Fin n → J), (∀ i j, i ≠ j → Commute (b i) (a j)) →
+    (List.ofFn fun i => a i * b i).prod = (List.ofFn a).prod * (List.ofFn b).prod
+  | 0, _, _, _ => by simp
+  | n + 1, a, b, h => by
+      simp only [List.ofFn_succ, List.prod_cons]
+      rw [ofFn_prod_mul (fun i => a i.succ) (fun i => b i.succ)
+        (fun i j hij => h _ _ (fun e => hij (Fin.succ_injective _ e)))]
+      have hc : Commute (b 0) (List.ofFn fun i => a i.succ).prod := by
+        apply Commute.list_prod_right
+        intro c hcm
+        simp only [List.mem_ofFn] at hcm
+        obtain ⟨j, rfl⟩ := hcm
+        exact h 0 j.succ (Fin.succ_ne_zero j).symm
+      simp only [mul_assoc]
+      rw [← mul_assoc (b 0), hc.eq]
+      simp only [mul_assoc]
+
+variable {n : ℕ} (ρ : Fin n → M →ₐ[ℂ] J)
+
+/-- The ordered product `(Xᵢ)ᵢ ↦ ρ₀ X₀ · ρ₁ X₁ ⋯`, multilinear in the bodies' operators. -/
+noncomputable def nMulti : MultilinearMap ℂ (fun _ : Fin n => M) J :=
+  (MultilinearMap.mkPiAlgebraFin ℂ n J).compLinearMap (fun i => (ρ i).toLinearMap)
+
+theorem nMulti_apply (x : Fin n → M) : nMulti ρ x = (List.ofFn fun i => ρ i (x i)).prod := by
+  simp [nMulti, MultilinearMap.mkPiAlgebraFin_apply]
+
+variable (hc : ∀ i j : Fin n, i ≠ j → ∀ X Y : M, Commute (ρ i X) (ρ j Y))
+
+/-- **The factoring map out of the `N`-fold tensor product `⨂ᵢ M`.** When distinct bodies commute
+(which interleaving invariance forces, `n_interleaving_invariant_iff`), the ordered product of the
+bodies' actions is an algebra map out of `⨂[ℂ] i, M`. -/
+noncomputable def nTensorLift : (⨂[ℂ] _ : Fin n, M) →ₐ[ℂ] J :=
+  PiTensorProduct.liftAlgHom (nMulti ρ) (by rw [nMulti_apply]; simp) (fun x y => by
+    rw [nMulti_apply, nMulti_apply, nMulti_apply]
+    simp only [Pi.mul_apply, map_mul]
+    exact ofFn_prod_mul _ _ (fun i j hij => hc i j hij _ _))
+
+theorem nTensorLift_tprod (x : Fin n → M) :
+    nTensorLift ρ hc (PiTensorProduct.tprod ℂ x) = (List.ofFn fun i => ρ i (x i)).prod := by
+  simp [nTensorLift, nMulti_apply]
+
+/-- On `1 ⊗ ⋯ ⊗ X ⊗ ⋯ ⊗ 1` (`X` in slot `i`) the factoring map is body `i`'s own action. -/
+theorem nTensorLift_single (i : Fin n) (X : M) :
+    nTensorLift ρ hc (PiTensorProduct.singleAlgHom i X) = ρ i X := by
+  simp only [PiTensorProduct.singleAlgHom_apply, MonoidHom.mulSingle_apply, nTensorLift_tprod]
+  rw [ofFn_single_prod i _ (fun j hj => by simp [Pi.mulSingle_eq_of_ne hj])]
+  simp
+
+/-- **Uniqueness: the universal property of `⨂ᵢ M`.** Any algebra map out of `⨂ᵢ M` that restricts
+to each body's action on its own slot is `nTensorLift`. -/
+theorem nTensorLift_unique (Φ : (⨂[ℂ] _ : Fin n, M) →ₐ[ℂ] J)
+    (h : ∀ i X, Φ (PiTensorProduct.singleAlgHom i X) = ρ i X) : Φ = nTensorLift ρ hc :=
+  PiTensorProduct.algHom_ext fun i => AlgHom.ext fun X => by
+    rw [AlgHom.comp_apply, AlgHom.comp_apply, h, nTensorLift_single]
+
+/-- **Every `N`-body joint fold factors through `⨂ᵢ M`.** If distinct bodies' twists commute, the
+joint fold of any word is the factoring map applied to `fold w₀ ⊗ fold w₁ ⊗ ⋯`. This is the
+`N`-body form of `composite_is_tensor`. -/
+theorem n_composite_is_tensor
+    (ht : ∀ i j : Fin n, i ≠ j → ∀ s t : Twist, Commute (ρ i s.toMatrix) (ρ j t.toMatrix))
+    (w : List (Fin n × Twist)) :
+    ncfold ρ w = nTensorLift ρ (fun i j hij => commute_all (ρ i) (ρ j) (ht i j hij))
+      (PiTensorProduct.tprod ℂ fun i => twistMatrixFold (nproj i w)) := by
+  rw [nTensorLift_tprod, ncfold_eq ρ ht (List.finRange n) (by first | exact List.nodup_finRange n | exact List.nodup_finRange) w
+    (fun x _ => by simp), List.ofFn_eq_map]
+
+end NTensor
+
+-- ==========================================
+-- §5f. N-body realization and faithfulness
+-- ==========================================
+
+section NFaithful
+
+variable {n : ℕ}
+
+/-- Configurations of `N` qubit bodies: a basis state of `(ℂ²)^{⊗N}`. -/
+abbrev Cfg (n : ℕ) := Fin n → Fin 2
+
+/-- Body `i` acting on `2^N`-component states: it moves slot `i` only. -/
+noncomputable def slotOp (i : Fin n) (X : M) : Module.End ℂ (Cfg n → ℂ) where
+  toFun ψ a := ∑ k : Fin 2, X (a i) k * ψ (Function.update a i k)
+  map_add' ψ φ := by
+    funext a
+    simp [mul_add, Finset.sum_add_distrib]
+  map_smul' c ψ := by
+    funext a
+    simp
+    ring
+
+theorem slotOp_apply (i : Fin n) (X : M) (ψ : Cfg n → ℂ) (a : Cfg n) :
+    slotOp i X ψ a = ∑ k : Fin 2, X (a i) k * ψ (Function.update a i k) := rfl
+
+/-- `slotOp i` is an algebra map: body `i` alone is a copy of `M`. -/
+noncomputable def slot (i : Fin n) : M →ₐ[ℂ] Module.End ℂ (Cfg n → ℂ) where
+  toFun := slotOp i
+  map_one' := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply, Matrix.one_apply]
+  map_mul' X Y := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply, Matrix.mul_apply, Fin.sum_univ_two]
+    ring
+  map_zero' := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply]
+  map_add' X Y := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply, add_mul, Finset.sum_add_distrib]
+  commutes' c := by
+    apply LinearMap.ext; intro ψ; funext a
+    simp [slotOp_apply, Algebra.algebraMap_eq_smul_one, Matrix.one_apply]
+
+/-- **Distinct slots commute.** -/
+theorem slot_commute (i j : Fin n) (hij : i ≠ j) (X Y : M) : Commute (slot i X) (slot j Y) := by
+  show slot i X * slot j Y = slot j Y * slot i X
+  apply LinearMap.ext; intro ψ; funext a
+  show slotOp i X (slotOp j Y ψ) a = slotOp j Y (slotOp i X ψ) a
+  simp only [slotOp_apply, Function.update_of_ne hij, Function.update_of_ne hij.symm,
+    Function.update_comm hij]
+  simp only [Fin.sum_univ_two]
+  ring
+
+/-- The `N`-body twist realization, as a map out of `⨂ᵢ M`. -/
+noncomputable def slotLift : (⨂[ℂ] _ : Fin n, M) →ₐ[ℂ] Module.End ℂ (Cfg n → ℂ) :=
+  nTensorLift slot (fun i j hij X Y => slot_commute i j hij X Y)
+
+/-- The operator fixing slots `T` from `b` to `a` and leaving the rest alone. On `T = univ` it is
+the elementary operator `|a⟩⟨b|`. -/
+noncomputable def partOp (a b : Cfg n) (T : Finset (Fin n)) : Module.End ℂ (Cfg n → ℂ) where
+  toFun ψ x := if (∀ k ∈ T, x k = a k) then ψ (fun k => if k ∈ T then b k else x k) else 0
+  map_add' ψ φ := by
+    funext x
+    simp only [Pi.add_apply]
+    split_ifs <;> simp
+  map_smul' c ψ := by
+    funext x
+    simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]
+    split_ifs <;> simp
+
+theorem partOp_apply (a b : Cfg n) (T : Finset (Fin n)) (ψ : Cfg n → ℂ) (x : Cfg n) :
+    partOp a b T ψ x =
+      if (∀ k ∈ T, x k = a k) then ψ (fun k => if k ∈ T then b k else x k) else 0 := rfl
+
+theorem partOp_empty (a b : Cfg n) : partOp a b ∅ = 1 := by
+  apply LinearMap.ext; intro ψ; funext x
+  simp [partOp_apply]
+
+theorem partOp_insert (a b : Cfg n) {i : Fin n} {T : Finset (Fin n)} (hi : i ∉ T) :
+    partOp a b (insert i T) = slot i (Matrix.single (a i) (b i) 1) * partOp a b T := by
+  apply LinearMap.ext; intro ψ; funext x
+  show partOp a b (insert i T) ψ x = slotOp i (Matrix.single (a i) (b i) 1) (partOp a b T ψ) x
+  rw [partOp_apply, slotOp_apply,
+    Fintype.sum_eq_single (b i) (fun k hk => by
+      rw [Matrix.single_apply_of_col_ne _ _ (Ne.symm hk), zero_mul]),
+    partOp_apply]
+  have hupd : ∀ m ∈ T, Function.update x i (b i) m = x m := fun m hm =>
+    Function.update_of_ne (show m ≠ i from fun e => hi (e ▸ hm)) _ _
+  have hfun : (fun m => if m ∈ T then b m else Function.update x i (b i) m) =
+      (fun m => if m ∈ insert i T then b m else x m) := by
+    funext m
+    by_cases hm : m = i
+    · rw [hm]
+      simp [hi]
+    · simp [hm, Finset.mem_insert]
+  simp only [hfun]
+  by_cases hx : x i = a i
+  · have hiff : (∀ m ∈ insert i T, x m = a m) ↔ (∀ m ∈ T, Function.update x i (b i) m = a m) :=
+      ⟨fun h m hm => by rw [hupd m hm]; exact h m (Finset.mem_insert_of_mem hm),
+       fun h m hm => by
+        rcases Finset.mem_insert.mp hm with hmi | hm'
+        · rw [hmi]; exact hx
+        · rw [← hupd m hm']; exact h m hm'⟩
+    rw [hx, Matrix.single_apply_same, one_mul]
+    simp only [hiff]
+  · rw [if_neg (fun h => hx (h i (Finset.mem_insert_self i T))),
+      Matrix.single_apply_of_row_ne (Ne.symm hx), zero_mul]
+
+theorem partOp_mem (a b : Cfg n) (T : Finset (Fin n)) : partOp a b T ∈ (slotLift (n := n)).range := by
+  induction T using Finset.induction_on with
+  | empty =>
+      rw [partOp_empty]
+      exact Subalgebra.one_mem _
+  | insert i T hi ih =>
+      rw [partOp_insert a b hi]
+      refine Subalgebra.mul_mem _ ((AlgHom.mem_range _).2 ⟨PiTensorProduct.singleAlgHom i (Matrix.single (a i) (b i) 1), ?_⟩) ih
+      exact nTensorLift_single _ _ i _
+
+theorem partOp_univ_apply (a b : Cfg n) (ψ : Cfg n → ℂ) (x : Cfg n) :
+    partOp a b Finset.univ ψ x = if x = a then ψ b else 0 := by
+  by_cases h : x = a
+  · rw [partOp_apply, if_pos (fun k _ => by rw [h]), if_pos h]
+    simp
+  · rw [partOp_apply, if_neg (fun hall => h (funext fun k => hall k (Finset.mem_univ k))), if_neg h]
+
+/-- Every operator on `2^N`-component states is a combination of elementary operators. -/
+theorem end_eq_sum (f : Module.End ℂ (Cfg n → ℂ)) :
+    f = ∑ a, ∑ b, (LinearMap.toMatrix' f a b) • partOp a b Finset.univ := by
+  apply LinearMap.ext; intro ψ; funext x
+  simp only [LinearMap.sum_apply, Finset.sum_apply, LinearMap.smul_apply, Pi.smul_apply,
+    smul_eq_mul, partOp_univ_apply, mul_ite, mul_zero]
+  rw [Fintype.sum_eq_single x (fun a ha => Finset.sum_eq_zero fun b _ => if_neg (Ne.symm ha))]
+  simp only [if_true]
+  conv_lhs => rw [← Matrix.toLin'_toMatrix' f]
+  rw [Matrix.toLin'_apply]
+  simp [Matrix.mulVec, dotProduct]
+
+theorem slotLift_surjective : Function.Surjective (slotLift (n := n)) := by
+  intro f
+  have hf : f ∈ (slotLift (n := n)).range := by
+    rw [end_eq_sum f]
+    exact Subalgebra.sum_mem _ fun a _ => Subalgebra.sum_mem _ fun b _ =>
+      Subalgebra.smul_mem _ (partOp_mem a b Finset.univ) _
+  exact (AlgHom.mem_range _).1 hf
+
+theorem slotLift_bijective : Function.Bijective (slotLift (n := n)) := by
+  have h1 : Module.finrank ℂ (⨂[ℂ] _ : Fin n, M) = (2 * 2) ^ n := by
+    rw [Module.finrank_eq_card_basis (Basis.piTensorProduct fun _ : Fin n => Module.finBasis ℂ M)]
+    simp [Fintype.card_fun, Module.finrank_matrix]
+  have h2 : Module.finrank ℂ (Module.End ℂ (Cfg n → ℂ)) = 2 ^ n * 2 ^ n := by
+    rw [Module.finrank_linearMap, Module.finrank_fintype_fun_eq_card]
+    simp [Fintype.card_fun]
+  have hs : Function.Surjective (slotLift (n := n)).toLinearMap := slotLift_surjective
+  have hi : Function.Injective (slotLift (n := n)).toLinearMap :=
+    (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
+      (h1.trans (by rw [h2, mul_pow]))).2 hs
+  exact ⟨hi, slotLift_surjective⟩
+
+/-- **`⨂ᵢ M ≅ End((ℂ²)^{⊗N})`, as algebras.** The joint algebra of `N` qubit bodies is exactly the
+`N`-fold tensor product, no bigger and no smaller. -/
+noncomputable def nTensorEquiv : (⨂[ℂ] _ : Fin n, M) ≃ₐ[ℂ] Module.End ℂ (Cfg n → ℂ) :=
+  AlgEquiv.ofBijective slotLift slotLift_bijective
+
+/-- **`N`-body faithfulness.** In any non-trivial joint algebra, the factoring map out of `⨂ᵢ M` is
+injective: `⨂ᵢ M` is a matrix algebra (`nTensorEquiv`), hence simple, so a ring map out of it has
+zero kernel. -/
+theorem n_composite_faithful {J : Type*} [Ring J] [Algebra ℂ J] [Nontrivial J]
+    (ρ : Fin n → M →ₐ[ℂ] J) (hc : ∀ i j : Fin n, i ≠ j → ∀ X Y : M, Commute (ρ i X) (ρ j Y)) :
+    Function.Injective (nTensorLift ρ hc) := by
+  let E : Matrix (Cfg n) (Cfg n) ℂ ≃ₐ[ℂ] (⨂[ℂ] _ : Fin n, M) :=
+    Matrix.toLinAlgEquiv'.trans nTensorEquiv.symm
+  let Ψ' : Matrix (Cfg n) (Cfg n) ℂ →ₐ[ℂ] J :=
+    (nTensorLift ρ hc).comp (E : Matrix (Cfg n) (Cfg n) ℂ →ₐ[ℂ] (⨂[ℂ] _ : Fin n, M))
+  have hφ : Function.Injective (Ψ'.toRingHom) := RingHom.injective _
+  have key : ∀ z, Ψ' (E.symm z) = nTensorLift ρ hc z := fun z => by
+    simp [Ψ', AlgHom.comp_apply]
+  intro x y hxy
+  apply E.symm.injective
+  apply hφ
+  show Ψ' (E.symm x) = Ψ' (E.symm y)
+  rw [key, key]
+  exact hxy
+
+/-- The joint operator algebra of `N` qubit bodies is simple (it is a matrix algebra). -/
+instance cfgEnd_simple : IsSimpleRing (Module.End ℂ (Cfg n → ℂ)) := by
+  rw [IsSimpleRing.iff_injective_ringHom]
+  intro S _ _ f
+  let E : Matrix (Cfg n) (Cfg n) ℂ ≃ₐ[ℂ] Module.End ℂ (Cfg n → ℂ) := Matrix.toLinAlgEquiv'
+  have h : Function.Injective (f.comp (E : Matrix (Cfg n) (Cfg n) ℂ →+* Module.End ℂ (Cfg n → ℂ))) :=
+    RingHom.injective _
+  intro x y hxy
+  have hxy' : (f.comp (E : Matrix (Cfg n) (Cfg n) ℂ →+* Module.End ℂ (Cfg n → ℂ))) (E.symm x) =
+      (f.comp (E : Matrix (Cfg n) (Cfg n) ℂ →+* Module.End ℂ (Cfg n → ℂ))) (E.symm y) := by
+    simpa using hxy
+  simpa using h hxy'
+
+instance cfgEnd_artinian : IsArtinianRing (Module.End ℂ (Cfg n → ℂ)) :=
+  IsArtinianRing.of_finite ℂ _
+
+/-- **`(ℂ²)^{⊗N}` is a simple module of the `N`-body joint algebra.** -/
+instance cfgState_simple : IsSimpleModule (Module.End ℂ (Cfg n → ℂ)) (Cfg n → ℂ) := by
+  rw [isSimpleModule_iff_toSpanSingleton_surjective]
+  refine ⟨inferInstance, fun v hv u => ?_⟩
+  obtain ⟨q, hq⟩ : ∃ q, v q ≠ 0 := by
+    by_contra h
+    push_neg at h
+    exact hv (funext h)
+  refine ⟨(v q)⁻¹ • (LinearMap.proj q : (Cfg n → ℂ) →ₗ[ℂ] ℂ).smulRight u, ?_⟩
+  rw [LinearMap.toSpanSingleton_apply]
+  change ((v q)⁻¹ • (LinearMap.proj q : (Cfg n → ℂ) →ₗ[ℂ] ℂ).smulRight u) v = u
+  simp [smul_smul, hq]
+
+/-- **Uniqueness of the `N`-body state space (Wedderburn).** Every simple module of the `N`-body
+joint algebra `⨂ᵢ M ≅ End((ℂ²)^{⊗N})` is isomorphic to `(ℂ²)^{⊗N}`. Same argument as
+`simple_module_is_twoBodyState`. -/
+theorem simple_module_is_cfgState (N : Type*) [AddCommGroup N]
+    [Module (Module.End ℂ (Cfg n → ℂ)) N] [IsSimpleModule (Module.End ℂ (Cfg n → ℂ)) N] :
+    Nonempty (N ≃ₗ[Module.End ℂ (Cfg n → ℂ)] (Cfg n → ℂ)) := by
+  let R := Module.End ℂ (Cfg n → ℂ)
+  let e₁ := LinearEquiv.ofInjective (LinearMap.inl R N (Cfg n → ℂ)) LinearMap.inl_injective
+  let e₂ := LinearEquiv.ofInjective (LinearMap.inr R N (Cfg n → ℂ)) LinearMap.inr_injective
+  have : IsSimpleModule R (LinearMap.range (LinearMap.inl R N (Cfg n → ℂ))) :=
+    IsSimpleModule.congr e₁.symm
+  have : IsSimpleModule R (LinearMap.range (LinearMap.inr R N (Cfg n → ℂ))) :=
+    IsSimpleModule.congr e₂.symm
+  obtain ⟨f⟩ := IsSimpleRing.isIsotypic R (N × (Cfg n → ℂ))
+    (LinearMap.range (LinearMap.inr R N (Cfg n → ℂ)))
+    (LinearMap.range (LinearMap.inl R N (Cfg n → ℂ)))
+  exact ⟨e₁.trans (f.trans e₂.symm)⟩
+
+end NFaithful
+
+-- ==========================================
+-- §6. The two sectors
+-- ==========================================
+
+/-- **A Kronecker product is a non-zero scalar exactly when both factors are scalars.** -/
+theorem kron_scalar_iff (A B : M) {c : ℂ} (hc : c ≠ 0) :
+    A ⊗ₖ B = c • (1 : QLF.Tsirelson.Q) ↔ ∃ a b : ℂ, A = a • (1 : M) ∧ B = b • (1 : M) ∧ a * b = c := by
+  constructor
+  · intro h
+    have ent : ∀ i j k l : Fin 2,
+        A i k * B j l = (c • (1 : QLF.Tsirelson.Q)) (i, j) (k, l) := fun i j k l =>
+      congrFun (congrFun h (i, j)) (k, l)
+    have e1 : A 0 0 * B 0 0 = c := by simpa using ent 0 0 0 0
+    have e2 : A 1 1 * B 0 0 = c := by simpa using ent 1 0 1 0
+    have e3 : A 0 0 * B 1 1 = c := by simpa using ent 0 1 0 1
+    have z1 : A 0 1 * B 0 0 = 0 := by simpa using ent 0 0 1 0
+    have z2 : A 1 0 * B 0 0 = 0 := by simpa using ent 1 0 0 0
+    have z3 : A 0 0 * B 0 1 = 0 := by simpa using ent 0 0 0 1
+    have z4 : A 0 0 * B 1 0 = 0 := by simpa using ent 0 1 0 0
+    have hB : B 0 0 ≠ 0 := fun h0 => hc (by rw [← e1, h0, mul_zero])
+    have hA : A 0 0 ≠ 0 := fun h0 => hc (by rw [← e1, h0, zero_mul])
+    have a01 : A 0 1 = 0 := (mul_eq_zero.1 z1).resolve_right hB
+    have a10 : A 1 0 = 0 := (mul_eq_zero.1 z2).resolve_right hB
+    have b01 : B 0 1 = 0 := (mul_eq_zero.1 z3).resolve_left hA
+    have b10 : B 1 0 = 0 := (mul_eq_zero.1 z4).resolve_left hA
+    have a11 : A 1 1 = A 0 0 := mul_right_cancel₀ hB (e2.trans e1.symm)
+    have b11 : B 1 1 = B 0 0 := mul_left_cancel₀ hA (e3.trans e1.symm)
+    refine ⟨A 0 0, B 0 0, ?_, ?_, e1⟩
+    · ext i j
+      fin_cases i <;> fin_cases j <;> simp [a01, a10, a11]
+    · ext i j
+      fin_cases i <;> fin_cases j <;> simp [b01, b10, b11]
+  · rintro ⟨a, b, rfl, rfl, rfl⟩
+    rw [Matrix.smul_kronecker, Matrix.kronecker_smul, Matrix.one_kronecker_one, smul_smul]
+
+/-- Every twist fold is invertible: the reversed history undoes it. -/
+theorem fold_mul_reverse (a : List Twist) : twistMatrixFold a * twistMatrixFold a.reverse = 1 := by
+  induction a with
+  | nil => show (1 : M) * 1 = 1; rw [mul_one]
+  | cons t a ih =>
+      rw [List.reverse_cons, QLF.IndexedFactors.twistMatrixFold_append]
+      show t.toMatrix * twistMatrixFold a * (twistMatrixFold a.reverse * (t.toMatrix * 1)) = 1
+      rw [mul_one, mul_assoc, ← mul_assoc (twistMatrixFold a), ih, one_mul,
+        QLF.ClosureUnitarity.twist_sq]
+
+/-- **Product sector: a scalar joint fold of independent bodies is two scalar body folds.** If the
+    composite fold `fold a ⊗ fold b` is a scalar, each body's own fold is a scalar. This is Pauli
+    closure of each factor, not ZFA closure (`scalar_fold_not_zfa`). -/
+theorem independent_closure_factors (a b : List Twist) {c : ℂ}
+    (h : twistMatrixFold a ⊗ₖ twistMatrixFold b = c • (1 : QLF.Tsirelson.Q)) :
+    (∃ x : ℂ, twistMatrixFold a = x • (1 : M)) ∧ (∃ y : ℂ, twistMatrixFold b = y • (1 : M)) := by
+  have hc : c ≠ 0 := by
+    rintro rfl
+    have hinv : (twistMatrixFold a ⊗ₖ twistMatrixFold b) *
+        (twistMatrixFold a.reverse ⊗ₖ twistMatrixFold b.reverse) = 1 := by
+      rw [← Matrix.mul_kronecker_mul, fold_mul_reverse, fold_mul_reverse,
+        Matrix.one_kronecker_one]
+    rw [h, zero_smul, zero_mul] at hinv
+    exact zero_ne_one hinv
+  obtain ⟨x, y, hx, hy, _⟩ := (kron_scalar_iff _ _ hc).1 h
+  exact ⟨⟨x, hx⟩, ⟨y, hy⟩⟩
+
+/-- **A scalar fold need not be a ZFA closure.** `^^` folds to `I` (`σy² = I`) but is not count
+    balanced. So the product sector's conclusion is scalar (Pauli) closure of each factor, and
+    reading it as two ZFA closures needs count balance as a separate hypothesis. -/
+theorem scalar_fold_not_zfa :
+    twistMatrixFold [Twist.up, Twist.up] = 1 ∧ ¬ countBalanced [Twist.up, Twist.up] := by
+  refine ⟨?_, ?_⟩
+  · show Twist.up.toMatrix * (Twist.up.toMatrix * 1) = 1
+    rw [mul_one, QLF.ClosureUnitarity.twist_sq]
+  · unfold countBalanced
+    decide
+
+/-- **Coupled sector: an open body is never closed by an independent partner.** If body `A`'s
+    history is open (its fold is no scalar), then for every history on body `B` the composite
+    fold is no scalar either. -/
+theorem open_factor_never_closes_jointly (a : List Twist)
+    (hopen : ∀ x : ℂ, twistMatrixFold a ≠ x • (1 : M)) (b : List Twist) (c : ℂ) :
+    twistMatrixFold a ⊗ₖ twistMatrixFold b ≠ c • (1 : QLF.Tsirelson.Q) := by
+  intro h
+  obtain ⟨⟨x, hx⟩, _⟩ := independent_closure_factors a b h
+  exact hopen x hx
+
+/-- **A product of independent factors cannot produce a shared closure.** The primordial pair
+    `^ | v` closes as one word (`countBalanced`), but placed on two independent bodies its
+    composite fold is no scalar for any phase. -/
+theorem shared_closure_not_independent :
+    countBalanced ([Twist.up] ++ [Twist.down]) ∧
+    ∀ c : ℂ, twistMatrixFold [Twist.up] ⊗ₖ twistMatrixFold [Twist.down] ≠
+      c • (1 : QLF.Tsirelson.Q) :=
+  ⟨QLF.IndexedFactors.up_down_balanced,
+   open_factor_never_closes_jointly _ QLF.IndexedFactors.up_fold_not_scalar _⟩
+
+-- ==========================================
+-- §7. States: entanglement lives inside the tensor space
+-- ==========================================
+
+/-- A product state `u ⊗ v` of the derived two-body space. -/
+def prodVec (u v : Fin 2 → ℂ) : Fin 2 × Fin 2 → ℂ := fun ij => u ij.1 * v ij.2
+
+lemma s_00 : QLF.JointClosure.s (0, 0) = 0 := by simp [QLF.JointClosure.s]
+lemma s_11 : QLF.JointClosure.s (1, 1) = 0 := by simp [QLF.JointClosure.s]
+lemma s_10 : QLF.JointClosure.s (1, 0) = -1 := by simp [QLF.JointClosure.s]
+lemma s_01 : QLF.JointClosure.s (0, 1) = 1 := by simp [QLF.JointClosure.s]
+
+/-- **No product state is a joint closure.** A product vector on which the two bodies' actions
+    cancel on the `x` and `z` axes is zero. -/
+theorem product_never_joint_closure (u v : Fin 2 → ℂ)
+    (hx : QLF.JointClosure.joint σx *ᵥ prodVec u v = 0)
+    (hz : QLF.JointClosure.joint σz *ᵥ prodVec u v = 0) : prodVec u v = 0 := by
+  have h := (QLF.JointClosure.closed_iff_singlet _).1 ⟨hx, hz⟩
+  have e00 : u 0 * v 0 = u 0 * v 1 * 0 := by
+    have := congrFun h (0, 0)
+    rw [Pi.smul_apply, s_00, smul_eq_mul] at this
+    exact this
+  have e10 : u 1 * v 0 = u 0 * v 1 * -1 := by
+    have := congrFun h (1, 0)
+    rw [Pi.smul_apply, s_10, smul_eq_mul] at this
+    exact this
+  have hsq : (u 0 * v 1) * (u 0 * v 1) = 0 := by
+    linear_combination (u 0 * v 1) * e10 - (u 1 * v 1) * e00
+  have hc : prodVec u v (0, 1) = 0 := mul_self_eq_zero.1 hsq
+  rw [h, hc, zero_smul]
+
+/-- **The singlet is not a product state.** -/
+theorem singlet_not_product : ¬ ∃ u v : Fin 2 → ℂ, QLF.JointClosure.s = prodVec u v := by
+  rintro ⟨u, v, huv⟩
+  have h0 : prodVec u v = 0 :=
+    product_never_joint_closure u v (huv ▸ QLF.JointClosure.closed_x)
+      (huv ▸ QLF.JointClosure.closed_z)
+  have h1 := congrFun (huv.trans h0) (0, 1)
+  rw [s_01] at h1
+  exact one_ne_zero h1
+
+/-- **Both sectors live in the derived tensor space.** It holds a non-zero joint closure, the
+    singlet, which is not a product; and no non-zero product vector is a joint closure. So tensor
+    products do represent entanglement. What no product of independent factors produces is a
+    shared closure. -/
+theorem tensor_space_sectors :
+    (QLF.JointClosure.s ≠ 0 ∧ QLF.JointClosure.joint σx *ᵥ QLF.JointClosure.s = 0 ∧
+      QLF.JointClosure.joint σz *ᵥ QLF.JointClosure.s = 0 ∧
+      ¬ ∃ u v : Fin 2 → ℂ, QLF.JointClosure.s = prodVec u v) ∧
+    (∀ u v : Fin 2 → ℂ, QLF.JointClosure.joint σx *ᵥ prodVec u v = 0 →
+      QLF.JointClosure.joint σz *ᵥ prodVec u v = 0 → prodVec u v = 0) := by
+  refine ⟨⟨?_, QLF.JointClosure.closed_x, QLF.JointClosure.closed_z, singlet_not_product⟩,
+    product_never_joint_closure⟩
+  intro h
+  have := congrFun h (0, 1)
+  rw [s_01] at this
+  exact one_ne_zero this
+
+-- ==========================================
+-- §8. Rung 6 from the derived composite fold
+-- ==========================================
+
+/-- A pair `[t, t†]` shared between two bodies: body `A` performs `t`, body `B` performs `t†`. -/
+def splitPair (t : Twist) : List Tok := [(false, t), (true, t.conj)]
+
+/-- **The shared pair's joint fold, read off the derived composite** (`twist_cfold`): `t ⊗ t†`.
+    No reading of the action is chosen; only which body holds which half. -/
+theorem splitPair_fold (t : Twist) :
+    cfold embA embB (splitPair t) = t.toMatrix ⊗ₖ t.conj.toMatrix := by
+  rw [twist_cfold]
+  simp [splitPair, projA, projB, twistMatrixFold]
+
+/-- **A shared strong pair fixes the singlet.** -/
+theorem split_strong_fixes_singlet (t : Twist) (ht : EntanglementPrimacy.StronglyEntangled t) :
+    cfold embA embB (splitPair t) *ᵥ JointClosure.s = JointClosure.s := by
+  rw [EntanglementPrimacy.stronglyEntangled_iff_spatial] at ht
+  rw [splitPair_fold]
+  cases t <;> simp [axisOf] at ht
+  all_goals
+    funext ⟨i, j⟩
+    fin_cases i <;> fin_cases j <;>
+      simp [Twist.toMatrix, Twist.conj, σx, σy, σz, JointClosure.s, mulVec, dotProduct,
+        Fintype.sum_prod_type, Fin.sum_univ_two, kroneckerMap_apply] <;>
+      (try ring_nf) <;> (try simp [Complex.I_sq])
+
+/-- **A shared gauge pair is a product:** it acts as the scalar `−1` on every two-body state, the
+    same as the unshared pair `t t† = −1`, so sharing it constrains nothing (rung 5). -/
+theorem split_gauge_scalar (ψ : Fin 2 × Fin 2 → ℂ) :
+    cfold embA embB (splitPair Twist.plus) *ᵥ ψ = -ψ := by
+  rw [splitPair_fold]
+  funext ⟨i, j⟩
+  fin_cases i <;> fin_cases j <;>
+    simp [Twist.toMatrix, Twist.conj, mulVec, dotProduct, Fintype.sum_prod_type, Fin.sum_univ_two,
+      kroneckerMap_apply, Matrix.one_apply]
+
+/-- **Rung 6, derived.** The singlet is the unique two-body state fixed by every shared strong pair,
+    where the pair's action is the derived composite fold `t ⊗ t†`, not a chosen reading. -/
+theorem split_strong_iff_singlet (ψ : Fin 2 × Fin 2 → ℂ) :
+    (∀ t : Twist, EntanglementPrimacy.StronglyEntangled t →
+        cfold embA embB (splitPair t) *ᵥ ψ = ψ) ↔ ψ = ψ (0, 1) • JointClosure.s := by
+  constructor
+  · intro h
+    have hx := h Twist.right ((EntanglementPrimacy.stronglyEntangled_iff_spatial _).2
+      (by simp [axisOf]))
+    have hz := h Twist.slash ((EntanglementPrimacy.stronglyEntangled_iff_spatial _).2
+      (by simp [axisOf]))
+    rw [splitPair_fold] at hx hz
+    have z00 := congrFun hz (0, 0)
+    have z11 := congrFun hz (1, 1)
+    have x01 := congrFun hx (0, 1)
+    simp [Twist.toMatrix, Twist.conj, σx, σz, mulVec, dotProduct, Fintype.sum_prod_type,
+      Fin.sum_univ_two, kroneckerMap_apply] at z00 z11 x01
+    have a00 : ψ (0, 0) = 0 := by
+      first
+        | exact z00
+        | linear_combination (-1/2 : ℂ) * z00
+        | linear_combination (1/2 : ℂ) * z00
+    have a11 : ψ (1, 1) = 0 := by
+      first
+        | exact z11
+        | linear_combination (-1/2 : ℂ) * z11
+        | linear_combination (1/2 : ℂ) * z11
+    have b10 : ψ (1, 0) = -ψ (0, 1) := by
+      first
+        | linear_combination x01
+        | linear_combination -x01
+        | linear_combination (-1 : ℂ) * x01
+    funext ⟨i, j⟩
+    fin_cases i <;> fin_cases j <;> simp [JointClosure.s, a00, a11, b10]
+  · intro hψ t ht
+    rw [hψ, mulVec_smul, split_strong_fixes_singlet t ht]
+
+/-- **The chosen reading and the derived one pick the same state.** Rung 6 read a pair as the sum
+    `X ⊗ 1 + 1 ⊗ X` (`JointClosure.joint`); the composite of independent bodies gives `t ⊗ t†`.
+    Both select exactly the singlet. -/
+theorem split_reading_agrees (ψ : Fin 2 × Fin 2 → ℂ) :
+    (∀ t : Twist, EntanglementPrimacy.StronglyEntangled t →
+        cfold embA embB (splitPair t) *ᵥ ψ = ψ) ↔
+      (JointClosure.joint σx *ᵥ ψ = 0 ∧ JointClosure.joint σz *ᵥ ψ = 0) :=
+  (split_strong_iff_singlet ψ).trans (JointClosure.closed_iff_singlet ψ).symm
+
+end QLF.TensorFromClosure

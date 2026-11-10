@@ -47,7 +47,7 @@ We reuse the repo’s twist basis and add Rho primitives. Existing `qc_assembler
 | **Qubit**            | Independent `*ELECTRON` process (or open prefix)          | `quantum_simulator.py` fluxoids    | Pre-cataloged minimal loops |
 | **Superposition**    | Parallel composition `\|` of prefixed paths                   | `qucalc_engine.py` BFS branches    | Instant `ApplyZfa` reuse |
 | **Gate (H, X, CNOT)**| Channel output + continuation on twist channels               | `qc_assembler.py`                 | Gate = cataloged composite closure |
-| **Entanglement**     | Shared gauge channels (`+`/`-`) between processes             | Bell tutorial                      | No tensor product — just shared channels |
+| **Entanglement**     | Shared gauge channels (`+`/`-`) between processes             | Bell tutorial                      | A shared closure. In Hilbert-space terms this is a non-product vector of the tensor space; what no product of independently closed factors can produce is the shared closure ([`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean)) |
 | **Measurement**      | Observer ZFA closure with system prefix → prune non-closing paths | `path_integral.py` statistics     | Projection = catalog match |
 | **Circuit**          | `new qubits in (gate1 \| gate2 \| ... \| ApplyZfa(...))`     | Full assembler chain               | Memoized sub-circuit reuse |
 
