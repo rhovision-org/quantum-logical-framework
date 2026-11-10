@@ -51,6 +51,7 @@ Registered in `lakefile.lean` roots array (build order); sources in `lean/`. **T
 | `QLF_Minkowski` | The state IS Minkowski space; `det(Form) = interval` |
 | `QLF_LorentzCover` | `SL(2,ℂ)→SO⁺(1,3)` double cover |
 | `QLF_Realizability` | No continuum in a finite-information region (Bekenstein) |
+| `QLF_RelativityScale` | **The relativity principle is a large-scale theorem, not a postulate**: the step-level census has a preferred frame (`step_census_frame_dependent`), and the frame-dependence falls as `4/(3L+1)` ≈ `(1/3)(L_P/r)²` (`covariance_isotropic`, `anisotropy_ratio`). Euclidean form; Lorentz via the cited Osterwalder–Schrader bridge. See `Relativity_Principle.md` |
 | `QLF_Riemann` · `QLF_MassGap` · `QLF_BSD` · `QLF_Hodge` · `QLF_PvsNP` · `QLF_NavierStokes` | The six Millennium reformulations — each a verified discrete core + one named bridge axiom (see **Axiom inventory** below) |
 
 ---
