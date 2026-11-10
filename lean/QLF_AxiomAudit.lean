@@ -568,9 +568,8 @@ table.  The `True := trivial` summary markers in these modules are NOT anchors. 
 -- Alpha cannot drift (kill-condition anchor)
 #print axioms QLF.Discoveries2026.alpha_cannot_drift
 
--- Born rule
-#print axioms QLF.BornFromWays.born_from_ways
-#print axioms QLF.BornFromWays.assignment_unique
+-- Born rule: `QLF.BornFromWays.born_from_ways` and `assignment_unique` are
+-- already anchored in the BornFromWays section above; do not duplicate them.
 
 -- Strong CP / no axion (kill-condition anchor)
 #print axioms QLF.theta_zero_on_closure
