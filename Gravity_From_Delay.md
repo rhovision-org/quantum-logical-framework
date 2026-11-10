@@ -234,7 +234,9 @@ not used: the **first law** `dE = T dS` at a horizon.
 
 QLF already proves the Hawking temperature, `T_H = ħc³/(8πGMk_B)` (`hawking_temperature_eq`,
 [`lean/QLF_HorizonTemperature.lean`](lean/QLF_HorizonTemperature.lean), as the Unruh relation at the
-surface gravity). With `E = Mc²`, the first law gives `dS/dM = c²/T_H = 8πGk_B M/(ħc)`. Up to an additive
+surface gravity). That is the continuum temperature; the census's lattice light cone leaves it intact
+for `M ≫ M_P` and changes the spectrum only near the Planck mass
+([`Relativity_Principle.md`](Relativity_Principle.md) §5a, [`BLACK-HOLES.md`](BLACK-HOLES.md) §3b). With `E = Mc²`, the first law gives `dS/dM = c²/T_H = 8πGk_B M/(ħc)`. Up to an additive
 constant, that forces `S = 4πGk_B M²/(ħc) = k_B A/(4L_P²)` on `R = 2GM/c²`. This is Hawking's 1975 route to
 the `1/4`, not new. What is new is applying it inside QLF: with QLF's own temperature, the naive count
 `N log 2 = 4 log 2 · S_BH` breaks the first law by exactly the residual.

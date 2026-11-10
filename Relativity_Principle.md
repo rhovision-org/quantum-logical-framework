@@ -175,8 +175,8 @@ So **large black holes see exact relativity**, and the departure appears only in
 of evaporation, as a direction-dependent dimming of the final burst along the lattice diagonals
 (the faster-than-`c` directions fit fewer modes below a given frequency). Two cautions. Near the
 Planck mass the semiclassical picture of a horizon is itself in doubt, so the bottom rows are
-indicative only. And whether the lattice axes are global or locally oriented is not settled; if
-they vary from region to region, the effect averages away over many black holes. The lattice also
+indicative only. And the axes are read as the hole's own twist frame (§2), so the effect has no
+fixed direction in the sky and averages away over many black holes. The lattice also
 removes the trans-Planckian problem: no mode exceeds `k = π`.
 
 ## 6. Interactions: shared pairs cannot move c
