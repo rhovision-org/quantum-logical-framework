@@ -123,6 +123,51 @@ quadratic in `k`, the same `(L_P/r)²` as §3. So **no Wick rotation is needed**
 Euclidean, and the phases make it Lorentzian. The zeros of `sin` at `k = π` are the lattice
 doublers, as in lattice fermions.
 
+## 5a. The lattice light cone, and what black holes see of it
+
+The light cone `sin²ω = Σ sin²k_a` is not round at the Planck scale. Along a lattice axis it is
+exact: `ω = |k|` (`axis_light_exact`). Along a diagonal, light outruns `c`: momentum `(κ, κ, 0)`
+gives `ω > √2 κ = |k|` (`diagonal_light_superluminal`, proved for `0 < κ ≤ 1/2`). Expanding,
+
+```
+ω² ≈ |k|² + (|k|⁴ − Σ k_a⁴) / 3
+```
+
+so the phase velocity is never below `c` and equals it only on the axes; sampling 20,000 random
+in-band modes finds no exception ([`lattice_hawking.py`](lattice_hawking.py)). The excess is
+quadratic in `k L_P`. Note the distinction: `c` varying from place to place relative to distant
+observers is gravity, and QLF has it already (`local_light_speed_invariant`). This is different:
+a direction dependence at one place, set by the lattice.
+
+**Black holes make the scale concrete.** A black hole of mass `M` radiates at the Hawking
+temperature `T = 1/(8πM)` in Planck units, so it probes exactly the regime where the light cone
+bends. [`lattice_hawking.py`](lattice_hawking.py) computes thermal emission with the census
+dispersion. It assumes the horizon emits at the Hawking temperature in the lattice rest frame, with
+no greybody factor. For `T ≪ 1`, the robustness of that temperature under modified short-distance
+dispersion is the result of [Jacobson, *PRD* 44, 1731 (1991)](https://link.aps.org/doi/10.1103/PhysRevD.44.1731),
+[Unruh, *PRD* 51, 2827 (1995)](https://arxiv.org/abs/gr-qc/9409008) and
+[Corley & Jacobson, *PRD* 54, 1568 (1996)](https://arxiv.org/abs/hep-th/9601073).
+
+| Black hole | `T` (Planck) | Body-diagonal vs axis power |
+|---|---|---|
+| Sun (10³⁸ `M_P`) | 4×10⁻⁴⁰ | −7×10⁻⁷⁹ |
+| 10¹⁵ g primordial | 9×10⁻²² | −3×10⁻⁴² |
+| 100 `M_P` | 4×10⁻⁴ | −0.0001 % |
+| 10 `M_P` | 4×10⁻³ | −0.007 % |
+| 1 `M_P` | 0.04 | −0.66 % |
+| 0.3 `M_P` | 0.13 | −7.3 % |
+
+Leading order is `−40 δ ζ(6)/ζ(4) · T²` with `δ = (1 − Σ n_a⁴)/6`, matched by the full numerics.
+Along an axis the spectrum is the continuum Planck spectrum up to the band edge `ω = π/2`.
+
+So **large black holes see exact relativity**, and the departure appears only in the last moments
+of evaporation, as a direction-dependent dimming of the final burst along the lattice diagonals
+(the faster-than-`c` directions fit fewer modes below a given frequency). Two cautions. Near the
+Planck mass the semiclassical picture of a horizon is itself in doubt, so the bottom rows are
+indicative only. And whether the lattice axes are global or locally oriented is not settled; if
+they vary from region to region, the effect averages away over many black holes. The lattice also
+removes the trans-Planckian problem: no mode exceeds `k = π`.
+
 ## 6. What remains open: one number
 
 [Collins, Perez, Sudarsky, Urrutia & Vucetich, *PRL* 93, 191301 (2004)](https://arxiv.org/abs/gr-qc/0403053)

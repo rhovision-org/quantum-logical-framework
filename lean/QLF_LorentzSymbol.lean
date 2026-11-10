@@ -49,6 +49,12 @@ only quadratic Lorentz violation the symmetry permits is the ratio `b/a`, the sp
 the census fixes at `1`. Whether interactions renormalize it (Collins et al. 2004) is now a single
 number, not an open-ended worry. It is not settled here.
 
+## The lattice light cone
+
+**`axis_light_exact`** — along a lattice axis the light cone is exact, `ω = κ`.
+**`diagonal_light_superluminal`** — along a diagonal `(κ, κ, 0)`, `ω > √2 κ = |k|`: light outruns
+`c` at order `(κ L_P)²`. Black-hole consequences: [`lattice_hawking.py`](../lattice_hawking.py).
+
 See [`Relativity_Principle.md`](../Relativity_Principle.md).
 -/
 
@@ -340,5 +346,79 @@ theorem quadratic_form_frame_invariant (Q : Fin 4 → Fin 4 → ℝ)
     fin_cases i <;> simp [h22, h33]
   · simp only [hij, ↓reduceIte]
     exact off i j hij
+
+end QLF.LorentzSymbol
+
+namespace QLF.LorentzSymbol
+
+-- ==========================================
+-- §4  The lattice light cone: exact on the axes, faster off them
+-- ==========================================
+
+/-- **Light is exact along a lattice axis.** On the lattice light cone `sin²ω = sin²κ` (momentum
+    `(κ, 0, 0)`), with `ω, κ ∈ [0, π/2]`, the frequency equals the wavenumber: `ω = κ`. -/
+theorem axis_light_exact {ω κ : ℝ} (hω0 : 0 ≤ ω) (hω1 : ω ≤ Real.pi / 2) (hκ0 : 0 ≤ κ)
+    (hκ1 : κ ≤ Real.pi / 2) (h : Real.sin ω ^ 2 = Real.sin κ ^ 2) : ω = κ := by
+  have hsω : 0 ≤ Real.sin ω := Real.sin_nonneg_of_nonneg_of_le_pi hω0 (by linarith [Real.pi_pos])
+  have hsκ : 0 ≤ Real.sin κ := Real.sin_nonneg_of_nonneg_of_le_pi hκ0 (by linarith [Real.pi_pos])
+  have hs : Real.sin ω = Real.sin κ := by
+    have := (sq_eq_sq₀ hsω hsκ).mp h
+    exact this
+  exact Real.injOn_sin ⟨by linarith [Real.pi_pos], hω1⟩ ⟨by linarith [Real.pi_pos], hκ1⟩ hs
+
+/-- The gap behind diagonal superluminality: `sin(√2 κ) < √2 sin κ` for `0 < κ ≤ 1/2`. -/
+theorem diagonal_sin_gap {κ : ℝ} (h0 : 0 < κ) (h1 : κ ≤ 1 / 2) :
+    Real.sin (Real.sqrt 2 * κ) < Real.sqrt 2 * Real.sin κ := by
+  have hs2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hs0 : 0 < Real.sqrt 2 := by positivity
+  have hs1 : Real.sqrt 2 < 3 / 2 := by
+    rw [show (3 / 2 : ℝ) = Real.sqrt ((3 / 2) ^ 2) by rw [Real.sqrt_sq]; norm_num]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  have hx : |Real.sqrt 2 * κ| ≤ 1 := by
+    rw [abs_of_pos (by positivity)]; nlinarith
+  have hk : |κ| ≤ 1 := by rw [abs_of_pos h0]; linarith
+  have b1 := Real.sin_bound hk
+  have b2 := Real.sin_bound hx
+  have hxa : |Real.sqrt 2 * κ| = Real.sqrt 2 * κ := abs_of_pos (mul_pos hs0 h0)
+  have hka : |κ| = κ := abs_of_pos h0
+  rw [hka] at b1
+  rw [hxa] at b2
+  have e3 : (Real.sqrt 2 * κ) ^ 3 = 2 * Real.sqrt 2 * κ ^ 3 := by
+    rw [mul_pow, show Real.sqrt 2 ^ 3 = Real.sqrt 2 ^ 2 * Real.sqrt 2 by ring, hs2]
+  have e5 : (Real.sqrt 2 * κ) ^ 5 = 4 * Real.sqrt 2 * κ ^ 5 := by
+    rw [mul_pow, show Real.sqrt 2 ^ 5 = (Real.sqrt 2 ^ 2) ^ 2 * Real.sqrt 2 by ring, hs2]; ring
+  rw [e3, e5] at b2
+  have l1 := (abs_le.mp b1).1
+  have u2 := (abs_le.mp b2).2
+  have hκ2 : κ ^ 2 ≤ 1 / 4 := by nlinarith
+  have key : 0 < Real.sqrt 2 * κ ^ 3 * (1 / 6 - κ ^ 2 / 20) := by
+    have : 0 < 1 / 6 - κ ^ 2 / 20 := by linarith
+    positivity
+  nlinarith [mul_le_mul_of_nonneg_left l1 hs0.le]
+
+/-- **Light outruns `c` along a lattice diagonal.** On the lattice light cone with momentum
+    `(κ, κ, 0)` (magnitude `|k| = √2 κ`), `sin²ω = 2 sin²κ` forces `ω > |k|`: the phase velocity
+    exceeds `c`, by a relative amount of order `(κ L_P)²`. With `axis_light_exact`, the census's
+    light cone is direction-dependent at the Planck scale. -/
+theorem diagonal_light_superluminal {ω κ : ℝ} (h0 : 0 < κ) (h1 : κ ≤ 1 / 2) (hω0 : 0 ≤ ω)
+    (hω1 : ω ≤ Real.pi / 2) (h : Real.sin ω ^ 2 = Real.sin κ ^ 2 + Real.sin κ ^ 2) :
+    Real.sqrt 2 * κ < ω := by
+  have hs0 : 0 < Real.sqrt 2 := by positivity
+  have hsω : 0 ≤ Real.sin ω := Real.sin_nonneg_of_nonneg_of_le_pi hω0 (by linarith [Real.pi_pos])
+  have hsκ : 0 < Real.sin κ := Real.sin_pos_of_pos_of_lt_pi h0 (by linarith [Real.pi_gt_three])
+  have hs2 : Real.sqrt 2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hsin : Real.sin ω = Real.sqrt 2 * Real.sin κ := by
+    have hpos : 0 ≤ Real.sqrt 2 * Real.sin κ := by positivity
+    have : Real.sin ω ^ 2 = (Real.sqrt 2 * Real.sin κ) ^ 2 := by rw [mul_pow, hs2, h]; ring
+    exact (sq_eq_sq₀ hsω hpos).mp this
+  have gap := diagonal_sin_gap h0 h1
+  by_contra hle'
+  have hle := not_lt.mp hle'
+  have hs1 : Real.sqrt 2 < 3 / 2 := by
+    rw [show (3 / 2 : ℝ) = Real.sqrt ((3 / 2) ^ 2) by rw [Real.sqrt_sq]; norm_num]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  have hk : Real.sqrt 2 * κ ≤ Real.pi / 2 := by nlinarith [Real.pi_gt_three]
+  have := Real.sin_le_sin_of_le_of_le_pi_div_two (by linarith [Real.pi_pos]) hk hle
+  linarith
 
 end QLF.LorentzSymbol
