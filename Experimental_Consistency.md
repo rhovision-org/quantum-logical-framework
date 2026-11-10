@@ -409,6 +409,8 @@ $$\tau_i \tau_j = -\delta_{ij} I - \varepsilon_{ijk} \tau_k, \qquad \tau_i = i\s
 
 (machine-verified `tau_xy_product`, `tau_yz_product`, `tau_zx_product` in [BraKetRhoQuCalc.lean](lean/BraKetRhoQuCalc.lean)). The τᵢ are the Pauli matrices times i; boosts act on them by the standard Lorentz-Pauli representation. Extending the discrete Maxwell formulas of §4.1–4.2 to time-indexed event sequences and showing the boost-mixing explicitly on EM fields (rather than on the kinematic boost itself) is the **remaining open piece**.
 
+**The relativity principle itself, at what scale** ([Relativity_Principle.md](Relativity_Principle.md), [lean/QLF_RelativityScale.lean](lean/QLF_RelativityScale.lean), [lean/QLF_LorentzSymbol.lean](lean/QLF_LorentzSymbol.lean), no axioms). Each twist is a Minkowski unit vector, so a single step singles out the frame of its own twist axes (`step_census_frame_dependent`); every frame-dependence of the census falls as `4/(3L+1) ≈ (1/3)(L_P/r)²`, quadratic with no linear term, which passes the GRB time-of-flight bounds. Keeping each history's fold gives Lorentz signature without a Wick rotation (`symbol_det`: the census symbol's determinant is the Minkowski interval), with light exact along the axes and faster than `c` off-axis at order `(k L_P)²`. The only quadratic violation the frame group permits is `c` itself (`quadratic_form_frame_invariant`), and shared-pair interactions cannot move it when the coupling is axis-blind, which every shared pair's fold is (`marginal_uniform`). Open: pair creation, and how two bodies in relative motion agree on a frame for a joint closure.
+
 ---
 
 ## §5 Hydrogen Spectrum — Quantitative Retrodiction

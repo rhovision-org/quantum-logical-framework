@@ -210,6 +210,7 @@ QLF is the mathematics that has **active inference built into its foundation**. 
 - [**Riemann-Conjecture-Proof.md**](Riemann-Conjecture-Proof.md) — the current QLF program relating ZFA symmetry, universality, and the critical line
 - [**Measurement_Problem.md**](Measurement_Problem.md) — QLF treatment of measurement and observer-dependent closure
 - [**UniversalRelativity.md**](UniversalRelativity.md) — emergent relativity and spacetime interpretation inside QLF
+- [**Relativity_Principle.md**](Relativity_Principle.md) — the relativity principle as a large-scale theorem: one step singles out its own twist frame, every frame-dependence falls as `(L_P/r)²`, the fold-weighted census is Lorentzian (light exact on the axes, faster than `c` off-axis), and shared-pair interactions cannot move `c`
 - [**Cross_Frequency_Lorentz.md**](Cross_Frequency_Lorentz.md) — Lorentz boost between Markov-blanket frames as a change of basis on internal ZFA event rates; identifies γ = f_A/f_B (the relativistic Doppler factor) and recovers time dilation, length contraction, and interval invariance as direct consequences
 - [**TheContinuum.md**](TheContinuum.md) — why the continuum is emergent (not foundational), how QLF dissolves Zeno's paradoxes and the Lorentz invariance trap, and why the Axiom of Choice is replaced by the ZFA filter
 - [**ReverseMathematics.md**](ReverseMathematics.md) — QLF as a physical realization of Reverse Mathematics; the RCA₀ core and the WKL₀ axiom boundary

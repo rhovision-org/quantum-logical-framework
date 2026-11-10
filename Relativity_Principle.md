@@ -47,6 +47,17 @@ So **exact invariance under continuous boosts is impossible on the substrate**. 
 why causal set theory uses Poisson sprinkling; the repo's `order_metric_continuum_limit` bridge
 ([`lean/QLF_OrderMetric.lean`](lean/QLF_OrderMetric.lean)) sits at the same place.
 
+**Whose frame.** What is proven is that one census, drawn in one set of twist axes, singles out the
+frame of those axes. Nothing proven says those axes are shared. Spacetime in QLF is synthesized, not a
+background, so the natural reading is that each observer's histories are drawn in that observer's own
+twist frame. Then every observer sees the identical census, the `4/(3L+1)` anisotropy and the lattice
+light cone of §5a included, each relative to its own axes, and **no local frame is preferred**. What is
+ruled out is a single global lattice that every observer sits on. Two consequences: the off-axis
+dispersion of §5a has no fixed axes in the sky, and the reading is tested where two bodies in relative
+motion share a closure. A shared pair puts both strands on one alphabet, so the two must agree on
+whose axes it is drawn in; §6 assumed one common frame. That question belongs to T2 (the Ignatowski
+step of the plan).
+
 ## 3. Where it holds: every frame-dependence dies with scale
 
 Summing over all `8^L` histories of length `L`, with `x_i` the displacement on axis `i`
