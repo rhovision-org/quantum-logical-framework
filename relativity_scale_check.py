@@ -15,7 +15,8 @@ and the step-level no-go: the gamma = 3 integer boost preserves the interval and
 (1 step) to (3,2,2,0) (7 steps); and lean/QLF_LorentzSymbol.lean: the matrix census
 is H(k)^L with H = 2i*Form(sin k), det H = -4*interval(sin k); and its shared-pair section:
 two strands that share Hermitian pairs t / t-dagger with coupling g leave strand A's marginal
-census at (8 + g)^L * usym^L (marginal_uniform), so A's spread is unchanged for every g, while a
+census at (8 + g)^L * usym^L (marginal_uniform), so A's normalized spread is unchanged whenever
+8 + g != 0 (marginal_normalized; at g = -8 the marginal vanishes and is skipped), while a
 coupling g0 on the gauge pair and gs on the spatial pairs changes A's time/space spread ratio,
 i.e. c, unless g0 = gs (marginal_proportional_iff). See Relativity_Principle.md.
 
@@ -130,7 +131,7 @@ def check_shared_pairs(max_len=3, g=0.37 - 0.21j):
     displacement distribution is read off directly from the enumeration (no symbol used)."""
     import collections
     ticks = [((a, b), 1) for a in STEP for b in STEP] + [((t, CONJ[t]), None) for t in STEP]
-    for g0, gs in ((g, g), (0.5, 0.0)):
+    for g0, gs in ((g, g), (0.5, 0.0), (-8.0, -8.0)):
         coup = lambda t: g0 if t in "+-" else gs
         for L in range(1, max_len + 1):
             distA = collections.defaultdict(complex)   # A's endpoint -> summed joint weight
@@ -143,15 +144,20 @@ def check_shared_pairs(max_len=3, g=0.37 - 0.21j):
                     x = [x[j] + STEP[a][j] for j in range(4)]
                 distA[tuple(x)] += w
             total = sum(distA.values())
+            # marginal_normalized needs 8 + g != 0: at g = -8 the marginal vanishes identically
+            # and has no normalized moments, so the check is skipped there.
+            if abs(total) < 1e-12:
+                assert abs(8 + g0) < 1e-12 or abs(8 + gs) < 1e-12
+                continue
             t2 = sum(v * x[0] ** 2 for x, v in distA.items()) / total
             s2 = sum(v * x[1] ** 2 for x, v in distA.items()) / total
             if g0 == gs:
-                assert abs(total - (8 + g) ** L * 8 ** L) < 1e-6
+                assert abs(total - (8 + g0) ** L * 8 ** L) < 1e-6
                 assert abs(t2 - L / 4) < 1e-9 and abs(s2 - L / 4) < 1e-9, (L, t2, s2)
             elif L == max_len:
                 # time spread / space spread = (8+g0)/(8+gs): c^2 shifts unless g0 = gs
                 assert abs(t2 / s2 - (8 + g0) / (8 + gs)) < 1e-9, (t2, s2)
-    print(f"shared pairs: uniform coupling leaves A's spread (and c) unchanged to L={max_len}; "
+    print(f"shared pairs: uniform coupling (8+g != 0) leaves A's normalized spread unchanged to L={max_len}; "
           f"axis-dependent coupling shifts time/space spread by (8+g0)/(8+gs)")
 
 

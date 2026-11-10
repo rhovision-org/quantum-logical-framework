@@ -74,7 +74,11 @@ The unitarity claim above is about **information** and the **exactly-conserved s
 
 ## 3b. The lattice light cone at the horizon
 
-The temperature above is the continuum one. The census's own light cone is not round at the Planck
+The temperature above is the continuum one. *Everything in this section is conditional on reading
+the census symbol's singular set as light's dispersion law, an assumption
+([`Relativity_Principle.md`](Relativity_Principle.md) §5), and the palindromic walk of
+[`QM_Postulates_QLF.md`](QM_Postulates_QLF.md) §5b gives the opposite off-axis sign, which would
+brighten the diagonals instead.* Under that reading, the census's light cone is not round at the Planck
 scale ([`Relativity_Principle.md`](Relativity_Principle.md) §5a, [`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean)):
 `sin²ω = Σ sin²k_a`, exact along a lattice axis (`axis_light_exact`) and faster than `c` off-axis
 (`diagonal_light_superluminal`), by an amount quadratic in `k L_P`. Two consequences for black holes:

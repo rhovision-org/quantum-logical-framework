@@ -1,19 +1,32 @@
-# The Relativity Principle in QLF — exact in the large, broken at the Planck step
+# The Relativity Principle in QLF — what the census proves, and what it does not yet
 
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
 
-**Epistemic status: proved in Lean, no axioms, including Lorentz signature.** Modules:
+**Epistemic status.** Every theorem cited is proved in Lean with no axioms:
 [`lean/QLF_RelativityScale.lean`](lean/QLF_RelativityScale.lean) (the unsigned census) and
-[`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean) (the signed census and the Lorentz
-signature). Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py). One
-question remains open, reduced to a single number (§5).
+[`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean) (the signed census, its symbol, and
+shared-pair interactions). Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py).
+**The relativity principle itself is not proved.** Physical boost covariance is an open obligation,
+and the step from the census symbol to a propagation law is an assumption, labelled where it is used.
 
 Einstein's first postulate says the laws of physics are the same for every observer in uniform
-motion. QLF does not assume it. It proves two things about the census of histories instead: the
-census **has** a preferred frame at the scale of a single step, and every trace of that frame
-**dies away** with scale at an exact, computed rate. So the relativity principle is not a
-postulate here and not exact. It is a large-scale theorem with a stated domain.
+motion. QLF does not assume it. What the census of histories proves is narrower:
+
+1. **At one step there is a preferred frame** (§2), so exact invariance under continuous boosts is
+   impossible on the substrate.
+2. **In the large the unsigned census becomes isotropic in the Euclidean sense** (§3): the
+   lattice's cubic anisotropy falls as `4/(3L+1) ≈ (1/3)(L_P/r)²`. Euclidean isotropy is not boost
+   invariance, even in the limit (`boost_not_euclidean`).
+3. **The signed census carries Lorentz signature in its symbol** (§5): its determinant is the
+   Minkowski interval, with no Wick rotation. Reading the symbol's zeros as the propagation law of
+   light is an assumption (the kinetic reading), and a second QLF walk gives the opposite off-axis
+   sign.
+4. **Shared-pair interactions cannot change the time/space spread ratio** when their coupling is
+   axis-blind (§6), with stated normalization conditions.
+
+The relativity principle is therefore neither postulated nor yet derived here. What would derive it
+is physical boost covariance of the propagation law (T2/T3 of the plan).
 
 ## 1. The question is precise because every twist is a spacetime unit vector
 
@@ -58,7 +71,7 @@ motion share a closure. A shared pair puts both strands on one alphabet, so the 
 whose axes it is drawn in; §6 assumed one common frame. That question belongs to T2 (the Ignatowski
 step of the plan).
 
-## 3. Where it holds: every frame-dependence dies with scale
+## 3. What dies with scale: the lattice's cubic anisotropy (Euclidean isotropy)
 
 Summing over all `8^L` histories of length `L`, with `x_i` the displacement on axis `i`
 (`i = 0` time, `1..3` space):
@@ -66,26 +79,31 @@ Summing over all `8^L` histories of length `L`, with `x_i` the displacement on a
 | Theorem | Statement | Reading |
 |---|---|---|
 | `covariance_isotropic` | `4·Σ x_i x_j = δ_ij · L · 8^L`, exactly, at every `L` | Time and each space axis spread equally; no axis is correlated with another |
-| `light_speed_from_spread` | `Σ x_t² = Σ x_a²` | The invariant speed is one Planck length per Planck tick, computed from the census rather than cancelled as in [`lean/QLF_SubstrateLightSpeed.lean`](lean/QLF_SubstrateLightSpeed.lean) |
+| `light_speed_from_spread` | `Σ x_t² = Σ x_a²` | Time and space spread equally: the census's natural speed unit is one Planck length per tick. Reading it as an *invariant* speed needs boost covariance, which the unsigned census lacks (compare [`lean/QLF_SubstrateLightSpeed.lean`](lean/QLF_SubstrateLightSpeed.lean), where `c` is cancelled) |
 | `first_moment_zero`, `third_moment_zero` | `Σ x_i = Σ x_i³ = 0` | No odd correction: nothing linear in the scale |
 | `fourth_moment`, `mixed_fourth_moment` | `16·Σ x_i⁴ = (3L²+L)·8^L`, `16·Σ x_i²x_j² = (L²−L)·8^L` | The first moments that can see the lattice |
 | `fourth_moment_anisotropy` | `Σ x_i⁴ − 3·Σ x_i²x_j² = Σ x_i²` | An isotropic distribution sets the left side to zero; the census misses by exactly its own spread |
 | `anisotropy_ratio` | relative anisotropy `= 4 / (3L + 1)` | Total at one step (`= 1`), then `4/7, 2/5, 4/13, 1/4, 4/19, …` |
-| `anisotropy_vanishes` | below any `ε > 0` beyond some `L₀` | The frame disappears in the large |
+| `anisotropy_vanishes` | below any `ε > 0` beyond some `L₀` | The lattice axes disappear in the large |
+| `boost_not_euclidean` | the boost sends `e_t` (Euclidean norm `1`) to `(3,2,2,0)` (norm `17`) | Euclidean isotropy is not boost invariance: the limiting Gaussian `exp(−\|q\|²/8)` takes `exp(−1/8)` and `exp(−17/8)` on a momentum and its boosted image |
 
-The spread grows as `r² = L/4` in Planck units, so the leading frame-dependence is
+The spread grows as `r² = L/4` in Planck units, so the cubic anisotropy is
 
 ```
 relative anisotropy = 4 / (3L + 1) ≈ (1/3) · (L_P / r)²
 ```
 
 **quadratic** in the ratio of the Planck length to the scale probed. The vanishing odd moments are
-why there is no linear term.
+why there is no linear term. This measures how much the lattice's axes show, not how much an
+inertial frame does: the unsigned census treats time like space, so it is `O(4)`-symmetric in the
+limit and not Lorentz-symmetric (`boost_not_euclidean`). Boosts need the signed census (§5).
 
-## 4. The domain where relativity works
+## 4. The domain where the lattice does not show
 
-Read in energy, `(L_P/r)²` is `(E/E_P)²`, with `E` the energy in the frame doing the measuring. The
-relativity principle holds wherever `E·γ ≪ E_P` in every frame compared:
+Read in energy, `(L_P/r)²` is `(E/E_P)²`, with `E` the energy in the frame doing the measuring. If
+the propagation law is the census symbol's (§5, an assumption) and is boost-covariant at long
+wavelength (not yet proved), the lattice's departure from it is of this size wherever `E·γ ≪ E_P`
+in every frame compared:
 
 | Regime | `E/E_P` | Predicted deviation `~(E/E_P)²` |
 |---|---|---|
@@ -125,8 +143,18 @@ Minkowski interval of the momentum, by `det_toMatrix_eq_interval`:
 det H(k) = −4 (sin²k₀ − sin²k₁ − sin²k₂ − sin²k₃)        (symbol_det)
 ```
 
-and it is singular exactly on the lattice light cone `sin²k₀ = Σ sin²k_a` (`symbol_light_cone`):
-the census's massless modes travel at `c = 1`. For small `k`, `H(k) ≈ 2i · Form(k) = 2i σ^μ k_μ`,
+and it is singular exactly on the lattice light cone `sin²k₀ = Σ sin²k_a` (`symbol_light_cone`).
+
+**The kinetic reading is an assumption.** `census_symbol` gives the powers `H(k)^L`, and
+`symbol_light_cone` says where `H` is singular. Calling that singular set the dispersion law of
+light assumes a kinetic equation, the Weyl-type `H(k)ψ = 0`, which the census does not supply. The
+generating resolvent of the powers, `(I − zH)⁻¹`, has its poles elsewhere: at `k = 0`, `H = 0` and
+the resolvent is `I`. Everything below that speaks of light, dispersion or black holes is
+conditional on this reading. A second QLF propagation law, the palindromic Weyl walk of
+[`QM_Postulates_QLF.md`](QM_Postulates_QLF.md) §5b, gives the opposite off-axis sign, so which law
+light follows is open.
+
+For small `k`, `H(k) ≈ 2i · Form(k) = 2i σ^μ k_μ`,
 the Weyl operator, which `SL(2,ℂ)` transforms covariantly
 ([`lean/QLF_LorentzCover.lean`](lean/QLF_LorentzCover.lean)). Each component deviates from the
 covariant `k_μ` by at most `|k|³/6 + |k|⁵/100` (`symbol_deviation`), a relative correction
@@ -134,7 +162,9 @@ quadratic in `k`, the same `(L_P/r)²` as §3. So **no Wick rotation is needed**
 Euclidean, and the phases make it Lorentzian. The zeros of `sin` at `k = π` are the lattice
 doublers, as in lattice fermions.
 
-## 5a. The lattice light cone, and what black holes see of it
+## 5a. The lattice light cone, and what black holes would see of it
+
+*Conditional throughout on the kinetic reading of §5, and opposite in sign to the palindromic walk.*
 
 The light cone `sin²ω = Σ sin²k_a` is not round at the Planck scale. Along a lattice axis it is
 exact: `ω = |k|` (`axis_light_exact`). Along a diagonal, light outruns `c`: momentum `(κ, κ, 0)`
@@ -171,15 +201,17 @@ dispersion is the result of [Jacobson, *PRD* 44, 1731 (1991)](https://link.aps.o
 Leading order is `−40 δ ζ(6)/ζ(4) · T²` with `δ = (1 − Σ n_a⁴)/6`, matched by the full numerics.
 Along an axis the spectrum is the continuum Planck spectrum up to the band edge `ω = π/2`.
 
-So **large black holes see exact relativity**, and the departure appears only in the last moments
+So, under the kinetic reading, **large black holes see no lattice effect**, and the departure appears only in the last moments
 of evaporation, as a direction-dependent dimming of the final burst along the lattice diagonals
 (the faster-than-`c` directions fit fewer modes below a given frequency). Two cautions. Near the
 Planck mass the semiclassical picture of a horizon is itself in doubt, so the bottom rows are
 indicative only. And the axes are read as the hole's own twist frame (§2), so the effect has no
-fixed direction in the sky and averages away over many black holes. The lattice also
+fixed direction in the sky and averages away over many black holes. And the palindromic walk of
+[`QM_Postulates_QLF.md`](QM_Postulates_QLF.md) §5b would brighten the diagonals instead, so even the
+sign of the effect waits on which propagation law light follows. The lattice also
 removes the trans-Planckian problem: no mode exceeds `k = π`.
 
-## 6. Interactions: shared pairs cannot move c
+## 6. Interactions: shared pairs cannot change the spread ratio
 
 [Collins, Perez, Sudarsky, Urrutia & Vucetich, *PRL* 93, 191301 (2004)](https://arxiv.org/abs/gr-qc/0403053)
 showed that a Planck-scale preferred frame leaks into low-energy physics through quantum loops at
@@ -209,17 +241,26 @@ every loop of the interaction is in it.
 | `joint_census` | the joint census is `(one-tick symbol)^L` |
 | `shared_wave` | a shared tick carries `e^{i(k_A − k_B)·e_t}`: the pair has zero net displacement, so it sees only the relative momentum |
 | `marginal_symbol` | summing over where `B` ends, `A` sees `Σ_t (8 + g_t) e^{i k_A·e_t}` |
-| **`marginal_uniform`** | if `g` is the same on all eight twists, `A`'s census is `(8 + g)^L` times its free census: **the interaction changes the count, never the spread, so `c = 1` for every coupling** |
+| `marginal_uniform` | if `g` is the same on all eight twists, `A`'s census is `(8 + g)^L` times its free census (an unnormalized identity, any `g : ℂ`) |
+| **`marginal_normalized`** | when `8 + g ≠ 0`, `A`'s census divided by the total joint weight is exactly the free census `usym^L/8^L`: **the interaction changes the count, never the normalized spread** |
 | **`marginal_proportional_iff`** | with `g₀` on the gauge pair and `g_s` on the spatial pairs, `A`'s census is proportional to the free one **iff `g₀ = g_s`**; otherwise the time/space spread ratio becomes `(8 + g₀)/(8 + g_s)` and `c` shifts |
 | **`shared_pair_fold_axis_blind`** | every shared pair folds to the same `−I`, gauge or spatial |
 | `joint_symbol_swap` | with a coupling equal on `t` and `t†`, swapping which strand takes which half leaves the joint census unchanged |
 
-So Collins's leak has an exact substrate form. A coupling that weighs time-like and space-like
-pairs differently renormalizes `c`, at any strength. The substrate's own weight on a shared pair,
-its fold, does not distinguish them. **If a shared pair is weighted by its fold, `c` is protected
-exactly, for every species and every coupling.** Different species that couple with different
-strengths `g` still all see `c = 1`, because the protection comes from axis-blindness, not from the
-size of `g`. The brute-force check (`relativity_scale_check.py`, `check_shared_pairs`) enumerates
+**Domain.** At `g = −8` the marginal vanishes identically and has no normalization, so no moments
+exist there. For real `g > −8` the marginal weight on each of `A`'s twists, `8 + g`, is positive,
+so `A`'s marginal is a genuine probability distribution, the free one (for `g ≥ 0` the joint
+weights are positive too, and for `−8 < g < 0` only the marginal is). For complex `g` the
+normalized census is a complex weight, not a probability, and "spread" means its normalized second
+moment.
+
+So Collins's leak has an exact substrate form for the spread ratio of §3, the census's `c`. A
+coupling that weighs time-like and space-like pairs differently changes it, at any strength. The
+substrate's own weight on a shared pair, its fold, does not distinguish them. **If a shared pair is
+weighted by its fold, the spread ratio stays `1` for every species and every coupling with
+`8 + g ≠ 0`**, because the protection comes from axis-blindness, not from the size of `g`. This is
+about the unsigned spread; that the spread ratio is the physical, boost-invariant `c` is the open
+obligation of §3. The brute-force check (`relativity_scale_check.py`, `check_shared_pairs`) enumerates
 the joint histories and reads `A`'s spread directly, without the symbol.
 
 **Emitter and absorber.** `joint_symbol_swap` answers a question from

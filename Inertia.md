@@ -96,8 +96,9 @@ sharp enough to end the programme on their own.
    exactly, not approximately. QLF has the right shape for this (a statistically uniform, stateless
    ether — [`UniversalRelativity.md`](UniversalRelativity.md)), but "the census looks the same in
    every frame" has to be proven, not asserted.
-   *(Update 2026-11-10: for the unsigned census it is now proven to hold in the large and fail at the
-   Planck step, with frame-dependence `4/(3L+1)`; see [`Relativity_Principle.md`](Relativity_Principle.md).)*
+   *(Update 2026-11-10: the unsigned census is now proven frame-dependent at the Planck step and
+   Euclidean-isotropic in the large, cubic anisotropy `4/(3L+1)`, which is not yet boost
+   invariance; see [`Relativity_Principle.md`](Relativity_Principle.md).)*
 3. **One mass, not two.** The `m` in `F = ma` must be *identically* the `m` of
    [`Per_Qubit_Mass_Quantum.md`](Per_Qubit_Mass_Quantum.md) and
    [`E_mc2_derivation.md`](E_mc2_derivation.md). A vacuum-window mechanism that produces its own mass

@@ -9,9 +9,11 @@ set_option linter.unusedSectionVars false
 
 [`QLF_RelativityScale`](QLF_RelativityScale.lean) proved that the *unsigned* census (a count of
 ways) becomes isotropic across time and space together: Euclidean `O(4)` symmetry, with
-frame-dependence `4/(3L+1)`. Euclidean is not Lorentzian. This module shows that the census
-already carries Lorentz signature once each history keeps its Pauli fold, the amplitude QLF
-assigns it. No Wick rotation is needed, and no axioms are used.
+cubic anisotropy `4/(3L+1)`. Euclidean is not Lorentzian, and Euclidean isotropy does not give boost
+invariance (`boost_not_euclidean`). This module shows that the census's momentum symbol already
+carries Lorentz signature once each history keeps its Pauli fold, the amplitude QLF assigns it. No
+Wick rotation is needed, and no axioms are used. What the symbol does *not* yet give is a derived
+propagation law (next section).
 
 ## The census in momentum space
 
@@ -30,12 +32,22 @@ Weight each history by a plane wave `exp(i k·x)` at its displacement `x`.
 * **`symbol_det`** — `det H(k) = −4 (sin²k₀ − sin²k₁ − sin²k₂ − sin²k₃)`: the determinant of the
   census symbol is the Minkowski interval of the lattice momentum, by `det_toMatrix_eq_interval`.
 * **`symbol_light_cone`** — `H(k)` is singular exactly on the lattice light cone
-  `sin²k₀ = Σ sin²k_a`: the census's massless modes propagate at `c = 1`.
+  `sin²k₀ = Σ sin²k_a`.
+
+**What is not derived: that these zeros are the propagating modes.** `census_symbol` gives the
+census's powers `H(k)^L`; `symbol_light_cone` says where `H` is singular. Reading the singular set
+as a dispersion law assumes a kinetic equation, the Weyl-type `H(k)ψ = 0`. The census alone does not
+supply it: the generating resolvent of the powers is `(I − zH)⁻¹`, whose poles are not at
+`det H = 0` (at `k = 0`, `H = 0` and the resolvent is `I`). Every statement below about light,
+dispersion or black holes is conditional on that kinetic reading, which is labelled as an
+assumption. A second QLF propagation law, the palindromic Weyl walk of
+[`QM_Postulates_QLF.md`](../QM_Postulates_QLF.md) §5b, gives the opposite off-axis sign, so which
+law light follows is open.
 
 ## Lorentz covariance in the large, and where it fails
 
 `QLF_LorentzCover` proves `X ↦ A X A†` (`A ∈ SL(2,ℂ)`) acts as the Lorentz group on `Form`s and
-preserves the interval. With `sin k ≈ k` the symbol is `2i · Form(k)`, so the census law is
+preserves the interval. With `sin k ≈ k` the symbol is `2i · Form(k)`, so the symbol is
 covariant (the Weyl operator `σ^μ k_μ`). **`symbol_deviation`**: each component differs from the
 covariant `k_μ` by at most `|k|³/6 + |k|⁵/100` (`|k| ≤ 1`), a relative correction quadratic in
 `k`, the same `(L_P/r)²` suppression as the unsigned census. At `|k| ~ 1` (the Planck scale) the
@@ -46,18 +58,19 @@ lattice symbol is not covariant. The 16 zeros of `sin` per period are the lattic
 **`quadratic_form_frame_invariant`** — a quadratic form on momentum space invariant under the
 substrate's frame group (axis reflections and spatial transpositions) is `diag(a, b, b, b)`. The
 only quadratic Lorentz violation the symmetry permits is the ratio `b/a`, the speed of light, which
-the census fixes at `1`. Whether interactions renormalize it (Collins et al. 2004) is that single
-number. §5 settles it for interactions by shared Hermitian pairs: **`marginal_uniform`**, a coupling
-equal on all eight twists leaves each strand's spread, and so `c`, unchanged at every strength and
-every order; **`marginal_proportional_iff`**, an axis-dependent coupling shifts `c` unless gauge and
+the free census fixes at `1` (equal temporal and spatial spread). Whether interactions renormalize
+it (Collins et al. 2004) is that single number. §5 settles it for interactions by shared Hermitian
+pairs: **`marginal_uniform`** / **`marginal_normalized`**, a coupling equal on all eight twists
+leaves each strand's normalized spread unchanged at every order, for every coupling with
+`8 + g ≠ 0` (for real `g > −8`, as a genuine probability distribution); **`marginal_proportional_iff`**, an axis-dependent coupling shifts `c` unless gauge and
 spatial couplings agree; **`shared_pair_fold_axis_blind`**, every shared pair folds to the same `−I`.
 Strands created or destroyed are not covered.
 
-## The lattice light cone
+## The lattice light cone (under the kinetic reading)
 
-**`axis_light_exact`** — along a lattice axis the light cone is exact, `ω = κ`.
-**`diagonal_light_superluminal`** — along a diagonal `(κ, κ, 0)`, `ω > √2 κ = |k|`: light outruns
-`c` at order `(κ L_P)²`. Black-hole consequences: [`lattice_hawking.py`](../lattice_hawking.py).
+**`axis_light_exact`** — along a lattice axis the singular set is exact, `ω = κ`.
+**`diagonal_light_superluminal`** — along a diagonal `(κ, κ, 0)`, `ω > √2 κ = |k|`: if the singular
+set is the dispersion law, light outruns `c` at order `(κ L_P)²`. Black-hole consequences: [`lattice_hawking.py`](../lattice_hawking.py).
 
 See [`Relativity_Principle.md`](../Relativity_Principle.md).
 -/
@@ -452,8 +465,13 @@ exact to all orders in `g` (every "loop" of the interaction is in it).
 * **`marginal_symbol`** — summing over where `B` ends (`k_B = 0`) leaves `A` with
   `Σ_t (8 + g_t) e^{i k_A·e_t}`.
 * **`marginal_uniform`** — if the coupling is the same on all eight twists, `A`'s marginal census
-  is `(8 + g)^L` times its free census: **the interaction rescales the count and changes nothing
-  about how `A` spreads**, so its light speed is `1`, for every `g`, to all orders.
+  is `(8 + g)^L` times its free census, an unnormalized identity for any `g : ℂ`.
+* **`marginal_normalized`** — when `8 + g ≠ 0`, dividing by the total weight leaves `A`'s
+  normalized census equal to the free one, `usym^L / 8^L`: the interaction changes nothing about
+  how `A` spreads, to all orders. At `g = −8` the marginal vanishes identically and has no
+  normalization. For real `g > −8` the marginal weight on each twist, `8 + g`, is positive, so `A`'s
+  marginal is a genuine probability distribution, the free one (for `g ≥ 0` the joint weights are
+  positive too). For complex `g` the normalized census is a complex weight, not a probability.
 * **`marginal_proportional_iff`** — conversely, with coupling `g₀` on the gauge pair and `g_s` on
   the spatial pairs, `A`'s marginal is proportional to its free census **iff `g₀ = g_s`**. A
   coupling that treats time and space differently does renormalize `c`: this is the substrate form
@@ -552,6 +570,14 @@ theorem marginal_symbol (kA : Fin 4 → ℝ) (g : Twist → ℂ) :
 theorem marginal_uniform (kA : Fin 4 → ℝ) (g : ℂ) (L : ℕ) :
     ∑ w ∈ words JStep L, (w.map (jamp kA 0 (fun _ => g))).prod = (8 + g) ^ L * usym kA ^ L := by
   rw [joint_census, marginal_symbol, ← Finset.mul_sum, ← usym, mul_pow]
+
+/-- **Normalized, the marginal is the free census.** When `8 + g ≠ 0`, `A`'s marginal census divided
+    by the total joint weight is `usym kA ^ L / 8 ^ L`, the free census's characteristic function. -/
+theorem marginal_normalized (kA : Fin 4 → ℝ) (g : ℂ) (hg : 8 + g ≠ 0) (L : ℕ) :
+    (∑ w ∈ words JStep L, (w.map (jamp kA 0 (fun _ => g))).prod) /
+      (∑ w ∈ words JStep L, (w.map (jamp 0 0 (fun _ => g))).prod) = usym kA ^ L / 8 ^ L := by
+  rw [marginal_uniform, marginal_uniform, usym_zero]
+  exact mul_div_mul_left _ _ (pow_ne_zero L hg)
 
 /-- Coupling `g₀` on the gauge pair, `gs` on the six spatial twists. -/
 def axisCoupling (g₀ gs : ℂ) : Twist → ℂ

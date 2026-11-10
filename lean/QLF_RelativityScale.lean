@@ -4,15 +4,16 @@ set_option linter.unusedVariables false
 set_option linter.unusedSectionVars false
 
 /-!
-# QLF_RelativityScale — the relativity principle holds in the large and fails at the Planck step
+# QLF_RelativityScale — a preferred frame at the Planck step, Euclidean isotropy in the large
 
 Each twist **is** a Minkowski unit vector. `Twist.toMatrix` sends the gauge twists `±` to `±I`, the
 time direction of the Hermitian `Form`, and the spatial twists to `±σ_a`, the three space
 directions (`QLF_Minkowski`: the trace is time, the Pauli coordinates are space). So a history's net
 displacement `disp w : Fin 4 → ℤ` (index `0` = time, `1,2,3` = `x,y,z`) is a point of the integer
 lattice `ℤ^{1,3}`, and a closure is a history whose displacement is zero. This module asks whether
-the census of histories looks the same to observers in uniform relative motion, and answers in two
-parts. No axioms.
+the census of histories looks the same to observers in uniform relative motion. It answers in two
+parts, and the second is weaker than boost invariance: the unsigned census isotropizes in the
+Euclidean sense, which is not the relativity principle (see the last section). No axioms.
 
 ## Where it fails: the single step picks a frame
 
@@ -25,30 +26,36 @@ parts. No axioms.
   numbers of ways. At the level of individual steps the census has a preferred frame, so exact
   invariance under continuous boosts is impossible on the substrate.
 
-## Where it holds: every frame-dependence dies with scale
+## What dies with scale: the lattice's cubic anisotropy
 
 Sum over all `8^L` histories of length `L`:
 
 * **`covariance_isotropic`** — `4·Σ x_i x_j = δ_ij · L·8^L` exactly, at every `L`. The census
   spreads equally along time and along each space axis and correlates none of them. The ratio of
-  temporal to spatial spread is `1`: the invariant speed is one Planck length per Planck tick,
-  computed rather than cancelled.
+  temporal to spatial spread is `1` (`light_speed_from_spread`), so the census's natural speed unit
+  is one Planck length per Planck tick. That this is an *invariant* speed would need boost
+  covariance, which the unsigned census does not have.
 * **`first_moment_zero`, `third_moment_zero`** — every odd moment vanishes, so no correction linear
   in the scale appears: the census is symmetric under each reflection.
-* **`fourth_moment_anisotropy`** — the first frame-dependent quantity is the hypercubic fourth-moment
+* **`fourth_moment_anisotropy`** — the first axis-dependent quantity is the hypercubic fourth-moment
   anisotropy `Σ x_i⁴ − 3 Σ x_i² x_j²`, which an isotropic distribution sets to zero. Here it equals
   `Σ x_i²` exactly, so relative to `Σ x_i⁴` it is
   **`anisotropy_ratio`**: `4 / (3L + 1)` — total (`= 1`) at a single step, and
   **`anisotropy_vanishes`**: below any `ε > 0` at large enough `L`.
 
-The spread grows as `r² = L/4` (Planck units), so the leading violation is `≈ (1/3)(L_P/r)²`:
-quadratic in the ratio of the Planck length to the scale, the same `(E/E_P)²` form that passes the
-LHAASO GRB 221009A bound. See [`Relativity_Principle.md`](../Relativity_Principle.md).
+The spread grows as `r² = L/4` (Planck units), so this anisotropy falls as `≈ (1/3)(L_P/r)²`:
+quadratic in the ratio of the Planck length to the scale, with no linear term. It measures the
+lattice's cubic (hypercubic) anisotropy, not dependence on an inertial frame.
+See [`Relativity_Principle.md`](../Relativity_Principle.md).
 
-## What this does not cover
+## What this does not cover: boosts
 
 Isotropy across the time and space axes is the Euclidean (`O(4)`) form of the symmetry: counting
-ways treats time like space. The Lorentz signature comes from the phases, in
+ways treats time like space. A boost is not an `O(4)` rotation, so Euclidean isotropy does not
+give boost invariance, even in the limit: **`boost_not_euclidean`** — the boost carries `e_t`
+(Euclidean norm `1`) to `(3,2,2,0)` (Euclidean norm `17`), so the limiting Gaussian
+`exp(−|q|²/8)` of `QLF_LorentzSymbol.characteristic_isotropic` takes different values on a
+momentum and its boosted image. Physical boost covariance is a separate obligation. The Lorentz signature comes from the phases, in
 [`QLF_LorentzSymbol`](QLF_LorentzSymbol.lean): keeping each history's Pauli fold, the census's
 momentum symbol is `2i·Form(sin k)`, whose determinant is the Minkowski interval.
 -/
@@ -273,8 +280,9 @@ theorem covariance_isotropic (L : ℕ) (i j : Fin 4) :
   · simp only [hij, ↓reduceIte]
     rw [cross_moment_zero L hij, mul_zero]
 
-/-- **The invariant speed is one.** The spread along time equals the spread along each space
-    axis, so `c² = Σ_tt / Σ_xx = 1` in Planck units. -/
+/-- **Equal spread in time and space.** The spread along time equals the spread along each space
+    axis, so the ratio `Σ_tt / Σ_xx` is `1` in Planck units. Reading this ratio as an invariant
+    speed needs boost covariance, which the unsigned census lacks (`boost_not_euclidean`). -/
 theorem light_speed_from_spread (L : ℕ) (a : Fin 4) :
     ∑ w ∈ words Twist L, disp w 0 ^ 2 = ∑ w ∈ words Twist L, disp w a ^ 2 := by
   have h0 := second_moment L 0
@@ -364,10 +372,19 @@ theorem anisotropy_vanishes (ε : ℚ) (hε : 0 < ε) :
   have : 4 < ε * N := by rwa [div_lt_iff₀ hε, mul_comm] at hN
   nlinarith
 
+/-- **Euclidean isotropy is not boost invariance.** The boost sends `e_t`, of Euclidean norm `1`,
+    to a vector of Euclidean norm `17`, so an `O(4)`-invariant limit distinguishes a momentum
+    from its boosted image. -/
+theorem boost_not_euclidean :
+    (∑ i, eT i ^ 2 = 1) ∧ (∑ i, boost eT i ^ 2 = 17) := by
+  rw [boost_eT]
+  constructor <;> simp [eT, Fin.sum_univ_four]
+
 /-- **Summary.** The census is frame-dependent at the Planck step
-    (`step_census_frame_dependent`) and isotropic in the large: the covariance is exactly
+    (`step_census_frame_dependent`) and Euclidean-isotropic in the large: the covariance is exactly
     isotropic at every scale (`covariance_isotropic`), odd moments vanish, and the first
-    frame-dependent moment falls as `4 / (3L + 1)` (`anisotropy_ratio`, `anisotropy_vanishes`). -/
+    axis-dependent moment falls as `4 / (3L + 1)` (`anisotropy_ratio`, `anisotropy_vanishes`).
+    Boost invariance is not implied (`boost_not_euclidean`). -/
 theorem relativity_scale_summary : True := trivial
 
 end QLF.RelativityScale

@@ -152,7 +152,7 @@ candidates below has passed yet; each is stated with its kill condition.
 
 | Candidate | QLF prediction | Standard expectation | Kill condition | State |
 |---|---|---|---|---|
-| **B-LIV: axis-aligned dispersion** | At Planck spacing the photon dispersion is `E² = k²[1 − ξ(n)(ℓ_P k)²]`, with `ξ` set by the direction `n` relative to the twist axes, so `E_QG,2 ≈ 2.4–5 E_P` (§5a). | Exact Lorentz invariance. | A bound on quadratic Lorentz violation above `E_QG,2 ≈ 2.4 E_P` (or, for the real-time walk, a sign opposite to the one it predicts). | **A number, but untestable now.** It is allowed by the best time-of-flight bound (`E_QG,2 > 6 × 10⁻⁸ E_P`, LHAASO 2024) by a factor of `4–8 × 10⁷`. The fold-weighted census fixes its sign (superluminal off-axis, exact on axes, `E_QG,2 ≈ 2.1 E_P` on the body diagonal, `QLF_LorentzSymbol`), but §5b's palindromic walk has the opposite sign, so the sign is not yet a prediction (§5a). |
+| **B-LIV: axis-aligned dispersion** | At Planck spacing the photon dispersion is `E² = k²[1 − ξ(n)(ℓ_P k)²]`, with `ξ` set by the direction `n` relative to the twist axes, so `E_QG,2 ≈ 2.4–5 E_P` (§5a). | Exact Lorentz invariance. | A bound on quadratic Lorentz violation above `E_QG,2 ≈ 2.4 E_P` (or, for the real-time walk, a sign opposite to the one it predicts). | **A number, but untestable now.** It is allowed by the best time-of-flight bound (`E_QG,2 > 6 × 10⁻⁸ E_P`, LHAASO 2024) by a factor of `4–8 × 10⁷`. Under its kinetic reading (an assumption), the fold-weighted census gives a sign (superluminal off-axis, exact on axes, `E_QG,2 ≈ 2.1 E_P` on the body diagonal, `QLF_LorentzSymbol`), but §5b's palindromic walk has the opposite sign, so the sign is not yet a prediction (§5a). |
 | **No α drift** | `α` cannot vary in time (`alpha_cannot_drift`). | The Standard Model allows no drift either; many extensions do. | A confirmed drift, for instance in thorium-229 nuclear clocks. | Distinguishes QLF from drift models, **not** from the Standard Model. |
 | **Predicted absences** | No supersymmetric partners, axion, WIMP, magnetic monopole, proton decay or light sterile `ν_R` ([`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §6). | The Standard Model has none of these either. | Discovery of any one. | Distinguishes QLF from extensions, **not** from the Standard Model. |
 | **`α⁻¹` from the census** | `137.032` structural ([`Alpha_Residual.md`](Alpha_Residual.md)). | Measured `137.035999…`. | Already a miss by `0.004`, attributed to continuum running. | **Not a pass.** Listed so it is not hidden. |
@@ -192,17 +192,20 @@ says neither, so a directional search has no predicted axes yet. Read as each ob
 frame ([`Relativity_Principle.md`](Relativity_Principle.md) §2), there are no fixed axes in the sky to
 predict. (4) Only time-of-flight bounds are checked here, not threshold effects such as photon decay.
 
-**The fold-weighted census fixes the time axis without a Wick rotation.** The two rows above continue
-the scalar walk's time axis by hand. Keeping each history's Pauli fold removes the choice:
+**The fold-weighted census needs no Wick rotation, but its dispersion is a reading.** The two rows
+above continue the scalar walk's time axis by hand. Keeping each history's Pauli fold removes that
+choice for the symbol:
 [`QLF_LorentzSymbol`](lean/QLF_LorentzSymbol.lean) proves the census is `H(k)^L` with
 `H(k) = 2i·Form(sin k)` (`census_symbol`, `symbol_eq_form`), whose determinant is the Minkowski interval
-of the lattice momentum (`symbol_det`). Its massless modes are `sin²(ℓ_P E) = Σ_i sin²(ℓ_P k_i)`
-(`symbol_light_cone`): **exact along an axis** (`axis_light_exact`) and **superluminal off-axis**
+of the lattice momentum (`symbol_det`). It is singular on `sin²(ℓ_P E) = Σ_i sin²(ℓ_P k_i)`
+(`symbol_light_cone`). Reading that singular set as the massless dispersion assumes a kinetic
+equation (`H(k)ψ = 0`) that the census does not supply; the generating resolvent `(I − zH)⁻¹` has
+its poles elsewhere. Under that reading the dispersion is **exact along an axis** (`axis_light_exact`) and **superluminal off-axis**
 (`diagonal_light_superluminal`), with `ξ(n) = (s₄ − 1)/3`. That gives `E_QG,2 = 2.45 E_P` on a face
 diagonal and `2.12 E_P` on the body diagonal (checked numerically; see
 [`Relativity_Principle.md`](Relativity_Principle.md) §5a and [`lattice_hawking.py`](lattice_hawking.py)).
-This is the second row's character with a different coefficient. It is a sign for the census, not yet
-for every walk: §5b's palindromic Weyl walk is subluminal on the body diagonal, so the two QLF
+This is the second row's character with a different coefficient. It is a sign for the census under
+the kinetic reading, not yet for every walk: §5b's palindromic Weyl walk is subluminal on the body diagonal, so the two QLF
 propagation laws disagree, and which one light follows is open.
 
 ### 5b. The realizable walk itself: a linear term, and how time symmetry removes it
