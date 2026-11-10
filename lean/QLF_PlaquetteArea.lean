@@ -10,7 +10,9 @@ set_option linter.unusedVariables false
 [`QLF_EdgeSign`](QLF_EdgeSign.lean) puts the phase of a history on the edges of its walk: a ℤ₂
 connection on `ℤ⁴` with π flux through every mixed spatial plaquette, the phase being the holonomy.
 That module decides individual squares (`^>v<` is `−1`, `^><v` is `+1`). This one says what the
-holonomy of a planar loop *is*: **one bit per unit of enclosed area**. It is the lattice form of
+holonomy of a planar loop *is*: **the parity of the enclosed area**, one π-flux quantum per
+plaquette summed mod 2. It is one ℤ₂ value per loop (areas differing by two give the same
+holonomy), not one recoverable bit per cell, and not an entropy density. It is the lattice form of
 Stokes' (Green's) theorem for a connection of constant flux.
 
 The physical reading (Jim, 2026-11-09: *does one up/down entanglement team with a left/right
@@ -142,8 +144,8 @@ theorem holonomy_eq_area_parity (ts : List Twist) (hp : ∀ t ∈ ts, axisOf t �
   unfold holonomy enclosedArea
   rw [holAux_planar ts (fun _ => 0) hp rfl, Int.cast_neg, zmod2_neg]
 
-/-- **The planar phase**: `(−1)^{#neg} · (−1)^{area}` — the sign content times one bit per enclosed
-    cell. -/
+/-- **The planar phase**: `(−1)^{#neg} · (−1)^{area}` — the sign content times the parity of the
+    enclosed area (one π-flux quantum per plaquette, summed mod 2). -/
 theorem connectionPhase_planar (ts : List Twist) (hp : ∀ t ∈ ts, axisOf t ≠ Axis.Z) :
     connectionPhase ts = (-1 : ℤ) ^ negCount ts * sgn ((enclosedArea ts : ℤ) : ZMod 2) := by
   have h := holonomy_eq_area_parity ts hp

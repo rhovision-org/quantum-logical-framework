@@ -85,7 +85,7 @@ What survives is the standard spinor fact that a 2-component state carries a 3-v
 | Overclaim | Resolved? | How |
 |---|---|---|
 | Area law `∝ R²` (was `holographic_event_count := 4πR²`, a definition) | **Yes for the lattice sphere; the horizon identification is a bridge** | `horizon_area_law`: the spatial `ℓ¹` sphere `sphere3 R` has between `(⌊R/2⌋+1)²` and `2(2R+1)²` sites. Enumeration gives exactly `4R²+2`. The `R²` is now a theorem; `4` vs `4π` is the ℓ¹-vs-Euclidean geometric factor of the continuum rendering, a named factor next to `4 log 2`. **Not proved:** that `sphere3 R` is the horizon QLF's capacity semantics (`closedAtHorizon`) selects, or that it renders as the continuum `4πR²`. Those are a geometric/physical bridge. `holographic_event_count := 4πR²` stays a definition and is not reclassified as a derived count |
-| Locality of shared closures (the premise of the area law) | **Yes, from the locality principle** | The premise is Jim's principle *only local information has any effect*: every shared pair links sites within a fixed **step distance** `d`. Nothing here is time; `d` counts steps of history. [`QLF_LocalAreaLaw`](lean/QLF_LocalAreaLaw.lean) `local_area_law` proves that then the pairs cut by the boundary of the `ℓ¹` ball of radius `R` number at most `4d(2d+1)³(2R+1)²`: `O(R²)` with a coefficient fixed by `d` alone, not by the region (`local_entropy_law` at `log 2` per pair). `light_cone` / `pair_range_le` / `pair_local_of_steps` connect it to histories: halves related to a shared event through `k` steps each lie within `2k`, so `d = 2k`. If the step distance were allowed to grow with `R`, the coefficient would grow too; the principle is what forbids that. This is the light-cone argument for area laws (the Lieb–Robinson route), here on the substrate. **Still posited:** that a shared pair is born at one event (the open item of `QLF_TensorFromClosure`, PR #219) |
+| Locality of shared closures (the premise of the area law) | **Yes, from the locality principle** | The premise is Jim's principle *only local information has any effect*: every shared pair links sites within a fixed **step distance** `d`. Nothing here is time; `d` counts steps of history. [`QLF_LocalAreaLaw`](lean/QLF_LocalAreaLaw.lean) `local_area_law` proves that then the pairs cut by the boundary of the `ℓ¹` ball of radius `R` number at most `4d(2d+1)³(2R+1)²`: `O(R²)` with a coefficient fixed by `d` alone, not by the region (`local_entropy_law` at `log 2` per pair). The pairs form a `Finset`, so the bound is for a *simple* pair graph: reading it as entropy assumes a local capacity of one shared pair per site pair (`M` singlets on one link would carry `M · log 2` and escape the bound), and the step from `log 2` per cut pair to von Neumann entropy stays open. `light_cone` / `pair_range_le` / `pair_local_of_steps` connect it to histories: halves related to a shared event through `k` steps each lie within `2k`, so `d = 2k`. If the step distance were allowed to grow with `R`, the coefficient would grow too; the principle is what forbids that. This is the light-cone argument for area laws (the Lieb–Robinson route), here on the substrate. **Still posited:** that a shared pair is born at one event (the open item of `QLF_TensorFromClosure`, PR #219) |
 | "The bulk is identical to the sum of its boundary states" | **Yes, in its precise form** (§0 rows 1–2) | The stronger reading, that the boundary *constrains* the bulk, is false at finite length (`every_prefix_closes`), so it should not be restated |
 | `holographic.py` as a faithful encoding | **Only as faithful closure *detection*** | The unnormalized `Form` of the open half detects the closure predicate exactly: `countBalanced_iff_strandForm_zero` ([`QLF_EntanglementPrimacy`](lean/QLF_EntanglementPrimacy.lean)) proves it is zero **exactly** on closures. It is **not** a faithful encoding of histories: it keeps only net counts, so it is not injective (`[up, down]` and `[down, up]` both give `0`). The normalized Bloch reading loses even the detection, and is documented as lossy in `holographic.py` |
 | Bekenstein–Hawking ¼ "derived" | **No** | Still the measured `4 log 2` residual. The new geometric factor (`4` vs `4π`) does not remove it: `4R²·log 2` vs `πR²` per Planck patch is a ratio `(4/π)·log 2·…` that depends on how a lattice site maps to a Planck area, which nothing fixes yet |
@@ -93,7 +93,7 @@ What survives is the standard spinor fact that a 2-component state carries a 3-v
 | "AdS/CFT is a provable identity / machine-verified" | **No** | The provable content is §0 rows 1–2. de Sitter / AdS readings stay prose |
 | Holographic QEC: "`full_zeno_prune` is the machine-verified boundary decoder" | **Not attempted** | Would need a code property (distance, recovery map). Open |
 
-### 4a. What a closure carries across a boundary: one bit per enclosed cell
+### 4a. What a closure carries across a boundary: one π-flux quantum per plaquette
 
 Jim asked (2026-11-09) whether an up/down entanglement teams with a left/right one to make a
 closure. It does, and the team carries a quantity neither pair has on its own: enclosed area.
@@ -108,10 +108,12 @@ they bound a different area. Numerically: 0 mismatches over the 68,844 planar cl
 length ≤ 10.
 
 For holography this is the precise sense in which a closure's phase is a **boundary** quantity: it
-is a flux, read entirely off the loop, and it equals one bit per cell of the surface the loop
-bounds. That is Stokes' theorem, which is bookkeeping in the method's sense (rule 4): it holds for
-every loop. What it settles is *where* the phase lives (on the enclosed surface, at one bit per
-cell), not a new count.
+is a flux, read entirely off the loop: one π-flux quantum per plaquette of the surface the loop
+bounds, summed mod 2. It is a single ℤ₂ value for the whole loop: areas that differ by two give the
+same holonomy, so it records neither the enclosed geometry nor one recoverable bit per cell, and it is
+not an entropy density. That is Stokes' theorem, which is bookkeeping in the method's sense (rule 4): it holds for
+every loop. What it settles is *where* the phase lives (on the enclosed surface, as the parity of
+the flux through it), not a new count.
 
 **Three dimensions are encoded in two.** The same module proves the general case
 (`holonomy_eq_projected_areas`): for *every* history, in any axes and closed or not, the holonomy

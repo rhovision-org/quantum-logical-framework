@@ -917,6 +917,66 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TensorFromClosure.composite_faithful": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.composite_is_tensor": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.independent_closure_factors": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.joint_fold_determines_pair": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.n_composite_faithful": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.n_composite_is_tensor": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.pair_scalar_ambiguity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.scalar_fold_not_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.shared_closure_not_independent": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.simple_module_is_cfgState": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.simple_module_is_twoBodyState": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorFromClosure.split_strong_iff_singlet": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Tsirelson.chsh_classical": [
     "propext"
   ],

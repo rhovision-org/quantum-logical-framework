@@ -22,6 +22,13 @@ shell of width `d` under the boundary (`shell_card_le`, at most `2d(2R+1)²` sit
 injection as `sphere3_card_le`), and its other end is one of `(2d+1)³` offsets (`box_card`).
 `local_entropy_law` reads it as entropy at `log 2` per cut pair.
 
+**Multiplicity is an assumption.** `P` is a `Finset (Site × Site)`, so a coordinate pair occurs at most
+once: the bound counts a *simple* pair graph. If `M` independent pairs could share one coordinate
+pair, fixed range alone would not bound them (`M` singlets across one link carry `M · log 2`). Reading
+the bound as entropy therefore needs a local capacity, at most one shared pair per site pair (or a
+fixed bound per pair, which multiplies the coefficient). That the `log 2` per cut pair is the von
+Neumann entropy of the reduced state is a separate bridge and stays open.
+
 Necessity is already proved: without locality the bound fails (`nonlocal_pairs_break_area_law`).
 
 No axioms.
@@ -205,7 +212,8 @@ theorem local_area_law (R d : ℕ) (P : Finset (Site × Site))
     _ ≤ (2 * d * (2 * R + 1) ^ 2) * ((2 * d + 1) ^ 3 * 2) := Nat.mul_le_mul hs le_rfl
     _ = 4 * d * (2 * d + 1) ^ 3 * (2 * R + 1) ^ 2 := by ring
 
-/-- **The local entropy law**: at `log 2` per cut pair, the entropy the ball shares with its outside
+/-- **The local entropy law** (assuming at most one shared pair per site pair, which `Finset` encodes):
+    at `log 2` per cut pair, the entropy the ball shares with its outside
     is at most `4d(2d+1)³(2R+1)² · log 2`. -/
 theorem local_entropy_law (R d : ℕ) (P : Finset (Site × Site))
     (hloc : ∀ e ∈ P, n1 (off e.1 e.2) ≤ d) :
