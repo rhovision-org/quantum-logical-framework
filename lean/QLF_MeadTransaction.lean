@@ -28,6 +28,9 @@ as a **matched pair**: a forward (retarded, "offer") half on `fix t` and a backw
 >
 > **`realStep_sub_neg`, `realStep_add_neg`** — retarded minus advanced is `2i sin k · M(t)`, the
 > whole twist with the factor `2`; retarded plus advanced is `2 cos k · 1`, which carries no twist.
+>
+> **`electric_eq_magnetic_iff`** — time–space (electric) planes equal space–space (magnetic) planes,
+> `d = d(d−1)/2`, only for `d = 3` spatial axes: half and half is a three-dimensional fact.
 
 Since the generator of the step is `i·M(t)` (`DiracWalk.realStep_generator`), `M(t)` is the step's
 velocity in lattice units, and the halves are its eigenspaces with velocity `+1` and `−1`. The two
@@ -112,5 +115,26 @@ theorem realStep_add_neg (t : Twist) (k : ℝ) :
   rw [realStep_eq_cos_sin, realStep_eq_cos_sin, Real.cos_neg, Real.sin_neg]
   push_cast
   module
+
+-- ==========================================
+-- §4  Electric and magnetic: half and half only with three spatial axes
+-- ==========================================
+
+/-- **Electric planes equal magnetic planes only for three spatial axes.** With `d` spatial axes and
+one gauge (time) axis, the time–space planes (electric, Mead's "lateral") number `d` and the
+space–space planes (magnetic, "transverse") number `d(d−1)/2`. They are equal, `2d = d(d−1)`, exactly
+when `d = 0` or `d = 3`. This is the counting face of electric–magnetic duality, which needs four
+dimensions; QLF's alphabet has three spatial axes, so its orthogonal folds split evenly. -/
+theorem electric_eq_magnetic_iff (d : ℕ) : 2 * d = d * (d - 1) ↔ d = 0 ∨ d = 3 := by
+  constructor
+  · intro h
+    by_cases hd : d ≤ 3
+    · interval_cases d <;> simp_all
+    · exfalso
+      obtain ⟨n, rfl⟩ : ∃ n, d = n + 4 := ⟨d - 4, by omega⟩
+      have e : n + 4 - 1 = n + 3 := by omega
+      rw [e] at h
+      nlinarith
+  · rintro (rfl | rfl) <;> norm_num
 
 end QLF.MeadTransaction

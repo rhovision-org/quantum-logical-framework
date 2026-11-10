@@ -74,16 +74,18 @@ a forward phase on one half and a backward phase on the conjugate half. [`QLF_Me
 | the factor 2 | `realStep_sub_neg`, `realStep_add_neg` | retarded minus advanced is `2i sin k·M(t)`: the whole twist, with the factor 2. Retarded plus advanced is `2 cos k·1`, which carries no twist. Reversing the momentum is the adjoint (`realStep_neg`), so the advanced step is the retarded step's time reverse. Summed over the three axes this is `H(k) = 2i·Form(sin k)` |
 | time-symmetric equations | `gauge_no_split` ([`QLF_GaugeAxis`](lean/QLF_GaugeAxis.lean)) | on the gauge (time) axis there is no split: one half is everything and the other nothing, so the gauge step is a pure clock phase. Only space is split half and half |
 | a null exchange | `GaugeAxis.light_cone` | when the clock phase cancels the spatial phase (zero free action per step), `ω² = k²`: a light-like step carries equal parts time and space |
+| electric = magnetic | `electric_eq_magnetic_iff` | time–space and space–space plane counts are equal only for three spatial axes |
 | the fluxoid | `EdgeSign.plaquette_yx`, `plaquette_twice` ([`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)) | one spatial ZFA loop `^>v<` has holonomy `−1` and two loops `+1` |
 
 **A correction to §3.** §3 says one ZFA loop is a `2π` phase. The proven holonomy is `−1`, which is `π`. That fits the superconducting fluxoid better than `2π` would: the flux quantum is `h/2e`, and an electron of charge `e` taken round it picks up Aharonov–Bohm phase `e·(h/2e)/ħ = π`, while the Cooper pair (charge `2e`) picks up `2π`. So one ZFA loop is half a turn for one electron and a full turn for the pair. That is the same `−1`/`+1` as §4's `720°`.
 
-**Two readings of "half lateral and half transverse".** Both are proven; which one Jim means is open.
+**"Half lateral and half transverse."** Jim's reading of Mead (2026-11-10): *lateral* is the spatial electric part, *transverse* the spatial magnetic part, and fundamentally both are orthogonal folds. In lattice-gauge terms the electric components live on time–space plaquettes (one gauge twist and one spatial twist) and the magnetic components on space–space plaquettes (two spatial twists). Twists on different spatial axes anticommute (`anti` in [`QLF_ChannelZeros`](lean/QLF_ChannelZeros.lean)), which is the formal sense in which the folds are orthogonal. What is proven about the split:
 
-1. *Half forward, half backward along each spatial axis*: `trace_fix_spatial` with `mead_transaction`, the two halves at `±c`.
-2. *Half time, half space in a null step*: `GaugeAxis.light_cone`, the clock phase equal to the spatial phase.
+- **`electric_eq_magnetic_iff`**: with `d` spatial axes there are `d` electric planes and `d(d−1)/2` magnetic planes, and the two counts are equal only for `d = 3` (or the empty `d = 0`). Half electric and half magnetic is a fact about three spatial axes, which is the counting form of electric–magnetic duality needing four dimensions. QLF's alphabet has three spatial axes, so the split is even.
+- **`EdgeSign.plaquette_gauge`** and **`plaquette_yx`**: the bare vacuum is not symmetric between the halves. An electric plaquette `^+v−` carries no flux, and a magnetic plaquette `^>v<` carries π.
+- The per-axis forward/backward split (`trace_fix_spatial`) and the null step (`GaugeAxis.light_cone`) are the other two halves that §6b proves; neither is the electric/magnetic split itself.
 
-[`Atomic_Structure_QLF.md`](Atomic_Structure_QLF.md) §5 uses "lateral" for the charge axis `<>` and "transverse" for spin. If that is the meaning, neither reading above is it yet, and the target is a theorem about the charge axis and the spin axes specifically.
+Open: that a *null* closure (a photon exchange) puts equal action on its electric and magnetic plaquettes, the substrate form of `|E| = c|B|` in a light wave. The plane counts make it possible; it is not yet proved.
 
 **Scope (method rule 4).** Every row above is an identity about one step or one loop. None changes a count of ways, so together they show that QLF's step *has* Mead's structure. They are not evidence that Mead's transaction is the physics.
 
