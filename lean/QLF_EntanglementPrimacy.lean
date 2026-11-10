@@ -68,14 +68,39 @@ creation operator creates only entanglements.
 * **`strand_realizes`**: every integer vector `(a, b, c, d) ∈ ℤ⁴` is the net signed count of some
   strand, so derived Forms fill the whole integer lattice.
 * **`rational_form_is_frequency`**: every Form with rational coordinates is the **frequency** of a
-  strand (`freqForm`: net counts per event over a window of `N` events).
+  strand (`freqForm ts N`: net counts divided by a normalisation `N`). `N` is not the strand's length:
+  the event-window reading is `N = ts.length`, and the theorems below say which results survive it.
+* **`net_abs_le_length`**: a strand is at least as long as its nets,
+  `|#+ − #−| + |#> − #<| + |#^ − #v| + |#/ − #\| ≤ length`, since each twist moves one axis by one.
 * **`pure_state_plus_up`**: the two-twist strand `+^` read over its own two events is the pure state
   `(½, 0, ½, 0)`.
 * **`rational_pure_state_is_frequency`**: every pure qubit state with a rational Bloch vector is a
   frequency of a strand.
+* **`form_approximated`** / **`form_approximated_freq`**: every real Form, irrational coordinates
+  included, has strand nets within one unit of `N · f`, so for `N > 0` some strand frequency is within
+  `1/N` of it, and it is a limit of strand frequencies. This is integer-count approximation under a
+  normalisation `N`; the strand may need more than `N` twists.
+* **`pure_state_family`**: for integers `m, n, k`, the strand with nets
+  `(m²+n²+k², 2mk, 2nk, m²+n²−k²)` normalised by `N = 2(m²+n²+k²)` is a pure state.
+* **`window_pure_on_axis`**: read over its own events (`length ≤ N`, one twist per event), a strand
+  is pure **only on an axis**: at most one spatial net is non-zero, so the state is one of the six
+  axis states `±x, ±y, ±z` (`pure_state_plus_up` is one). Example: `pure_state_family` at
+  `m = n = k = 1` has `N = 6` but nets `(3, 2, 2, 1)`, which need eight twists.
 
-So the real numbers in a Form enter only as ratios of counts to a window. Pure-state normalisation
-`t = ½` is a choice of window (the gauge net is half the events), not an extra postulate.
+## Rung 4b: pure strand frequencies are dense (no axioms)
+
+* **`stereo_on_sphere`**, **`stereo_inverse`**, **`stereo_continuous`**: inverse stereographic
+  projection maps the plane onto the pure Bloch sphere minus its north pole, continuously, and
+  `(2x, 2y)/(1 − 2z)` inverts it.
+* **`pure_strand_frequencies_dense`**: for every pure state `f` and `ε > 0` some strand frequency is
+  itself pure and within `ε` of `f` on every coordinate. The north pole is `+/` exactly; elsewhere a
+  rational plane point near the preimage gives, after clearing denominators, an instance of
+  `pure_state_family`.
+
+So the real numbers in a Form enter only as ratios of counts to a normalisation. Pure-state
+normalisation `t = ½` is a choice of `N` (the gauge net is half of it), not an extra postulate. But
+if `N` must be the number of events, only the six axis states are pure frequencies; every other pure
+state needs `N` to be a normalisation shorter than the strand.
 
 ## Rung 5: the strong reading (no axioms)
 
@@ -104,23 +129,29 @@ Read a pair `[t, t†]` as the twist's axis acting on both sites of a two-body s
 
 ## What is still NOT proved (stated so nobody overclaims)
 
-1. **Irrational Forms.** A pure state whose Bloch vector is irrational is the frequency of no finite
-   strand. Rational points are dense on the sphere (classical), so each such state is a limit of
-   strand frequencies, but that limit is not formalised here. `QLF_Realizability` is the reason to
-   expect no more than rationals in a finite region; linking the two is open.
-2. **Why the window is `N`.** Rung 4 shows that `t = ½` is reached by choosing the window; it does
-   not derive that the physical window is the one that makes the gauge net half of it.
+1. **Irrational Forms are limits, not frequencies.** A Form with an irrational coordinate is the
+   frequency of no finite strand, but `form_approximated_freq` puts some strand's frequency within
+   `1/N` of it at every normalisation `N > 0`, so it is a limit of strand frequencies, and
+   `pure_strand_frequencies_dense` (rung 4b) makes the approximants of a pure state pure themselves.
+   Not formalised: the link to `QLF_Realizability`, which is the reason to expect no more than
+   rationals in a finite region.
+2. **What `N` is physically.** Rung 4 reaches `t = ½` by choosing the normalisation `N`; it does
+   not derive that the physical `N` makes the gauge net half of it. And `window_pure_on_axis` shows
+   the choice is forced away from the plainest reading: if `N` counts events one twist each, the
+   only pure frequencies are the six axis states. Off-axis pure states need `N` below the strand's
+   length (several twists per event, or a normalisation that is not an event count), and which of
+   those is physical is open.
 3. **The two-body reading.** Rung 6 maps a pair to the joint action of its axis on two sites, a
    chosen reading. [`QLF_TensorFromClosure`](QLF_TensorFromClosure.lean) §8 now derives the action
    instead: a pair shared as `t` on one body and `t†` on the other folds to `t ⊗ t†`, the singlet is
    the unique state every shared strong pair fixes (`split_strong_iff_singlet`), and it agrees with
-   this reading (`split_reading_agrees`). Still posited: a shared pair puts one half on each body. The tensor product itself, which `closed_iff_singlet` used, is now derived
-   for two bodies in [`QLF_TensorFromClosure`](QLF_TensorFromClosure.lean): interleaving invariance
-   forces commuting bodies, and every such composite factors uniquely through `M ⊗ M ≅ Mat₄(ℂ)`.
+   this reading (`split_reading_agrees`). Still posited: a shared pair puts one half on each body.
+   The tensor product itself, which `closed_iff_singlet` uses, is derived there too.
 
 Rungs 1–6 of "the logical entanglement is responsible for all other results" are proved here for the
 twist layer: what closes (pairs), its phase (pairs × crossings), its Form (the open half), every
-rational Form and pure state (frequencies of strands), which pairs are entangled in the strong
+rational Form and pure state (frequencies of strands under a normalisation; within a one-twist-per-
+event window only the axis states are pure), which pairs are entangled in the strong
 sense (exactly the spatial ones), and that those pairs single out the two-body singlet.
 -/
 
@@ -453,6 +484,24 @@ theorem netY_append (l₁ l₂ : List Twist) : netY (l₁ ++ l₂) = netY l₁ +
 theorem netZ_append (l₁ l₂ : List Twist) : netZ (l₁ ++ l₂) = netZ l₁ + netZ l₂ := by
   simp [netZ]
 
+/-- **A strand is at least as long as its nets.** Each twist moves one axis by one unit, so the
+    absolute net counts summed over the four axes never exceed the number of twists. This is what
+    separates a normalisation `N` from an event count: a strand read as one twist per event cannot
+    carry nets larger than its own length. -/
+theorem net_abs_le_length (ts : List Twist) :
+    |netT ts| + |netX ts| + |netY ts| + |netZ ts| ≤ (ts.length : ℤ) := by
+  induction ts with
+  | nil => simp [netT, netX, netY, netZ]
+  | cons t ts ih =>
+    rw [netT_cons, netX_cons, netY_cons, netZ_cons, List.length_cons]
+    push_cast
+    cases t <;> simp only [twT, twX, twY, twZ, zero_add] <;>
+      linarith [abs_add_le (1 : ℤ) (netT ts), abs_add_le (-1 : ℤ) (netT ts),
+        abs_add_le (1 : ℤ) (netX ts), abs_add_le (-1 : ℤ) (netX ts),
+        abs_add_le (1 : ℤ) (netY ts), abs_add_le (-1 : ℤ) (netY ts),
+        abs_add_le (1 : ℤ) (netZ ts), abs_add_le (-1 : ℤ) (netZ ts),
+        (abs_one : |(1 : ℤ)| = 1), abs_neg (1 : ℤ)]
+
 /-- One axis at a time: a strand with any integer net on a chosen axis and zero on the others. The
     twist pair `(p, n)` is the axis's positive and negative letter. -/
 private theorem exists_on_axis (p n : Twist) (f : List Twist → ℤ)
@@ -548,6 +597,343 @@ theorem rational_pure_state_is_frequency (a b c d : ℤ) (N : ℕ)
   refine ⟨ts, ?_, hts⟩
   rw [hts]
   exact hpure
+
+/-- **Every real Form is approached by strand frequencies.** For any Form `f` and any window `N`, some
+    strand's net counts sit within one unit of `N · f` on every axis, so its frequency
+    (`freqForm`, nets divided by `N`) is within `1/N` of `f`. As the window grows the frequencies
+    converge to `f`, irrational coordinates included. -/
+theorem form_approximated (f : Form) (N : ℕ) :
+    ∃ ts : List Twist,
+      |(netT ts : ℝ) - N * f.t| ≤ 1 ∧ |(netX ts : ℝ) - N * f.x| ≤ 1 ∧
+      |(netY ts : ℝ) - N * f.y| ≤ 1 ∧ |(netZ ts : ℝ) - N * f.z| ≤ 1 := by
+  obtain ⟨ts, h1, h2, h3, h4⟩ :=
+    strand_realizes ⌊(N : ℝ) * f.t⌋ ⌊(N : ℝ) * f.x⌋ ⌊(N : ℝ) * f.y⌋ ⌊(N : ℝ) * f.z⌋
+  refine ⟨ts, ?_, ?_, ?_, ?_⟩
+  · rw [h1, abs_le]
+    have := Int.floor_le ((N : ℝ) * f.t)
+    have := Int.lt_floor_add_one ((N : ℝ) * f.t)
+    constructor <;> linarith
+  · rw [h2, abs_le]
+    have := Int.floor_le ((N : ℝ) * f.x)
+    have := Int.lt_floor_add_one ((N : ℝ) * f.x)
+    constructor <;> linarith
+  · rw [h3, abs_le]
+    have := Int.floor_le ((N : ℝ) * f.y)
+    have := Int.lt_floor_add_one ((N : ℝ) * f.y)
+    constructor <;> linarith
+  · rw [h4, abs_le]
+    have := Int.floor_le ((N : ℝ) * f.z)
+    have := Int.lt_floor_add_one ((N : ℝ) * f.z)
+    constructor <;> linarith
+
+/-- **The `1/N` reading of `form_approximated`.** For a window `N > 0`, some strand's frequency is
+    within `1/N` of `f` on every coordinate. Here `N` is a normalisation: the strand may be longer
+    than `N` (`net_abs_le_length` bounds it below, nothing bounds it above), so this is integer-count
+    approximation, not realization within `N` events. -/
+theorem form_approximated_freq (f : Form) (N : ℕ) (hN : 0 < N) :
+    ∃ ts : List Twist,
+      |(freqForm ts N).t - f.t| ≤ 1 / N ∧ |(freqForm ts N).x - f.x| ≤ 1 / N ∧
+      |(freqForm ts N).y - f.y| ≤ 1 / N ∧ |(freqForm ts N).z - f.z| ≤ 1 / N := by
+  obtain ⟨ts, h1, h2, h3, h4⟩ := form_approximated f N
+  have hn : (0 : ℝ) < N := by exact_mod_cast hN
+  have hn0 : (N : ℝ) ≠ 0 := ne_of_gt hn
+  have key : ∀ a s : ℝ, |a - N * s| ≤ 1 → |a / N - s| ≤ 1 / N := by
+    intro a s h
+    have e : a / N - s = (a - N * s) / N := by
+      rw [sub_div, mul_comm, mul_div_assoc, div_self hn0, mul_one]
+    rw [e, abs_div, abs_of_pos hn]
+    gcongr
+  exact ⟨ts, key _ _ h1, key _ _ h2, key _ _ h3, key _ _ h4⟩
+
+/-- **A family of pure states made of strands.** For integers `m, n, k` (not all zero), the strand
+    with nets `(m² + n² + k², 2mk, 2nk, m² + n² − k²)`, normalised by `N = 2(m² + n² + k²)`, is a
+    pure qubit state. Its Bloch vector is the inverse stereographic image of the rational point
+    `(m/k, n/k)`, which is why the four nets satisfy `(2mk)² + (2nk)² + (m² + n² − k²)² =
+    (m² + n² + k²)²`. Pure states are limits of these *pure* strand frequencies
+    (`pure_strand_frequencies_dense`). `N` is a normalisation, not the strand's
+    length: off an axis the strand is longer than `N` (`window_pure_on_axis`). -/
+theorem pure_state_family (m n k : ℤ) (N : ℕ) (hN : (N : ℤ) = 2 * (m ^ 2 + n ^ 2 + k ^ 2))
+    (hN0 : N ≠ 0) :
+    ∃ ts : List Twist, IsPure (freqForm ts N) := by
+  obtain ⟨ts, h1, h2, h3, h4⟩ :=
+    strand_realizes (m ^ 2 + n ^ 2 + k ^ 2) (2 * m * k) (2 * n * k) (m ^ 2 + n ^ 2 - k ^ 2)
+  refine ⟨ts, ?_⟩
+  have hNR : (N : ℝ) = 2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2) := by exact_mod_cast hN
+  have hD : (m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2 ≠ 0 := by
+    intro h0
+    apply hN0
+    have : (N : ℝ) = 0 := by rw [hNR, h0, mul_zero]
+    exact_mod_cast this
+  have hi : (2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2)) *
+      (2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2))⁻¹ = 1 :=
+    mul_inv_cancel₀ (mul_ne_zero two_ne_zero hD)
+  unfold IsPure
+  simp only [freqForm, h1, h2, h3, h4]
+  push_cast
+  rw [hNR]
+  constructor
+  · linear_combination (1 / 2 : ℝ) * hi
+  · linear_combination (1 / 4 * (2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2) *
+      (2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2))⁻¹ + 1)) * hi
+
+/-- The real inequality behind `window_pure_on_axis`: non-negative `a, b, c` with `a + b + c ≤ n/2`
+    and `a² + b² + c² = n²/4` have every pairwise product zero, so at most one is non-zero. -/
+private theorem at_most_one_nonzero (a b c n : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c)
+    (hn : 0 ≤ n) (hsum : a + b + c ≤ n / 2) (hS : a ^ 2 + b ^ 2 + c ^ 2 = n ^ 2 / 4) :
+    a * b = 0 ∧ b * c = 0 ∧ a * c = 0 := by
+  have hsq : (a + b + c) * (a + b + c) ≤ n / 2 * (n / 2) :=
+    mul_le_mul hsum hsum (by linarith) (by linarith)
+  have h1 := mul_nonneg ha hb
+  have h2 := mul_nonneg hb hc
+  have h3 := mul_nonneg ha hc
+  refine ⟨?_, ?_, ?_⟩ <;> nlinarith [hsq, hS, h1, h2, h3]
+
+/-- **Inside its own window, a strand is pure only on an axis.** If a strand of at most `N` twists
+    (one twist per event) has a pure frequency over the window `N`, then at most one of its spatial
+    nets is non-zero: the state is one of the six axis states `±x, ±y, ±z`. The gauge net must be
+    `N/2` for `t = ½`, leaving at most `N/2` twists for the Bloch vector, and a vector of length `½`
+    whose coordinates sum in absolute value to at most `½` lies on an axis. So `pure_state_plus_up`
+    is the generic case, and every off-axis pure state (`pure_state_family` with two of `m, n, k`
+    non-zero, for instance `m = n = k = 1`: `N = 6` but nets `(3, 2, 2, 1)` need eight twists) is a
+    frequency only when `N` is a normalisation, not the event count. -/
+theorem window_pure_on_axis (ts : List Twist) (N : ℕ) (hlen : ts.length ≤ N)
+    (hp : IsPure (freqForm ts N)) :
+    netX ts * netY ts = 0 ∧ netY ts * netZ ts = 0 ∧ netX ts * netZ ts = 0 := by
+  unfold IsPure at hp
+  obtain ⟨ht, hs⟩ := hp
+  simp only [freqForm] at ht hs
+  have hN : 0 < N := by
+    rcases Nat.eq_zero_or_pos N with h | h
+    · subst h
+      norm_num at ht
+    · exact h
+  have hn : (0 : ℝ) < N := by exact_mod_cast hN
+  have hn0 : (N : ℝ) ≠ 0 := ne_of_gt hn
+  have hT : (netT ts : ℝ) = N / 2 := by
+    rw [div_eq_iff hn0] at ht
+    linarith
+  have hS : (netX ts : ℝ) ^ 2 + (netY ts : ℝ) ^ 2 + (netZ ts : ℝ) ^ 2 = (N : ℝ) ^ 2 / 4 := by
+    rw [div_pow, div_pow, div_pow, ← add_div, ← add_div, div_eq_iff (pow_ne_zero 2 hn0)] at hs
+    linarith
+  rw [← sq_abs (netX ts : ℝ), ← sq_abs (netY ts : ℝ), ← sq_abs (netZ ts : ℝ)] at hS
+  have hb := net_abs_le_length ts
+  have hbR : |(netT ts : ℝ)| + |(netX ts : ℝ)| + |(netY ts : ℝ)| + |(netZ ts : ℝ)| ≤
+      (ts.length : ℝ) := by exact_mod_cast hb
+  have hlenR : (ts.length : ℝ) ≤ N := by exact_mod_cast hlen
+  rw [hT, abs_of_pos (half_pos hn)] at hbR
+  obtain ⟨p1, p2, p3⟩ := at_most_one_nonzero |(netX ts : ℝ)| |(netY ts : ℝ)| |(netZ ts : ℝ)| N
+    (abs_nonneg _) (abs_nonneg _) (abs_nonneg _) hn.le (by linarith) hS
+  rw [← abs_mul, abs_eq_zero] at p1 p2 p3
+  exact ⟨by exact_mod_cast p1, by exact_mod_cast p2, by exact_mod_cast p3⟩
+
+-- ==========================================
+-- Rung 4b: pure strand frequencies are dense on the Bloch sphere
+-- ==========================================
+
+/-- Inverse stereographic projection from the north pole onto the Bloch sphere of radius `½`,
+    `x` coordinate. -/
+noncomputable def stereoX (u v : ℝ) : ℝ := u / (u ^ 2 + v ^ 2 + 1)
+/-- Inverse stereographic projection, `y` coordinate. -/
+noncomputable def stereoY (u v : ℝ) : ℝ := v / (u ^ 2 + v ^ 2 + 1)
+/-- Inverse stereographic projection, `z` coordinate. -/
+noncomputable def stereoZ (u v : ℝ) : ℝ := (u ^ 2 + v ^ 2 - 1) / (2 * (u ^ 2 + v ^ 2 + 1))
+
+/-- The inverse stereographic image of every plane point is a pure Bloch vector (length `½`). -/
+theorem stereo_on_sphere (u v : ℝ) :
+    stereoX u v ^ 2 + stereoY u v ^ 2 + stereoZ u v ^ 2 = 1 / 4 := by
+  have h : u ^ 2 + v ^ 2 + 1 ≠ 0 := by positivity
+  have hi : (u ^ 2 + v ^ 2 + 1) * (u ^ 2 + v ^ 2 + 1)⁻¹ = 1 := mul_inv_cancel₀ h
+  simp only [stereoX, stereoY, stereoZ, div_eq_mul_inv, mul_inv]
+  linear_combination (((u ^ 2 + v ^ 2 + 1) * (u ^ 2 + v ^ 2 + 1)⁻¹ + 1) / 4) * hi
+
+/-- **Stereographic projection inverts it.** Every pure Bloch vector except the north pole
+    `(0, 0, ½)` is the image of the plane point `(2x, 2y)/(1 − 2z)`. -/
+theorem stereo_inverse (x y z : ℝ) (hs : x ^ 2 + y ^ 2 + z ^ 2 = 1 / 4) (hz : z ≠ 1 / 2) :
+    stereoX (2 * x / (1 - 2 * z)) (2 * y / (1 - 2 * z)) = x ∧
+    stereoY (2 * x / (1 - 2 * z)) (2 * y / (1 - 2 * z)) = y ∧
+    stereoZ (2 * x / (1 - 2 * z)) (2 * y / (1 - 2 * z)) = z := by
+  have hw : (1 - 2 * z) ≠ 0 := by
+    intro h
+    apply hz
+    linarith
+  obtain ⟨u, hu_def⟩ : ∃ u : ℝ, u = 2 * x / (1 - 2 * z) := ⟨_, rfl⟩
+  obtain ⟨v, hv_def⟩ : ∃ v : ℝ, v = 2 * y / (1 - 2 * z) := ⟨_, rfl⟩
+  rw [← hu_def, ← hv_def]
+  have hu : 2 * x = u * (1 - 2 * z) := by
+    rw [hu_def]
+    exact (div_eq_iff hw).mp rfl
+  have hv : 2 * y = v * (1 - 2 * z) := by
+    rw [hv_def]
+    exact (div_eq_iff hw).mp rfl
+  have hS2 : (u ^ 2 + v ^ 2 + 1) * (1 - 2 * z) * (1 - 2 * z) = 2 * (1 - 2 * z) := by
+    linear_combination (-(u * (1 - 2 * z) + 2 * x)) * hu + (-(v * (1 - 2 * z) + 2 * y)) * hv +
+      4 * hs
+  have hS : (u ^ 2 + v ^ 2 + 1) * (1 - 2 * z) = 2 := mul_right_cancel₀ hw hS2
+  have hS0 : u ^ 2 + v ^ 2 + 1 ≠ 0 := by positivity
+  unfold stereoX stereoY stereoZ
+  refine ⟨?_, ?_, ?_⟩
+  · rw [div_eq_iff hS0]
+    apply mul_right_cancel₀ hw
+    linear_combination (-1 : ℝ) * hu - x * hS
+  · rw [div_eq_iff hS0]
+    apply mul_right_cancel₀ hw
+    linear_combination (-1 : ℝ) * hv - y * hS
+  · rw [div_eq_iff (mul_ne_zero two_ne_zero hS0)]
+    apply mul_right_cancel₀ hw
+    linear_combination (1 - 2 * z) * hS
+
+/-- The three coordinates of the inverse stereographic map are continuous on the plane. -/
+theorem stereo_continuous :
+    Continuous (fun p : ℝ × ℝ => stereoX p.1 p.2) ∧
+    Continuous (fun p : ℝ × ℝ => stereoY p.1 p.2) ∧
+    Continuous (fun p : ℝ × ℝ => stereoZ p.1 p.2) := by
+  have hd : Continuous (fun p : ℝ × ℝ => p.1 ^ 2 + p.2 ^ 2 + 1) := by fun_prop
+  have hn3 : Continuous (fun p : ℝ × ℝ => p.1 ^ 2 + p.2 ^ 2 - 1) := by fun_prop
+  have hd2 : Continuous (fun p : ℝ × ℝ => 2 * (p.1 ^ 2 + p.2 ^ 2 + 1)) := by fun_prop
+  refine ⟨?_, ?_, ?_⟩
+  · unfold stereoX
+    apply Continuous.div continuous_fst hd
+    intro p
+    show p.1 ^ 2 + p.2 ^ 2 + 1 ≠ 0
+    positivity
+  · unfold stereoY
+    apply Continuous.div continuous_snd hd
+    intro p
+    show p.1 ^ 2 + p.2 ^ 2 + 1 ≠ 0
+    positivity
+  · unfold stereoZ
+    apply Continuous.div hn3 hd2
+    intro p
+    show 2 * (p.1 ^ 2 + p.2 ^ 2 + 1) ≠ 0
+    positivity
+
+/-- `pure_state_family` at `(m, n, k) = K · (q, r, 1)` has frequency `(½, stereo(q, r))`: the
+    family is the inverse stereographic image of `(m/k, n/k)`, and the scale `K` cancels. -/
+private theorem family_coords (q r K : ℝ) (hK : K ≠ 0) :
+    ((q * K) ^ 2 + (r * K) ^ 2 + K ^ 2) / (2 * ((q * K) ^ 2 + (r * K) ^ 2 + K ^ 2)) = 1 / 2 ∧
+    2 * (q * K) * K / (2 * ((q * K) ^ 2 + (r * K) ^ 2 + K ^ 2)) = stereoX q r ∧
+    2 * (r * K) * K / (2 * ((q * K) ^ 2 + (r * K) ^ 2 + K ^ 2)) = stereoY q r ∧
+    ((q * K) ^ 2 + (r * K) ^ 2 - K ^ 2) / (2 * ((q * K) ^ 2 + (r * K) ^ 2 + K ^ 2)) =
+      stereoZ q r := by
+  have hs : q ^ 2 + r ^ 2 + 1 ≠ 0 := by positivity
+  have hd : 2 * ((q * K) ^ 2 + (r * K) ^ 2 + K ^ 2) = 2 * K ^ 2 * (q ^ 2 + r ^ 2 + 1) := by ring
+  have hd0 : 2 * K ^ 2 * (q ^ 2 + r ^ 2 + 1) ≠ 0 :=
+    mul_ne_zero (mul_ne_zero two_ne_zero (pow_ne_zero 2 hK)) hs
+  unfold stereoX stereoY stereoZ
+  rw [hd]
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · rw [div_eq_iff hd0]
+    ring
+  · rw [div_eq_iff hd0, div_mul_eq_mul_div, eq_div_iff hs]
+    ring
+  · rw [div_eq_iff hd0, div_mul_eq_mul_div, eq_div_iff hs]
+    ring
+  · rw [div_eq_iff hd0, div_mul_eq_mul_div, eq_div_iff (mul_ne_zero two_ne_zero hs)]
+    ring
+
+/-- **Pure strand frequencies are dense among pure states.** For every pure qubit state `f` and every
+    `ε > 0` there is a strand and a normalisation `N` whose frequency is itself a pure state and lies
+    within `ε` of `f` on each Bloch coordinate (`t = ½` on both). The north pole is hit exactly by
+    `+/` over `N = 2`. Every other pure state is the inverse stereographic image of a plane point;
+    rational plane points are dense and the map is continuous, and a rational point
+    `(q, r)` is `pure_state_family` at `(m, n, k) = (q, r, 1) · den q · den r`. So every pure state
+    is a limit of pure strand frequencies, with no classical fact cited. `N` is a normalisation here:
+    off an axis the strand is longer than `N` (`window_pure_on_axis`). -/
+theorem pure_strand_frequencies_dense (f : Form) (hf : IsPure f) (ε : ℝ) (hε : 0 < ε) :
+    ∃ (ts : List Twist) (N : ℕ), IsPure (freqForm ts N) ∧
+      |(freqForm ts N).x - f.x| < ε ∧ |(freqForm ts N).y - f.y| < ε ∧
+      |(freqForm ts N).z - f.z| < ε := by
+  unfold IsPure at hf
+  obtain ⟨_, hs⟩ := hf
+  by_cases hz : f.z = 1 / 2
+  · -- the north pole, exactly: the strand `+/` normalised by `2`
+    have hz2 : f.z ^ 2 = 1 / 4 := by
+      rw [hz]
+      norm_num
+    have hxy : f.x ^ 2 + f.y ^ 2 = 0 := by linarith
+    have hx : f.x = 0 := by nlinarith [sq_nonneg f.x, sq_nonneg f.y]
+    have hy : f.y = 0 := by nlinarith [sq_nonneg f.x, sq_nonneg f.y]
+    refine ⟨[Twist.plus, Twist.slash], 2, ?_, ?_, ?_, ?_⟩
+    · unfold IsPure
+      norm_num [freqForm, netT, netX, netY, netZ, twT, twX, twY, twZ]
+    · rw [hx]
+      norm_num [freqForm, netX, twX, hε]
+    · rw [hy]
+      norm_num [freqForm, netY, twY, hε]
+    · rw [hz]
+      norm_num [freqForm, netZ, twZ, hε]
+  · -- every other pure state: approach its stereographic preimage by rational points
+    obtain ⟨hX, hY, hZ⟩ := stereo_inverse f.x f.y f.z hs hz
+    obtain ⟨u, hu⟩ : ∃ u : ℝ, u = 2 * f.x / (1 - 2 * f.z) := ⟨_, rfl⟩
+    obtain ⟨v, hv⟩ : ∃ v : ℝ, v = 2 * f.y / (1 - 2 * f.z) := ⟨_, rfl⟩
+    rw [← hu, ← hv] at hX hY hZ
+    obtain ⟨cx, cy, cz⟩ := stereo_continuous
+    obtain ⟨δ₁, hδ₁, h₁⟩ := Metric.continuous_iff.mp cx (u, v) ε hε
+    obtain ⟨δ₂, hδ₂, h₂⟩ := Metric.continuous_iff.mp cy (u, v) ε hε
+    obtain ⟨δ₃, hδ₃, h₃⟩ := Metric.continuous_iff.mp cz (u, v) ε hε
+    obtain ⟨δ, hδ, hδ1, hδ2, hδ3⟩ : ∃ δ : ℝ, 0 < δ ∧ δ ≤ δ₁ ∧ δ ≤ δ₂ ∧ δ ≤ δ₃ :=
+      ⟨min δ₁ (min δ₂ δ₃), lt_min hδ₁ (lt_min hδ₂ hδ₃), min_le_left _ _,
+        (min_le_right _ _).trans (min_le_left _ _), (min_le_right _ _).trans (min_le_right _ _)⟩
+    obtain ⟨q, hq1, hq2⟩ := exists_rat_btwn (show u - δ < u + δ by linarith)
+    obtain ⟨r, hr1, hr2⟩ := exists_rat_btwn (show v - δ < v + δ by linarith)
+    have hd : dist ((q : ℝ), (r : ℝ)) (u, v) < δ := by
+      simp only [Prod.dist_eq, Real.dist_eq, max_lt_iff, abs_lt]
+      exact ⟨⟨by linarith, by linarith⟩, by linarith, by linarith⟩
+    have ex := h₁ _ (lt_of_lt_of_le hd hδ1)
+    have ey := h₂ _ (lt_of_lt_of_le hd hδ2)
+    have ez := h₃ _ (lt_of_lt_of_le hd hδ3)
+    simp only [Real.dist_eq] at ex ey ez
+    rw [hX] at ex
+    rw [hY] at ey
+    rw [hZ] at ez
+    -- clear the denominators of `(q, r)` into integers `(m, n, k)`
+    have hqd : (q.den : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr q.den_nz
+    have hrd : (r.den : ℝ) ≠ 0 := Nat.cast_ne_zero.mpr r.den_nz
+    have hq : (q : ℝ) * q.den = q.num := (eq_div_iff hqd).mp (Rat.cast_def q)
+    have hr : (r : ℝ) * r.den = r.num := (eq_div_iff hrd).mp (Rat.cast_def r)
+    have hK : (q.den : ℝ) * r.den ≠ 0 := mul_ne_zero hqd hrd
+    obtain ⟨m, hm⟩ : ∃ m : ℤ, (m : ℝ) = q * ((q.den : ℝ) * r.den) :=
+      ⟨q.num * r.den, by push_cast; rw [← hq]; ring⟩
+    obtain ⟨n, hn⟩ : ∃ n : ℤ, (n : ℝ) = r * ((q.den : ℝ) * r.den) :=
+      ⟨r.num * q.den, by push_cast; rw [← hr]; ring⟩
+    obtain ⟨k, hk⟩ : ∃ k : ℤ, (k : ℝ) = (q.den : ℝ) * r.den :=
+      ⟨q.den * r.den, by push_cast; ring⟩
+    obtain ⟨ts, h1, h2, h3, h4⟩ :=
+      strand_realizes (m ^ 2 + n ^ 2 + k ^ 2) (2 * m * k) (2 * n * k) (m ^ 2 + n ^ 2 - k ^ 2)
+    obtain ⟨N, hN⟩ : ∃ N : ℕ, (N : ℤ) = 2 * (m ^ 2 + n ^ 2 + k ^ 2) :=
+      ⟨_, Int.toNat_of_nonneg (by positivity)⟩
+    have hNR : (N : ℝ) = 2 * ((m : ℝ) ^ 2 + (n : ℝ) ^ 2 + (k : ℝ) ^ 2) := by exact_mod_cast hN
+    obtain ⟨c1, c2, c3, c4⟩ := family_coords (q : ℝ) (r : ℝ) ((q.den : ℝ) * r.den) hK
+    have ct : (freqForm ts N).t = 1 / 2 := by
+      simp only [freqForm, h1]
+      push_cast
+      rw [hNR, hm, hn, hk]
+      exact c1
+    have cx' : (freqForm ts N).x = stereoX q r := by
+      simp only [freqForm, h2]
+      push_cast
+      rw [hNR, hm, hn, hk]
+      exact c2
+    have cy' : (freqForm ts N).y = stereoY q r := by
+      simp only [freqForm, h3]
+      push_cast
+      rw [hNR, hm, hn, hk]
+      exact c3
+    have cz' : (freqForm ts N).z = stereoZ q r := by
+      simp only [freqForm, h4]
+      push_cast
+      rw [hNR, hm, hn, hk]
+      exact c4
+    refine ⟨ts, N, ?_, ?_, ?_, ?_⟩
+    · unfold IsPure
+      rw [ct, cx', cy', cz']
+      exact ⟨rfl, stereo_on_sphere _ _⟩
+    · rw [cx']
+      exact ex
+    · rw [cy']
+      exact ey
+    · rw [cz']
+      exact ez
 
 -- ==========================================
 -- Rung 5: the strong reading — which pairs cannot be split
