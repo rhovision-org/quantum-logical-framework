@@ -318,5 +318,6 @@ lean_lib QLF where
     `QLF_HolographicArea,
     `QLF_PlaquetteArea,
     `QLF_LocalAreaLaw,
-    `QLF_TensorFromClosure
+    `QLF_TensorFromClosure,
+    `QLF_MetricSinglet
   ]

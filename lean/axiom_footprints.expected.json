@@ -692,6 +692,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.MetricSinglet.expect_twoBody": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MetricSinglet.metric_is_singlet": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MetricSinglet.product_annihilator_iff_singlet": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.MixingUnitarity.block_unitary_iff": [
     "Classical.choice",
     "Quot.sound",

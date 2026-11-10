@@ -320,6 +320,29 @@ conservation, are likewise explicit hypotheses of the main theorem.
 construction and Raychaudhuri focusing. That is now the *single* remaining substrate question for the
 field equations, rather than "the tensor derivation" as a whole.
 
+## §6d The middle arrow in two-body language: the metric is the singlet
+
+[`QLF_MetricSinglet`](lean/QLF_MetricSinglet.lean) (no axioms) gives `SymTensor4` a substrate reading.
+A `Form` is a 2×2 Hermitian matrix `t·I + x·σx + y·σy + z·σz`, so a rank-2 tensor `S_ab` is the
+two-body observable `Ŝ = Σ S_ab σ_a ⊗ σ_b` on `ℂ² ⊗ ℂ²`, the space whose joint algebra
+[`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean) derives (`M ⊗ M ≅ Mat₄`). Then:
+
+* **The metric is the singlet** (`metric_is_singlet`): `Σ η_ab σ_a ⊗ σ_b = 4|s⟩⟨s|`, invariant
+  under every `SL(2,ℂ)` transform `A ⊗ A`.
+* **A null vector is a pure state** (`kForm_null`, `expect_twoBody`): a qubit `ψ` gives the null
+  vector `k^a = ⟨ψ|σ_a|ψ⟩/2`, and `⟨ψψ|Ŝ|ψψ⟩ = 4 S_ab k^a k^b`.
+* **The null-cone step is singlet uniqueness** (`product_annihilator_iff_singlet`): `Ŝ` vanishes on
+  every product state `ψ ⊗ ψ` exactly when it is a multiple of the singlet projector. The nine
+  integer probes of §6b are nine product states with Gaussian-integer amplitudes, e.g.
+  `(5,3,4,0) = k(1+2i, −1+2i)`.
+
+This is the shape of rung 6 of entanglement primacy (`split_strong_iff_singlet`: the singlet is the
+unique state every shared strong pair fixes). Read together, the metric is the shared pair and the
+null directions are the unshared product states. **Scope:** this changes the *reading* of the middle
+arrow, not the count of open arrows. The first arrow (local Rindler + Raychaudhuri) and an instance of
+`DivergenceCalculus` remain open, and that `R_ab − κT_ab` is a two-body observable is a reading of the
+proven isomorphism, not a derivation of curvature.
+
 ---
 
 ## §7 Honest scope
@@ -381,6 +404,9 @@ characterisation. Logic fixes no local term: `G`, `Λ` and `T` still come from t
 | `null_annihilator_iff_metric_multiple` | the null-cone annihilators are **exactly** the metric multiples (one-dimensional, spanned by `g`); nine lattice points decide membership |
 | `contract_metricMultiple` | `contract (f·g) v = f · interval v` — a metric multiple annihilates the whole null cone |
 | `axis_probes_insufficient` | sharpness: the six axis probes alone fail (pure-`xy` witness), so the `3-4-5` probes are load-bearing |
+| `metric_is_singlet` | ([`QLF_MetricSinglet`](lean/QLF_MetricSinglet.lean)) `Σ η_ab σ_a⊗σ_b = 4|s⟩⟨s|`: the Minkowski metric is the singlet (§6d) |
+| `expect_twoBody` | a product state `ψ⊗ψ` reads a tensor on its null vector: `⟨ψψ|Ŝ|ψψ⟩ = 4 S_ab k^a k^b` |
+| `product_annihilator_iff_singlet` | the null-cone step as two-body algebra: vanishing on every product state ⟺ a multiple of the singlet |
 | `DivergenceCalculus` | the `∇^a`/`∂_b` interface — the differential-geometry boundary as a **structure**, so no axiom is added (§6c) |
 | `scalar_multiple_is_curvature` | contracted Bianchi + conservation ⟹ `f = R/2 − Λ` with `Λ` **constant** (the integration step) |
 | `einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` — the field equations over the interface (§6c) |
