@@ -31,6 +31,8 @@ In one line: **the universe is logical, its logic is constructive and sufficient
 
 ---
 
+For the current Paper I v0.3 work, see the [handoff](Paper_I_v0.3_Handoff.md) and [scoped verification receipt](verification/paper-i-v0.3/README.md).
+
 ## 🚀 Major substrate-derivation discoveries
 
 QLF spans **more than a hundred machine-verified Lean modules** (zero `sorry`) covering the Standard Model, gravity/GR, cosmology, condensed matter, nuclear fusion, and the Millennium problems — see the [module table](#the-lean-formalization) and [`Open_Problems.md`](Open_Problems.md) for the full map. The **ten headline quantitative wins** from ZFA + h alone:
