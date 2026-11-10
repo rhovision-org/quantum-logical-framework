@@ -7,6 +7,7 @@ execute Lean, authenticate receipts, establish blinding, or decide physical trut
 from __future__ import annotations
 
 import json
+import hashlib
 import re
 import sys
 from datetime import datetime
@@ -257,7 +258,21 @@ def _constant(value: str) -> None:
     raise ValidationError(f"non-JSON numeric constant: {value}")
 
 
-def validate_directory(directory: Path) -> list[Path]:
+def _artifact_integrity(data: dict, repository_root: Path, path: Path) -> None:
+    if data["record_type"] != "claim" or data["gate_outcomes"]["G6"]["status"] != "PASS":
+        return
+    root = repository_root.resolve()
+    for artifact in data["reviewer_independence"]["receipt"]["artifacts"]:
+        relative = Path(artifact["path"])
+        _require(not relative.is_absolute() and ".." not in relative.parts,
+                 f"{path}: receipt artifact must be a repository-relative path")
+        target = (root / relative).resolve()
+        _require(root in target.parents, f"{path}: receipt artifact escapes the repository")
+        actual = hashlib.sha256(target.read_bytes()).hexdigest()
+        _require(actual == artifact["sha256"], f"{path}: receipt artifact digest mismatch: {relative}")
+
+
+def validate_directory(directory: Path, *, repository_root: Path = ROOT) -> list[Path]:
     files = sorted(directory.rglob("*.json"))
     _require(bool(files), f"{directory}: no JSON records found")
     errors, seen = [], set()
@@ -272,6 +287,7 @@ def validate_directory(directory: Path) -> list[Path]:
                 validate_kill_conditions(data, path)
             else:
                 raise ValidationError(f"{path}: unknown or missing record_type {kind!r}")
+            _artifact_integrity(data, repository_root, path)
             _require(data["record_id"] not in seen, f"{path}: duplicate record ID {data['record_id']}")
             seen.add(data["record_id"])
         except (ValidationError, ValueError, OSError) as exc:
@@ -282,7 +298,7 @@ def validate_directory(directory: Path) -> list[Path]:
 
 def main(root: Path | None = None) -> int:
     try:
-        files = validate_directory((root or ROOT) / "claim_records")
+        files = validate_directory((root or ROOT) / "claim_records", repository_root=root or ROOT)
     except (ValidationError, OSError) as exc:
         print(f"FAIL: {exc}", file=sys.stderr)
         return 1

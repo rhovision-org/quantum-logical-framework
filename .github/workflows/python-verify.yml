@@ -6,12 +6,16 @@ on:
     paths:
       - "**/*.py"
       - "claim_records/**"
+      - "verification/paper-i-v0.3/**"
+      - "sparc/**"
       - ".github/workflows/python-verify.yml"
   pull_request:
     branches: ["main"]
     paths:
       - "**/*.py"
       - "claim_records/**"
+      - "verification/paper-i-v0.3/**"
+      - "sparc/**"
       - ".github/workflows/python-verify.yml"
 
 jobs:

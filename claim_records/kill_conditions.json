@@ -1,7 +1,7 @@
 {
   "record_id": "QLF-KILL-001",
   "version": "0.3.1-draft",
-  "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
+  "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
   "reviewer": "Aria (technical reviewer)",
   "purpose": "Draft falsification and test ledger. No entry is a completed preregistration until its operational specification and documented pre-exposure chronology are frozen. Formal anchors name scoped mathematics, not experimental validation.",
   "entries": [

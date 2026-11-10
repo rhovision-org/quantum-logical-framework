@@ -1,0 +1,8 @@
+{
+  "bare": "1/128",
+  "directional_modes": 9,
+  "leading_alpha": "1/137",
+  "reported_inverse_comparator": "137.035999",
+  "inverse_relative_discrepancy_percent": 0.026269739530267518,
+  "scope": "Leading model identity and arithmetic against a fixed published comparator; not a measurement or derivation of the residual 137.032."
+}

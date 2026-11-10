@@ -1,8 +1,8 @@
 {
   "record_id": "QLF-ALPHA-001",
   "version": "0.3.1-draft",
-  "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
-  "informal_statement": "QLF's 8-twist, three-directional construction gives a leading inverse fine-structure constant alpha^-1 = 137, a bracket 137 < alpha^-1 < 137.048, and a structural value 137.032; the reported agreement with CODATA is 0.026% at leading order.",
+  "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+  "informal_statement": "The defined 8-twist/three-direction counting model gives leading inverse coupling 137. Source theorems check a fixed reported residual 0.035999 inside the rational interval (1/64, 0.04814). The approximately 137.032 structural value is reported; identification with measured, scale-dependent coupling remains open.",
   "approximation_or_regime": {
     "name": "leading + structural",
     "description": "The 137 and 137.032 values are leading/structural; the residual running and the coupling/scale map are not derived.",
@@ -32,8 +32,8 @@
   "dependencies": {
     "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
     "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
-    "audit_baseline": "not present for these theorem names in the 240-anchor baseline at the source revision",
-    "qlf_bridge_axioms": "none explicit in the source scan; original #print axioms output pending"
+    "audit_baseline": "Reviewed 302-entry baseline; +62 entries, no changed old footprints. Original CI log and source-equivalence check archived in verification/paper-i-v0.3/.",
+    "qlf_bridge_axioms": "No project bridge axiom in these selected original CI footprints; physical identifications remain separately open."
   },
   "inputs": [
     {
@@ -71,7 +71,7 @@
     "baseline": "CODATA recommended value",
     "reported_values": {
       "leading": "137",
-      "bracket": "137 < alpha^-1 < 137.048",
+      "bracket": "Formal comparator-residual band: 1/64 < 0.035999 < 0.04814; the often rounded ~137.048 upper scale is not an exact strict bound of 137.048.",
       "structural": "137.032"
     },
     "uncertainties": "CODATA uncertainty; QLF residual uncertainty not yet derived"
@@ -89,8 +89,8 @@
     "comparison_type": "retrodiction"
   },
   "evidence": {
-    "F": "Finite identities are source-inspected; original theorem-specific #print axioms anchors are absent.",
-    "N": "The arithmetic and interval statements are reproducible; the 0.026% comparison is a retrodiction.",
+    "F": "The exact stated mathematical declarations have reviewed original CI footprints and the recorded baseline. Physical interpretation is not promoted.",
+    "N": "Leading model arithmetic reproduced in alpha_arithmetic.json; the structural residual value remains reported rather than independently re-derived.",
     "E": "No independent measurement was made for this paper.",
     "reviewer": "Ω-WITNESS technical review for aixaria0; collaborator tier; the receipt records executed checks separately from publication approval."
   },
@@ -104,11 +104,11 @@
   "gate_outcomes": {
     "G0": {
       "status": "PASS",
-      "reason": "Source revision and file paths recorded; hashes to be added at the frozen pin."
+      "reason": "Full audited source revision, original build identifiers, pinned toolchain/lockfile and digest-addressed execution artifacts recorded."
     },
     "G1": {
-      "status": "INCONCLUSIVE",
-      "reason": "The named theorem footprints are absent from the 240-anchor baseline; original #print axioms output pending."
+      "status": "PASS",
+      "reason": "Original source compiled in the linked project CI; exact reports and unchanged Lean/build inputs were inspected, and the 302-entry baseline was deliberately recorded and checked outside CI. No local Lean rebuild is claimed."
     },
     "G2": {
       "status": "PASS",
@@ -120,40 +120,58 @@
     },
     "G4": {
       "status": "PASS",
-      "reason": "The finite arithmetic and interval statements are reproducible; the CODATA comparison is a retrodiction."
+      "reason": "Frozen-source receipt reproduces the leading 1/137 identity and arithmetic against the fixed reported comparator only; residual/scale running is not independently re-derived."
     },
     "G5": {
       "status": "INCONCLUSIVE",
       "reason": "No prospective measurement or frozen scale/scheme protocol."
     },
     "G6": {
-      "status": "INCONCLUSIVE",
-      "reason": "Matching scoped execution receipt will be attached after rerunning the frozen source; no independent physical replication is claimed."
+      "status": "PASS",
+      "reason": "Scoped collaborator technical receipt archives source inspection, kernel-footprint review and declared numerical reproductions. This is not independent physical validation or publication approval."
     }
   },
   "evidence_status": {
-    "formal": "CANDIDATE",
-    "numerical": "CANDIDATE",
+    "formal": "VERIFIED",
+    "numerical": "REPRODUCED",
     "empirical": "NOT_ESTABLISHED",
     "bridge": "OPEN"
   },
   "reviewer_independence": {
-    "source_inspection": "Authors are QLF developers; technical review by Aria, not an independent external audit.",
+    "source_inspection": "Scoped collaborator review for aixaria0; no independent external audit claimed.",
     "enumeration": "Finite arithmetic reproducibility check; not an independent measurement.",
-    "original_lean_kernel": "Original theorem footprints pending.",
-    "measurement": "Not performed.",
+    "original_lean_kernel": "Original project CI reports reviewed with unchanged-source check and recorded baseline; no local Lean execution.",
+    "measurement": "No physical experiment or independent empirical replication.",
     "independence_tier": "collaborator",
-    "receipt": null
+    "receipt": {
+      "reviewer": "Ω-WITNESS for aixaria0",
+      "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+      "scopes": [
+        "source_review",
+        "kernel_audit",
+        "numerical_reproduction"
+      ],
+      "artifacts": [
+        {
+          "path": "verification/paper-i-v0.3/receipt.json",
+          "sha256": "2685c3e9d6b6733b04a2e28e12de18d2a4b847fd9d4e23b6d7da28b9bcc66ee1"
+        },
+        {
+          "path": "verification/paper-i-v0.3/ci-41182f7-axioms.log",
+          "sha256": "fd5f8692d11eb96955da03b97a1154f4bb57105cfc5f53ef4373f60ac0b9a0e7"
+        }
+      ]
+    }
   },
   "provenance": {
     "repository": "https://github.com/rhovision-org/quantum-logical-framework",
-    "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
+    "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
     "reference_documents": [
       "Alpha.md",
       "Alpha_Residual.md",
       "Proof_to_Physics.md"
     ],
-    "status": "draft skeleton; fill hashes, frozen pin, and reviewer sign-off before promotion."
+    "status": "Audited source pin; see verification/paper-i-v0.3/receipt.json. Full PR remains draft pending the new regression CI run and maintainer review."
   },
   "record_type": "claim"
 }

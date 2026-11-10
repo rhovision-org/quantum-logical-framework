@@ -23,6 +23,14 @@ class PaperIReproductionTests(unittest.TestCase):
         self.assertEqual(len(data['lattice_checks']), 19)
         self.assertTrue(all(data['lattice_checks'].values()))
 
+    def test_committed_receipt_artifacts_match_their_digests(self):
+        receipt_path = ROOT / 'verification/paper-i-v0.3/receipt.json'
+        receipt = json.loads(receipt_path.read_text())
+        for artifact in receipt['artifacts']:
+            target = (ROOT / artifact['path']).resolve()
+            self.assertIn(ROOT.resolve(), target.parents)
+            self.assertEqual(hashlib.sha256(target.read_bytes()).hexdigest(), artifact['sha256'])
+
     def test_sparc_reproduces_frozen_data_scores_and_csv(self):
         expected_hashes = {
             'MassModels_Lelli2016c.mrt': '9108994b12cc401b94a1768beca61c53ec354779385c9c9cc571049f3043244c',

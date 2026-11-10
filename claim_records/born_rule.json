@@ -1,7 +1,7 @@
 {
   "record_id": "QLF-BORN-001",
   "version": "0.3.1-draft",
-  "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
+  "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
   "informal_statement": "An assignment obeying the specified ProbAssignment symmetry, normalization and refinement assumptions equals the defined finite bornProb. This is a characterization conditional on those rules, not their derivation from detector physics.",
   "approximation_or_regime": {
     "name": "finite Gaussian-integer amplitude registers",
@@ -25,8 +25,8 @@
   "dependencies": {
     "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
     "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
-    "audit_baseline": "Both anchors already exist in the 240-entry source baseline; no duplicate anchors are needed.",
-    "qlf_bridge_axioms": "none explicit in the source scan; original #print axioms output pending"
+    "audit_baseline": "Reviewed 302-entry baseline; +62 entries, no changed old footprints. Original CI log and source-equivalence check archived in verification/paper-i-v0.3/.",
+    "qlf_bridge_axioms": "No project bridge axiom in these selected original CI footprints; physical identifications remain separately open."
   },
   "inputs": [
     {
@@ -65,7 +65,7 @@
     "comparison_type": "not_applicable"
   },
   "evidence": {
-    "F": "The conditional characterization and uniqueness anchors already have original CI reports and baseline entries; no duplicate additions are required.",
+    "F": "The exact stated mathematical declarations have reviewed original CI footprints and the recorded baseline. Physical interpretation is not promoted.",
     "N": "No separate numerical reproduction is claimed for the Born-assignment characterization.",
     "E": "No detector-probability measurement is claimed.",
     "reviewer": "Ω-WITNESS technical review for aixaria0; collaborator tier."
@@ -80,11 +80,11 @@
   "gate_outcomes": {
     "G0": {
       "status": "PASS",
-      "reason": "Source revision and file paths recorded; hashes to be added at the frozen pin."
+      "reason": "Full audited source revision, original build identifiers, pinned toolchain/lockfile and digest-addressed execution artifacts recorded."
     },
     "G1": {
-      "status": "INCONCLUSIVE",
-      "reason": "Both theorem anchors already have enforced baseline entries and original CI reports. The scoped review receipt will identify the exact audited source and baseline."
+      "status": "PASS",
+      "reason": "Original source compiled in the linked project CI; exact reports and unchanged Lean/build inputs were inspected, and the 302-entry baseline was deliberately recorded and checked outside CI. No local Lean rebuild is claimed."
     },
     "G2": {
       "status": "PASS",
@@ -103,33 +103,50 @@
       "reason": "No physical Born-probability or interference experiment was performed for this record."
     },
     "G6": {
-      "status": "INCONCLUSIVE",
-      "reason": "No independent third-party receipt for this claim; the review is a collaborator technical review."
+      "status": "PASS",
+      "reason": "Scoped collaborator technical receipt archives source inspection, kernel-footprint review and declared numerical reproductions. This is not independent physical validation or publication approval."
     }
   },
   "evidence_status": {
-    "formal": "CANDIDATE",
+    "formal": "VERIFIED",
     "numerical": "NOT_ESTABLISHED",
     "empirical": "NOT_ESTABLISHED",
     "bridge": "OPEN"
   },
   "reviewer_independence": {
-    "source_inspection": "Authors are QLF developers; technical review by Aria, not an independent external audit.",
+    "source_inspection": "Scoped collaborator review for aixaria0; no independent external audit claimed.",
     "enumeration": "No distinct numerical reproduction is claimed for the assignment characterization.",
-    "original_lean_kernel": "Original theorem footprints pending.",
-    "measurement": "Not performed.",
+    "original_lean_kernel": "Original project CI reports reviewed with unchanged-source check and recorded baseline; no local Lean execution.",
+    "measurement": "No physical experiment or independent empirical replication.",
     "independence_tier": "collaborator",
-    "receipt": null
+    "receipt": {
+      "reviewer": "Ω-WITNESS for aixaria0",
+      "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+      "scopes": [
+        "source_review",
+        "kernel_audit"
+      ],
+      "artifacts": [
+        {
+          "path": "verification/paper-i-v0.3/receipt.json",
+          "sha256": "2685c3e9d6b6733b04a2e28e12de18d2a4b847fd9d4e23b6d7da28b9bcc66ee1"
+        },
+        {
+          "path": "verification/paper-i-v0.3/ci-41182f7-axioms.log",
+          "sha256": "fd5f8692d11eb96955da03b97a1154f4bb57105cfc5f53ef4373f60ac0b9a0e7"
+        }
+      ]
+    }
   },
   "provenance": {
     "repository": "https://github.com/rhovision-org/quantum-logical-framework",
-    "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
+    "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
     "reference_documents": [
       "Born_Rule.md",
       "Proof_to_Physics.md",
       "Claim_Status.md"
     ],
-    "status": "draft skeleton; fill hashes, frozen pin, and reviewer sign-off before promotion."
+    "status": "Audited source pin; see verification/paper-i-v0.3/receipt.json. Full PR remains draft pending the new regression CI run and maintainer review."
   },
   "record_type": "claim"
 }

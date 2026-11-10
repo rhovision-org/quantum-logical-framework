@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import contextlib
+import hashlib
 import copy
 import importlib.util
 import io
@@ -232,6 +233,28 @@ class ClaimRecordTests(unittest.TestCase):
             (nested / "future.json").write_text('{"record_type":"unknown"}')
             with self.assertRaises(validator.ValidationError):
                 validator.validate_directory(directory)
+
+    def test_receipt_artifact_integrity_and_path_confinement(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            directory = root / "claim_records"
+            directory.mkdir()
+            artifact = root / "synthetic.log"
+            artifact.write_text("synthetic fixture, no real verification")
+            data = self.promoted("formal")
+            data["reviewer_independence"]["receipt"]["artifacts"] = [
+                {"path": "synthetic.log", "sha256": hashlib.sha256(artifact.read_bytes()).hexdigest()}]
+            record = directory / "fixture.json"
+            record.write_text(json.dumps(data))
+            validator.validate_directory(directory, repository_root=root)
+            artifact.write_text("tampered")
+            with self.assertRaises(validator.ValidationError):
+                validator.validate_directory(directory, repository_root=root)
+            for unsafe in ("../outside.log", str(artifact)):
+                data["reviewer_independence"]["receipt"]["artifacts"][0]["path"] = unsafe
+                record.write_text(json.dumps(data))
+                with self.assertRaises(validator.ValidationError):
+                    validator.validate_directory(directory, repository_root=root)
 
     def test_empty_directory_duplicate_json_keys_and_nan_fail_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

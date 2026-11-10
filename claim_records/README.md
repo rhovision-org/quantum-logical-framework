@@ -47,7 +47,10 @@ merely by flipping G3/G5 to PASS. Reviewer tiers are `self`, `collaborator` and
 `independent`. A self-run record cannot mark G6 PASS. G6 is relative to the declared receipt scope/tier: a collaborator
 computational receipt is not an independent physical replication. Receipts name
 the reviewer, audited source revision, evidence scopes and digest-addressed
-artifacts. Metadata validation does not authenticate those artifacts or signatures.
+artifacts. The directory check verifies that referenced local artifact bytes match their
+digests and stay inside the repository. It does not authenticate the issuer,
+execution history or signatures. The reproduction tests additionally check the
+execution receipt's artifact manifest.
 
 ## Registration policy
 

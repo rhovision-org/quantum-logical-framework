@@ -1,0 +1,36 @@
+{
+  "comparable_pairs": 15,
+  "lattice_checks": {
+    "antisymmetric": true,
+    "complement_antitone": true,
+    "complement_bottom": true,
+    "complement_involution": true,
+    "complement_top": true,
+    "join_absorption": true,
+    "join_associative": true,
+    "join_commutative": true,
+    "join_least_upper": true,
+    "join_upper_left": true,
+    "join_upper_right": true,
+    "meet_absorption": true,
+    "meet_associative": true,
+    "meet_commutative": true,
+    "meet_greatest_lower": true,
+    "meet_lower_left": true,
+    "meet_lower_right": true,
+    "reflexive": true,
+    "transitive": true
+  },
+  "nondistributive_join_over_meet": 24,
+  "nondistributive_meet_over_join": 24,
+  "nonvacuous_orthomodular": 15,
+  "ordered_pairs": 36,
+  "ordered_triples": 216,
+  "orthomodular_implications": 36,
+  "scope": "finite independent implementation; neither Lean proof nor physical experiment",
+  "witness": [
+    "ax",
+    "az",
+    "azp"
+  ]
+}
