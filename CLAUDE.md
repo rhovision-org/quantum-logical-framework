@@ -6,7 +6,7 @@ Project context for Claude Code sessions. Read this before making any changes.
 
 ## Project overview
 
-**Quantum Logical Framework (QLF)** is a formal proof system machine-verified in Lean 4 across **292 modules with zero `sorry` blocks**. It encodes quantum mechanics and spacetime dynamics using phase-string combinatorics (ZFA — Zero-phase Flux Algebra).
+**Quantum Logical Framework (QLF)** is a formal proof system machine-verified in Lean 4 across **296 modules with zero `sorry` blocks**. It encodes quantum mechanics and spacetime dynamics using phase-string combinatorics (ZFA — Zero-phase Flux Algebra).
 
 Core claim: *ZFA balance is the selection principle for physical reality.* Every terminating computation is a ZFA string; every ZFA string is symmetric (lies on the critical line). The Church-Turing universe filtered to ZFA-balanced strings is our physical universe.
 
@@ -28,9 +28,9 @@ setup notes are in the session memory (`local-lean-impractical`).
 
 ---
 
-## Modules — 292, machine-verified, zero `sorry`
+## Modules — 296, machine-verified, zero `sorry`
 
-Registered in `lakefile.lean` roots array (build order); sources in `lean/`. **The full per-module table — descriptions + key-theorem lists for all 292 — lives in [`lean/README.md`](lean/README.md); consult it when working on any specific module.** Thematic families and every individual result are also mapped in [`FlowChart.md`](FlowChart.md). The core anchors a session references most often:
+Registered in `lakefile.lean` roots array (build order); sources in `lean/`. **The full per-module table — descriptions + key-theorem lists for all 296 — lives in [`lean/README.md`](lean/README.md); consult it when working on any specific module.** Thematic families and every individual result are also mapped in [`FlowChart.md`](FlowChart.md). The core anchors a session references most often:
 
 | Module | What it proves |
 |---|---|
@@ -180,6 +180,12 @@ for some time, and two rules had gone stale unnoticed.
     but opaque to instance synthesis. `unfold ClosedLoop; decide` works; `decide` alone does not.
     (Also on this toolchain: **`List.length_map` takes one explicit argument**, so
     `List.length_map _ _` is *function expected*. `by simp` is the safe spelling.)
+
+19. ✅ **Under `import Mathlib`, a `def` built from `Finset.Icc` on `ℤ` must be `noncomputable`.**
+    Instance resolution picks `Int.instConditionallyCompleteLinearOrder`'s order, so the compiler
+    rejects it (*failed to compile definition … consider marking it as 'noncomputable'*). The
+    theorems about it are unaffected. Write `noncomputable def` up front. Cost one CI cycle in
+    `QLF_HolographicArea`.
 
 ---
 
@@ -372,11 +378,11 @@ There is no background absolute time. There is no fixed external geometry. Gravi
 
 ### Holography as topological necessity
 
-The holographic principle (Bekenstein 1972, 't Hooft 1993, Susskind 1995) and AdS/CFT correspondence are not separate conjectures in QLF — they are direct consequences of ZFA closure. The bulk spacetime (AdS interior) is the space of unresolved internal nodes of the QuCalc generator tree. The boundary (CFT) consists of the terminal leaves that satisfy exact ZFA balance.
+The holographic principle (Bekenstein 1972, 't Hooft 1993, Susskind 1995) and the AdS/CFT correspondence are *read* in QLF through ZFA closure: the bulk as the unresolved internal nodes of the QuCalc generator tree, the boundary as the terminal leaves that satisfy exact ZFA balance. This is an interpretation, not a derived consequence; what is proved is listed next.
 
-Because a bulk path only persists if it terminates in a ZFA-stable boundary, the entire bulk is mathematically identical to the sum of its boundary states. The holographic principle is therefore a **topological necessity of closure**, not a duality.
+**Audited 2026-11-09 ([`Holography_Audit.md`](Holography_Audit.md)): state this precisely.** Proved in [`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean): closure is a boundary property (`closure_iff_boundary_silent`, which telescopes and so is bookkeeping); the bulk is the prefix closure of the boundary because *every* prefix closes (`every_prefix_closes`), so it constrains no finite path; and the **area law follows from locality of shared closures** (`cutEntropy_le_area`; `nonlocal_pairs_break_area_law` shows locality is necessary). `holographic_event_count := 4πR²` is a *definition* and stays one. Proved in [`QLF_HolographicArea`](lean/QLF_HolographicArea.lean): the spatial `ℓ¹` sphere has `Θ(R²)` sites (`horizon_area_law`, exactly `4R²+2` by enumeration), and pairs born at one event and carried `k` steps stay within `2k` (`pair_range_le`). Two things are *not* proved: that this sphere is the physical capacity horizon (a geometric bridge), and an area law without a locality premise. With Jim's principle *only local information has any effect* (shared pairs within a fixed step distance `d`; `d` counts steps, not time), [`QLF_LocalAreaLaw`](lean/QLF_LocalAreaLaw.lean) `local_area_law` proves the cut pairs of the `ℓ¹` ball of radius `R` number at most `4d(2d+1)³(2R+1)²`. [`QLF_PlaquetteArea`](lean/QLF_PlaquetteArea.lean): a closure's phase is the parity of the sum of its three projected areas (`holonomy_eq_projected_areas`). Do not call AdS/CFT "machine-verified" or the area law "automatic".
 
-Modern sharpening: Almheiri, Dong, Harlow (2015) and the HaPPY code (Pastawski et al. 2015) show that bulk spacetime geometry IS a quantum error-correcting code on the boundary. In QLF, `full_zeno_prune` is the machine-verified boundary decoder — it filters the event stream to those whose boundary information is logically self-consistent.
+Modern sharpening: Almheiri, Dong, Harlow (2015) and the HaPPY code (Pastawski et al. 2015) show that bulk spacetime geometry IS a quantum error-correcting code on the boundary. QLF's *reading* is that `full_zeno_prune` plays the role of the boundary decoder, filtering the event stream to closures. That is not machine-verified: no code property (distance, recovery map) is proved, so call it a proposed correspondence.
 
 ### Measurement without collapse
 
@@ -455,7 +461,7 @@ was where it slipped. Apply these to new work:
 | Path | Purpose |
 |---|---|
 | `lean/` | All Lean source files |
-| `lakefile.lean` | Build config; `roots` array lists all 292 modules |
+| `lakefile.lean` | Build config; `roots` array lists all 296 modules |
 | `lean/README.md` | Module table and proof chain documentation |
 | `README.md` | Project overview with citations and convergence themes |
 | `CLAUDE.md` | This file — project context for new Claude sessions |

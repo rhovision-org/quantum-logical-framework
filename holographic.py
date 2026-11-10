@@ -73,6 +73,15 @@ class LogicalProjection:
 
 def spinor_from_action(action: Tuple[int, int, int, int]) -> np.ndarray:
     """
+    NOTE (holography audit, Holography_Audit.md section 2): this map is many-to-one.
+    Normalisation forgets scale and the Bloch reading forgets phase, so the closed
+    state (0,0,0,0) and the open prefixes '^', 'v', '>' all project to +Z. The
+    unnormalised action vector (the Form of the open half) detects closure exactly:
+    it is zero exactly on closures (countBalanced_iff_strandForm_zero in
+    lean/QLF_EntanglementPrimacy.lean). It is still not a faithful encoding of a
+    history, since it keeps only net counts ('^v' and 'v^' both give zero). Read the
+    projection below as a lossy view.
+
     Map canonical QLF action coordinates into a normalized two-component state.
 
     alpha := vertical + i*horizontal

@@ -1,6 +1,8 @@
 # Holographic Projection in QLF:
 # 3D Observable Structure as a Projection of 2-Component QuCalc Logic
 
+> Part of the [Quantum Logical Framework (QLF)](README.md). **Audit note (2026-11-09):** the claims below were checked in [`Holography_Audit.md`](Holography_Audit.md). The bridge map in §2–§6 is many-to-one: a closed history and `^`, `v`, `>` all project to `+Z`. So it is a spinor projection (normalization + Hopf map, 4 → 2 real parameters), not a faithful holographic encoding. The AdS/CFT section's "machine-verified" citation was incorrect. The proved bulk–boundary content is in [`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean).
+
 ## Abstract
 
 In the Quantum Logical Framework (QLF), the primitive object is not a point in
@@ -226,7 +228,7 @@ and the projected levels.
 The current implementation proves the following:
 
 1. QuCalc histories can be generated canonically from the core.
-2. Their prefix-action can be encoded faithfully as a 2-component logical state.
+2. Their prefix-action can be mapped to a 2-component logical state (not faithfully: the map forgets scale and phase, and sends the closed state to the same point as `^`; see [`Holography_Audit.md`](Holography_Audit.md) §2).
 3. That state projects to 3 real observables on the unit sphere.
 4. The same state admits a lower-dimensional boundary encoding by relative
    phase.
@@ -403,7 +405,7 @@ at the multi-event level.
 
 ## Holographic Emergence: de Sitter Expansion and Anti-de Sitter Stability
 
-In the Quantum Logical Framework, the holographic principle is not a duality between two separate theories — it is an **identity** between the internal branching logic of the QuCalc tree and the boundary closures that survive Zero Free Action.
+In the Quantum Logical Framework, the holographic principle is *read* as a relation between the internal branching logic of the QuCalc tree and the boundary closures that survive Zero Free Action. What of it is proved is stated in the AdS/CFT section below; the rest of this section is interpretation.
 
 **de Sitter space** arises naturally as the geometry of **possibilist expansion**. When independent replication processes (`*P`) dominate, each new distinction increases the event density outward. The positive cosmological constant emerges directly from the imbalance of unresolved twists: the manifold expands because more logical possibilities are continuously being generated than can be immediately closed.
 
@@ -411,13 +413,13 @@ In the Quantum Logical Framework, the holographic principle is not a duality bet
 
 ### The AdS/CFT Identity in QLF
 
-In classical physics the AdS/CFT correspondence is a conjectured duality. In QLF it is a **provable identity**:
+In classical physics the AdS/CFT correspondence is a conjectured duality. In QLF the following reading is proposed. Its provable part is stated precisely below.
 
 - The **bulk** (AdS interior) is the space of unresolved internal nodes of the QuCalc generator tree.
 - The **boundary** (CFT) consists of the terminal leaves that satisfy the ZFA condition (exact phase balance, `sum imbalance = 0`).
-- Because a bulk path only persists if it terminates in a ZFA-stable boundary, the entire bulk is mathematically identical to the sum of its boundary states. The holographic principle is therefore a topological necessity of closure, not an extra assumption.
+- The proposed reading: because a bulk path only persists if it terminates in a ZFA-stable boundary, the bulk is determined by its boundary states. As proved (next paragraph) this is weaker than an identity: every prefix closes, so the boundary does not constrain the bulk.
 
-This identity is machine-verified in `RhoQuCalc.lean` and `ZFAEventDynamics.lean`: a single replication process drives de Sitter-like expansion, while parallel composition of entangled closures with shared ZFA constraints produces the contractive, stable geometry of Anti-de Sitter space.
+**What is proved** ([`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean), correcting an earlier citation of `RhoQuCalc.lean` / `ZFAEventDynamics.lean`, which contain nothing on bulk or boundary): every bulk path does reach a ZFA boundary (`every_prefix_closes`), so the bulk is the prefix closure of the boundary. This holds because *every* prefix closes, so it constrains no path. Closure itself is a boundary property (`closure_iff_boundary_silent`). An area law follows once shared closures are local (`cutEntropy_le_area`); [`QLF_HolographicArea`](lean/QLF_HolographicArea.lean) gives that locality for pairs related through a bounded number of steps, and [`QLF_LocalAreaLaw`](lean/QLF_LocalAreaLaw.lean) proves the area law from the principle that only local information has effect (`local_area_law`: at most `4d(2d+1)³(2R+1)²` cut pairs for step distance `d`). The de Sitter / AdS readings in this section are prose and have no Lean anchor.
 
 ### Solving the Ultraviolet Catastrophe
 
