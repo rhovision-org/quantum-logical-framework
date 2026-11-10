@@ -74,10 +74,17 @@ the closure, its multiplicity, its holders and its priority.
 Everything lives in one linear cell, which is consumed and restored on every write:
 
 ```
-{ "records":   { id: { "twists": [Int], "phase": Int, "excursion": Int, "attesters": Set(name) } },
+{ "records":   { id: { "twists": [Int], "phase": Int, "excursion": Int, "attesters": Set(key) } },
   "names":     { name: Set(id) },                       // a concept = its ways
-  "questions": { q: { "seed": [Int], "context": Int, "answers": Set(id) } } }
+  "answers":   { q: Set(id) },                          // q = (seed, context); never mixed with names
+  "asked":     Set(q) }                                 // questions registered for listing
 ```
+
+**Access.** Deploying [`QKB.rho`](rholang/QKB.rho) registers the service in rholo's registry as
+`bundle+{*QKB}`, which callers can send to but nobody can receive on, so no client can intercept
+another's requests. The registry uri goes to the deploy's own `rho:rchain:deployId` channel. Any
+later deploy reaches the service with `rho:registry:lookup` on that uri, the pattern rholo's own
+`rgov/Directory.rho` and `Group.rho` use.
 
 - **`id`** is the uri `rho:qucalc:grant` mints, a blake2b-256 content address of the twists. The same
   closure asserted by two parties lands on one record. That is what lets R count holders instead of
@@ -142,9 +149,9 @@ by one key give R = 1, and a second key makes it 2. The sharded model refuses fr
 | `redundancy(id)` | number of independent holders | **R**, how much of a meme the record is |
 | `first(name)` | the closure under `name` reached first | **priority**: least excursion, then shortest, then phase, then lexicographic |
 | `ask(seed, context)` | `{ok, q, residual}` with `q = (seed, context)` | what any answer must supply |
-| `answer(q, cont, attester)` | as `assert`, for `seed ++ cont` | |
+| `answer(q, cont, attester)` | `{ok, id, redundancy}` for `seed ++ cont`, or a refusal | filed under `q`'s answers only |
 | `solve(q)` | the continuation of the first-reached recorded answer | priority, the same cascade as `/solve` |
-| `compatible(p, q)` / `conjoin(p, q)` | Bool / proposition or `"incompatible"` | the logic layer, §5 |
+| `compatible(p, q)` / `conjoin(p, q)` | Bool / proposition, `"incompatible"` or `"invalid proposition"` | the logic layer, §5 |
 
 Three things to keep straight:
 
@@ -163,6 +170,14 @@ Three things to keep straight:
   in another context is a different question. Check (g) replays an `ask` after an answer and finds the
   answer still there. The first version keyed questions by a caller-chosen name and overwrote them,
   which Aria caught in review.
+- **Answers have their own namespace, and need no prior ask.** An answer is checked against `q`'s own
+  seed, so it is valid whether or not `q` was asked. `ask` only registers `q` for listing. That keeps
+  answers order-independent across shards, because no answer leg depends on an ask leg having
+  arrived. Answers are filed in `answers[q]`, never under `names`. Aria's third review found that the
+  sharded model had used one index for both. A valid but unrelated closure asserted *under the name*
+  `q` then won `solve` with a continuation that does not close the seed. Check (i) reproduces that
+  trace and gets the right answer in both models. It also shows the two models refuse the same
+  malformed questions, and that 20 shuffled orders of ask-among-answers all converge.
 - **Malformed input fails closed, with an answer.** Every twist list (a record, a seed, a continuation)
   must be a list of integers `0..7` no longer than 64. Anything else gets
   `{ok: false, error: "invalid twists"}` before it reaches `scan` or a native call. Check (g) sends
@@ -197,8 +212,17 @@ distributivity fails. So `conjoin` returns `"incompatible"` for spatial atoms on
 gauge atom with a spatial atom gives the Boolean pair, and two atoms in one context use the lattice
 meet.
 
-**Malformed propositions are refused before any fold.** A proposition must be `"bot"`, `"top"` or
-`(axis, sign)`, with the axis an integer `0..3` and the sign `1` or `−1`. Anything else gets
+**Conjunctions are propositions too.** The full proposition set is MO3 over the spatial axes, smashed
+with the gauge block: a pair (spatial part, gauge part), collapsed to ⊥ if either part is ⊥. So a
+proposition is `"bot"`, `"top"`, an atom `(axis, sign)`, or `("and", spatial atom, gauge atom)`, which
+is what `conjoin` returns for two compatible atoms in different blocks. `conjoin` takes the meet part
+by part and refuses only when the spatial parts clash. Its output is always valid input again. The
+first version returned `("and", …)` and then rejected it as input, which Aria caught. Check (i)
+enumerates all 22 propositions and confirms closure, commutativity and idempotence for every
+defined pair, and associativity wherever both groupings are defined.
+
+**Malformed propositions are refused before any fold.** Anything outside that set, including an axis
+outside `0..3`, a sign other than `±1`, or an `"and"` whose parts are in the wrong blocks, gets
 `"invalid proposition"`. Without this check an axis of 4 would build twist 8 and the native call would
 fail instead of answering. Check (h) tries 12 malformed propositions in either position and in
 both, and confirms that every well-formed pair still gets an answer.
@@ -230,7 +254,7 @@ Laws 26–29) is not used. The idempotent single legs of Law 28 are enough.
 | Role | Sharded by | Holds | Answers |
 |---|---|---|---|
 | record shard | content id (blake2b of the twists) | `id → (twists, attesters)` | `redundancy` |
-| index shard | name or question | `name → {(key, id)}`, `q → seed` | `ways`, `first`, `solve` |
+| index shard | name or question | `name → {(key, id)}` and, separately, `q → {(key, id)}` answers | `ways`, `first`, `solve` |
 
 `key` is the `/solve` cascade key: (excursion, length, phase rank, history). It is computed from the
 closure alone, so storing it beside the id makes `ways`, `first` and `solve` local to **one** index
@@ -271,7 +295,8 @@ In Rholang, each shard runs [`QKB.rho`](rholang/QKB.rho) in one role. A client r
 the cross-shard invoke primitive, using `$at(shard, …)` as
 [`shard_exchange.rho`](https://github.com/rhovision-org/rholo/blob/dev/qucalc/examples/shard_exchange.rho)
 does. Splitting the contract into the two roles, and storing `key` in the name index, are the
-contract-side changes. They are not written yet. **So this section is a design checked in a
+contract-side changes. They are not written yet. Answers already live in their own map, and the
+sharded model keeps a separate answer index next to the name index. **So this section is a design checked in a
 simulation. The current `QKB.rho` is a single-cell contract and is not decentralized.**
 
 ## 7. What would make it a result

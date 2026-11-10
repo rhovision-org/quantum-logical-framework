@@ -170,39 +170,68 @@ def commute_matrix(a: int, b: int) -> bool:
     return pauli_fold(SYMBOLS[2 * a] + SYMBOLS[2 * b]) == pauli_fold(SYMBOLS[2 * b] + SYMBOLS[2 * a])
 
 
-def valid_prop(p) -> bool:
-    """'bot', 'top', or (axis, sign) with axis an int in 0..3 and sign in {1, -1}.
-    Checked before any native call: an axis of 4 would build twist 8."""
-    if p in (BOT, TOP):
-        return True
+def _atom(p) -> bool:
     return (isinstance(p, tuple) and len(p) == 2
             and type(p[0]) is int and 0 <= p[0] <= 3
             and type(p[1]) is int and p[1] in (1, -1))
 
 
+def valid_prop(p) -> bool:
+    """'bot', 'top', an atom (axis, sign) with axis an int in 0..3 and sign in
+    {1, -1}, or a conjunction ("and", spatial atom, gauge atom), which is what
+    conjoin returns for two compatible atoms in different blocks. Checked before
+    any native call: an axis of 4 would build twist 8."""
+    if p in (BOT, TOP) or _atom(p):
+        return True
+    return (isinstance(p, tuple) and len(p) == 3 and p[0] == "and"
+            and _atom(p[1]) and p[1][0] < 3 and _atom(p[2]) and p[2][0] == 3)
+
+
+def _parts(p):
+    """A valid proposition as (spatial part, gauge part), each BOT/TOP/atom.
+    The lattice is MO3 (spatial) smashed with the gauge Boolean block: the
+    gauge twists are ±I, so they commute with everything, and a conjunction
+    with either part ⊥ is ⊥."""
+    if p in (BOT, TOP):
+        return (p, p)
+    if p[0] == "and":
+        return (p[1], p[2])
+    return (TOP, p) if p[0] == 3 else (p, TOP)
+
+
+def _from_parts(sp, g):
+    if BOT in (sp, g):
+        return BOT
+    if g == TOP:
+        return sp
+    if sp == TOP:
+        return g
+    return ("and", sp, g)
+
+
 def compatible(p, q) -> Optional[bool]:
     """True / False, or None for a malformed proposition (the contract answers
-    "invalid proposition")."""
+    "invalid proposition"). Only the spatial parts can clash."""
     if not (valid_prop(p) and valid_prop(q)):
         return None
-    if p in (BOT, TOP) or q in (BOT, TOP):
+    a, b = _parts(p)[0], _parts(q)[0]
+    if a in (BOT, TOP) or b in (BOT, TOP):
         return True
-    return commute(p[0], q[0])
+    return commute(a[0], b[0])
 
 
 def conjoin(p, q):
-    """Conjunction the KB will actually assert. Same-context atoms use the
-    lattice meet; incompatible atoms are refused ("incompatible"), never silently ⊥ —
-    a client must not read 'incompatible' as 'contradictory'. A gauge atom is
-    compatible with everything, so its conjunction is the classical pair."""
+    """Conjunction the KB will actually assert, closed under its own output:
+    every result is again a valid proposition. Incompatible spatial atoms are
+    refused ("incompatible"), never silently ⊥ — a client must not read
+    'incompatible' as 'contradictory'. Otherwise the meet is taken part by part."""
     c = compatible(p, q)
     if c is None:
         return "invalid proposition"
     if not c:
         return "incompatible"
-    if p in (BOT, TOP) or q in (BOT, TOP) or p[0] == q[0]:
-        return meet(p, q)
-    return ("and", p, q)        # commuting, different blocks: Boolean product
+    (s1, g1), (s2, g2) = _parts(p), _parts(q)
+    return _from_parts(meet(s1, s2), meet(g1, g2))
 
 
 SPATIAL_ATOMS = [(a, s) for a in range(3) for s in (1, -1)]
@@ -238,21 +267,21 @@ class Record:
     attesters: set = field(default_factory=set)
 
 
-@dataclass
-class Question:
-    seed: list[int]
-    context: int
-    answers: set = field(default_factory=set)     # content ids of closed histories
+def valid_question(q) -> bool:
+    return (isinstance(q, tuple) and len(q) == 2 and isinstance(q[0], tuple)
+            and valid_twists(list(q[0])) and type(q[1]) is int and 0 <= q[1] <= 3)
 
 
 class KB:
     def __init__(self) -> None:
         self.records: dict[str, Record] = {}
         self.names: dict[str, set[str]] = {}
-        self.questions: dict[str, Question] = {}
+        self.asked: set = set()                      # questions registered by ask
+        self.answers: dict[tuple, set[str]] = {}     # q -> ids; never mixed with names
 
     # -- layer 1–3 ----------------------------------------------------------
-    def assert_closure(self, name: str, ts: list[int], attester) -> dict:
+    def _admit(self, ts, attester) -> dict:
+        """Gate + record + attester, without filing under any name."""
         if not valid_twists(ts):
             return {"ok": False, "error": "invalid twists"}
         pk = pub_key_bytes(attester)
@@ -265,9 +294,14 @@ class KB:
         if rec is None:
             rec = self.records[cid] = Record(list(ts), phase(ts), excursion(ts))
         rec.attesters.add(pk)
-        self.names.setdefault(name, set()).add(cid)
-        return {"ok": True, "id": cid, "ways": len(self.names[name]),
-                "redundancy": len(rec.attesters)}
+        return {"ok": True, "id": cid, "redundancy": len(rec.attesters)}
+
+    def assert_closure(self, name: str, ts: list[int], attester) -> dict:
+        res = self._admit(ts, attester)
+        if res["ok"]:
+            self.names.setdefault(name, set()).add(res["id"])
+            res["ways"] = len(self.names[name])
+        return res
 
     def ways(self, name: str) -> int:
         return len(self.names.get(name, ()))
@@ -298,35 +332,37 @@ class KB:
     def ask(self, seed: list[int], context: int) -> dict:
         """Grow-only: the id is the question's content, so a replayed ask finds
         the same entry and leaves its answers alone."""
-        if not valid_twists(seed) or type(context) is not int or not 0 <= context <= 3:
+        q = (tuple(seed), context) if isinstance(seed, list) else None
+        if q is None or not valid_question(q):
             return {"ok": False, "error": "invalid question"}
-        q = question_id(seed, context)
-        self.questions.setdefault(q, Question(list(seed), context))
+        self.asked.add(q)
         return {"ok": True, "q": q, "residual": tuple(-x for x in action(seed))}
 
     def answer(self, q, cont: list[int], attester) -> dict:
-        qq = self.questions.get(q)
-        if qq is None:
-            return {"ok": False, "error": "no such question"}
+        """A question is its content, so any well-formed q can be answered,
+        before or after it is asked: the answer is checked against q's own seed.
+        That keeps answers order-independent across shards (ask registers q
+        for listing; it is not a precondition)."""
+        if not valid_question(q):
+            return {"ok": False, "error": "invalid question"}
         if not valid_twists(cont):
             return {"ok": False, "error": "invalid twists"}
-        res = self.assert_closure(q, qq.seed + cont, attester)
+        res = self._admit(list(q[0]) + cont, attester)
         if res["ok"]:
-            qq.answers.add(res["id"])
+            self.answers.setdefault(q, set()).add(res["id"])
         return res
 
-    def solve(self, q: str) -> Optional[list[int]]:
-        """The continuation of the first-reached recorded closure.
+    def solve(self, q) -> Optional[list[int]]:
+        """The continuation of the first-reached recorded answer.
 
         No prefix-freeness filter is needed: if a recorded answer's continuation
         has a recorded closing prefix, that prefix has excursion <= and length <,
         so the cascade already ranks it first. The minimum over all answers is
         the minimum over events (qucalc_search mode=events)."""
-        qq = self.questions.get(q)
-        if qq is None:
+        if not valid_question(q):
             return None
-        best = self._cascade(qq.answers)
-        return self.records[best[0]].twists[len(qq.seed):] if best else None
+        best = self._cascade(self.answers.get(q, ()))
+        return self.records[best[0]].twists[len(q[0]):] if best else None
 
 
 # --------------------------------------------------------------------------- #
@@ -356,10 +392,14 @@ class IndexShard:
     Carrying the key beside the id makes ways / first / solve local to one shard."""
     def __init__(self) -> None:
         self.names: dict[str, set] = {}
-        self.seeds: dict[str, list[int]] = {}
+        self.answers: dict[tuple, set] = {}          # separate from names
+        self.asked: set = set()
 
     def put(self, name: str, key: tuple, cid: str) -> None:        # idempotent
         self.names.setdefault(name, set()).add((key, cid))
+
+    def put_answer(self, q: tuple, key: tuple, cid: str) -> None:  # idempotent
+        self.answers.setdefault(q, set()).add((key, cid))
 
 
 class ShardedKB:
@@ -378,15 +418,21 @@ class ShardedKB:
         self.idx = [IndexShard() for _ in range(k)]
 
     # legs, exposed separately so a test can deliver them in any order, twice
-    def legs(self, name, ts: list[int], attester):
+    def _record_leg(self, ts, attester):
         pk = pub_key_bytes(attester)
-        if not valid_twists(ts) or pk is None or not is_closure(ts):            # the gate is stateless: any shard checks it
-            return []
+        if not valid_twists(ts) or pk is None or not is_closure(ts):  # stateless gate
+            return None
         cid = content_id(ts)
         r = self.rec[shard_of(cid, self.k)]
+        return cid, (lambda: r.put(cid, ts, pk))
+
+    def legs(self, name, ts: list[int], attester):
+        got = self._record_leg(ts, attester)
+        if got is None:
+            return []
+        cid, leg = got
         i = self.idx[shard_of(name, self.k)]
-        return [lambda: r.put(cid, ts, pk),
-                lambda: i.put(name, cascade_key(ts), cid)]
+        return [leg, lambda: i.put(name, cascade_key(ts), cid)]
 
     def assert_closure(self, name, ts, attester) -> None:
         for leg in self.legs(name, ts, attester):
@@ -403,23 +449,32 @@ class ShardedKB:
         e = self.idx[shard_of(name, self.k)].names.get(name)
         return min(e)[1] if e else None
 
-    def ask(self, seed: list[int], context: int):
-        q = question_id(seed, context)
-        self.idx[shard_of(repr(q), self.k)].seeds.setdefault(q, list(seed))
-        return q
+    def ask(self, seed: list[int], context: int) -> dict:
+        q = (tuple(seed), context) if isinstance(seed, list) else None
+        if q is None or not valid_question(q):
+            return {"ok": False, "error": "invalid question"}
+        self.idx[shard_of(q, self.k)].asked.add(q)
+        return {"ok": True, "q": q, "residual": tuple(-x for x in action(seed))}
 
     def answer_legs(self, q, cont: list[int], attester):
-        if not valid_twists(cont):
+        if not valid_question(q) or not valid_twists(cont):
             return []
-        return self.legs(q, list(q[0]) + list(cont), attester)
-
-    def solve(self, q: str) -> Optional[list[int]]:
+        ts = list(q[0]) + list(cont)
+        got = self._record_leg(ts, attester)
+        if got is None:
+            return []
+        cid, leg = got
         i = self.idx[shard_of(q, self.k)]
-        e = i.names.get(q)
+        return [leg, lambda: i.put_answer(q, cascade_key(ts), cid)]
+
+    def solve(self, q) -> Optional[list[int]]:
+        if not valid_question(q):
+            return None
+        e = self.idx[shard_of(q, self.k)].answers.get(q)
         if not e:
             return None
         key, _ = min(e)                  # the key carries the history: no record-shard read
-        return from_str(key[3])[len(i.seeds[q]):]
+        return from_str(key[3])[len(q[0]):]
 
     def merged(self) -> "ShardedKB":
         """Union of all shards into one: what a full replica would hold."""
@@ -432,7 +487,10 @@ class ShardedKB:
             for n, es in i.names.items():
                 for key, cid in es:
                     m.idx[0].put(n, key, cid)
-            m.idx[0].seeds.update(i.seeds)
+            for q, es in i.answers.items():
+                for key, cid in es:
+                    m.idx[0].put_answer(q, key, cid)
+            m.idx[0].asked |= i.asked
         return m
 
 
@@ -544,7 +602,7 @@ def _selfcheck() -> None:
     kb4.answer(q, from_str("<v"), alice)
     before = kb4.solve(q)
     again = kb4.ask(seed, 0)                                   # replayed ask
-    assert again["q"] == q and kb4.solve(q) == before and len(kb4.questions[q].answers) == 1
+    assert again["q"] == q and kb4.solve(q) == before and len(kb4.answers[q]) == 1
     q2 = kb4.ask(seed, 1)["q"]                                 # same seed, other context:
     assert q2 != q and kb4.solve(q2) is None and kb4.solve(q) == before   # a different question
     bad = [[8], [-1], [0, 1, True, 2], [0.0, 1, 2, 3], "^v<>", None, (0, 1, 2, 3),
@@ -555,7 +613,7 @@ def _selfcheck() -> None:
         assert kb4.answer(q, b, alice)["ok"] is False
         assert kb4.ask(b, 0)["ok"] is False
     assert kb4.ask(seed, 4)["ok"] is False and kb4.ask(seed, "0")["ok"] is False
-    assert kb4.answer(("nope",), from_str("<v"), alice)["error"] == "no such question"
+    assert kb4.answer(("nope",), from_str("<v"), alice)["error"] == "invalid question"
     assert kb4.solve(q) == before and "x" not in kb4.names
     print(f"(g) replayed ask keeps its answers; {len(bad)} malformed inputs refused on "
           f"assert/ask/answer; state unchanged")
@@ -587,6 +645,60 @@ def _selfcheck() -> None:
                for q_ in MO3 + [(3, 1), (3, -1)])
     print(f"(h) 5 fresh names refused as attesters, 5 repeats by one key give R=1; "
           f"{len(bad_props)} malformed propositions refused before any fold")
+
+    # (i) third review: answers are their own namespace, conjoin is closed, the
+    #     sharded model validates questions like the single store, and answers
+    #     may arrive before (or without) the ask that registers the question.
+    q = question_id(from_str("^>"), 0)
+    for model in (KB(), ShardedKB(3)):
+        model.ask(from_str("^>"), 0)
+        run = (model.answer_legs if isinstance(model, ShardedKB) else None)
+        if run:
+            for leg in run(q, from_str("<v"), alice):
+                leg()
+            model.assert_closure(q, from_str("+-+-"), alice)   # unrelated closure filed under q
+        else:
+            model.answer(q, from_str("<v"), alice)
+            model.assert_closure(q, from_str("+-+-"), alice)
+        assert model.solve(q) == from_str("<v"), (type(model).__name__, model.solve(q))
+    props = (MO3 + [(3, 1), (3, -1)]
+             + [("and", sa, g) for sa in SPATIAL_ATOMS for g in ((3, 1), (3, -1))])
+    n_ok = 0
+    for p_, q_ in itertools.product(props, repeat=2):
+        r = conjoin(p_, q_)
+        assert r == "incompatible" or valid_prop(r), (p_, q_, r)
+        if r != "incompatible":
+            n_ok += 1
+            assert conjoin(r, TOP) == r and conjoin(r, r) == r       # closed, idempotent
+            assert conjoin(q_, p_) == r                              # commutative
+    for p_, q_, r_ in itertools.product(props, repeat=3):            # associative where defined
+        a1, b1 = conjoin(p_, q_), conjoin(q_, r_)
+        if "incompatible" not in (a1, b1):
+            assert conjoin(a1, r_) == conjoin(p_, b1) or "incompatible" in (
+                conjoin(a1, r_), conjoin(p_, b1)), (p_, q_, r_)
+    assert conjoin(("and", (0, 1), (3, 1)), (1, 1)) == "incompatible"
+    assert conjoin(("and", (0, 1), (3, 1)), (3, -1)) == BOT
+    assert not valid_prop(("and", (3, 1), (0, 1))) and not valid_prop(("and", (0, 1), (1, 1)))
+    single, sharded = KB(), ShardedKB(4)
+    for bad_q in (([8], 0), ([0], 4), ([0, 1], True), ("^v", 0)):
+        assert single.ask(*bad_q) == sharded.ask(*bad_q) == {"ok": False, "error": "invalid question"}
+    for qq in (("nope",), ((8,), 0), ((0,), 4)):
+        assert single.answer(qq, [1], alice)["error"] == "invalid question"
+        assert sharded.answer_legs(qq, [1], alice) == [] and sharded.solve(qq) is None
+    for order in range(20):                        # ask anywhere among the answer legs
+        sk, ref2 = ShardedKB(3), KB()
+        conts = [from_str(c) for c in ("<v", "v<", "<v+-", "/v<\\")]
+        steps = [l for c in conts for l in sk.answer_legs(q, c, people[order % 6])]
+        steps.append(lambda: sk.ask(from_str("^>"), 0))
+        random.Random(order).shuffle(steps)
+        for st in steps:
+            st()
+        for c in conts:
+            ref2.answer(q, c, people[order % 6])     # single store, never asked
+        assert sk.solve(q) == ref2.solve(q) == from_str("<v") and q in sk.merged().idx[0].asked
+    print(f"(i) non-answer under the question id ignored by solve in both models; "
+          f"conjoin closed on {len(props)} propositions ({n_ok} defined pairs); "
+          f"questions validated alike; answer-before-ask converges")
     print("all self-checks passed")
 
 
