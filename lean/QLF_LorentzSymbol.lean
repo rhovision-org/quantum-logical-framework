@@ -458,6 +458,9 @@ exact to all orders in `g` (every "loop" of the interaction is in it).
   the spatial pairs, `A`'s marginal is proportional to its free census **iff `g₀ = g_s`**. A
   coupling that treats time and space differently does renormalize `c`: this is the substrate form
   of the Collins et al. (2004) leakage.
+* **`joint_symbol_swap`** — with a coupling equal on `t` and `t†` (which the fold is), swapping which
+  strand takes `t` and which takes `t†` leaves the joint census unchanged: the census cannot tell
+  emitter from absorber.
 * **`shared_pair_fold_axis_blind`** — and the substrate does not treat them differently: every
   shared pair folds to the same `−I`, gauge or spatial (`hermitian_pair_folds_to_negI`). If a
   shared pair's weight is its fold, the coupling is uniform and `c` is protected.
@@ -586,6 +589,23 @@ theorem marginal_proportional_iff (g₀ gs : ℂ) :
     apply Finset.sum_congr rfl
     intro t _
     cases t <;> rfl
+
+theorem conj_conj' (t : Twist) : t.conj.conj = t := by cases t <;> rfl
+
+/-- The wave of the conjugate step is the wave of the step at reversed momentum. -/
+theorem wave_conj (k : Fin 4 → ℝ) (t : Twist) : wave k (step t.conj) = wave (-k) (step t) := by
+  simp only [wave, kdot, step_conj, Pi.neg_apply, Int.cast_neg, mul_neg, neg_mul]
+
+/-- **The joint census cannot tell emitter from absorber.** If the coupling is the same on a twist
+    and its conjugate, swapping the two strands (which one takes `t`, which takes `t†`) leaves the
+    one-tick symbol, and so the whole joint census, unchanged. -/
+theorem joint_symbol_swap (kA kB : Fin 4 → ℝ) (g : Twist → ℂ) (hg : ∀ t, g t.conj = g t) :
+    ∑ s : JStep, jamp kA kB g s = ∑ s : JStep, jamp kB kA g s := by
+  rw [joint_symbol, joint_symbol, mul_comm (usym kA)]
+  congr 1
+  refine Fintype.sum_equiv (Function.Involutive.toPerm _ conj_conj') _ _ (fun t => ?_)
+  show _ = g t.conj * wave (kB - kA) (step t.conj)
+  rw [hg, wave_conj, neg_sub]
 
 /-- **Every shared pair folds to the same scalar**, gauge or spatial: the substrate's own weight on
     a shared pair does not distinguish time from space. -/

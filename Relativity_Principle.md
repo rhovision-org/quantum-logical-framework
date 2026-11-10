@@ -212,6 +212,7 @@ every loop of the interaction is in it.
 | **`marginal_uniform`** | if `g` is the same on all eight twists, `A`'s census is `(8 + g)^L` times its free census: **the interaction changes the count, never the spread, so `c = 1` for every coupling** |
 | **`marginal_proportional_iff`** | with `g₀` on the gauge pair and `g_s` on the spatial pairs, `A`'s census is proportional to the free one **iff `g₀ = g_s`**; otherwise the time/space spread ratio becomes `(8 + g₀)/(8 + g_s)` and `c` shifts |
 | **`shared_pair_fold_axis_blind`** | every shared pair folds to the same `−I`, gauge or spatial |
+| `joint_symbol_swap` | with a coupling equal on `t` and `t†`, swapping which strand takes which half leaves the joint census unchanged |
 
 So Collins's leak has an exact substrate form. A coupling that weighs time-like and space-like
 pairs differently renormalizes `c`, at any strength. The substrate's own weight on a shared pair,
@@ -220,6 +221,14 @@ exactly, for every species and every coupling.** Different species that couple w
 strengths `g` still all see `c = 1`, because the protection comes from axis-blindness, not from the
 size of `g`. The brute-force check (`relativity_scale_check.py`, `check_shared_pairs`) enumerates
 the joint histories and reads `A`'s spread directly, without the symbol.
+
+**Emitter and absorber.** `joint_symbol_swap` answers a question from
+[`Collective_Electrodynamics.md`](Collective_Electrodynamics.md) §6: which half of a shared pair
+belongs to the emitter and which to the absorber. Within the pair, nothing decides it. The census
+sums both assignments with equal weight (the Wheeler–Feynman time symmetry), and the fold weights
+them equally too, since `t·t†` and `t†·t` both fold to `−I`. By method rule 4 the assignment changes
+no count here, so it is a label. If it is physical, it has to come from outside the pair: from which
+strand's other closures come first, the priority order of `closedAtHorizon_mono`.
 
 What this leaves open. The model has two strands that persist. Strands that are created or
 destroyed (pair creation, a variable number of histories) are not covered, and those are where
