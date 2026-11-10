@@ -5,11 +5,13 @@ on:
     branches: ["main"]
     paths:
       - "**/*.py"
+      - "claim_records/**"
       - ".github/workflows/python-verify.yml"
   pull_request:
     branches: ["main"]
     paths:
       - "**/*.py"
+      - "claim_records/**"
       - ".github/workflows/python-verify.yml"
 
 jobs:
@@ -27,6 +29,9 @@ jobs:
       - name: Compile every tracked Python source
         run: |
           git ls-files -z '*.py' | xargs -0 -r python3 -m py_compile
+
+      - name: Validate every typed claim record
+        run: python3 scripts/validate_claim_records.py
 
       - name: Run dependency-free regression tests
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v

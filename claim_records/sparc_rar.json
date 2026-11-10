@@ -1,12 +1,12 @@
 {
   "record_id": "QLF-SPARC-001",
-  "version": "0.3-draft",
+  "version": "0.3.1-draft",
   "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
-  "informal_statement": "QLF's closure-balance radial-acceleration relation, with a0 = c H0 / (2 pi), reproduces the SPARC rotation-curve sample with no per-galaxy fit: 0.133 dex scatter and a zero mean offset on 147 galaxies / 2696 points, using canonical mass-to-light ratios and a declared local H0.",
+  "informal_statement": "The declared QLF RAR formula reproduces descriptive residuals on a curated public SPARC sample: 147 galaxies / 2696 points, mean -0.0002 dex and scatter 0.1327 dex at H0=73 and M/L=0.5/0.7. This is a retrospective benchmark, not independently established blinding.",
   "approximation_or_regime": {
     "name": "non-relativistic equilibrium; canonical M/L; local H0",
-    "description": "The RAR form is substrate-motivated; the interpolation function is not proved unique. H0 = 73 km/s/Mpc is declared; disk/bulge M/L = 0.5/0.7 are external standard values; no parameter is fitted to the rotation curves.",
-    "validity_limits": "The scatter cannot distinguish the QLF interpolation from other RAR forms at this level; the result is a retrospective blind analysis of public SPARC data, not a prospective prediction."
+    "description": "Non-relativistic algebraic RAR with declared H0=73 km/s/Mpc and standard external disk/bulge M/L=0.5/0.7. The QLF formula has no per-galaxy fitted parameter. Vobs is loaded and used for quality selection before sealing.",
+    "validity_limits": "The benchmark does not establish interpolation uniqueness, historical information isolation, an independent timestamp, statistical model equivalence, or a measured uncertainty floor."
   },
   "formal_statement": {
     "namespace": "QLF",
@@ -30,7 +30,7 @@
       "sparc/predictions_sealed.csv",
       "sparc/receipt.json"
     ],
-    "type": "algebraic RAR model + blind SPARC pipeline"
+    "type": "algebraic RAR model plus retrospective public-data pipeline"
   },
   "dependencies": {
     "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
@@ -74,7 +74,7 @@
   "interpretation": {
     "map": "The closure-balance relation is identified with the observed radial-acceleration relation; a0 = cH0/(2 pi) is identified with the MOND/RAR acceleration scale.",
     "formal_status": "The algebraic RAR identity is formalized; the identification of the closure-balance variables with the observed g_bar/g_obs is a bridge, and the interpolation form is not unique.",
-    "noncircularity_test": "The predictor uses baryonic inputs only and seals V_pred before Vobs is scored; the seal is self-generated, so an independent timestamp/replication is still required."
+    "noncircularity_test": "For an admitted point the prediction uses baryonic inputs. The sample selection uses Vobs/error ratios; Vobs and gobs are loaded/computed before the seal. A stronger test needs controlled target access and a frozen analysis."
   },
   "observable": {
     "symbol": "T = g_obs / g_pred; residual = log10(g_obs) - log10(g_pred)",
@@ -85,25 +85,26 @@
       "newton": "mean +0.4309 dex, scatter 0.2809 dex",
       "nfw_per_galaxy": "mean -0.005 dex, scatter 0.0593 dex"
     },
-    "uncertainties": "Observational floor ~0.13 dex; calibration and extinction uncertainties are not re-analyzed here."
+    "uncertainties": "Descriptive residual scatter only; no independently reanalysed measurement uncertainty budget or intrinsic-scatter inference."
   },
   "measurement_protocol": {
-    "status": "retrospective blind analysis of public data; no new observations",
-    "design": "Baryonic-only prediction for V_pred(R); SHA-256 seal before scoring Vobs; no per-galaxy tuning.",
+    "status": "retrospective public-data reproduction; no new observations",
+    "design": "Apply declared target-informed quality cuts; evaluate a baryonic-input formula; hash predictions before residual scoring. This does not establish a pre-unblinding information barrier.",
     "apparatus": "SPARC long-slit Halpha rotation curves and 3.6 micron photometry; public data.",
-    "failure_condition": "A reproduced mismatch in the RAR, a failed independent replication, or a dependence on H0/M-L that removes the zero-offset result."
+    "failure_condition": "A reproduced mismatch in the RAR, a failed independent replication, or a dependence on H0/M-L that removes the zero-offset result.",
+    "execution_status": "retrospective_reproduction"
   },
   "reported_agreement": {
     "value": "0.133 dex scatter, mean -0.0002 dex, 147 galaxies / 2696 points",
     "comparator": "SPARC curated sample; Newton and per-galaxy NFW fits on the same points",
-    "uncertainty": "observational floor ~0.13 dex",
-    "comparison_type": "retrospective blind"
+    "uncertainty": "Descriptive residual scatter only; no independently reanalysed measurement uncertainty budget or intrinsic-scatter inference.",
+    "comparison_type": "consistency"
   },
   "evidence": {
     "F": "The algebraic RAR and a0 identities are source-inspected; original theorem-specific #print axioms anchors are absent.",
-    "N": "The blind pipeline is reproducible; the committed prediction file's body SHA-256 matches the receipt's seal, and the data hash matches.",
-    "E": "No independent measurement or third-party replication; the SPARC data are public and the seal is self-generated.",
-    "reviewer": "Aria, technical reviewer; authors are QLF developers."
+    "N": "Exact reproduction and digests are recorded in the scoped numerical receipt; no claim of historical blindness follows.",
+    "E": "No new observations, controlled blind reveal, or independent physical replication.",
+    "reviewer": "Ω-WITNESS technical review for aixaria0; collaborator tier; the receipt records executed checks separately from publication approval."
   },
   "defeaters": {
     "formal": "A kernel/axiom discrepancy or a counterexample to the RAR identity.",
@@ -139,12 +140,12 @@
     },
     "G6": {
       "status": "INCONCLUSIVE",
-      "reason": "No independent third-party receipt; the review is a collaborator technical review."
+      "reason": "Matching scoped execution receipt will be attached after rerunning the frozen source; no independent physical replication is claimed."
     }
   },
   "evidence_status": {
     "formal": "CANDIDATE",
-    "numerical": "REPRODUCED",
+    "numerical": "CANDIDATE",
     "empirical": "NOT_ESTABLISHED",
     "bridge": "OPEN"
   },
@@ -152,7 +153,9 @@
     "source_inspection": "Authors are QLF developers; technical review by Aria, not an independent external audit.",
     "enumeration": "The pipeline is author-supplied; the seal is self-generated. Independent replication is pending.",
     "original_lean_kernel": "Original theorem footprints pending.",
-    "measurement": "Retrospective public-data analysis only."
+    "measurement": "Retrospective public-data analysis only.",
+    "independence_tier": "collaborator",
+    "receipt": null
   },
   "provenance": {
     "repository": "https://github.com/rhovision-org/quantum-logical-framework",
@@ -160,7 +163,10 @@
     "data": {
       "source": "SPARC (Lelli, McGaugh & Schombert 2016)",
       "data_sha256_16": "9108994b12cc401b",
-      "sealed_predictions_sha256": "5f06582c8058c6c14f3ef2805b872574afcfe63773624c9b10aaa2fdedabfb90"
+      "sealed_predictions_sha256": "5f06582c8058c6c14f3ef2805b872574afcfe63773624c9b10aaa2fdedabfb90",
+      "catalogue_sha256": "5aa0501f6b0d881fa579030e315e7b5b6ef561a5bd3a07472f9929c7e5728243",
+      "mass_model_sha256": "9108994b12cc401b94a1768beca61c53ec354779385c9c9cc571049f3043244c",
+      "prediction_csv_sha256": "e745538455dd153d6b644f0ae0307c38b15770af79bb0a95ac41b8192380373c"
     },
     "reference_documents": [
       "SPARC.md",
@@ -168,5 +174,6 @@
       "Proof_to_Physics.md"
     ],
     "status": "draft skeleton; fill frozen pin, reviewer sign-off, and independent-replication status before promotion."
-  }
+  },
+  "record_type": "claim"
 }

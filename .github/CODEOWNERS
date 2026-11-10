@@ -14,3 +14,11 @@
 /lean/QLF_QuantumLogic.lean          @aixaria0
 /scripts/validate_claim_records.py   @aixaria0
 /tests/test_claim_records.py         @aixaria0
+
+# Review the baseline and the mechanisms that enforce it.
+/lean/axiom_footprints.expected.json @aixaria0
+/scripts/proof_trust.py              @aixaria0
+/tests/test_proof_trust.py           @aixaria0
+/.github/workflows/lean-verify.yml   @aixaria0
+/.github/workflows/python-verify.yml @aixaria0
+/.github/CODEOWNERS                  @jimscarver @aixaria0

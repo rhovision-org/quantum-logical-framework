@@ -1,6 +1,6 @@
 {
   "record_id": "QLF-ALPHA-001",
-  "version": "0.3-draft",
+  "version": "0.3.1-draft",
   "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
   "informal_statement": "QLF's 8-twist, three-directional construction gives a leading inverse fine-structure constant alpha^-1 = 137, a bracket 137 < alpha^-1 < 137.048, and a structural value 137.032; the reported agreement with CODATA is 0.026% at leading order.",
   "approximation_or_regime": {
@@ -79,7 +79,8 @@
   "measurement_protocol": {
     "status": "not applicable for the retrodiction; a scale/scheme protocol is required for any prospective claim",
     "design": "Predeclare the scale and renormalization scheme, the count-to-coupling map, the tolerance, and the comparator before comparing with a measured value.",
-    "failure_condition": "A confirmed alpha variation, or a failed count-to-coupling map, or a comparison that requires post-hoc adjustment of w."
+    "failure_condition": "A confirmed alpha variation, or a failed count-to-coupling map, or a comparison that requires post-hoc adjustment of w.",
+    "execution_status": "not_performed"
   },
   "reported_agreement": {
     "value": "0.026% at leading order (reported)",
@@ -91,7 +92,7 @@
     "F": "Finite identities are source-inspected; original theorem-specific #print axioms anchors are absent.",
     "N": "The arithmetic and interval statements are reproducible; the 0.026% comparison is a retrodiction.",
     "E": "No independent measurement was made for this paper.",
-    "reviewer": "Aria, technical reviewer; authors are QLF developers."
+    "reviewer": "Ω-WITNESS technical review for aixaria0; collaborator tier; the receipt records executed checks separately from publication approval."
   },
   "defeaters": {
     "formal": "A kernel/axiom discrepancy or a counterexample to an interval identity.",
@@ -127,12 +128,12 @@
     },
     "G6": {
       "status": "INCONCLUSIVE",
-      "reason": "No independent third-party receipt for this claim; the review is a collaborator technical review."
+      "reason": "Matching scoped execution receipt will be attached after rerunning the frozen source; no independent physical replication is claimed."
     }
   },
   "evidence_status": {
     "formal": "CANDIDATE",
-    "numerical": "REPRODUCED",
+    "numerical": "CANDIDATE",
     "empirical": "NOT_ESTABLISHED",
     "bridge": "OPEN"
   },
@@ -140,7 +141,9 @@
     "source_inspection": "Authors are QLF developers; technical review by Aria, not an independent external audit.",
     "enumeration": "Finite arithmetic reproducibility check; not an independent measurement.",
     "original_lean_kernel": "Original theorem footprints pending.",
-    "measurement": "Not performed."
+    "measurement": "Not performed.",
+    "independence_tier": "collaborator",
+    "receipt": null
   },
   "provenance": {
     "repository": "https://github.com/rhovision-org/quantum-logical-framework",
@@ -151,5 +154,6 @@
       "Proof_to_Physics.md"
     ],
     "status": "draft skeleton; fill hashes, frozen pin, and reviewer sign-off before promotion."
-  }
+  },
+  "record_type": "claim"
 }

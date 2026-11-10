@@ -293,8 +293,9 @@ the result it is used to support.
 The implementation of this rule is indexed in [`Claim_Status.md`](Claim_Status.md) and
 [`claim_records/kill_conditions.json`](claim_records/kill_conditions.json). Each claim record states
 the approximation/regime, the input provenance (derived / declared / fitted / external), the
-comparator, the reported agreement, and the bridge/evidence status. The kill-condition record is the
-pre-registered null side of the same ledger. The records are schema-checked by
+comparator, the reported agreement, and the bridge/evidence status. The kill-condition record is a draft falsification/test ledger; no completed
+preregistration is asserted until its operational rule and pre-exposure chronology
+are frozen and documented. The records are schema-checked by
 `scripts/validate_claim_records.py`; they are not a substitute for the observation.
 
 **R0a — The discovery/confirmation firewall.** Anything constructed while the target number was in
@@ -375,8 +376,10 @@ it is a smaller number and the same commitment. And *"construct an inhabitant" d
 discharge*: a satisfiable interface is evidence only when its instances are hard to come by, so
 building the toy is what tells you which case you are in, and there is no way to know in advance.
 
-Read the dependency footprint afterwards rather than trusting the source: an absent `propext` in a
-`#print axioms` report is the signature of a pure application — the "theorem" restates its axiom.
+Read the full dependency footprint and theorem statement rather than trusting a
+label. An absent `propext` does not diagnose an axiom restatement: finite computation
+and definitional equality can legitimately have empty footprints. Check explicitly
+whether a conclusion is assumed, derived, or only adjacent to the advertised claim.
 Machinery: [`scripts/axiom_audit.sh`](scripts/axiom_audit.sh) pins what exists to be assumed,
 [`lean/QLF_AxiomAudit.lean`](lean/QLF_AxiomAudit.lean) reports what the proofs actually consume.
 
