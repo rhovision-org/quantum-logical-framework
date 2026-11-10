@@ -13,7 +13,11 @@ closed forms the Lean module proves:
 
 and the step-level no-go: the gamma = 3 integer boost preserves the interval and sends e_t
 (1 step) to (3,2,2,0) (7 steps); and lean/QLF_LorentzSymbol.lean: the matrix census
-is H(k)^L with H = 2i*Form(sin k), det H = -4*interval(sin k). See Relativity_Principle.md.
+is H(k)^L with H = 2i*Form(sin k), det H = -4*interval(sin k); and its shared-pair section:
+two strands that share Hermitian pairs t / t-dagger with coupling g leave strand A's marginal
+census at (8 + g)^L * usym^L (marginal_uniform), so A's spread is unchanged for every g, while a
+coupling g0 on the gauge pair and gs on the spatial pairs changes A's time/space spread ratio,
+i.e. c, unless g0 = gs (marginal_proportional_iff). See Relativity_Principle.md.
 
 Usage: python3 relativity_scale_check.py [--max-len 6]
 """
@@ -116,6 +120,41 @@ def check_matrix_symbol(max_len=4, trials=3):
           f"checked to L={max_len} at {trials} random momenta")
 
 
+CONJ = {"+": "-", "-": "+", ">": "<", "<": ">", "^": "v", "v": "^", "/": "\\", "\\": "/"}
+
+
+def check_shared_pairs(max_len=3, g=0.37 - 0.21j):
+    """marginal_uniform / marginal_proportional_iff, by enumerating joint two-strand histories.
+
+    A tick is a free pair (a, b) or a shared pair (t, t-dagger). Summing over where B ends, A's
+    displacement distribution is read off directly from the enumeration (no symbol used)."""
+    import collections
+    ticks = [((a, b), 1) for a in STEP for b in STEP] + [((t, CONJ[t]), None) for t in STEP]
+    for g0, gs in ((g, g), (0.5, 0.0)):
+        coup = lambda t: g0 if t in "+-" else gs
+        for L in range(1, max_len + 1):
+            distA = collections.defaultdict(complex)   # A's endpoint -> summed joint weight
+            for word in itertools.product(range(len(ticks)), repeat=L):
+                w = 1
+                x = [0, 0, 0, 0]
+                for i in word:
+                    (a, _b), free = ticks[i]
+                    w *= 1 if free else coup(a)
+                    x = [x[j] + STEP[a][j] for j in range(4)]
+                distA[tuple(x)] += w
+            total = sum(distA.values())
+            t2 = sum(v * x[0] ** 2 for x, v in distA.items()) / total
+            s2 = sum(v * x[1] ** 2 for x, v in distA.items()) / total
+            if g0 == gs:
+                assert abs(total - (8 + g) ** L * 8 ** L) < 1e-6
+                assert abs(t2 - L / 4) < 1e-9 and abs(s2 - L / 4) < 1e-9, (L, t2, s2)
+            elif L == max_len:
+                # time spread / space spread = (8+g0)/(8+gs): c^2 shifts unless g0 = gs
+                assert abs(t2 / s2 - (8 + g0) / (8 + gs)) < 1e-9, (t2, s2)
+    print(f"shared pairs: uniform coupling leaves A's spread (and c) unchanged to L={max_len}; "
+          f"axis-dependent coupling shifts time/space spread by (8+g0)/(8+gs)")
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-len", type=int, default=6)
@@ -123,3 +162,4 @@ if __name__ == "__main__":
     check_no_go()
     check_moments(args.max_len)
     check_matrix_symbol()
+    check_shared_pairs()

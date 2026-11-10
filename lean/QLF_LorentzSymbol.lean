@@ -46,8 +46,12 @@ lattice symbol is not covariant. The 16 zeros of `sin` per period are the lattic
 **`quadratic_form_frame_invariant`** — a quadratic form on momentum space invariant under the
 substrate's frame group (axis reflections and spatial transpositions) is `diag(a, b, b, b)`. The
 only quadratic Lorentz violation the symmetry permits is the ratio `b/a`, the speed of light, which
-the census fixes at `1`. Whether interactions renormalize it (Collins et al. 2004) is now a single
-number, not an open-ended worry. It is not settled here.
+the census fixes at `1`. Whether interactions renormalize it (Collins et al. 2004) is that single
+number. §5 settles it for interactions by shared Hermitian pairs: **`marginal_uniform`**, a coupling
+equal on all eight twists leaves each strand's spread, and so `c`, unchanged at every strength and
+every order; **`marginal_proportional_iff`**, an axis-dependent coupling shifts `c` unless gauge and
+spatial couplings agree; **`shared_pair_fold_axis_blind`**, every shared pair folds to the same `−I`.
+Strands created or destroyed are not covered.
 
 ## The lattice light cone
 
@@ -420,5 +424,173 @@ theorem diagonal_light_superluminal {ω κ : ℝ} (h0 : 0 < κ) (h1 : κ ≤ 1 /
   have hk : Real.sqrt 2 * κ ≤ Real.pi / 2 := by nlinarith [Real.pi_gt_three]
   have := Real.sin_le_sin_of_le_of_le_pi_div_two (by linarith [Real.pi_pos]) hk hle
   linarith
+
+end QLF.LorentzSymbol
+
+-- ==========================================
+-- §5  Shared-pair interactions cannot change c
+-- ==========================================
+
+namespace QLF.LorentzSymbol
+
+open Finset QLF QLF.RelativityScale Complex
+
+/-!
+## Two strands that interact by sharing Hermitian pairs
+
+Two histories `A` and `B` run side by side, one twist each per tick. On an ordinary tick they step
+independently. On a **shared** tick they close a Hermitian pair between them: `A` takes `t`, `B`
+takes `t†`, weighted by a coupling `g t`. A joint history is a word over
+`JStep = (Twist × Twist) ⊕ Twist` (free pair, or shared twist), and the joint census, weighted by
+plane waves at momenta `k_A`, `k_B`, sums every way of interleaving free and shared ticks, so it is
+exact to all orders in `g` (every "loop" of the interaction is in it).
+
+* **`joint_census`** — the joint census is a power of its one-tick symbol.
+* **`shared_wave`** — a shared tick carries `e^{i(k_A − k_B)·e_t}`: since `t†` steps opposite to
+  `t`, the pair has zero net displacement and sees only the **relative** momentum.
+* **`joint_symbol`** — the one-tick symbol is `usym k_A · usym k_B + Σ_t g_t e^{i(k_A−k_B)·e_t}`.
+* **`marginal_symbol`** — summing over where `B` ends (`k_B = 0`) leaves `A` with
+  `Σ_t (8 + g_t) e^{i k_A·e_t}`.
+* **`marginal_uniform`** — if the coupling is the same on all eight twists, `A`'s marginal census
+  is `(8 + g)^L` times its free census: **the interaction rescales the count and changes nothing
+  about how `A` spreads**, so its light speed is `1`, for every `g`, to all orders.
+* **`marginal_proportional_iff`** — conversely, with coupling `g₀` on the gauge pair and `g_s` on
+  the spatial pairs, `A`'s marginal is proportional to its free census **iff `g₀ = g_s`**. A
+  coupling that treats time and space differently does renormalize `c`: this is the substrate form
+  of the Collins et al. (2004) leakage.
+* **`shared_pair_fold_axis_blind`** — and the substrate does not treat them differently: every
+  shared pair folds to the same `−I`, gauge or spatial (`hermitian_pair_folds_to_negI`). If a
+  shared pair's weight is its fold, the coupling is uniform and `c` is protected.
+
+Scope. This covers interactions by shared Hermitian pairs between strands that persist. It does
+not cover strands that are created or destroyed (a variable number of histories), and that a pair's
+weight is its fold is the reading the last theorem supports, not a theorem about all couplings.
+-/
+
+/-- Summing over words of length `n+1` peels off the first letter, for any finite alphabet. -/
+theorem sum_words_succ' {α β : Type} [DecidableEq α] [Fintype α] [AddCommMonoid β]
+    (m : ℕ) (g : List α → β) :
+    ∑ w ∈ words α (m + 1), g w = ∑ a : α, ∑ w ∈ words α m, g (a :: w) := by
+  rw [words, sum_biUnion]
+  · apply sum_congr rfl
+    intro a _
+    rw [sum_image (fun _ _ _ _ h => by simpa using h)]
+  · intro a₁ _ a₂ _ hne
+    apply Finset.disjoint_left.mpr
+    intro h h1 h2
+    simp only [mem_image] at h1 h2
+    obtain ⟨w₁, -, rfl⟩ := h1
+    obtain ⟨w₂, -, he⟩ := h2
+    exact hne (List.cons.inj he).1.symm
+
+/-- One tick of a two-strand history: a free pair `(a, b)`, or a shared Hermitian pair `t / t†`. -/
+abbrev JStep := (Twist × Twist) ⊕ Twist
+
+/-- The plane-wave amplitude of one tick, with coupling `g` on shared ticks. -/
+noncomputable def jamp (kA kB : Fin 4 → ℝ) (g : Twist → ℂ) : JStep → ℂ
+  | .inl (a, b) => wave kA (step a) * wave kB (step b)
+  | .inr t => g t * (wave kA (step t) * wave kB (step t.conj))
+
+/-- **The joint census is a power of its one-tick symbol.** -/
+theorem joint_census (kA kB : Fin 4 → ℝ) (g : Twist → ℂ) (L : ℕ) :
+    ∑ w ∈ words JStep L, (w.map (jamp kA kB g)).prod = (∑ s : JStep, jamp kA kB g s) ^ L := by
+  induction L with
+  | zero => simp [words]
+  | succ L ih =>
+      rw [sum_words_succ', pow_succ', ← ih, Finset.sum_mul]
+      apply Finset.sum_congr rfl
+      intro s _
+      rw [Finset.mul_sum]
+      apply Finset.sum_congr rfl
+      intro w _
+      simp
+
+/-- The conjugate twist steps the opposite way. -/
+theorem step_conj (t : Twist) (i : Fin 4) : step t.conj i = -step t i := by
+  cases t <;> fin_cases i <;> rfl
+
+/-- **A shared pair sees only the relative momentum.** -/
+theorem shared_wave (kA kB : Fin 4 → ℝ) (t : Twist) :
+    wave kA (step t) * wave kB (step t.conj) = wave (kA - kB) (step t) := by
+  simp only [wave, kdot, step_conj, ← Complex.exp_add]
+  congr 1
+  push_cast
+  simp only [Pi.sub_apply, Fin.sum_univ_four]
+  push_cast
+  ring
+
+/-- **The one-tick joint symbol**: free product plus a relative-momentum shared term. -/
+theorem joint_symbol (kA kB : Fin 4 → ℝ) (g : Twist → ℂ) :
+    ∑ s : JStep, jamp kA kB g s =
+      usym kA * usym kB + ∑ t : Twist, g t * wave (kA - kB) (step t) := by
+  rw [Fintype.sum_sum_type, Fintype.sum_prod_type, usym, usym, Finset.sum_mul_sum]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro t _
+  simp only [jamp, shared_wave]
+
+theorem wave_zero (v : Fin 4 → ℤ) : wave 0 v = 1 := by
+  simp [wave, kdot]
+
+theorem usym_zero : usym 0 = 8 := by
+  simp [usym, wave_zero]
+  rfl
+
+/-- **`B` summed out**: `A` sees `Σ_t (8 + g_t) e^{i k_A·e_t}`. -/
+theorem marginal_symbol (kA : Fin 4 → ℝ) (g : Twist → ℂ) :
+    ∑ s : JStep, jamp kA 0 g s = ∑ t : Twist, (8 + g t) * wave kA (step t) := by
+  rw [joint_symbol, usym_zero, sub_zero, usym, Finset.sum_mul, ← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro t _
+  ring
+
+/-- **A uniform shared-pair coupling cannot change `A`'s spread.** At every length and every
+    coupling, `A`'s marginal census is `(8 + g)^L` times its free census `usym^L`. -/
+theorem marginal_uniform (kA : Fin 4 → ℝ) (g : ℂ) (L : ℕ) :
+    ∑ w ∈ words JStep L, (w.map (jamp kA 0 (fun _ => g))).prod = (8 + g) ^ L * usym kA ^ L := by
+  rw [joint_census, marginal_symbol, ← Finset.mul_sum, ← usym, mul_pow]
+
+/-- Coupling `g₀` on the gauge pair, `gs` on the six spatial twists. -/
+def axisCoupling (g₀ gs : ℂ) : Twist → ℂ
+  | .plus => g₀
+  | .minus => g₀
+  | _ => gs
+
+/-- **`c` is protected exactly when the coupling is axis-blind.** `A`'s marginal one-tick symbol is
+    a constant multiple of its free symbol, for all momenta, iff `g₀ = gs`. -/
+theorem marginal_proportional_iff (g₀ gs : ℂ) :
+    (∃ c : ℂ, ∀ kA : Fin 4 → ℝ,
+      ∑ s : JStep, jamp kA 0 (axisCoupling g₀ gs) s = c * usym kA) ↔ g₀ = gs := by
+  constructor
+  · rintro ⟨c, hc⟩
+    have h0 := hc 0
+    have hπ := hc ![Real.pi, 0, 0, 0]
+    rw [marginal_symbol, usym_zero] at h0
+    rw [marginal_symbol, usym_eq_cos] at hπ
+    simp only [sum_twist, axisCoupling, wave_zero] at h0
+    simp only [sum_twist, axisCoupling, wave_plus, wave_minus, wave_right, wave_left, wave_up,
+      wave_down, wave_slash, wave_backslash] at hπ
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.cons_val_three,
+      Matrix.head_cons, Matrix.tail_cons, Complex.ofReal_zero, mul_zero, neg_zero,
+      Complex.exp_zero, Real.cos_pi, Real.cos_zero] at hπ
+    have he : Complex.exp (Complex.I * (Real.pi : ℂ)) = -1 := by
+      rw [mul_comm]; exact Complex.exp_pi_mul_I
+    have he' : Complex.exp (-(Complex.I * (Real.pi : ℂ))) = -1 := by
+      rw [Complex.exp_neg, he]; norm_num
+    rw [he, he'] at hπ
+    push_cast at hπ
+    linear_combination (1 / 6 : ℂ) * h0 - (1 / 3 : ℂ) * hπ
+  · rintro rfl
+    refine ⟨8 + g₀, fun kA => ?_⟩
+    rw [marginal_symbol, usym, Finset.mul_sum]
+    apply Finset.sum_congr rfl
+    intro t _
+    cases t <;> rfl
+
+/-- **Every shared pair folds to the same scalar**, gauge or spatial: the substrate's own weight on
+    a shared pair does not distinguish time from space. -/
+theorem shared_pair_fold_axis_blind (t u : Twist) :
+    t.toMatrix * t.conj.toMatrix = u.toMatrix * u.conj.toMatrix := by
+  rw [hermitian_pair_folds_to_negI, hermitian_pair_folds_to_negI]
 
 end QLF.LorentzSymbol

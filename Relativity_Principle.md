@@ -168,30 +168,53 @@ indicative only. And whether the lattice axes are global or locally oriented is 
 they vary from region to region, the effect averages away over many black holes. The lattice also
 removes the trans-Planckian problem: no mode exceeds `k = π`.
 
-## 6. What remains open: one number
+## 6. Interactions: shared pairs cannot move c
 
 [Collins, Perez, Sudarsky, Urrutia & Vucetich, *PRL* 93, 191301 (2004)](https://arxiv.org/abs/gr-qc/0403053)
 showed that a Planck-scale preferred frame leaks into low-energy physics through quantum loops at
-about the percent level unless something forbids it. Everything above is free propagation. The
+about the percent level unless something forbids it. Everything above §6 is free propagation. The
 question is whether interactions undo it.
 
 `quadratic_form_frame_invariant` reduces that question to one number. Any quadratic form on
 momentum space that the substrate's frame group leaves invariant is `diag(a, b, b, b)`, so the only
 Lorentz violation the symmetry allows at that order is the ratio `b/a`, the speed of light in each
 species. The census sets it to `1` for free propagation (`light_speed_from_spread`,
-`symbol_eq_form`). If interactions shift it differently for different species, QLF has Collins's
-problem. If something holds it at `1`, the problem is absent. The frame group alone does not hold
-it, because it never mixes time with space.
+`symbol_eq_form`). The frame group alone does not hold it there, because it never mixes time with
+space. So the question is what interactions do to `b/a`.
 
-Joint closures themselves are already proven: the two-spin joint closure is the singlet
+Joint closures are already proven: the two-spin joint closure is the singlet
 ([`lean/QLF_JointClosure.lean`](lean/QLF_JointClosure.lean)), the composite fold of `N` bodies is the
 tensor product, and a shared pair folds to `t ⊗ t†`
-([`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean)). Those are the joint
-*states* and their algebra. What this question needs is their *momentum-space* side: the census
-symbol of two histories that share pairs, and whether the shared pairs move the time/space ratio.
-One structural fact points the right way: a shared pair puts `t` on one body and `t†` on the
-other, so its net displacement is zero and it cannot depend on the total momentum. That is a lead,
-not yet a theorem.
+([`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean)). The new part is their
+momentum-space side, in [`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean) §5, no axioms.
+
+Two histories `A` and `B` run side by side. On a free tick each takes its own twist. On a shared
+tick they close a Hermitian pair between them, `t` on `A` and `t†` on `B`, with coupling `g_t`. The
+joint census sums every interleaving of free and shared ticks, so it is exact to all orders in `g`:
+every loop of the interaction is in it.
+
+| Result | Statement |
+|---|---|
+| `joint_census` | the joint census is `(one-tick symbol)^L` |
+| `shared_wave` | a shared tick carries `e^{i(k_A − k_B)·e_t}`: the pair has zero net displacement, so it sees only the relative momentum |
+| `marginal_symbol` | summing over where `B` ends, `A` sees `Σ_t (8 + g_t) e^{i k_A·e_t}` |
+| **`marginal_uniform`** | if `g` is the same on all eight twists, `A`'s census is `(8 + g)^L` times its free census: **the interaction changes the count, never the spread, so `c = 1` for every coupling** |
+| **`marginal_proportional_iff`** | with `g₀` on the gauge pair and `g_s` on the spatial pairs, `A`'s census is proportional to the free one **iff `g₀ = g_s`**; otherwise the time/space spread ratio becomes `(8 + g₀)/(8 + g_s)` and `c` shifts |
+| **`shared_pair_fold_axis_blind`** | every shared pair folds to the same `−I`, gauge or spatial |
+
+So Collins's leak has an exact substrate form. A coupling that weighs time-like and space-like
+pairs differently renormalizes `c`, at any strength. The substrate's own weight on a shared pair,
+its fold, does not distinguish them. **If a shared pair is weighted by its fold, `c` is protected
+exactly, for every species and every coupling.** Different species that couple with different
+strengths `g` still all see `c = 1`, because the protection comes from axis-blindness, not from the
+size of `g`. The brute-force check (`relativity_scale_check.py`, `check_shared_pairs`) enumerates
+the joint histories and reads `A`'s spread directly, without the symbol.
+
+What this leaves open. The model has two strands that persist. Strands that are created or
+destroyed (pair creation, a variable number of histories) are not covered, and those are where
+Collins's loop integrals live in field theory. That a pair's weight is its fold is the reading
+`shared_pair_fold_axis_blind` supports, not a theorem about every possible coupling. These two
+points are now the whole of the open question.
 
 ## 7. How this fits the rest
 
