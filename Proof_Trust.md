@@ -56,12 +56,13 @@ assumption-free.
 
 ## Paper I v0.3 — MO2/QuantumLogic coverage
 
-At the source revision used by Paper I v0.3 (`06a99e7`), the reviewed baseline
-contains 229 anchors. Twelve are for `QLF.TensorFromClosure`; there are **zero**
-anchors for `QLF.MO2` or `QLF.QuantumLogic`. The paper's formal case study is
-therefore `F-CANDIDATE`, not `F`, until the anchors in
-`QLF_AxiomAudit.lean` are run against the original build and the resulting
-footprints are reviewed into `lean/axiom_footprints.expected.json`.
+At the `06a99e7` snapshot the reviewed baseline contains 229 anchors. After the
+#220 merge (`a8657be`) it contains 240: twelve for `QLF.TensorFromClosure`,
+eleven for the holography audit, and still **zero** anchors for `QLF.MO2` or
+`QLF.QuantumLogic`. The paper's formal case study is therefore `F-CANDIDATE`,
+not `F`, until the anchors in `QLF_AxiomAudit.lean` are run against the original
+build and the resulting footprints are reviewed into
+`lean/axiom_footprints.expected.json`.
 
 The v0.3 PR adds:
 

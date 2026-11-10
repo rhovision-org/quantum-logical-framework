@@ -1,7 +1,7 @@
 {
   "record_id": "QLF-KILL-001",
   "version": "0.3-draft",
-  "source_revision": "06a99e792a50eafa51e1a19d6d1ab8cc0724580c",
+  "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
   "reviewer": "Aria (technical reviewer)",
   "purpose": "Pre-registered null predictions and kill conditions. Each entry names the formal anchor (where one exists), the comparator, the observation that would end the claim, and the current status. A kill condition is not evidence for the claim; it is the observation that would count against it.",
   "entries": [

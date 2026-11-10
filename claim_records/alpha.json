@@ -1,7 +1,7 @@
 {
   "record_id": "QLF-ALPHA-001",
   "version": "0.3-draft",
-  "source_revision": "06a99e792a50eafa51e1a19d6d1ab8cc0724580c",
+  "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
   "informal_statement": "QLF's 8-twist, three-directional construction gives a leading inverse fine-structure constant alpha^-1 = 137, a bracket 137 < alpha^-1 < 137.048, and a structural value 137.032; the reported agreement with CODATA is 0.026% at leading order.",
   "approximation_or_regime": {
     "name": "leading + structural",
@@ -32,7 +32,7 @@
   "dependencies": {
     "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
     "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
-    "audit_baseline": "not present for these theorem names in the 229-anchor baseline at the source revision",
+    "audit_baseline": "not present for these theorem names in the 240-anchor baseline at the source revision",
     "qlf_bridge_axioms": "none explicit in the source scan; original #print axioms output pending"
   },
   "inputs": [
@@ -107,7 +107,7 @@
     },
     "G1": {
       "status": "INCONCLUSIVE",
-      "reason": "The named theorem footprints are absent from the 229-anchor baseline; original #print axioms output pending."
+      "reason": "The named theorem footprints are absent from the 240-anchor baseline; original #print axioms output pending."
     },
     "G2": {
       "status": "PASS",
@@ -144,7 +144,7 @@
   },
   "provenance": {
     "repository": "https://github.com/rhovision-org/quantum-logical-framework",
-    "source_revision": "06a99e792a50eafa51e1a19d6d1ab8cc0724580c",
+    "source_revision": "a8657be247ee7725099c0fc45eea94a62d57d904",
     "reference_documents": [
       "Alpha.md",
       "Alpha_Residual.md",
