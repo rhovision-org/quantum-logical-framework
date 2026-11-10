@@ -1,5 +1,7 @@
 # Collective Electrodynamics: The QuCalc Fluxoid
 
+> Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and opposite quantum logical action with zero free energy, the principle of QLF.
+
 Carver Mead's *Collective Electrodynamics* redefined the electromagnetic interaction by stripping away the concept of point particles and localized "flying" photons, replacing them with the continuous coupling of quantum phases. 
 
 The **Quantum Logical Framework (QLF)** provides the discrete, computational "source code" for Mead's collective phenomena. By mapping Mead's continuous phase variables to QuCalc's discrete twist symbols, classical electromagnetism emerges naturally from topological logic. Mead's picture is, in the QLF reading, **almost entirely correct** — the one place QLF *corrects* it is his residual commitment to *continuous* phase and frequency (**§5**).
@@ -41,6 +43,58 @@ Mead's *Collective Electrodynamics* is, in the QLF reading, **almost entirely co
 - **Nothing empirical is lost.** Every experimental success of collective electrodynamics — the Aharonov–Bohm shift, the *integer* fluxoid, the transactional photon — is a statement about *closed loops* and *counts*, which is exactly what QLF keeps; the continuum was only ever the interpolation between them.
 
 **Why the residue matters.** The continuum is where classical electromagnetism's pathologies live — the ultraviolet divergence, the infinite self-energy of a point charge. A *discrete* frequency spectrum has none: the fluxoid count is an integer, the closure census is finite, and `ℏω = 1 bit at frequency ω` prices each mode ([`Photon_Energy_Bits.md`](Photon_Energy_Bits.md), [`Information_Energy_Equivalence.md`](Information_Energy_Equivalence.md)). So QLF does not merely restate Mead discretely; it closes the one gap through which the old infinities re-enter — the electromagnetic face of QLF's [continuum-is-a-rendering](TheContinuum.md) thesis. **Mead's collective phases, read as counts of ½-spin closures: *it from bit*, completing the picture.**
+
+## 6. Mead's transaction, checked against what is proven
+
+Sections 1 to 5 read Mead in QLF's language. This section checks the reading against sources and against Lean, and separates what is proven from what is still a reading.
+
+### 6a. What Mead says (sources checked 2026-11-10)
+
+From Cramer and Mead, *Symmetry, Transactions, and the Mechanism of Wave Function Collapse* (*Symmetry* **12**, 1373 (2020); [arXiv:2006.11365](https://arxiv.org/abs/2006.11365)), which restates the electrodynamics of Mead's *Collective Electrodynamics* (MIT Press, 2000):
+
+- **Both light cones.** The four-potential an electron feels is the sum of the current elements on its light cone, each weighted by `1/r`. Elements on the past light cone give the retarded field and elements on the future light cone the advanced field. The wave equation is second order and "does not favor any particular sign of space or time".
+- **Offer and confirmation.** A transfer starts as a small offer wave from the excited emitter and a confirmation wave from the absorber. The coupled pair is unstable, the exchange grows exponentially, and energy is conserved between the two atoms throughout.
+- **Transverse far field.** Far from a neutral atom, the longitudinal gradient of the scalar potential cancels the longitudinal part of the vector potential, so the field that carries the exchange is purely transverse.
+
+The equal weighting "half retarded plus half advanced" is Wheeler and Feynman's (*Rev. Mod. Phys.* **17**, 157 (1945)). The 2020 paper uses a matched retarded/advanced pair but does not state weights. The phrase "quantum action is 2c, half lateral and half transverse" was not found in these sources; it is recorded here as Jim's summary, and §6b gives the readings of it that Lean supports.
+
+### 6b. What QLF proves
+
+The realizable step along a twist `t` at momentum `k` ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean)) is
+
+`realStep t k = e^{ik}·fix t + e^{−ik}·fix t̄`,
+
+a forward phase on one half and a backward phase on the conjugate half. [`QLF_MeadTransaction`](lean/QLF_MeadTransaction.lean) reads it as Mead's matched pair. No axioms.
+
+| Mead | QLF theorem | What it says |
+|---|---|---|
+| a matched retarded/advanced pair | `mead_transaction` | the halves `fix t`, `fix t̄` are complementary projectors; the twist is their difference, `M(t) = fix t − fix t̄`; they are its `+1` and `−1` eigenspaces |
+| half and half | `trace_fix_spatial` | on every spatial axis each half has trace `1` of `2`: the split is exactly equal |
+| "2c" | `mead_transaction` + `DiracWalk.realStep_generator` | the step's generator is `i·M(t)`, so `M(t)` is its velocity in lattice units; the two halves move at `+c` and `−c`, a spread of `2c`, half each way. This is the discrete form of Dirac's result that his velocity operator `cα` has eigenvalues `±c`, the root of Schrödinger's *Zitterbewegung* (*Sitzber. Preuss. Akad. Wiss.* **24**, 418 (1930)) |
+| the factor 2 | `realStep_sub_neg`, `realStep_add_neg` | retarded minus advanced is `2i sin k·M(t)`: the whole twist, with the factor 2. Retarded plus advanced is `2 cos k·1`, which carries no twist. Reversing the momentum is the adjoint (`realStep_neg`), so the advanced step is the retarded step's time reverse. Summed over the three axes this is `H(k) = 2i·Form(sin k)` |
+| time-symmetric equations | `gauge_no_split` ([`QLF_GaugeAxis`](lean/QLF_GaugeAxis.lean)) | on the gauge (time) axis there is no split: one half is everything and the other nothing, so the gauge step is a pure clock phase. Only space is split half and half |
+| a null exchange | `GaugeAxis.light_cone` | when the clock phase cancels the spatial phase (zero free action per step), `ω² = k²`: a light-like step carries equal parts time and space |
+| the fluxoid | `EdgeSign.plaquette_yx`, `plaquette_twice` ([`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)) | one spatial ZFA loop `^>v<` has holonomy `−1` and two loops `+1` |
+
+**A correction to §3.** §3 says one ZFA loop is a `2π` phase. The proven holonomy is `−1`, which is `π`. That fits the superconducting fluxoid better than `2π` would: the flux quantum is `h/2e`, and an electron of charge `e` taken round it picks up Aharonov–Bohm phase `e·(h/2e)/ħ = π`, while the Cooper pair (charge `2e`) picks up `2π`. So one ZFA loop is half a turn for one electron and a full turn for the pair. That is the same `−1`/`+1` as §4's `720°`.
+
+**Two readings of "half lateral and half transverse".** Both are proven; which one Jim means is open.
+
+1. *Half forward, half backward along each spatial axis*: `trace_fix_spatial` with `mead_transaction`, the two halves at `±c`.
+2. *Half time, half space in a null step*: `GaugeAxis.light_cone`, the clock phase equal to the spatial phase.
+
+[`Atomic_Structure_QLF.md`](Atomic_Structure_QLF.md) §5 uses "lateral" for the charge axis `<>` and "transverse" for spin. If that is the meaning, neither reading above is it yet, and the target is a theorem about the charge axis and the spin axes specifically.
+
+**Scope (method rule 4).** Every row above is an identity about one step or one loop. None changes a count of ways, so together they show that QLF's step *has* Mead's structure. They are not evidence that Mead's transaction is the physics.
+
+### 6c. What is still open
+
+1. **Who owns each half.** The theorems split one step into a forward and a backward half. Mead puts the offer on the emitter and the confirmation on the absorber. The QLF version is a two-history statement: in a shared pair, `t` on the emitter and `t†` on the absorber ([`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean) gives the composite fold `t ⊗ t†`), the emitter's half should be `fix t` and the absorber's `fix t̄`. That is not proved.
+2. **The avalanche.** Cramer and Mead's collapse mechanism is the exponential growth of a phase-matched pair. QLF's nearest structure is the first-closure race (`/solve`, [`QucalcSearch.md`](QucalcSearch.md)), but the exponential rate has not been derived from it.
+3. **The `1/r` weight.** The four-potential weights each light-cone element by `1/r`. On the substrate this should be the Green's function of the closure walk ([`Closure_Walk.md`](Closure_Walk.md)). No Lean statement connects them.
+4. **The transverse far field.** The cancellation of the longitudinal parts needs a four-potential built from closures, which QLF does not have yet.
+
+Item 1 is the one that would change a count: the exchange census of [`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §40 already separates spin-flip and no-flip exchanges, and asking which of them put the forward half on the emitter is a question about numbers of ways.
 
 ## Examples: Collective Electrodynamics in QLF
 
