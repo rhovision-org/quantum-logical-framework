@@ -35,6 +35,9 @@ as a **matched pair**: a forward (retarded, "offer") half on `fix t` and a backw
 > **`equal_split_iff_null`, `closure_equal_split`** — a transverse mode puts equal action on the
 > electric and magnetic planes iff it is null; a massless closure (`GaugeAxis.light_cone`) is null, so
 > its action splits evenly, `|E| = c|B|`.
+>
+> **`shared_pair_halves`** — a shared pair (`t` on one body, `t†` on the other) folds to `+1` exactly
+> where the bodies are in opposite halves: joint closure pairs offer with confirmation, symmetrically.
 
 Since the generator of the step is `i·M(t)` (`DiracWalk.realStep_generator`), `M(t)` is the step's
 velocity in lattice units, and the halves are its eigenspaces with velocity `+1` and `−1`. The two
@@ -196,5 +199,37 @@ theorem closure_equal_split (w ky kx kz ex ey ez : ℝ) (ψ : Fin 2 → ℂ) (h�
   have hr : w ^ 2 = ky ^ 2 + kx ^ 2 + kz ^ 2 := by exact_mod_cast hl
   have h := electric_sub_magnetic w kx ky kz ex ey ez
   linear_combination h + (ex ^ 2 + ey ^ 2 + ez ^ 2) * hr + (kx * ex + ky * ey + kz * ez) * ht
+
+-- ==========================================
+-- §6  A shared pair forces the halves opposite
+-- ==========================================
+
+open Kronecker
+
+private theorem kron_sub_left (A B C : Matrix (Fin 2) (Fin 2) ℂ) :
+    (A - B) ⊗ₖ C = A ⊗ₖ C - B ⊗ₖ C := by
+  ext i j
+  simp [Matrix.kroneckerMap_apply, sub_mul]
+
+private theorem kron_sub_right (A B C : Matrix (Fin 2) (Fin 2) ℂ) :
+    A ⊗ₖ (B - C) = A ⊗ₖ B - A ⊗ₖ C := by
+  ext i j
+  simp [Matrix.kroneckerMap_apply, mul_sub]
+
+/-- **A shared pair's joint fold separates opposite halves from equal ones.** When `t` sits on one body
+and `t†` on the other, the composite fold `t ⊗ t†` (`QLF_TensorFromClosure`) is `+1` exactly where one
+body is in its forward half and the other in its backward half, and `−1` where both are in the same
+half. So joint closure pairs an offer with a confirmation. The expression is symmetric under swapping
+the bodies, so the fold does not say which body is the emitter. -/
+theorem shared_pair_halves (t : Twist) :
+    t.toMatrix ⊗ₖ t.conj.toMatrix =
+      (fix t ⊗ₖ fix t.conj + fix t.conj ⊗ₖ fix t) -
+        (fix t ⊗ₖ fix t + fix t.conj ⊗ₖ fix t.conj) := by
+  have h1 := DiracWalk.fix_sub_conj t
+  have h2 : fix t.conj - fix t = t.conj.toMatrix := by
+    have h := DiracWalk.fix_sub_conj t.conj
+    rwa [show t.conj.conj = t by cases t <;> rfl] at h
+  rw [← h1, ← h2, kron_sub_left, kron_sub_right, kron_sub_right]
+  abel
 
 end QLF.MeadTransaction
