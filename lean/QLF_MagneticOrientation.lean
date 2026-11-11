@@ -425,4 +425,51 @@ theorem bodies_destroy_iff (A B : List Bool) :
     netSpace (allPairings A B) < 0 ↔ moment A * moment B < 0 := by
   rw [netSpace_allPairings]; constructor <;> intro h <;> linarith
 
+-- ==========================================
+-- §8  Bending preserves balance
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"the orientation bends with curvature"*. Carried round a loop, an orientation
+comes back flipped exactly when the loop's holonomy is odd (`holonomy_eq_projected_areas`). A body
+carried round one loop is flipped as a whole: every unit by the same holonomy bit. -/
+
+/-- Carry every unit of a body round a loop of holonomy bit `h`: flip all of them iff `h`. -/
+def transport (h : Bool) (A : List Bool) : List Bool := A.map (fun p => xor h p)
+
+theorem unitArea_xor (h p : Bool) : unitArea (xor h p) = (if h then -1 else 1) * unitArea p := by
+  cases h <;> cases p <;> decide
+
+/-- Transport multiplies the moment by the holonomy sign. -/
+theorem moment_transport (h : Bool) (A : List Bool) :
+    moment (transport h A) = (if h then -1 else 1) * moment A := by
+  induction A with
+  | nil => simp [transport, moment]
+  | cons p ps ih =>
+      simp only [transport, List.map_cons, moment] at ih ⊢
+      rw [ih, unitArea_xor]; ring
+
+theorem transport_length (h : Bool) (A : List Bool) : (transport h A).length = A.length := by
+  simp [transport]
+
+/-- **Bending preserves balance.** Carried round any loop, a balanced body stays balanced, it keeps
+    its size, and so its pairing count with any other body is unchanged while the space it makes stays
+    zero. Gravity, read as the orientation-blind count, is the same in curved and flat regions. -/
+theorem bending_preserves_balance (h : Bool) (A B : List Bool) (hA : moment A = 0) :
+    moment (transport h A) = 0 ∧
+      netSpace (allPairings (transport h A) B) = 0 ∧
+      (allPairings (transport h A) B).length = A.length * B.length := by
+  have hm : moment (transport h A) = 0 := by rw [moment_transport, hA]; ring
+  refine ⟨hm, (neutral_holds_distance _ B hm).1, ?_⟩
+  rw [allPairings_length, transport_length]
+
+/-- Two bodies carried round loops with bits `h`, `k`: the space they make is multiplied by the
+    product of the two holonomy signs, and the pairing count does not change. -/
+theorem transport_pair (h k : Bool) (A B : List Bool) :
+    netSpace (allPairings (transport h A) (transport k B)) =
+        (if h then -1 else 1) * (if k then -1 else 1) * netSpace (allPairings A B) ∧
+      (allPairings (transport h A) (transport k B)).length = (allPairings A B).length := by
+  refine ⟨?_, ?_⟩
+  · rw [netSpace_allPairings, netSpace_allPairings, moment_transport, moment_transport]; ring
+  · rw [allPairings_length, allPairings_length, transport_length, transport_length]
+
 end QLF.MagneticOrientation
