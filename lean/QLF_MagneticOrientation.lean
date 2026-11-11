@@ -837,4 +837,79 @@ theorem ferromagnet_one_way (n : ℕ) : waysWithUps n n = 1 ∧ waysWithUps n 0 
   rw [waysWithUps_eq_choose, waysWithUps_eq_choose]
   exact ⟨Nat.choose_self n, Nat.choose_zero_right n⟩
 
+-- ==========================================
+-- §12  Magnons
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"connect the idea of magnons in the classes."* Measured from the aligned
+(ferromagnetic) body, a magnon is one flipped unit. Each one lowers the moment by two half-units,
+one whole unit of spin, so the moment classes of §11 are magnon numbers: the ferromagnet has none,
+the ferrimagnet has the minority sublattice, and the paramagnetic mode has `n/2`. The count of ways
+to place `k` magnons on `n` units is `C(n, k)`, and one magnon has `n` ways, the count a spin wave
+spreads over. -/
+
+/-- The number of magnons: units flipped down from the all-up body. -/
+def magnons (A : List Bool) : ℕ := A.count false
+
+/-- **The moment is the size minus two per magnon.** -/
+theorem moment_magnons (A : List Bool) : moment A = A.length - 2 * (magnons A : ℤ) := by
+  induction A with
+  | nil => simp [moment, magnons]
+  | cons p ps ih =>
+      unfold magnons at ih ⊢
+      rw [moment, ih, List.count_cons, List.length_cons]
+      cases p <;> simp [unitArea] <;> ring
+
+/-- **A magnon carries one whole unit of spin**: flipping any up unit down, anywhere in the body,
+    lowers the moment by two half-units. -/
+theorem magnon_lowers_moment (pfx sfx : List Bool) :
+    moment (pfx ++ true :: sfx) - moment (pfx ++ false :: sfx) = 2 := by
+  rw [moment_append, moment_append]
+  simp [moment, unitArea]
+
+/-- **Ferromagnet: the aligned body has no magnons.** -/
+theorem ferromagnet_no_magnons (n : ℕ) : magnons (List.replicate n true) = 0 := by
+  simp [magnons, List.count_replicate]
+
+/-- **Ferrimagnet: the minority sublattice is the magnon number.** -/
+theorem ferri_magnons (n₁ n₂ : ℕ) :
+    magnons (List.replicate n₁ true ++ List.replicate n₂ false) = n₂ := by
+  simp [magnons, List.count_append, List.count_replicate]
+
+/-- How many bodies of size `n` carry exactly `k` magnons. -/
+def waysWithMagnons (n k : ℕ) : ℕ := (bodies n).countP (fun A => magnons A == k)
+
+/-- **Placing `k` magnons on `n` units has `C(n, k)` ways.** -/
+theorem waysWithMagnons_eq_choose (n k : ℕ) : waysWithMagnons n k = n.choose k := by
+  induction n generalizing k with
+  | zero => cases k <;> simp [waysWithMagnons, bodies, magnons]
+  | succ n ih =>
+      unfold waysWithMagnons at ih ⊢
+      rw [bodies, List.countP_append, List.countP_map, List.countP_map]
+      cases k with
+      | zero =>
+          have h1 : (bodies n).countP ((fun A => magnons A == 0) ∘ (false :: ·)) = 0 := by
+            rw [List.countP_eq_zero]; intro A _; simp [magnons]
+          have h2 : (bodies n).countP ((fun A => magnons A == 0) ∘ (true :: ·)) =
+              (bodies n).countP (fun A => magnons A == 0) := by
+            rfl
+          rw [h1, h2, ih]; simp
+      | succ k =>
+          have h1 : (bodies n).countP ((fun A => magnons A == k + 1) ∘ (false :: ·)) =
+              (bodies n).countP (fun A => magnons A == k) := by
+            congr 1; funext A; simp [magnons]
+          have h2 : (bodies n).countP ((fun A => magnons A == k + 1) ∘ (true :: ·)) =
+              (bodies n).countP (fun A => magnons A == k + 1) := by
+            rfl
+          rw [h1, h2, ih, ih, Nat.choose_succ_succ, Nat.add_comm]
+
+/-- **One magnon has `n` ways**, one for each unit it can sit on: the count a spin wave spreads over. -/
+theorem one_magnon_ways (n : ℕ) : waysWithMagnons n 1 = n := by
+  rw [waysWithMagnons_eq_choose, Nat.choose_one_right]
+
+/-- **The paramagnetic mode is half the units flipped**: no magnon number has more ways than `n/2`. -/
+theorem paramagnet_half_magnons (n k : ℕ) : waysWithMagnons n k ≤ waysWithMagnons n (n / 2) := by
+  rw [waysWithMagnons_eq_choose, waysWithMagnons_eq_choose]
+  exact Nat.choose_le_middle k n
+
 end QLF.MagneticOrientation
