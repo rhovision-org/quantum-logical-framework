@@ -353,4 +353,76 @@ theorem fixed_distance_is_balanced (es : List (Bool × Bool)) :
     funext e; obtain ⟨a, b⟩ := e; cases a <;> cases b <;> rfl
   rw [h1, h2]
 
+-- ==========================================
+-- §7  Every pairing of two bodies: moments for orientation, counts for the rest
+-- ==========================================
+
+/-! Two bodies, each a list of oriented units (up `true`, down `false`). Let every unit of one pair
+with every unit of the other. The number of pairings is the product of the sizes, blind to
+orientation. The space they make is the product of the bodies' net orientations (their moments). So
+a body with as many ups as downs holds every distance under the orientation term, whatever it is
+paired with: what is left between neutral bodies is only the orientation-blind count. -/
+
+/-- Every unit of `A` paired with every unit of `B`. -/
+def allPairings (A B : List Bool) : List (Bool × Bool) := A.flatMap (fun p => B.map (fun q => (p, q)))
+
+/-- The net orientation of a body: ups minus downs, its moment. -/
+def moment : List Bool → ℤ
+  | [] => 0
+  | p :: ps => unitArea p + moment ps
+
+theorem jointSpace_eq_mul (p q : Bool) : jointSpace p q = 2 * (unitArea p * unitArea q) := by
+  cases p <;> cases q <;> decide
+
+theorem netSpace_append (l m : List (Bool × Bool)) : netSpace (l ++ m) = netSpace l + netSpace m := by
+  induction l with
+  | nil => simp [netSpace]
+  | cons e es ih => simp only [List.cons_append, netSpace, ih]; ring
+
+theorem netSpace_row (p : Bool) (B : List Bool) :
+    netSpace (B.map (fun q => (p, q))) = 2 * (unitArea p * moment B) := by
+  induction B with
+  | nil => simp [netSpace, moment]
+  | cons q qs ih => simp only [List.map_cons, netSpace, moment, ih, jointSpace_eq_mul]; ring
+
+/-- **The space two bodies make is the product of their moments.** -/
+theorem netSpace_allPairings (A B : List Bool) :
+    netSpace (allPairings A B) = 2 * (moment A * moment B) := by
+  induction A with
+  | nil => simp [allPairings, netSpace, moment]
+  | cons p ps ih =>
+      have h : allPairings (p :: ps) B = B.map (fun q => (p, q)) ++ allPairings ps B := by
+        simp [allPairings, List.flatMap_cons]
+      rw [h, netSpace_append, netSpace_row, ih, moment]
+      ring
+
+/-- **The number of pairings is the product of the sizes**, whatever the orientations. -/
+theorem allPairings_length (A B : List Bool) : (allPairings A B).length = A.length * B.length := by
+  induction A with
+  | nil => simp [allPairings]
+  | cons p ps ih =>
+      have h : allPairings (p :: ps) B = B.map (fun q => (p, q)) ++ allPairings ps B := by
+        simp [allPairings, List.flatMap_cons]
+      rw [h, List.length_append, List.length_map, ih, List.length_cons]
+      ring
+
+/-- **Neutral bodies hold every distance under the orientation term.** If one body has zero moment,
+    the space made by all pairings with any other body is zero, while the number of pairings is still
+    the product of the sizes. -/
+theorem neutral_holds_distance (A B : List Bool) (hA : moment A = 0) :
+    netSpace (allPairings A B) = 0 ∧ (allPairings A B).length = A.length * B.length := by
+  refine ⟨?_, allPairings_length A B⟩
+  rw [netSpace_allPairings, hA]
+  ring
+
+/-- **Like poles expand, opposite poles destroy, for whole bodies.** Space is made iff the moments
+    agree in sign, destroyed iff they are opposite. -/
+theorem bodies_expand_iff (A B : List Bool) :
+    0 < netSpace (allPairings A B) ↔ 0 < moment A * moment B := by
+  rw [netSpace_allPairings]; constructor <;> intro h <;> linarith
+
+theorem bodies_destroy_iff (A B : List Bool) :
+    netSpace (allPairings A B) < 0 ↔ moment A * moment B < 0 := by
+  rw [netSpace_allPairings]; constructor <;> intro h <;> linarith
+
 end QLF.MagneticOrientation
