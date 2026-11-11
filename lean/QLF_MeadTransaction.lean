@@ -38,6 +38,10 @@ as a **matched pair**: a forward (retarded, "offer") half on `fix t` and a backw
 >
 > **`shared_pair_halves`** — a shared pair (`t` on one body, `t†` on the other) folds to `+1` exactly
 > where the bodies are in opposite halves: joint closure pairs offer with confirmation, symmetrically.
+>
+> **`pair_polarization_transverse`, `pair_closure_equal_split`** — a polarization built from the
+> forward and backward halves along the momentum, `ε = χ†σψ`, is automatically transverse with no time
+> component, so on a massless closure `|E| = c|B|` holds with transversality derived, not assumed.
 
 Since the generator of the step is `i·M(t)` (`DiracWalk.realStep_generator`), `M(t)` is the step's
 velocity in lattice units, and the halves are its eigenspaces with velocity `+1` and `−1`. The two
@@ -231,5 +235,68 @@ theorem shared_pair_halves (t : Twist) :
     rwa [show t.conj.conj = t by cases t <;> rfl] at h
   rw [← h1, ← h2, kron_sub_left, kron_sub_right, kron_sub_right]
   abel
+
+-- ==========================================
+-- §7  Transversality from the halves
+-- ==========================================
+
+private theorem star_ofReal' (r : ℝ) : star (r : ℂ) = (r : ℂ) := Complex.conj_ofReal r
+
+/-- The Weyl generator at a real momentum is Hermitian. -/
+theorem weyl_herm (ky kx kz : ℝ) :
+    (Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ))ᴴ = Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ) := by
+  unfold Mass.weyl
+  rw [Matrix.conjTranspose_add, Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
+    Matrix.conjTranspose_smul, Matrix.conjTranspose_smul, ClosureUnitarity.twist_herm,
+    ClosureUnitarity.twist_herm, ClosureUnitarity.twist_herm, star_ofReal', star_ofReal',
+    star_ofReal']
+
+/-- **A polarization built from opposite halves is transverse.** Let `ψ` be the forward half along the
+momentum (`k·σ ψ = λψ`) and `χ` the backward half (`k·σ χ = −λχ`), `λ ≠ 0`. The polarization
+`ε_a = χ† σ_a ψ` they span has no time component (`χ†ψ = 0`, the halves are orthogonal) and no
+component along `k` (`k·ε = 0`). So the transversality that `closure_equal_split` assumed is not an
+extra input when the mode is an offer paired with a confirmation. -/
+theorem pair_polarization_transverse (ky kx kz l : ℝ) (hl : l ≠ 0) (ψ χ : Fin 2 → ℂ)
+    (hψ : Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ) *ᵥ ψ = (l : ℂ) • ψ)
+    (hχ : Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ) *ᵥ χ = (-(l : ℂ)) • χ) :
+    star χ ⬝ᵥ ψ = 0 ∧
+      (ky : ℂ) * (star χ ⬝ᵥ (Twist.up.toMatrix *ᵥ ψ)) +
+        (kx : ℂ) * (star χ ⬝ᵥ (Twist.left.toMatrix *ᵥ ψ)) +
+        (kz : ℂ) * (star χ ⬝ᵥ (Twist.slash.toMatrix *ᵥ ψ)) = 0 := by
+  have key : star (Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ) *ᵥ χ) ⬝ᵥ ψ =
+      star χ ⬝ᵥ (Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ) *ᵥ ψ) := by
+    rw [Matrix.star_mulVec, ← Matrix.dotProduct_mulVec, weyl_herm]
+  rw [hψ, hχ] at key
+  simp only [star_smul, smul_dotProduct, dotProduct_smul, star_neg, star_ofReal',
+    smul_eq_mul] at key
+  have hl' : (l : ℂ) ≠ 0 := by exact_mod_cast hl
+  have h2 : ((2 : ℂ) * l) * (star χ ⬝ᵥ ψ) = 0 := by linear_combination -key
+  have h0 : star χ ⬝ᵥ ψ = 0 :=
+    (mul_eq_zero.mp h2).resolve_left (mul_ne_zero two_ne_zero hl')
+  refine ⟨h0, ?_⟩
+  have e := congrArg (fun v => star χ ⬝ᵥ v) hψ
+  simp only [Mass.weyl, Matrix.add_mulVec, Matrix.smul_mulVec, dotProduct_add,
+    dotProduct_smul, smul_eq_mul, h0, mul_zero] at e
+  linear_combination e
+
+/-- **Offer ⊗ confirmation on a massless closure: `|E| = c|B|` with nothing assumed.** If the clock
+cancels the spatial phase on some state (`closure_equal_split`) and the polarization is built from the
+forward and backward halves along the momentum, its real part carries equal electric and magnetic
+action. -/
+theorem pair_closure_equal_split (w ky kx kz l : ℝ) (hl : l ≠ 0) (φ ψ χ : Fin 2 → ℂ) (hφ : φ ≠ 0)
+    (hclose : ((w : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) +
+      Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ)) *ᵥ φ = 0)
+    (hψ : Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ) *ᵥ ψ = (l : ℂ) • ψ)
+    (hχ : Mass.weyl (ky : ℂ) (kx : ℂ) (kz : ℂ) *ᵥ χ = (-(l : ℂ)) • χ) :
+    electricAction w (star χ ⬝ᵥ (Twist.left.toMatrix *ᵥ ψ)).re
+        (star χ ⬝ᵥ (Twist.up.toMatrix *ᵥ ψ)).re (star χ ⬝ᵥ (Twist.slash.toMatrix *ᵥ ψ)).re =
+      magneticAction kx ky kz (star χ ⬝ᵥ (Twist.left.toMatrix *ᵥ ψ)).re
+        (star χ ⬝ᵥ (Twist.up.toMatrix *ᵥ ψ)).re (star χ ⬝ᵥ (Twist.slash.toMatrix *ᵥ ψ)).re := by
+  have ht := (pair_polarization_transverse ky kx kz l hl ψ χ hψ hχ).2
+  have hre := congrArg Complex.re ht
+  simp only [Complex.add_re, Complex.mul_re, Complex.ofReal_re, Complex.ofReal_im, zero_mul,
+    sub_zero, Complex.zero_re] at hre
+  apply closure_equal_split w ky kx kz _ _ _ φ hφ hclose
+  linarith
 
 end QLF.MeadTransaction
