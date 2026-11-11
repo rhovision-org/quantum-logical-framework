@@ -1183,4 +1183,72 @@ theorem chain_has_walls (a b : ℝ) (ha : 0 < a) (hb : 0 < b) (n : ℕ) (hn : 0 
     exact pos_of_mul_pos_right this hab.le
   positivity
 
+-- ==========================================
+-- §16  Why the plane orders: the Peierls count
+-- ==========================================
+
+/-! On a chain one wall costs a factor `x = b/a` and has `n` places, so walls always win (§15). In
+the plane a wall is a closed path. A path of length `L` costs `x^L`, and the number of such paths is
+at most the non-backtracking walks: `4 · 3^(L−1)` from a given start, and at most `L` starts for a
+path enclosing a given site. So the total weight of walls round a site is at most `Σ L (3x)^L`, which
+does not grow with the size of the body and is below `1/2` once `x ≤ 1/12`. That comparison of two
+counts is Peierls' 1936 argument. Proved here: the walk count, the divergence on the chain and the
+bound in the plane. Not proved: that the chance a site is flipped is at most that sum (the contour
+map itself), which is what turns the bound into long-range order. -/
+
+/-- The four lattice steps; the reverse of step `s` is `s + 2`. -/
+def revStep (s : Fin 4) : Fin 4 := s + 2
+
+/-- Non-backtracking continuations of length `n` after a step `c`. -/
+def nbExt : Fin 4 → ℕ → List (List (Fin 4))
+  | _, 0 => [[]]
+  | c, n + 1 =>
+      ((List.finRange 4).filter (fun s => s ≠ revStep c)).flatMap
+        (fun s => (nbExt s n).map (s :: ·))
+
+/-- Non-backtracking walks of length `n + 1` from a fixed start. -/
+def nbWalks (n : ℕ) : List (List (Fin 4)) :=
+  (List.finRange 4).flatMap (fun s => (nbExt s n).map (s :: ·))
+
+theorem three_ways_on (c : Fin 4) :
+    ((List.finRange 4).filter (fun s => s ≠ revStep c)).length = 3 := by
+  fin_cases c <;> decide
+
+theorem nbExt_length (c : Fin 4) (n : ℕ) : (nbExt c n).length = 3 ^ n := by
+  induction n generalizing c with
+  | zero => rfl
+  | succ n ih =>
+      simp only [nbExt, List.length_flatMap, List.length_map, ih]
+      rw [List.map_const', List.sum_replicate, three_ways_on]
+      simp [pow_succ]; ring
+
+/-- **Wall paths of length `n + 1` from a fixed start number `4 · 3ⁿ`.** -/
+theorem nbWalks_length (n : ℕ) : (nbWalks n).length = 4 * 3 ^ n := by
+  simp only [nbWalks, List.length_flatMap, List.length_map, nbExt_length]
+  simp
+  ring
+
+/-- **On a chain walls always win**: placements times cost, `n · x`, exceeds any bound. -/
+theorem chain_walls_unbounded (x : ℝ) (hx : 0 < x) (M : ℝ) : ∃ n : ℕ, M < n * x := by
+  obtain ⟨n, hn⟩ := exists_nat_gt (M / x)
+  exact ⟨n, by rwa [div_lt_iff₀ hx] at hn⟩
+
+/-- **In the plane the wall weight is bounded**, whatever the size of the body:
+    `Σ L (3x)^L = 3x/(1 − 3x)²` for `3x < 1`. -/
+theorem plane_wall_weight (x : ℝ) (hx : 0 ≤ x) (h3 : 3 * x < 1) :
+    (∑' L : ℕ, (L : ℝ) * (3 * x) ^ L) = 3 * x / (1 - 3 * x) ^ 2 := by
+  apply tsum_coe_mul_geometric_of_norm_lt_one
+  rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+  exact h3
+
+/-- **Cold enough, walls lose**: for `x ≤ 1/12` the total wall weight round a site is below `1/2`. -/
+theorem plane_walls_lose (x : ℝ) (hx : 0 ≤ x) (h12 : x ≤ 1 / 12) :
+    (∑' L : ℕ, (L : ℝ) * (3 * x) ^ L) < 1 / 2 := by
+  rw [plane_wall_weight x hx (by linarith)]
+  have hpos : 0 < (1 - 3 * x) ^ 2 := by
+    have : 0 < 1 - 3 * x := by linarith
+    positivity
+  rw [div_lt_iff₀ hpos]
+  nlinarith
+
 end QLF.MagneticOrientation
