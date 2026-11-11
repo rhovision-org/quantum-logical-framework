@@ -299,4 +299,45 @@ theorem pair_closure_equal_split (w ky kx kz l : ℝ) (hl : l ≠ 0) (φ ψ χ :
   apply closure_equal_split w ky kx kz _ _ _ φ hφ hclose
   linarith
 
+-- ==========================================
+-- §8  A shared pair's field is transverse to its own axis
+-- ==========================================
+
+private theorem star_mulVec_dot' (A B : Matrix (Fin 2) (Fin 2) ℂ) (u v : Fin 2 → ℂ) :
+    star (A *ᵥ u) ⬝ᵥ (B *ᵥ v) = star u ⬝ᵥ ((Aᴴ * B) *ᵥ v) := by
+  rw [Matrix.star_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_vecMul,
+    ← Matrix.dotProduct_mulVec]
+
+/-- **The field a shared pair sources is transverse to the pair's axis.** `shared_pair_halves` says a
+shared pair `t ⊗ t†` survives exactly on opposite halves: one body in the forward half of `t`
+(`fix t ψ = ψ`), the other in the backward half (`fix t̄ χ = χ`). The polarization they span then has
+no time component (`χ†ψ = 0`) and no component along the twist's own axis (`χ† M(t) ψ = 0`). The
+twist is the step's velocity (`mead_transaction`), so this is `k·ε = 0` with `k` along the exchange.
+Nothing about the field is assumed: the pair builds it, and the halves make it transverse. -/
+theorem shared_pair_transverse (t : Twist) (ψ χ : Fin 2 → ℂ)
+    (hψ : fix t *ᵥ ψ = ψ) (hχ : fix t.conj *ᵥ χ = χ) :
+    star χ ⬝ᵥ ψ = 0 ∧ star χ ⬝ᵥ (t.toMatrix *ᵥ ψ) = 0 := by
+  have h0 : star χ ⬝ᵥ ψ = 0 := by
+    rw [← hχ, ← hψ, star_mulVec_dot', fix_herm, fix_conj_mul, Matrix.zero_mulVec, dotProduct_zero]
+  refine ⟨h0, ?_⟩
+  have hM : t.toMatrix *ᵥ ψ = ψ := by
+    rw [← hψ, Matrix.mulVec_mulVec, twist_mul_fix]
+  rw [hM, h0]
+
+/-- **Shared pair along `^`: equal electric and magnetic action, nothing assumed.** For an exchange
+along the `Y` axis (momentum `k_y`, the axis of the twist `^`), a massless closure whose polarization
+is built by the shared pair `^ ⊗ v` carries equal electric and magnetic action. -/
+theorem shared_pair_equal_split_up (w ky : ℝ) (φ ψ χ : Fin 2 → ℂ) (hφ : φ ≠ 0)
+    (hclose : ((w : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ) +
+      Mass.weyl (ky : ℂ) ((0 : ℝ) : ℂ) ((0 : ℝ) : ℂ)) *ᵥ φ = 0)
+    (hψ : fix Twist.up *ᵥ ψ = ψ) (hχ : fix Twist.up.conj *ᵥ χ = χ) :
+    electricAction w (star χ ⬝ᵥ (Twist.left.toMatrix *ᵥ ψ)).re
+        (star χ ⬝ᵥ (Twist.up.toMatrix *ᵥ ψ)).re (star χ ⬝ᵥ (Twist.slash.toMatrix *ᵥ ψ)).re =
+      magneticAction 0 ky 0 (star χ ⬝ᵥ (Twist.left.toMatrix *ᵥ ψ)).re
+        (star χ ⬝ᵥ (Twist.up.toMatrix *ᵥ ψ)).re (star χ ⬝ᵥ (Twist.slash.toMatrix *ᵥ ψ)).re := by
+  have ht := (shared_pair_transverse Twist.up ψ χ hψ hχ).2
+  apply closure_equal_split w ky 0 0 _ _ _ φ hφ hclose
+  rw [ht, Complex.zero_re]
+  ring
+
 end QLF.MeadTransaction
