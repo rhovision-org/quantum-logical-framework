@@ -319,5 +319,5 @@ lean_lib QLF where
     `QLF_PlaquetteArea,
     `QLF_LocalAreaLaw,
     `QLF_TensorFromClosure,
-    `QLF_MetricSinglet
+    `QLF_MetricSinglet, `QLF_LatticeDivergence
   ]

@@ -106,6 +106,7 @@ import QLF_HolographicArea
 import QLF_PlaquetteArea
 import QLF_LocalAreaLaw
 import QLF_MetricSinglet
+import QLF_LatticeDivergence
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -461,3 +462,5 @@ import QLF_MetricSinglet
 #print axioms QLF.MetricSinglet.metric_is_singlet
 #print axioms QLF.MetricSinglet.expect_twoBody
 #print axioms QLF.MetricSinglet.product_annihilator_iff_singlet
+#print axioms QLF.LatticeDivergence.latticeCalculus
+#print axioms QLF.LatticeDivergence.lattice_einstein_field_equations

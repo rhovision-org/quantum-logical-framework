@@ -339,9 +339,33 @@ two-body observable `Ŝ = Σ S_ab σ_a ⊗ σ_b` on `ℂ² ⊗ ℂ²`, the space
 This is the shape of rung 6 of entanglement primacy (`split_strong_iff_singlet`: the singlet is the
 unique state every shared strong pair fixes). Read together, the metric is the shared pair and the
 null directions are the unshared product states. **Scope:** this changes the *reading* of the middle
-arrow, not the count of open arrows. The first arrow (local Rindler + Raychaudhuri) and an instance of
-`DivergenceCalculus` remain open, and that `R_ab − κT_ab` is a two-body observable is a reading of the
+arrow, not the count of open arrows. The first arrow (local Rindler + Raychaudhuri) remains open
+(an instance of `DivergenceCalculus` is now built, §6e), and that `R_ab − κT_ab` is a two-body observable is a reading of the
 proven isomorphism, not a derivation of curvature.
+
+## §6e The calculus, built: forward differences on the substrate lattice
+
+[`QLF_LatticeDivergence`](lean/QLF_LatticeDivergence.lean) (no axioms) builds a `DivergenceCalculus`
+instance on `ℤ⁴`, the lattice the closure walk lives on, where the eight twists are the steps `±e_a`
+([`Closure_Walk.md`](Closure_Walk.md)). The gradient is the forward difference
+`∂_b f = f(p + e_b) − f(p)` and the divergence is `∇^a A_ab = Σ_a η^aa (A_ab(p + e_a) − A_ab(p))`.
+
+* **Metric compatibility** (`ldiv_metricMultiple`) holds exactly, because `η^aa η_ab = δ_ab`: the
+  divergence of `f g_ab` is the single difference `Δ_b f`.
+* **Connectedness** (`const_of_differences_zero`) holds because every site is reached from the origin
+  by axis steps, so a field with all four differences zero is constant.
+* So `einstein_field_equations` runs on the lattice with the calculus discharged
+  (`lattice_einstein_field_equations`), and `Λ` is **one constant for every site**.
+
+**R6a first.** The interface is also satisfied on a single point with `div = 0` and `grad = 0`
+(`unit_calculus`), so the existence of an instance is no evidence by itself. What this instance adds
+is that the calculus the derivation needs is the substrate's own step calculus, and that lattice
+connectedness is what makes `Λ` global.
+
+**Scope.** The discrete contracted Bianchi identity and discrete conservation remain hypotheses.
+Forward differences obey no exact Leibniz rule, so a lattice Ricci tensor need not satisfy
+`∇^a R_ab = ½ ∂_b R` exactly; whether the substrate's curvature (§6a) does is not settled here. The
+first arrow is untouched.
 
 ---
 
@@ -411,6 +435,8 @@ characterisation. Logic fixes no local term: `G`, `Λ` and `T` still come from t
 | `scalar_multiple_is_curvature` | contracted Bianchi + conservation ⟹ `f = R/2 − Λ` with `Λ` **constant** (the integration step) |
 | `einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` — the field equations over the interface (§6c) |
 | `metric_form_from_null_probes` | chains §6b into §6c: nine integer null probes deliver the metric form `einstein_field_equations` needs |
+| `latticeCalculus` | ([`QLF_LatticeDivergence`](lean/QLF_LatticeDivergence.lean)) the interface built on `ℤ⁴` from forward differences along the twist steps (§6e) |
+| `lattice_einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` on the lattice with the calculus discharged; one `Λ` for every site. Discrete Bianchi and conservation are still hypotheses |
 | `no_time_loops_from_logic` | ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)) from the law of weakening alone, no event lies in its own strict past; `loopWorld_has_time_loop` shows the law is needed |
 | `logical_world_globally_hyperbolic` | no time loops + finite causal intervals: the discrete global hyperbolicity the field equations need as a global condition (§7) |
 | `rotation_without_time_loops` | ([`QLF_NoTimeLoops`](lean/QLF_NoTimeLoops.lean)) unbounded circulation coexists with no time loops: Gödel's rotation allowed, his closed timelike curves excluded |

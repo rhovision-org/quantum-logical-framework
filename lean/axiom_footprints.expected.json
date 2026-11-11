@@ -568,6 +568,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LatticeDivergence.latticeCalculus": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.lattice_einstein_field_equations": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LatticeGauge.axisStep_norm": [
     "Classical.choice",
     "Quot.sound",
