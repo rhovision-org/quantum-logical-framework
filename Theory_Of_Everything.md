@@ -25,16 +25,16 @@ interaction; the logical complexity inside them is far larger.
 
 ## 1. The foundation
 
-| Topic | Read | Flow chart |
-|---|---|---|
-| Possibilist ontology; ZFA first, then every way | [Philosophy.md](Philosophy.md) §3a, [possibilist-ontology.md](possibilist-ontology.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
-| Only logic is assumed; QLF's construction is one model | [Philosophy.md](Philosophy.md) §3d, [UniversalRelativity.md](UniversalRelativity.md) §4b | Master map |
-| The method: status labels, kill conditions, counting ways | [ScientificApproach.md](ScientificApproach.md), [MostWays_First.md](MostWays_First.md) | Master map |
-| The eight twists and why eight | [eight-twists-sufficiency.md](eight-twists-sufficiency.md), [HALF-SPIN-ZFA-EMBEDDING.md](HALF-SPIN-ZFA-EMBEDDING.md) | [1](FlowChart.md#1-space-time-and-the-continuum) |
-| Closure is a walk back to the origin of `ℤ⁴`; most of possibility never closes | [Closure_Walk.md](Closure_Walk.md) | 1 |
-| Every terminating computation is a ZFA string | [Universality.md](Universality.md) | Master map |
-| No finite closure is final | [Law_Of_Exceptions.md](Law_Of_Exceptions.md) | Master map |
-| Mathematics from the substrate | [Mathematics_From_QLF.md](Mathematics_From_QLF.md), [Category_Theory_QLF.md](Category_Theory_QLF.md) | Master map |
+| Topic | Read |
+|---|---|
+| Possibilist ontology; ZFA first, then every way | [Philosophy.md](Philosophy.md) §3a, [possibilist-ontology.md](possibilist-ontology.md) |
+| Only logic is assumed; QLF's construction is one model | [Philosophy.md](Philosophy.md) §3d, [UniversalRelativity.md](UniversalRelativity.md) §4b |
+| The method: status labels, kill conditions, counting ways | [ScientificApproach.md](ScientificApproach.md), [MostWays_First.md](MostWays_First.md) |
+| The eight twists and why eight | [eight-twists-sufficiency.md](eight-twists-sufficiency.md), [HALF-SPIN-ZFA-EMBEDDING.md](HALF-SPIN-ZFA-EMBEDDING.md) |
+| Closure is a walk back to the origin of `ℤ⁴`; most of possibility never closes | [Closure_Walk.md](Closure_Walk.md) |
+| Every terminating computation is a ZFA string | [Universality.md](Universality.md) |
+| No finite closure is final | [Law_Of_Exceptions.md](Law_Of_Exceptions.md) |
+| Mathematics from the substrate | [Mathematics_From_QLF.md](Mathematics_From_QLF.md), [Category_Theory_QLF.md](Category_Theory_QLF.md) |
 
 ## 2. The two a priori solutions
 
@@ -65,36 +65,36 @@ interaction; the logical complexity inside them is far larger.
 
 | Rung | Read | Flow chart |
 |---|---|---|
-| The first distinction and the logical bang | [Genesis.md](Genesis.md), `QLF_LogicalBang` | Master map |
-| Space and time synthesized, event by event | [SpaceTime.md](SpaceTime.md), [Spacetime_Constructor.md](Spacetime_Constructor.md), [spacetime-matter-emergence.md](spacetime-matter-emergence.md) | [1](FlowChart.md#1-space-time-and-the-continuum) |
-| The constants | [Alpha.md](Alpha.md), [Alpha_Residual.md](Alpha_Residual.md) | [2](FlowChart.md#2-the-fundamental-constants) |
-| The electron: the simplest closure, a plane loop | [Spin_QLF.md](Spin_QLF.md) | [4](FlowChart.md#4-atoms-and-qed) |
-| **The proton: the simplest isolated imbalance.** No closure shorter than six carries baryon winding; the proton word closes at six with winding +1, in unboundedly many ways | [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md), [SEX.md](SEX.md), `QLF_BaryonWinding`, `QLF_Manifestation` (`proton_simplest_isolated_imbalance`, `proton_ways_unbounded`), PR #226 | [7](FlowChart.md#7-particles-and-the-standard-model) |
-| Particles and the Standard Model | [Standard_Model.md](Standard_Model.md) | 7 |
-| Atoms | [Atomic_Structure_QLF.md](Atomic_Structure_QLF.md) | 4 |
-| Molecules: a bond is a shared closure | [Chemistry.md](Chemistry.md) | [11](FlowChart.md#11-chemistry-molecules-and-folding) |
-| Folding | [Protein_Folding.md](Protein_Folding.md) | 11 |
-| Life: generate and select | [Evolution.md](Evolution.md), [Quantum_Biology.md](Quantum_Biology.md), [ZFA_DNA.md](ZFA_DNA.md) | 11 |
-| Minds and collectives | [Consciousness.md](Consciousness.md), [QLF_as_Intelligence.md](QLF_as_Intelligence.md), [Game_Theory_QLF.md](Game_Theory_QLF.md) | Master map |
+| The first distinction and the logical bang | [Genesis.md](Genesis.md), `QLF_LogicalBang` | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
+| Space and time synthesized, event by event | [SpaceTime.md](SpaceTime.md), [Spacetime_Constructor.md](Spacetime_Constructor.md), [spacetime-matter-emergence.md](spacetime-matter-emergence.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
+| The constants | [Alpha.md](Alpha.md), [Alpha_Residual.md](Alpha_Residual.md) | [2 Constants](FlowChart.md#2-the-fundamental-constants) |
+| The electron: the simplest closure, a plane loop | [Spin_QLF.md](Spin_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
+| **The proton: the simplest isolated imbalance.** No closure shorter than six carries baryon winding; the proton word closes at six with winding +1, in unboundedly many ways | [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md), [SEX.md](SEX.md), `QLF_BaryonWinding`, `QLF_Manifestation` (`proton_simplest_isolated_imbalance`, `proton_ways_unbounded`), PR #226 | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
+| Particles and the Standard Model | [Standard_Model.md](Standard_Model.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
+| Atoms | [Atomic_Structure_QLF.md](Atomic_Structure_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
+| Molecules: a bond is a shared closure | [Chemistry.md](Chemistry.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
+| Folding | [Protein_Folding.md](Protein_Folding.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
+| Life: generate and select | [Evolution.md](Evolution.md), [Quantum_Biology.md](Quantum_Biology.md), [ZFA_DNA.md](ZFA_DNA.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
+| Minds and collectives | [Consciousness.md](Consciousness.md), [QLF_as_Intelligence.md](QLF_as_Intelligence.md), [Game_Theory_QLF.md](Game_Theory_QLF.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
 
 ## 5. Forces and the cosmos
 
 | Reading | Read | Flow chart |
 |---|---|---|
-| Three gauge forces as one substrate interaction | [Forces_From_Three_Axes.md](Forces_From_Three_Axes.md) | [3](FlowChart.md#3-forces) |
-| Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs in PR #223) | 3 |
-| Gravity from balance; distance equals delay | [Gravity_From_Delay.md](Gravity_From_Delay.md), [Gravity.md](Gravity.md), [Quantum_Gravity.md](Quantum_Gravity.md) | [5](FlowChart.md#5-gravity-and-gr) |
-| Cosmic expansion by delay; dark energy and dark matter | [Cosmological_Constant.md](Cosmological_Constant.md), [DarkMatter.md](DarkMatter.md) | [6](FlowChart.md#6-cosmology-and-the-dark-sector) |
-| Holography, stated precisely | [Holography_Audit.md](Holography_Audit.md) | [8](FlowChart.md#8-quantum-gravity--toe-pillars) |
+| Three gauge forces as one substrate interaction | [Forces_From_Three_Axes.md](Forces_From_Three_Axes.md) | [3 Forces](FlowChart.md#3-forces) |
+| Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs in PR #223) | [3 Forces](FlowChart.md#3-forces) |
+| Gravity from balance; distance equals delay | [Gravity_From_Delay.md](Gravity_From_Delay.md), [Gravity.md](Gravity.md), [Quantum_Gravity.md](Quantum_Gravity.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
+| Cosmic expansion by delay; dark energy and dark matter | [Cosmological_Constant.md](Cosmological_Constant.md), [DarkMatter.md](DarkMatter.md) | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
+| Holography, stated precisely | [Holography_Audit.md](Holography_Audit.md) | [8 Quantum gravity](FlowChart.md#8-quantum-gravity--toe-pillars) |
 
 ## 6. Boundaries: what is open
 
 | Topic | Read | Flow chart |
 |---|---|---|
-| The gap registry | [Open_Problems.md](Open_Problems.md) | — |
-| The six Millennium reformulations, each one bridge axiom | [Millennium.md](Millennium.md) | [9](FlowChart.md#9-the-millennium-prize-program) |
-| Beyond the Standard Model | [Beyond_Standard_Model.md](Beyond_Standard_Model.md) | [10](FlowChart.md#10-beyond-the-sm) |
-| QFT and renormalization | [Perturbation_Theory_QLF.md](Perturbation_Theory_QLF.md) | [12](FlowChart.md#12-quantum-field-theory-and-renormalization) |
+| The gap registry | [Open_Problems.md](Open_Problems.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
+| The six Millennium reformulations, each one bridge axiom | [Millennium.md](Millennium.md) | [9 Millennium](FlowChart.md#9-the-millennium-prize-program) |
+| Beyond the Standard Model | [Beyond_Standard_Model.md](Beyond_Standard_Model.md) | [10 Beyond the SM](FlowChart.md#10-beyond-the-sm) |
+| QFT and renormalization | [Perturbation_Theory_QLF.md](Perturbation_Theory_QLF.md) | [12 QFT](FlowChart.md#12-quantum-field-theory-and-renormalization) |
 
 ---
 
