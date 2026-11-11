@@ -912,4 +912,80 @@ theorem paramagnet_half_magnons (n k : ℕ) : waysWithMagnons n k ≤ waysWithMa
   rw [waysWithMagnons_eq_choose, waysWithMagnons_eq_choose]
   exact Nat.choose_le_middle k n
 
+-- ==========================================
+-- §13  Averages over every way
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"consider averages, things happen every way."* Every body of size `n`
+happens, each once (`bodies`, `bodies_nodup`), so a class's average is a sum over all `2ⁿ` of them.
+Summed over every way the moment is zero, the magnon number averages `n/2`, and the squared moment
+averages exactly `n`: the units add their fluctuations independently. That last number is the
+numerator of Curie's law (`χ = ⟨M²⟩/kT` for free moments), here a count. Note (method rule 3) the
+average moment `0` is itself a way only for even `n`. -/
+
+private theorem sum_map_sub' (l : List (List Bool)) (f g : List Bool → ℤ) :
+    (l.map (fun A => f A - g A)).sum = (l.map f).sum - (l.map g).sum := by
+  induction l with
+  | nil => simp
+  | cons a l ih => simp only [List.map_cons, List.sum_cons, ih]; ring
+
+private theorem sum_map_const' (l : List (List Bool)) (c : ℤ) :
+    (l.map (fun _ => c)).sum = l.length * c := by
+  induction l with
+  | nil => simp
+  | cons a l ih => simp only [List.map_cons, List.sum_cons, ih, List.length_cons]; push_cast; ring
+
+theorem bodies_length (n : ℕ) : (bodies n).length = 2 ^ n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [bodies, ih, pow_succ]; ring
+
+/-- **Over every way, the moment sums to zero.** -/
+theorem sum_moment_bodies (n : ℕ) : ((bodies n).map moment).sum = 0 := by
+  induction n with
+  | zero => simp [bodies, moment]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : (moment ∘ (true :: ·)) = fun A => 1 + moment A := by
+        funext A; simp [moment, unitArea]
+      have h2 : (moment ∘ (false :: ·)) = fun A => -1 + moment A := by
+        funext A; simp [moment, unitArea]
+      rw [h1, h2, List.sum_map_add, List.sum_map_add, ih]
+      simp
+
+/-- **Over every way, the squared moment sums to `n · 2ⁿ`**: the average fluctuation is `n`. -/
+theorem sum_moment_sq_bodies (n : ℕ) :
+    ((bodies n).map (fun A => moment A ^ 2)).sum = n * 2 ^ n := by
+  induction n with
+  | zero => simp [bodies, moment]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : ((fun A => moment A ^ 2) ∘ (true :: ·)) =
+          fun A => (1 + 2 * moment A) + moment A ^ 2 := by
+        funext A; simp [moment, unitArea]; ring
+      have h2 : ((fun A => moment A ^ 2) ∘ (false :: ·)) =
+          fun A => (1 - 2 * moment A) + moment A ^ 2 := by
+        funext A; simp [moment, unitArea]; ring
+      rw [h1, h2]
+      simp only [List.sum_map_add, sum_map_sub', List.sum_map_mul_left, sum_moment_bodies,
+        sum_map_const', bodies_length, ih]
+      push_cast; ring
+
+/-- **Over every way, the magnons number `n · 2ⁿ / 2`**: on average half the units are flipped. -/
+theorem sum_magnons_bodies (n : ℕ) :
+    2 * ((bodies n).map (fun A => (magnons A : ℤ))).sum = n * 2 ^ n := by
+  have h : ∀ A : List Bool, (magnons A : ℤ) = (A.length - moment A) / 2 := by
+    intro A; rw [moment_magnons]; omega
+  have e : ((bodies n).map (fun A => (magnons A : ℤ))) =
+      (bodies n).map (fun A => ((n : ℤ) - moment A) / 2) := by
+    apply List.map_congr_left; intro A hA
+    rw [h, (mem_bodies n A).mp hA]
+  have hsum : 2 * ((bodies n).map (fun A => (magnons A : ℤ))).sum =
+      ((bodies n).map (fun A => (n : ℤ) - moment A)).sum := by
+    rw [← List.sum_map_mul_left]
+    apply congrArg; apply List.map_congr_left; intro A hA
+    rw [moment_magnons, (mem_bodies n A).mp hA]; ring
+  rw [hsum, sum_map_sub', sum_moment_bodies, sum_map_const', bodies_length]
+  push_cast; ring
+
 end QLF.MagneticOrientation
