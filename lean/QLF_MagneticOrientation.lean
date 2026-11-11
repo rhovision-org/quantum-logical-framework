@@ -988,4 +988,95 @@ theorem sum_magnons_bodies (n : ℕ) :
   rw [hsum, sum_map_sub', sum_moment_bodies, sum_map_const', bodies_length]
   push_cast; ring
 
+-- ==========================================
+-- §14  The average from photon exchange with the vacuum
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"we expect zfa; the average we want is from photon interactions with vacuum
+energies."* §13's flat average treats every way alike. A unit exchanges photons with the vacuum, and
+its weight up or down is the rate of that exchange: `u` for up, `d` for down. A body's weight is the
+product over its units, and the weighted sums factorise. With a symmetric vacuum (`u = d`) the
+weighted moment is zero, as ZFA expects. A field that tilts the exchange, `u = e^{βh}`,
+`d = e^{−βh}`, gives the moment `n · tanh(βh)`, the spin-½ paramagnet. That the rates take the
+Boltzmann form (detailed balance with the radiation bath) is imported; the temperature itself is
+`QLF_CensusTemperature`'s. -/
+
+/-- A body's weight: `u` for each up unit, `d` for each down unit. -/
+def weight (u d : ℝ) : List Bool → ℝ
+  | [] => 1
+  | p :: ps => (if p then u else d) * weight u d ps
+
+private theorem sum_map_mul_const (l : List (List Bool)) (f : List Bool → ℝ) (c : ℝ) :
+    (l.map (fun A => c * f A)).sum = c * (l.map f).sum := by
+  induction l with
+  | nil => simp
+  | cons a l ih => simp only [List.map_cons, List.sum_cons, ih]; ring
+
+private theorem sum_map_add_r (l : List (List Bool)) (f g : List Bool → ℝ) :
+    (l.map (fun A => f A + g A)).sum = (l.map f).sum + (l.map g).sum := by
+  induction l with
+  | nil => simp
+  | cons a l ih => simp only [List.map_cons, List.sum_cons, ih]; ring
+
+/-- **The partition sum over every way is `(u + d)ⁿ`.** -/
+theorem partition_bodies (u d : ℝ) (n : ℕ) :
+    ((bodies n).map (weight u d)).sum = (u + d) ^ n := by
+  induction n with
+  | zero => simp [bodies, weight]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : (weight u d ∘ (true :: ·)) = fun A => u * weight u d A := by
+        funext A; simp [weight]
+      have h2 : (weight u d ∘ (false :: ·)) = fun A => d * weight u d A := by
+        funext A; simp [weight]
+      rw [h1, h2, sum_map_mul_const, sum_map_mul_const, ih]; ring
+
+/-- **The weighted moment over every way**: `(u + d) · Σ w·m = n (u − d) (u + d)ⁿ`, so the average
+    moment is `n (u − d)/(u + d)`. -/
+theorem weighted_moment_bodies (u d : ℝ) (n : ℕ) :
+    (u + d) * ((bodies n).map (fun A => weight u d A * moment A)).sum
+      = n * (u - d) * (u + d) ^ n := by
+  induction n with
+  | zero => simp [bodies, weight, moment]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : ((fun A => weight u d A * (moment A : ℝ)) ∘ (true :: ·)) =
+          fun A => u * weight u d A + u * (weight u d A * moment A) := by
+        funext A; simp [weight, moment, unitArea]; ring
+      have h2 : ((fun A => weight u d A * (moment A : ℝ)) ∘ (false :: ·)) =
+          fun A => (-d) * weight u d A + d * (weight u d A * moment A) := by
+        funext A; simp [weight, moment, unitArea]; ring
+      rw [h1, h2, sum_map_add_r, sum_map_add_r, sum_map_mul_const, sum_map_mul_const,
+        sum_map_mul_const, sum_map_mul_const, partition_bodies]
+      have : (u + d) * (u * (u + d) ^ n + u * ((bodies n).map (fun A => weight u d A * moment A)).sum
+          + (-d * (u + d) ^ n + d * ((bodies n).map (fun A => weight u d A * moment A)).sum))
+          = (u + d) * (u - d) * (u + d) ^ n
+            + (u + d) * ((u + d) * ((bodies n).map (fun A => weight u d A * moment A)).sum) := by
+        ring
+      rw [this, ih]; push_cast; ring
+
+/-- **A symmetric vacuum gives ZFA**: equal exchange rates up and down leave zero weighted moment. -/
+theorem symmetric_vacuum_zero_moment (u : ℝ) (hu : u ≠ 0) (n : ℕ) :
+    ((bodies n).map (fun A => weight u u A * moment A)).sum = 0 := by
+  have h := weighted_moment_bodies u u n
+  have h2 : (u + u) ≠ 0 := by intro h'; apply hu; linarith
+  simp only [sub_self, mul_zero, zero_mul] at h
+  rcases mul_eq_zero.mp h with h3 | h3
+  · exact absurd h3 h2
+  · exact h3
+
+/-- **A tilted exchange gives the paramagnet**: with `u = e^{x}`, `d = e^{−x}` (`x = βh`) the average
+    moment is `n · tanh x`. -/
+theorem tilted_average_tanh (x : ℝ) (n : ℕ) :
+    ((bodies n).map (fun A => weight (Real.exp x) (Real.exp (-x)) A * moment A)).sum
+      / ((bodies n).map (weight (Real.exp x) (Real.exp (-x)))).sum = n * Real.tanh x := by
+  have hpos : 0 < Real.exp x + Real.exp (-x) := by positivity
+  have h := weighted_moment_bodies (Real.exp x) (Real.exp (-x)) n
+  rw [partition_bodies, Real.tanh_eq_sinh_div_cosh, Real.sinh_eq, Real.cosh_eq]
+  have hZ : (Real.exp x + Real.exp (-x)) ^ n ≠ 0 := pow_ne_zero _ hpos.ne'
+  rw [div_eq_iff hZ]
+  have hc : (Real.exp x + Real.exp (-x)) ≠ 0 := hpos.ne'
+  apply mul_left_cancel₀ hc
+  rw [h]; field_simp
+
 end QLF.MagneticOrientation
