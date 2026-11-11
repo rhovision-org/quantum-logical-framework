@@ -1,0 +1,62 @@
+{
+  "benchmark": "QLF retrospective SPARC rotation-curve benchmark",
+  "issue": 77,
+  "protocol": "baryonic-input formula on target-informed quality cuts; SHA-256 sealed before residual scoring; Vobs already loaded; no per-galaxy QLF tuning",
+  "sample": "SPARC curated: Q<=2 & Inc>=30deg & e_Vobs<0.1*Vobs  (galaxies=147, points=2696)",
+  "qlf_params": {
+    "a0_m_s2": 1.129e-10,
+    "a0_formula": "cH0/(2pi)",
+    "H0_km_s_Mpc": 73.0,
+    "Mass_to_Light": {
+      "disk": 0.5,
+      "bulge": 0.7
+    },
+    "fit_to_curves": "none"
+  },
+  "data": {
+    "source": "Lelli, McGaugh & Schombert 2016 (SPARC)",
+    "file": "MassModels_Lelli2016c.mrt",
+    "sha256_16": "9108994b12cc401b"
+  },
+  "sealed_predictions_sha256": "5f06582c8058c6c14f3ef2805b872574afcfe63773624c9b10aaa2fdedabfb90",
+  "results_dex": {
+    "newton": {
+      "name": "Newton (g_bar, no DM)",
+      "free_params": 0,
+      "mean_dex": 0.4309,
+      "scatter_dex": 0.2809,
+      "N": 2696
+    },
+    "nfw": {
+      "name": "NFW (2 params/galaxy fit)",
+      "free_params": 294,
+      "mean_dex": -0.005,
+      "scatter_dex": 0.0593,
+      "N": 2696
+    },
+    "rarfit": {
+      "name": "QLF form, fixed external g_dag",
+      "free_params": 1,
+      "mean_dex": -0.0094,
+      "scatter_dex": 0.1326,
+      "N": 2696
+    },
+    "qlf": {
+      "name": "QLF, a0=cH0/2pi DERIVED",
+      "free_params": 0,
+      "mean_dex": -0.0002,
+      "scatter_dex": 0.1327,
+      "N": 2696
+    }
+  },
+  "parameter_accounting": {
+    "free_params": "Legacy complexity labels: rarfit=1 denotes an external calibrated number, not an optimization in this run. NFW parameters are grid fit here; declared H0, M/L and model-selection provenance are separate.",
+    "optimized_here": {
+      "newton": 0,
+      "qlf": 0,
+      "rarfit": 0,
+      "nfw": 294
+    }
+  },
+  "verdict": "Numerical reproduction of declared formulas on this curated public sample. QLF scatter is about 0.133 dex; the NFW grid fit is about 0.059 dex. These descriptive residuals do not establish historical blinding, an observational uncertainty floor, statistical model equivalence, or a unique physical mechanism."
+}

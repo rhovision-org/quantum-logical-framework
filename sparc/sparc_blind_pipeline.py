@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Blind QLF rotation-curve benchmark on SPARC (issue #77) — full version.
+Retrospective QLF rotation-curve benchmark on public SPARC data (issue #77).
 
-Predictor uses BARYONIC inputs only (Vgas, Vdisk, Vbul, R); Vobs is never read by
-predict(); it is revealed only in score(), after the predictions are SHA-256-sealed.
+For an admitted point, the QLF prediction formula uses baryonic inputs only
+(Vgas, Vdisk, Vbul, R). Vobs is loaded before sealing and is used in quality
+selection. The digest is written before residual scoring; it does not establish
+information isolation, an independent timestamp, or historical blinding.
 
 Curated sample (≈ the SPARC RAR "common" sample): quality flag Q<=2 and inclination
 Inc>=30 deg (Table 1), plus per-point e_Vobs < 0.1*Vobs.
@@ -12,7 +14,7 @@ Models (all on the SAME points):
   - QLF (DERIVED): a0 = cH0/2pi, canonical global M/L (0.5/0.7), closure-balance RAR
         g_obs = 0.5*(g_bar + sqrt(g_bar^2 + 4 g_bar a0))   (Lean: radialAccel_self_consistent)
         ZERO parameters fit to the rotation curves.
-  - QLF form, a0 FITTED to SPARC (g_dagger=1.2e-10): isolates the form from the ~13% a0 residual.
+  - QLF form, fixed external g_dagger=1.2e-10: no optimization of this value is performed here.
   - Newton: g_pred = g_bar (no dark matter).
   - NFW: a 2-parameter dark halo (V200, c) fit PER GALAXY (300+ free params total).
 """
@@ -105,7 +107,7 @@ def main():
     rows = curated(mass, cat); pts = points(rows)
     gals = sorted({p['gid'] for p in pts})
 
-    # BLIND: seal QLF predictions (baryonic only) before revealing Vobs
+    # Hash baryonic-formula predictions before scoring; Vobs was already loaded.
     blob = "\n".join(f"{p['gid']},{p['R']:.4f},{v_of(rar(p['gbar'],a0),p['R']):.4f}" for p in pts)
     seal = hashlib.sha256(blob.encode()).hexdigest()
     open("predictions_sealed.csv","w").write("gid,R_kpc,Vpred_kms\n"+blob+"\n")
@@ -124,10 +126,10 @@ def main():
 
     labels = {'newton':('Newton (g_bar, no DM)',0),
               'nfw':('NFW (2 params/galaxy fit)', 2*len(gals)),
-              'rarfit':('QLF form, a0 FITTED (g_dag)',1),
+              'rarfit':('QLF form, fixed external g_dag',1),
               'qlf':('QLF, a0=cH0/2pi DERIVED',0)}
     table = {}
-    print("=== QLF blind SPARC benchmark — curated sample (Q<=2, Inc>=30) — issue #77 ===")
+    print("=== QLF retrospective SPARC benchmark — curated sample (Q<=2, Inc>=30) — issue #77 ===")
     print(f"H0={H0}  a0=cH0/2pi={a0*1e10:.3f}e-10 ({100*a0/G_DAG:.0f}% g_dag)  galaxies={len(gals)}  points={len(pts)}")
     print(f"sealed predictions sha256={seal[:16]}…   data sha256={data_hash}\n")
     print(f"{'model':<30}{'free params':>13}{'mean(dex)':>11}{'scatter(dex)':>14}")
@@ -137,19 +139,19 @@ def main():
         table[k] = dict(name=name, free_params=npar, mean_dex=round(mean,4), scatter_dex=round(sc,4), N=n)
 
     receipt = dict(
-        benchmark="QLF blind SPARC rotation-curve prediction", issue=77,
-        protocol="baryonic-only prediction, SHA-256 sealed before Vobs revealed; no per-galaxy tuning",
+        benchmark="QLF retrospective SPARC rotation-curve benchmark", issue=77,
+        protocol="baryonic-input formula on target-informed quality cuts; SHA-256 sealed before residual scoring; Vobs already loaded; no per-galaxy QLF tuning",
         sample=f"SPARC curated: Q<=2 & Inc>=30deg & e_Vobs<0.1*Vobs  (galaxies={len(gals)}, points={len(pts)})",
         qlf_params=dict(a0_m_s2=round(a0,13), a0_formula="cH0/(2pi)", H0_km_s_Mpc=H0,
                         Mass_to_Light=dict(disk=YDISK, bulge=YBUL), fit_to_curves="none"),
         data=dict(source="Lelli, McGaugh & Schombert 2016 (SPARC)", file=DATA, sha256_16=data_hash),
         sealed_predictions_sha256=seal,
         results_dex=table,
-        verdict=("QLF (0 free params) reproduces the SPARC rotation curves at the observational-floor "
-                 "scatter (~0.13 dex), statistically identical to best-fit MOND, and far better than "
-                 "Newton (no dark matter). NFW fits tighter (~0.06 dex) but only with 294 free parameters "
-                 "(2/galaxy) — absorbing the per-galaxy scatter that the RAR's observed tightness shows "
-                 "is not physical halo diversity. Parameter economy: QLF 0, NFW 294, for the same data."))
+        parameter_accounting={"free_params": "Legacy complexity labels: rarfit=1 denotes an external calibrated number, not an optimization in this run. NFW parameters are grid fit here; declared H0, M/L and model-selection provenance are separate.", "optimized_here": {"newton": 0, "qlf": 0, "rarfit": 0, "nfw": 2*len(gals)}},
+        verdict=("Numerical reproduction of declared formulas on this curated public sample. "
+                 "QLF scatter is about 0.133 dex; the NFW grid fit is about 0.059 dex. "
+                 "These descriptive residuals do not establish historical blinding, an observational "
+                 "uncertainty floor, statistical model equivalence, or a unique physical mechanism."))
     json.dump(receipt, open("receipt.json","w"), indent=2)
     print("\nReceipt -> receipt.json (sealed hash, declared params, data provenance, scored results).")
 

@@ -1,80 +1,77 @@
-# Blind SPARC rotation-curve benchmark — [QLF](README.md) vs Newton / MOND
+# Retrospective SPARC rotation-curve benchmark
 
-A **blind, parameter-free** test of QLF's dark-matter sector (the radial-acceleration law of
-[`DarkMatter.md`](DarkMatter.md) §7.5) against the real SPARC rotation-curve database
-(Lelli, McGaugh & Schombert 2016, 175 disk galaxies). Issue [#77](https://github.com/jimscarver/quantum-logical-framework/issues/77);
-pipeline in [`sparc/sparc_blind_pipeline.py`](sparc/sparc_blind_pipeline.py).
+This is a reproducible public-data comparison of the declared QLF RAR formula
+with Newtonian baryonic acceleration and a per-galaxy NFW grid fit. It is related
+to [issue #77](https://github.com/rhovision-org/quantum-logical-framework/issues/77).
+The pipeline is [`sparc/sparc_blind_pipeline.py`](sparc/sparc_blind_pipeline.py);
+its historical filename does not establish an information-isolated experiment.
 
-## The protocol (blind)
+## Inputs and numerical model
 
-The predictor reads **baryonic inputs only** — `Vgas`, `Vdisk`, `Vbul`, radius `R` — and never the
-observed velocity `Vobs`. Predictions `V_pred(r)` are written and **SHA-256 sealed** *before* `Vobs` is
-revealed and scored. No per-galaxy tuning of any kind (per-galaxy tuning is disqualifying, #77).
+The QLF predictor uses `g = (g_bar + sqrt(g_bar² + 4 g_bar a0))/2`, with
+`a0 = c H0/(2π)`, declared `H0 = 73 km/s/Mpc`, and external global mass-to-light
+values `0.5` (disk) and `0.7` (bulge). No per-galaxy QLF parameter is optimized by
+this script. That does not establish that the model form or declared inputs were
+historically chosen without access to the public data.
 
-## The QLF model — zero parameters fit to the rotation curves
+Lean proves the defined RAR's algebraic self-consistency. The physical mapping of
+closure-balance variables onto observed accelerations and uniqueness of the
+interpolation remain separate bridge questions; see
+[`Proof_to_Physics.md`](Proof_to_Physics.md).
 
-- **Acceleration scale** `a₀ = c H₀ / 2π` — **derived** (the de Sitter horizon / loop phase,
-  [`QLF_DarkMatter`](lean/QLF_DarkMatter.lean) `mond_acceleration`); `H₀` is declared, not fitted.
-- **Mass-to-light** `Υ_disk = 0.5`, `Υ_bul = 0.7` — the canonical global 3.6 µm stellar-population
-  values (the same ones MOND/RAR use); **not** fit to the curves.
-- **Radial-acceleration relation** (the closure-balance, Lean `radialAccel_self_consistent`):
-  `g_obs = ½(g_bar + √(g_bar² + 4 g_bar a₀))`, the positive root of `g² = g_bar·(g + a₀)`.
+## Information access and seal
 
-So the prediction has **no free parameter fit to the rotation curves** — `a₀` is derived, `Υ` is from
-stellar populations.
+`load_mass()` reads observed velocities and errors. The quality cut uses
+`eV < 0.1 Vobs`, and `points()` computes `gobs` before the prediction CSV is
+written. For an admitted point, the QLF prediction formula uses its baryonic
+inputs. The hash seal is written before residual scoring, but does not establish
+that targets were inaccessible, first revealed afterwards, or independently
+unseen. Target-informed quality selection is not by itself proof of fitting.
 
-## Result — curated sample (147 galaxies, 2696 points; `Q ≤ 2`, `Inc ≥ 30°`, `e_Vobs < 0.1·Vobs`)
+The appropriate status is **retrospective public-data benchmark / numerical
+reproduction**. Historical blinding, third-party chronology and independent
+physical confirmation are not established by this workflow.
 
-Residual = `log₁₀ g_obs − log₁₀ g_pred` (dex). `scatter` is RMS about the model's own mean; `mean` is the
-systematic offset. Machine-readable [`sparc/receipt.json`](sparc/receipt.json).
+## Reproduced descriptive results
 
-| model | free params | mean (dex) | scatter (dex) |
-|---|---|---|---|
-| **Newton** (`g_bar`, no dark matter) | 0 | **+0.431** | 0.281 |
-| **NFW** halo, fit **per galaxy** | **294** | −0.005 | 0.059 |
-| QLF form, `a₀` **fitted** to SPARC | 1 | −0.009 | 0.133 |
-| **QLF, `a₀ = cH₀/2π` DERIVED** (`H₀ = 73`) | **0** | **−0.000** | **0.133** |
+The cuts `Q ≤ 2`, `Inc ≥ 30°`, positive radii/velocities and
+`0 < eV < 0.1 Vobs` admit 147 galaxies and 2696 points with valid baryonic inputs.
+Residuals are `log10(gobs) − log10(gpred)`; scatter is population standard
+deviation about the model's own mean, not inferred intrinsic scatter.
 
-- **Newton fails**: a `+0.431 dex` offset is a factor **2.7×** of "missing gravity" — the dark-matter
-  signal itself.
-- **QLF, parameter-free, hits the observational floor**: `0.133 dex` scatter (= McGaugh+2016's measured
-  RAR scatter ~0.13 dex), with a **zero** mean offset, and *identical* to the same form with `a₀` fitted —
-  the derived `a₀ = cH₀/2π` is essentially exact. Insensitive to `H₀` (0.13–0.14 dex for `H₀ = 67–73`).
-- **vs NFW — the parameter economy.** NFW fits *tighter* (`0.059 dex`), but only by giving **2 free halo
-  parameters to every galaxy** (294 total): it absorbs the per-galaxy scatter. The RAR's *observed*
-  tightness (`0.13 dex`, mostly observational error) shows there is **no room** for that halo-to-halo
-  diversity — so NFW's lower scatter is over-fitting noise, not better prediction. **QLF matches the data
-  with `0` free parameters; NFW needs `294`.**
+| Model | Parameters optimized in this run | Mean, dex | Scatter, dex |
+|---|---:|---:|---:|
+| Newton, baryonic acceleration only | 0 | 0.4309 | 0.2809 |
+| NFW, two grid-searched parameters per galaxy | 294 | −0.0050 | 0.0593 |
+| QLF form with fixed external `g_dag = 1.2e−10` | 0 | −0.0094 | 0.1326 |
+| QLF form with declared `a0 = c H0/(2π)` | 0 | −0.0002 | 0.1327 |
 
-**So QLF predicts the SPARC rotation curves blind, parameter-free, at the observational floor — as well as
-best-fit MOND, far better than Newton, and with `294×` fewer parameters than NFW for the same data** — the
-galactic Radial Acceleration Relation reproduced with `a₀` *derived*, not fit.
+The external `g_dag` was not refitted by this script; it should not be described
+as this form's newly computed best fit. The receipt's legacy `free_params` label
+is qualified by `parameter_accounting`. Smaller residuals or fewer fitted
+parameters alone do not establish model equivalence, an observational error
+floor, overfitting, physical uniqueness or a Bayesian model preference.
 
-## Honest scope
+## Reproduce at a frozen revision
 
-- The interpolation *form* is substrate-**motivated** (the closure-balance conjunction; `DarkMatter.md`
-  §7.5) and the two limits are forced (Newton; geometric-mean/Tully–Fisher), but the exact `ν`-function
-  is not yet proven the *unique* one — other interpolations fit at this level. The scatter cannot
-  distinguish them; the *parameter-free a₀* is the real win.
-- The `1/2π` prefactor is **confirmed**: fit `a₀` in QLF's *own* closure-balance form (not McGaugh's
-  exponential, which gives `g† = 1.20×10⁻¹⁰`) and the data prefers `a₀ = 1.127×10⁻¹⁰` = `cH₀/2π` at
-  **`H₀ = 72.9`** — the local Hubble constant. So the old "~13%" was a wrong-form comparison; the prefactor
-  is right to `< 1%` at the local `H₀`, and the only residual is the **Hubble tension** itself (the galaxy
-  data picks the local `H₀ = 73`, not the CMB `67`). (`DarkMatter.md` §5.)
-- Curation, NFW, and the receipt are now done: the **standard SPARC RAR cuts** (`Q ≤ 2`, `Inc ≥ 30°`) from
-  Table 1, an explicit per-galaxy **NFW** fit, and a SHA-256 **verification receipt** (`sparc/receipt.json`).
-
-## Reproduce
+Both input datasets are already committed. Do not replace them with a moving
+mirror download when reproducing a recorded result.
 
 ```bash
 cd sparc
-# data (public; Lelli, McGaugh & Schombert 2016), GitHub mirror:
-curl -sSL https://raw.githubusercontent.com/jobovy/sparc-rotation-curves/main/data/MassModels_Lelli2016c.mrt -o MassModels_Lelli2016c.mrt
 python3 sparc_blind_pipeline.py
 ```
 
+The script writes `predictions_sealed.csv` and `receipt.json` in its working
+directory; use a temporary copy when preserving the committed historical files.
+The regression tests perform that isolated reproduction. The full CSV hash and
+the body-only seal (without header/trailing newline) hash different byte strings.
+The [claim record](claim_records/sparc_rar.json) carries the data provenance and
+open bridge. A future blinded test needs a frozen selection/analysis policy,
+controlled target access and an independently inspectable chronology.
+
 ## References
 
-- F. Lelli, S. McGaugh & J. Schombert, *SPARC: Mass Models for 175 Disk Galaxies*, AJ **152** (2016) 157.
-- S. McGaugh, F. Lelli & J. Schombert, *Radial Acceleration Relation*, PRL **117** (2016) 201101.
-- [`DarkMatter.md`](DarkMatter.md) §7.5 (the closure-balance RAR), [`lean/QLF_DarkMatter.lean`](lean/QLF_DarkMatter.lean).
+- Lelli, McGaugh & Schombert, *SPARC: Mass Models for 175 Disk Galaxies*, AJ 152 (2016) 157.
+- McGaugh, Lelli & Schombert, *Radial Acceleration Relation*, PRL 117 (2016) 201101.
+- [`lean/QLF_DarkMatter.lean`](lean/QLF_DarkMatter.lean), [`lean/QLF_MondScale.lean`](lean/QLF_MondScale.lean), [`lean/QLF_RarBalance.lean`](lean/QLF_RarBalance.lean).

@@ -79,6 +79,26 @@ theorem le_refl : ∀ a : QL, le a a = true := by decide
 theorem le_trans : ∀ a b c : QL, le a b = true → le b c = true → le a c = true := by decide
 theorem le_antisymm : ∀ a b : QL, le a b = true → le b a = true → a = b := by decide
 
+/-! ### Lattice (lub/glb) and absorption obligations
+
+These make explicit that `sup` and `inf` are the join and meet with respect to
+`le`, and that the lattice absorption laws hold.  They are the missing formal
+obligations identified in Paper I v0.3; the theorem statements match the paper's
+Appendix A. -/
+
+theorem le_sup_left : ∀ a b : QL, le a (sup a b) = true := by decide
+theorem le_sup_right : ∀ a b : QL, le b (sup a b) = true := by decide
+theorem sup_le : ∀ a b c : QL,
+    le a c = true → le b c = true → le (sup a b) c = true := by decide
+
+theorem inf_le_left : ∀ a b : QL, le (inf a b) a = true := by decide
+theorem inf_le_right : ∀ a b : QL, le (inf a b) b = true := by decide
+theorem le_inf : ∀ a b c : QL,
+    le c a = true → le c b = true → le c (inf a b) = true := by decide
+
+theorem sup_inf_absorb : ∀ a b : QL, sup a (inf a b) = a := by decide
+theorem inf_sup_absorb : ∀ a b : QL, inf a (sup a b) = a := by decide
+
 /-! ### Orthocomplemented -/
 
 /-- **The orthocomplement is an involution** `a⊥⊥ = a`. -/

@@ -1,0 +1,197 @@
+{
+  "record_id": "QLF-SPARC-001",
+  "version": "0.3.1-draft",
+  "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+  "informal_statement": "The declared QLF RAR formula reproduces descriptive residuals on a curated public SPARC sample: 147 galaxies / 2696 points, mean -0.0002 dex and scatter 0.1327 dex at H0=73 and M/L=0.5/0.7. This is a retrospective benchmark, not independently established blinding.",
+  "approximation_or_regime": {
+    "name": "non-relativistic equilibrium; canonical M/L; local H0",
+    "description": "Non-relativistic algebraic RAR with declared H0=73 km/s/Mpc and standard external disk/bulge M/L=0.5/0.7. The QLF formula has no per-galaxy fitted parameter. Vobs is loaded and used for quality selection before sealing.",
+    "validity_limits": "The benchmark does not establish interpolation uniqueness, historical information isolation, an independent timestamp, statistical model equivalence, or a measured uncertainty floor."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.mond_acceleration_horizon_form",
+      "QLF.radialAccel_self_consistent",
+      "QLF.MondScale.a0_is_hubble_per_closure_loop",
+      "QLF.MondScale.a0_eq_c_times_cyclic_rate",
+      "QLF.rar_is_free_energy_balance"
+    ],
+    "statement_scope": "Algebraic identities for the acceleration scale and the closure-balance RAR; not a derivation of the SPARC data or of the interpolation's uniqueness."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_DarkMatter.lean",
+      "lean/QLF_MondScale.lean",
+      "lean/QLF_RarBalance.lean"
+    ],
+    "analysis_files": [
+      "sparc/sparc_blind_pipeline.py",
+      "sparc/predictions_sealed.csv",
+      "sparc/receipt.json"
+    ],
+    "type": "algebraic RAR model plus retrospective public-data pipeline"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "Reviewed 302-entry baseline; +62 entries, no changed old footprints. Original CI log and source-equivalence check archived in verification/paper-i-v0.3/.",
+    "data": "SPARC MassModels_Lelli2016c.mrt and SPARC_Lelli2016c.mrt",
+    "qlf_bridge_axioms": "No project bridge axiom in these selected original CI footprints; physical identifications remain separately open."
+  },
+  "inputs": [
+    {
+      "name": "H0",
+      "value": "73 km/s/Mpc",
+      "provenance": "declared",
+      "source": "local Hubble constant; SPARC.md states H0 is declared, not fitted"
+    },
+    {
+      "name": "disk mass-to-light",
+      "value": "0.5",
+      "provenance": "external",
+      "source": "canonical 3.6 micron stellar-population value"
+    },
+    {
+      "name": "bulge mass-to-light",
+      "value": "0.7",
+      "provenance": "external",
+      "source": "canonical 3.6 micron stellar-population value"
+    },
+    {
+      "name": "a0",
+      "value": "c H0 / (2 pi) = 1.129e-10 m/s^2",
+      "provenance": "derived",
+      "source": "QLF_MondScale / QLF_DarkMatter"
+    },
+    {
+      "name": "SPARC data",
+      "value": "147 galaxies, 2696 points after Q<=2, Inc>=30 deg, e_Vobs<0.1 Vobs",
+      "provenance": "external",
+      "source": "Lelli, McGaugh & Schombert 2016"
+    }
+  ],
+  "interpretation": {
+    "map": "The closure-balance relation is identified with the observed radial-acceleration relation; a0 = cH0/(2 pi) is identified with the MOND/RAR acceleration scale.",
+    "formal_status": "The algebraic RAR identity is formalized; the identification of the closure-balance variables with the observed g_bar/g_obs is a bridge, and the interpolation form is not unique.",
+    "noncircularity_test": "For an admitted point the prediction uses baryonic inputs. The sample selection uses Vobs/error ratios; Vobs and gobs are loaded/computed before the seal. A stronger test needs controlled target access and a frozen analysis."
+  },
+  "observable": {
+    "symbol": "T = g_obs / g_pred; residual = log10(g_obs) - log10(g_pred)",
+    "baseline": "SPARC rotation-curve sample",
+    "reported_values": {
+      "qlf_derived": "mean -0.0002 dex, scatter 0.1327 dex",
+      "qlf_fitted_a0": "mean -0.0094 dex, scatter 0.1326 dex",
+      "newton": "mean +0.4309 dex, scatter 0.2809 dex",
+      "nfw_per_galaxy": "mean -0.005 dex, scatter 0.0593 dex"
+    },
+    "uncertainties": "Descriptive residual scatter only; no independently reanalysed measurement uncertainty budget or intrinsic-scatter inference."
+  },
+  "measurement_protocol": {
+    "status": "retrospective public-data reproduction; no new observations",
+    "design": "Apply declared target-informed quality cuts; evaluate a baryonic-input formula; hash predictions before residual scoring. This does not establish a pre-unblinding information barrier.",
+    "apparatus": "SPARC long-slit Halpha rotation curves and 3.6 micron photometry; public data.",
+    "failure_condition": "A reproduced mismatch in the RAR, a failed independent replication, or a dependence on H0/M-L that removes the zero-offset result.",
+    "execution_status": "retrospective_reproduction"
+  },
+  "reported_agreement": {
+    "value": "0.133 dex scatter, mean -0.0002 dex, 147 galaxies / 2696 points",
+    "comparator": "SPARC curated sample; Newton and per-galaxy NFW fits on the same points",
+    "uncertainty": "Descriptive residual scatter only; no independently reanalysed measurement uncertainty budget or intrinsic-scatter inference.",
+    "comparison_type": "consistency"
+  },
+  "evidence": {
+    "F": "The exact stated mathematical declarations have reviewed original CI footprints and the recorded baseline. Physical interpretation is not promoted.",
+    "N": "Exact reproduction and digests are recorded in the scoped numerical receipt; no claim of historical blindness follows.",
+    "E": "No new observations, controlled blind reveal, or independent physical replication.",
+    "reviewer": "Ω-WITNESS technical review for aixaria0; collaborator tier; the receipt records executed checks separately from publication approval."
+  },
+  "defeaters": {
+    "formal": "A kernel/axiom discrepancy or a counterexample to the RAR identity.",
+    "interpretation": "The interpolation form is not unique, or the closure-balance variables do not map onto the observed g_bar/g_obs.",
+    "numerical": "An independent pipeline reproduces a different residual distribution or a nonzero mean offset.",
+    "empirical": "A failed independent replication, or a dependence on H0/M-L that removes the result.",
+    "conceptual": "The 'parameter-free' claim is overstated because H0 and M/L are external inputs."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Full audited source revision, original build identifiers, pinned toolchain/lockfile and digest-addressed execution artifacts recorded."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Original source compiled in the linked project CI; exact reports and unchanged Lean/build inputs were inspected, and the 302-entry baseline was deliberately recorded and checked outside CI. No local Lean rebuild is claimed."
+    },
+    "G2": {
+      "status": "PASS",
+      "reason": "Algebraic definitions and theorem names are traceable to source; the interpolation-form bridge is identified separately."
+    },
+    "G3": {
+      "status": "INCONCLUSIVE",
+      "reason": "The RAR interpolation form is not unique, and the closure-balance-to-observed-acceleration map is not proved noncircular."
+    },
+    "G4": {
+      "status": "PASS",
+      "reason": "Frozen-source pipeline reproduces the CSV byte-for-byte, seal, 147 galaxies/2696 points and all four descriptive residual summaries; not historical blinding."
+    },
+    "G5": {
+      "status": "INCONCLUSIVE",
+      "reason": "The SPARC analysis is retrospective and self-sealed; no prospective or independently replicated observation."
+    },
+    "G6": {
+      "status": "PASS",
+      "reason": "Scoped collaborator technical receipt archives source inspection, kernel-footprint review and declared numerical reproductions. This is not independent physical validation or publication approval."
+    }
+  },
+  "evidence_status": {
+    "formal": "VERIFIED",
+    "numerical": "REPRODUCED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "Scoped collaborator review for aixaria0; no independent external audit claimed.",
+    "enumeration": "The pipeline is author-supplied; the seal is self-generated. Independent replication is pending.",
+    "original_lean_kernel": "Original project CI reports reviewed with unchanged-source check and recorded baseline; no local Lean execution.",
+    "measurement": "No physical experiment or independent empirical replication.",
+    "independence_tier": "collaborator",
+    "receipt": {
+      "reviewer": "Ω-WITNESS for aixaria0",
+      "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+      "scopes": [
+        "source_review",
+        "kernel_audit",
+        "numerical_reproduction"
+      ],
+      "artifacts": [
+        {
+          "path": "verification/paper-i-v0.3/receipt.json",
+          "sha256": "2685c3e9d6b6733b04a2e28e12de18d2a4b847fd9d4e23b6d7da28b9bcc66ee1"
+        },
+        {
+          "path": "verification/paper-i-v0.3/ci-41182f7-axioms.log",
+          "sha256": "fd5f8692d11eb96955da03b97a1154f4bb57105cfc5f53ef4373f60ac0b9a0e7"
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "repository": "https://github.com/rhovision-org/quantum-logical-framework",
+    "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+    "data": {
+      "source": "SPARC (Lelli, McGaugh & Schombert 2016)",
+      "data_sha256_16": "9108994b12cc401b",
+      "sealed_predictions_sha256": "5f06582c8058c6c14f3ef2805b872574afcfe63773624c9b10aaa2fdedabfb90",
+      "catalogue_sha256": "5aa0501f6b0d881fa579030e315e7b5b6ef561a5bd3a07472f9929c7e5728243",
+      "mass_model_sha256": "9108994b12cc401b94a1768beca61c53ec354779385c9c9cc571049f3043244c",
+      "prediction_csv_sha256": "e745538455dd153d6b644f0ae0307c38b15770af79bb0a95ac41b8192380373c"
+    },
+    "reference_documents": [
+      "SPARC.md",
+      "DarkMatter.md",
+      "Proof_to_Physics.md"
+    ],
+    "status": "Audited source pin; see verification/paper-i-v0.3/receipt.json. Full PR remains draft pending the new regression CI run and maintainer review."
+  },
+  "record_type": "claim"
+}

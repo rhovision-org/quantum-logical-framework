@@ -54,6 +54,30 @@ Commit the manifest change together with the theorem change. Never run
 automatically a defect, but it must not be silently reclassified as
 assumption-free.
 
+## Paper I v0.3 — scoped coverage and review provenance
+
+At base revision `a8657be`, the manifest had 240 entries, including twelve
+TensorFromClosure and eleven holography anchors, but none for MO2/QuantumLogic.
+This branch reviews 62 additions: seventeen MO2, eighteen QuantumLogic and
+27 further named declarations. The resulting manifest has 302 entries; every
+old footprint is unchanged. Both BornFromWays anchors were already present and
+are not added again.
+
+The original Lean build and separate 302-report audit ran in project CI at
+`41182f7` (test merge `8cf63f3`). The reviewed source preserves all Lean/build
+inputs byte-for-byte. The normalized original reports, deliberately recorded
+baseline delta, numerical runs and exact provenance are archived in
+[`verification/paper-i-v0.3/`](verification/paper-i-v0.3/).
+The baseline regeneration was a reviewed operation outside CI. It is not an
+independent local Lean rebuild; the subsequent regression CI run is identified
+separately in the PR. A matching footprint establishes only the exact theorem
+relative to its dependencies, not the physical reading of its headline name.
+
+The branch also adds typed claim records, the migrated three-polarizer record,
+a scoped Born-assignment record and a **draft** falsification/test ledger.
+[`claim_records/README.md`](claim_records/README.md) states the promotion policy.
+No entry is a completed preregistration merely because its JSON validates.
+
 ## Limits of this gate
 
 - Exact axiom-footprint enforcement covers the explicit audit anchors, not
