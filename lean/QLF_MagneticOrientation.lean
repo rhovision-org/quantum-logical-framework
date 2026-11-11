@@ -1079,4 +1079,108 @@ theorem tilted_average_tanh (x : ℝ) (n : ℕ) :
   apply mul_left_cancel₀ hc
   rw [h]; field_simp
 
+-- ==========================================
+-- §15  Neighbour coupling: the chain
+-- ==========================================
+
+/-! The open piece of §14 is the coupling between units. Let neighbouring units exchange too, so a
+neighbour pair weighs `a` when like and `b` when opposite (a domain wall). Then a ferromagnetic
+coupling is `a > b` and an antiferromagnetic one `b > a`. On a chain the sums over every way are
+exact: the partition sum is `2(a + b)ⁿ` for `n + 1` units, and the average number of walls is
+`n · b/(a + b)`. That is proportional to the length for every `b > 0`, so a chain at any finite
+temperature is broken into domains and carries no long-range order (Ising 1925). With Boltzmann
+weights `a = e^{βJ}`, `b = e^{−βJ}` the wall fraction is `1/(1 + e^{2βJ})`. -/
+
+/-- The chain weight of a body: `a` per like neighbour pair, `b` per opposite pair. -/
+def chainWeight (a b : ℝ) : List Bool → ℝ
+  | p :: q :: rest => (if p = q then a else b) * chainWeight a b (q :: rest)
+  | _ => 1
+
+/-- Domain walls: neighbour pairs with opposite orientation. -/
+def walls : List Bool → ℕ
+  | p :: q :: rest => (if p = q then 0 else 1) + walls (q :: rest)
+  | _ => 0
+
+/-- **Chain partition sum, from either end state**: `Σ_A w(c :: A) = (a + b)ⁿ` over bodies of size `n`. -/
+theorem chain_partition_from (a b : ℝ) (n : ℕ) (c : Bool) :
+    ((bodies n).map (fun A => chainWeight a b (c :: A))).sum = (a + b) ^ n := by
+  induction n generalizing c with
+  | zero => simp [bodies, chainWeight]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : ((fun A => chainWeight a b (c :: A)) ∘ (true :: ·)) =
+          fun A => (if c = true then a else b) * chainWeight a b (true :: A) := by
+        funext A; simp [chainWeight]
+      have h2 : ((fun A => chainWeight a b (c :: A)) ∘ (false :: ·)) =
+          fun A => (if c = false then a else b) * chainWeight a b (false :: A) := by
+        funext A; simp [chainWeight]
+      rw [h1, h2, sum_map_mul_const, sum_map_mul_const, ih true, ih false]
+      cases c <;> simp <;> ring
+
+/-- **Chain partition sum**: `2(a + b)ⁿ` over every body of `n + 1` units. -/
+theorem chain_partition (a b : ℝ) (n : ℕ) :
+    ((bodies (n + 1)).map (chainWeight a b)).sum = 2 * (a + b) ^ n := by
+  simp only [bodies, List.map_append, List.map_map, List.sum_append]
+  have e1 : (chainWeight a b ∘ (true :: ·)) = fun A => chainWeight a b (true :: A) := rfl
+  have e2 : (chainWeight a b ∘ (false :: ·)) = fun A => chainWeight a b (false :: A) := rfl
+  rw [e1, e2, chain_partition_from, chain_partition_from]; ring
+
+/-- **Weighted walls, from either end state**: `(a + b) · Σ w·walls = n b (a + b)ⁿ`. -/
+theorem chain_walls_from (a b : ℝ) (n : ℕ) (c : Bool) :
+    (a + b) * ((bodies n).map (fun A => chainWeight a b (c :: A) * walls (c :: A))).sum
+      = n * b * (a + b) ^ n := by
+  induction n generalizing c with
+  | zero => simp [bodies, chainWeight, walls]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : ((fun A => chainWeight a b (c :: A) * (walls (c :: A) : ℝ)) ∘ (true :: ·)) =
+          fun A => (if c = true then a else b) * (if c = true then 0 else 1) *
+              chainWeight a b (true :: A)
+            + (if c = true then a else b) *
+              (chainWeight a b (true :: A) * walls (true :: A)) := by
+        funext A; simp only [Function.comp, chainWeight, walls]; push_cast; ring
+      have h2 : ((fun A => chainWeight a b (c :: A) * (walls (c :: A) : ℝ)) ∘ (false :: ·)) =
+          fun A => (if c = false then a else b) * (if c = false then 0 else 1) *
+              chainWeight a b (false :: A)
+            + (if c = false then a else b) *
+              (chainWeight a b (false :: A) * walls (false :: A)) := by
+        funext A; simp only [Function.comp, chainWeight, walls]; push_cast; ring
+      rw [h1, h2, sum_map_add_r, sum_map_add_r, sum_map_mul_const, sum_map_mul_const,
+        sum_map_mul_const, sum_map_mul_const, chain_partition_from, chain_partition_from]
+      have ht := ih true
+      have hf := ih false
+      push_cast
+      cases c
+      · simp only [Bool.false_eq_true, ↓reduceIte]
+        linear_combination b * ht + a * hf
+      · simp only [↓reduceIte, Bool.true_eq_false]
+        linear_combination a * ht + b * hf
+
+/-- **Average walls on a chain of `n + 1` units**: `(a + b) · Σ w·walls = 2 n b (a + b)ⁿ`, so the
+    average is `n · b/(a + b)`. -/
+theorem chain_walls (a b : ℝ) (n : ℕ) :
+    (a + b) * ((bodies (n + 1)).map (fun A => chainWeight a b A * walls A)).sum
+      = 2 * n * b * (a + b) ^ n := by
+  simp only [bodies, List.map_append, List.map_map, List.sum_append]
+  have e1 : ((fun A => chainWeight a b A * (walls A : ℝ)) ∘ (true :: ·)) =
+      fun A => chainWeight a b (true :: A) * walls (true :: A) := rfl
+  have e2 : ((fun A => chainWeight a b A * (walls A : ℝ)) ∘ (false :: ·)) =
+      fun A => chainWeight a b (false :: A) * walls (false :: A) := rfl
+  rw [e1, e2, mul_add, chain_walls_from, chain_walls_from]; ring
+
+/-- **A chain never orders at finite temperature**: with both exchange weights positive the average
+    number of walls is a positive fraction `b/(a + b)` of the length. -/
+theorem chain_has_walls (a b : ℝ) (ha : 0 < a) (hb : 0 < b) (n : ℕ) (hn : 0 < n) :
+    0 < ((bodies (n + 1)).map (fun A => chainWeight a b A * walls A)).sum
+      / ((bodies (n + 1)).map (chainWeight a b)).sum := by
+  have hab : 0 < a + b := by linarith
+  have h := chain_walls a b n
+  rw [chain_partition]
+  have hpos : 0 < ((bodies (n + 1)).map (fun A => chainWeight a b A * walls A)).sum := by
+    have : 0 < (a + b) * ((bodies (n + 1)).map (fun A => chainWeight a b A * walls A)).sum := by
+      rw [h]; have : (0 : ℝ) < n := by exact_mod_cast hn
+      positivity
+    exact pos_of_mul_pos_right this hab.le
+  positivity
+
 end QLF.MagneticOrientation
