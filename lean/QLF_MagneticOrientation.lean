@@ -28,6 +28,11 @@ shadows together are the loop's oriented area vector, which in the continuum is 
 * **`joint_cost_pos_iff`** / **`joint_release_iff`** — for two closures with areas `A` and `B` on a
   plane, `(A+B)² − (A² + B²) = 2AB`. Joining two same-oriented events increases the square of the area,
   and joining opposite-oriented events decreases it.
+* **`fixed_distance_iff`** — reading the space between two poles as the running sum of those cross
+  terms, **a fixed distance has equal space orientation**: like and opposite pairings equal in number.
+  **`like_poles_expand`**, **`opposite_poles_destroy`**: like poles make `2n` units, opposite poles
+  remove `2n`. **`fixed_distance_is_balanced`**: a fixed distance is a balanced (ZFA) string of
+  relative orientations.
 
 **The magnetic reading (imported, labelled).** If magnetic action is quadratic in the enclosed flux,
 as the Maxwell action is in `B`, then with flux quantized (each plaquette is one π quantum,
@@ -255,5 +260,97 @@ theorem square_pair :
     projArea Axis.X Axis.Y ([Twist.up, Twist.right, Twist.down, Twist.left] ++
       mirror [Twist.up, Twist.right, Twist.down, Twist.left]) = 0 := by
   constructor <;> decide
+
+-- ==========================================
+-- §6  A fixed distance has equal space orientation
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"prove a fixed distance has equal space orientation, like poles expand space,
+opposite poles destroy space."*
+
+Two poles exchange events. Each event pairs one unit of oriented space from each pole, up or down
+(`true` / `false`), and §4 says what joining them does: the squared area changes by the cross term
+`2AB`. With unit orientations that is `+2` when the poles agree and `−2` when they are opposite. The
+space between the poles is the running sum of those cross terms, so it holds still exactly when like
+and opposite pairings come in equal numbers. -/
+
+/-- The signed unit area of an orientation: up `+1`, down `−1`. -/
+def unitArea (b : Bool) : ℤ := if b then 1 else -1
+
+/-- **The space one joint event makes**: the cross term `(A+B)² − (A² + B²)` for two unit areas. -/
+def jointSpace (p q : Bool) : ℤ := (unitArea p + unitArea q) ^ 2 - (unitArea p ^ 2 + unitArea q ^ 2)
+
+/-- Like orientations make two units of space; opposite orientations destroy two. -/
+theorem jointSpace_eq (p q : Bool) : jointSpace p q = if p = q then 2 else -2 := by
+  cases p <;> cases q <;> decide
+
+/-- The space made between two poles over a run of joint events. -/
+def netSpace : List (Bool × Bool) → ℤ
+  | [] => 0
+  | e :: es => jointSpace e.1 e.2 + netSpace es
+
+/-- Joint events whose poles agree. -/
+def likeCount (es : List (Bool × Bool)) : ℕ := es.countP (fun e => e.1 == e.2)
+
+/-- Joint events whose poles are opposite. -/
+def oppositeCount (es : List (Bool × Bool)) : ℕ := es.countP (fun e => !(e.1 == e.2))
+
+theorem netSpace_eq (es : List (Bool × Bool)) :
+    netSpace es = 2 * ((likeCount es : ℤ) - (oppositeCount es : ℤ)) := by
+  induction es with
+  | nil => simp [netSpace, likeCount, oppositeCount]
+  | cons e es ih =>
+      obtain ⟨p, q⟩ := e
+      simp only [netSpace, likeCount, oppositeCount, List.countP_cons] at ih ⊢
+      rw [ih, jointSpace_eq]
+      cases p <;> cases q <;> simp <;> ring
+
+/-- **A fixed distance has equal space orientation.** The space between two poles is unchanged by a
+    run of joint events exactly when as many of them pair like orientations as pair opposite ones. -/
+theorem fixed_distance_iff (es : List (Bool × Bool)) :
+    netSpace es = 0 ↔ likeCount es = oppositeCount es := by
+  rw [netSpace_eq]
+  constructor
+  · intro h; omega
+  · intro h; rw [h]; ring
+
+/-- **Like poles expand space.** If every joint event pairs like orientations, `n` events make `2n`
+    units of space. -/
+theorem like_poles_expand (es : List (Bool × Bool)) (h : ∀ e ∈ es, e.1 = e.2) :
+    netSpace es = 2 * es.length := by
+  induction es with
+  | nil => simp [netSpace]
+  | cons e es ih =>
+      simp only [netSpace, List.length_cons]
+      rw [ih (fun x hx => h x (List.mem_cons_of_mem _ hx)), jointSpace_eq,
+        if_pos (h e (List.mem_cons_self))]
+      push_cast; ring
+
+/-- **Opposite poles destroy space.** If every joint event pairs opposite orientations, `n` events
+    remove `2n` units. -/
+theorem opposite_poles_destroy (es : List (Bool × Bool)) (h : ∀ e ∈ es, e.1 ≠ e.2) :
+    netSpace es = -(2 * es.length) := by
+  induction es with
+  | nil => simp [netSpace]
+  | cons e es ih =>
+      simp only [netSpace, List.length_cons]
+      rw [ih (fun x hx => h x (List.mem_cons_of_mem _ hx)), jointSpace_eq,
+        if_neg (h e (List.mem_cons_self))]
+      push_cast; ring
+
+/-- **The relative orientation is a ZFA string.** Read each joint event by its relative orientation,
+    like (`+`) or opposite (`−`). A fixed distance is exactly a balanced string: equal and opposite
+    relative orientation, the ZFA condition on the one axis that separates the poles. -/
+theorem fixed_distance_is_balanced (es : List (Bool × Bool)) :
+    netSpace es = 0 ↔
+      (es.map (fun e => e.1 == e.2)).count true = (es.map (fun e => e.1 == e.2)).count false := by
+  rw [fixed_distance_iff, likeCount, oppositeCount, List.count_eq_countP, List.count_eq_countP,
+    List.countP_map, List.countP_map]
+  have h1 : ((fun x => x == true) ∘ fun e : Bool × Bool => e.1 == e.2) = fun e => e.1 == e.2 := by
+    funext e; obtain ⟨a, b⟩ := e; cases a <;> cases b <;> rfl
+  have h2 : ((fun x => x == false) ∘ fun e : Bool × Bool => e.1 == e.2) =
+      fun e => !(e.1 == e.2) := by
+    funext e; obtain ⟨a, b⟩ := e; cases a <;> cases b <;> rfl
+  rw [h1, h2]
 
 end QLF.MagneticOrientation

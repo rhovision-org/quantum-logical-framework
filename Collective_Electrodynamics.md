@@ -119,6 +119,18 @@ Every closure casts a signed shadow on each of the three spatial planes ([`QLF_P
 | Joining two events with areas `A`, `B` changes the squared area by `2AB`: up, so the square grows, iff the orientations agree; down iff they are opposite | `joint_cost_pos_iff`, `joint_release_iff`, `joint_events` |
 | Worked case: two clockwise squares make area `−2`; a square and its mirror make `0` | `square_pair` |
 
+**A fixed distance has equal space orientation** (Jim, 2026-11-11: *like poles expand space, opposite poles destroy space*). Two poles exchange joint events, each pairing a unit of oriented space from either pole, up or down. By the joining identity each event makes `+2` units of space when the poles agree and `−2` when they are opposite (`jointSpace_eq`). Reading the space between the poles as the running sum of these terms:
+
+| Statement | Theorem |
+|---|---|
+| Net space made = `2 × (#like − #opposite)` | `netSpace_eq` |
+| **The distance is fixed iff like and opposite pairings are equal in number** | `fixed_distance_iff` |
+| Like poles expand space: `n` like events make `2n` units | `like_poles_expand` |
+| Opposite poles destroy space: `n` opposite events remove `2n` units | `opposite_poles_destroy` |
+| Written as a string of relative orientations (like `+`, opposite `−`), a fixed distance is exactly a balanced string: ZFA on the axis that separates the poles | `fixed_distance_is_balanced` |
+
+So a held distance is itself a ZFA closure, of relative orientation. The reading that the space between the poles *is* this running sum is the step taken here, not derived; the theorems are what follows once it is taken.
+
 **Attraction and repulsion.** If magnetic action is quadratic in the enclosed flux, as Maxwell's is in `B` (§6b's `magneticAction`), and flux comes in whole plaquettes (one π quantum each, [`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)), then the joint-area identity is the fluxoid rule: two up quanta cost more action merged than apart, so they **repel**; an up and a down quantum cost less merged, so they **attract**, and merged completely they **annihilate**, leaving no space at all. This is what type-II superconductors show: vortices of the same sense repel, and a vortex meets an antivortex and both vanish. The quadratic action is imported here, not derived, and the head-to-tail attraction of two bar magnets (fixed moments stacked along the normal) is a different geometry that the module does not cover.
 
 **Scope (method rule 4).** These are identities about how oriented area composes; none changes a count of ways. The count that would test the reading: how many closures of length `L` carry each signed area, and whether the joint census of two events favours the opposite-orientation pairing.
