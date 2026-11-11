@@ -689,4 +689,152 @@ theorem gauge_steps_pos (k : ℕ) : ∑ u ∈ closures (2 * (k + 1)), stepsOn Ax
     (fun _ _ => Nat.zero_le _) hmem
   omega
 
+-- ==========================================
+-- §11  Classes of magnetism
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"should we consider classes of magnetism effects, anti, ferro, ferri?"* A body
+is a list of oriented units; its size `n` and moment `m` (ups minus downs) are the two numbers the
+pairing split reads. The classes separate by `m/n` and by how neighbours pair, and the count of ways
+puts them in order: the unordered (paramagnetic) moment is the mode, the fully ordered ones are the
+fewest ways. -/
+
+/-- The moment is twice the number of ups minus the size. -/
+theorem moment_eq (A : List Bool) : moment A = 2 * (A.count true : ℤ) - A.length := by
+  induction A with
+  | nil => simp [moment]
+  | cons p ps ih =>
+      rw [moment, ih, List.count_cons, List.length_cons]
+      cases p <;> simp [unitArea] <;> ring
+
+theorem count_true_le (A : List Bool) : A.count true ≤ A.length := List.count_le_length
+
+/-- **The moment never exceeds the size.** -/
+theorem abs_moment_le (A : List Bool) : |moment A| ≤ A.length := by
+  rw [moment_eq, abs_le]
+  have := count_true_le A
+  constructor <;> omega
+
+/-- **Ferromagnet: the moment is the full size exactly when every unit is up.** -/
+theorem moment_eq_length_iff (A : List Bool) : moment A = A.length ↔ ∀ p ∈ A, p = true := by
+  rw [moment_eq]
+  constructor
+  · intro h p hp
+    have hc : A.count true = A.length := by omega
+    have := List.count_eq_length.mp hc p hp
+    simpa using this.symm
+  · intro h
+    have hc : A.count true = A.length := List.count_eq_length.mpr (fun p hp => by rw [h p hp])
+    rw [hc]; ring
+
+/-- An alternating chain: up, down, up, … starting from `b`. -/
+def alt : Bool → ℕ → List Bool
+  | _, 0 => []
+  | b, n + 1 => b :: alt (!b) n
+
+/-- **Antiferromagnet: every neighbour pair in an alternating chain is opposite.** -/
+theorem alt_neighbours_opposite (b : Bool) (n : ℕ) : List.IsChain (· ≠ ·) (alt b n) := by
+  induction n generalizing b with
+  | zero => exact List.IsChain.nil
+  | succ n ih =>
+      cases n with
+      | zero => exact List.IsChain.singleton b
+      | succ n =>
+          have h := ih (!b)
+          simp only [alt] at h ⊢
+          exact List.IsChain.cons_cons (by cases b <;> simp) h
+
+/-- **Antiferromagnet: an even alternating chain has zero moment, an odd one a single unit.** -/
+theorem moment_alt (b : Bool) (k : ℕ) :
+    moment (alt b (2 * k)) = 0 ∧ moment (alt b (2 * k + 1)) = unitArea b := by
+  induction k generalizing b with
+  | zero => simp [alt, moment]
+  | succ k ih =>
+      have h1 : alt b (2 * (k + 1)) = b :: (!b) :: alt b (2 * k) := by
+        rw [show 2 * (k + 1) = 2 * k + 1 + 1 by ring]; simp [alt]
+      have h2 : alt b (2 * (k + 1) + 1) = b :: (!b) :: alt b (2 * k + 1) := by
+        rw [show 2 * (k + 1) + 1 = 2 * k + 1 + 1 + 1 by ring]; simp [alt]
+      rw [h1, h2]
+      simp only [moment, (ih b).1, (ih b).2]
+      cases b <;> simp [unitArea]
+
+theorem moment_append (A B : List Bool) : moment (A ++ B) = moment A + moment B := by
+  induction A with
+  | nil => simp [moment]
+  | cons p ps ih => simp only [List.cons_append, moment, ih]; ring
+
+theorem moment_replicate (b : Bool) (n : ℕ) : moment (List.replicate n b) = n * unitArea b := by
+  induction n with
+  | zero => simp [moment]
+  | succ n ih => rw [List.replicate_succ, moment, ih]; push_cast; ring
+
+/-- **Ferrimagnet: two opposite sublattices of sizes `n₁`, `n₂` leave moment `n₁ − n₂`.** -/
+theorem moment_ferri (n₁ n₂ : ℕ) :
+    moment (List.replicate n₁ true ++ List.replicate n₂ false) = (n₁ : ℤ) - n₂ := by
+  rw [moment_append, moment_replicate, moment_replicate]
+  simp [unitArea]; ring
+
+/-- Every body of size `n`, each once. -/
+def bodies : ℕ → List (List Bool)
+  | 0 => [[]]
+  | n + 1 => (bodies n).map (true :: ·) ++ (bodies n).map (false :: ·)
+
+theorem mem_bodies (n : ℕ) (A : List Bool) : A ∈ bodies n ↔ A.length = n := by
+  induction n generalizing A with
+  | zero => cases A <;> simp [bodies]
+  | succ n ih =>
+      cases A with
+      | nil => simp [bodies]
+      | cons p ps => cases p <;> simp [bodies, ih]
+
+theorem bodies_nodup (n : ℕ) : (bodies n).Nodup := by
+  induction n with
+  | zero => simp [bodies]
+  | succ n ih =>
+      rw [bodies, List.nodup_append]
+      refine ⟨ih.map (fun _ _ h => by simpa using h), ih.map (fun _ _ h => by simpa using h), ?_⟩
+      intro x hx y hy
+      simp only [List.mem_map] at hx hy
+      obtain ⟨_, _, rfl⟩ := hx
+      obtain ⟨_, _, rfl⟩ := hy
+      simp
+
+/-- How many bodies of size `n` have exactly `k` ups. -/
+def waysWithUps (n k : ℕ) : ℕ := (bodies n).countP (fun A => A.count true == k)
+
+/-- **The number of bodies of size `n` with `k` ups is `C(n, k)`.** -/
+theorem waysWithUps_eq_choose (n k : ℕ) : waysWithUps n k = n.choose k := by
+  induction n generalizing k with
+  | zero => cases k <;> simp [waysWithUps, bodies]
+  | succ n ih =>
+      unfold waysWithUps at ih ⊢
+      rw [bodies, List.countP_append, List.countP_map, List.countP_map]
+      cases k with
+      | zero =>
+          have h1 : (bodies n).countP ((fun A => A.count true == 0) ∘ (true :: ·)) = 0 := by
+            rw [List.countP_eq_zero]; intro A _; simp
+          have h2 : (bodies n).countP ((fun A => A.count true == 0) ∘ (false :: ·)) =
+              (bodies n).countP (fun A => A.count true == 0) := by
+            rfl
+          rw [h1, h2, ih]; simp
+      | succ k =>
+          have h1 : (bodies n).countP ((fun A => A.count true == k + 1) ∘ (true :: ·)) =
+              (bodies n).countP (fun A => A.count true == k) := by
+            congr 1; funext A; simp
+          have h2 : (bodies n).countP ((fun A => A.count true == k + 1) ∘ (false :: ·)) =
+              (bodies n).countP (fun A => A.count true == k + 1) := by
+            rfl
+          rw [h1, h2, ih, ih, Nat.choose_succ_succ]
+
+/-- **Paramagnet is the mode.** No moment class has more ways than the one closest to zero
+    (`k = n/2` ups). -/
+theorem paramagnet_most_ways (n k : ℕ) : waysWithUps n k ≤ waysWithUps n (n / 2) := by
+  rw [waysWithUps_eq_choose, waysWithUps_eq_choose]
+  exact Nat.choose_le_middle k n
+
+/-- **Ferromagnet is the fewest.** Fully aligned up is one way (and fully down is one more). -/
+theorem ferromagnet_one_way (n : ℕ) : waysWithUps n n = 1 ∧ waysWithUps n 0 = 1 := by
+  rw [waysWithUps_eq_choose, waysWithUps_eq_choose]
+  exact ⟨Nat.choose_self n, Nat.choose_zero_right n⟩
+
 end QLF.MagneticOrientation

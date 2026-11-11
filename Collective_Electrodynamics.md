@@ -93,6 +93,17 @@ So "half lateral, half transverse" holds **exactly at closure and nowhere else**
 
 **Transversality from the halves.** `closure_equal_split` takes transversality, `K·ε = 0`, as an input. It does not have to be one. Build the polarization from the two halves along the momentum: `ψ` the forward half (`k·σ ψ = λψ`) and `χ` the backward half (`k·σ χ = −λχ`), with `ε_a = χ† σ_a ψ`. Then **`pair_polarization_transverse`** proves `χ†ψ = 0` (no time component) and `k·ε = 0` (no longitudinal component), because the two halves are eigenvectors of the Hermitian `k·σ` with opposite eigenvalues. **`pair_closure_equal_split`** puts the pieces together: on a massless closure, the real part of an offer-paired-with-confirmation polarization carries equal electric and magnetic action, with nothing assumed about its direction. This is the substrate form of the spinor-helicity construction of photon polarizations, where `ε` is a bilinear in two spinors of opposite helicity. The result is still an identity about a mode, not a count of ways (method rule 4).
 
+**Classes of magnetism** (Jim, 2026-11-11: *"should we consider classes of magnetism effects, anti, ferro, ferri?"*). A body is a list of up and down units, so it carries two numbers: its size `n` and its moment `m`, ups minus downs. The moment is `2·#up − n` (`moment_eq`), so `|m| ≤ n` (`abs_moment_le`) and the classes separate by where `m` sits in that range and by how neighbours pair:
+
+| Class | Orientation | Moment | Ways (bodies of size `n`) | Lean |
+|---|---|---|---|---|
+| Ferromagnet | all units aligned | `±n`, the maximum | `1` each way | `moment_eq_length_iff`, `ferromagnet_one_way` |
+| Antiferromagnet | neighbours opposite | `0` (even chain), one unit (odd) | `1` each start | `alt_neighbours_opposite`, `moment_alt` |
+| Ferrimagnet | two opposite sublattices, unequal | `n₁ − n₂` | | `moment_ferri` |
+| Paramagnet | no order | the mode, `m ≈ 0` | `C(n, n/2)`, the most | `paramagnet_most_ways` |
+
+The count is the content (method rule 1): the number of bodies with `k` ups is `C(n, k)` (`waysWithUps_eq_choose`), so the unordered moment near zero is the mode and the ordered extremes are the fewest ways. That is why order is rare and why it melts: a coupling that favours aligned (ferro) or opposite (antiferro) neighbours must beat a multiplicity ratio of `C(n, n/2)` to `1`, and the temperature where it stops doing so is the Curie or Néel point. That last sentence is the standard statistical reading and is not proved here; the coupling is not derived. Diamagnetism (an induced moment opposing the applied one, Lenz) is a response, not an ordering, and is not covered. The expansion and contraction readings of Pauli exclusion and pair annihilation are in [`Magnetism_Spatial_Dynamics.md`](Magnetism_Spatial_Dynamics.md) §2–§3 and are not repeated here.
+
 **Scope (method rule 4).** Every row above is an identity about one step or one loop. None changes a count of ways, so together they show that QLF's step *has* Mead's structure. They are not evidence that Mead's transaction is the physics.
 
 ### 6c. What is still open
@@ -137,7 +148,7 @@ So a held distance is itself a ZFA closure, of relative orientation. The reading
 
 **Attraction and repulsion.** If magnetic action is quadratic in the enclosed flux, as Maxwell's is in `B` (§6b's `magneticAction`), and flux comes in whole plaquettes (one π quantum each, [`QLF_EdgeSign`](lean/QLF_EdgeSign.lean)), then the joint-area identity is the fluxoid rule: two up quanta cost more action merged than apart, so they **repel**; an up and a down quantum cost less merged, so they **attract**, and merged completely they **annihilate**, leaving no space at all. This is what type-II superconductors show: vortices of the same sense repel, and a vortex meets an antivortex and both vanish. The quadratic action is imported here, not derived, and the head-to-tail attraction of two bar magnets (fixed moments stacked along the normal) is a different geometry that the module does not cover.
 
-**Scope (method rule 4).** These are identities about how oriented area composes; none changes a count of ways. The count that would test the reading: how many closures of length `L` carry each signed area, and whether the joint census of two events favours the opposite-orientation pairing.
+**Scope (method rule 4).** Most of these are identities about how oriented area composes and change no count of ways; the exceptions are the counts (`vacuum_net_orientation_zero`, `census_axis_blind`, `waysWithUps_eq_choose`). The count that would test the reading: how many closures of length `L` carry each signed area, and whether the joint census of two events favours the opposite-orientation pairing.
 
 ## Examples: Collective Electrodynamics in QLF
 
