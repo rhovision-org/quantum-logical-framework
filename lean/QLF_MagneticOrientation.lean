@@ -1,5 +1,7 @@
 import QLF_PlaquetteArea
 import QLF_HandedLoops
+import QLF_KraftMeasure
+import QLF_HolographicBoundary
 
 set_option linter.unusedVariables false
 
@@ -43,7 +45,11 @@ This is the fixed-flux case, and matches vortex–vortex repulsion and vortex–
 The quadratic action is an input here, not derived, and the head-to-tail attraction of bar magnets
 (fixed moment, stacked along the normal) is a different geometry that this module does not cover.
 
-**Honest scope (method rule 4).** These are identities about how oriented area composes. None of them
+**The one count (§9).** `closure_area_symmetric`: at every length, as many closures enclose signed
+area `A` on a plane as `−A`, because the mirror is an involution on closures that negates area; so
+`vacuum_net_orientation_zero`, the vacuum's total oriented area is zero at every length.
+
+**Honest scope (method rule 4).** Apart from §9 these are identities about how oriented area composes. None of them
 changes a count of ways. What would: counting how many closures of length `L` have a given signed
 area, and showing the joint census of two events favours the opposite-orientation pairing.
 
@@ -471,5 +477,83 @@ theorem transport_pair (h k : Bool) (A B : List Bool) :
   refine ⟨?_, ?_⟩
   · rw [netSpace_allPairings, netSpace_allPairings, moment_transport, moment_transport]; ring
   · rw [allPairings_length, allPairings_length, transport_length, transport_length]
+
+-- ==========================================
+-- §9  The vacuum is balanced in orientation
+-- ==========================================
+
+/-! The census reason gravity sees balance. Among all closures of a given length, the mirror pairs
+each one with another of the same length whose oriented area is the opposite on every plane. So the
+census of closures by signed area is exactly symmetric: as many ways enclose `+A` as `−A`, and the
+vacuum's total oriented area is zero at every length. This is a statement about counts of ways. -/
+
+private instance decCB : DecidablePred countBalanced := fun ts => by
+  unfold countBalanced; infer_instance
+
+/-- All closures of length `L`: the count-balanced twist histories. -/
+def closures (L : ℕ) : Finset (List Twist) :=
+  (words Twist L).filter (fun ts => decide (countBalanced ts))
+
+theorem conj_conj (t : Twist) : t.conj.conj = t := by cases t <;> rfl
+
+theorem mirror_mirror (u : List Twist) : mirror (mirror u) = u := by
+  simp [mirror, List.map_reverse, Function.comp_def, conj_conj]
+
+theorem countBalanced_mirror {u : List Twist} (hu : countBalanced u) : countBalanced (mirror u) := by
+  rw [zfa_iff_handedness_balanced] at hu ⊢
+  intro a
+  rw [handednessOn_mirror, hu a]
+  simp
+
+theorem returns_of_balanced {u : List Twist} (hu : countBalanced u) : Returns u := by
+  intro a
+  have h := (QLF.HolographicBoundary.position_eq_zero_iff u).mpr hu
+  exact congrFun h a
+
+theorem mirror_mem_closures {L : ℕ} {u : List Twist} (hu : u ∈ closures L) :
+    mirror u ∈ closures L := by
+  simp only [closures, Finset.mem_filter, mem_words, decide_eq_true_eq] at hu ⊢
+  exact ⟨by rw [mirror_length]; exact hu.1, countBalanced_mirror hu.2⟩
+
+/-- **The orientation census is symmetric.** At every length, as many closures enclose signed area
+    `A` on a plane as enclose `−A`. -/
+theorem closure_area_symmetric {a b : Axis} (hab : a ≠ b) (L : ℕ) (A : ℤ) :
+    ((closures L).filter (fun u => projArea a b u = A)).card =
+      ((closures L).filter (fun u => projArea a b u = -A)).card := by
+  apply Finset.card_bij' (fun u _ => mirror u) (fun u _ => mirror u)
+  · intro u hu
+    simp only [Finset.mem_filter] at hu ⊢
+    refine ⟨mirror_mem_closures hu.1, ?_⟩
+    have hb : countBalanced u := by
+      simp only [closures, Finset.mem_filter, decide_eq_true_eq] at hu; exact hu.1.2
+    rw [projArea_mirror hab (returns_of_balanced hb), hu.2]
+  · intro u hu
+    simp only [Finset.mem_filter] at hu ⊢
+    refine ⟨mirror_mem_closures hu.1, ?_⟩
+    have hb : countBalanced u := by
+      simp only [closures, Finset.mem_filter, decide_eq_true_eq] at hu; exact hu.1.2
+    rw [projArea_mirror hab (returns_of_balanced hb), hu.2, neg_neg]
+  · intro u _; exact mirror_mirror u
+  · intro u _; exact mirror_mirror u
+
+/-- **The vacuum carries zero net orientation.** Summed over every closure of length `L`, the signed
+    area on any plane is zero. -/
+theorem vacuum_net_orientation_zero {a b : Axis} (hab : a ≠ b) (L : ℕ) :
+    ∑ u ∈ closures L, projArea a b u = 0 := by
+  have h : ∑ u ∈ closures L, projArea a b u = ∑ u ∈ closures L, projArea a b (mirror u) := by
+    apply Finset.sum_nbij' mirror mirror
+    · intro u hu; exact mirror_mem_closures hu
+    · intro u hu; exact mirror_mem_closures hu
+    · intro u _; exact mirror_mirror u
+    · intro u _; exact mirror_mirror u
+    · intro u _; rw [mirror_mirror]
+  have h2 : ∑ u ∈ closures L, projArea a b (mirror u) = -∑ u ∈ closures L, projArea a b u := by
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro u hu
+    have hb : countBalanced u := by
+      simp only [closures, Finset.mem_filter, decide_eq_true_eq] at hu; exact hu.2
+    exact projArea_mirror hab (returns_of_balanced hb)
+  linarith
 
 end QLF.MagneticOrientation
