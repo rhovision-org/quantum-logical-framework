@@ -556,4 +556,137 @@ theorem vacuum_net_orientation_zero {a b : Axis} (hab : a ≠ b) (L : ℕ) :
     exact projArea_mirror hab (returns_of_balanced hb)
   linarith
 
+-- ==========================================
+-- §10  The census is axis-blind: γ = 1
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"distance equals delay."* Every step runs at `c`, so a step on the gauge axis
+is delay in time and a step on a spatial axis is delay in space. In the weak field, light passing a
+mass is late by `(1 + γ)` times the Newtonian amount: `1` from slowed clocks (the time part) and `γ`
+from stretched space. GR has `γ = 1`; Cassini measured `γ − 1 = (2.1 ± 2.3) × 10⁻⁵`.
+
+What the census gives: swapping the gauge axis with any spatial axis is a bijection on closures of
+each length (count balance treats the four axes alike), so summed over all closures of length `L`,
+every axis receives exactly the same number of steps. If the delay that balance adds to each axis is
+proportional to that axis's share of the census (the reading, labelled below), the time part and the
+part along each spatial axis are equal, which is `γ = 1`. -/
+
+private instance lawfulBEqTwist : LawfulBEq Twist where
+  eq_of_beq {a b} h := by cases a <;> cases b <;> first | rfl | exact absurd h (by decide)
+  rfl {a} := by cases a <;> decide
+
+/-- Swap two axes in the frame, keeping every twist's sign. -/
+def axSwap (a b c : Axis) : Axis := if c = a then b else if c = b then a else c
+
+/-- The twist with its axis relabelled by `axSwap a b` and its handedness kept. -/
+def swapTw (a b : Axis) (t : Twist) : Twist :=
+  if isNegTwist t then leftTwist (axSwap a b (axisOf t)) else rightTwist (axSwap a b (axisOf t))
+
+theorem axSwap_invol (a b c : Axis) : axSwap a b (axSwap a b c) = c := by
+  cases a <;> cases b <;> cases c <;> decide
+
+theorem swapTw_invol (a b : Axis) (t : Twist) : swapTw a b (swapTw a b t) = t := by
+  cases a <;> cases b <;> cases t <;> decide
+
+theorem swapTw_right (a b c : Axis) : swapTw a b (rightTwist c) = rightTwist (axSwap a b c) := by
+  cases a <;> cases b <;> cases c <;> decide
+
+theorem swapTw_left (a b c : Axis) : swapTw a b (leftTwist c) = leftTwist (axSwap a b c) := by
+  cases a <;> cases b <;> cases c <;> decide
+
+theorem axisOf_swapTw (a b : Axis) (t : Twist) : axisOf (swapTw a b t) = axSwap a b (axisOf t) := by
+  cases a <;> cases b <;> cases t <;> decide
+
+theorem swapTw_injective (a b : Axis) : Function.Injective (swapTw a b) := by
+  intro x y h
+  have := congrArg (swapTw a b) h
+  rwa [swapTw_invol, swapTw_invol] at this
+
+theorem count_map_swap (a b : Axis) (u : List Twist) (t : Twist) :
+    (u.map (swapTw a b)).count t = u.count (swapTw a b t) := by
+  conv_lhs => rw [← swapTw_invol a b t]
+  exact List.count_map_of_injective u (swapTw a b) (swapTw_injective a b) _
+
+theorem handednessOn_swap (a b c : Axis) (u : List Twist) :
+    handednessOn c (u.map (swapTw a b)) = handednessOn (axSwap a b c) u := by
+  unfold handednessOn
+  rw [count_map_swap, count_map_swap, swapTw_right, swapTw_left]
+
+theorem countBalanced_swap (a b : Axis) (u : List Twist) :
+    countBalanced (u.map (swapTw a b)) ↔ countBalanced u := by
+  rw [zfa_iff_handedness_balanced, zfa_iff_handedness_balanced]
+  constructor
+  · intro h c
+    have := h (axSwap a b c)
+    rwa [handednessOn_swap, axSwap_invol] at this
+  · intro h c
+    rw [handednessOn_swap]
+    exact h _
+
+/-- Steps a history spends on axis `a`. -/
+def stepsOn (a : Axis) (u : List Twist) : ℕ := u.countP (fun t => decide (axisOf t = a))
+
+theorem stepsOn_swap (a b c : Axis) (u : List Twist) :
+    stepsOn c (u.map (swapTw a b)) = stepsOn (axSwap a b c) u := by
+  unfold stepsOn
+  rw [List.countP_map]
+  congr 1
+  funext t
+  simp only [Function.comp_apply, axisOf_swapTw]
+  apply decide_eq_decide.mpr
+  constructor
+  · intro h; rw [← h, axSwap_invol]
+  · intro h; rw [h, axSwap_invol]
+
+theorem swap_mem_closures (a b : Axis) {L : ℕ} {u : List Twist} (hu : u ∈ closures L) :
+    u.map (swapTw a b) ∈ closures L := by
+  simp only [closures, Finset.mem_filter, mem_words, decide_eq_true_eq] at hu ⊢
+  exact ⟨by rw [List.length_map]; exact hu.1, (countBalanced_swap a b u).mpr hu.2⟩
+
+theorem axSwap_right (a b : Axis) : axSwap a b b = a := by
+  cases a <;> cases b <;> decide
+
+/-- **The census is axis-blind.** Summed over all closures of length `L`, every axis receives the
+    same number of steps; in particular the gauge (time) axis gets exactly what each spatial axis
+    gets. -/
+theorem census_axis_blind (a b : Axis) (L : ℕ) :
+    ∑ u ∈ closures L, stepsOn a u = ∑ u ∈ closures L, stepsOn b u := by
+  apply Finset.sum_nbij' (fun u => u.map (swapTw a b)) (fun u => u.map (swapTw a b))
+  · intro u hu; exact swap_mem_closures a b hu
+  · intro u hu; exact swap_mem_closures a b hu
+  · intro u _; simp [List.map_map, Function.comp_def, swapTw_invol]
+  · intro u _; simp [List.map_map, Function.comp_def, swapTw_invol]
+  · intro u _; rw [stepsOn_swap, axSwap_right]
+
+/-- **`γ = 1` from the census.** Read the PPN `γ` as the delay weight of a spatial axis over that of
+    the time axis, each weight being the axis's share of the closure census. At every length where
+    the census is nonempty the ratio is exactly `1`, and the Shapiro factor `1 + γ` is `2`, GR's
+    value. The reading (delay per axis ∝ census share) is the step this theorem does not prove. -/
+noncomputable def censusGamma (L : ℕ) (s : Axis) : ℚ :=
+  ((∑ u ∈ closures L, stepsOn s u : ℕ) : ℚ) / ((∑ u ∈ closures L, stepsOn Axis.I u : ℕ) : ℚ)
+
+theorem censusGamma_eq_one (L : ℕ) (s : Axis) (h : ∑ u ∈ closures L, stepsOn Axis.I u ≠ 0) :
+    censusGamma L s = 1 ∧ 1 + censusGamma L s = 2 := by
+  have he : censusGamma L s = 1 := by
+    unfold censusGamma
+    rw [census_axis_blind s Axis.I L]
+    exact div_self (by exact_mod_cast h)
+  exact ⟨he, by rw [he]; norm_num⟩
+
+/-- The census is nonempty on the gauge axis at every even length: `+^k −^k` is a closure. -/
+theorem gauge_steps_pos (k : ℕ) : ∑ u ∈ closures (2 * (k + 1)), stepsOn Axis.I u ≠ 0 := by
+  have hmem : List.replicate (k + 1) Twist.plus ++ List.replicate (k + 1) Twist.minus ∈
+      closures (2 * (k + 1)) := by
+    simp only [closures, Finset.mem_filter, mem_words, decide_eq_true_eq]
+    refine ⟨by simp; ring, ?_⟩
+    unfold countBalanced
+    simp [List.count_replicate]
+  have hpos : 0 < stepsOn Axis.I (List.replicate (k + 1) Twist.plus ++
+      List.replicate (k + 1) Twist.minus) := by
+    unfold stepsOn
+    simp [List.countP_replicate, axisOf]
+  have hle := Finset.single_le_sum (f := fun u => stepsOn Axis.I u)
+    (fun _ _ => Nat.zero_le _) hmem
+  omega
+
 end QLF.MagneticOrientation
