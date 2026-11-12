@@ -763,6 +763,62 @@
     "propext"
   ],
   "QLF.Majorana.neutrino_majorana": [],
+  "QLF.Manifestation.closed_insertion_is_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.closures_unbounded": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.completion_net_determined": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.distance_eq_delay": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.isolated_iff_closed": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.isolation_interleaved": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.prime_closure_every_length": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.proton_simplest_isolated_imbalance": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.proton_ways_unbounded": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.rearrangement_neutral": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.same_niches_iff_sameNet": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Manifestation.short_closures_unwound": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Mass.chirality_comm_dirac": [
     "Classical.choice",
     "Quot.sound",

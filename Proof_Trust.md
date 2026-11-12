@@ -58,20 +58,33 @@ assumption-free.
 
 At base revision `a8657be`, the manifest had 240 entries, including twelve
 TensorFromClosure and eleven holography anchors, but none for MO2/QuantumLogic.
-This branch reviews 62 additions: seventeen MO2, eighteen QuantumLogic and
-27 further named declarations. The resulting manifest has 302 entries; every
-old footprint is unchanged. Both BornFromWays anchors were already present and
-are not added again.
+PR #224 added 62 anchors: seventeen MO2, eighteen QuantumLogic and 27 further
+named declarations, bringing the reviewed baseline to **302**; every old
+footprint was unchanged. Both BornFromWays anchors were already present and are
+not added again.
+
+Two subsequent merged PRs extend the same reviewed baseline without changing
+any earlier set:
+
+- **PR #225** added five anchors: three `QLF.MetricSinglet` and two
+  `QLF.LatticeDivergence` theorems, bringing the baseline to **307**.
+- **PR #226** added twelve `QLF.Manifestation` anchors, bringing the baseline
+  to **319**. The current exact-footprint gate is 319 entries.
 
 The original Lean build and separate 302-report audit ran in project CI at
 `41182f7` (test merge `8cf63f3`). The reviewed source preserves all Lean/build
 inputs byte-for-byte. The normalized original reports, deliberately recorded
 baseline delta, numerical runs and exact provenance are archived in
-[`verification/paper-i-v0.3/`](verification/paper-i-v0.3/).
+[`verification/paper-i-v0.3/`](verification/paper-i-v0.3/). That receipt is
+scoped to the 302-anchor #224 closure; the #225 and #226 deltas are recorded in
+their PRs and in the current baseline file.
 The baseline regeneration was a reviewed operation outside CI. It is not an
-independent local Lean rebuild; the subsequent regression CI run is identified
-separately in the PR. A matching footprint establishes only the exact theorem
+independent local Lean rebuild; the subsequent regression CI runs are identified
+separately in the PRs. A matching footprint establishes only the exact theorem
 relative to its dependencies, not the physical reading of its headline name.
+In particular, the metric-singlet/lattice-Einstein and Manifestation results are
+formal theorems under their stated premises; they do **not** close the physical
+bridge (G3) or empirical adequacy (G5).
 
 The branch also adds typed claim records, the migrated three-polarizer record,
 a scoped Born-assignment record and a **draft** falsification/test ledger.

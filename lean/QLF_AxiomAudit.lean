@@ -107,6 +107,7 @@ import QLF_PlaquetteArea
 import QLF_LocalAreaLaw
 import QLF_MetricSinglet
 import QLF_LatticeDivergence
+import QLF_Manifestation
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -586,3 +587,20 @@ table.  The `True := trivial` summary markers in these modules are NOT anchors. 
 #print axioms QLF.Discoveries2026.antiparticle_length
 #print axioms QLF.Discoveries2026.charge3W_antiparticle
 #print axioms QLF.Majorana.neutrino_majorana
+
+/-! ## QLF_Manifestation — orientation, isolation, unbounded closures, distance = delay, proton
+
+These anchors are added by PR #226 and reviewed in the 319-anchor baseline. -/
+
+#print axioms QLF.Manifestation.completion_net_determined
+#print axioms QLF.Manifestation.isolated_iff_closed
+#print axioms QLF.Manifestation.isolation_interleaved
+#print axioms QLF.Manifestation.closed_insertion_is_phase
+#print axioms QLF.Manifestation.closures_unbounded
+#print axioms QLF.Manifestation.prime_closure_every_length
+#print axioms QLF.Manifestation.distance_eq_delay
+#print axioms QLF.Manifestation.same_niches_iff_sameNet
+#print axioms QLF.Manifestation.rearrangement_neutral
+#print axioms QLF.Manifestation.short_closures_unwound
+#print axioms QLF.Manifestation.proton_simplest_isolated_imbalance
+#print axioms QLF.Manifestation.proton_ways_unbounded

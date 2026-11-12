@@ -8,6 +8,13 @@ says where each part of the picture lives and how the parts connect. It proves n
 claim below points to the document or Lean module that carries it. The full visual map is the
 [flow chart](FlowChart.md) ([clickable version](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html)).
 
+**Merged formal backbone (12 November 2026).** PR #225 adds the metric-singlet /
+lattice-Einstein representational result ([Einstein_Equations.md](Einstein_Equations.md) §6d–§6e);
+PR #226 adds [Manifestation.md](Manifestation.md) (orientation, isolation-is-closure,
+unbounded closures, `distance_eq_delay`, and the proton as the simplest isolated
+imbalance). Both are formal `F` results in the reviewed **319-anchor** baseline.
+Their physical readings remain `B-OPEN`; the map is still not evidence.
+
 **The thesis** (Jim Whitescarver, 2026-11-11):
 
 > The magic of possibilistic quantum logical manifestation is that it manifests unbounded in complexity,
@@ -41,11 +48,11 @@ interaction; the logical complexity inside them is far larger.
 | Solution | What is proved | Where |
 |---|---|---|
 | **Orientation (top down).** Every history completes to a closure using only itself | the dagger completes every history; a history joined to its mirror closes | [Reversibility.md](Reversibility.md), `QLF_ClosureUnitarity`, `QLF_Discoveries2026` (`mirror_closes`) |
-| The shortest completion is the history's distance from closure | *distance equals delay* | `QLF_Manifestation` (`distance_eq_delay`), PR #226 |
-| **Isolation (bottom up).** A part is isolated exactly when it is closed | *isolation is closure*; a closed part inserted anywhere costs only a global phase | `QLF_Manifestation` (`isolated_iff_closed`, `closed_insertion_is_phase`), PR #226; `QLF_ClosureRenewal` |
+| The shortest completion is the history's distance from closure | *distance equals delay* | [Manifestation.md](Manifestation.md) (`distance_eq_delay`), `QLF_Manifestation` |
+| **Isolation (bottom up).** A part is isolated exactly when it is closed | *isolation is closure*; a closed part inserted anywhere costs only a global phase | [Manifestation.md](Manifestation.md) (`isolated_iff_closed`, `closed_insertion_is_phase`), `QLF_Manifestation`; `QLF_ClosureRenewal` |
 | An open part cannot be hidden | forced sharing | [Discoveries_2026.md](Discoveries_2026.md) §3 |
 | Isolation in practice: Markov blankets | blankets at every scale | [Emergent_Markov_Blankets.md](Emergent_Markov_Blankets.md), [Hadrons_Markov_Blankets.md](Hadrons_Markov_Blankets.md), [Primordial_Markov_Blankets.md](Primordial_Markov_Blankets.md) |
-| Unbounded complexity | at least `8ⁿ` closures of length `2n`; a prime closure of every even length | `QLF_Manifestation` (`closures_unbounded`, `prime_closure_every_length`), PR #226 |
+| Unbounded complexity | at least `8ⁿ` closures of length `2n`; a prime closure of every even length | [Manifestation.md](Manifestation.md) (`closures_unbounded`, `prime_closure_every_length`), `QLF_Manifestation` |
 
 ## 3. The hard problems possibility solves
 
@@ -69,7 +76,7 @@ interaction; the logical complexity inside them is far larger.
 | Space and time synthesized, event by event | [SpaceTime.md](SpaceTime.md), [Spacetime_Constructor.md](Spacetime_Constructor.md), [spacetime-matter-emergence.md](spacetime-matter-emergence.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
 | The constants: the `6 spatial + 2 gauge` split of the eight twists fixes a family, with α the flagship | α⁻¹ ≈ 137: [Alpha.md](Alpha.md), [Alpha_Residual.md](Alpha_Residual.md); weak mixing `sin²θ_W = 3/8` and the Koide `2/3`: [Weak_Force.md](Weak_Force.md), [Lepton_Generations_Fourier.md](Lepton_Generations_Fourier.md); `m_p/m_e = 6π⁵`: [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md); `m_π/m_e ≈ 2/α`: [Pion_QLF.md](Pion_QLF.md); the coupling strengths: [Forces_From_Alpha.md](Forces_From_Alpha.md); the Planck scale and `c`, `ℏ`, `G`: [Planck_Scale.md](Planck_Scale.md), [Per_Qubit_Mass_Quantum.md](Per_Qubit_Mass_Quantum.md), [Gravity_From_Delay.md](Gravity_From_Delay.md); `Ω_Λ ≈ log 2`: [Cosmological_Constant.md](Cosmological_Constant.md); nuclear magic numbers: [Magic_numbers.md](Magic_numbers.md) | [2 Constants](FlowChart.md#2-the-fundamental-constants) |
 | The electron: the simplest closure, a plane loop | [Spin_QLF.md](Spin_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
-| **The proton: the simplest isolated imbalance.** No closure shorter than six carries baryon winding; the proton word closes at six with winding +1, in unboundedly many ways | [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md), [SEX.md](SEX.md), `QLF_BaryonWinding`, `QLF_Manifestation` (`proton_simplest_isolated_imbalance`, `proton_ways_unbounded`), PR #226 | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
+| **The proton: the simplest isolated imbalance.** No closure shorter than six carries baryon winding; the proton word closes at six with winding +1, in unboundedly many ways | [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md), [SEX.md](SEX.md), `QLF_BaryonWinding`, [Manifestation.md](Manifestation.md) (`proton_simplest_isolated_imbalance`, `proton_ways_unbounded`), `QLF_Manifestation` | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Particles and the Standard Model | [Standard_Model.md](Standard_Model.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Atoms | [Atomic_Structure_QLF.md](Atomic_Structure_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
 | Molecules: a bond is a shared closure | [Chemistry.md](Chemistry.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
@@ -84,6 +91,7 @@ interaction; the logical complexity inside them is far larger.
 | Three gauge forces as one substrate interaction | [Forces_From_Three_Axes.md](Forces_From_Three_Axes.md) | [3 Forces](FlowChart.md#3-forces) |
 | Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs in PR #223) | [3 Forces](FlowChart.md#3-forces) |
 | Gravity from balance; distance equals delay | [Gravity_From_Delay.md](Gravity_From_Delay.md), [Gravity.md](Gravity.md), [Quantum_Gravity.md](Quantum_Gravity.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
+| **Metric = singlet; lattice divergence/Einstein equations** | [Einstein_Equations.md](Einstein_Equations.md) §6d–§6e, `QLF_MetricSinglet`, `QLF_LatticeDivergence` — formal representational result under explicit premises; physical gravity bridge **open** | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
 | Cosmic expansion by delay; dark energy and dark matter | [Cosmological_Constant.md](Cosmological_Constant.md), [DarkMatter.md](DarkMatter.md) | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
 | Holography, stated precisely | [Holography_Audit.md](Holography_Audit.md) | [8 Quantum gravity](FlowChart.md#8-quantum-gravity--toe-pillars) |
 
