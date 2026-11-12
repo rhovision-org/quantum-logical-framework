@@ -66,9 +66,12 @@ rows in the physical-claims table and do not have physical `E` status:
   tensor product is derived from independent-body premises, not assumed for the
   independent sector: `composite_is_tensor`, `tensorEquiv`,
   `n_composite_is_tensor`, `nTensorEquiv`. This is formal `F` for the
-  representation. The conservative return on closure classes
-  (`TensorConservativeReturn`) is **not yet proved**; `pair_scalar_ambiguity`
-  shows why the raw factor pair cannot be returned. It is a near-complete bridge,
+  representation. The conservative return on closure classes is
+  now proved as `tensor_conservative_return` / `tensorTrigger_exists` in
+  `QLF_TensorConservativeReturn` (outside the 319-anchor baseline). It proves
+  coherence of the quotient return; it does not show that the quotient is the
+  physically selected closure equivalence. `pair_scalar_ambiguity` shows why the
+  raw factor pair cannot be returned. The tensor bridge remains near-complete,
   not a closed physical bridge.
 
 These are claim-map and formal-coverage entries, not promotions of a physical

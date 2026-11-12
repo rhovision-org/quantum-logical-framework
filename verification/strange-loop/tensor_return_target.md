@@ -1,6 +1,6 @@
 # TensorConservativeReturn — theorem target
 
-**Status:** `NOT_STARTED`. This is a specification, not a proof. No `sorry` is added to the repository.
+**Status:** `PROVED` as a quotient construction in `lean/QLF_TensorConservativeReturn.lean` (`tensorTrigger_exists`, `tensor_conservative_return`). The theorem is outside the 319-anchor reviewed baseline and does not by itself close the tensor bridge.
 
 ## Why
 
@@ -16,6 +16,25 @@ versions are `n_composite_is_tensor` / `nTensorEquiv`.
 
 The tensor product is therefore not assumed for the independent sector. The
 remaining question is the strange-loop one: what does the return map recover?
+
+## What is proved
+
+`QLF_TensorConservativeReturn` defines the quotient of two-body histories by
+equality of the tensor image
+
+```
+w ~ w'  iff  fold(projA w) ⊗ fold(projB w) = fold(projA w') ⊗ fold(projB w').
+```
+
+`F` maps a class to its tensor image; `R` chooses a class from an image;
+`R ∘ F = id` is proved on classes. `class_of_step` shows that interleaving moves
+land in the same class. `tensorTrigger_exists` instantiates
+`QuotientStrangeLoopTrigger`.
+
+What this establishes is the **coherence of the quotient return**. What it does
+not establish is that this quotient is the physically selected closure
+equivalence, or that the entangled sector returns a shared closure. Those remain
+open, and every actual bridge record stays `B-OPEN`.
 
 ## Target
 
@@ -47,8 +66,9 @@ physical equivalence classes, not syntax.
 
 A Lean theorem instantiating `QuotientStrangeLoopTrigger` with the actual tensor
 algebra, using the existing `composite_is_tensor` / `tensorEquiv` results, and
-proving `composite_id_on_quotient`. The theorem must be in the Lean build and its
-axiom footprint recorded if it is to move the bridge beyond `PARTIAL`.
+proving `composite_id_on_quotient`. **This is now done at the quotient level**;
+the physical selection of the equivalence and the entangled-sector return remain
+open. The theorem is not in the 319-anchor baseline.
 
 ## Non-goals
 

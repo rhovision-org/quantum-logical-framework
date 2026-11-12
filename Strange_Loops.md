@@ -216,17 +216,20 @@ shape: a finite class side, a tensor side, a physical equivalence, a forward map
 that respects it, and a return that is the identity on classes. The toy instance
 `toyQuotientTrigger_exists` checks the shape; it is not the tensor theorem.
 
-**Missing theorem target.** Instantiate `QuotientStrangeLoopTrigger` with
+**Quotient theorem, now proved.** `QLF_TensorConservativeReturn` instantiates
+`QuotientStrangeLoopTrigger` with
 
-- `Core` = finite closure classes (not raw words),
-- `Tensor` = `M ⊗[ℂ] M` (or the `N`-body tensor algebra),
-- `forward` = `composite_is_tensor` / `n_composite_is_tensor`,
-- `ret` = the closure-class invariant read from the tensor,
-- `coreEquiv` = physical closure equivalence,
+- `Core` = `ClosureClass`, two-body histories quotiented by equality of the tensor image,
+- `Tensor` = the subtype of `M ⊗[ℂ] M` in the image of `F`,
+- `forward` = `forwardImage`,
+- `ret` = `R`, choosing a class from an image,
+- `coreEquiv` = equality of classes,
 
-and prove `composite_id_on_quotient`. Call the resulting theorem
-`TensorConservativeReturn`. It is **not yet proved** and is not in the 319-anchor
-baseline.
+and proves `tensor_conservative_return` / `tensorTrigger_exists`. `class_of_step`
+shows that interleaving moves land in the same class. This proves the **coherence
+of the quotient return**, not that the quotient is the physically selected
+closure equivalence, and not the entangled-sector return. It is outside the
+319-anchor baseline.
 
 For the entangled sector the hierarchy is:
 
