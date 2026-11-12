@@ -4,7 +4,9 @@
 **Module:** [`lean/QLF_Manifestation.lean`](lean/QLF_Manifestation.lean)
 **Audit anchors:** twelve `QLF.Manifestation.*` entries in
 [`lean/axiom_footprints.expected.json`](lean/axiom_footprints.expected.json)
-(current baseline: 319 anchors).
+(current baseline: 319 anchors). The module also proves
+`closures_at_least_eight_pow`; it is part of the module but is not a separate
+baseline entry.
 **Merged by:** PR #226.
 
 This page is the companion document for the Manifestation module. It says what the
