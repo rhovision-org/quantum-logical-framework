@@ -461,8 +461,10 @@ most `(|k_x| + |k_y| + |k_z|)⁶ · 7/4320`, and `walk_dispersion_quadratic` sho
 with `cos E_pred`, where `E_pred² = k² − (k_x²k_y² + k_y²k_z² + k_z²k_x²)/3`, to within
 `(|k_x| + |k_y| + |k_z|)⁶ / 50`. That is forecast F2 of `QM_Postulates_QLF.md` §5c: subluminal, zero
 along the axes, `ξ = 1/9` on the body diagonal. Momenta are in lattice units and need
-`|k_x| + |k_y| + |k_z| ≤ 1`. Turning the agreement of `cos E` into one of `E` itself uses only that
-`cos` is invertible near `0`, which is not formalized here. -/
+`|k_x| + |k_y| + |k_z| ≤ 1`. `walk_energy_quadratic` then inverts the cosine: with
+`E = arccos (Π cos k_i)`, the branch `0 ≤ E ≤ π`, `E²` agrees with `E_pred²` to within
+`(|k_x| + |k_y| + |k_z|)⁶ / 10`. Choosing that branch, and reading `E` as an energy, are not
+derived here. -/
 
 section QuadraticTerm
 
@@ -613,6 +615,91 @@ theorem walk_dispersion_quadratic (a b c : ℝ) (h : |a| + |b| + |c| ≤ 1) :
     (Real.cos (Real.sqrt u) - (1 - u / 2 + u ^ 2 / 24))
   refine this.trans ((add_le_add (add_le_add hW hgap) hE).trans ?_)
   linarith [pow_nonneg hT0 6]
+
+private theorem abs_sin_ge (y : ℝ) (hy : |y| ≤ Real.pi / 2) : 2 * |y| ≤ |Real.sin y| * Real.pi := by
+  rcases le_total 0 y with h0 | h0
+  · rw [abs_of_nonneg h0] at hy ⊢
+    have := Real.mul_le_sin h0 hy
+    rw [div_mul_eq_mul_div, div_le_iff₀ Real.pi_pos] at this
+    exact this.trans (mul_le_mul_of_nonneg_right (le_abs_self _) Real.pi_pos.le)
+  · rw [abs_of_nonpos h0] at hy ⊢
+    have := Real.mul_le_sin (neg_nonneg.mpr h0) hy
+    rw [Real.sin_neg, div_mul_eq_mul_div, div_le_iff₀ Real.pi_pos] at this
+    exact this.trans (mul_le_mul_of_nonneg_right (neg_le_abs _) Real.pi_pos.le)
+
+/-- Two angles with close cosines have close squares: for `0 ≤ p ≤ π/2` and `0 ≤ q ≤ 1`,
+`|p² − q²| ≤ (π²/2)·|cos p − cos q|`. No division by the angle is needed. -/
+private theorem sq_gap_le_cos_gap (p q : ℝ) (hp0 : 0 ≤ p) (hp : p ≤ Real.pi / 2)
+    (hq0 : 0 ≤ q) (hq : q ≤ 1) :
+    |p ^ 2 - q ^ 2| ≤ Real.pi ^ 2 / 2 * |Real.cos p - Real.cos q| := by
+  have hpi := Real.pi_gt_three
+  have h1 := abs_sin_ge ((p + q) / 2) (by rw [abs_of_nonneg (by linarith)]; linarith)
+  have h2 := abs_sin_ge ((p - q) / 2) (by rw [abs_le]; constructor <;> linarith)
+  have hc : |Real.cos p - Real.cos q| = 2 * (|Real.sin ((p + q) / 2)| * |Real.sin ((p - q) / 2)|) := by
+    rw [Real.cos_sub_cos, abs_mul, abs_mul]; norm_num; ring
+  have hprod := mul_le_mul h1 h2 (by positivity) (by positivity)
+  have hfac : |p ^ 2 - q ^ 2| = 4 * (|(p + q) / 2| * |(p - q) / 2|) := by
+    rw [← abs_mul, show (p + q) / 2 * ((p - q) / 2) = (p ^ 2 - q ^ 2) / 4 by ring, abs_div,
+      abs_of_pos (by norm_num : (0 : ℝ) < 4)]
+    ring
+  rw [hc, hfac]
+  linarith
+
+/-- **F2 at the level of the energy.** With `E = arccos (Π cos k_i)` the walk's quasi-energy on
+the branch `0 ≤ E ≤ π`, `E² = k² − (k_x²k_y² + k_y²k_z² + k_z²k_x²)/3` up to
+`(|k_x| + |k_y| + |k_z|)⁶ / 10`. -/
+theorem walk_energy_quadratic (a b c : ℝ) (h : |a| + |b| + |c| ≤ 1) :
+    |Real.arccos (Real.cos a * Real.cos b * Real.cos c) ^ 2 -
+      ((a ^ 2 + b ^ 2 + c ^ 2) - (a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2) / 3)| ≤
+      (|a| + |b| + |c|) ^ 6 / 10 := by
+  have hD := walk_dispersion_quadratic a b c h
+  have hT0 : 0 ≤ |a| + |b| + |c| := by positivity
+  have hT6 : (|a| + |b| + |c|) ^ 6 ≤ 1 := pow_le_one₀ hT0 h
+  have hrT : a ^ 2 + b ^ 2 + c ^ 2 ≤ (|a| + |b| + |c|) ^ 2 := by
+    have ha := sq_abs a; have hb := sq_abs b; have hc := sq_abs c
+    nlinarith [abs_nonneg a, abs_nonneg b, abs_nonneg c, mul_nonneg (abs_nonneg a) (abs_nonneg b),
+      mul_nonneg (abs_nonneg b) (abs_nonneg c), mul_nonneg (abs_nonneg c) (abs_nonneg a)]
+  have hSr : 3 * (a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2) ≤ (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 := by
+    nlinarith [sq_nonneg (a ^ 2 - b ^ 2), sq_nonneg (b ^ 2 - c ^ 2), sq_nonneg (c ^ 2 - a ^ 2)]
+  have hS0 : 0 ≤ a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2 := by positivity
+  have hr0 : 0 ≤ a ^ 2 + b ^ 2 + c ^ 2 := by positivity
+  have hr1 : a ^ 2 + b ^ 2 + c ^ 2 ≤ 1 := by nlinarith
+  have hPle : |Real.cos a * Real.cos b * Real.cos c| ≤ 1 := by
+    rw [abs_mul, abs_mul]
+    have := Real.abs_cos_le_one a; have := Real.abs_cos_le_one b; have := Real.abs_cos_le_one c
+    calc |Real.cos a| * |Real.cos b| * |Real.cos c| ≤ 1 * 1 * 1 := by gcongr
+      _ = 1 := by norm_num
+  generalize |a| + |b| + |c| = T at h hD hT0 hT6 hrT ⊢
+  generalize a ^ 2 + b ^ 2 + c ^ 2 = r at hD hrT hSr hr0 hr1 ⊢
+  generalize a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2 = S at hD hSr hS0 ⊢
+  generalize Real.cos a * Real.cos b * Real.cos c = P at hD hPle ⊢
+  have hu0 : 0 ≤ r - S / 3 := by nlinarith
+  have hu1 : r - S / 3 ≤ 1 := by linarith
+  generalize r - S / 3 = u at hD hu0 hu1 ⊢
+  have hq0 := Real.sqrt_nonneg u
+  have hq1 : Real.sqrt u ≤ 1 := by
+    calc Real.sqrt u ≤ Real.sqrt 1 := Real.sqrt_le_sqrt hu1
+      _ = 1 := Real.sqrt_one
+  have hsq : Real.sqrt u ^ 2 = u := Real.sq_sqrt hu0
+  -- `cos √u ≥ cos 1 ≥ 43/96`, so `P > 0` and the branch `E ≤ π/2` is the one in play.
+  have hcos1 : (43 : ℝ) / 96 ≤ Real.cos 1 := by
+    have := Real.cos_bound (x := 1) (by norm_num)
+    rw [abs_le] at this; norm_num at this; linarith [this.1]
+  have hcosq : Real.cos 1 ≤ Real.cos (Real.sqrt u) :=
+    Real.cos_le_cos_of_nonneg_of_le_pi hq0 (by linarith [Real.pi_gt_three]) hq1
+  have hP0 : 0 ≤ P := by
+    have := (abs_le.mp hD).1
+    linarith
+  obtain ⟨hPm, hP1⟩ := abs_le.mp hPle
+  have hE := Real.cos_arccos hPm hP1
+  have hgap := sq_gap_le_cos_gap (Real.arccos P) (Real.sqrt u) (Real.arccos_nonneg P)
+    (Real.arccos_le_pi_div_two.mpr hP0) hq0 hq1
+  rw [hE, hsq] at hgap
+  have hpi2 : Real.pi ^ 2 ≤ 10 := by
+    have := Real.pi_lt_d2; have := Real.pi_pos; nlinarith
+  calc |Real.arccos P ^ 2 - u| ≤ Real.pi ^ 2 / 2 * |P - Real.cos (Real.sqrt u)| := hgap
+    _ ≤ 10 / 2 * (T ^ 6 / 50) := by gcongr
+    _ = T ^ 6 / 10 := by ring
 
 end QuadraticTerm
 

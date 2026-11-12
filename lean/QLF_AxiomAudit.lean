@@ -320,6 +320,7 @@ import QLF_Majorana
 #print axioms QLF.ClosureChannels.coinless_twist_step
 #print axioms QLF.ClosureChannels.walk_cos_taylor
 #print axioms QLF.ClosureChannels.walk_dispersion_quadratic
+#print axioms QLF.ClosureChannels.walk_energy_quadratic
 #print axioms QLF.Tsirelson.chsh_sq
 #print axioms QLF.Tsirelson.chsh_classical
 #print axioms QLF.Tsirelson.chsh_tsirelson
