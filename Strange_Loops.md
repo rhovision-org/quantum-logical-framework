@@ -146,7 +146,7 @@ Each claim record also carries a `strange_loop.first_order_evidence` field (`F`,
 
 | Bridge | What must be proved | Current status |
 |---|---|---|
-| **MO2 → Malus `1/8`** | An operational map from the 15 comparable pairs and 24 distributivity failures to the three-polarizer geometry, plus a proof that the induced probability on the image is exactly `1/8` after the map is applied, and that the map conservatively returns the original lattice inequalities. | Toy embedding exists; `QLF_StrangeLoop` proves the shape for a two-element lattice; first-order `F+N` established; operational map still open; G3 `INCOMPLETE`. |
+| **MO2 → Malus `1/8`** | An operational map from the 15 comparable pairs and 24 distributivity failures to the three-polarizer geometry, plus a proof that the induced probability on the image is exactly `1/8` after the map is applied, and that the map conservatively returns the original lattice inequalities. | Toy embedding exists; `QLF_StrangeLoop` proves the interface shape and `QLF_ConservativeReturn` proves the toy count/phase return on a closed twist history; first-order `F+N` established; operational map still open; G3 `INCOMPLETE`. |
 | **Born uniqueness** | That refinement additivity in `QLF_BornFromWays` is itself realized by a ZFA closure on the same Gaussian-integer register the theorem quantifies over — the self-referential return. | Finite uniqueness proved; first-order `F` established; `QLF_StrangeLoopBorn` proves the finite unit-way return; physical refinement still a premise. |
 | **α residual** | A predeclared, scale-independent multiplicity rule whose leading term is forced by the capacity-horizon bifibration self-similarity, with the residual weight `w = 1/2` derived rather than fitted. | First-order `F+N` established; leading `137` structural; multiplicity/return open. |
 | **SPARC RAR** | A blinded, pre-registered prediction of the RAR curve from closure balance alone, on data held out from the original analysis. | First-order `N` established retrospectively; return/prospective test incomplete. |
@@ -155,7 +155,7 @@ Any one of these, if proved under the §6.1 interface, would constitute support.
 
 ### 6.3 Minimal next proofs
 
-1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (no Mathlib, no axioms). It is not yet in the 319-anchor baseline, so the claim record is `PARTIAL`, not `PROVED`.
+1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (generic two-element interface) and strengthened in `QLF_ConservativeReturn.lean`, which maps a formal count/phase object to a net-zero twist history and proves `R ∘ F = id`, closure, and count/phase recovery. Both are no-Mathlib/no-axiom and outside the 319-anchor baseline, so the claim record remains `PARTIAL`, not `PROVED`.
 2. **An instantiation for the Born uniqueness theorem** — **partial**: `QLF_StrangeLoopBorn.lean` proves the finite unit-way return on the existing `QLF_BornFromWays` register; the physical refinement remains open.
 3. **One blinded numerical check** whose protocol is committed before the numbers are looked up — three-polarizer or α residual. The three-polarizer protocol draft is [`verification/strange-loop/blinded_protocol.md`](verification/strange-loop/blinded_protocol.md); it is `AWAITING_DATA`, not executed.
 
@@ -192,6 +192,7 @@ The result is deliberately negative: a pure MO2 meet walk gives `0` (it blocks a
 - `m_p/m_e = 6π⁵`, one-loop `g−2` form, and the other reported entries in Paper I Table 1.
 - Born finite uniqueness on Gaussian integers; no continuum or Gleason continuity step.
 - `QLF_StrangeLoop.lean` — toy two-element conservative-return interface, no Mathlib/no axioms; outside the 319 baseline.
+- `QLF_ConservativeReturn.lean` — toy formal → net-zero twist history return with count/phase recovery; no Mathlib/no axioms; outside the 319 baseline.
 - `QLF_StrangeLoopBorn.lean` — finite unit-way Born return on the existing Gaussian-integer register; outside the 319 baseline; physical refinement still `B-OPEN`.
 - `no_time_loops_from_logic` and `loop_same_facts` for realized histories; loops in the reversible possibility algebra.
 

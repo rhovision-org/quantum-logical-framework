@@ -89,7 +89,7 @@
       "return_map": "detector record -> finite closure count -> MO2 inequality table",
       "composite_identity_on": "the 19 finite MO2 lattice checks / RCA0 fragment",
       "conservative_return_status": "PARTIAL",
-      "proof_artifact": "lean/QLF_StrangeLoop.lean (toy two-element interface; not the operational optical map)",
+      "proof_artifact": "lean/QLF_ConservativeReturn.lean (toy Formal -> ClosedHistory with count/phase recovery; not the optical operational map)",
       "imported_axioms": "Malus cos^2 law, Born trace rule, angle calibration, detector model",
       "falsifier": "A calibrated stack outside the frozen prediction, or a return map that assumes the target 1/8."
     }

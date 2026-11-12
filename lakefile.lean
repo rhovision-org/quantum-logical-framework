@@ -322,5 +322,6 @@ lean_lib QLF where
     `QLF_MetricSinglet, `QLF_LatticeDivergence,
     `QLF_Manifestation,
     `QLF_StrangeLoop,
-    `QLF_StrangeLoopBorn
+    `QLF_StrangeLoopBorn,
+    `QLF_ConservativeReturn
   ]

@@ -18,8 +18,9 @@ Paper I v0.3 leaves the optical, α, SPARC and Born bridges `B-OPEN` / `INCOMPLE
 
 - [`lean/QLF_StrangeLoop.lean`](../../lean/QLF_StrangeLoop.lean) — toy two-element conservative-return interface. Proves `R ∘ F = id`, `F ∘ R = id`, and preservation of order, join, meet and complement. Standalone, no Mathlib, no axioms. It is **not** the optical map.
 - [`lean/QLF_StrangeLoopBorn.lean`](../../lean/QLF_StrangeLoopBorn.lean) — finite unit-way return on the existing `QLF_BornFromWays` Gaussian-integer register. Proves the refinement fibre counts return the formal norm and every admissible `ProbAssignment` returns `bornProb`. It does **not** prove the physical refinement or detector record.
+- [`lean/QLF_ConservativeReturn.lean`](../../lean/QLF_ConservativeReturn.lean) — stronger toy return for the MO2 side: `F : Formal -> ClosedHistory` maps a two-element formal object to a net-zero twist word; `R` reads the phase back; `conservative_return`, `F_closed`, `count_recovered`, `phase_recovered` and `F_invariants` are proved. No Mathlib, no continuum, no axioms; it is still **not** the optical operational map.
 
-Both files build in project CI but are **outside the 319-anchor reviewed baseline**. The claim-record proof status is therefore `PARTIAL`, not `PROVED`; a `TESTED` loop would require a reviewed anchor and a real artifact.
+All three files build in project CI but are **outside the 319-anchor reviewed baseline**. The claim-record proof status is therefore `PARTIAL`, not `PROVED`; a `TESTED` loop would require a reviewed anchor and a real artifact.
 
 ## Run
 
