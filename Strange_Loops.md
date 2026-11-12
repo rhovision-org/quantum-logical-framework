@@ -142,6 +142,8 @@ with:
 
 Each claim record also carries a `strange_loop.first_order_evidence` field (`F`, `N`, `F+N` or `NONE`) and a `first_order_note`, plus a `proof_obligation` object with `domain`, `codomain`, `forward_map`, `return_map`, `composite_identity_on`, `conservative_return_status` (`NOT_STARTED` / `PARTIAL` / `PROVED`), `proof_artifact`, `imported_axioms` and `falsifier`. MO2 and Born are `PARTIAL` with toy Lean artifacts; α and SPARC remain `NOT_STARTED`. A `TESTED` loop requires `PROVED` plus a real artifact.
 
+The trigger shape itself is now a Lean structure, `QLF.ConservativeReturn.StrangeLoopTrigger`, packaged in `lean/QLF_ConservativeReturn.lean`: its fields are the formal core, closed-history type, closure predicate, `F`, `R`, count/phase maps, composite identity, image closure, and count/phase recovery. `toyTrigger_exists` proves the structure is inhabited on the two-element toy, and `no_event_cycle` proves the toy analogue of `no_time_loops_from_logic`: toy events strictly increase history length, so no event chain returns to its start. This is a machine-checked *predicate*, not an instantiation for any Paper I bridge; every actual bridge still has to supply its own maps and remains `B-OPEN`.
+
 ### 6.2 The four concrete obligations
 
 | Bridge | What must be proved | Current status |
