@@ -68,7 +68,7 @@ class ClaimRecordTests(unittest.TestCase):
                  "empirical": {"G0", "G3", "G4", "G5", "G6"}, "bridge": {"G0", "G2", "G3", "G6"}}
         for component, gates in paths.items():
             for gate in gates:
-                for outcome in ("FAIL", "INCONCLUSIVE", "NOT_APPLICABLE"):
+                for outcome in ("FAIL", "INCONCLUSIVE", "INCOMPLETE", "NOT_APPLICABLE"):
                     with self.subTest(component=component, gate=gate, outcome=outcome):
                         bad = self.promoted(component)
                         bad["gate_outcomes"][gate]["status"] = outcome
@@ -295,6 +295,9 @@ class ClaimRecordTests(unittest.TestCase):
         self.rejects(bad)
         bad = copy.deepcopy(self.alpha)
         bad["strange_loop"]["proof_obligation"]["conservative_return_status"] = "DONE"
+        self.rejects(bad)
+        bad = copy.deepcopy(self.alpha)
+        bad["strange_loop"]["first_order_evidence"] = "ESTABLISHED"
         self.rejects(bad)
 
     def test_tested_loop_requires_proved_return_obligation(self) -> None:

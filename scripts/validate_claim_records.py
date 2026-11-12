@@ -22,12 +22,14 @@ CLAIM_FIELDS = {
     "evidence_status", "reviewer_independence", "provenance",
 }
 GATE_NAMES = {f"G{i}" for i in range(7)}
-GATE_STATUSES = {"PASS", "FAIL", "INCONCLUSIVE", "NOT_APPLICABLE"}
+GATE_STATUSES = {"PASS", "FAIL", "INCONCLUSIVE", "INCOMPLETE", "NOT_APPLICABLE"}
 STRANGE_LOOP_FIELDS = {
     "name", "levels", "return_level", "conservative_return",
-    "noncircularity_witness", "status", "defeater", "proof_obligation",
+    "noncircularity_witness", "status", "first_order_evidence",
+    "first_order_note", "defeater", "proof_obligation",
 }
 STRANGE_LOOP_STATUSES = {"B-OPEN", "SPECIFIED", "TESTED"}
+FIRST_ORDER_EVIDENCE = {"F", "N", "F+N", "NONE"}
 PROOF_OBLIGATION_FIELDS = {
     "domain", "codomain", "forward_map", "return_map",
     "composite_identity_on", "conservative_return_status",
@@ -200,11 +202,14 @@ def validate_claim_record(data: dict, path: Path) -> None:
     loop = None
     if "strange_loop" in data:
         loop = _object(data["strange_loop"], f"{path}.strange_loop", STRANGE_LOOP_FIELDS, exact=True)
-        for key in ("name", "return_level", "conservative_return", "noncircularity_witness", "status", "defeater"):
+        for key in ("name", "return_level", "conservative_return", "noncircularity_witness", "status",
+                    "first_order_evidence", "first_order_note", "defeater"):
             _text(loop[key], f"{path}.strange_loop.{key}")
         levels = _texts(loop["levels"], f"{path}.strange_loop.levels")
         _require(len(levels) >= 2, f"{path}: strange_loop requires at least two levels")
         _require(loop["status"] in STRANGE_LOOP_STATUSES, f"{path}: invalid strange_loop status")
+        _require(loop["first_order_evidence"] in FIRST_ORDER_EVIDENCE,
+                 f"{path}: invalid first_order_evidence")
         obligation = _object(
             loop["proof_obligation"], f"{path}.strange_loop.proof_obligation",
             PROOF_OBLIGATION_FIELDS, exact=True,

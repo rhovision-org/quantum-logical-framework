@@ -88,6 +88,8 @@
     "conservative_return": "The algebraic RAR and the a0 identity are formal; the benchmark returns a descriptive residual, not a predeclared prediction.",
     "noncircularity_witness": "Target-informed selection and a self-seal are recorded; no independent chronology or controlled target access is established.",
     "status": "B-OPEN",
+    "first_order_evidence": "N",
+    "first_order_note": "147-galaxy / 2696-point retrospective residual benchmark; first-order numerical result established, no prospective test.",
     "defeater": "A failed independent replication, a reproduced mismatch, or an H0/M-L dependence that removes the result.",
     "proof_obligation": {
       "domain": "closure-balance RAR variables and public SPARC baryonic inputs",
@@ -152,16 +154,16 @@
       "reason": "Algebraic definitions and theorem names are traceable to source; the interpolation-form bridge is identified separately."
     },
     "G3": {
-      "status": "INCONCLUSIVE",
-      "reason": "The RAR interpolation form is not unique, and the closure-balance-to-observed-acceleration map is not proved noncircular."
+      "status": "INCOMPLETE",
+      "reason": "The closure-balance-to-observed-acceleration map and interpolation uniqueness are incomplete."
     },
     "G4": {
       "status": "PASS",
       "reason": "Frozen-source pipeline reproduces the CSV byte-for-byte, seal, 147 galaxies/2696 points and all four descriptive residual summaries; not historical blinding."
     },
     "G5": {
-      "status": "INCONCLUSIVE",
-      "reason": "The SPARC analysis is retrospective and self-sealed; no prospective or independently replicated observation."
+      "status": "INCOMPLETE",
+      "reason": "The benchmark is retrospective; no independent prospective replication, so the empirical gate is incomplete."
     },
     "G6": {
       "status": "PASS",

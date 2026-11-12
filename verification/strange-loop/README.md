@@ -10,7 +10,7 @@
 
 ## What it asks
 
-Paper I v0.3 leaves the optical, α, SPARC and Born bridges `B-OPEN`. The strange-loop reading asks what finite record a claimed loop returns to. This toy asks the narrow optical question:
+Paper I v0.3 leaves the optical, α, SPARC and Born bridges `B-OPEN` / `INCOMPLETE`: their first-order `F`/`N` results stand, but the operational/return map is missing. The strange-loop reading asks what finite record a claimed loop returns to. This toy asks the narrow optical question:
 
 > Does a pure MO2 closure walk reproduce the three-polarizer `1/8`, or does the operational re-preparation/probability map do the work?
 
@@ -40,7 +40,7 @@ python3 -m unittest discover -s tests -p 'test_strange_loop_observer.py' -v
 | Blanket integrating first two stages only | **0.25** | the third stage is outside the observer's blanket |
 | Self-screen fixed point | **true** | toy idempotence only; not a physical bridge |
 
-**Conclusion:** the pure MO2 meet does **not** produce `1/8`; it produces `0`. A re-preparation walk produces `1/8` only under uniform or Malus-supplied weights, and different weights with the same lattice pattern produce different transmissions. The lattice alone is underdetermined; the operational map is the missing premise. That is why `claim_records/three_polarizer.json` keeps `bridge: OPEN` and `strange_loop.status: B-OPEN`.
+**Conclusion:** the pure MO2 meet does **not** produce `1/8`; it produces `0`. A re-preparation walk produces `1/8` only under uniform or Malus-supplied weights, and different weights with the same lattice pattern produce different transmissions. The lattice alone is underdetermined; the operational map is the missing premise. That is why `claim_records/three_polarizer.json` keeps `bridge: OPEN`, `strange_loop.status: B-OPEN`, and `G3: INCOMPLETE`.
 
 ## Scope
 

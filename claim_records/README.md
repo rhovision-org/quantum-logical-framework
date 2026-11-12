@@ -32,7 +32,8 @@ separately records whether any protocol was completed.
 
 Claims may also carry a `strange_loop` object: a name, at least two typed
 levels, a `return_level`, a `conservative_return` statement, a
-`noncircularity_witness`, a status (`B-OPEN`, `SPECIFIED` or `TESTED`) and a
+`noncircularity_witness`, a status (`B-OPEN`, `SPECIFIED` or `TESTED`),
+`first_order_evidence` (`F`, `N`, `F+N` or `NONE`), a `first_order_note`, and a
 defeater. The loop is a review shape, not a new evidence type. A record cannot
 mark `bridge: CLOSED` unless its loop is `TESTED`; otherwise the bridge stays
 `B-OPEN`.
@@ -46,8 +47,8 @@ return and a real artifact; a `bridge: CLOSED` record requires a `TESTED` loop.
 
 ## Component promotion policy
 
-All listed gates must be PASS; FAIL, INCONCLUSIVE and NOT_APPLICABLE cannot bypass
-a mandatory gate. Components have separate statuses: verifying a finite theorem
+All listed gates must be PASS; FAIL, INCONCLUSIVE, INCOMPLETE and
+NOT_APPLICABLE cannot bypass a mandatory gate. Components have separate statuses: verifying a finite theorem
 does not promote its physical identification.
 
 | Promoted component | Mandatory gates | Additional condition |
@@ -58,7 +59,19 @@ does not promote its physical identification.
 | Empirical ESTABLISHED | G0, G3, G4, G5, G6 | Closed bridge and empirical receipt; completed prospective comparison, or independently replicated blind analysis at independent reviewer tier |
 
 A retrospective reproduction or retrodiction cannot become empirical evidence
-merely by flipping G3/G5 to PASS. Reviewer tiers are `self`, `collaborator` and
+merely by flipping G3/G5 to PASS.
+
+## Gate terminology
+
+- `INCOMPLETE` — the first-order `F`/`N` result stands, but the required map,
+  conservative return or prospective test has not been constructed.
+- `INCONCLUSIVE` — a comparator exists but its result is ambiguous or fails to
+  discriminate. Reserve this for that case, not for a missing bridge.
+- `B-OPEN` remains the bridge status; a `bridge: CLOSED` record requires
+  `TESTED` and a `PROVED` conservative return.
+
+The four bridge records currently read "first-order `F+N` / `N` / `F` established;
+return incomplete", not "nothing established". Reviewer tiers are `self`, `collaborator` and
 `independent`. A self-run record cannot mark G6 PASS. G6 is relative to the declared receipt scope/tier: a collaborator
 computational receipt is not an independent physical replication. Receipts name
 the reviewer, audited source revision, evidence scopes and digest-addressed

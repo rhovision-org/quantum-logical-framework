@@ -37,6 +37,8 @@ For each bridge, record:
 
 A bridge with no such return is not a closed loop, however suggestive the numerical agreement. The four Paper I bridge records (`three_polarizer.json`, `alpha.json`, `sparc_rar.json`, `born_rule.json`) carry a `strange_loop` object plus a `proof_obligation` with domain, codomain, forward/return maps, composite identity, conservative-return status, imported axioms and falsifier. All four loops are `B-OPEN`; MO2 and Born are `PARTIAL` with the toy Lean artifacts `QLF_StrangeLoop` and `QLF_StrangeLoopBorn`, while α and SPARC remain `NOT_STARTED`. A `TESTED` loop requires a `PROVED` return plus a real artifact; a `bridge: CLOSED` record requires a `TESTED` loop.
 
+**Incomplete vs inconclusive.** `INCOMPLETE` describes a bridge whose first-order `F`/`N` result and comparator stand, but whose operational map or conservative return has not been constructed. `INCONCLUSIVE` is reserved for a comparator that exists but is ambiguous or fails to discriminate. Thus the four bridge records read “first-order `F+N` / `N` / `F` established; return incomplete,” not “nothing established.” The G3 gate is `INCOMPLETE`, not `INCONCLUSIVE`; the `B-OPEN` label is unchanged.
+
 ## Evidence categories
 
 - **Kernel-proved:** the exact theorem and its axiom dependencies are recorded.
@@ -54,7 +56,8 @@ A bridge with no such return is not a closed loop, however suggestive the numeri
 3. Identify the missing map from substrate quantities to the lab observable.
 4. State the two-phase / strange-loop structure: the finite record to which it
    returns and why that return is conservative. If no return is exhibited, mark
-   the bridge `B-OPEN`.
+   the bridge `B-OPEN` / `INCOMPLETE`; reserve `INCONCLUSIVE` for an ambiguous
+   comparator.
 5. Record at least one counterexample or failure condition and a baseline
    from conventional physics.
 6. Reject promotion from conditional to derived unless the bridge itself

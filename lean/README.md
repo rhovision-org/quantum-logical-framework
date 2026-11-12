@@ -18,6 +18,15 @@ The entire combinatorial core operates strictly within **RCA₀** — the minimu
 
 ---
 
+## Bridge status terminology
+
+`INCOMPLETE` means a first-order `F`/`N` result and its comparator stand, but the
+operational map or conservative return has not been constructed. `INCONCLUSIVE`
+is reserved for a comparator that exists but is ambiguous or fails to discriminate.
+The strange-loop bridge records therefore read "first-order `F+N` / `N` / `F`
+established; return incomplete"; `bridge: CLOSED` still requires `TESTED` and a
+`PROVED` conservative return.
+
 ## Active Modules
 
 ### Core ZFA Combinatorics

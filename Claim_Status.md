@@ -6,14 +6,14 @@ The numerical agreements below are as reported by QLF. The claim records in `cla
 
 | Claim | QLF result | Approximation / regime | Comparator | Reported agreement | Inputs | Bridge status | Evidence status |
 |---|---|---|---|---|---|---|---|
-| Fine-structure α | α⁻¹ = 137 leading; formal comparator-residual band `(1/64, 0.04814)`; reported structural 137.032 | Leading + structural; residual running not derived | CODATA | 0.026% (reported) | 8-twist count (derived); w = ½ (declared/structural); CODATA (external) | `B-OPEN`: count → renormalized coupling at a scale | Audited finite identities; `N` for leading arithmetic; physical bridge open |
+| Fine-structure α | α⁻¹ = 137 leading; formal comparator-residual band `(1/64, 0.04814)`; reported structural 137.032 | Leading + structural; residual running not derived | CODATA | 0.026% (reported) | 8-twist count (derived); w = ½ (declared/structural); CODATA (external) | `B-OPEN` / incomplete: first-order `F+N` established; count-to-coupling return incomplete | Audited finite identities; `N` for leading arithmetic; physical bridge open |
 | m_p/m_e | 6π⁵ | Structural; no QCD derivation | PDG | 0.002% (reported) | 3-quark/5-angle structure (declared/structural); PDG (external) | `B-OPEN` | Audited defined Lenz identity; reported numerical comparison |
 | Electron anomaly `a_e = (g_e − 2)/2` | `alpha_QLF/(2π) = 1/(274π)`; `g_e − 2 = alpha_QLF/π` at one loop | One-loop Schwinger form; higher orders omitted | Reported electron anomaly | 0.18% (reported for model α = 1/137) | `alpha_QLF` derived within the model; measured anomaly external | `B-OPEN`: model coupling → measured coupling; algebraic form agrees with QED | Numerical consistency; no independent QLF confirmation |
 | Ω_Λ | log 2 ≈ 0.693, reported late-epoch match | Observed numerical match; physical derivation open | Planck | 1.2% (reported) | Observed fraction external; H₀ calibrates the dimensionful cosmological sector, not log 2 itself | `B-OPEN`: count → physical dark-energy fraction | Reported numerical consistency; not a derived cosmological fraction |
-| SPARC/RAR | a₀ = cH₀/2π; g² = g_bar(g + a₀); 0.1327 dex, mean −0.0002 dex | Non-relativistic equilibrium; canonical M/L; local H₀ | SPARC | 0.133 dex, mean −0.0002 dex (reported) | H₀ (declared); M/L (external); SPARC (external); a₀ (derived) | `B` for interpolation form; a₀ derived within model | `N` consistency benchmark; empirical support not established |
+| SPARC/RAR | a₀ = cH₀/2π; g² = g_bar(g + a₀); 0.1327 dex, mean −0.0002 dex | Non-relativistic equilibrium; canonical M/L; local H₀ | SPARC | 0.133 dex, mean −0.0002 dex (reported) | H₀ (declared); M/L (external); SPARC (external); a₀ (derived) | `B-OPEN` / incomplete: first-order `N` established; interpolation/return incomplete | `N` consistency benchmark; empirical support not established |
 | Mercury perihelion | 42.99″/century | Weak-field; standard GR inputs | Ephemeris | 0.03% (reported) | M_☉, a, e, T (external) | `B`: holographic count → GR potential | `N` (consistency) |
 | α cannot drift | Continuity plus membership in the discrete structural value set implies constancy | Conditional mathematical null; measured-coupling identification open | A future specified clock comparison | Pending | Measured-coupling/residual map not supplied | `B-OPEN`: structural α → measured α | proposed null test; registration incomplete |
-| Born-rule characterization | `ProbAssignment` satisfying the stated symmetry/refinement conditions equals `bornProb` | Finite Gaussian-integer amplitude registers; interface assumptions explicit | Quantum probabilities | Structural; no detector experiment | Unit-way counts plus declared assignment rules | `B-OPEN`: physical realization of the assignment rules | Existing footprint coverage for `born_from_ways`/`assignment_unique`; no empirical promotion |
+| Born-rule characterization | `ProbAssignment` satisfying the stated symmetry/refinement conditions equals `bornProb` | Finite Gaussian-integer amplitude registers; interface assumptions explicit | Quantum probabilities | Structural; no detector experiment | Unit-way counts plus declared assignment rules | `B-OPEN` / incomplete: first-order `F` established; physical refinement/return incomplete | Existing footprint coverage for `born_from_ways`/`assignment_unique`; no empirical promotion |
 
 ## Status vocabulary
 
@@ -23,18 +23,20 @@ The numerical agreements below are as reported by QLF. The claim records in `cla
 - `B` / `B-OPEN` — interpretation depends on an explicit bridge; `OPEN` means the bridge is not yet specified/proved.
 - `E` / `E-candidate` — empirical comparison; `candidate` means retrospective/self-sealed or not independently replicated.
 
+**Incomplete vs inconclusive.** `INCOMPLETE` is the right label when the first-order `F`/`N` result and its comparator stand, but the operational map or conservative return has not been constructed. `INCONCLUSIVE` is reserved for a comparator that exists but is ambiguous or fails to discriminate. “First-order established” is therefore not an empty result and not a closed bridge.
+
 ## Strange-loop / two-phase bridge shape
 
 A strange loop is a level-crossing self-reference that returns to its starting level. In the claim ledger it is a **review shape**, not a new evidence type: every bridge candidate must name its levels and the finite record to which it returns, or remain `B-OPEN`. The conceptual note is [`Strange_Loops.md`](Strange_Loops.md); the validator enforces the fields and the `TESTED`-for-`CLOSED` rule.
 
 | Claim | Loop levels | Conservative return | Status |
 |---|---|---|---|
-| MO2 → optical apparatus | MO2 lattice → toy `ℂ²` embedding → ideal polarizer → detector | finite MO2 count/detector record; the `1/8` is imported Malus/Born, not derived | `B-OPEN`; G3 inconclusive |
-| α count → coupling | 8-twist census → residual multiplicity → coupling at scale → CODATA | leading `137` and formal band `(1/64, 0.04814)`; `137.032` reported, scale map not proved | `B-OPEN` |
-| SPARC RAR | public data → closure-balance RAR → `a₀ = cH₀/(2π)` → residual | retrospective residual summary only; no predeclared prediction | `N`; G5 open |
-| Born uniqueness | Gaussian-integer register → unit-way refinement → ZFA closure → outcome | finite unit-way count; physical refinement is a premise | `F` formal; `B-OPEN` |
+| MO2 → optical apparatus | MO2 lattice → toy `ℂ²` embedding → ideal polarizer → detector | finite MO2 count/detector record; the `1/8` is imported Malus/Born, not derived | `B-OPEN` / incomplete: first-order `F+N` established; return incomplete |
+| α count → coupling | 8-twist census → residual multiplicity → coupling at scale → CODATA | leading `137` and formal band `(1/64, 0.04814)`; `137.032` reported, scale map not proved | `B-OPEN` / incomplete: first-order `F+N` established; return incomplete |
+| SPARC RAR | public data → closure-balance RAR → `a₀ = cH₀/(2π)` → residual | retrospective residual summary only; no predeclared prediction | `B-OPEN` / incomplete: first-order `N` established; return incomplete |
+| Born uniqueness | Gaussian-integer register → unit-way refinement → ZFA closure → outcome | finite unit-way count; physical refinement is a premise | `B-OPEN` / incomplete: first-order `F` established; return incomplete |
 
-The four corresponding JSON records carry a `strange_loop` object with `name`, `levels`, `return_level`, `conservative_return`, `noncircularity_witness`, `status` and `defeater`, plus a `proof_obligation` naming the domain, codomain, forward/return maps, composite identity, conservative-return status, imported axioms and falsifier. MO2 and Born are `PARTIAL` with the toy Lean artifacts `QLF_StrangeLoop` and `QLF_StrangeLoopBorn`; α and SPARC remain `NOT_STARTED`. A `TESTED` loop requires `PROVED` plus a real artifact, and a `bridge: CLOSED` record requires a `TESTED` loop.
+The four corresponding JSON records carry a `strange_loop` object with `name`, `levels`, `return_level`, `conservative_return`, `noncircularity_witness`, `status`, `first_order_evidence` (`F`, `N`, `F+N` or `NONE`), `first_order_note` and `defeater`, plus a `proof_obligation` naming the domain, codomain, forward/return maps, composite identity, conservative-return status, imported axioms and falsifier. MO2 and Born are `PARTIAL` with the toy Lean artifacts `QLF_StrangeLoop` and `QLF_StrangeLoopBorn`; α and SPARC remain `NOT_STARTED`. A `TESTED` loop requires `PROVED` plus a real artifact, and a `bridge: CLOSED` record requires a `TESTED` loop.
 
 ## Claim records
 
