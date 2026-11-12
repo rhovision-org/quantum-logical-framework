@@ -43,6 +43,12 @@ The four corresponding JSON records carry a `strange_loop` object with `name`, `
 `E-candidate` with kill conditions. `TensorConservativeReturn` is a worked conservative-return form for one
 conventional construction; it does not close the interpretive claim. See [issue #213](https://github.com/rhovision-org/quantum-logical-framework/issues/213).
 
+**Issue #11 (“not even wrong”).** This remains open. PR #230 does not add a new empirical prediction; it
+makes the missing operational bridge explicit and keeps first-order `F`/`N` results from being promoted to
+`E`. SPARC remains a retrospective benchmark; α remains `N`/`B-OPEN`; the kill-condition ledger records the
+nulls that could fail.
+
+
 ## Claim records
 
 - `claim_records/alpha.json` — α claim record (draft).

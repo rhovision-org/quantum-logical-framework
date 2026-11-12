@@ -309,6 +309,8 @@ This is the cross-cutting evidence layer. It does not add a thirteenth domain; i
 
 **Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) · [`Strange_Loops.md`](Strange_Loops.md) · [`verification/strange-loop/`](verification/strange-loop/README.md) · [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py).
 
+**Issue #11 boundary:** this layer does not claim a new empirical prediction. It specifies the missing operational return and keeps first-order `F`/`N` results from being promoted to `E`; issue #11 remains open until a prediction or derivation is actually tested.
+
 **The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 343-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge with a first-order `F`/`N` result but no conservative return is `B-OPEN` / `INCOMPLETE`; reserve `INCONCLUSIVE` for a comparator that is ambiguous or fails to discriminate. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
 
 ---

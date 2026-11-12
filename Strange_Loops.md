@@ -345,6 +345,23 @@ construction. It does **not** close “map is the territory”: the physically s
 entangled-sector return, and the formal-to-event map remain open. It supplies the form such a bridge must take,
 under the same non-circularity and no-time-loop constraints as the rest of this note.
 
+### 9.2 Issue #11: “not even wrong”
+
+[Issue #11](https://github.com/rhovision-org/quantum-logical-framework/issues/11) asks for at least one of:
+a new prediction, a derivation from fewer assumptions, or a concrete resolution of a known problem. It is the
+founding empirical critique, and this PR does **not** close it.
+
+What the conservative-return work changes is the *method*: it makes the missing operational map explicit,
+prevents a first-order `F`/`N` result from being promoted to a physical claim, and forces every proposed bridge
+to state its domain, codomain, return and falsifier. The α and SPARC records remain `N`/`B-OPEN`; SPARC is a
+retrospective public-data benchmark, not a prospective blind test. The kill-condition ledger records the nulls
+that could fail. A future claim earns physical content only when it changes a count of ways and survives an
+independent or prospective comparator—not when it is restated in QLF vocabulary.
+
+So #11 remains open until a prediction or operational derivation is actually tested. The correct PR claim is
+narrower: **the method now specifies what such a test would have to return.**
+
+
 
 ---
 
