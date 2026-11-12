@@ -31,7 +31,8 @@
   "MG": "Magic_numbers.md",
   "MP": "Proton_Resonance_R_e.md",
   "MPI": "Pion_QLF.md",
-  "S2": "Proton_Resonance_R_e.md"
+  "S2": "Proton_Resonance_R_e.md",
+  "AB": "Claim_Status.md"
  },
  {
   "H3": "#master-map--the-substrate-and-its-ten-domains",
@@ -71,7 +72,9 @@
   "DM": "DarkMatter.md",
   "DE": "DarkMatter.md",
   "AGE": "AgeOfUniverse.md",
-  "NS": "Fusion.md"
+  "NS": "Fusion.md",
+  "SP": "SPARC.md",
+  "SD": "Claim_Status.md"
  },
  {
   "H7": "#master-map--the-substrate-and-its-ten-domains",
@@ -95,7 +98,11 @@
   "LQ": "LQG_QLF.md",
   "ST": "StringTheory.md",
   "SU": "SUSY_QLF.md",
-  "PL": "Planck_Scale.md"
+  "PL": "Planck_Scale.md",
+  "MSM": "Einstein_Equations.md",
+  "MNF": "Manifestation.md",
+  "TOE": "Theory_Of_Everything.md",
+  "CST": "Claim_Status.md"
  },
  {
   "H9": "#master-map--the-substrate-and-its-ten-domains",
@@ -142,5 +149,25 @@
   "RUN": "lean/QLF_VacuumPolarizationTower.lean",
   "KR": "lean/QLF_KraftMeasure.lean",
   "DYS": "TheContinuum.md"
+ },
+ {
+  "MTH": "Paper_I_v0.3_Handoff.md",
+  "F": "Proof_Trust.md",
+  "N": "verification/paper-i-v0.3/README.md",
+  "B": "Proof_to_Physics.md",
+  "E": "ScientificApproach.md",
+  "G1": "Proof_Trust.md",
+  "G3": "Proof_to_Physics.md",
+  "G5": "ScientificApproach.md",
+  "DEF": "Claim_Status.md",
+  "MO2": "Quantum_Logic_Foundations.md",
+  "TP": "Three_Polarizer_Paradox.md",
+  "AL": "Alpha.md",
+  "SP": "SPARC.md",
+  "MSM": "Einstein_Equations.md",
+  "MNF": "Manifestation.md",
+  "TOE": "Theory_Of_Everything.md",
+  "PAPER": "Paper_I_v0.3_Handoff.md",
+  "GIST": "https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1"
  }
 ]

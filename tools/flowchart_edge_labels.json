@@ -131,7 +131,8 @@
    "RG>RUN": "Q(R) = Q0 2^R",
    "PT>KR": "prefix-free code",
    "KR>DYS": "no mode continuum"
-  }
+  },
+  {}
  ],
  "master_domain_verbs": {
   "1": "renders",
