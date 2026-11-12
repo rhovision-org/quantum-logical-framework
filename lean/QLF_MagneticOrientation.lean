@@ -1251,4 +1251,70 @@ theorem plane_walls_lose (x : ℝ) (hx : 0 ≤ x) (h12 : x ≤ 1 / 12) :
   rw [div_lt_iff₀ hpos]
   nlinarith
 
+-- ==========================================
+-- §17  The magnon as a wave
+-- ==========================================
+
+/-! §12 counts one magnon's `n` placements. Neighbour exchange (§15) moves the flipped unit one
+place left or right, so the placements are not separate states: exchange acts on an amplitude `ψ`
+over them as `(Hψ)(j) = 2ψ(j) − ψ(j+1) − ψ(j−1)`, the cost of the two walls a flip makes less what
+hopping returns. Its modes are the phase waves `ψ(j) = e^{ikj}`, with energy `2 − 2cos k`. On a ring
+of `n` units the allowed `k` are `2πm/n`, so there are `n` waves for the `n` placements: the same
+count in another basis. The uniform wave `k = 0` costs nothing (turning every unit together is
+free), and for long waves the energy is at most `k²`, the quadratic magnon dispersion. That the
+coefficient is the exchange coupling `J`, and Bloch's `T^{3/2}` law that follows in three
+dimensions, are not derived here. -/
+
+/-- A phase wave of wavenumber `k` across the placements. -/
+noncomputable def phaseWave (k : ℝ) (j : ℤ) : ℂ := Complex.exp (Complex.I * k * j)
+
+/-- Neighbour exchange acting on an amplitude over placements. -/
+def exchangeOp (ψ : ℤ → ℂ) (j : ℤ) : ℂ := 2 * ψ j - ψ (j + 1) - ψ (j - 1)
+
+/-- **A phase wave is a mode of neighbour exchange, with energy `2 − 2cos k`.** -/
+theorem magnon_mode (k : ℝ) (j : ℤ) :
+    exchangeOp (phaseWave k) j = (2 - 2 * Real.cos k : ℝ) * phaseWave k j := by
+  unfold exchangeOp phaseWave
+  have h1 : Complex.exp (Complex.I * k * ((j + 1 : ℤ) : ℂ)) =
+      Complex.exp (Complex.I * k * j) * Complex.exp (Complex.I * k) := by
+    rw [← Complex.exp_add]; congr 1; push_cast; ring
+  have h2 : Complex.exp (Complex.I * k * ((j - 1 : ℤ) : ℂ)) =
+      Complex.exp (Complex.I * k * j) * Complex.exp (-(Complex.I * k)) := by
+    rw [← Complex.exp_add]; congr 1; push_cast; ring
+  have hc : Complex.exp (Complex.I * k) + Complex.exp (-(Complex.I * k)) = 2 * Complex.cos k := by
+    rw [Complex.two_cos]; congr 2 <;> ring
+  rw [h1, h2]
+  push_cast
+  linear_combination (-Complex.exp (Complex.I * k * j)) * hc
+
+/-- **On a ring of `n` units the allowed waves are `k = 2πm/n`.** -/
+theorem magnon_ring (n : ℕ) (hn : 0 < n) (m j : ℤ) :
+    phaseWave (2 * Real.pi * m / n) (j + n) = phaseWave (2 * Real.pi * m / n) j := by
+  unfold phaseWave
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  have : Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ) * ((j + n : ℤ) : ℂ) =
+      Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ) * j + m * (2 * Real.pi * Complex.I) := by
+    push_cast; field_simp
+  rw [this, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+
+/-- **Only `n` waves are distinct**: `m` and `m + n` give the same wave on every placement. -/
+theorem magnon_ring_modes (n : ℕ) (hn : 0 < n) (m j : ℤ) :
+    phaseWave (2 * Real.pi * (m + n : ℤ) / n) j = phaseWave (2 * Real.pi * m / n) j := by
+  unfold phaseWave
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  have : Complex.I * ((2 * Real.pi * ((m + n : ℤ) : ℝ) / n : ℝ) : ℂ) * (j : ℂ) =
+      Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ) * j + j * (2 * Real.pi * Complex.I) := by
+    push_cast; field_simp
+  rw [this, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+
+/-- **The uniform wave costs nothing**: turning every unit together is free. -/
+theorem magnon_zero_mode : (2 - 2 * Real.cos 0 : ℝ) = 0 := by simp
+
+/-- **Magnon energy is never negative and at most `k²`**: the quadratic dispersion. -/
+theorem magnon_dispersion (k : ℝ) :
+    0 ≤ 2 - 2 * Real.cos k ∧ 2 - 2 * Real.cos k ≤ k ^ 2 := by
+  constructor
+  · have := Real.cos_le_one k; linarith
+  · have := Real.one_sub_sq_div_two_le_cos (x := k); linarith
+
 end QLF.MagneticOrientation
