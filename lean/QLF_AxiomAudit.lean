@@ -105,6 +105,8 @@ import QLF_HolographicBoundary
 import QLF_HolographicArea
 import QLF_PlaquetteArea
 import QLF_LocalAreaLaw
+import QLF_MetricSinglet
+import QLF_LatticeDivergence
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -475,6 +477,12 @@ import QLF_Majorana
 #print axioms QLF.PlaquetteArea.holonomy_eq_projected_areas
 #print axioms QLF.PlaquetteArea.fold_eq_projected_phase
 #print axioms QLF.LocalAreaLaw.local_area_law
+#print axioms QLF.MetricSinglet.metric_is_singlet
+#print axioms QLF.MetricSinglet.expect_twoBody
+#print axioms QLF.MetricSinglet.product_annihilator_iff_singlet
+#print axioms QLF.LatticeDivergence.latticeCalculus
+#print axioms QLF.LatticeDivergence.lattice_einstein_field_equations
+
 
 /-! ## Paper I v0.3 — MO2 / QuantumLogic G1 anchors
 

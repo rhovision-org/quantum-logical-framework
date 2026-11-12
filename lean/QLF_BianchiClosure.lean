@@ -49,8 +49,8 @@ constant — the one QLF fixes independently as `Ω_Λ = log 2` (`QLF_Cosmologic
 ## Honest scope
 
 Two things this does *not* do. It does not construct the calculus — `DivergenceCalculus` is an
-interface, and until an instance exists the field equations here are conditional on it (the
-signature says so). And it does not touch the **first** arrow: getting `S_ab k^a k^b = 0` from
+interface, and the field equations here are conditional on it (the signature says so). Instances are
+built in `QLF_LatticeCalculus` (on `ℤ`) and `QLF_LatticeDivergence` (on `ℤ⁴`, Minkowski signature). And it does not touch the **first** arrow: getting `S_ab k^a k^b = 0` from
 `δQ = T δS` needs the local Rindler construction and Raychaudhuri focusing, still open
 (`QLF_EinsteinEquations.einstein_equations_in_progress`). What changes is the shape of what remains:
 with arrows two and three closed, the full field equations reduce to **one** substrate question

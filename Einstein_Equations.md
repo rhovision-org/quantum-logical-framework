@@ -316,9 +316,62 @@ and a future construction (Mathlib connections, or a substrate difference calcul
 *building* an instance rather than by deleting an axiom. The two physics inputs, contracted Bianchi and
 conservation, are likewise explicit hypotheses of the main theorem.
 
-**What this leaves.** One arrow: `δQ = T δS ⟹ (R_ab − κ T_ab) k^a k^b = 0`, needing the local Rindler
+**What this leaves.** The interface is now inhabited, first in one dimension
+([`QLF_LatticeCalculus`](lean/QLF_LatticeCalculus.lean)) and then on the full `ℤ⁴` lattice with the
+Minkowski signature (§6e). One arrow remains: `δQ = T δS ⟹ (R_ab − κ T_ab) k^a k^b = 0`, needing the local Rindler
 construction and Raychaudhuri focusing. That is now the *single* remaining substrate question for the
 field equations, rather than "the tensor derivation" as a whole.
+
+## §6d The middle arrow in two-body language: the metric is the singlet
+
+[`QLF_MetricSinglet`](lean/QLF_MetricSinglet.lean) (no axioms) gives `SymTensor4` a substrate reading.
+A `Form` is a 2×2 Hermitian matrix `t·I + x·σx + y·σy + z·σz`, so a rank-2 tensor `S_ab` is the
+two-body observable `Ŝ = Σ S_ab σ_a ⊗ σ_b` on `ℂ² ⊗ ℂ²`, the space whose joint algebra
+[`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean) derives (`M ⊗ M ≅ Mat₄`). Then:
+
+* **The metric is the singlet** (`metric_is_singlet`): `Σ η_ab σ_a ⊗ σ_b = 4|s⟩⟨s|`, invariant
+  under every `SL(2,ℂ)` transform `A ⊗ A`.
+* **A null vector is a pure state** (`kForm_null`, `expect_twoBody`): a qubit `ψ` gives the null
+  vector `k^a = ⟨ψ|σ_a|ψ⟩/2`, and `⟨ψψ|Ŝ|ψψ⟩ = 4 S_ab k^a k^b`.
+* **The null-cone step is singlet uniqueness** (`product_annihilator_iff_singlet`): `Ŝ` vanishes on
+  every product state `ψ ⊗ ψ` exactly when it is a multiple of the singlet projector. The nine
+  integer probes of §6b are nine product states with Gaussian-integer amplitudes, e.g.
+  `(5,3,4,0) = k(1+2i, −1+2i)`.
+
+This is the shape of rung 6 of entanglement primacy (`split_strong_iff_singlet`: the singlet is the
+unique state every shared strong pair fixes). Read together, the metric is the shared pair and the
+null directions are the unshared product states. **Scope:** this changes the *reading* of the middle
+arrow, not the count of open arrows. The first arrow (local Rindler + Raychaudhuri) remains open
+(an instance of `DivergenceCalculus` is now built, §6e), and that `R_ab − κT_ab` is a two-body observable is a reading of the
+proven isomorphism, not a derivation of curvature.
+
+## §6e The calculus, built: forward differences on the substrate lattice
+
+The interface was first inhabited by [`QLF_LatticeCalculus`](lean/QLF_LatticeCalculus.lean): a
+forward-difference calculus on `ℤ` with one live direction. That settles consistency (the field-equation
+theorems are not vacuous) but, as its own docstring says, not the Lorentzian geometry, since the
+`x, y, z` directions are inert. [`QLF_LatticeDivergence`](lean/QLF_LatticeDivergence.lean) (no axioms)
+takes that step. It builds the instance on `ℤ⁴`, the lattice the closure walk lives on, where the eight twists are the steps `±e_a`
+([`Closure_Walk.md`](Closure_Walk.md)). The gradient is the forward difference
+`∂_b f = f(p + e_b) − f(p)` and the divergence is `∇^a A_ab = Σ_a η^aa (A_ab(p + e_a) − A_ab(p))`.
+
+* **Metric compatibility** (`ldiv_metricMultiple`) holds exactly, because `η^aa η_ab = δ_ab`: the
+  divergence of `f g_ab` is the single difference `Δ_b f`.
+* **Connectedness** (`const_of_differences_zero`) holds because every site is reached from the origin
+  by axis steps, so a field with all four differences zero is constant.
+* So `einstein_field_equations` runs on the lattice with the calculus discharged
+  (`lattice_einstein_field_equations`), and `Λ` is **one constant for every site**.
+
+**R6a first.** The interface is also satisfied on a single point with `div = 0` and `grad = 0`
+(`unit_calculus`), so the existence of an instance is no evidence by itself. What the `ℤ⁴` instance adds
+over the `ℤ` one is that all four directions are live and the divergence contracts with the
+`(+,−,−,−)` signature, so metric compatibility uses the Minkowski metric rather than one component of
+it; and that lattice connectedness in four directions is what makes `Λ` one constant everywhere.
+
+**Scope.** The discrete contracted Bianchi identity and discrete conservation remain hypotheses.
+Forward differences obey no exact Leibniz rule, so a lattice Ricci tensor need not satisfy
+`∇^a R_ab = ½ ∂_b R` exactly; whether the substrate's curvature (§6a) does is not settled here. The
+first arrow is untouched.
 
 ---
 
@@ -335,7 +388,9 @@ annihilating the null cone is a metric multiple, forced by **nine integer lattic
 continuum of null directions ([`QLF_NullTensorReconstruction`](lean/QLF_NullTensorReconstruction.lean)).
 The arrow *out* of it is closed too (§6c): contracted Bianchi plus conservation force `f = R/2 − Λ`
 with `Λ` constant, giving `G_ab + Λ g_ab = κ T_ab` — and with **zero new axioms**, the calculus being an
-interface (`DivergenceCalculus`) discharged by construction rather than posited. What is left is the
+interface (`DivergenceCalculus`) discharged by construction rather than posited, and now constructed on
+the substrate lattice `ℤ⁴` (§6e). The middle arrow also has a two-body reading: the metric is the
+singlet and the null directions are product states (§6d). What is left is the
 arrow *into* the metric form: local Rindler + Raychaudhuri focusing.
 
 The remaining open step is *concrete and named*, not "differential geometry QLF lacks": it is the
@@ -381,10 +436,16 @@ characterisation. Logic fixes no local term: `G`, `Λ` and `T` still come from t
 | `null_annihilator_iff_metric_multiple` | the null-cone annihilators are **exactly** the metric multiples (one-dimensional, spanned by `g`); nine lattice points decide membership |
 | `contract_metricMultiple` | `contract (f·g) v = f · interval v` — a metric multiple annihilates the whole null cone |
 | `axis_probes_insufficient` | sharpness: the six axis probes alone fail (pure-`xy` witness), so the `3-4-5` probes are load-bearing |
+| `metric_is_singlet` | ([`QLF_MetricSinglet`](lean/QLF_MetricSinglet.lean)) `Σ η_ab σ_a⊗σ_b = 4|s⟩⟨s|`: the Minkowski metric is the singlet (§6d) |
+| `expect_twoBody` | a product state `ψ⊗ψ` reads a tensor on its null vector: `⟨ψψ|Ŝ|ψψ⟩ = 4 S_ab k^a k^b` |
+| `product_annihilator_iff_singlet` | the null-cone step as two-body algebra: vanishing on every product state ⟺ a multiple of the singlet |
 | `DivergenceCalculus` | the `∇^a`/`∂_b` interface — the differential-geometry boundary as a **structure**, so no axiom is added (§6c) |
 | `scalar_multiple_is_curvature` | contracted Bianchi + conservation ⟹ `f = R/2 − Λ` with `Λ` **constant** (the integration step) |
 | `einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` — the field equations over the interface (§6c) |
 | `metric_form_from_null_probes` | chains §6b into §6c: nine integer null probes deliver the metric form `einstein_field_equations` needs |
+| `interface_is_inhabited` | ([`QLF_LatticeCalculus`](lean/QLF_LatticeCalculus.lean)) a nondegenerate forward-difference instance on `ℤ`, one live direction: the interface is consistent |
+| `latticeCalculus` | ([`QLF_LatticeDivergence`](lean/QLF_LatticeDivergence.lean)) the interface built on `ℤ⁴` from forward differences along the twist steps (§6e) |
+| `lattice_einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` on the lattice with the calculus discharged; one `Λ` for every site. Discrete Bianchi and conservation are still hypotheses |
 | `no_time_loops_from_logic` | ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)) from the law of weakening alone, no event lies in its own strict past; `loopWorld_has_time_loop` shows the law is needed |
 | `logical_world_globally_hyperbolic` | no time loops + finite causal intervals: the discrete global hyperbolicity the field equations need as a global condition (§7) |
 | `rotation_without_time_loops` | ([`QLF_NoTimeLoops`](lean/QLF_NoTimeLoops.lean)) unbounded circulation coexists with no time loops: Gödel's rotation allowed, his closed timelike curves excluded |
