@@ -49,6 +49,8 @@ reality.
 
 ---
 
+**Strange-loop reading.** The self-model is a level-crossing self-reference: the blanket models itself, its environment, and their interaction, and its closures synthesize its local time and world. It is a loop in the reversible possibility algebra, not a closed causal curve in the realized history; `no_time_loops_from_logic` prunes the latter. The conceptual note and its limits are in [`Strange_Loops.md`](Strange_Loops.md) §3.
+
 ## 2. A spectrum of closures at different frequencies
 
 Every ZFA closure synthesizes its own local time, `f = 1/t` ([`ZFAEventDynamics`](lean/ZFAEventDynamics.lean),

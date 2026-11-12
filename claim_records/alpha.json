@@ -66,6 +66,20 @@
     "formal_status": "The count-to-renormalized-coupling map is not formalized; the identification is a bridge.",
     "noncircularity_test": "The coupling/scale map and the w value must be specified independently of the CODATA comparison before the comparison is counted as a prediction."
   },
+  "strange_loop": {
+    "name": "8-twist census -> residual multiplicity -> renormalized coupling at a scale",
+    "levels": [
+      "8-twist census",
+      "residual weight / multiplicity",
+      "renormalized coupling at a stated scale",
+      "CODATA comparison"
+    ],
+    "return_level": "finite comparator-residual band / leading count",
+    "conservative_return": "The leading 137 and the formal comparator-residual band (1/64, 0.04814) are finitary; 137.032 is reported/structural, and the count-to-coupling scale map is not a proved return.",
+    "noncircularity_witness": "The scale/scheme and w must be fixed before CODATA; w = 1/2 is structural, but the multiplicity/resummation is open.",
+    "status": "B-OPEN",
+    "defeater": "A post-hoc w, an undeclared scale/scheme, or a confirmed alpha variation."
+  },
   "observable": {
     "symbol": "alpha^-1 at a stated scale/scheme",
     "baseline": "CODATA recommended value",

@@ -501,6 +501,13 @@ check nor an experiment: by §8 the inventory **is** the apparatus, so enumerati
 an experiment but reading the substrate's own facts, which is why *exact computational result* is a
 status in its own right (§3) and why calling that layer "simulation" understates it.
 
+### 5e. The conservative-return test
+
+A bridge may present itself as a **strange loop**: a level-crossing self-reference that returns to its starting level after an apparent ascent. The shape is admissible only if the return is **conservative** — the finitary content claimed at the physical level is already available in the `RCA₀` core. QLF's own two-phase example is Lean/Mathlib checking the substrate rules, then the substrate re-deriving the mathematics; conservativity is what keeps that from being vicious ([`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §2).
+
+For a physical bridge, state the formal level, the physical level, the finite record to which the loop returns, and why the return is not target-derived. If no such return can be exhibited, the bridge is `B-OPEN`. This is an additional review question inside G3, not a new evidence gate and not a promotion rule. The conceptual note and the four current bridge records are in [`Strange_Loops.md`](Strange_Loops.md) and [`claim_records/`](claim_records/README.md).
+
+
 ---
 
 ## 6. The hypothesis lifecycle

@@ -76,6 +76,20 @@
     "formal_status": "The algebraic RAR identity is formalized; the identification of the closure-balance variables with the observed g_bar/g_obs is a bridge, and the interpolation form is not unique.",
     "noncircularity_test": "For an admitted point the prediction uses baryonic inputs. The sample selection uses Vobs/error ratios; Vobs and gobs are loaded/computed before the seal. A stronger test needs controlled target access and a frozen analysis."
   },
+  "strange_loop": {
+    "name": "SPARC public data -> closure-balance RAR -> a0 = cH0/(2 pi) -> residual summary",
+    "levels": [
+      "public SPARC data",
+      "closure-balance RAR",
+      "a0 = cH0/(2 pi)",
+      "retrospective residual summary"
+    ],
+    "return_level": "retrospective residual summary",
+    "conservative_return": "The algebraic RAR and the a0 identity are formal; the benchmark returns a descriptive residual, not a predeclared prediction.",
+    "noncircularity_witness": "Target-informed selection and a self-seal are recorded; no independent chronology or controlled target access is established.",
+    "status": "B-OPEN",
+    "defeater": "A failed independent replication, a reproduced mismatch, or an H0/M-L dependence that removes the result."
+  },
   "observable": {
     "symbol": "T = g_obs / g_pred; residual = log10(g_obs) - log10(g_pred)",
     "baseline": "SPARC rotation-curve sample",

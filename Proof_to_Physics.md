@@ -23,6 +23,20 @@ identification with a physical observable and from an experimental test.
 | Strong CP / no axion | [QLF_StrongCP](lean/QLF_StrongCP.lean): `theta_zero_on_closure` | Identify the physical θ-term with the QLF CP-odd winding; distinguish an unnecessary axion from a separately posited absence hypothesis | [claim_records/kill_conditions.json](claim_records/kill_conditions.json) |
 | CPT / antiparticle time mirror | [QLF_Discoveries2026](lean/QLF_Discoveries2026.lean): `antiparticle_length`, `charge3W_antiparticle`; [QLF_Majorana](lean/QLF_Majorana.lean): `neutrino_majorana` | Bridge length equality to mass equality; compare with BASE proton/antiproton data | [claim_records/kill_conditions.json](claim_records/kill_conditions.json) |
 
+## Strange-loop / conservative-return criterion
+
+A bridge can be read as a two-phase loop: a formal level, a physical level, and a return to a finite record. The loop is admissible only if the return is **conservative** — the finitary content claimed at the physical level is already available in the `RCA₀` core, or the bridge is marked `B-OPEN`. The full conceptual note is [`Strange_Loops.md`](Strange_Loops.md); the G3 checklist remains authoritative.
+
+For each bridge, record:
+
+1. the formal level and the physical level;
+2. the map and its preservation obligations;
+3. the finite record to which the loop returns;
+4. why the return is conservative rather than target-derived;
+5. a defeater that would break the loop.
+
+A bridge with no such return is not a closed loop, however suggestive the numerical agreement. The four Paper I bridge records (`three_polarizer.json`, `alpha.json`, `sparc_rar.json`, `born_rule.json`) carry a `strange_loop` object, all currently `B-OPEN`. A `bridge: CLOSED` record requires a `TESTED` loop.
+
 ## Evidence categories
 
 - **Kernel-proved:** the exact theorem and its axiom dependencies are recorded.
@@ -38,9 +52,12 @@ identification with a physical observable and from an experimental test.
 1. Identify the exact Lean declaration and print its axiom footprint.
 2. List every definition or premise that contains the desired conclusion.
 3. Identify the missing map from substrate quantities to the lab observable.
-4. Record at least one counterexample or failure condition and a baseline
+4. State the two-phase / strange-loop structure: the finite record to which it
+   returns and why that return is conservative. If no return is exhibited, mark
+   the bridge `B-OPEN`.
+5. Record at least one counterexample or failure condition and a baseline
    from conventional physics.
-5. Reject promotion from conditional to derived unless the bridge itself
+6. Reject promotion from conditional to derived unless the bridge itself
    has been proved and reviewed.
 
 The current research programme is tracked in

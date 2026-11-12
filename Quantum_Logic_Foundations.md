@@ -114,6 +114,8 @@ The logic of the universe is not classical Boolean logic over pre-existing facts
   minimal quantum logic is **proven**; the general Hilbert representation is the one named bridge — the
   "verified discrete core + one bridge" Millennium pattern.
 
+**Strange-loop reading.** The MO2 result is the finite formal level. The missing upward move is from lattice propositions to a realized apparatus and back to a finite closure record. The three-polarizer `1/8` is an imported ideal-optics comparator, not that return; the bridge remains `B-OPEN`. The same two-phase/conservative-return discipline is stated in [`Strange_Loops.md`](Strange_Loops.md) and [`Claim_Status.md`](Claim_Status.md).
+
 Quantum logic, in QLF, is not an exotic alternative bolted onto physics. It is the native
 logic of distinction-and-closure, and physics is what that logic does.
 

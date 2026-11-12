@@ -23,6 +23,19 @@ The numerical agreements below are as reported by QLF. The claim records in `cla
 - `B` / `B-OPEN` — interpretation depends on an explicit bridge; `OPEN` means the bridge is not yet specified/proved.
 - `E` / `E-candidate` — empirical comparison; `candidate` means retrospective/self-sealed or not independently replicated.
 
+## Strange-loop / two-phase bridge shape
+
+A strange loop is a level-crossing self-reference that returns to its starting level. In the claim ledger it is a **review shape**, not a new evidence type: every bridge candidate must name its levels and the finite record to which it returns, or remain `B-OPEN`. The conceptual note is [`Strange_Loops.md`](Strange_Loops.md); the validator enforces the fields and the `TESTED`-for-`CLOSED` rule.
+
+| Claim | Loop levels | Conservative return | Status |
+|---|---|---|---|
+| MO2 → optical apparatus | MO2 lattice → toy `ℂ²` embedding → ideal polarizer → detector | finite MO2 count/detector record; the `1/8` is imported Malus/Born, not derived | `B-OPEN`; G3 inconclusive |
+| α count → coupling | 8-twist census → residual multiplicity → coupling at scale → CODATA | leading `137` and formal band `(1/64, 0.04814)`; `137.032` reported, scale map not proved | `B-OPEN` |
+| SPARC RAR | public data → closure-balance RAR → `a₀ = cH₀/(2π)` → residual | retrospective residual summary only; no predeclared prediction | `N`; G5 open |
+| Born uniqueness | Gaussian-integer register → unit-way refinement → ZFA closure → outcome | finite unit-way count; physical refinement is a premise | `F` formal; `B-OPEN` |
+
+The four corresponding JSON records carry a `strange_loop` object with `name`, `levels`, `return_level`, `conservative_return`, `noncircularity_witness`, `status` and `defeater`. A `bridge: CLOSED` record requires `status: TESTED`.
+
 ## Claim records
 
 - `claim_records/alpha.json` — α claim record (draft).

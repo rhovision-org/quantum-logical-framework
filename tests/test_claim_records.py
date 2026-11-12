@@ -45,6 +45,7 @@ class ClaimRecordTests(unittest.TestCase):
             data["evidence_status"]["bridge"] = "CLOSED"
             for gate in validator.PROMOTION_GATES["bridge"]:
                 data["gate_outcomes"][gate]["status"] = "PASS"
+            data["strange_loop"]["status"] = "TESTED"
         if component == "empirical":
             data["reported_agreement"]["comparison_type"] = "prospective"
             data["measurement_protocol"]["execution_status"] = "prospective_completed"
@@ -265,6 +266,28 @@ class ClaimRecordTests(unittest.TestCase):
                 (directory / "bad.json").write_text(text)
                 with self.assertRaises(validator.ValidationError):
                     validator.validate_directory(directory)
+
+    def test_closed_bridge_requires_tested_strange_loop(self) -> None:
+        good = self.promoted("bridge")
+        validator.validate_claim_record(good, Path("synthetic.json"))
+        bad = copy.deepcopy(good)
+        bad["strange_loop"]["status"] = "B-OPEN"
+        self.rejects(bad)
+        bad = copy.deepcopy(good)
+        del bad["strange_loop"]
+        self.rejects(bad)
+
+    def test_strange_loop_requires_typed_levels_and_fields(self) -> None:
+        bad = copy.deepcopy(self.alpha)
+        bad["strange_loop"]["levels"] = ["only one level"]
+        self.rejects(bad)
+        for field in ("return_level", "conservative_return", "noncircularity_witness", "defeater"):
+            bad = copy.deepcopy(self.alpha)
+            del bad["strange_loop"][field]
+            self.rejects(bad)
+        bad = copy.deepcopy(self.alpha)
+        bad["strange_loop"]["status"] = "CLOSED"
+        self.rejects(bad)
 
 
 if __name__ == "__main__":

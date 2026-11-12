@@ -31,10 +31,13 @@ flowchart LR
   FRN --> D9["9 The Millennium Prize program"]
   FRN --> D10["10 Beyond the SM"]
   FND --> MTH["Methods and evidence: Paper I v0.3"]
+  FND --> SL["Two-phase / strange-loop bootstrapping"]
+  SL -.->|frames| MTH
   MTH -.->|audits| D2
   MTH -.->|audits| D6
   MTH -.->|audits| D8
   click MTH "#methods-and-evidence-paper-i-v03"
+  click SL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md" _blank
 ```
 
 **Jump to:** [1 Space, time and the continuum](#1-space-time-and-the-continuum) &middot; [2 The fundamental constants](#2-the-fundamental-constants) &middot; [3 Forces](#3-forces) &middot; [4 Atoms and QED](#4-atoms-and-qed) &middot; [5 Gravity and GR](#5-gravity-and-gr) &middot; [6 Cosmology and the dark sector](#6-cosmology-and-the-dark-sector) &middot; [7 Particles and the Standard Model](#7-particles-and-the-standard-model) &middot; [8 Quantum-gravity / TOE pillars](#8-quantum-gravity--toe-pillars) &middot; [9 The Millennium Prize program](#9-the-millennium-prize-program) &middot; [10 Beyond the SM](#10-beyond-the-sm) &middot; [11 Chemistry, molecules and folding](#11-chemistry-molecules-and-folding) &middot; [12 Quantum field theory and renormalization](#12-quantum-field-theory-and-renormalization) &middot; [Methods and evidence](#methods-and-evidence-paper-i-v03)
@@ -42,6 +45,8 @@ flowchart LR
 The five families: **Foundations** (1-2, 12) &middot; **Matter and forces** (3, 4, 7) &middot; **Emergent matter** (11) &middot; **Gravity and the cosmos** (5-6) &middot; **Frontiers** (8-10).
 
 The **Methods and evidence** layer is **cross-cutting**, not a sixth domain: it audits claims across the families without changing the taxonomy.
+
+**Two-phase / strange-loop bootstrapping:** the controlled metalanguage ↔ substrate loop and the observer self-reference/no-time-loop distinction are collected in [`Strange_Loops.md`](Strange_Loops.md), with the conservativity resolution in [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §2 and the possibility/record distinction in [`Philosophy.md`](Philosophy.md) §3d.
 
 **Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **319-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
 
@@ -480,6 +485,9 @@ This is the cross-cutting evidence layer. It does not add a thirteenth domain; i
 ```mermaid
 flowchart TD
   MTH["Paper I v0.3: claim-record methodology"]
+  MTH --> SL["Two-phase / strange-loop bootstrapping"]
+  SL --> MATH["Mathematics_From_QLF.md section 2: conservative return"]
+  SL --> PHIL["Philosophy.md section 3d / Time.md section 7a: no time loops"]
   MTH --> F["F - audited formal statements (319 anchors)"]
   MTH --> N["N - reproduced numerical results"]
   MTH --> B["B-OPEN - interpretation bridges"]
@@ -492,6 +500,8 @@ flowchart TD
   G5 --> DEF
   MTH --> MO2["MO2: 16 finite laws in both namespaces (F; 35 anchors)"]
   MO2 --> TP["Three-polarizer 1/8 (B-OPEN: imported Malus/Born; detector map open)"]
+  MTH --> BORN["Born uniqueness (F formal; B-OPEN refinement)"]
+  BORN --> BP["Operational probability bridge (B-OPEN)"]
   MTH --> AL["alpha = 1/137 leading (F + N; B-OPEN: count -> coupling at scale)"]
   AL --> SP["SPARC RAR (N retrospective; B-OPEN / G5)"]
   MTH --> MSM["Metric singlet / lattice Einstein (F under premises; physical gravity B-OPEN)"]
@@ -502,9 +512,9 @@ flowchart TD
   PAPER --> GIST["Gist / verification/paper-i-v0.3/"]
 ```
 
-**Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html).
+**Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) · [`Strange_Loops.md`](Strange_Loops.md) · [`verification/strange-loop/`](verification/strange-loop/README.md) · [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py).
 
-**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 319-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
+**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 319-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge that presents itself as a loop must name its levels and a conservative return, or remain `B-OPEN`; the defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
 
 ---
 

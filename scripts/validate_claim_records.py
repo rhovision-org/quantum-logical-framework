@@ -17,12 +17,17 @@ ROOT = Path(__file__).resolve().parent.parent
 CLAIM_FIELDS = {
     "record_type", "record_id", "version", "source_revision", "informal_statement",
     "approximation_or_regime", "formal_statement", "formal_object", "dependencies",
-    "inputs", "interpretation", "observable", "measurement_protocol",
+    "inputs", "interpretation", "strange_loop", "observable", "measurement_protocol",
     "reported_agreement", "evidence", "defeaters", "gate_outcomes",
     "evidence_status", "reviewer_independence", "provenance",
 }
 GATE_NAMES = {f"G{i}" for i in range(7)}
 GATE_STATUSES = {"PASS", "FAIL", "INCONCLUSIVE", "NOT_APPLICABLE"}
+STRANGE_LOOP_FIELDS = {
+    "name", "levels", "return_level", "conservative_return",
+    "noncircularity_witness", "status", "defeater",
+}
+STRANGE_LOOP_STATUSES = {"B-OPEN", "SPECIFIED", "TESTED"}
 COMPARISON_TYPES = {"prospective", "retrospective blind", "retrodiction", "consistency", "not_applicable"}
 EXECUTION_STATUSES = {"not_performed", "retrospective_reproduction", "prospective_completed", "independently_replicated"}
 INPUT_PROVENANCE = {"derived", "declared", "fitted", "external"}
@@ -186,6 +191,17 @@ def validate_claim_record(data: dict, path: Path) -> None:
     for component, values in allowed.items():
         _text(status[component], f"{path}.evidence_status.{component}")
         _require(status[component] in values, f"{path}: invalid {component} status")
+    loop = None
+    if "strange_loop" in data:
+        loop = _object(data["strange_loop"], f"{path}.strange_loop", STRANGE_LOOP_FIELDS, exact=True)
+        for key in ("name", "return_level", "conservative_return", "noncircularity_witness", "status", "defeater"):
+            _text(loop[key], f"{path}.strange_loop.{key}")
+        levels = _texts(loop["levels"], f"{path}.strange_loop.levels")
+        _require(len(levels) >= 2, f"{path}: strange_loop requires at least two levels")
+        _require(loop["status"] in STRANGE_LOOP_STATUSES, f"{path}: invalid strange_loop status")
+    if status["bridge"] == "CLOSED":
+        _require(loop is not None, f"{path}: a CLOSED bridge requires a strange_loop specification")
+        _require(loop["status"] == "TESTED", f"{path}: a CLOSED bridge requires a TESTED strange_loop return")
     receipt = _receipt(data, gates, path)
     for component, promoted in {"formal": "VERIFIED", "numerical": "REPRODUCED", "empirical": "ESTABLISHED", "bridge": "CLOSED"}.items():
         if status[component] == promoted:

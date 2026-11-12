@@ -47,6 +47,20 @@
     "formal_status": "The mathematical characterization is conditional on its interface. The physical realization and interpretation of the interface are not proved here.",
     "noncircularity_test": "Derive the assignment rules from independently specified physical structure; do not assume the target probability law through an equivalent refinement rule."
   },
+  "strange_loop": {
+    "name": "Gaussian-integer register -> unit-way refinement -> ZFA closure -> operational probability",
+    "levels": [
+      "Gaussian-integer amplitude register",
+      "unit-way refinement",
+      "ZFA closure / event",
+      "operational probability record"
+    ],
+    "return_level": "finite unit-way count / detector record",
+    "conservative_return": "born_from_ways and assignment_unique prove the finite characterization; refinement is a premise, and no theorem shows QLF dynamics performs an amplitude-preserving physical refinement.",
+    "noncircularity_witness": "The refinement process must be specified independently of the target Born weights; the current refinement is mathematical, not physical.",
+    "status": "B-OPEN",
+    "defeater": "A refinement rule that assumes the target weights, or a detector comparison that fails under a frozen map."
+  },
   "observable": {
     "symbol": "operational event probability",
     "baseline": "quantum interference and detector statistics",
