@@ -1,6 +1,6 @@
 # TensorConservativeReturn — theorem target
 
-**Status:** `PROVED` as a quotient construction in `lean/QLF_TensorConservativeReturn.lean` (`tensorTrigger_exists`, `tensor_conservative_return`). The theorem is outside the 319-anchor reviewed baseline and does not by itself close the tensor bridge.
+**Status:** `PROVED` as a quotient construction in `lean/QLF_TensorConservativeReturn.lean` (`tensorTrigger_exists`, `tensor_conservative_return`). The theorem is in the 343-anchor reviewed baseline and does not by itself close the tensor bridge.
 
 ## Why
 
@@ -68,7 +68,7 @@ A Lean theorem instantiating `QuotientStrangeLoopTrigger` with the actual tensor
 algebra, using the existing `composite_is_tensor` / `tensorEquiv` results, and
 proving `composite_id_on_quotient`. **This is now done at the quotient level**;
 the physical selection of the equivalence and the entangled-sector return remain
-open. The theorem is not in the 319-anchor baseline.
+open. The theorem is in the 343-anchor baseline.
 
 ## Non-goals
 
@@ -98,6 +98,6 @@ singlet is the worked example; it is not proved here.
 ## Relation to the claim records
 
 This target is formal-only. It does not change any `bridge: B-OPEN` status, any
-`strange_loop.status`, or the 319-anchor baseline. The theorem exists but is
+`strange_loop.status`, or the 343-anchor baseline. The theorem exists but is
 outside the reviewed baseline; until it is reviewed there, the tensor bridge
 remains a **near-complete conservative bridge**, not a closed physical bridge.

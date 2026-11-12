@@ -21,8 +21,11 @@ The repository changes are collected in [PR #224](https://github.com/rhovision-o
 - PR #226: twelve `QLF.Manifestation` anchors, baseline **319**; orientation,
   isolation-is-closure, unbounded closures, distance = delay, and the proton as
   the simplest isolated imbalance.
-- All 319 anchors have reviewed project-CI footprints; no old footprint was
-  changed by #225 or #226. The `verification/paper-i-v0.3/` receipt remains
+- PR #230: twenty-four conservative-return and tensor-return anchors
+  (StrangeLoop 7, finite Born 3, ConservativeReturn 9, tensor quotient 5),
+  baseline **343**; the actual bridges remain `B-OPEN`.
+- All 343 anchors have reviewed project-CI footprints; no old footprint was
+  changed by #225, #226 or #230. The `verification/paper-i-v0.3/` receipt remains
   scoped to the 302-anchor #224 closure; the later deltas are in the #225/#226
   PRs and the current baseline file.
 - Recursive typed-record validation, nested content checks, applicable gate paths,
@@ -39,7 +42,7 @@ The repository changes are collected in [PR #224](https://github.com/rhovision-o
 Read [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/) for the #224
 receipt, then inspect the #225 and #226 PR diffs and the current
 [`lean/axiom_footprints.expected.json`](lean/axiom_footprints.expected.json)
-(319 entries). The original Lean execution was project CI, not a local
+(343 entries). The original Lean execution was project CI, not a local
 independent rebuild. The current exact-footprint gate is the authoritative
 formal check; the metric/Einstein and Manifestation results remain formal
 theorems under their stated premises, not physical bridge closures.
@@ -65,7 +68,7 @@ metric-singlet/lattice-Einstein result as a second representational case (§8.1)
 use Manifestation as formal backbone for the ToE map, not as physical evidence.
 
 Choose an immutable release head after checking CI; the current reviewed baseline is
-**319 anchors** (302 #224 + 5 #225 + 12 #226). Cite the audited source and
+**343 anchors** (302 #224 + 5 #225 + 12 #226 + 24 #230). Cite the audited source and
 execution receipts explicitly; do not silently replace old evidence with moving main.
 Confirm the human author list, CRediT roles, conflicts and license before circulation.
 Then perform a short delta review and generate the final document/PDF with real tables.

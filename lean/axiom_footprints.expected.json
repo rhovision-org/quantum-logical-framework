@@ -1258,11 +1258,13 @@
   ],
   "QLF.StrangeLoop.conservative_return": [],
   "QLF.StrangeLoop.refinement_return": [
+    "Classical.choice",
     "Quot.sound",
     "propext"
   ],
   "QLF.StrangeLoop.return_forward": [],
   "QLF.TensorConservativeReturn.F_injective": [
+    "Classical.choice",
     "Quot.sound",
     "propext"
   ],
@@ -1272,6 +1274,7 @@
     "propext"
   ],
   "QLF.TensorConservativeReturn.class_of_step": [
+    "Classical.choice",
     "Quot.sound",
     "propext"
   ],

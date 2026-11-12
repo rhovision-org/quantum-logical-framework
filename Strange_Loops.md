@@ -157,7 +157,7 @@ Any one of these, if proved under the §6.1 interface, would constitute support.
 
 ### 6.3 Minimal next proofs
 
-1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (generic two-element interface) and strengthened in `QLF_ConservativeReturn.lean`, which maps a formal count/phase object to a net-zero twist history and proves `R ∘ F = id`, closure, and count/phase recovery. Both are no-Mathlib/no-axiom and outside the 319-anchor baseline, so the claim record remains `PARTIAL`, not `PROVED`.
+1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (generic two-element interface) and strengthened in `QLF_ConservativeReturn.lean`, which maps a formal count/phase object to a net-zero twist history and proves `R ∘ F = id`, closure, and count/phase recovery. Both are no-Mathlib/no-axiom and now anchored in the 343-anchor baseline; the claim record remains `PARTIAL` because this is a toy, not the actual operational bridge.
 2. **An instantiation for the Born uniqueness theorem** — **partial**: `QLF_StrangeLoopBorn.lean` proves the finite unit-way return on the existing `QLF_BornFromWays` register; the physical refinement remains open.
 3. **One blinded numerical check** whose protocol is committed before the numbers are looked up — three-polarizer or α residual. The three-polarizer protocol draft is [`verification/strange-loop/blinded_protocol.md`](verification/strange-loop/blinded_protocol.md); it is `AWAITING_DATA`, not executed.
 
@@ -228,8 +228,8 @@ that respects it, and a return that is the identity on classes. The toy instance
 and proves `tensor_conservative_return` / `tensorTrigger_exists`. `class_of_step`
 shows that interleaving moves land in the same class. This proves the **coherence
 of the quotient return**, not that the quotient is the physically selected
-closure equivalence, and not the entangled-sector return. It is outside the
-319-anchor baseline.
+closure equivalence, and not the entangled-sector return. It is in the
+343-anchor baseline.
 
 For the entangled sector the hierarchy is:
 
@@ -279,14 +279,14 @@ The result is deliberately negative: a pure MO2 meet walk gives `0` (it blocks a
 
 **Already in place:**
 
-- 319-anchor Lean baseline (post-#224/#225/#226), including 17 MO2 and 18 QuantumLogic anchors, 5 metric/lattice anchors, and 12 Manifestation anchors.
+- 343-anchor Lean baseline (post-#224/#225/#226/#230), including 17 MO2 and 18 QuantumLogic anchors, 5 metric/lattice anchors, 12 Manifestation anchors, and 24 conservative-return/tensor-return anchors.
 - Complete finite MO2 enumeration: 15 comparable pairs, 36/36 orthomodular implications (15 non-vacuous), 24 distributivity failures in each direction; all 19 lattice checks pass.
 - α leading value `137`, formal comparator-residual band `(1/64, 0.04814)`, reported structural `137.032`, 0.026% leading agreement.
 - `m_p/m_e = 6π⁵`, one-loop `g−2` form, and the other reported entries in Paper I Table 1.
 - Born finite uniqueness on Gaussian integers; no continuum or Gleason continuity step.
-- `QLF_StrangeLoop.lean` — toy two-element conservative-return interface, no Mathlib/no axioms; outside the 319 baseline.
-- `QLF_ConservativeReturn.lean` — toy formal → net-zero twist history return with count/phase recovery; no Mathlib/no axioms; outside the 319 baseline.
-- `QLF_StrangeLoopBorn.lean` — finite unit-way Born return on the existing Gaussian-integer register; outside the 319 baseline; physical refinement still `B-OPEN`.
+- `QLF_StrangeLoop.lean` — toy two-element conservative-return interface, no Mathlib/no axioms; in the 343 baseline.
+- `QLF_ConservativeReturn.lean` — toy formal → net-zero twist history return with count/phase recovery, trigger/quotient structures and no-event-cycle; no Mathlib/no axioms; in the 343 baseline.
+- `QLF_StrangeLoopBorn.lean` — finite unit-way Born return on the existing Gaussian-integer register; in the 343 baseline; physical refinement still `B-OPEN`.
 - `no_time_loops_from_logic` and `loop_same_facts` for realized histories; loops in the reversible possibility algebra.
 
 **What would materially strengthen the claim:**
@@ -329,7 +329,7 @@ The Paper I v0.3 Gist is linked from the [flow chart](FlowChart.md) and the repo
 - [`Alpha.md`](Alpha.md) — the α derivation programme and its honest scope.
 - [`SPARC.md`](SPARC.md) — the retrospective benchmark and its limits.
 - [`Claim_Status.md`](Claim_Status.md) — the human-readable claim ledger.
-- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` is proved in `QLF_TensorConservativeReturn` (outside the 319 baseline).
+- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` is proved in `QLF_TensorConservativeReturn` (in the 343 baseline).
 - [`verification/strange-loop/tensor_return_target.md`](verification/strange-loop/tensor_return_target.md) — the explicit `TensorConservativeReturn` target, now `PROVED` as a quotient construction; physical selection remains open.
 - [`lean/QLF_ConservativeReturn.lean`](lean/QLF_ConservativeReturn.lean) — `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger`, the toy return and `no_event_cycle`.
 - [`Proof_to_Physics.md`](Proof_to_Physics.md) — G3 and the bridge registry.

@@ -22,7 +22,7 @@ Paper I v0.3 leaves the optical, α, SPARC and Born bridges `B-OPEN` / `INCOMPLE
 
 The tensor-product return target is specified in [`tensor_return_target.md`](tensor_return_target.md): `TensorConservativeReturn` is `PROVED` as a quotient construction in `lean/QLF_TensorConservativeReturn.lean`; `pair_scalar_ambiguity` requires the return to land on closure classes, not raw factor pairs. Physical selection of the equivalence remains open.
 
-All three files build in project CI but are **outside the 319-anchor reviewed baseline**. The claim-record proof status is therefore `PARTIAL`, not `PROVED`; a `TESTED` loop would require a reviewed anchor and a real artifact.
+All four files build in project CI and are now in the **343-anchor reviewed baseline**. The claim-record proof status remains `PARTIAL`, not `PROVED`, because these are toy/quotient witnesses, not the actual operational bridges; `TESTED` still requires the real map plus a reviewed artifact.
 
 ## Run
 

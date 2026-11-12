@@ -12,7 +12,7 @@ claim below points to the document or Lean module that carries it. The full visu
 lattice-Einstein representational result ([Einstein_Equations.md](Einstein_Equations.md) §6d–§6e);
 PR #226 adds [Manifestation.md](Manifestation.md) (orientation, isolation-is-closure,
 unbounded closures, `distance_eq_delay`, and the proton as the simplest isolated
-imbalance). Both are formal `F` results in the reviewed **319-anchor** baseline.
+imbalance). Both are formal `F` results in the reviewed **343-anchor** baseline.
 Their physical readings remain `B-OPEN`; the map is still not evidence.
 
 **The thesis** (Jim Whitescarver, 2026-11-11):

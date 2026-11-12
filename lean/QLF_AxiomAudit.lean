@@ -613,8 +613,7 @@ These anchors are added by PR #226 and reviewed in the 319-anchor baseline. -/
 
 These anchors are added by PR #230. They are the toy conservative-return
 interface, the finite Born return, the trigger/quotient structures, and the
-tensor quotient return. They are outside the historical 319-anchor snapshot
-until this block is reviewed and the expected baseline is updated. -/
+tensor quotient return. They are part of the 343-anchor baseline. -/
 
 #print axioms QLF.StrangeLoop.conservative_return
 #print axioms QLF.StrangeLoop.return_forward
