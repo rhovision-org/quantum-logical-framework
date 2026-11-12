@@ -50,9 +50,12 @@ The full Paper I v0.3 manuscript is separate. Its positive claims table must pre
 these distinctions: model identity versus measured quantity, reported agreement versus
 executed reproduction, conditional characterization versus physical derivation, and
 draft test specification versus preregistration. Keep MO2/three-polarizer as the primary
-worked case; add α and SPARC as separately scoped records.
+worked case; add α and SPARC as separately scoped records; add the
+metric-singlet/lattice-Einstein result as a second representational case (§8.1);
+use Manifestation as formal backbone for the ToE map, not as physical evidence.
 
-Choose an immutable release head after checking CI. Cite the audited source and
+Choose an immutable release head after checking CI; the current reviewed baseline is
+**319 anchors** (302 #224 + 5 #225 + 12 #226). Cite the audited source and
 execution receipts explicitly; do not silently replace old evidence with moving main.
 Confirm the human author list, CRediT roles, conflicts and license before circulation.
 Then perform a short delta review and generate the final document/PDF with real tables.
