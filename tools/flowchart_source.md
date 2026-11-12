@@ -499,11 +499,11 @@ flowchart TD
   G3 --> DEF
   G5 --> DEF
   MTH --> MO2["MO2: 16 finite laws in both namespaces (F; 35 anchors)"]
-  MO2 --> TP["Three-polarizer 1/8 (B-OPEN: imported Malus/Born; detector map open)"]
-  MTH --> BORN["Born uniqueness (F formal; B-OPEN refinement)"]
+  MO2 --> TP["Three-polarizer 1/8 (strange-loop candidate; B-OPEN until return proved)"]
+  MTH --> BORN["Born uniqueness (F formal; strange-loop candidate, B-OPEN until return proved)"]
   BORN --> BP["Operational probability bridge (B-OPEN)"]
-  MTH --> AL["alpha = 1/137 leading (F + N; B-OPEN: count -> coupling at scale)"]
-  AL --> SP["SPARC RAR (N retrospective; B-OPEN / G5)"]
+  MTH --> AL["alpha = 1/137 leading (F + N; strange-loop candidate, B-OPEN until return proved)"]
+  AL --> SP["SPARC RAR (N retrospective; strange-loop candidate, B-OPEN until return proved; G5 open)"]
   MTH --> MSM["Metric singlet / lattice Einstein (F under premises; physical gravity B-OPEN)"]
   MTH --> MNF["Manifestation (F formal; physical selection B-OPEN)"]
   MSM --> TOE["ToE claim map"]
@@ -514,7 +514,7 @@ flowchart TD
 
 **Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) · [`Strange_Loops.md`](Strange_Loops.md) · [`verification/strange-loop/`](verification/strange-loop/README.md) · [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py).
 
-**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 319-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge that presents itself as a loop must name its levels and a conservative return, or remain `B-OPEN`; the defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
+**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 319-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge that presents itself as a loop is a strange-loop candidate and remains `B-OPEN` until it names its levels and proves a conservative return; the defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
 
 ---
 

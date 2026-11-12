@@ -37,6 +37,13 @@ defeater. The loop is a review shape, not a new evidence type. A record cannot
 mark `bridge: CLOSED` unless its loop is `TESTED`; otherwise the bridge stays
 `B-OPEN`.
 
+Each `strange_loop` also carries a `proof_obligation` object:
+`domain`, `codomain`, `forward_map`, `return_map`, `composite_identity_on`,
+`conservative_return_status` (`NOT_STARTED`, `PARTIAL` or `PROVED`),
+`proof_artifact`, `imported_axioms` and `falsifier`. The obligation is a
+**specification**, not a proof. A `TESTED` loop requires a `PROVED` conservative
+return and a real artifact; a `bridge: CLOSED` record requires a `TESTED` loop.
+
 ## Component promotion policy
 
 All listed gates must be PASS; FAIL, INCONCLUSIVE and NOT_APPLICABLE cannot bypass

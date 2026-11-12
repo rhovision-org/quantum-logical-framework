@@ -35,7 +35,7 @@ For each bridge, record:
 4. why the return is conservative rather than target-derived;
 5. a defeater that would break the loop.
 
-A bridge with no such return is not a closed loop, however suggestive the numerical agreement. The four Paper I bridge records (`three_polarizer.json`, `alpha.json`, `sparc_rar.json`, `born_rule.json`) carry a `strange_loop` object, all currently `B-OPEN`. A `bridge: CLOSED` record requires a `TESTED` loop.
+A bridge with no such return is not a closed loop, however suggestive the numerical agreement. The four Paper I bridge records (`three_polarizer.json`, `alpha.json`, `sparc_rar.json`, `born_rule.json`) carry a `strange_loop` object plus a `proof_obligation` with domain, codomain, forward/return maps, composite identity, conservative-return status, imported axioms and falsifier. All four loops are `B-OPEN` and all four obligations are `NOT_STARTED`. A `TESTED` loop requires a `PROVED` return plus a real artifact; a `bridge: CLOSED` record requires a `TESTED` loop.
 
 ## Evidence categories
 

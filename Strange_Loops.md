@@ -113,11 +113,61 @@ Gaussian-integer register
 
 and the return is conservative only if the detector record is a count of the same unit ways, not a probability law inserted to match the target. The current claim record marks this `B-OPEN`; see [`claim_records/born_rule.json`](claim_records/born_rule.json) and [`Born_Rule.md`](Born_Rule.md) §9.
 
-The same schema is attached to `alpha.json`, `sparc_rar.json`, and `three_polarizer.json`. The validator enforces the shape: a `strange_loop` entry must name at least two levels, a return level, a conservative-return statement, a noncircularity witness, a status (`B-OPEN`, `SPECIFIED`, or `TESTED`), and a defeater. A record cannot mark `bridge: CLOSED` unless its loop is `TESTED`.
+The same schema — including a `proof_obligation` naming the domain, codomain, forward/return maps, composite identity, imported axioms and falsifier — is attached to `alpha.json`, `sparc_rar.json`, and `three_polarizer.json`. The validator enforces the shape: a `strange_loop` entry must name at least two levels, a return level, a conservative-return statement, a noncircularity witness, a status (`B-OPEN`, `SPECIFIED`, or `TESTED`), and a defeater. A record cannot mark `bridge: CLOSED` unless its loop is `TESTED`.
 
 ---
 
-## 6. The toy observer model
+## 6. What must be proved
+
+The strange-loop reading becomes checkable only when it states a proof obligation. The following is the minimal interface; it is a **specification**, not a theorem and not evidence.
+
+### 6.1 The conservative strange-loop bridge interface
+
+Once the relevant categories are specified, a candidate bridge is a pair of structure-preserving maps (functors, in the categorical reading)
+
+```
+F : Formal -> Physical
+R : Physical -> Formal
+```
+
+with:
+
+1. **Conservative return:** `R ∘ F = id` on the finitary `RCA₀` core.
+2. **No smuggled continuum:** every finitary theorem used by `F` is already proved in the substrate without the continuum apparatus.
+3. **Explicit return witness:** the image under `F` of each MO2 proposition (or Gaussian-integer amplitude) is a ZFA-closed history whose count and phase invariants recover the original formal object.
+4. **Visible imports:** every physical/statistical axiom used by `F` or `R` is named.
+5. **Falsifier:** a predeclared observation or formal result that would break the return.
+
+The current claim records carry this as a `proof_obligation` object with `domain`, `codomain`, `forward_map`, `return_map`, `composite_identity_on`, `conservative_return_status` (`NOT_STARTED` / `PARTIAL` / `PROVED`), `proof_artifact`, `imported_axioms` and `falsifier`. All four are `NOT_STARTED`; a `TESTED` loop requires `PROVED` plus a real artifact.
+
+### 6.2 The four concrete obligations
+
+| Bridge | What must be proved | Current status |
+|---|---|---|
+| **MO2 → Malus `1/8`** | An operational map from the 15 comparable pairs and 24 distributivity failures to the three-polarizer geometry, plus a proof that the induced probability on the image is exactly `1/8` after the map is applied, and that the map conservatively returns the original lattice inequalities. | Toy embedding exists; G3 inconclusive. |
+| **Born uniqueness** | That refinement additivity in `QLF_BornFromWays` is itself realized by a ZFA closure on the same Gaussian-integer register the theorem quantifies over — the self-referential return. | Finite uniqueness proved; refinement still a premise. |
+| **α residual** | A predeclared, scale-independent multiplicity rule whose leading term is forced by the capacity-horizon bifibration self-similarity, with the residual weight `w = 1/2` derived rather than fitted. | Leading `137` structural; multiplicity open. |
+| **SPARC RAR** | A blinded, pre-registered prediction of the RAR curve from closure balance alone, on data held out from the original analysis. | Retrospective `N` only. |
+
+Any one of these, if proved under the §6.1 interface, would constitute support. Partial results — for example, a return map for the Boolean sublattice only — are valuable if labelled as partial and kept `B-OPEN`.
+
+### 6.3 Minimal next proofs
+
+1. **A Lean statement and proof of the interface**, even for a toy two-element ortholattice. The current toy is Python, not a Lean theorem.
+2. **An instantiation for the Born uniqueness theorem** on Gaussian integers: define the refinement as a ZFA closure and prove the return on the same register.
+3. **One blinded numerical check** whose protocol is committed before the numbers are looked up — three-polarizer or α residual.
+
+### 6.4 What is not required
+
+- A general theory of consciousness or Hofstadter-style self-models.
+- Collapse of the map/territory distinction; Paper I correctly keeps it open.
+- Continuum Gleason or measure-theoretic uniqueness; the finite characterizations already in the repository are the right strength.
+
+Until these proofs exist, the strange-loop reading is a useful organising hypothesis that correctly highlights why the bridges are still open. It is not yet evidence that they can be closed.
+
+---
+
+## 7. The toy observer model
 
 [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py) is a finite toy model, not evidence. It represents a Markov-blanket observer as a subset of MO2 elements and a lattice state, runs a three-stage polarizer sequence, and compares:
 
@@ -130,7 +180,7 @@ The result is deliberately negative: a pure MO2 meet walk gives `0` (it blocks a
 
 ---
 
-## 7. Current status and what would strengthen it
+## 8. Current status and what would strengthen it
 
 **Already in place:**
 
@@ -153,7 +203,7 @@ These are research tasks, not results. The strange-loop reading makes them sharp
 
 ---
 
-## 8. Relation to Paper I v0.3
+## 9. Relation to Paper I v0.3
 
 Paper I v0.3's method contribution is the typed separation:
 
@@ -170,7 +220,7 @@ The Paper I v0.3 Gist is linked from the [flow chart](FlowChart.md) and the repo
 
 ---
 
-## 9. References and internal links
+## 10. References and internal links
 
 - [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §1–§2 — the emergence ladder and the bootstrapping/conservativity resolution.
 - [`Philosophy.md`](Philosophy.md) §3d — only logic is assumed; time loops live in possibility.

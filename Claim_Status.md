@@ -34,7 +34,7 @@ A strange loop is a level-crossing self-reference that returns to its starting l
 | SPARC RAR | public data → closure-balance RAR → `a₀ = cH₀/(2π)` → residual | retrospective residual summary only; no predeclared prediction | `N`; G5 open |
 | Born uniqueness | Gaussian-integer register → unit-way refinement → ZFA closure → outcome | finite unit-way count; physical refinement is a premise | `F` formal; `B-OPEN` |
 
-The four corresponding JSON records carry a `strange_loop` object with `name`, `levels`, `return_level`, `conservative_return`, `noncircularity_witness`, `status` and `defeater`. A `bridge: CLOSED` record requires `status: TESTED`.
+The four corresponding JSON records carry a `strange_loop` object with `name`, `levels`, `return_level`, `conservative_return`, `noncircularity_witness`, `status` and `defeater`, plus a `proof_obligation` naming the domain, codomain, forward/return maps, composite identity, conservative-return status, imported axioms and falsifier. All four obligations are `NOT_STARTED`; a `TESTED` loop requires `PROVED` plus a real artifact, and a `bridge: CLOSED` record requires a `TESTED` loop.
 
 ## Claim records
 

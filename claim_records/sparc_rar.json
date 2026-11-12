@@ -88,7 +88,18 @@
     "conservative_return": "The algebraic RAR and the a0 identity are formal; the benchmark returns a descriptive residual, not a predeclared prediction.",
     "noncircularity_witness": "Target-informed selection and a self-seal are recorded; no independent chronology or controlled target access is established.",
     "status": "B-OPEN",
-    "defeater": "A failed independent replication, a reproduced mismatch, or an H0/M-L dependence that removes the result."
+    "defeater": "A failed independent replication, a reproduced mismatch, or an H0/M-L dependence that removes the result.",
+    "proof_obligation": {
+      "domain": "closure-balance RAR variables and public SPARC baryonic inputs",
+      "codomain": "rotation-curve accelerations and residual distribution",
+      "forward_map": "g_bar -> closure-balance RAR -> g_pred",
+      "return_map": "residual summary -> closure-balance check",
+      "composite_identity_on": "algebraic RAR identity and a0 = cH0/(2 pi); no finitary return on the observational data",
+      "conservative_return_status": "NOT_STARTED",
+      "proof_artifact": "not yet supplied",
+      "imported_axioms": "H0, disk/bulge M/L, SPARC selection, interpolation form",
+      "falsifier": "A failed independent replication, or an H0/M-L dependence that removes the result."
+    }
   },
   "observable": {
     "symbol": "T = g_obs / g_pred; residual = log10(g_obs) - log10(g_pred)",

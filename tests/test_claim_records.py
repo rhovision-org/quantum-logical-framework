@@ -46,6 +46,8 @@ class ClaimRecordTests(unittest.TestCase):
             for gate in validator.PROMOTION_GATES["bridge"]:
                 data["gate_outcomes"][gate]["status"] = "PASS"
             data["strange_loop"]["status"] = "TESTED"
+            data["strange_loop"]["proof_obligation"]["conservative_return_status"] = "PROVED"
+            data["strange_loop"]["proof_obligation"]["proof_artifact"] = "synthetic theorem, not a real proof"
         if component == "empirical":
             data["reported_agreement"]["comparison_type"] = "prospective"
             data["measurement_protocol"]["execution_status"] = "prospective_completed"
@@ -287,6 +289,22 @@ class ClaimRecordTests(unittest.TestCase):
             self.rejects(bad)
         bad = copy.deepcopy(self.alpha)
         bad["strange_loop"]["status"] = "CLOSED"
+        self.rejects(bad)
+        bad = copy.deepcopy(self.alpha)
+        del bad["strange_loop"]["proof_obligation"]["domain"]
+        self.rejects(bad)
+        bad = copy.deepcopy(self.alpha)
+        bad["strange_loop"]["proof_obligation"]["conservative_return_status"] = "DONE"
+        self.rejects(bad)
+
+    def test_tested_loop_requires_proved_return_obligation(self) -> None:
+        good = self.promoted("bridge")
+        validator.validate_claim_record(good, Path("synthetic.json"))
+        bad = copy.deepcopy(good)
+        bad["strange_loop"]["proof_obligation"]["conservative_return_status"] = "NOT_STARTED"
+        self.rejects(bad)
+        bad = copy.deepcopy(good)
+        bad["strange_loop"]["proof_obligation"]["proof_artifact"] = "not yet supplied"
         self.rejects(bad)
 
 

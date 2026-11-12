@@ -78,7 +78,18 @@
     "conservative_return": "The leading 137 and the formal comparator-residual band (1/64, 0.04814) are finitary; 137.032 is reported/structural, and the count-to-coupling scale map is not a proved return.",
     "noncircularity_witness": "The scale/scheme and w must be fixed before CODATA; w = 1/2 is structural, but the multiplicity/resummation is open.",
     "status": "B-OPEN",
-    "defeater": "A post-hoc w, an undeclared scale/scheme, or a confirmed alpha variation."
+    "defeater": "A post-hoc w, an undeclared scale/scheme, or a confirmed alpha variation.",
+    "proof_obligation": {
+      "domain": "8-twist count and residual comparator",
+      "codomain": "renormalized alpha^-1 at a declared scale and scheme",
+      "forward_map": "count -> leading 137 + residual weight -> coupling at scale",
+      "return_map": "measured coupling -> residual band -> finite count",
+      "composite_identity_on": "leading arithmetic and the formal comparator-residual band (1/64, 0.04814)",
+      "conservative_return_status": "NOT_STARTED",
+      "proof_artifact": "not yet supplied",
+      "imported_axioms": "scale/scheme choice, vacuum-polarization multiplicity, CODATA comparator",
+      "falsifier": "A post-hoc w or scale, or a confirmed alpha variation."
+    }
   },
   "observable": {
     "symbol": "alpha^-1 at a stated scale/scheme",

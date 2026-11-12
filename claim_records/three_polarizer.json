@@ -79,7 +79,18 @@
     "conservative_return": "The finite MO2 laws and the 19 lattice checks are formal; the 1/8 is imported ideal Malus/Born optics, not a return proved from QLF dynamics.",
     "noncircularity_witness": "The angle/detector map must be specified independently of the target transmission; the current comparator is imported conventional optics, so the loop is not closed.",
     "status": "B-OPEN",
-    "defeater": "A circular angle/detector map, a non-preserving embedding, or a calibrated mismatch under a frozen apparatus map."
+    "defeater": "A circular angle/detector map, a non-preserving embedding, or a calibrated mismatch under a frozen apparatus map.",
+    "proof_obligation": {
+      "domain": "finite MO2 propositions and their 15 comparable pairs",
+      "codomain": "ideal polarizer settings and detector outcome records",
+      "forward_map": "MO2 element -> toy C^2 projector -> polarizer angle/outcome; currently a toy embedding, not an operational map",
+      "return_map": "detector record -> finite closure count -> MO2 inequality table",
+      "composite_identity_on": "the 19 finite MO2 lattice checks / RCA0 fragment",
+      "conservative_return_status": "NOT_STARTED",
+      "proof_artifact": "not yet supplied",
+      "imported_axioms": "Malus cos^2 law, Born trace rule, angle calibration, detector model",
+      "falsifier": "A calibrated stack outside the frozen prediction, or a return map that assumes the target 1/8."
+    }
   },
   "observable": {
     "symbol": "T=Iout/Iunpolarized",

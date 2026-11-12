@@ -25,9 +25,15 @@ GATE_NAMES = {f"G{i}" for i in range(7)}
 GATE_STATUSES = {"PASS", "FAIL", "INCONCLUSIVE", "NOT_APPLICABLE"}
 STRANGE_LOOP_FIELDS = {
     "name", "levels", "return_level", "conservative_return",
-    "noncircularity_witness", "status", "defeater",
+    "noncircularity_witness", "status", "defeater", "proof_obligation",
 }
 STRANGE_LOOP_STATUSES = {"B-OPEN", "SPECIFIED", "TESTED"}
+PROOF_OBLIGATION_FIELDS = {
+    "domain", "codomain", "forward_map", "return_map",
+    "composite_identity_on", "conservative_return_status",
+    "proof_artifact", "imported_axioms", "falsifier",
+}
+PROOF_OBLIGATION_STATUSES = {"NOT_STARTED", "PARTIAL", "PROVED"}
 COMPARISON_TYPES = {"prospective", "retrospective blind", "retrodiction", "consistency", "not_applicable"}
 EXECUTION_STATUSES = {"not_performed", "retrospective_reproduction", "prospective_completed", "independently_replicated"}
 INPUT_PROVENANCE = {"derived", "declared", "fitted", "external"}
@@ -199,6 +205,26 @@ def validate_claim_record(data: dict, path: Path) -> None:
         levels = _texts(loop["levels"], f"{path}.strange_loop.levels")
         _require(len(levels) >= 2, f"{path}: strange_loop requires at least two levels")
         _require(loop["status"] in STRANGE_LOOP_STATUSES, f"{path}: invalid strange_loop status")
+        obligation = _object(
+            loop["proof_obligation"], f"{path}.strange_loop.proof_obligation",
+            PROOF_OBLIGATION_FIELDS, exact=True,
+        )
+        for key in PROOF_OBLIGATION_FIELDS:
+            _text(obligation[key], f"{path}.strange_loop.proof_obligation.{key}")
+        _require(
+            obligation["conservative_return_status"] in PROOF_OBLIGATION_STATUSES,
+            f"{path}: invalid conservative_return_status",
+        )
+        if obligation["conservative_return_status"] == "PROVED":
+            _require(
+                obligation["proof_artifact"].strip().lower() not in {"none", "not yet supplied", "n/a"},
+                f"{path}: PROVED return requires a proof artifact",
+            )
+        if loop["status"] == "TESTED":
+            _require(
+                obligation["conservative_return_status"] == "PROVED",
+                f"{path}: TESTED strange_loop requires a PROVED conservative return",
+            )
     if status["bridge"] == "CLOSED":
         _require(loop is not None, f"{path}: a CLOSED bridge requires a strange_loop specification")
         _require(loop["status"] == "TESTED", f"{path}: a CLOSED bridge requires a TESTED strange_loop return")
