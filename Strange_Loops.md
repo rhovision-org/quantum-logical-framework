@@ -143,6 +143,161 @@ The analogy is suggestive, not a derivation. It is a `B-OPEN` reading of the sam
 
 The observer loop in §3A is a higher-order closure of this form, not a consequence proved here.
 
+## 2B. The ρ-calculus analogy: capabilities, join and reflection
+
+The event-level picture has a close structural analogue in the ρ-calculus and Rholang. The analogy is
+`B-OPEN`: it is a correspondence between forms, not a proof that ZFA closure is a ρ-reduction or that
+QLF is implemented in Rholang.
+
+### 2B.1 Listener and trigger as dual capabilities
+
+Rholang computation is message passing on named channels. A receive waits on a channel; a send offers
+data on it; neither side alone is the communication reduction. Schematically:
+
+```
+for (x <- n) { P }  |  n!(Q)  ->  P[Q/x].
+```
+
+The QLF event has the same shape:
+
+```
+Listen_A  |  Trigger_B  ->  E_AB
+```
+
+when `B ∈ L(A)` and `A ∈ L(B)`, i.e. `Z(A ∘ B) = 0`. The event is a **successful capability match
+producing closure**, not one object mechanically causing another.
+
+### 2B.2 The name is the capability; read/write are its polarities
+
+The stronger formulation is not “a listener is a capability and a trigger is a capability.” It is:
+
+> **A name is the capability to participate in a relation; read and write authority provide its
+> listener and trigger polarities.**
+
+Rholang's bundle system is suggestive here: `bundle-{P}` restricts to read authority, `bundle+{P}`
+to write authority, `bundle0{P}` to neither, and ordinary `bundle{P}` retains both. The channel name
+connects the complementary authorities. The QLF analogue is the conjugate pair `t ↔ t†`: neither
+polarity alone is the complete event; their compatible interaction is.
+
+### 2B.3 The event is the rendezvous, not either participant
+
+In an asynchronous process calculus a send can exist before a receiver, or a receiver before a send;
+the significance lies in the eventual matching communication. That supports the QLF statement:
+
+```
+trigger and result are relative; the match is invariant.
+```
+
+From the listener's side the message is the trigger. From the sender's side the listener is the
+environment capable of accepting and transforming the message. At the reduction level there is simply:
+
+```
+matching resources  ->  event.
+```
+
+### 2B.4 Join patterns and ZFA closure
+
+A Rholang receive can require several resources simultaneously:
+
+```rholang
+for (a <- x; b <- y; c <- z) { P }
+```
+
+The continuation does not fire until all required matches are present; the join consumes them
+atomically. This is a better analogue of ZFA closure than ordinary sequential function calling:
+
+```
+{A, B, C, ...}  ->  E     only when all closure requirements are satisfied.
+```
+
+QLF writes the condition as `Σ_i Z_i = 0`; the process calculus writes it as “all required
+communications present.” **Join matching may be the computational analogue of ZFA closure.** That is a
+conjecture about form, not an identity theorem.
+
+### 2B.5 No external scheduler
+
+Capability/process calculi do not require an external controller that notices a command and then
+executes an event. The authority to participate is carried in the communicating names themselves.
+Instead of:
+
+```
+external controller  ->  event,
+```
+
+the picture is:
+
+```
+compatible capabilities  ->  interaction.
+```
+
+That fits a universe with no outside: there is no cosmic scheduler asking which event to execute.
+The possibilities themselves carry the capabilities required to participate.
+
+### 2B.6 Reflection and the strange loop
+
+The reflective higher-order ρ-calculus makes processes and names mutually related: names are
+structured from quoted processes, so process structure can become communicable name structure.
+Conceptually:
+
+```
+P  ->  @P  ->  P
+```
+
+—behavior becomes a name/capability, and the name can recover or activate behavior. This is a level
+crossing, not ordinary recursion:
+
+```
+behavior  ->  name/capability describing behavior  ->  behavior.
+```
+
+So there are two complementary strange-loop structures:
+
+```
+process  ↔  name          (ρ-calculus)
+open action  ↔  complement (QLF)
+```
+
+The analogy is suggestive, but the QLF side is still the ZFA condition `Z(A ∘ B) = 0`; the ρ side is
+an operational/computational form, not a derivation of that condition.
+
+### 2B.7 Correspondence table
+
+| QLF | ρ-calculus / Rholang |
+|---|---|
+| possibility / history | process |
+| distinguishable interaction condition | name / channel |
+| authority to participate | capability |
+| open complement requirement | receive / listener |
+| compatible complement | send / trigger |
+| several simultaneous requirements | join |
+| ZFA closure | successful communication reduction |
+| continuation after event | continuation process |
+| perspective reversal | read/write polarity |
+| self-reference without recursion | quote/drop reflection |
+
+The primitive event can then be written abstractly as:
+
+```
+L_A | T_B  --(A ⋈ B)-->  E
+```
+
+where the capability match `A ⋈ B` means `Z(A ∘ B) = 0`.
+
+### 2B.8 Status
+
+**`B-OPEN`:** the correspondence between QLF events and ρ-calculus reductions; the identification of
+join matching with ZFA closure; the reading of names as physical capabilities. These are structural
+analogies, not theorems or empirical claims.
+
+**Existing formal/implementation anchors:** [`lean/RhoQuCalc.lean`](lean/RhoQuCalc.lean),
+[`BraKetRhoQuCalc.md`](BraKetRhoQuCalc.md), and [`zfa-catalog-rho-notation.md`](zfa-catalog-rho-notation.md)
+provide process-algebra and bra-ket machinery; they do not prove the event correspondence above.
+
+**`E`:** none.
+
+The ontological reading—“reality consists not of objects that subsequently interact, but of
+capabilities whose compatible meetings are events”—is an interpretation, not a derived result.
+
 ## 3. Observer loops are not time loops
 
 The observer/consciousness layer has the same shape. An observer is a finite, terminating, self-referential **Markov blanket**: it models itself, its environment, and their interaction, and its ZFA closures synthesize its local time and world. The relevant documents are [`Philosophy.md`](Philosophy.md) §3d, [`Time.md`](Time.md) §7a, [`Hadrons_Markov_Blankets.md`](Hadrons_Markov_Blankets.md), and [`Consciousness.md`](Consciousness.md).
@@ -599,6 +754,9 @@ narrower: **the method now specifies what such a test would have to return.**
 - [`lean/QLF_ConservativeReturn.lean`](lean/QLF_ConservativeReturn.lean) — `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger`, the toy return and `no_event_cycle`.
 - [`Proof_to_Physics.md`](Proof_to_Physics.md) — G3 and the bridge registry.
 - [Issue #213](https://github.com/rhovision-org/quantum-logical-framework/issues/213) — “Map is the Territory”: the interpretive claim, graded `B-OPEN`/conjecture; the tensor quotient is a worked bridge form, not a closure.
+- [`BraKetRhoQuCalc.md`](BraKetRhoQuCalc.md) — the ρ-calculus / bra-ket connection and `RhoQuCalc` machinery.
+- [`lean/RhoQuCalc.lean`](lean/RhoQuCalc.lean) — ρ-process algebra, Hermitian structure, ZFA stability.
+- [Rholang documentation](https://rholang.org/docs/rholang/) and [RChain resources](https://rchain.coop/resources.html) — external process-calculus and capability background; the analogy is not an implementation claim.
 - [`ScientificApproach.md`](ScientificApproach.md) §5 — the bridge protocol.
 - [`claim_records/`](claim_records/README.md) — typed records and the `strange_loop` field.
 - [`flowchart_source.md`](tools/flowchart_source.md) / [live FlowChart](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) — the navigation map.
