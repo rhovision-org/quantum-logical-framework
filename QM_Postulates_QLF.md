@@ -212,8 +212,10 @@ one-way order. Since `cos E` is then even in every `k_i`, the palindrome's dispe
 **proved** in Lean ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean), no axioms): `realStep_eq_cos_sin`
 writes each realizable step as `cos k · 1 + i sin k · M(t)`, `realWalk_trace` proves the full complex
 trace is `2 cos k_y cos k_x cos k_z` (so its imaginary part vanishes too), and `realWalk_trace_even`
-proves it is even in each `k_i`. The one-way identity stays numerical, since that order is no longer the
-Lean walk.
+proves it is even in each `k_i`. The one-way identity is proved as well (`oneWayWalk_trace`, §8 of the
+module): with the Lean twists it reads `Π cos k_i + Π sin k_i`. The sign differs from the script's because
+the Lean `left` twist is `−σ_x` and the script uses `+σ_x`; it is the same walk at `k_x → −k_x`, and the
+odd term changes sign between octants either way.
 
 The fixed order breaks time reversal and parity, and that leaves a term **linear** in energy. Its sign
 flips between octants and between the two chiralities (the Dirac walk runs the other chirality at
@@ -281,8 +283,14 @@ Take any nearest-neighbour step along one axis: it sends the spin one site forwa
 So the electron's free step follows from four things: one site per tick, unitarity at every momentum,
 no coin at zero momentum, and the twist as the spin generator. The last is QLF's realizability premise
 (§1, row A3). The coin `U` is where mass enters. That the coin is the handedness flip `β`, and that
-the three axes are composed in the palindromic order (the reversal identity `realWalk_neg`), are still
-choices rather than theorems. Two things remain physical identifications: that the electron is a
+the three axes are composed in the palindromic order, are still choices rather than theorems. For the
+order, the choice is now pinned to one premise: that the dispersion is even under `k → −k`. Every
+palindromic word of steps has the reversal identity `W(−k) = W(k)†` (`palindrome_reversal`). The one-way
+order does not, and its dispersion is odd by exactly `4 Π sin k_i` (`oneWayWalk_trace_odd`,
+`oneWayWalk_not_reversal`). A four-step walk is even only when the repeated axis is split equally, and
+that walk is the five-step palindrome in another frame (`splitWalk_even_iff`,
+`splitWalk_conj_palindrome`). Evenness itself is not derived from logic; under the electron
+identification it is what the Crab bound requires. Two things remain physical identifications: that the electron is a
 spin-½ closure that moves this way, and that the lattice tick is the Planck time.
 
 
