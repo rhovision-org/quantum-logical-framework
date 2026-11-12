@@ -266,6 +266,15 @@ between them, the result is an orphan record: it is held but has no name, and th
 names it heals that. There is never a name pointing at nothing. If the legs arrive out of order, an
 index entry can briefly come before its record. Only `redundancy` waits for the record leg.
 
+**Both legs carry one snapshot.** The history is copied once, then validated, and its content id and
+cascade key are computed from that copy. Both legs carry only those fixed values. Without this, a
+client that changes its own list after building the legs could store one history under another's id,
+or pair a record with the wrong index key. Aria found both cases in the reference model. Rholang
+values are immutable, so the contract cannot hit this, but a client library written in a mutable
+language can. Self-check (j) changes the list before delivery and between the two legs, for both
+assertions and answers. It confirms that every stored id matches its history and every index key
+matches its record.
+
 **Two properties come from the substrate rather than from engineering:**
 
 - **The gate needs no state.** Per-axis balance is a property of the twists alone, so any shard and any

@@ -419,20 +419,28 @@ class ShardedKB:
 
     # legs, exposed separately so a test can deliver them in any order, twice
     def _record_leg(self, ts, attester):
-        pk = pub_key_bytes(attester)
-        if not valid_twists(ts) or pk is None or not is_closure(ts):  # stateless gate
+        """Snapshot first, then validate, address and key the snapshot. Both legs
+        capture only these fixed values, so mutating the caller's list after the
+        legs are built (before delivery, or between them) cannot change what is
+        stored. (In Rholang every value is immutable, so the contract cannot
+        hit this; a client library in a mutable language can.)"""
+        if not isinstance(ts, list):
             return None
-        cid = content_id(ts)
+        snap = tuple(ts)
+        pk = pub_key_bytes(attester)
+        if not valid_twists(list(snap)) or pk is None or not is_closure(list(snap)):
+            return None                                           # stateless gate
+        cid, key = content_id(list(snap)), cascade_key(list(snap))
         r = self.rec[shard_of(cid, self.k)]
-        return cid, (lambda: r.put(cid, ts, pk))
+        return cid, key, (lambda: r.put(cid, list(snap), pk))
 
     def legs(self, name, ts: list[int], attester):
         got = self._record_leg(ts, attester)
         if got is None:
             return []
-        cid, leg = got
+        cid, key, leg = got
         i = self.idx[shard_of(name, self.k)]
-        return [leg, lambda: i.put(name, cascade_key(ts), cid)]
+        return [leg, lambda: i.put(name, key, cid)]
 
     def assert_closure(self, name, ts, attester) -> None:
         for leg in self.legs(name, ts, attester):
@@ -463,9 +471,9 @@ class ShardedKB:
         got = self._record_leg(ts, attester)
         if got is None:
             return []
-        cid, leg = got
+        cid, key, leg = got
         i = self.idx[shard_of(q, self.k)]
-        return [leg, lambda: i.put_answer(q, cascade_key(ts), cid)]
+        return [leg, lambda: i.put_answer(q, key, cid)]
 
     def solve(self, q) -> Optional[list[int]]:
         if not valid_question(q):
@@ -699,6 +707,37 @@ def _selfcheck() -> None:
     print(f"(i) non-answer under the question id ignored by solve in both models; "
           f"conjoin closed on {len(props)} propositions ({n_ok} defined pairs); "
           f"questions validated alike; answer-before-ask converges")
+
+    # (j) fourth review: a queued leg carries a snapshot, not the caller's list.
+    def integrity(sk):
+        for shard in sk.rec:
+            for cid, (ts_, _) in shard.recs.items():
+                assert content_id(ts_) == cid, (cid, ts_)             # content address holds
+        for shard in sk.idx:
+            for table in (shard.names, shard.answers):
+                for es in table.values():
+                    for key, cid in es:
+                        rec = sk.rec[shard_of(cid, sk.k)].recs[cid]
+                        assert key == cascade_key(rec[0]), (key, rec[0])   # index agrees
+    for mutate_at in ("before", "between"):
+        for make in ("assert", "answer"):
+            sk = ShardedKB(3)
+            buf = from_str("^<v>") if make == "assert" else from_str("<v")
+            lg = (sk.legs("n", buf, alice) if make == "assert"
+                  else sk.answer_legs(question_id(from_str("^>"), 0), buf, alice))
+            if mutate_at == "before":
+                buf[:] = from_str("+-+-")
+            lg[0]()
+            if mutate_at == "between":
+                buf[:] = from_str("+-+-")
+            lg[1]()
+            integrity(sk)
+            want = from_str("^<v>") if make == "assert" else from_str("^><v")
+            stored = [ts_ for sh in sk.rec for ts_, _ in sh.recs.values()]
+            assert stored == [want], (mutate_at, make, stored)
+    assert ShardedKB(2).legs("n", tuple(from_str("^<v>")), alice) == []    # not a list
+    print("(j) caller mutation before delivery or between legs changes nothing: "
+          "content ids and index keys match the stored history")
     print("all self-checks passed")
 
 
