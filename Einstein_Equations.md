@@ -316,7 +316,9 @@ and a future construction (Mathlib connections, or a substrate difference calcul
 *building* an instance rather than by deleting an axiom. The two physics inputs, contracted Bianchi and
 conservation, are likewise explicit hypotheses of the main theorem.
 
-**What this leaves.** One arrow: `δQ = T δS ⟹ (R_ab − κ T_ab) k^a k^b = 0`, needing the local Rindler
+**What this leaves.** The interface is now inhabited, first in one dimension
+([`QLF_LatticeCalculus`](lean/QLF_LatticeCalculus.lean)) and then on the full `ℤ⁴` lattice with the
+Minkowski signature (§6e). One arrow remains: `δQ = T δS ⟹ (R_ab − κ T_ab) k^a k^b = 0`, needing the local Rindler
 construction and Raychaudhuri focusing. That is now the *single* remaining substrate question for the
 field equations, rather than "the tensor derivation" as a whole.
 
@@ -345,8 +347,11 @@ proven isomorphism, not a derivation of curvature.
 
 ## §6e The calculus, built: forward differences on the substrate lattice
 
-[`QLF_LatticeDivergence`](lean/QLF_LatticeDivergence.lean) (no axioms) builds a `DivergenceCalculus`
-instance on `ℤ⁴`, the lattice the closure walk lives on, where the eight twists are the steps `±e_a`
+The interface was first inhabited by [`QLF_LatticeCalculus`](lean/QLF_LatticeCalculus.lean): a
+forward-difference calculus on `ℤ` with one live direction. That settles consistency (the field-equation
+theorems are not vacuous) but, as its own docstring says, not the Lorentzian geometry, since the
+`x, y, z` directions are inert. [`QLF_LatticeDivergence`](lean/QLF_LatticeDivergence.lean) (no axioms)
+takes that step. It builds the instance on `ℤ⁴`, the lattice the closure walk lives on, where the eight twists are the steps `±e_a`
 ([`Closure_Walk.md`](Closure_Walk.md)). The gradient is the forward difference
 `∂_b f = f(p + e_b) − f(p)` and the divergence is `∇^a A_ab = Σ_a η^aa (A_ab(p + e_a) − A_ab(p))`.
 
@@ -358,9 +363,10 @@ instance on `ℤ⁴`, the lattice the closure walk lives on, where the eight twi
   (`lattice_einstein_field_equations`), and `Λ` is **one constant for every site**.
 
 **R6a first.** The interface is also satisfied on a single point with `div = 0` and `grad = 0`
-(`unit_calculus`), so the existence of an instance is no evidence by itself. What this instance adds
-is that the calculus the derivation needs is the substrate's own step calculus, and that lattice
-connectedness is what makes `Λ` global.
+(`unit_calculus`), so the existence of an instance is no evidence by itself. What the `ℤ⁴` instance adds
+over the `ℤ` one is that all four directions are live and the divergence contracts with the
+`(+,−,−,−)` signature, so metric compatibility uses the Minkowski metric rather than one component of
+it; and that lattice connectedness in four directions is what makes `Λ` one constant everywhere.
 
 **Scope.** The discrete contracted Bianchi identity and discrete conservation remain hypotheses.
 Forward differences obey no exact Leibniz rule, so a lattice Ricci tensor need not satisfy
@@ -382,7 +388,9 @@ annihilating the null cone is a metric multiple, forced by **nine integer lattic
 continuum of null directions ([`QLF_NullTensorReconstruction`](lean/QLF_NullTensorReconstruction.lean)).
 The arrow *out* of it is closed too (§6c): contracted Bianchi plus conservation force `f = R/2 − Λ`
 with `Λ` constant, giving `G_ab + Λ g_ab = κ T_ab` — and with **zero new axioms**, the calculus being an
-interface (`DivergenceCalculus`) discharged by construction rather than posited. What is left is the
+interface (`DivergenceCalculus`) discharged by construction rather than posited, and now constructed on
+the substrate lattice `ℤ⁴` (§6e). The middle arrow also has a two-body reading: the metric is the
+singlet and the null directions are product states (§6d). What is left is the
 arrow *into* the metric form: local Rindler + Raychaudhuri focusing.
 
 The remaining open step is *concrete and named*, not "differential geometry QLF lacks": it is the
@@ -435,6 +443,7 @@ characterisation. Logic fixes no local term: `G`, `Λ` and `T` still come from t
 | `scalar_multiple_is_curvature` | contracted Bianchi + conservation ⟹ `f = R/2 − Λ` with `Λ` **constant** (the integration step) |
 | `einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` — the field equations over the interface (§6c) |
 | `metric_form_from_null_probes` | chains §6b into §6c: nine integer null probes deliver the metric form `einstein_field_equations` needs |
+| `interface_is_inhabited` | ([`QLF_LatticeCalculus`](lean/QLF_LatticeCalculus.lean)) a nondegenerate forward-difference instance on `ℤ`, one live direction: the interface is consistent |
 | `latticeCalculus` | ([`QLF_LatticeDivergence`](lean/QLF_LatticeDivergence.lean)) the interface built on `ℤ⁴` from forward differences along the twist steps (§6e) |
 | `lattice_einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` on the lattice with the calculus discharged; one `Λ` for every site. Discrete Bianchi and conservation are still hypotheses |
 | `no_time_loops_from_logic` | ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)) from the law of weakening alone, no event lies in its own strict past; `loopWorld_has_time_loop` shows the law is needed |

@@ -7,8 +7,10 @@ set_option linter.unusedVariables false
 # QLF_LatticeDivergence — the divergence calculus, built on the closure walk's lattice
 
 [`QLF_BianchiClosure`](QLF_BianchiClosure.lean) derived `G_ab + Λ g_ab = κ T_ab` from the metric form
-over an *interface*, `DivergenceCalculus`, and left building an instance open. This module builds one
-on the lattice the substrate already walks on: `ℤ⁴`, where the eight twists are the steps `±e_a`
+over an *interface*, `DivergenceCalculus`. [`QLF_LatticeCalculus`](QLF_LatticeCalculus.lean) showed
+the interface is inhabited, with a forward-difference instance on `ℤ` in which only one direction is
+live. This module builds the four-dimensional instance with the Minkowski signature, on the lattice
+the substrate already walks on: `ℤ⁴`, where the eight twists are the steps `±e_a`
 ([`Closure_Walk.md`](../Closure_Walk.md)).
 
 * `∂_b f` is the forward difference `f(p + e_b) − f(p)`.
