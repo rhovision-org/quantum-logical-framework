@@ -47,12 +47,16 @@ This module adds only what was missing. No axiom.
   isolation: a lineage is independent of the niche it meets exactly when it is closed.
 
 * **§6 The proton: the simplest isolated imbalance.** A closure is isolated, so it can carry an
-  imbalance only in a quantity counting cannot see. The first such quantity is the three-axis
-  winding (baryon number): every closure shorter than six has none (`short_closures_unwound`), and
-  at six the proton word `>^/` closes as a prime closure with winding `+1`
-  (`proton_simplest_isolated_imbalance`). Possibility makes it stable: at length `6 + 2n` at least
-  `2ⁿ` closures carry winding `+1` (`proton_ways_unbounded`), so the proton is a class of ways
-  whose multiplicity grows without bound, not one fragile configuration.
+  imbalance only in a quantity counting cannot see. The first such quantity is baryon number, read
+  as `QLF_BaryonWinding`'s gauge-invariant `junctionBaryon` (the three-axis winding of the word's
+  spatial skeleton): every closure shorter than six has none (`short_closures_unwound`), and at six
+  the proton word `>^/` closes as a prime closure with baryon number `+1`
+  (`proton_simplest_isolated_imbalance`). At length `6 + 2n` at least `2ⁿ` distinct closures carry
+  baryon number `+1` (`proton_ways_unbounded`). That is raw-history multiplicity only: the
+  witnesses share one junction, and each with `n > 0` has the proton closure as a proper closed
+  prefix. It is not a stability theorem; any physical reading of it is open and lives in the
+  companion document. The windowed winding `baryonNumber` is not used for these claims, because a
+  gauge pair inserted inside the proton word changes it (`gauge_pair_insertion_regression`).
 
 **Scope.** These are theorems about the possibility space, not about which world is ours. That
 selection is the first closure (`QLF_ClosureDepth`, `/solve`); the physics readings (magnetism from
@@ -389,12 +393,19 @@ theorem axis_count_pos {w : List Twist} {a : Ax} (h : ∃ t ∈ w, axOf t = some
     subst e
     refine ⟨fun h' => ?_, fun h' => ?_, fun h' => ?_⟩ <;> (try cases h') <;> omega
 
-/-- **Short closures carry no winding.** Every closure of length below six has baryon number zero:
-    a winding needs all three spatial axes, and a closure pays two events per axis. -/
+theorem mem_of_mem_junction {t : Twist} {w : List Twist} (h : t ∈ junction w) : t ∈ w :=
+  List.mem_of_mem_filter h
+
+/-- **Short closures carry no baryon number.** Every closure of length below six has
+    `junctionBaryon` zero: a winding needs all three spatial axes on the junction, those twists are
+    in the word, and a closure pays two events per axis. -/
 theorem short_closures_unwound {w : List Twist} (hb : countBalanced w) (hl : w.length < 6) :
-    baryonNumber w = 0 := by
+    junctionBaryon w = 0 := by
   by_contra h
-  obtain ⟨hx, hy, hz⟩ := winding_needs_three_axes w h
+  obtain ⟨⟨t1, m1, e1⟩, ⟨t2, m2, e2⟩, ⟨t3, m3, e3⟩⟩ := winding_needs_three_axes (junction w) h
+  have hx : ∃ t ∈ w, axOf t = some Ax.x := ⟨t1, mem_of_mem_junction m1, e1⟩
+  have hy : ∃ t ∈ w, axOf t = some Ax.y := ⟨t2, mem_of_mem_junction m2, e2⟩
+  have hz : ∃ t ∈ w, axOf t = some Ax.z := ⟨t3, mem_of_mem_junction m3, e3⟩
   have cx := (axis_count_pos hx).1 rfl
   have cy := (axis_count_pos hy).2.1 rfl
   have cz := (axis_count_pos hz).2.2 rfl
@@ -408,66 +419,35 @@ def protonClosure : List Twist :=
 
 /-- **The proton is the simplest isolated imbalance.** A closure is isolated (`isolated_iff_closed`),
     so it can hide an imbalance only in a quantity that counting cannot see. The first such quantity
-    is the three-axis winding: no closure shorter than six carries it (`short_closures_unwound`),
-    and at six the proton word `>^/` (`baryon_proton`) closes into a prime closure with winding
-    exactly `+1`. -/
+    is baryon number (`junctionBaryon`): no closure shorter than six carries it
+    (`short_closures_unwound`), and at six the proton word `>^/` (`baryon_proton`) closes into a
+    prime closure with baryon number exactly `+1`. -/
 theorem proton_simplest_isolated_imbalance :
     protonClosure.take 3 = [Twist.right, Twist.up, Twist.slash] ∧
     countBalanced protonClosure ∧ FirstReturn.IsPrime protonClosure ∧
-    baryonNumber protonClosure = 1 ∧ protonClosure.length = 6 ∧
-    ∀ w : List Twist, countBalanced w → w.length < 6 → baryonNumber w = 0 := by
+    junctionBaryon protonClosure = 1 ∧ protonClosure.length = 6 ∧
+    ∀ w : List Twist, countBalanced w → w.length < 6 → junctionBaryon w = 0 := by
   refine ⟨rfl, ?_, ?_, by decide, rfl, fun w hb hl => short_closures_unwound hb hl⟩
   · unfold countBalanced; decide
   · decide
 
-theorem signTriple_none_left (q r : Option Ax) : signTriple none q r = 0 := by
-  cases q <;> cases r <;> rfl
+/-- **Regression: the windowed winding is not baryon number.** Inserting the gauge pair `+-` after
+    the first twist of the proton closure keeps it closed and keeps its junction, so `junctionBaryon`
+    stays `1`, while the windowed `baryonNumber` drops to `0`. -/
+theorem gauge_pair_insertion_regression :
+    let w := [Twist.right, Twist.plus, Twist.minus, Twist.up, Twist.slash, Twist.left,
+      Twist.backslash, Twist.down]
+    countBalanced w ∧ junction w = protonClosure ∧ junctionBaryon w = 1 ∧ baryonNumber w = 0 := by
+  refine ⟨?_, by decide, by decide, by decide⟩
+  unfold countBalanced; decide
 
-theorem signTriple_none_mid (p r : Option Ax) : signTriple p none r = 0 := by
-  rcases p with _ | ⟨_ | _ | _⟩ <;> rfl
-
-theorem signTriple_none_right (p q : Option Ax) : signTriple p q none = 0 := by
-  rcases p with _ | ⟨_ | _ | _⟩ <;> rcases q with _ | ⟨_ | _ | _⟩ <;> rfl
-
-/-- A history of gauge twists only carries no winding. -/
-theorem baryon_all_gauge : ∀ w : List Twist, (∀ t ∈ w, axOf t = none) → baryonNumber w = 0
-  | [], _ => rfl
-  | [_], _ => rfl
-  | [_, _], _ => rfl
-  | a :: b :: c :: rest, h => by
-    have ha : axOf a = none := h a (by simp)
-    have ih := baryon_all_gauge (b :: c :: rest) (fun t ht => h t (List.mem_cons_of_mem _ ht))
-    show signTriple (axOf a) (axOf b) (axOf c) + baryonNumber (b :: c :: rest) = 0
-    rw [ha, signTriple_none_left, ih]; rfl
-
-theorem baryon_gauge_tail (a : Twist) (w : List Twist) (h : ∀ t ∈ w, axOf t = none) :
-    baryonNumber (a :: w) = 0 := by
-  match w, h with
-  | [], _ => rfl
-  | [_], _ => rfl
-  | g₁ :: g₂ :: r, h =>
-    have h1 : axOf g₁ = none := h g₁ (by simp)
-    show signTriple (axOf a) (axOf g₁) (axOf g₂) + baryonNumber (g₁ :: g₂ :: r) = 0
-    rw [h1, signTriple_none_mid, baryon_all_gauge _ h]; rfl
-
-/-- **Gauge padding leaves the winding unchanged.** Appending gauge twists to any history adds no
-    winding: every window that reaches the padding contains an axis-free twist. -/
-theorem baryon_append_gauge : ∀ (l w : List Twist), (∀ t ∈ w, axOf t = none) →
-    baryonNumber (l ++ w) = baryonNumber l
-  | [], w, h => baryon_all_gauge w h
-  | [a], w, h => by rw [List.singleton_append, baryon_gauge_tail a w h]; rfl
-  | [a, b], w, h => by
-    match w, h with
-    | [], _ => rfl
-    | g :: r, h =>
-      have hg : axOf g = none := h g (by simp)
-      show signTriple (axOf a) (axOf b) (axOf g) + baryonNumber (b :: g :: r) = baryonNumber [a, b]
-      rw [hg, signTriple_none_right, baryon_gauge_tail b (g :: r) h]; rfl
-  | a :: b :: c :: rest, w, h => by
-    have ih := baryon_append_gauge (b :: c :: rest) w h
-    show signTriple (axOf a) (axOf b) (axOf c) + baryonNumber ((b :: c :: rest) ++ w) =
-      signTriple (axOf a) (axOf b) (axOf c) + baryonNumber (b :: c :: rest)
-    rw [ih]
+/-- Gauge twists vanish from the junction. -/
+theorem junction_append_gauge (l w : List Twist) (h : ∀ t ∈ w, axOf t = none) :
+    junction (l ++ w) = junction l := by
+  have hw : w.filter isSpatial = [] :=
+    List.filter_eq_nil_iff.mpr (fun t ht => by simp [isSpatial, h t ht])
+  unfold junction
+  rw [List.filter_append, hw, List.append_nil]
 
 /-- A balanced gauge word from a word of bits: each bit chooses `+-` or `-+`. -/
 def gaugeWord (bs : List Bool) : List Twist :=
@@ -517,13 +497,14 @@ theorem gaugeWord_injective : Function.Injective gaugeWord := by
       cases a <;> cases b <;> simp at h
       all_goals rw [ih h]
 
-/-- **Possibility makes the proton stable: its ways are unbounded.** At length `6 + 2n` there are at
-    least `2ⁿ` closures carrying baryon winding exactly `+1`, all admitted by the same niches as the
-    proton closure padded to that length. The proton is not one fragile configuration but a class
-    whose multiplicity grows without bound. (Census: 192 at length 6, 15 552 at length 8.) -/
+/-- **The proton's ways are unbounded (raw-history multiplicity).** At length `6 + 2n` there are at
+    least `2ⁿ` distinct closures with baryon number (`junctionBaryon`) exactly `+1`. The witnesses
+    are the proton closure followed by a balanced gauge word, so they share one junction and each
+    with `n > 0` has the proton closure as a proper closed prefix: this counts histories, not
+    distinct prime closures, and it is not by itself a stability argument. -/
 theorem proton_ways_unbounded (n : ℕ) :
     2 ^ n ≤ ((words Twist (6 + 2 * n)).filter
-      (fun w => decide (countBalanced w ∧ baryonNumber w = 1))).card := by
+      (fun w => decide (countBalanced w ∧ junctionBaryon w = 1))).card := by
   have hcard : (words Bool n).card = 2 ^ n := by rw [card_words]; simp
   rw [← hcard]
   apply Finset.card_le_card_of_injOn (fun bs => protonClosure ++ gaugeWord bs)
@@ -533,7 +514,7 @@ theorem proton_ways_unbounded (n : ℕ) :
     refine ⟨?_, ?_, ?_⟩
     · rw [List.length_append, gaugeWord_length, hbs]; rfl
     · exact ClosureKernel.balanced_append (by unfold countBalanced; decide) (gaugeWord_balanced bs)
-    · rw [baryon_append_gauge _ _ (gaugeWord_gauge bs)]; decide
+    · rw [junctionBaryon, junction_append_gauge _ _ (gaugeWord_gauge bs)]; decide
   · intro x _ y _ h
     exact gaugeWord_injective (List.append_cancel_left h)
 

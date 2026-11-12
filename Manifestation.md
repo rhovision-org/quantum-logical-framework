@@ -65,18 +65,28 @@ under its own premises.
 - `same_niches_iff_sameNet` — two variants are admitted by the same niches exactly
   when they have the same net.
 - `rearrangement_neutral` — reordering within a net does not change the selection.
-- `short_closures_unwound` — short closures are unwound in the stated sense.
 
 These are structural selection statements. They do not assert a biological or
 cognitive selection mechanism.
 
 ### 6. The proton as the simplest isolated imbalance
 
-- `proton_simplest_isolated_imbalance` — no closure shorter than six carries
-  baryon winding; the proton word closes at six with winding +1.
-- `proton_ways_unbounded` — the proton closes in unboundedly many ways.
+Baryon number here is `QLF_BaryonWinding`'s gauge-invariant `junctionBaryon`, the
+three-axis winding of the word's spatial skeleton, not the windowed `baryonNumber`,
+which a gauge pair inserted inside the word can change.
 
-Here "proton" names a closure word with baryon winding in the substrate model.
+- `short_closures_unwound` — every closure shorter than six has baryon number 0.
+- `proton_simplest_isolated_imbalance` — the proton word closes at six as a prime
+  closure with baryon number +1.
+- `proton_ways_unbounded` — at length `6 + 2n` at least `2ⁿ` distinct closures
+  have baryon number +1. This is raw-history multiplicity: the witnesses are the
+  proton closure followed by a balanced gauge word, so they share one junction and
+  each with `n > 0` has a proper closed prefix. It is not a stability theorem.
+- `gauge_pair_insertion_regression` — inserting `+-` after the proton's first twist
+  keeps the closure and its junction, so `junctionBaryon` stays 1 while the windowed
+  winding drops to 0.
+
+Here "proton" names a closure word with baryon number in the substrate model.
 It is **not** a QCD derivation of the physical proton mass, radius, or structure.
 The result is a formal structural statement, not a particle-physics measurement.
 
