@@ -38,6 +38,7 @@ flowchart LR
   MTH -.->|audits| D8
   click MTH "#methods-and-evidence-paper-i-v03"
   click SL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md" _blank
+  click MT "https://github.com/rhovision-org/quantum-logical-framework/issues/213" _blank
 ```
 
 **Jump to:** [1 Space, time and the continuum](#1-space-time-and-the-continuum) &middot; [2 The fundamental constants](#2-the-fundamental-constants) &middot; [3 Forces](#3-forces) &middot; [4 Atoms and QED](#4-atoms-and-qed) &middot; [5 Gravity and GR](#5-gravity-and-gr) &middot; [6 Cosmology and the dark sector](#6-cosmology-and-the-dark-sector) &middot; [7 Particles and the Standard Model](#7-particles-and-the-standard-model) &middot; [8 Quantum-gravity / TOE pillars](#8-quantum-gravity--toe-pillars) &middot; [9 The Millennium Prize program](#9-the-millennium-prize-program) &middot; [10 Beyond the SM](#10-beyond-the-sm) &middot; [11 Chemistry, molecules and folding](#11-chemistry-molecules-and-folding) &middot; [12 Quantum field theory and renormalization](#12-quantum-field-theory-and-renormalization) &middot; [Methods and evidence](#methods-and-evidence-paper-i-v03)
@@ -488,6 +489,7 @@ flowchart TD
   MTH --> SL["Two-phase / strange-loop bootstrapping"]
   SL --> MATH["Mathematics_From_QLF.md section 2: conservative return"]
   SL --> PHIL["Philosophy.md section 3d / Time.md section 7a: no time loops"]
+  SL --> MT["Map ≡ territory / entanglements are the only effects (B-OPEN conjecture; issue #213)"]
   MTH --> F["F - audited formal statements (343 anchors)"]
   MTH --> N["N - reproduced numerical results"]
   MTH --> B["B-OPEN - interpretation bridges"]

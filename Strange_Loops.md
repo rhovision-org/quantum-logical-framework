@@ -316,6 +316,36 @@ The strange-loop reading is the conceptual shape of the `B-OPEN` row. It is not 
 
 The Paper I v0.3 Gist is linked from the [flow chart](FlowChart.md) and the repository's evidence index. The audited snapshot remains [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
 
+### 9.1 Map is the territory (issue #213)
+
+[Issue #213](https://github.com/rhovision-org/quantum-logical-framework/issues/213), “Map is the Territory,” is the
+interpretive claim that under ZFA the relational rewrite network is not a map of a separate territory; its
+self-consistent closed execution *is* the territory. Standard QM and classical physics are then incomplete maps
+of that single territory.
+
+The issue already grades the claim correctly:
+
+- **`F` / verified:** the discrete substrate, ZFA closure, MO2, continuum unrealizability, pair structure and
+  ER=EPR formal components.
+- **`B-OPEN` / conjecture:** the identification “map ≡ territory / entanglements are the only effects.” No
+  noncircular map from the formal expression to the physical event has been specified.
+- **`E-candidate`:** exclusivity of ZFA, with kill conditions.
+
+That is exactly the gap the conservative-return interface addresses. `TensorConservativeReturn` is a worked
+example of the required bridge form:
+
+```
+finite closure composition  →  tensor/Hilbert representation
+                            →  same finite closure information
+                               (on the physical quotient).
+```
+
+The checked `R ∘ F = id` on tensor-image classes is a noncircular preservation result for one conventional
+construction. It does **not** close “map is the territory”: the physically selected closure equivalence, the
+entangled-sector return, and the formal-to-event map remain open. It supplies the form such a bridge must take,
+under the same non-circularity and no-time-loop constraints as the rest of this note.
+
+
 ---
 
 ## 10. References and internal links
@@ -333,6 +363,7 @@ The Paper I v0.3 Gist is linked from the [flow chart](FlowChart.md) and the repo
 - [`verification/strange-loop/tensor_return_target.md`](verification/strange-loop/tensor_return_target.md) — the explicit `TensorConservativeReturn` target, now `PROVED` as a quotient construction; physical selection remains open.
 - [`lean/QLF_ConservativeReturn.lean`](lean/QLF_ConservativeReturn.lean) — `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger`, the toy return and `no_event_cycle`.
 - [`Proof_to_Physics.md`](Proof_to_Physics.md) — G3 and the bridge registry.
+- [Issue #213](https://github.com/rhovision-org/quantum-logical-framework/issues/213) — “Map is the Territory”: the interpretive claim, graded `B-OPEN`/conjecture; the tensor quotient is a worked bridge form, not a closure.
 - [`ScientificApproach.md`](ScientificApproach.md) §5 — the bridge protocol.
 - [`claim_records/`](claim_records/README.md) — typed records and the `strange_loop` field.
 - [`flowchart_source.md`](tools/flowchart_source.md) / [live FlowChart](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) — the navigation map.
