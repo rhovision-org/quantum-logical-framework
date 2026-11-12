@@ -329,8 +329,8 @@ The Paper I v0.3 Gist is linked from the [flow chart](FlowChart.md) and the repo
 - [`Alpha.md`](Alpha.md) — the α derivation programme and its honest scope.
 - [`SPARC.md`](SPARC.md) — the retrospective benchmark and its limits.
 - [`Claim_Status.md`](Claim_Status.md) — the human-readable claim ledger.
-- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` remains the missing theorem.
-- [`verification/strange-loop/tensor_return_target.md`](verification/strange-loop/tensor_return_target.md) — the explicit `TensorConservativeReturn` theorem target, status `NOT_STARTED`.
+- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` is proved in `QLF_TensorConservativeReturn` (outside the 319 baseline).
+- [`verification/strange-loop/tensor_return_target.md`](verification/strange-loop/tensor_return_target.md) — the explicit `TensorConservativeReturn` target, now `PROVED` as a quotient construction; physical selection remains open.
 - [`lean/QLF_ConservativeReturn.lean`](lean/QLF_ConservativeReturn.lean) — `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger`, the toy return and `no_event_cycle`.
 - [`Proof_to_Physics.md`](Proof_to_Physics.md) — G3 and the bridge registry.
 - [`ScientificApproach.md`](ScientificApproach.md) §5 — the bridge protocol.

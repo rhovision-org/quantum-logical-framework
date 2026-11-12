@@ -98,6 +98,6 @@ singlet is the worked example; it is not proved here.
 ## Relation to the claim records
 
 This target is formal-only. It does not change any `bridge: B-OPEN` status, any
-`strange_loop.status`, or the 319-anchor baseline. Until the theorem exists and is
-reviewed, the tensor bridge remains a **near-complete conservative bridge**, not a
-closed physical bridge.
+`strange_loop.status`, or the 319-anchor baseline. The theorem exists but is
+outside the reviewed baseline; until it is reviewed there, the tensor bridge
+remains a **near-complete conservative bridge**, not a closed physical bridge.

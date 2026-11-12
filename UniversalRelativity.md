@@ -355,6 +355,64 @@ $$\det\!\begin{pmatrix} t+z & x-iy \\ x+iy & t-z \end{pmatrix} = t^2 - x^2 - y^2
 
 The full **`SL(2,ℂ) → SO⁺(1,3)` double cover** is machine-checked in [`QLF_LorentzCover`](lean/QLF_LorentzCover.lean): a group homomorphism (`spinor_hom`) with **kernel exactly `{±I}`** (`spinor_kernel`, the genuine 2-to-1), whose generators are realized explicitly — a diagonal `diag(a,b)` acts as a **Lorentz boost** on the null coordinates (`boostZ_action`), a unitary `diag(w,w̄)` as a **spatial rotation** (`rotZ_action`) — and which is **surjective** onto every proper orthochronous Lorentz transformation (`spinor_surjective`). So special relativity's symmetry group and the spinor double cover are theorems of the substrate, not assumptions. The one bridge axiom is the standard Lie-theory generation fact — the **KAK/Cartan decomposition of `SO⁺(1,3)`** — whose composed generators are themselves proven in the image. Couched in the **Witten 1988 → Reshetikhin–Turaev precedent**: a physics-native construction whose single bridge is *settled mathematics* (Lie theory Mathlib does not yet package), not a QLF-specific posit. Full in-Lean elimination is the KAK project, Class-B dischargeable in principle; in the Witten mode a settled-math bridge under a fully-proven core is the honored end-state, not a gap.
 
+### 3a′. The next rung: derived tensor composition and the metric singlet
+
+The one-body spacetime object is `Herm₂(ℂ) ≅ ℝ^{1,3}`. The natural next rung for two independent
+bodies is
+
+```
+Herm₂(ℂ)  →  Herm₂(ℂ) ⊗ Herm₂(ℂ),
+```
+
+the algebraic space of rank-2 objects. This is not an assumed quantum-mechanical composition rule:
+[`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean) derives the tensor product for independent
+bodies from interleaving invariance, and `QLF_MetricSinglet` identifies the Minkowski metric with the
+singlet projector in that two-body representation.
+
+The GR progression is therefore:
+
+```
+closure  →  Form  →  Minkowski vector  →  derived tensor composition
+        →  metric singlet  →  Einstein tensor structure.
+```
+
+The strange-loop addition supplies the methodological condition:
+
+```
+substrate  →  GR tensor representation  →  substrate class.
+```
+
+The middle representation is mathematically derived; the final **physical return** is only
+quotient-coherent so far.
+
+**Machine-verified:**
+
+- `M ⊗ M` is forced by independent-body composition under the stated premises
+  (`composite_is_tensor`, `tensorEquiv`, `n_composite_is_tensor`, `nTensorEquiv`).
+- The tensor image has a coherent quotient return:
+  `QLF_TensorConservativeReturn` proves `R ∘ F = id` on closure classes
+  (`tensor_conservative_return`, `tensorTrigger_exists`).
+- The Minkowski metric corresponds to the singlet projector in the two-body representation
+  (`metric_is_singlet`).
+
+**Still open:**
+
+- The physically selected equivalence relation connecting the returned tensor class to actual
+  gravitational closure dynamics. `tensor_conservative_return` proves coherence, not physical
+  selection.
+- The causal-order → smooth-curvature continuum bridge.
+
+The GR-specific strange-loop target is stronger than the tensor quotient return:
+
+```
+closure causal order  →  g_μν  →  causal/null relation
+```
+
+and the return must recover the same causal-order relation. Call it
+`CausalMetricConservativeReturn` (or `MetricConservativeReturn`). It is **not proved**. PR #230
+strengthens Universal Relativity by making the tensor composition and its quotient return explicit;
+it does **not** close the GR continuum bridge.
+
 ### 3b. It from bit — the unit of information is the ½-spin closure
 
 The 2-spinors of the double cover (§3a) carry more than Lorentz structure — they carry

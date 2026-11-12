@@ -48,7 +48,7 @@ The four corresponding JSON records carry a `strange_loop` object with `name`, `
 
 ## Related formal developments (not physical claims)
 
-The current 319-anchor baseline also covers two formal developments that are **not**
+The current 319-anchor baseline also covers three formal developments that are **not**
 rows in the physical-claims table and do not have physical `E` status:
 
 - **Metric singlet / lattice Einstein equations** (PR #225; 5 anchors; three
@@ -61,7 +61,6 @@ rows in the physical-claims table and do not have physical `E` status:
   isolated imbalance are `F` as formal statements. Physical selection, a
   detector/apparatus map, and empirical adequacy remain `B-OPEN`/not established.
   See `Manifestation.md`.
-
 - **Tensor product / independent composition** (`QLF_TensorFromClosure`). The
   tensor product is derived from independent-body premises, not assumed for the
   independent sector: `composite_is_tensor`, `tensorEquiv`,
