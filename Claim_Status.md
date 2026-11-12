@@ -43,6 +43,8 @@ The four corresponding JSON records carry a `strange_loop` object with `name`, `
 `E-candidate` with kill conditions. `TensorConservativeReturn` is a worked conservative-return form for one
 conventional construction; it does not close the interpretive claim. See [issue #213](https://github.com/rhovision-org/quantum-logical-framework/issues/213).
 
+**Observer / knowledge loop (`B-OPEN`).** `Strange_Loops.md` §3A gives the precise reading: the universe contains closures that construct models of the closure process that constructed them. The toy trigger, `no_event_cycle`, and `TensorConservativeReturn` prove the form, not that an observer realizes it. The operational definitions of knowledge, intelligence and self-awareness, and the perspectival extension of Universal Relativity, remain `B-OPEN`; no `E` claim is made.
+
 **Issue #11 (“not even wrong”).** This remains open. PR #230 does not add a new empirical prediction; it
 makes the missing operational bridge explicit and keeps first-order `F`/`N` results from being promoted to
 `E`. SPARC remains a retrospective benchmark; α remains `N`/`B-OPEN`; the kill-condition ledger records the

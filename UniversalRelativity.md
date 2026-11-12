@@ -413,6 +413,15 @@ and the return must recover the same causal-order relation. Call it
 strengthens Universal Relativity by making the tensor composition and its quotient return explicit;
 it does **not** close the GR continuum bridge.
 
+### 3a″. Knowledge is perspectival (`B-OPEN`)
+
+The same closure perspective that removes an absolute external spacetime description suggests a further
+interpretive extension: no observer possesses the universe's complete state, and knowledge is carried by
+finite internal models inside the closure structure. This is developed in
+[`Strange_Loops.md`](Strange_Loops.md) §3A as a `B-OPEN` reading, not a theorem. The formal conservative
+returns (`tensor_conservative_return`, `no_event_cycle`) constrain the shape such an observer model must
+take; they do not prove that active inference or self-models are realized by ZFA closures.
+
 ### 3b. It from bit — the unit of information is the ½-spin closure
 
 The 2-spinors of the double cover (§3a) carry more than Lorentz structure — they carry

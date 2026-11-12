@@ -65,6 +65,133 @@ So an observer's self-model can be a strange loop in the **possibility algebra**
 
 ---
 
+## 3A. The deeper loop: closure, knowledge and the immanent self-model
+
+The precise claim is not that the universe is a single omniscient mind. It is:
+
+> **The universe contains closures that construct models of the closure process that constructed them.**
+
+That is a genuine strange loop, and it is the natural continuation of the conservative-return discipline:
+
+```
+possibility  →  ZFA closure  →  persistent system
+             →  internal model  →  action/test  →  new closure
+```
+
+The model is not outside reality looking in. It is another physical closure inside reality.
+
+### 3A.1 Events are closures, not automatically loops
+
+An event is a closure. It becomes a *strange loop* only when a persistent structure returns information about the closure process to a later closure, and that return is conservative on the relevant equivalence class. A primordial double helix or “qucalc DNA” is a useful metaphor for a persistent, self-encoding structure, but it is not a proved QLF object until a finite encoding, a return map and a falsifier are specified. The same caution applies to poetic formulations such as “all truth is a praora”: they become QLF claims only when they are given an operational return. The formal content here is the trigger shape, not the metaphor.
+
+### 3A.2 Knowledge, operationally
+
+A proposed QLF definition:
+
+> **Knowledge = persistent internal information that correctly constrains future closure.**
+
+A rock contains information, but it need not contain an internal model that predicts its own interaction with its environment. A Markov-blanketed system can. Its boundary separates `inside | outside`, while interactions across the boundary let the interior state encode regularities of the exterior. If the interior representation improves the system's ability to reach future viable closures, the representation has physical meaning.
+
+The active-inference loop is approximately:
+
+```
+environment  →  boundary observations  →  internal model
+             →  action  →  environment
+```
+
+All five terms are built from the same closure substrate. This is a `B-OPEN` reading, not a theorem and not empirical evidence.
+
+### 3A.3 The model contains itself
+
+The critical transition is when an internal model represents not only its environment but also its own boundary and its own modeling process:
+
+```
+M = M(world, self, M).
+```
+
+This is not an infinite symbolic regress; it is a finite recursive model. The loop is:
+
+```
+C  →  O(C)  →  M_O(C, O)  →  O's actions  →  C'
+```
+
+where `C` is the surrounding closure structure, `O` is an observer produced by it, and `M_O` is the observer's internal representation. The observer is reality constructing a finite representation of reality inside reality.
+
+### 3A.4 Why this is not vicious circularity
+
+A self-reference becomes scientifically meaningful when there is a conservative return:
+
+```
+reality  →  internal representation  →  reality
+```
+
+If the model is faithful, the relevant invariants survive:
+
+```
+R(F(C)) ~ C
+```
+
+for the properties being modeled—not every microscopic detail. Just as `TensorConservativeReturn` operates on equivalence classes rather than raw syntax, an observer need not encode every event in the universe. It needs to preserve the information relevant to its closure. This is closer to a fixed point than an infinite regress:
+
+```
+M ≈ F(R(M)).
+```
+
+A sufficiently good model predicts what the world will do; the world tests that model through subsequent closure. That is how a representation acquires meaning in QLF.
+
+This is a **formal analogy**, not a derivation of the observer loop. `TensorConservativeReturn` proves the quotient return for the tensor construction; it does not prove that an observer's internal model is faithful, that active inference is realized by ZFA closures, or that a self-model exists. Those remain `B-OPEN`.
+
+### 3A.5 The synthesis hierarchy
+
+Reality's self-knowledge can be read as a hierarchy:
+
+```
+closure                 →  information
+persistent closures      →  memory
+structured memory        →  model
+model + feedback         →  inference
+model containing itself  →  self-knowledge
+```
+
+This is a cleaner QLF route to intelligence than introducing “consciousness” as another primitive. The proposed definitions are:
+
+> **Intelligence is closure constructing a model of closure.**
+
+> **Self-awareness is closure constructing a model that includes its own closure boundary.**
+
+These are operational definitions, not empirical discoveries; they remain `B-OPEN` until a physical system is shown to realize the return.
+
+### 3A.6 No God's-eye model
+
+Every observer is a finite-capacity local horizon. No observer possesses the universe's complete state. The universe knows itself **perspectivally**: each Markov blanket carries a partial model `M_i(U)`, and the universe's self-description is distributed across these internal perspectives. This is compatible with Universal Relativity's rejection of an absolute external description, but the extension
+
+> **knowledge itself is relative to a closure perspective**
+
+is an interpretive `B-OPEN` extension, not a theorem. The underlying closure relations constrain all perspectives, which is why different observers can discover the same physics.
+
+### 3A.7 Science itself is a strange loop
+
+QLF gives a striking instance:
+
+```
+Universe  →  observer  →  mathematics
+          →  formal model of the Universe
+          →  physical computation testing the model
+          →  Universe
+```
+
+Lean, implemented by physical computers inside the same universe, verifies propositions about that closure substrate. This is a canonical Hofstadter loop, with one QLF constraint: the return has to be conservative. The model cannot gain authority merely because it describes itself. It must return to finite physical records or formal proofs.
+
+### 3A.8 Status
+
+**Formal:** the toy `StrangeLoopTrigger`/`QuotientStrangeLoopTrigger`, `no_event_cycle`, and `TensorConservativeReturn` quotient coherence.
+
+**`B-OPEN`:** the observer/self-model loop, active inference, the knowledge definition, the intelligence/self-awareness definitions, and the perspectival extension of Universal Relativity.
+
+**`E`:** none. No empirical claim is promoted here.
+
+**Falsifiers / defeaters:** a persistent system with the same adaptive capacity but no internal model; a model that cannot be distinguished from a fixed response; a return that imports the target value; or a self-model that requires an event-time loop.
+
 ## 4. The strange-loop reading of the open bridges
 
 A physical bridge is a map from substrate structure to an observable, with domain, codomain, preservation conditions, a probability/outcome rule, and a defeater. The G3 checklist in [`Proof_to_Physics.md`](Proof_to_Physics.md) and Paper I v0.3 §11.2 states the minimum. The strange-loop reading adds one question:
