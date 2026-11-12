@@ -77,14 +77,14 @@ theorem F_injective : Function.Injective F := by
     induction d using Quot.ind with
     | mk b =>
       apply Quot.sound
-      simpa [F] using h
+      simpa [F, PairEquiv] using h
 
 /-- **The quotient conservative return:** the class read back from the tensor
     image is the original class. -/
 theorem R_forward (c : ClosureClass) : R (forwardImage c) = c := by
-  unfold R forwardImage
-  have h := Classical.choose_spec (show ∃ c' : ClosureClass, F c' = F c from ⟨c, rfl⟩)
-  exact F_injective h
+  unfold R
+  have h := Classical.choose_spec (forwardImage c).2
+  exact F_injective (by simpa [forwardImage] using h)
 
 /-- Interleaving moves preserve the tensor image. -/
 theorem step_foldPair {w w' : PairHistory} (h : Step w w') :
