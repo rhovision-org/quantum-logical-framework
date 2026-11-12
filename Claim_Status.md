@@ -31,6 +31,25 @@ The numerical agreements below are as reported by QLF. The claim records in `cla
 - `claim_records/three_polarizer.json` — migrated finite/optical bridge record.
 - `claim_records/born_rule.json` — scoped Born-assignment characterization.
 
+## Related formal developments (not physical claims)
+
+The current 319-anchor baseline also covers two formal developments that are **not**
+rows in the physical-claims table and do not have physical `E` status:
+
+- **Metric singlet / lattice Einstein equations** (PR #225; 5 anchors; three
+  `QLF.MetricSinglet`, two `QLF.LatticeDivergence`). The exact statements are `F`
+  under the stated premises. The physical reading of the metric, spacetime and
+  gravity remains `B-OPEN`; the local Rindler/Raychaudhuri arrow and the
+  substrate curvature are still open.
+- **Manifestation** (PR #226; 12 anchors). Orientation, isolation-is-closure,
+  unbounded closures, `distance_eq_delay`, and the proton as the simplest
+  isolated imbalance are `F` as formal statements. Physical selection, a
+  detector/apparatus map, and empirical adequacy remain `B-OPEN`/not established.
+  See `Manifestation.md`.
+
+These are claim-map and formal-coverage entries, not promotions of a physical
+claim. A named theorem is not an `N` reproduction and not an `E` observation.
+
 ## Validation
 
 ```bash
@@ -44,6 +63,8 @@ The validator discovers every JSON record recursively by explicit record type, c
 
 - `Proof_Trust.md` — the axiom-footprint gate and its current coverage.
 - `Proof_to_Physics.md` — the evidence registry and open bridges.
+- `Manifestation.md` — the Manifestation formal results and their `B-OPEN` physical reading.
+- `Einstein_Equations.md` §6d–§6e — the metric-singlet/lattice-Einstein representational result.
 - `ScientificApproach.md` — the governing method, bridge grades, and pre-registration rules.
 - `SPARC.md` — the retrospective public-data benchmark SPARC analysis and its receipt.
 - Paper I v0.3 §2 — the manuscript's positive-claims table and prose.
