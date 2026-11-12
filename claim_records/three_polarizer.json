@@ -86,8 +86,8 @@
       "forward_map": "MO2 element -> toy C^2 projector -> polarizer angle/outcome; currently a toy embedding, not an operational map",
       "return_map": "detector record -> finite closure count -> MO2 inequality table",
       "composite_identity_on": "the 19 finite MO2 lattice checks / RCA0 fragment",
-      "conservative_return_status": "NOT_STARTED",
-      "proof_artifact": "not yet supplied",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_StrangeLoop.lean (toy two-element interface; not the operational optical map)",
       "imported_axioms": "Malus cos^2 law, Born trace rule, angle calibration, detector model",
       "falsifier": "A calibrated stack outside the frozen prediction, or a return map that assumes the target 1/8."
     }

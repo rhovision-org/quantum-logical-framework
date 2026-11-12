@@ -138,14 +138,14 @@ with:
 4. **Visible imports:** every physical/statistical axiom used by `F` or `R` is named.
 5. **Falsifier:** a predeclared observation or formal result that would break the return.
 
-The current claim records carry this as a `proof_obligation` object with `domain`, `codomain`, `forward_map`, `return_map`, `composite_identity_on`, `conservative_return_status` (`NOT_STARTED` / `PARTIAL` / `PROVED`), `proof_artifact`, `imported_axioms` and `falsifier`. All four are `NOT_STARTED`; a `TESTED` loop requires `PROVED` plus a real artifact.
+The current claim records carry this as a `proof_obligation` object with `domain`, `codomain`, `forward_map`, `return_map`, `composite_identity_on`, `conservative_return_status` (`NOT_STARTED` / `PARTIAL` / `PROVED`), `proof_artifact`, `imported_axioms` and `falsifier`. MO2 and Born are `PARTIAL` with toy Lean artifacts; α and SPARC remain `NOT_STARTED`. A `TESTED` loop requires `PROVED` plus a real artifact.
 
 ### 6.2 The four concrete obligations
 
 | Bridge | What must be proved | Current status |
 |---|---|---|
-| **MO2 → Malus `1/8`** | An operational map from the 15 comparable pairs and 24 distributivity failures to the three-polarizer geometry, plus a proof that the induced probability on the image is exactly `1/8` after the map is applied, and that the map conservatively returns the original lattice inequalities. | Toy embedding exists; G3 inconclusive. |
-| **Born uniqueness** | That refinement additivity in `QLF_BornFromWays` is itself realized by a ZFA closure on the same Gaussian-integer register the theorem quantifies over — the self-referential return. | Finite uniqueness proved; refinement still a premise. |
+| **MO2 → Malus `1/8`** | An operational map from the 15 comparable pairs and 24 distributivity failures to the three-polarizer geometry, plus a proof that the induced probability on the image is exactly `1/8` after the map is applied, and that the map conservatively returns the original lattice inequalities. | Toy embedding exists; `QLF_StrangeLoop` proves the shape for a two-element lattice; operational map still open; G3 inconclusive. |
+| **Born uniqueness** | That refinement additivity in `QLF_BornFromWays` is itself realized by a ZFA closure on the same Gaussian-integer register the theorem quantifies over — the self-referential return. | Finite uniqueness proved; `QLF_StrangeLoopBorn` proves the finite unit-way return; physical refinement still a premise. |
 | **α residual** | A predeclared, scale-independent multiplicity rule whose leading term is forced by the capacity-horizon bifibration self-similarity, with the residual weight `w = 1/2` derived rather than fitted. | Leading `137` structural; multiplicity open. |
 | **SPARC RAR** | A blinded, pre-registered prediction of the RAR curve from closure balance alone, on data held out from the original analysis. | Retrospective `N` only. |
 
@@ -153,9 +153,9 @@ Any one of these, if proved under the §6.1 interface, would constitute support.
 
 ### 6.3 Minimal next proofs
 
-1. **A Lean statement and proof of the interface**, even for a toy two-element ortholattice. The current toy is Python, not a Lean theorem.
-2. **An instantiation for the Born uniqueness theorem** on Gaussian integers: define the refinement as a ZFA closure and prove the return on the same register.
-3. **One blinded numerical check** whose protocol is committed before the numbers are looked up — three-polarizer or α residual.
+1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (no Mathlib, no axioms). It is not yet in the 319-anchor baseline, so the claim record is `PARTIAL`, not `PROVED`.
+2. **An instantiation for the Born uniqueness theorem** — **partial**: `QLF_StrangeLoopBorn.lean` proves the finite unit-way return on the existing `QLF_BornFromWays` register; the physical refinement remains open.
+3. **One blinded numerical check** whose protocol is committed before the numbers are looked up — three-polarizer or α residual. The three-polarizer protocol draft is [`verification/strange-loop/blinded_protocol.md`](verification/strange-loop/blinded_protocol.md); it is `AWAITING_DATA`, not executed.
 
 ### 6.4 What is not required
 
@@ -189,6 +189,8 @@ The result is deliberately negative: a pure MO2 meet walk gives `0` (it blocks a
 - α leading value `137`, formal comparator-residual band `(1/64, 0.04814)`, reported structural `137.032`, 0.026% leading agreement.
 - `m_p/m_e = 6π⁵`, one-loop `g−2` form, and the other reported entries in Paper I Table 1.
 - Born finite uniqueness on Gaussian integers; no continuum or Gleason continuity step.
+- `QLF_StrangeLoop.lean` — toy two-element conservative-return interface, no Mathlib/no axioms; outside the 319 baseline.
+- `QLF_StrangeLoopBorn.lean` — finite unit-way Born return on the existing Gaussian-integer register; outside the 319 baseline; physical refinement still `B-OPEN`.
 - `no_time_loops_from_logic` and `loop_same_facts` for realized histories; loops in the reversible possibility algebra.
 
 **What would materially strengthen the claim:**

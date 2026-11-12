@@ -66,8 +66,8 @@
       "forward_map": "register -> unit-way refinement -> ZFA closure -> outcome",
       "return_map": "detector record -> finite unit-way count -> bornProb",
       "composite_identity_on": "RCA0 finite unit-way count; not the physical detector",
-      "conservative_return_status": "NOT_STARTED",
-      "proof_artifact": "not yet supplied",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_StrangeLoopBorn.lean (finite unit-way return; physical refinement still open)",
       "imported_axioms": "ProbAssignment symmetry, normalization, refinement additivity, physical refinement premise",
       "falsifier": "A refinement rule that assumes the target Born weights, or a detector comparison that fails under a frozen map."
     }

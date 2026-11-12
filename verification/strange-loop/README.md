@@ -5,6 +5,7 @@
 **Code:** [`tools/strange_loop_observer.py`](../../tools/strange_loop_observer.py)  
 **Output:** [`strange_loop_observer.json`](strange_loop_observer.json)  
 **Output SHA-256:** `0a703861b139740614e2d49c37d497277b0216da4a9bcabee801ab465e3cf74e`  
+**Blinded protocol:** [`blinded_protocol.md`](blinded_protocol.md) — status `AWAITING_DATA`; protocol SHA-256 `d01cf37b27bacab7d3dddbcbc4dfe6926cebf5149bc9c2ffcbbd52f11a546099`  
 **Tests:** [`tests/test_strange_loop_observer.py`](../../tests/test_strange_loop_observer.py)
 
 ## What it asks
@@ -12,6 +13,13 @@
 Paper I v0.3 leaves the optical, α, SPARC and Born bridges `B-OPEN`. The strange-loop reading asks what finite record a claimed loop returns to. This toy asks the narrow optical question:
 
 > Does a pure MO2 closure walk reproduce the three-polarizer `1/8`, or does the operational re-preparation/probability map do the work?
+
+## Lean proof artifacts
+
+- [`lean/QLF_StrangeLoop.lean`](../../lean/QLF_StrangeLoop.lean) — toy two-element conservative-return interface. Proves `R ∘ F = id`, `F ∘ R = id`, and preservation of order, join, meet and complement. Standalone, no Mathlib, no axioms. It is **not** the optical map.
+- [`lean/QLF_StrangeLoopBorn.lean`](../../lean/QLF_StrangeLoopBorn.lean) — finite unit-way return on the existing `QLF_BornFromWays` Gaussian-integer register. Proves the refinement fibre counts return the formal norm and every admissible `ProbAssignment` returns `bornProb`. It does **not** prove the physical refinement or detector record.
+
+Both files build in project CI but are **outside the 319-anchor reviewed baseline**. The claim-record proof status is therefore `PARTIAL`, not `PROVED`; a `TESTED` loop would require a reviewed anchor and a real artifact.
 
 ## Run
 
