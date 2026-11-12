@@ -52,6 +52,97 @@ The loop is therefore a **self-consistent fixed point**: the verifier is an inst
 
 ---
 
+## 2A. The primitive event: mutual satisfaction, not recursion
+
+A single event does not become a strange loop merely because it closes. The loop appears when the event is read as **two incomplete perspectives that mutually satisfy one another**.
+
+Let `A` and `B` be open actions or histories, `∘` their composition, and `Z` the ZFA free-action functional. (`Z` is used here to avoid confusing the closure functional with the forward map `F` used elsewhere.) The primitive reading is:
+
+```
+Z(A) ≠ 0,    Z(B) ≠ 0,    Z(A ∘ B) = 0.
+```
+
+Then `B` is the answer to `A`, while simultaneously `A` is the answer to `B`. There is no absolute requester/responder distinction:
+
+```
+A --request--> B        and        B --request--> A.
+```
+
+At the event, `A ↔ B = C`; neither side is the privileged cause. Trigger and result are perspectival descriptions of one mutual closure.
+
+### 2A.1 Listening conditions
+
+For an open action `A`, define its **listening condition**:
+
+```
+L(A) = { B | Z(A ∘ B) = 0 }.
+```
+
+Likewise `L(B) = { A | Z(A ∘ B) = 0 }`. At an event:
+
+```
+B ∈ L(A)    and    A ∈ L(B).
+```
+
+Closure is mutual compatibility. No observer, signal, or central scheduler is required: the logical deficit of each side specifies the other.
+
+### 2A.2 Relational, not recursive
+
+Ordinary recursion has the form
+
+```
+f(x) → f(x-1) → f(x-2) → ...
+```
+
+where one invocation generates another invocation of the same rule. QLF does not need that at the primitive event. The complementary possibilities already exist; nothing has to call itself repeatedly into existence. The self-reference is **relational**, not recursive:
+
+```
+A → L(A) ∋ B → L(B) ∋ A.
+```
+
+The loop is in the logical relationship of possibilities and terminates in closure. The realized event is the closure of that relationship; it is not an event-time cycle. This is the primitive form of the distinction already used by `no_time_loops_from_logic`: loops may exist in possibility/representation while realized history does not run backward.
+
+### 2A.3 Why a universe with no outside forces this reading
+
+If the universe is everything, there is no external agent to provide the question, the trigger, the missing information, the answer, or the criterion saying the answer is complete. Those must all be internal. The primitive physical problem therefore has to contain both its deficit and the condition resolving that deficit.
+
+A bit is the simplest illustration: `0` and `1` are defined by their distinction, not as absolute symbols. QLF strengthens this into complementary physical action, `t ↔ t†`. The proposed ontological reading is:
+
+```
+distinction → complement → closed distinction.
+```
+
+Nature does not need an external answer key because the completion condition is contained in the problem. This is an **ontological interpretation**, not a theorem.
+
+### 2A.4 Trigger and result are relative; closure is invariant
+
+Suppose `A ∘ B = C`. From `A`'s perspective, `B` is the trigger; from `B`'s perspective, `A` is the trigger. From the closure perspective there is no privileged trigger:
+
+```
+A ↔ B = C.
+```
+
+Compare:
+
+```
+coordinates are relative;       ds² is invariant.
+request/response orientation is relative;       Z = 0 is invariant.
+```
+
+The analogy is suggestive, not a derivation. It is a `B-OPEN` reading of the same perspectival structure that Universal Relativity applies to spacetime.
+
+### 2A.5 Status
+
+**Formal/toy:** the `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger` shape, `no_event_cycle`, and the possibility-algebra results (`loopWorld_has_time_loop`, `no_time_loops_from_logic`, `loop_same_facts`, `logical_world_globally_hyperbolic`).
+
+**`B-OPEN`:** the claim that every realized event has this reciprocal structure; the identification of the listening condition with a physical request; the reading of consciousness as a higher-order closure of this primitive loop.
+
+**`E`:** none.
+
+**Falsifiers / defeaters:** an event that cannot be decomposed into mutually listening open actions; a closure whose completion condition is supplied only externally; or a reading that requires a realized event-time loop.
+
+The observer loop in §3A is a higher-order closure of this form, not a consequence proved here.
+
 ## 3. Observer loops are not time loops
 
 The observer/consciousness layer has the same shape. An observer is a finite, terminating, self-referential **Markov blanket**: it models itself, its environment, and their interaction, and its ZFA closures synthesize its local time and world. The relevant documents are [`Philosophy.md`](Philosophy.md) §3d, [`Time.md`](Time.md) §7a, [`Hadrons_Markov_Blankets.md`](Hadrons_Markov_Blankets.md), and [`Consciousness.md`](Consciousness.md).

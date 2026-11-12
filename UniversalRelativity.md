@@ -422,6 +422,14 @@ finite internal models inside the closure structure. This is developed in
 returns (`tensor_conservative_return`, `no_event_cycle`) constrain the shape such an observer model must
 take; they do not prove that active inference or self-models are realized by ZFA closures.
 
+### 3a‴. Trigger and result are relative; closure is invariant (`B-OPEN`)
+
+At the primitive event, two incomplete perspectives can be read as mutually satisfying one another:
+`Z(A) ≠ 0`, `Z(B) ≠ 0`, and `Z(A ∘ B) = 0`. From `A`'s side `B` is the trigger; from `B`'s side `A`
+is the trigger; the closure is the invariant. This is the event-level counterpart of the relativity
+statement that coordinates are relative while `ds²` is invariant. The analogy is developed in
+[`Strange_Loops.md`](Strange_Loops.md) §2A and remains `B-OPEN`, not a derivation of primitive causation.
+
 ### 3b. It from bit — the unit of information is the ½-spin closure
 
 The 2-spinors of the double cover (§3a) carry more than Lorentz structure — they carry
