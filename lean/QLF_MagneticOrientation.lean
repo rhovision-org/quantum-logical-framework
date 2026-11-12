@@ -1307,6 +1307,49 @@ theorem magnon_ring_modes (n : ℕ) (hn : 0 < n) (m j : ℤ) :
     push_cast; field_simp
   rw [this, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
 
+/-- **The `n` ring waves are distinct**: two waves that agree one place along have `m ≡ m'` mod `n`. -/
+theorem magnon_ring_distinct (n : ℕ) (hn : 0 < n) (m : ℤ)
+    (h : phaseWave (2 * Real.pi * m / n) 1 = 1) : (n : ℤ) ∣ m := by
+  unfold phaseWave at h
+  obtain ⟨q, hq⟩ := Complex.exp_eq_one_iff.mp h
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hpi : (Real.pi : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero
+  have hc : (2 * (Real.pi : ℂ) * Complex.I) ≠ 0 :=
+    mul_ne_zero (mul_ne_zero two_ne_zero hpi) Complex.I_ne_zero
+  have e : (m : ℂ) = ((q * n : ℤ) : ℂ) := by
+    apply mul_left_cancel₀ hc
+    have e1 : 2 * (Real.pi : ℂ) * Complex.I * m =
+        (Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ) * ((1 : ℤ) : ℂ)) * n := by
+      push_cast; field_simp
+    rw [e1, hq]; push_cast; ring
+  have : m = q * n := by exact_mod_cast e
+  exact ⟨q, by rw [this]; ring⟩
+
+/-- **A ring wave other than the uniform one sums to zero over the ring**, so the waves are
+    orthogonal and the `n` waves are a full change of basis for the `n` placements. -/
+theorem magnon_wave_sum_zero (n : ℕ) (hn : 0 < n) (m : ℤ) (h : ¬ (n : ℤ) ∣ m) :
+    ∑ j ∈ Finset.range n, phaseWave (2 * Real.pi * m / n) (j : ℤ) = 0 := by
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  set x : ℂ := Complex.exp (Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ)) with hx
+  have hpow : ∀ j : ℕ, phaseWave (2 * Real.pi * m / n) (j : ℤ) = x ^ j := by
+    intro j
+    unfold phaseWave
+    rw [hx, ← Complex.exp_nat_mul]; congr 1; push_cast; ring
+  have hx1 : x ≠ 1 := by
+    intro hx1
+    apply h
+    apply magnon_ring_distinct n hn m
+    unfold phaseWave
+    rw [← hx1, hx]; congr 1; push_cast; ring
+  have hxn : x ^ n = 1 := by
+    rw [hx, ← Complex.exp_nat_mul]
+    have : (n : ℂ) * (Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ)) =
+        m * (2 * Real.pi * Complex.I) := by
+      push_cast; field_simp
+    rw [this, Complex.exp_int_mul_two_pi_mul_I]
+  simp only [hpow]
+  rw [geom_sum_eq hx1, hxn, sub_self, zero_div]
+
 /-- **The uniform wave costs nothing**: turning every unit together is free. -/
 theorem magnon_zero_mode : (2 - 2 * Real.cos 0 : ℝ) = 0 := by simp
 
@@ -1316,5 +1359,73 @@ theorem magnon_dispersion (k : ℝ) :
   constructor
   · have := Real.cos_le_one k; linarith
   · have := Real.one_sub_sq_div_two_le_cos (x := k); linarith
+
+-- ==========================================
+-- §18  One exchanged photon is one magnon
+-- ==========================================
+
+/-! §14 weights a unit by its photon exchange with the vacuum, and §12 calls a flipped unit a magnon.
+They are one statement. Flipping a unit changes the body's weight by exactly one factor `d/u`
+(`flip_weight`), and changes its moment by one whole unit of spin (`magnon_lowers_moment`), which is
+what one photon carries. So a body's weight is set by its magnon number alone (`weight_eq_magnons`),
+and the average number of magnons under exchange with a field-tilted vacuum is `n/(e^{2βh} + 1)`
+(`magnon_occupancy`). The occupancy per unit has the exclusion form, `1/(e^{ε/T} + 1)` with
+`ε = 2h`, because a unit can be flipped only once. -/
+
+/-- **A body's vacuum weight is set by its magnon number**: `u` per up unit, `d` per magnon. -/
+theorem weight_eq_magnons (u d : ℝ) (A : List Bool) :
+    weight u d A = u ^ (A.count true) * d ^ (magnons A) := by
+  induction A with
+  | nil => simp [weight, magnons]
+  | cons p ps ih =>
+      unfold magnons at ih ⊢
+      cases p <;> simp [weight, ih, pow_succ] <;> ring
+
+theorem weight_append (u d : ℝ) (A B : List Bool) :
+    weight u d (A ++ B) = weight u d A * weight u d B := by
+  induction A with
+  | nil => simp [weight]
+  | cons p ps ih => simp only [List.cons_append, weight, ih]; ring
+
+/-- **One flip is one factor `d/u`**: creating a magnon anywhere trades one `u` for one `d`. -/
+theorem flip_weight (u d : ℝ) (pfx sfx : List Bool) :
+    weight u d (pfx ++ false :: sfx) * u = weight u d (pfx ++ true :: sfx) * d := by
+  rw [weight_append, weight_append]
+  simp [weight]; ring
+
+/-- **Weighted magnons over every way**: `(u + d) · Σ w·k = n d (u + d)ⁿ`, so the average number of
+    magnons is `n · d/(u + d)`. -/
+theorem weighted_magnons_bodies (u d : ℝ) (n : ℕ) :
+    (u + d) * ((bodies n).map (fun A => weight u d A * (magnons A : ℝ))).sum
+      = n * d * (u + d) ^ n := by
+  have hk : ∀ A ∈ bodies n, weight u d A * (magnons A : ℝ) =
+      (1 / 2) * ((n : ℝ) * weight u d A) + (-(1 / 2)) * (weight u d A * (moment A : ℝ)) := by
+    intro A hA
+    have hm := moment_magnons A
+    rw [(mem_bodies n A).mp hA] at hm
+    have hm' : (moment A : ℝ) = (n : ℝ) - 2 * (magnons A : ℝ) := by exact_mod_cast hm
+    rw [hm']; ring
+  rw [List.map_congr_left hk, sum_map_add_r, sum_map_mul_const, sum_map_mul_const,
+    sum_map_mul_const, partition_bodies]
+  have h := weighted_moment_bodies u d n
+  linear_combination (-(1 / 2 : ℝ)) * h
+
+/-- **Magnon occupancy under photon exchange**: with `u = e^{x}`, `d = e^{−x}` (`x = βh`) the
+    average number of magnons is `n/(e^{2x} + 1)`. -/
+theorem magnon_occupancy (x : ℝ) (n : ℕ) :
+    ((bodies n).map (fun A => weight (Real.exp x) (Real.exp (-x)) A * (magnons A : ℝ))).sum
+      / ((bodies n).map (weight (Real.exp x) (Real.exp (-x)))).sum
+      = n / (Real.exp (2 * x) + 1) := by
+  have hpos : 0 < Real.exp x + Real.exp (-x) := by positivity
+  have h := weighted_magnons_bodies (Real.exp x) (Real.exp (-x)) n
+  rw [partition_bodies]
+  have hZ : (Real.exp x + Real.exp (-x)) ^ n ≠ 0 := pow_ne_zero _ hpos.ne'
+  have h2 : Real.exp (2 * x) = Real.exp x * Real.exp x := by rw [← Real.exp_add]; ring_nf
+  have h1 : Real.exp x * Real.exp (-x) = 1 := by rw [← Real.exp_add]; simp
+  have hd : (0 : ℝ) < Real.exp (2 * x) + 1 := by positivity
+  rw [div_eq_div_iff hZ hd.ne']
+  apply mul_left_cancel₀ hpos.ne'
+  rw [← mul_assoc, h, h2]
+  linear_combination ((n : ℝ) * (Real.exp x + Real.exp (-x)) ^ n * Real.exp x) * h1
 
 end QLF.MagneticOrientation
