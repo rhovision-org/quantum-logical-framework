@@ -287,10 +287,15 @@ the three axes are composed in the palindromic order, are still choices rather t
 order, the choice is now pinned to one premise: that the dispersion is even under `k → −k`. Every
 palindromic word of steps has the reversal identity `W(−k) = W(k)†` (`palindrome_reversal`). The one-way
 order does not, and its dispersion is odd by exactly `4 Π sin k_i` (`oneWayWalk_trace_odd`,
-`oneWayWalk_not_reversal`). A four-step walk is even only when the repeated axis is split equally, and
-that walk is the five-step palindrome in another frame (`splitWalk_even_iff`,
-`splitWalk_conj_palindrome`). Evenness itself is not derived from logic; under the electron
-identification it is what the Crab bound requires. Two things remain physical identifications: that the electron is a
+`oneWayWalk_not_reversal`). For one four-step pattern, `up(a) · left(b) · up(a') · slash(c)`, the
+dispersion is even at a point exactly when `sin(a − a') sin b sin c = 0` (`splitWalk_even_iff`). Where
+`sin b sin c ≠ 0` that is `a − a' ∈ πℤ`, so the equal split follows only for nearby angles, and the equal
+split is the five-step palindrome in another frame (`splitWalk_conj_palindrome`). Two limits on this.
+`palindrome_reversal` is sufficiency only: necessity over arbitrary step words is not proved. And exact
+evenness is an additional symmetry assumption, not something the data require. It is consistent with the
+Crab and Čerenkov bounds, but so is a slightly unequal split: `a = (1+δ)k_y/2`, `a' = (1−δ)k_y/2` gives
+`η = −2δ n_x n_y n_z`, and `δ = 10⁻⁸` sits inside both bounds while evenness fails. The bounds exclude
+the one-way order (`δ = 1`), not every odd term. Two things remain physical identifications: that the electron is a
 spin-½ closure that moves this way, and that the lattice tick is the Planck time.
 
 

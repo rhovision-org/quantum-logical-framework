@@ -712,10 +712,17 @@ on. Every palindromic word of realizable steps has the reversal identity `W(−k
 have it: its dispersion is `cos E = Π cos k_i + Π sin k_i` (`oneWayWalk_trace`), odd under reversal
 by `−4 Π sin k_i` (`oneWayWalk_trace_odd`, `oneWayWalk_not_reversal`). The sign of the odd term
 follows the Lean twists (`left = −σ_x`); `liv_dispersion.py` uses `+σ_x` and so prints the other
-sign, which is the same walk at `k_x → −k_x`. Among four-step walks, the dispersion is even only
-when the repeated axis is split equally (`splitWalk_trace`, `splitWalk_even_iff`), and that walk is
-the five-step palindrome seen in another frame (`splitWalk_conj_palindrome`). So an even dispersion
-needs at least a symmetric split. That the dispersion must be even is a premise, not a theorem. -/
+sign, which is the same walk at `k_x → −k_x`. For one four-step pattern, `up(a) · left(b) ·
+up(a') · slash(c)`, the dispersion is even at a given point exactly when
+`sin (a − a') sin b sin c = 0` (`splitWalk_trace`, `splitWalk_even_iff`). Where `sin b sin c ≠ 0`
+that is `a − a' ∈ πℤ`, so the equal split follows only under a local restriction such as
+`|a − a'| < π`; `a = π/2`, `a' = −π/2` is even and unequal. The equal split is the five-step
+palindrome seen in another frame (`splitWalk_conj_palindrome`).
+
+Scope. `palindrome_reversal` is sufficiency. Necessity over arbitrary step words is not proved, and
+the four-step result covers this one pattern. That the dispersion must be exactly even is a symmetry
+assumption, not a theorem, and no finite observational bound can require it: a split
+`a = (1+δ)k_y/2`, `a' = (1−δ)k_y/2` has odd part `sin (δ k_y) sin k_x sin k_z`, as small as one likes. -/
 
 section StepOrder
 
@@ -799,7 +806,9 @@ theorem splitWalk_trace (a a' b c : ℝ) :
   simp only [h4]
   ring
 
-/-- **Even exactly when the split is equal** (or a sine vanishes). -/
+/-- **Pointwise evenness of the split walk**: the trace at the reversed angles equals the trace
+exactly when `sin (a − a') sin b sin c = 0`. Where `sin b sin c ≠ 0` this is `a − a' ∈ πℤ`, which
+is the equal split only under a local restriction on the angles. -/
 theorem splitWalk_even_iff (a a' b c : ℝ) :
     Matrix.trace (splitWalk (-a) (-a') (-b) (-c)) = Matrix.trace (splitWalk a a' b c) ↔
       Real.sin (a - a') * Real.sin b * Real.sin c = 0 := by
