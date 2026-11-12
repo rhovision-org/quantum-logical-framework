@@ -24,6 +24,11 @@ Everything is finite and definitional. There is no Mathlib import, no
 continuum object, no probability rule and no optical/detector map. This is a
 toy return witness only: the actual bridge records remain `B-OPEN`, and their
 `proof_obligation` status is at most `PARTIAL`.
+
+It also packages `QuotientStrangeLoopTrigger`, the quotient version needed by the
+tensor-product target `TensorConservativeReturn`: the return holds on physical
+closure classes, not on raw factor pairs. The tensor bridge is not instantiated
+here; see `verification/strange-loop/tensor_return_target.md`.
 -/
 namespace QLF.ConservativeReturn
 
@@ -241,5 +246,56 @@ theorem transGen_event_length_lt {h h' : History}
     This is the finite analogue of `no_time_loops_from_logic`. -/
 theorem no_event_cycle (h : History) : ¬ Relation.TransGen Event h h :=
   fun ht => Nat.lt_irrefl _ (transGen_event_length_lt ht)
+
+/-- A **quotient trigger**: the conservative return holds on physical equivalence
+    classes, not on raw syntax. This is the shape the tensor-product bridge needs:
+    `F` takes a finite closure class to its tensor/Hilbert representation, `R`
+    returns the class, and `R ∘ F = id` holds only up to `coreEquiv`.
+
+    The tensor bridge is not instantiated here. `QLF_TensorFromClosure` supplies
+    the forward direction; the missing theorem is an instance of this structure
+    with `coreEquiv` the closure-class equivalence and `Tensor` the two-body
+    tensor algebra. -/
+structure QuotientStrangeLoopTrigger where
+  /-- Finite closure-class side. -/
+  Core : Type
+  /-- Tensor/Hilbert representation side. -/
+  Tensor : Type
+  /-- Physical equivalence on the finite side. -/
+  coreEquiv : Core -> Core -> Prop
+  /-- Equivalence is reflexive. -/
+  equiv_refl : ∀ c, coreEquiv c c
+  /-- Equivalence is symmetric. -/
+  equiv_symm : ∀ {c c'}, coreEquiv c c' -> coreEquiv c' c
+  /-- Equivalence is transitive. -/
+  equiv_trans : ∀ {c c' c''}, coreEquiv c c' -> coreEquiv c' c'' -> coreEquiv c c''
+  /-- Forward map to the representation. -/
+  forward : Core -> Tensor
+  /-- Return map from the representation. -/
+  ret : Tensor -> Core
+  /-- The forward map respects physical equivalence. -/
+  forward_respects : ∀ {c c'}, coreEquiv c c' -> forward c = forward c'
+  /-- The return is the identity on physical equivalence classes. -/
+  composite_id_on_quotient : ∀ c, coreEquiv (ret (forward c)) c
+
+/-- The toy quotient instance: equivalence is equality and the tensor side is the
+    same closed-history toy. This checks the shape only. -/
+def toyQuotientTrigger : QuotientStrangeLoopTrigger where
+  Core := Core
+  Tensor := ZFAHistory
+  coreEquiv := Eq
+  equiv_refl := fun _ => rfl
+  equiv_symm := fun h => h.symm
+  equiv_trans := fun h₁ h₂ => h₁.trans h₂
+  forward := F
+  ret := R
+  forward_respects := by
+    intro c c' h
+    rw [h]
+  composite_id_on_quotient := conservative_return
+
+/-- The toy quotient trigger is inhabited. -/
+theorem toyQuotientTrigger_exists : Nonempty QuotientStrangeLoopTrigger :=
+  ⟨toyQuotientTrigger⟩
 
 end QLF.ConservativeReturn

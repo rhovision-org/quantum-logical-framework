@@ -171,6 +171,94 @@ Until these proofs exist, the strange-loop reading is a useful organising hypoth
 
 ---
 
+### 6.5 Tensor products: the best current near-return
+
+`QLF_TensorFromClosure` is the strongest existing candidate for a nearly complete
+conservative bridge. It does not assume the tensor product for the independent
+sector. From three premises — each body has its own fold, the joint fold is
+multiplicative, and events of distinct independent bodies have no relative order
+— it derives commutation, the universal property `composite_is_tensor`, the
+two-body realization `tensorEquiv`, and the `N`-body versions
+`n_composite_is_tensor` / `nTensorEquiv`.
+
+The proposed reading is:
+
+> **Closure composition is primitive; the tensor product is a conservative
+> representation of independent composition.**
+
+The forward direction is largely present:
+
+```
+F : ([h_A], [h_B]) ↦ U(h_A) ⊗ U(h_B).
+```
+
+The return cannot demand the raw pair of factors. `pair_scalar_ambiguity` exposes
+the obstruction:
+
+```
+(-I) ⊗ I = I ⊗ (-I).
+```
+
+The tensor object does not remember where a common scalar phase was assigned.
+The correct target is therefore
+
+```
+R ∘ F = id   on closure classes, not syntax.
+```
+
+The bottom level should contain only physically meaningful finitary information:
+ledger, fold, factor assignment where meaningful, closure status, and
+first-closure structure. Word order that the theory declares irrelevant must not
+be demanded back.
+
+`QLF_ConservativeReturn.QuotientStrangeLoopTrigger` now formalizes exactly this
+shape: a finite class side, a tensor side, a physical equivalence, a forward map
+that respects it, and a return that is the identity on classes. The toy instance
+`toyQuotientTrigger_exists` checks the shape; it is not the tensor theorem.
+
+**Missing theorem target.** Instantiate `QuotientStrangeLoopTrigger` with
+
+- `Core` = finite closure classes (not raw words),
+- `Tensor` = `M ⊗[ℂ] M` (or the `N`-body tensor algebra),
+- `forward` = `composite_is_tensor` / `n_composite_is_tensor`,
+- `ret` = the closure-class invariant read from the tensor,
+- `coreEquiv` = physical closure equivalence,
+
+and prove `composite_id_on_quotient`. Call the resulting theorem
+`TensorConservativeReturn`. It is **not yet proved** and is not in the 319-anchor
+baseline.
+
+For the entangled sector the hierarchy is:
+
+```
+primitive shared/independent closure relations
+        ↓
+H_A ⊗ H_B
+        ↓
+product or entangled state
+        ↓
+closure-class invariants
+```
+
+The loop closes only if the last step returns the correct substrate distinction.
+An entangled state such as the singlet is acceptable as a QLF rendering only when
+its return identifies an irreducible shared closure rather than two independently
+closed factors. That is a criterion, not a theorem about the singlet yet.
+
+This is a level-crossing in possibility space, not a physical time loop. Toy
+events still strictly advance (`no_event_cycle` in `QLF_ConservativeReturn`); the
+return is a map between descriptions, not a cycle in the event record.
+
+The general rule suggested by this case is:
+
+> **Every conventional quantum construction should be required to have a
+> conservative return to closure.**
+
+Tensor products are the first strong example. The same criterion can later be
+applied to Hilbert spaces, unitarity, the S-matrix, poles, zeros and Born
+probabilities. It is a test of whether QLF has derived the conventional object
+rather than merely translated it.
+
 ## 7. The toy observer model
 
 [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py) is a finite toy model, not evidence. It represents a Markov-blanket observer as a subset of MO2 elements and a lattice state, runs a three-stage polarizer sequence, and compares:
@@ -238,6 +326,9 @@ The Paper I v0.3 Gist is linked from the [flow chart](FlowChart.md) and the repo
 - [`Alpha.md`](Alpha.md) — the α derivation programme and its honest scope.
 - [`SPARC.md`](SPARC.md) — the retrospective benchmark and its limits.
 - [`Claim_Status.md`](Claim_Status.md) — the human-readable claim ledger.
+- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` remains the missing theorem.
+- [`verification/strange-loop/tensor_return_target.md`](verification/strange-loop/tensor_return_target.md) — the explicit `TensorConservativeReturn` theorem target, status `NOT_STARTED`.
+- [`lean/QLF_ConservativeReturn.lean`](lean/QLF_ConservativeReturn.lean) — `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger`, the toy return and `no_event_cycle`.
 - [`Proof_to_Physics.md`](Proof_to_Physics.md) — G3 and the bridge registry.
 - [`ScientificApproach.md`](ScientificApproach.md) §5 — the bridge protocol.
 - [`claim_records/`](claim_records/README.md) — typed records and the `strange_loop` field.

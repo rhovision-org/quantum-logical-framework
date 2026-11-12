@@ -62,6 +62,15 @@ rows in the physical-claims table and do not have physical `E` status:
   detector/apparatus map, and empirical adequacy remain `B-OPEN`/not established.
   See `Manifestation.md`.
 
+- **Tensor product / independent composition** (`QLF_TensorFromClosure`). The
+  tensor product is derived from independent-body premises, not assumed for the
+  independent sector: `composite_is_tensor`, `tensorEquiv`,
+  `n_composite_is_tensor`, `nTensorEquiv`. This is formal `F` for the
+  representation. The conservative return on closure classes
+  (`TensorConservativeReturn`) is **not yet proved**; `pair_scalar_ambiguity`
+  shows why the raw factor pair cannot be returned. It is a near-complete bridge,
+  not a closed physical bridge.
+
 These are claim-map and formal-coverage entries, not promotions of a physical
 claim. A named theorem is not an `N` reproduction and not an `E` observation.
 
