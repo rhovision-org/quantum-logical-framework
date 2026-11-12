@@ -76,6 +76,7 @@ import QLF_LocalGauge
 import QLF_LatticeGauge
 import QLF_RelativityScale
 import QLF_LorentzSymbol
+import QLF_BoostCovariance
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -673,3 +674,8 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.LorentzSymbol.marginal_normalized
 #print axioms QLF.LorentzSymbol.marginal_proportional_iff
 #print axioms QLF.LorentzSymbol.joint_symbol_swap
+#print axioms QLF.BoostCovariance.shell_taylor
+#print axioms QLF.BoostCovariance.onShell_minkowski
+#print axioms QLF.BoostCovariance.shell_lorentz_invariant
+#print axioms QLF.BoostCovariance.shell_boost_invariant
+#print axioms QLF.BoostCovariance.diracWalk_boost_covariant

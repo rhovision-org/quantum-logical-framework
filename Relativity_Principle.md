@@ -6,9 +6,11 @@
 **Epistemic status.** Every theorem cited is proved in Lean with no axioms:
 [`lean/QLF_RelativityScale.lean`](lean/QLF_RelativityScale.lean) (the unsigned census) and
 [`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean) (the signed census, its symbol, and
-shared-pair interactions). Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py).
-**The relativity principle itself is not proved.** Physical boost covariance is an open obligation,
-and the step from the census symbol to a propagation law is an assumption, labelled where it is used.
+shared-pair interactions), and [`lean/QLF_BoostCovariance.lean`](lean/QLF_BoostCovariance.lean) (boost
+covariance of the Dirac walk). Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py).
+**The relativity principle is proved for free propagation in the large, and not beyond that** (§5b).
+With interactions it is open, and for the census symbol the step to a propagation law is still an
+assumption, labelled where it is used.
 
 Einstein's first postulate says the laws of physics are the same for every observer in uniform
 motion. QLF does not assume it. What the census of histories proves is narrower:
@@ -25,8 +27,13 @@ motion. QLF does not assume it. What the census of histories proves is narrower:
 4. **Shared-pair interactions cannot change the time/space spread ratio** when their coupling is
    axis-blind (§6), with stated normalization conditions.
 
-The relativity principle is therefore neither postulated nor yet derived here. What would derive it
-is physical boost covariance of the propagation law (T2/T3 of the plan).
+5. **Free propagation is boost-covariant in the large** (§5b). The unitary Dirac walk has a derived
+   energy–momentum law, and that law agrees with the Lorentz-invariant mass shell `E² = |k|² + m²`
+   up to a relative correction of order `(L_P/λ)²`, in every frame where the wavelengths stay long
+   (`shell_lorentz_invariant`, `diracWalk_boost_covariant`).
+
+So the principle is not postulated. It is derived for one free particle on the Dirac walk, as an
+approximation with a stated error, and it is open for interacting histories.
 
 ## 1. The question is precise because every twist is a spacetime unit vector
 
@@ -211,6 +218,56 @@ fixed direction in the sky and averages away over many black holes. And the pali
 sign of the effect waits on which propagation law light follows. The lattice also
 removes the trans-Planckian problem: no mode exceeds `k = π`.
 
+## 5b. Boost covariance of free propagation: the Dirac walk
+
+§5 needed an assumption because a census symbol is not a propagation law. The repo has a dynamics
+whose propagation law is a theorem: the unitary Dirac walk of
+[`lean/QLF_DiracWalk.lean`](lean/QLF_DiracWalk.lean) ([`Closure_Unitarity.md`](Closure_Unitarity.md)
+§15). It is built from twist steps, it is unitary at every step (`diracWalk_unitary`), and every
+eigenvalue `e^{iE}` at momentum `k` and mass `m` satisfies the exact relation
+(`diracWalk_dispersion`)
+
+    cos E = cos m · cos k_y · cos k_x · cos k_z.
+
+This is the palindromic walk of [`QM_Postulates_QLF.md`](QM_Postulates_QLF.md) §5b, the one whose
+dispersion has no term linear in `L_P`.
+[`lean/QLF_BoostCovariance.lean`](lean/QLF_BoostCovariance.lean) compares that relation with the
+relativistic one. Write `S = E² + |k|² + m²` in Planck units, so `S` is about `(L_P/λ)²`.
+
+| Theorem | Statement |
+|---|---|
+| `shell_taylor` | For `S ≤ 1`, the walk's shell function differs from half the Minkowski form `(E² − \|k\|² − m²)/2` by at most `S²/4` |
+| `onShell_minkowski` | On the walk's shell, `\|E² − \|k\|² − m²\| ≤ S²/2` |
+| `shell_lorentz_invariant` | If `(E, k)` is on the walk's shell and `(E′, k′)` has the same Minkowski form, then `(E′, k′)` satisfies the walk's shell equation up to `S²/4 + S′²/4` |
+| `boost_form`, `shell_boost_invariant` | A boost along `x` with `γ² − u² = 1` preserves the form, so the boosted energy–momentum is on-shell to the same accuracy |
+| `diracWalk_boost_covariant` | On the walk itself: if `e^{iE}` is an eigenvalue at `k` and `e^{iE″}` one at the boosted momentum, then `\|cos E″ − cos E′\| ≤ S²/4 + S′²/4`, where `E′` is the boosted energy |
+
+The shell function is of order `S` and the error is of order `S²`, so the relative error is of
+order `S ≈ (L_P/λ)²`. `shell_lorentz_invariant` covers every Lorentz transformation at once, boosts
+in any direction and rotations, because it only uses that the form is preserved.
+
+**What this settles.** For a free particle on the Dirac walk, an observer moving at constant
+velocity finds the same energy–momentum law, to `(L_P/λ)²`. That is the relativity principle for
+free propagation, with the propagation law derived and the boost physical. Both obligations left
+open by §3 and §5 are met for this dynamics.
+
+**The domain.** The bound needs `S′ ≤ 1` as well as `S ≤ 1`: the wavelength must stay long compared
+with `L_P` in the boosted frame too. A boost with `γ` near `λ/L_P` blue-shifts the mode to the
+lattice scale, and there the theorem says nothing. So the principle is a close approximation that
+fails for boosts large enough to resolve the lattice, which is the challenge to exact relativity
+that §2 began. At `γ = 10¹¹` (the highest-energy cosmic-ray protons) the lattice is still `10⁸`
+times finer than the boosted proton's Compton wavelength.
+
+**What stays open.**
+
+- *Interactions.* This is one free particle. §6 gives a partial result for shared pairs in the
+  census; boost covariance of interacting histories is not proved.
+- *One way, not the way.* The Dirac walk is a unitary dynamics the substrate carries. That nature's
+  propagation is this walk and no other is not proved, and the census symbol of §5 is a different
+  object whose off-axis sign disagrees with it.
+- *Exactness.* The error term is real: `shell_taylor` is a bound on a non-zero remainder, and §2
+  already shows exact invariance is impossible.
+
 ## 6. Interactions: shared pairs cannot change the spread ratio
 
 [Collins, Perez, Sudarsky, Urrutia & Vucetich, *PRL* 93, 191301 (2004)](https://arxiv.org/abs/gr-qc/0403053)
@@ -288,8 +345,8 @@ points are now the whole of the open question.
   same for the 96 discrete frames (signed axis permutations × gauge swap). Those frames contain no
   boosts; this module is where boosts enter.
 - [`Inertia.md`](Inertia.md) kill condition 2 asked for "exact Lorentz invariance at constant
-  velocity" to be proven, not asserted. The answer is that it is not exact: it holds to
-  `~(L_P/r)²`.
+  velocity" to be proven, not asserted. The answer is that it is not exact: for free propagation it
+  holds to `~(L_P/λ)²` (§5b).
 - The prose arguments in [`SpaceTime.md`](SpaceTime.md) §4 and
   [`UniversalRelativity.md`](UniversalRelativity.md) (a uniform, stateless ether makes dilation
   reciprocal) are the intuition this module makes quantitative.
