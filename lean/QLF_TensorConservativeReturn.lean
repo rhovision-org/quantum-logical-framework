@@ -73,9 +73,9 @@ def R (x : TensorImage) : ClosureClass :=
 theorem F_injective : Function.Injective F := by
   intro c d h
   induction c using Quot.ind with
-  | h a =>
+  | mk a =>
     induction d using Quot.ind with
-    | h b =>
+    | mk b =>
       apply Quot.sound
       simpa [F] using h
 
