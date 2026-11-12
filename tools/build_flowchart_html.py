@@ -124,7 +124,8 @@ def add_clicks(idx, diagram):
                 continue
             if tgt.startswith("#"):       # hub back-links (to the master anchor) -> skip
                 continue
-            lines.append(f'  click {nid} "{REPO}/{tgt}" _blank')
+            href = tgt if tgt.startswith(("http://", "https://")) else f"{REPO}/{tgt}"
+            lines.append(f'  click {nid} "{href}" _blank')
     return diagram.rstrip() + "\n" + "\n".join(lines) + "\n" if lines else diagram
 
 # ---- assemble HTML ----

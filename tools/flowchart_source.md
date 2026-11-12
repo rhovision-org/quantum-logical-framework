@@ -30,11 +30,20 @@ flowchart LR
   FRN --> D8["8 Quantum-gravity / TOE pillars"]
   FRN --> D9["9 The Millennium Prize program"]
   FRN --> D10["10 Beyond the SM"]
+  FND --> MTH["Methods and evidence: Paper I v0.3"]
+  MTH -.->|audits| D2
+  MTH -.->|audits| D6
+  MTH -.->|audits| D8
+  click MTH "#methods-and-evidence-paper-i-v03"
 ```
 
-**Jump to:** [1 Space, time and the continuum](#1-space-time-and-the-continuum) &middot; [2 The fundamental constants](#2-the-fundamental-constants) &middot; [3 Forces](#3-forces) &middot; [4 Atoms and QED](#4-atoms-and-qed) &middot; [5 Gravity and GR](#5-gravity-and-gr) &middot; [6 Cosmology and the dark sector](#6-cosmology-and-the-dark-sector) &middot; [7 Particles and the Standard Model](#7-particles-and-the-standard-model) &middot; [8 Quantum-gravity / TOE pillars](#8-quantum-gravity--toe-pillars) &middot; [9 The Millennium Prize program](#9-the-millennium-prize-program) &middot; [10 Beyond the SM](#10-beyond-the-sm) &middot; [11 Chemistry, molecules and folding](#11-chemistry-molecules-and-folding) &middot; [12 Quantum field theory and renormalization](#12-quantum-field-theory-and-renormalization)
+**Jump to:** [1 Space, time and the continuum](#1-space-time-and-the-continuum) &middot; [2 The fundamental constants](#2-the-fundamental-constants) &middot; [3 Forces](#3-forces) &middot; [4 Atoms and QED](#4-atoms-and-qed) &middot; [5 Gravity and GR](#5-gravity-and-gr) &middot; [6 Cosmology and the dark sector](#6-cosmology-and-the-dark-sector) &middot; [7 Particles and the Standard Model](#7-particles-and-the-standard-model) &middot; [8 Quantum-gravity / TOE pillars](#8-quantum-gravity--toe-pillars) &middot; [9 The Millennium Prize program](#9-the-millennium-prize-program) &middot; [10 Beyond the SM](#10-beyond-the-sm) &middot; [11 Chemistry, molecules and folding](#11-chemistry-molecules-and-folding) &middot; [12 Quantum field theory and renormalization](#12-quantum-field-theory-and-renormalization) &middot; [Methods and evidence](#methods-and-evidence-paper-i-v03)
 
 The five families: **Foundations** (1-2, 12) &middot; **Matter and forces** (3, 4, 7) &middot; **Emergent matter** (11) &middot; **Gravity and the cosmos** (5-6) &middot; **Frontiers** (8-10).
+
+The **Methods and evidence** layer is **cross-cutting**, not a sixth domain: it audits claims across the families without changing the taxonomy.
+
+**Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **319-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
 
 **Emergent matter** is the one family that is not fundamental physics. The other four ask what the
 substrate *is*; this one asks what it **assembles** once atoms exist — and it earns a family of its own
@@ -122,12 +131,13 @@ The `6 spatial + 2 gauge` split (the `3` axes) fixes a family of constants. **α
 ```mermaid
 flowchart TD
   SP["6+2 split -> 3 spatial axes"]
-  SP --> AL["alpha = 1/137"]
+  SP --> AL["alpha = 1/137 (formal leading; B-OPEN physical map)"]
   SP --> WK["sin^2theta_W = 3/8"]
-  SP --> OL["Omega_Lambda ~ log 2 (observed match)"]
+  SP --> OL["Omega_Lambda ~ log 2 (reported match; B-OPEN)"]
+  AL --> AB["B-OPEN: count -> measured coupling at scale; defeater: failed scale map or alpha drift"]
   SP --> NW["Newton 1/r^2"]
   SP --> MG["nuclear magic numbers"]
-  S2["3-quark Borromean closure"] --> MP["m_p/m_e = 6pi^5"]
+  S2["3-quark Borromean closure"] --> MP["m_p/m_e = 6pi^5 (structural; B-OPEN)"]
   AL --> MPI["m_pi/m_e = 274"]
 ```
 
@@ -138,13 +148,11 @@ flowchart TD
 The census spectrum explorer [`Genesis.md`](Genesis.md) exercises the constants sector end-to-end: the exact `−p/2` census spectral exponent (Lean-anchored, `QLF_CensusWalk`), census → π, and `α⁻¹ = 128 + d²` (`d = 3 → 137`).
 
 **α's full story** (derivation, IR/3-D scale, the running, the no-drift theorem, 4D/5D
-over-determination): [`Alpha.md`](Alpha.md). **The `+0.036` residual is now healed to its honest shape**
-([`Alpha_Residual.md`](Alpha_Residual.md) §9c): the bracket is two-sided and machine-checked both ends
-(`137.01587 < α⁻¹ < 137.04813`), the equal-weight prediction **`137.032` is structural** (`w = ½` forced
-by the free-monoid bifibration, not fitted), and `0.036` is **existence-proven** (reachable by a prime
-resummation) with its **multiplicity open** — which resummation = the continuum vacuum-polarisation
-running, the Standard Model's own frontier. Every substrate mechanism swing is closed; CODATA is an
-estimate of the missing count, not a target.
+over-determination): [`Alpha.md`](Alpha.md). The current claim record uses the exact formal
+comparator-residual band `(1/64, 0.04814)`, not the older strict `137.048` bound; the structural
+**`137.032` is reported, not re-derived**, and the count-to-renormalized-coupling map remains
+**`B-OPEN`**. Defeater: a failed scale map or a confirmed α variation. See [`Claim_Status.md`](Claim_Status.md)
+and [`claim_records/alpha.json`](claim_records/alpha.json).
 
 ---
 
@@ -218,7 +226,9 @@ flowchart TD
   EV["ZFA event synthesis w = -1"]
   EV --> OL["Horizon count closes the 10^122 catastrophe; Omega_Lambda ~ log 2 matched"]
   EV --> IN["Inflation same field"]
-  EV --> DM["Dark matter no particle"]
+  EV --> DM["Dark matter: closure-balance RAR (B-OPEN physical reading)"]
+  DM --> SP["SPARC: 147 galaxies / 2696 points; N retrospective benchmark; B-OPEN / G5"]
+  SP --> SD["Defeater: reproduced mismatch or failed independent replication"]
   OL --> DE["Dark energy"]
   EV --> AGE["Age ~ 13.8 Gyr"]
   EV --> NS["^4He fraction Y_p ~ 1/4"]
@@ -234,7 +244,7 @@ flowchart TD
 
 **Open:** [`Cosmological_Constant.md`](Cosmological_Constant.md) · [`Curvature.md`](Curvature.md) · [`DarkMatter.md`](DarkMatter.md) · [`SPARC.md`](SPARC.md) · [`AgeOfUniverse.md`](AgeOfUniverse.md) · [`Fusion.md`](Fusion.md) · [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §3a
 
-Dark matter is the closure-balance RAR, blind-tested parameter-free on 147 SPARC galaxies (`a₀ = cH₀/2π`, the `2π` derived; [`SPARC.md`](SPARC.md)). `a₀` is constant locally (`a₀/(cH) = 1/2π`) and scales with `H(z)` across redshift; the MUSE-DARK data prefer this expansion clock over the age clock and a constant `a₀` ([`DarkMatter.md`](DarkMatter.md) §5c). On that clock the dark-matter fit votes for the local `H₀ ≈ 72.9`, a conditional vote on the **Hubble tension**, not a resolution (§5a). The dynamical `ρ_Λ ∝ H²` reading is excluded, so QLF is no longer in the early-dark-energy class. **No epoch is special, in the own-clock sense:** every observer sees the same rate profile, faster behind and slower ahead (`QLF_InflationObserver`, pre-registered; a constant `Λ` would break it). **Named tension:** `ρ_Λ ∝ H²` then keeps `Ω_Λ = log 2` at recombination and BBN, far above early dark-energy bounds ([`Curvature.md`](Curvature.md) §8a).
+Dark matter is the closure-balance RAR, tested retrospectively on 147 SPARC galaxies (`a₀ = cH₀/2π`, the `2π` derived; [`SPARC.md`](SPARC.md)). The analysis uses target-informed selection and a seal before residual scoring, so it is an **`N` consistency benchmark**, not a blind/independent trial. The physical interpolation/form remains **`B-OPEN`**; G5 is open. `a₀` is constant locally (`a₀/(cH) = 1/2π`) and scales with `H(z)` across redshift; the MUSE-DARK data prefer this expansion clock over the age clock and a constant `a₀` ([`DarkMatter.md`](DarkMatter.md) §5c). On that clock the dark-matter fit votes for the local `H₀ ≈ 72.9`, a conditional vote on the **Hubble tension**, not a resolution (§5a). The dynamical `ρ_Λ ∝ H²` reading is excluded, so QLF is no longer in the early-dark-energy class. **No epoch is special, in the own-clock sense:** every observer sees the same rate profile, faster behind and slower ahead (`QLF_InflationObserver`, pre-registered; a constant `Λ` would break it). **Named tension:** `ρ_Λ ∝ H²` then keeps `Ω_Λ = log 2` at recombination and BBN, far above early dark-energy bounds ([`Curvature.md`](Curvature.md) §8a).
 
 **Convergence with accepted cosmology (the ledger, [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §3a).** QLF is **concordant with ΛCDM's observational core** — the hot Big Bang, CMB, BBN (`Y_p = 1/4`), the ≈13.8 Gyr age, `Ω_Λ = log 2 ≈ 0.69`, and the `w≈−1` accelerating expansion are all reproduced or left intact (*a Big-Bang-singularity alternative, not a hot-Big-Bang-observation alternative*). It **diverges only on ΛCDM's two interpretive pillars** — particle cold dark matter (→ the RAR/MOND reading above) and a static `Λ` (→ dynamical `ρ_Λ ∝ H²`), i.e. the open, contested questions. Its **deeper convergence** is with accepted **thermodynamic/emergent gravity** (Jacobson 1995, Bekenstein–Hawking, holography), from which it *derives* the Einstein `8πG` coefficient and `Λ = log 2` (`QLF_EinsteinEquations`). **Named exception:** `ρ_Λ ∝ H²` keeps `Ω_Λ = log 2` at early epochs, in tension with CMB/BBN early dark-energy bounds ([`Curvature.md`](Curvature.md) §8a).
 
@@ -278,7 +288,7 @@ same length and opposite charge and baryon number, for every word
 
 ## 8. Quantum-gravity / TOE pillars
 
-QLF meets the three TOE-candidate programs — and reproduces their wins from the substrate.
+QLF meets the three TOE-candidate programs — and reproduces their wins from the substrate. The merged metric-singlet/lattice-Einstein and Manifestation results are **`F`** as exact named statements, but they strengthen the **ToE claim map**, not the physical bridge: their physical readings remain **`B-OPEN`**, and neither closes G3/G5. The ToE index is a map, not evidence ([`Theory_Of_Everything.md`](Theory_Of_Everything.md), [`Manifestation.md`](Manifestation.md), [`Claim_Status.md`](Claim_Status.md)).
 
 ```mermaid
 flowchart TD
@@ -287,6 +297,11 @@ flowchart TD
   S --> ST["String theory"]
   S --> SU["Supersymmetry"]
   S --> PL["Planck scale"]
+  S --> MSM["Metric singlet / lattice Einstein (F under premises; physical gravity B-OPEN)"]
+  S --> MNF["Manifestation (F formal; physical selection B-OPEN)"]
+  MSM --> TOE["ToE claim map"]
+  MNF --> TOE
+  TOE --> CST["Claim_Status.md / Manifestation.md"]
 ```
 
 **Connectors:** *j = 1/2 spin network* &rarr; Loop Quantum Gravity &middot; *C(2n,n) modes* &rarr; String theory &middot; *Q = half-spin shift* &rarr; Supersymmetry &middot; *closure floor mu^2=1/2* &rarr; Planck scale
@@ -328,7 +343,7 @@ flowchart TD
   B["Beyond the Standard Model"]
   B --> D1["derived: alpha, Koide, theta-bar=0"]
   B --> P1["Majorana neutrino -> 0nubetabeta"]
-  B --> P2["no cosmological drift of alpha0"]
+  B --> P2["no cosmological drift of alpha0 (conditional null; registration draft)"]
   B --> P3["dark matter is not a particle"]
   P2 --> TH9["Th-229 nuclear clocks: alpha cannot drift"]
   P3 --> LZ["LZ single event: kill condition"]
@@ -455,6 +470,41 @@ turbulence swing produced a side-derivation (She–Léveque `C₀ = 2` from `/so
 Osterwalder–Schrader theory on ℝ⁴) is not constructed here — that step is the Yang–Mills boundary axiom of
 domain 9. What the reformulation proves is that the discrete substrate the continuum is the *limit of*, plus
 the one explicit crossing, carries QFT's empirical content.
+
+---
+
+## Methods and evidence: Paper I v0.3
+
+This is the cross-cutting evidence layer. It does not add a thirteenth domain; it records **what kind of claim** each result is and which bridge is still missing. The full paper is the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1); the audited snapshot is [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
+
+```mermaid
+flowchart TD
+  MTH["Paper I v0.3: claim-record methodology"]
+  MTH --> F["F - audited formal statements (319 anchors)"]
+  MTH --> N["N - reproduced numerical results"]
+  MTH --> B["B-OPEN - interpretation bridges"]
+  MTH --> E["E - empirical evidence (none established)"]
+  F --> G1["G1 PASS: MO2/QuantumLogic + metric/lattice + Manifestation"]
+  B --> G3["G3 OPEN: ZFA histories -> QL -> detector; three-polarizer, alpha, SPARC"]
+  E --> G5["G5 OPEN: independent / prospective test"]
+  G1 --> DEF["Defeaters and non-promotion rules"]
+  G3 --> DEF
+  G5 --> DEF
+  MTH --> MO2["MO2: 16 finite laws in both namespaces (F; 35 anchors)"]
+  MO2 --> TP["Three-polarizer 1/8 (B-OPEN: imported Malus/Born; detector map open)"]
+  MTH --> AL["alpha = 1/137 leading (F + N; B-OPEN: count -> coupling at scale)"]
+  AL --> SP["SPARC RAR (N retrospective; B-OPEN / G5)"]
+  MTH --> MSM["Metric singlet / lattice Einstein (F under premises; physical gravity B-OPEN)"]
+  MTH --> MNF["Manifestation (F formal; physical selection B-OPEN)"]
+  MSM --> TOE["ToE claim map"]
+  MNF --> TOE
+  MTH --> PAPER["Paper I v0.3 integrated draft"]
+  PAPER --> GIST["Gist / verification/paper-i-v0.3/"]
+```
+
+**Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html).
+
+**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 319-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
 
 ---
 
