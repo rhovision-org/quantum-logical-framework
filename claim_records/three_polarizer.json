@@ -1,0 +1,179 @@
+{
+  "record_id": "QLF-TP-001",
+  "version": "0.3.1-draft",
+  "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+  "informal_statement": "The six-element MO2 table satisfies the finite order, lattice, complement and orthomodular laws. The ideal 0°→45°→90° transmission 1/8 imports conventional Malus/Born optics; it is not a QLF-specific optical prediction.",
+  "approximation_or_regime": {
+    "name": "finite MO2 plus ideal polarizers",
+    "description": "Exhaustive six-element algebra; unpolarized ideal input and imported Malus/Born state-update model for the optical comparator.",
+    "validity_limits": "No ZFA-history-to-detector map, arbitrary-angle probability derivation or new optical experiment is established."
+  },
+  "formal_statement": {
+    "namespace": "QLF.MO2 / QLF.QuantumLogic",
+    "theorems": [
+      "QLF.MO2.le_refl",
+      "QLF.MO2.le_trans",
+      "QLF.MO2.le_antisymm",
+      "QLF.MO2.compl_involutive",
+      "QLF.MO2.compl_antitone",
+      "QLF.MO2.inf_compl_bot",
+      "QLF.MO2.sup_compl_top",
+      "QLF.MO2.orthomodular",
+      "QLF.MO2.not_distributive",
+      "QLF.MO2.le_sup_left",
+      "QLF.MO2.le_sup_right",
+      "QLF.MO2.sup_le",
+      "QLF.MO2.inf_le_left",
+      "QLF.MO2.inf_le_right",
+      "QLF.MO2.le_inf",
+      "QLF.MO2.sup_inf_absorb",
+      "QLF.MO2.inf_sup_absorb",
+      "QLF.QuantumLogic.incompatibility_source"
+    ],
+    "statement_scope": "Finite table identities and a separately stated Pauli commutator equality; no operational optical bridge."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_MO2.lean",
+      "lean/QLF_QuantumLogic.lean"
+    ],
+    "analysis_files": [
+      "scripts/mo2_finite_audit.py"
+    ],
+    "type": "finite orthomodular, non-distributive lattice"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "Reviewed 302-entry baseline; +62 entries, no changed old footprints. Original CI log and source-equivalence check archived in verification/paper-i-v0.3/.",
+    "qlf_bridge_axioms": "No project bridge axiom in these selected original CI footprints; physical identifications remain separately open."
+  },
+  "inputs": [
+    {
+      "name": "MO2 operations",
+      "value": "six constructors and explicit finite order/join/meet/complement",
+      "provenance": "declared",
+      "source": "lean/QLF_MO2.lean"
+    },
+    {
+      "name": "ideal optical law",
+      "value": "unpolarized first transmission 1/2; sequential cos²(angle difference)",
+      "provenance": "external",
+      "source": "Three_Polarizer_Paradox.md; conventional ideal optics"
+    }
+  ],
+  "interpretation": {
+    "map": "az/azp ↦ V/H, ax/axp ↦ D/A in a toy C² projection embedding",
+    "formal_status": "The finite embedding is a mathematical example; the physical history-to-apparatus map remains open.",
+    "noncircularity_test": "Specify the detector and angle interpretation independently of the target transmission. Imported Malus law is labelled, not counted as a QLF prediction."
+  },
+  "observable": {
+    "symbol": "T=Iout/Iunpolarized",
+    "baseline": "conventional ideal optics",
+    "reported_values": {
+      "0°": "1/2",
+      "0°→90°": "0",
+      "0°→45°→90°": "1/8",
+      "0°→90°→45°": "0"
+    },
+    "uncertainties": "No optical measurements were made; future instrument extinction, angle and background uncertainties need specification."
+  },
+  "measurement_protocol": {
+    "status": "proposed optical comparison, not performed",
+    "execution_status": "not_performed",
+    "design": "Randomized calibrated measurements of four polarizer stacks under a frozen apparatus/outcome map. A QLF-specific test also needs a discriminating prediction.",
+    "failure_condition": "A calibrated discrepancy under a frozen bridge rejects that bridge; the imported 1/8 does not independently confirm QLF."
+  },
+  "reported_agreement": {
+    "value": "finite: 15 comparable pairs; 36/36 orthomodular implications (15 non-vacuous); 24/216 distributive failures in each direction",
+    "comparator": "explicit six-element MO2 table; ideal optics only as an imported illustration",
+    "uncertainty": "finite enumeration exhausts its domain; no physical uncertainty was measured",
+    "comparison_type": "consistency"
+  },
+  "evidence": {
+    "F": "The exact stated mathematical declarations have reviewed original CI footprints and the recorded baseline. Physical interpretation is not promoted.",
+    "N": "scripts/mo2_finite_audit.py exhaustively checks the finite table; exact output is in the numerical receipt.",
+    "E": "No optical measurements or QLF-specific optical prediction.",
+    "reviewer": "Ω-WITNESS technical review for aixaria0; collaborator tier."
+  },
+  "defeaters": {
+    "formal": "Finite counterexample, original kernel failure or unexpected axiom footprint.",
+    "interpretation": "Circular or non-preserving history-to-optics map.",
+    "numerical": "Reproducible mismatch with the finite table or declared algorithm.",
+    "empirical": "Calibrated future observation outside a frozen prediction and uncertainty budget.",
+    "conceptual": "The imported optical comparator is treated as a new QLF-specific prediction."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Full audited source revision, original build identifiers, pinned toolchain/lockfile and digest-addressed execution artifacts recorded."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Original source compiled in the linked project CI; exact reports and unchanged Lean/build inputs were inspected, and the 302-entry baseline was deliberately recorded and checked outside CI. No local Lean rebuild is claimed."
+    },
+    "G2": {
+      "status": "PASS",
+      "reason": "Finite constructors, eight lub/glb/absorption obligations and theorem-to-claim scope are explicit; traceability does not imply physical interpretation."
+    },
+    "G3": {
+      "status": "INCONCLUSIVE",
+      "reason": "No verified ZFA-history-to-detector map; arbitrary-angle probabilities are imported."
+    },
+    "G4": {
+      "status": "PASS",
+      "reason": "Frozen-source script output reproduces all 19 finite checks, 15 comparable pairs, 36 implications and 24 distributive failures in each direction."
+    },
+    "G5": {
+      "status": "INCONCLUSIVE",
+      "reason": "No original optical measurement or frozen discriminating QLF test."
+    },
+    "G6": {
+      "status": "PASS",
+      "reason": "Scoped collaborator technical receipt archives source inspection, kernel-footprint review and declared numerical reproductions. This is not independent physical validation or publication approval."
+    }
+  },
+  "evidence_status": {
+    "formal": "VERIFIED",
+    "numerical": "REPRODUCED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "Scoped collaborator review for aixaria0; no independent external audit claimed.",
+    "enumeration": "Finite arithmetic reproducibility check; not an independent measurement.",
+    "original_lean_kernel": "Original project CI reports reviewed with unchanged-source check and recorded baseline; no local Lean execution.",
+    "measurement": "No physical experiment or independent empirical replication.",
+    "independence_tier": "collaborator",
+    "receipt": {
+      "reviewer": "Ω-WITNESS for aixaria0",
+      "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+      "scopes": [
+        "source_review",
+        "kernel_audit",
+        "numerical_reproduction"
+      ],
+      "artifacts": [
+        {
+          "path": "verification/paper-i-v0.3/receipt.json",
+          "sha256": "2685c3e9d6b6733b04a2e28e12de18d2a4b847fd9d4e23b6d7da28b9bcc66ee1"
+        },
+        {
+          "path": "verification/paper-i-v0.3/ci-41182f7-axioms.log",
+          "sha256": "fd5f8692d11eb96955da03b97a1154f4bb57105cfc5f53ef4373f60ac0b9a0e7"
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "repository": "https://github.com/rhovision-org/quantum-logical-framework",
+    "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+    "reference_documents": [
+      "Three_Polarizer_Paradox.md",
+      "Quantum_Logic_Foundations.md",
+      "Proof_Trust.md"
+    ],
+    "status": "Audited source pin; see verification/paper-i-v0.3/receipt.json. Full PR remains draft pending the new regression CI run and maintainer review."
+  },
+  "record_type": "claim"
+}

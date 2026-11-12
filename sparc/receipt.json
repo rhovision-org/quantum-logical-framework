@@ -1,7 +1,7 @@
 {
-  "benchmark": "QLF blind SPARC rotation-curve prediction",
+  "benchmark": "QLF retrospective SPARC rotation-curve benchmark",
   "issue": 77,
-  "protocol": "baryonic-only prediction, SHA-256 sealed before Vobs revealed; no per-galaxy tuning",
+  "protocol": "baryonic-input formula on target-informed quality cuts; SHA-256 sealed before residual scoring; Vobs already loaded; no per-galaxy QLF tuning",
   "sample": "SPARC curated: Q<=2 & Inc>=30deg & e_Vobs<0.1*Vobs  (galaxies=147, points=2696)",
   "qlf_params": {
     "a0_m_s2": 1.129e-10,
@@ -35,7 +35,7 @@
       "N": 2696
     },
     "rarfit": {
-      "name": "QLF form, a0 FITTED (g_dag)",
+      "name": "QLF form, fixed external g_dag",
       "free_params": 1,
       "mean_dex": -0.0094,
       "scatter_dex": 0.1326,
@@ -49,5 +49,14 @@
       "N": 2696
     }
   },
-  "verdict": "QLF (0 free params) reproduces the SPARC rotation curves at the observational-floor scatter (~0.13 dex), statistically identical to best-fit MOND, and far better than Newton (no dark matter). NFW fits tighter (~0.06 dex) but only with 294 free parameters (2/galaxy) \u2014 absorbing the per-galaxy scatter that the RAR's observed tightness shows is not physical halo diversity. Parameter economy: QLF 0, NFW 294, for the same data."
+  "parameter_accounting": {
+    "free_params": "Legacy complexity labels: rarfit=1 denotes an external calibrated number, not an optimization in this run. NFW parameters are grid fit here; declared H0, M/L and model-selection provenance are separate.",
+    "optimized_here": {
+      "newton": 0,
+      "qlf": 0,
+      "rarfit": 0,
+      "nfw": 294
+    }
+  },
+  "verdict": "Numerical reproduction of declared formulas on this curated public sample. QLF scatter is about 0.133 dex; the NFW grid fit is about 0.059 dex. These descriptive residuals do not establish historical blinding, an observational uncertainty floor, statistical model equivalence, or a unique physical mechanism."
 }

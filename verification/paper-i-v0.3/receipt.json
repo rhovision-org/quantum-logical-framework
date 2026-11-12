@@ -1,0 +1,60 @@
+{
+  "reviewer": "Ω-WITNESS for aixaria0",
+  "independence_tier": "collaborator",
+  "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+  "checked_at": "2026-11-10T18:18:54.324476+00:00",
+  "numerical_environment": {
+    "python": "3.14.8",
+    "architecture": "aarch64"
+  },
+  "kernel_evidence": {
+    "execution": "original project GitHub Actions; inspected reports, not a local Lean rebuild",
+    "run_url": "https://github.com/rhovision-org/quantum-logical-framework/actions/runs/42845773351/job/129932700521",
+    "head_revision": "41182f739979227906cc1412e33f03be1ecba4f5",
+    "test_merge_revision": "8cf63f32b3ede1fee696bfbd7de479a1c4549a39",
+    "lean_build": "success",
+    "reports": 302,
+    "extraction": "Original contiguous audit-step output after removal of GitHub prefixes, including multiline reports and the historical baseline-mismatch failure; full original log remains linked.",
+    "source_equivalence": "All Lean sources, lockfile, toolchain, lakefile, gate script and Lean workflow match the original CI source byte-for-byte; only the reviewed manifest is regenerated afterwards."
+  },
+  "artifacts": [
+    {
+      "path": "verification/paper-i-v0.3/alpha_arithmetic.json",
+      "sha256": "c5508f69e7e1d61e1ed0e5c6b475013867fa5f58732da86b62f341aedebd1936"
+    },
+    {
+      "path": "verification/paper-i-v0.3/baseline_delta.json",
+      "sha256": "8ebe5163f41838ae87064d0a60382d27b08a10c9bdef5c2188da950f331b86d9"
+    },
+    {
+      "path": "verification/paper-i-v0.3/ci-41182f7-axioms.log",
+      "sha256": "fd5f8692d11eb96955da03b97a1154f4bb57105cfc5f53ef4373f60ac0b9a0e7"
+    },
+    {
+      "path": "verification/paper-i-v0.3/mo2_results.json",
+      "sha256": "6afe1109bbc61ecb831fddf9dcedd98a3ad6b302ed22aa7f01019db1ae4f1e9c"
+    },
+    {
+      "path": "verification/paper-i-v0.3/sparc_receipt.json",
+      "sha256": "b824907387426716abe40b8e23fe54ea0e2e8b187c9b8ee66f1f112133a71ef8"
+    },
+    {
+      "path": "verification/paper-i-v0.3/sparc_run.log",
+      "sha256": "61c537ef62894acafcea3f2c91f306cf2f9e62626f19901def809353224eb5c4"
+    }
+  ],
+  "source_file_sha256": {
+    "scripts/mo2_finite_audit.py": "183fbff0746304f3783b51b417161e6b08324142077d750e6991b21caf43dcba",
+    "sparc/sparc_blind_pipeline.py": "3d413a30262adafcd8e977a44a1a77452ce17ce6d1a5717253df19365935c784",
+    "sparc/MassModels_Lelli2016c.mrt": "9108994b12cc401b94a1768beca61c53ec354779385c9c9cc571049f3043244c",
+    "sparc/SPARC_Lelli2016c.mrt": "5aa0501f6b0d881fa579030e315e7b5b6ef561a5bd3a07472f9929c7e5728243",
+    "lean-toolchain": "cdbc6c372a2b37ad94430a6cec69cedfa4d36f255bfd968773fd91bf7a1746bf",
+    "lake-manifest.json": "0aa021a7855a54499de2b4b8ea270e572d71696f3cffaf38c220a3de549e4e92"
+  },
+  "limits": [
+    "No local Lean execution",
+    "No physical experiment",
+    "No independent historical blinding or third-party timestamp",
+    "No publication or authorship approval"
+  ]
+}

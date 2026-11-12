@@ -1,0 +1,145 @@
+{
+  "record_id": "QLF-KILL-001",
+  "version": "0.3.1-draft",
+  "source_revision": "59b92e082a73ba8bccb48ce0597463b665da727b",
+  "reviewer": "Aria (technical reviewer)",
+  "purpose": "Draft falsification and test ledger. No entry is a completed preregistration until its operational specification and documented pre-exposure chronology are frozen. Formal anchors name scoped mathematics, not experimental validation.",
+  "entries": [
+    {
+      "id": "alpha_drift",
+      "claim": "alpha has no time argument and cannot drift; a continuous history of values in {1/(128 + d^2) : d in N} is constant.",
+      "comparator": "nuclear-clock alpha-drift bounds (e.g. Th-229, Yb+/Sr comparisons)",
+      "kill_condition": "A confirmed, calibrated time variation of alpha.",
+      "status": "DRAFT",
+      "source": "Discoveries_2026.md V8; lean/QLF_Discoveries2026.lean",
+      "anchors": [
+        "QLF.Discoveries2026.alpha_cannot_drift"
+      ],
+      "formal_scope": "Continuity plus membership in the discrete structural value set implies constancy; the measured coupling and residual/running correction are not identified by this theorem.",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null,
+        "data_access": "not_established"
+      }
+    },
+    {
+      "id": "axion",
+      "claim": "The proposed closure mechanism would avoid requiring a Peccei-Quinn axion to cancel physical theta, if the winding-to-QCD bridge is established.",
+      "comparator": "axion haloscope/helioscope and ADMX-like searches",
+      "kill_condition": "A failure of the frozen winding-to-physical-theta bridge would reject that mechanism. Axion detection rejects only a separately specified axion-absence hypothesis; it does not alone refute that an axion is unnecessary.",
+      "status": "DRAFT",
+      "source": "Completeness_Evidence.md; Mysteries_Of_Physics.md; lean/QLF_StrongCP.lean",
+      "anchors": [
+        "QLF.theta_zero_on_closure"
+      ],
+      "formal_scope": "A defined CP-odd winding is zero on a ZFA closure; this neither constructs physical QCD theta nor proves that axions cannot exist.",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null,
+        "data_access": "not_established"
+      }
+    },
+    {
+      "id": "cpt_proton_antiproton",
+      "claim": "The antiparticle is the time-mirror: same length (mass proxy), opposite charge and opposite junction baryon number.",
+      "comparator": "BASE proton/antiproton mass and charge-to-mass comparisons",
+      "kill_condition": "A confirmed CPT-violating mass or charge-to-mass difference.",
+      "status": "DRAFT",
+      "source": "Discoveries_2026.md V1; lean/QLF_Majorana.lean",
+      "anchors": [
+        "QLF.Discoveries2026.antiparticle_length",
+        "QLF.Discoveries2026.charge3W_antiparticle"
+      ],
+      "formal_scope": "Conjugate-and-reverse preserves word length and negates a defined charge count; length-to-mass and experimental charge maps remain open.",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null,
+        "data_access": "not_established"
+      }
+    },
+    {
+      "id": "0nubb",
+      "claim": "The nu1-only Majorana refinement predicts m_betabeta approximately 0.25 meV.",
+      "comparator": "LEGEND-1000 / nEXO reach",
+      "kill_condition": "The published defeater is a 0nubb signal at the LEGEND-1000/nEXO reach of approximately 10 meV, inconsistent with the QLF window; the exact window logic is to be finalized with the collaboration.",
+      "status": "DRAFT",
+      "source": "Discoveries_2026.md; lean/QLF_Majorana.lean; Open_Problems.md",
+      "anchors": [
+        "QLF.Majorana.neutrino_majorana"
+      ],
+      "formal_scope": "The assigned up/down word is self-conjugate. No quantitative effective mass or decay-rate window follows from this anchor.",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null,
+        "data_access": "not_established"
+      }
+    },
+    {
+      "id": "qrng_deviation",
+      "claim": "QRNG streams match the ZFA-closure null.",
+      "comparator": "predeclared QRNG sieve",
+      "kill_condition": "A predeclared, calibrated deviation from the closure null.",
+      "status": "DRAFT",
+      "source": "QRNG_Closure_Observatory.md; Completeness_Evidence.md",
+      "anchors": [],
+      "formal_scope": "No formal anchor is claimed; a quantitative null distribution and decision rule remain to be specified.",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null,
+        "data_access": "not_established"
+      }
+    },
+    {
+      "id": "objective_collapse_jitter",
+      "claim": "No objective-collapse time jitter.",
+      "comparator": "objective-collapse noise bounds",
+      "kill_condition": "A confirmed objective-collapse signal.",
+      "status": "DRAFT",
+      "source": "Discoveries_2026.md",
+      "anchors": [],
+      "formal_scope": "No formal anchor is claimed; a calibrated physical signal model and rejection rule remain to be specified.",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null,
+        "data_access": "not_established"
+      }
+    }
+  ],
+  "record_type": "test_ledger"
+}

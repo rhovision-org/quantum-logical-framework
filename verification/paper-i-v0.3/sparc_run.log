@@ -1,0 +1,11 @@
+=== QLF retrospective SPARC benchmark — curated sample (Q<=2, Inc>=30) — issue #77 ===
+H0=73.0  a0=cH0/2pi=1.129e-10 (94% g_dag)  galaxies=147  points=2696
+sealed predictions sha256=5f06582c8058c6c1…   data sha256=9108994b12cc401b
+
+model                           free params  mean(dex)  scatter(dex)
+Newton (g_bar, no DM)                     0      0.431         0.281
+NFW (2 params/galaxy fit)               294     -0.005         0.059
+QLF form, fixed external g_dag            1     -0.009         0.133
+QLF, a0=cH0/2pi DERIVED                   0     -0.000         0.133
+
+Receipt -> receipt.json (sealed hash, declared params, data provenance, scored results).

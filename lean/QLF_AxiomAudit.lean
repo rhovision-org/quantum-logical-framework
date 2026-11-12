@@ -108,6 +108,24 @@ import QLF_LocalAreaLaw
 import QLF_MetricSinglet
 import QLF_LatticeDivergence
 
+-- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
+-- The baseline for these anchors is intentionally updated only after a
+-- reviewed `proof_trust.py --record` run; see Proof_Trust.md.
+import QLF_MO2
+import QLF_QuantumLogic
+import QLF_FineStructureSubstrate
+import QLF_AlphaRigidity
+import QLF_LenzMassRatio
+import QLF_GMinusTwo
+import QLF_CosmologicalConstant
+import QLF_DarkMatter
+import QLF_MondScale
+import QLF_RarBalance
+import QLF_MercuryPerihelion
+import QLF_Discoveries2026
+import QLF_StrongCP
+import QLF_Majorana
+
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
 #print axioms double_fold_identity
@@ -464,3 +482,107 @@ import QLF_LatticeDivergence
 #print axioms QLF.MetricSinglet.product_annihilator_iff_singlet
 #print axioms QLF.LatticeDivergence.latticeCalculus
 #print axioms QLF.LatticeDivergence.lattice_einstein_field_equations
+
+
+/-! ## Paper I v0.3 — MO2 / QuantumLogic G1 anchors
+
+These are the exact anchors proposed in Paper I v0.3 Appendix A.  The
+`True := trivial` summary markers (`quantum_logic_summary`,
+`MO2_is_quantum_logic`) are intentionally NOT anchored.  Baseline updates
+require a reviewed `proof_trust.py --record` run; see Proof_Trust.md. -/
+
+-- MO2: existing core theorems
+#print axioms QLF.MO2.le_refl
+#print axioms QLF.MO2.le_trans
+#print axioms QLF.MO2.le_antisymm
+#print axioms QLF.MO2.compl_involutive
+#print axioms QLF.MO2.compl_antitone
+#print axioms QLF.MO2.inf_compl_bot
+#print axioms QLF.MO2.sup_compl_top
+#print axioms QLF.MO2.orthomodular
+#print axioms QLF.MO2.not_distributive
+
+-- MO2: new lub/glb/absorption laws
+#print axioms QLF.MO2.le_sup_left
+#print axioms QLF.MO2.le_sup_right
+#print axioms QLF.MO2.sup_le
+#print axioms QLF.MO2.inf_le_left
+#print axioms QLF.MO2.inf_le_right
+#print axioms QLF.MO2.le_inf
+#print axioms QLF.MO2.sup_inf_absorb
+#print axioms QLF.MO2.inf_sup_absorb
+
+-- QuantumLogic: existing core theorems
+#print axioms QLF.QuantumLogic.le_refl
+#print axioms QLF.QuantumLogic.le_trans
+#print axioms QLF.QuantumLogic.le_antisymm
+#print axioms QLF.QuantumLogic.compl_involutive
+#print axioms QLF.QuantumLogic.compl_antitone
+#print axioms QLF.QuantumLogic.inf_compl_bot
+#print axioms QLF.QuantumLogic.sup_compl_top
+#print axioms QLF.QuantumLogic.orthomodular
+#print axioms QLF.QuantumLogic.not_distributive
+#print axioms QLF.QuantumLogic.incompatibility_source
+
+-- QuantumLogic: new lub/glb/absorption laws
+#print axioms QLF.QuantumLogic.le_sup_left
+#print axioms QLF.QuantumLogic.le_sup_right
+#print axioms QLF.QuantumLogic.sup_le
+#print axioms QLF.QuantumLogic.inf_le_left
+#print axioms QLF.QuantumLogic.inf_le_right
+#print axioms QLF.QuantumLogic.le_inf
+#print axioms QLF.QuantumLogic.sup_inf_absorb
+#print axioms QLF.QuantumLogic.inf_sup_absorb
+
+/-! ## Paper I v0.3 — headline-claim anchors
+
+Substantive theorem anchors for the claims in the paper's positive claims
+table.  The `True := trivial` summary markers in these modules are NOT anchors. -/
+
+-- Fine-structure alpha
+#print axioms QLF.alpha_QLF_eq
+#print axioms QLF.alpha_bare_eq
+#print axioms QLF.AlphaBound.leadInv_eq
+#print axioms QLF.AlphaBound.codata_in_exact_census_band
+#print axioms QLF.AlphaBound.codata_residual_in_census_bracket
+#print axioms QLF.AlphaRigidity.inverseAlpha_at_three
+#print axioms QLF.AlphaRigidity.alpha_unique
+
+-- m_p / m_e
+#print axioms QLF.lenz_factor_eq
+#print axioms QLF.mass_ratio_QLF_eq
+
+-- g - 2
+#print axioms QLF.a_e_QLF_eq_schwinger
+#print axioms QLF.a_e_QLF_substrate
+#print axioms QLF.g_factor_QLF_eq
+
+-- Omega_Lambda
+#print axioms QLF.Omega_Lambda_4_gauge_eq
+#print axioms QLF.Omega_Lambda_0_gauge_eq
+#print axioms QLF.only_2_gauge_matches_observed_Omega_Lambda
+
+-- Dark matter / RAR
+#print axioms QLF.mond_acceleration_horizon_form
+#print axioms QLF.radialAccel_self_consistent
+#print axioms QLF.MondScale.a0_is_hubble_per_closure_loop
+#print axioms QLF.MondScale.a0_eq_c_times_cyclic_rate
+#print axioms QLF.rar_is_free_energy_balance
+
+-- Mercury perihelion
+#print axioms QLF.perihelion_advance_per_century_eq
+#print axioms QLF.perihelion_advance_form_equivalence
+
+-- Alpha cannot drift (kill-condition anchor)
+#print axioms QLF.Discoveries2026.alpha_cannot_drift
+
+-- Born rule: `QLF.BornFromWays.born_from_ways` and `assignment_unique` are
+-- already anchored in the BornFromWays section above; do not duplicate them.
+
+-- Strong CP / no axion (kill-condition anchor)
+#print axioms QLF.theta_zero_on_closure
+
+-- CPT / antiparticle time mirror (kill-condition anchors)
+#print axioms QLF.Discoveries2026.antiparticle_length
+#print axioms QLF.Discoveries2026.charge3W_antiparticle
+#print axioms QLF.Majorana.neutrino_majorana
