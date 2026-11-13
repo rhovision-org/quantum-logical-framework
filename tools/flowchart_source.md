@@ -33,6 +33,7 @@ flowchart LR
   FND --> MTH["Methods and evidence: Paper I v0.3"]
   FND --> SL["Two-phase / strange-loop bootstrapping"]
   FND --> REL["Relativity: free Dirac-walk boost covariance F; interacting return NOT_STARTED (#207)"]
+  FND --> LEP["Lepton mass-ratio protocol (#140): B-OPEN; delta not derived"]
   FND --> MAP["Map ≡ territory under ZFA (B-OPEN interpretation; issue #213)"]
   SL -.->|frames| MTH
   MTH -.->|audits| D2
@@ -41,6 +42,7 @@ flowchart LR
   click MTH "#methods-and-evidence-paper-i-v03"
   click SL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md" _blank
   click REL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Relativity_Principle.md" _blank
+  click LEP "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Lepton_Mass_Ratio_Protocol.md" _blank
   click MAP "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Map_Is_Territory.md" _blank
   click MT "https://github.com/rhovision-org/quantum-logical-framework/issues/213" _blank
   click KNW "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#3a-the-deeper-loop-closure-knowledge-and-the-immanent-self-model" _blank

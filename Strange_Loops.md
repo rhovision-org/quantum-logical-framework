@@ -901,6 +901,20 @@ applied to Hilbert spaces, unitarity, the S-matrix, poles, zeros and Born
 probabilities. It is a test of whether QLF has derived the conventional object
 rather than merely translated it.
 
+### 6.6 Lepton mass-ratio candidate: `B-OPEN`, no result yet
+
+The lepton spectrum is the next physics-facing candidate for the same discipline. The existing formal inputs are real but partial: three generations from the three spatial axes (`num_generations_eq_three`), Koide `Q = 2/3` (`koide_two_thirds`), and the electron `^<v>` anchor with axes `{x,y}` and fold `−I` (`electronCycle_folds_negI`). None of these fixes `m_mu/m_e` or `m_tau/m_e`.
+
+[`Lepton_Mass_Ratio_Protocol.md`](Lepton_Mass_Ratio_Protocol.md) pre-registers the attempt:
+
+- rooted closure selection rules are frozen before any target mass is read;
+- the Koide three-phase form is the only admissible functional;
+- the electron fixes only the overall scale;
+- the phase `delta` must come from closure counts, and the mass assignment must return the closure invariants;
+- the topology ladder's known `L = 10` ambiguity and load-bearing 3-axis filter are recorded, not hidden.
+
+The protocol and claim record are `B-OPEN`; `delta` is not derived, the conservative return is `NOT_STARTED`, and no `N` or `E` claim is made. Issue [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140) remains open.
+
 ## 7. The toy observer model
 
 [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py) is a finite toy model, not evidence. It represents a Markov-blanket observer as a subset of MO2 elements and a lattice state, runs a three-stage polarizer sequence, and compares:
