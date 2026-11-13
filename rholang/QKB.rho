@@ -4,8 +4,10 @@
 // Design: ../Quantum_Knowledge_Base.md.  Executable specification (same rules, checked
 // against twist_core.py and qucalc_search.py): ../qkb_reference.py.
 //
-// STATUS: written against rholo's documented surface and its rho:qucalc:* natives. It has NOT
-// been parsed or run by rholo, nor deployed. The Python reference is what has been run.
+// STATUS: parsed and executed on an isolated local rnode (quantum-os commit 070d8f8,
+// rnode sha256 3323e67399fd0d5bf5e91fbcfa4dd157848e2b9ec5e7c0276c71288f675f6400),
+// including registry publication and a separate deploy's lookup. NOT deployed on a public
+// or production network. Evidence: ../verification/qkb/rholo_acceptance.md.
 //
 // Twists are rholo's integers:  0 ^  1 v  2 >  3 <  4 /  5 \  6 +  7 -
 // axis(t) = t / 2  (0 y, 1 x, 2 z, 3 gauge);  sign(t) = + iff t % 2 == 0.

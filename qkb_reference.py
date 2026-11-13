@@ -4,7 +4,9 @@ qkb_reference.py — executable specification of the quantum logical knowledge b
 The Rholang contract `rholang/QKB.rho` is the deployable form; this file is the
 same semantics in Python, so every rule the contract enforces can be checked
 against the repo's canonical engines (`twist_core.py`, `qucalc_search.py`)
-without a node. Design and rationale: Quantum_Knowledge_Base.md.
+without a node. The contract has also been parsed and executed on an isolated
+rnode; that evidence is in `verification/qkb/rholo_acceptance.md`. Design and
+rationale: Quantum_Knowledge_Base.md.
 
 Run `python3 qkb_reference.py` to execute the self-checks (seconds).
 

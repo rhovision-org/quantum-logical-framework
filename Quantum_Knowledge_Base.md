@@ -4,9 +4,13 @@
 every rule below and checks them against the repo's canonical engines ([`twist_core.py`](twist_core.py),
 [`qucalc_search.py`](qucalc_search.py)); it runs in under a second and passes. The Rholang contract
 [`rholang/QKB.rho`](rholang/QKB.rho) is the same design written for
-[rholo](https://github.com/rhovision-org/rholo) and its `rho:qucalc:*` natives. **It has not been
-parsed or run by rholo, nor deployed on a node.** Until a pinned parser check and an isolated-node
-acceptance run exist, it is a specification, not an accepted implementation. Part of the
+[rholo](https://github.com/rhovision-org/rholo) and its `rho:qucalc:*` natives. **It has been parsed
+and executed on an isolated local rnode, including registry publication and a separate deploy's
+lookup; it has not been deployed on a public or production network.** The run is recorded in
+[`verification/qkb/rholo_acceptance.md`](verification/qkb/rholo_acceptance.md) (directory ledger:
+[`verification/qkb/README.md`](verification/qkb/README.md)), with the
+quantum-os tree commit and rnode binary hash pinned. This accepts the contract as executable; it does
+not make the single-cell contract decentralized or production-ready. Part of the
 [Quantum Logical Framework (QLF)](README.md).
 
 ZFA here means what it means everywhere in QLF: equal and opposite quantum logical action, with zero
@@ -317,14 +321,17 @@ Memetics §10 with real, independent attesters on a rholo devnet, and record whi
 holders. Memetics T4 predicts R follows priority (`first`), not multiplicity (`ways`). If R tracks
 `ways` instead, that prediction fails. Pre-register the test before running it, as §8 there did.
 
-## 8. Next steps
+## 8. Runtime acceptance and next steps
 
-1. **The merge gate (from review):** parse [`QKB.rho`](rholang/QKB.rho) with rholo's parser at a
-   pinned commit, then run an isolated-node acceptance test. It should cover assert and refusal,
-   repeat attestation, duplicate questions, malformed input, solve and compatibility, by porting
-   self-checks (a)–(g) as deploys and reading their results with the node's exploratory deploy.
-   Running rholo's code was not permitted in this session. Either a session that may build rholo
-   or a pinned CI job (it would be this repo's first non-Lean CI job) has to do it.
+1. **Runtime acceptance (done 2026-11-13, isolated node).** Parse and execute
+   [`QKB.rho`](rholang/QKB.rho) on the checked-in `rnode` from
+   [`quantum-os`](https://github.com/rchain-community/quantum-os) commit
+   `070d8f8254ab4d39cdf80f8a60eee37c38910588` (binary SHA-256
+   `3323e67399fd0d5bf5e91fbcfa4dd157848e2b9ec5e7c0276c71288f675f6400`). The run covers assert and
+   refusal, repeat attestation, duplicate questions, answer-before-ask, malformed input, solve,
+   compatibility and conjoin, and registry publication followed by a separate deploy's lookup.
+   Results and exact commands: [`verification/qkb/rholo_acceptance.md`](verification/qkb/rholo_acceptance.md).
+   This is isolated-node acceptance, not a public deployment or a security audit.
 2. File an issue on rholo about the aggregate gate in `achieves_zfa` (after Jim agrees to filing it).
 3. Add `QLF_QuantumLogic3` (MO3 by `decide`).
 4. Pre-register and run the redundancy-against-priority test (§7).
