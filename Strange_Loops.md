@@ -377,6 +377,60 @@ machine-checked correspondence theorem. Those are `NOT_STARTED`.
 `PR #216` is an **open draft**, not part of the 343-anchor baseline and not audited here. This section
 is a cross-link and a target, not a promotion.
 
+### 2B.12 Is a QKB query itself a strange loop?
+
+Not automatically. A QKB query is a **rendezvous**, not yet a self-referential loop:
+
+```
+ask(q)  |  answer(q, cont)  ->  solve(q) -> recorded closure
+```
+
+`ask` is a listener condition, `answer` is the trigger, and `solve` is the match. That is a two-party
+request/response loop in the weak sense: a question is closed by an answer. It does not by itself
+return a model of the asking process.
+
+A QKB query becomes a genuine strange loop only if all three of the following hold:
+
+1. the question can name the KB's own state, records, query process, or capability boundary
+   (self-reference, not just a query about an external seed);
+2. the answer can change the listener's future question set or capability set, so the result feeds
+   back into what can be asked next;
+3. the return is conservative on the relevant equivalence class: the self-model must not invent
+   closure-relevant facts or erase them.
+
+Schematically, the self-query target is:
+
+```
+Q  ->  KB(Q, KB)  ->  Q'        with   Q' ~ Q
+```
+
+on the finite closure-relevant invariants. QKB's current `ask`/`answer`/`solve` is first-order and does
+not implement this. The self-query target is **`NOT_STARTED`**.
+
+### 2B.13 What ρ-universality does and does not give
+
+The ρ-calculus is universal for computable process structure. That makes a formal QLF encoding
+**plausible**: finite QLF histories are finite words, names can encode axes, messages can encode twists,
+and a join can encode a multi-axis closure condition. QKB already gives an executable sketch of the
+knowledge-level layer.
+
+But universality is **expressiveness, not adequacy**:
+
+- a universal calculus can encode both faithful and unfaithful maps;
+- universality does not select the right encoding of `Z`, `∘`, or closure equivalence;
+- it does not prove soundness (`Z(h)=0` → reduction) or completeness (reduction → closure preimage);
+- it does not prove conservativity, bisimulation, or absence of event-time loops;
+- it does not make the QKB query self-referential.
+
+So the correct statement is:
+
+> **A simple formal connection is likely constructible because ρ is universal and QLF's event layer is
+> finite; it is not automatic, and no such theorem exists yet.**
+
+The concrete target remains `RhoCorrespondence` in §2B.10, plus the self-query obligation in
+[`verification/strange-loop/rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md).
+Both are `NOT_STARTED` and outside the 343-anchor baseline.
+
 ## 3. Observer loops are not time loops
 
 The observer/consciousness layer has the same shape. An observer is a finite, terminating, self-referential **Markov blanket**: it models itself, its environment, and their interaction, and its ZFA closures synthesize its local time and world. The relevant documents are [`Philosophy.md`](Philosophy.md) §3d, [`Time.md`](Time.md) §7a, [`Hadrons_Markov_Blankets.md`](Hadrons_Markov_Blankets.md), and [`Consciousness.md`](Consciousness.md).

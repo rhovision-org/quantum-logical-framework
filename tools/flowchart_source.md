@@ -497,7 +497,7 @@ flowchart TD
   SL --> KNW["Closure → information → model → self-model (B-OPEN; no E)"]
   SL --> EVT["Primitive event: mutual closure / listening both ways (B-OPEN)"]
   SL --> RHO["ρ-calculus / Rholang: name = capability, join = closure analogue (B-OPEN)"]
-  SL --> QKB["QKB (PR #216 draft): ask/answer as listener/trigger; not yet self-knowledge"]
+  SL --> QKB["QKB (PR #216 draft): ask/answer rendezvous; self-query target NOT_STARTED"]
   MTH --> F["F - audited formal statements (343 anchors)"]
   MTH --> N["N - reproduced numerical results"]
   MTH --> B["B-OPEN - interpretation bridges"]

@@ -52,7 +52,43 @@ closure-relevant equivalence class (compare `TensorConservativeReturn`).
 8. **No scheduler.** The translation has no external scheduler; matching is internal to the process
    configuration.
 
+## Why a formal connection is plausible
+
+The finite QLF event layer is a good target for a ρ encoding:
+
+- a history is a finite word; names can encode axes and messages can encode twists;
+- a per-axis ZFA gate can be represented as a join over axis counters (QKB's `scan` is an executable
+  sketch of this);
+- `ask`/`answer`/`solve` already has the listener/trigger/reduction shape at the knowledge level;
+- reflective ρ supplies quote/drop, which is the natural candidate for self-query.
+
+This makes a formal connection **plausible**, not automatic.
+
+## Universality is not adequacy
+
+A universal process calculus can encode both faithful and unfaithful translations. The existence of
+*some* encoding proves only expressiveness. A correspondence theorem still needs:
+
+- a specified encoding, not an arbitrary one;
+- soundness and completeness for the intended fragment;
+- preservation of join, restriction, replication, reflection and read/write polarity;
+- conservativity (no new closures, no lost closure-relevant facts);
+- a chosen bisimulation/equivalence and a proof of it;
+- a no-scheduler / no-event-time-loop result.
+
+## Self-query obligation
+
+A QKB query is a rendezvous, not automatically a strange loop. For a self-query loop, add:
+
+9. **Self-query.** The question representation can name the KB's own state/query process, and the
+   answer can update the listener's future question/capability set under a stated authority.
+10. **Conservative self-return.** The self-model returns to the finite records on the closure-relevant
+    equivalence class: `R(F(records)) ~ records`.
+
+Both are `NOT_STARTED`. The current QKB design is first-order and does not implement them.
+
 ## Non-goals
+
 
 - Proving that QLF is *the same as* Rholang or pure ρ-calculus.
 - Treating the Rholang bundle syntax as a formal semantics without a fixed presentation.
