@@ -1,0 +1,1431 @@
+import QLF_PlaquetteArea
+import QLF_HandedLoops
+import QLF_KraftMeasure
+import QLF_HolographicBoundary
+
+set_option linter.unusedVariables false
+
+/-!
+# QLF_MagneticOrientation — **events create space with an orientation**
+
+Jim, 2026-11-11: *"its simple, events create space with an orientation"*, and asked how that
+orientation shows up as magnetic attraction and repulsion, and as space being synthesized or
+annihilated.
+
+[`QLF_PlaquetteArea`](QLF_PlaquetteArea.lean) gives every history three shadows, its signed projected
+areas on the `XY`, `XZ` and `YZ` planes (`projArea`), and shows the closure's phase is their parity.
+The sign of a shadow is the loop's **orientation**, counter-clockwise or clockwise. The three signed
+shadows together are the loop's oriented area vector, which in the continuum is its magnetic moment
+(`m = ½ ∮ r × dr`). This module proves how oriented area combines.
+
+* **`projArea_append`** — the shadows of closures **add**: a closure followed by any history has the
+  sum of their signed areas on every plane. Area made by an event is kept by the next one.
+* **`projArea_mirror`** — the mirror (Hermitian adjoint, `QLF_HandedLoops.mirror`: reverse the order,
+  flip every handedness bit) of a closure has **the opposite orientation** on every plane.
+* **`annihilation`** — a history followed by its mirror retraces its own path: it returns, it is a
+  ZFA closure, its shadows on all three planes are zero and its holonomy is trivial. Oriented area and
+  its opposite **annihilate**, and leave nothing.
+* **`synthesis`** — a closure repeated `k` times encloses `k` times its area on every plane. Same
+  orientation **synthesizes** space.
+* **`joint_cost_pos_iff`** / **`joint_release_iff`** — for two closures with areas `A` and `B` on a
+  plane, `(A+B)² − (A² + B²) = 2AB`. Joining two same-oriented events increases the square of the area,
+  and joining opposite-oriented events decreases it.
+* **`fixed_distance_iff`** — reading the space between two poles as the running sum of those cross
+  terms, **a fixed distance has equal space orientation**: like and opposite pairings equal in number.
+  **`like_poles_expand`**, **`opposite_poles_destroy`**: like poles make `2n` units, opposite poles
+  remove `2n`. **`fixed_distance_is_balanced`**: a fixed distance is a balanced (ZFA) string of
+  relative orientations.
+
+**The magnetic reading (imported, labelled).** If magnetic action is quadratic in the enclosed flux,
+as the Maxwell action is in `B`, then with flux quantized (each plaquette is one π quantum,
+`QLF_EdgeSign`) the joint-cost identity is the fluxoid rule of type-II superconductors: two
+same-sense flux quanta cost more action merged than apart, so they **repel**; opposite-sense quanta
+cost less merged, so they **attract**, and merged completely they **annihilate** (`annihilation`).
+This is the fixed-flux case, and matches vortex–vortex repulsion and vortex–antivortex annihilation.
+The quadratic action is an input here, not derived, and the head-to-tail attraction of bar magnets
+(fixed moment, stacked along the normal) is a different geometry that this module does not cover.
+
+**The one count (§9).** `closure_area_symmetric`: at every length, as many closures enclose signed
+area `A` on a plane as `−A`, because the mirror is an involution on closures that negates area; so
+`vacuum_net_orientation_zero`, the vacuum's total oriented area is zero at every length.
+
+**Honest scope (method rule 4).** Apart from §9 these are identities about how oriented area composes. None of them
+changes a count of ways. What would: counting how many closures of length `L` have a given signed
+area, and showing the joint census of two events favours the opposite-orientation pairing.
+
+No axioms.
+-/
+
+namespace QLF.MagneticOrientation
+
+open QLF QLF.PhaseRule QLF.EdgeSign QLF.PlaquetteArea QLF.HandedLoops
+
+-- ==========================================
+-- §1  Walks compose
+-- ==========================================
+
+/-- A history **returns** when its walk ends where it began on every axis. -/
+def Returns (ts : List Twist) : Prop := ∀ a : Axis, position ts a = 0
+
+theorem positionFrom_append (u v : List Twist) : ∀ x : Axis → ℤ,
+    positionFrom x (u ++ v) = positionFrom (positionFrom x u) v := by
+  induction u with
+  | nil => intro x; rfl
+  | cons t ts ih => intro x; exact ih (stepPos x t)
+
+theorem lineInt_append (a b : Axis) (u v : List Twist) : ∀ x : Axis → ℤ,
+    lineInt a b x (u ++ v) = lineInt a b x u + lineInt a b (positionFrom x u) v := by
+  induction u with
+  | nil => intro x; simp [lineInt, positionFrom]
+  | cons t ts ih =>
+      intro x
+      simp only [List.cons_append, lineInt, positionFrom]
+      rw [ih (stepPos x t)]
+      ring
+
+theorem position_zero_of_returns {u : List Twist} (hu : Returns u) :
+    positionFrom (fun _ => 0) u = fun _ => 0 := by
+  funext a
+  exact hu a
+
+/-- **Oriented area adds.** After a closure, the next history's shadows add to the closure's own, on
+    every plane. -/
+theorem projArea_append (a b : Axis) {u : List Twist} (hu : Returns u) (v : List Twist) :
+    projArea a b (u ++ v) = projArea a b u + projArea a b v := by
+  unfold projArea
+  rw [lineInt_append, position_zero_of_returns hu]
+  ring
+
+theorem returns_append {u v : List Twist} (hu : Returns u) (hv : Returns v) :
+    Returns (u ++ v) := by
+  intro a
+  unfold position
+  rw [positionFrom_append, position_zero_of_returns hu]
+  exact hv a
+
+-- ==========================================
+-- §2  The mirror retraces
+-- ==========================================
+
+theorem axisOf_conj (t : Twist) : axisOf t.conj = axisOf t := by
+  cases t <;> rfl
+
+theorem twistStep_conj (t : Twist) : twistStep t.conj = -twistStep t := by
+  cases t <;> simp [twistStep, isNegTwist, Twist.conj]
+
+/-- A step followed by its conjugate puts the walker back. -/
+theorem stepPos_conj (x : Axis → ℤ) (t : Twist) : stepPos (stepPos x t) t.conj = x := by
+  funext c
+  unfold stepPos
+  rw [axisOf_conj, twistStep_conj]
+  split_ifs <;> ring
+
+theorem mirror_cons (t : Twist) (ts : List Twist) : mirror (t :: ts) = mirror ts ++ [t.conj] := by
+  simp [mirror]
+
+/-- A history followed by its mirror returns to where it started, from any point. -/
+theorem retrace_position (u : List Twist) : ∀ x : Axis → ℤ,
+    positionFrom x (u ++ mirror u) = x := by
+  induction u with
+  | nil => intro x; rfl
+  | cons t ts ih =>
+      intro x
+      rw [mirror_cons, ← List.append_assoc, List.cons_append, List.cons_append, positionFrom, positionFrom_append,
+        ih (stepPos x t)]
+      exact stepPos_conj x t
+
+/-- A history followed by its mirror sweeps no area on any plane: every step is undone by its
+    conjugate at the same place. -/
+theorem retrace_lineInt {a b : Axis} (hab : a ≠ b) (u : List Twist) : ∀ x : Axis → ℤ,
+    lineInt a b x (u ++ mirror u) = 0 := by
+  induction u with
+  | nil => intro x; rfl
+  | cons t ts ih =>
+      intro x
+      rw [mirror_cons, ← List.append_assoc, List.cons_append, List.cons_append, lineInt, lineInt_append,
+        ih (stepPos x t), retrace_position ts (stepPos x t)]
+      simp only [lineInt, axisOf_conj, twistStep_conj]
+      by_cases ha : axisOf t = a
+      · rw [if_pos ha, if_pos ha, stepPos_of_ne x t (ha ▸ hab)]
+        ring
+      · rw [if_neg ha, if_neg ha]
+        ring
+
+theorem returns_retrace (u : List Twist) : Returns (u ++ mirror u) := by
+  intro a
+  unfold position
+  rw [retrace_position]
+
+/-- **Annihilation.** A history followed by its mirror returns, is a ZFA closure, has zero shadow
+    on all three spatial planes, and has trivial holonomy. -/
+theorem annihilation (u : List Twist) :
+    Returns (u ++ mirror u) ∧ countBalanced (u ++ mirror u) ∧
+      projArea Axis.X Axis.Y (u ++ mirror u) = 0 ∧
+      projArea Axis.X Axis.Z (u ++ mirror u) = 0 ∧
+      projArea Axis.Y Axis.Z (u ++ mirror u) = 0 ∧
+      holonomy (u ++ mirror u) = 0 := by
+  have hxy : projArea Axis.X Axis.Y (u ++ mirror u) = 0 := by
+    unfold projArea; rw [retrace_lineInt (by decide)]; rfl
+  have hxz : projArea Axis.X Axis.Z (u ++ mirror u) = 0 := by
+    unfold projArea; rw [retrace_lineInt (by decide)]; rfl
+  have hyz : projArea Axis.Y Axis.Z (u ++ mirror u) = 0 := by
+    unfold projArea; rw [retrace_lineInt (by decide)]; rfl
+  refine ⟨returns_retrace u, equal_and_opposite_balances u, hxy, hxz, hyz, ?_⟩
+  rw [holonomy_eq_projected_areas, hxy, hxz, hyz]
+  simp
+
+/-- **The mirror reverses orientation.** A closure's mirror has the opposite signed area on every
+    plane. -/
+theorem projArea_mirror {a b : Axis} (hab : a ≠ b) {u : List Twist} (hu : Returns u) :
+    projArea a b (mirror u) = -projArea a b u := by
+  have h0 : projArea a b (u ++ mirror u) = 0 := by
+    unfold projArea; rw [retrace_lineInt hab]; rfl
+  rw [projArea_append a b hu] at h0
+  linarith
+
+theorem returns_mirror {u : List Twist} (hu : Returns u) : Returns (mirror u) := by
+  intro a
+  have h := returns_retrace u a
+  unfold position at h ⊢
+  rw [positionFrom_append, position_zero_of_returns hu] at h
+  exact h
+
+-- ==========================================
+-- §3  Same orientation synthesizes
+-- ==========================================
+
+theorem returns_loopTrain {u : List Twist} (hu : Returns u) : ∀ k, Returns (loopTrain u k)
+  | 0 => fun a => rfl
+  | k + 1 => by rw [loopTrain_succ]; exact returns_append (returns_loopTrain hu k) hu
+
+/-- **Synthesis.** A closure repeated `k` times encloses `k` times its oriented area on every plane. -/
+theorem synthesis (a b : Axis) {u : List Twist} (hu : Returns u) :
+    ∀ k : ℕ, projArea a b (loopTrain u k) = (k : ℤ) * projArea a b u
+  | 0 => by simp [loopTrain, projArea, lineInt]
+  | k + 1 => by
+      rw [loopTrain_succ, projArea_append a b (returns_loopTrain hu k), synthesis a b hu k]
+      push_cast
+      ring
+
+-- ==========================================
+-- §4  Joining two oriented events
+-- ==========================================
+
+/-- The cross term of joining two oriented areas. -/
+theorem joint_square (A B : ℤ) : (A + B) ^ 2 - (A ^ 2 + B ^ 2) = 2 * (A * B) := by ring
+
+/-- Joining raises the squared area exactly when the two orientations agree. -/
+theorem joint_cost_pos_iff (A B : ℤ) : A ^ 2 + B ^ 2 < (A + B) ^ 2 ↔ 0 < A * B := by
+  constructor <;> intro h <;> nlinarith [joint_square A B]
+
+/-- Joining lowers the squared area exactly when the two orientations are opposite. -/
+theorem joint_release_iff (A B : ℤ) : (A + B) ^ 2 < A ^ 2 + B ^ 2 ↔ A * B < 0 := by
+  constructor <;> intro h <;> nlinarith [joint_square A B]
+
+/-- **Two oriented events on a plane.** For closures `u`, `v`, the joint history `u ++ v` carries the
+    summed area, and its square exceeds the separate squares iff the orientations agree. -/
+theorem joint_events (a b : Axis) {u : List Twist} (hu : Returns u) (v : List Twist) :
+    projArea a b (u ++ v) = projArea a b u + projArea a b v ∧
+      (projArea a b u ^ 2 + projArea a b v ^ 2 < projArea a b (u ++ v) ^ 2 ↔
+        0 < projArea a b u * projArea a b v) ∧
+      (projArea a b (u ++ v) ^ 2 < projArea a b u ^ 2 + projArea a b v ^ 2 ↔
+        projArea a b u * projArea a b v < 0) := by
+  rw [projArea_append a b hu]
+  exact ⟨rfl, joint_cost_pos_iff _ _, joint_release_iff _ _⟩
+
+/-- **An event and its mirror are opposite-oriented, and joined they annihilate.** For a closure with
+    nonzero area on a plane, its mirror has the opposite sign there (so joining releases), and the
+    joint area is zero. -/
+theorem mirror_pair_annihilates {a b : Axis} (hab : a ≠ b) {u : List Twist} (hu : Returns u)
+    (hA : projArea a b u ≠ 0) :
+    projArea a b u * projArea a b (mirror u) < 0 ∧ projArea a b (u ++ mirror u) = 0 := by
+  rw [projArea_mirror hab hu, projArea_append a b hu, projArea_mirror hab hu]
+  refine ⟨?_, by ring⟩
+  have : 0 < projArea a b u * projArea a b u := mul_self_pos.mpr hA
+  linarith
+
+-- ==========================================
+-- §5  Worked cases
+-- ==========================================
+
+/-- The clockwise unit square `^>v<` returns and encloses `−1` on the `XY` plane. -/
+theorem square_returns : Returns [Twist.up, Twist.right, Twist.down, Twist.left] := by
+  intro a; cases a <;> decide
+
+theorem square_area : projArea Axis.X Axis.Y [Twist.up, Twist.right, Twist.down, Twist.left] = -1 := by
+  decide
+
+/-- Its mirror is the counter-clockwise square, area `+1`. -/
+theorem square_mirror_area :
+    projArea Axis.X Axis.Y (mirror [Twist.up, Twist.right, Twist.down, Twist.left]) = 1 := by
+  decide
+
+/-- Two same-sense squares synthesize area `−2`; a square and its mirror annihilate to `0`. -/
+theorem square_pair :
+    projArea Axis.X Axis.Y (loopTrain [Twist.up, Twist.right, Twist.down, Twist.left] 2) = -2 ∧
+    projArea Axis.X Axis.Y ([Twist.up, Twist.right, Twist.down, Twist.left] ++
+      mirror [Twist.up, Twist.right, Twist.down, Twist.left]) = 0 := by
+  constructor <;> decide
+
+-- ==========================================
+-- §6  A fixed distance has equal space orientation
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"prove a fixed distance has equal space orientation, like poles expand space,
+opposite poles destroy space."*
+
+Two poles exchange events. Each event pairs one unit of oriented space from each pole, up or down
+(`true` / `false`), and §4 says what joining them does: the squared area changes by the cross term
+`2AB`. With unit orientations that is `+2` when the poles agree and `−2` when they are opposite. The
+space between the poles is the running sum of those cross terms, so it holds still exactly when like
+and opposite pairings come in equal numbers. -/
+
+/-- The signed unit area of an orientation: up `+1`, down `−1`. -/
+def unitArea (b : Bool) : ℤ := if b then 1 else -1
+
+/-- **The space one joint event makes**: the cross term `(A+B)² − (A² + B²)` for two unit areas. -/
+def jointSpace (p q : Bool) : ℤ := (unitArea p + unitArea q) ^ 2 - (unitArea p ^ 2 + unitArea q ^ 2)
+
+/-- Like orientations make two units of space; opposite orientations destroy two. -/
+theorem jointSpace_eq (p q : Bool) : jointSpace p q = if p = q then 2 else -2 := by
+  cases p <;> cases q <;> decide
+
+/-- The space made between two poles over a run of joint events. -/
+def netSpace : List (Bool × Bool) → ℤ
+  | [] => 0
+  | e :: es => jointSpace e.1 e.2 + netSpace es
+
+/-- Joint events whose poles agree. -/
+def likeCount (es : List (Bool × Bool)) : ℕ := es.countP (fun e => e.1 == e.2)
+
+/-- Joint events whose poles are opposite. -/
+def oppositeCount (es : List (Bool × Bool)) : ℕ := es.countP (fun e => !(e.1 == e.2))
+
+theorem netSpace_eq (es : List (Bool × Bool)) :
+    netSpace es = 2 * ((likeCount es : ℤ) - (oppositeCount es : ℤ)) := by
+  induction es with
+  | nil => simp [netSpace, likeCount, oppositeCount]
+  | cons e es ih =>
+      obtain ⟨p, q⟩ := e
+      simp only [netSpace, likeCount, oppositeCount, List.countP_cons] at ih ⊢
+      rw [ih, jointSpace_eq]
+      cases p <;> cases q <;> simp <;> ring
+
+/-- **A fixed distance has equal space orientation.** The space between two poles is unchanged by a
+    run of joint events exactly when as many of them pair like orientations as pair opposite ones. -/
+theorem fixed_distance_iff (es : List (Bool × Bool)) :
+    netSpace es = 0 ↔ likeCount es = oppositeCount es := by
+  rw [netSpace_eq]
+  constructor
+  · intro h; omega
+  · intro h; rw [h]; ring
+
+/-- **Like poles expand space.** If every joint event pairs like orientations, `n` events make `2n`
+    units of space. -/
+theorem like_poles_expand (es : List (Bool × Bool)) (h : ∀ e ∈ es, e.1 = e.2) :
+    netSpace es = 2 * es.length := by
+  induction es with
+  | nil => simp [netSpace]
+  | cons e es ih =>
+      simp only [netSpace, List.length_cons]
+      rw [ih (fun x hx => h x (List.mem_cons_of_mem _ hx)), jointSpace_eq,
+        if_pos (h e (List.mem_cons_self))]
+      push_cast; ring
+
+/-- **Opposite poles destroy space.** If every joint event pairs opposite orientations, `n` events
+    remove `2n` units. -/
+theorem opposite_poles_destroy (es : List (Bool × Bool)) (h : ∀ e ∈ es, e.1 ≠ e.2) :
+    netSpace es = -(2 * es.length) := by
+  induction es with
+  | nil => simp [netSpace]
+  | cons e es ih =>
+      simp only [netSpace, List.length_cons]
+      rw [ih (fun x hx => h x (List.mem_cons_of_mem _ hx)), jointSpace_eq,
+        if_neg (h e (List.mem_cons_self))]
+      push_cast; ring
+
+/-- **The relative orientation is a ZFA string.** Read each joint event by its relative orientation,
+    like (`+`) or opposite (`−`). A fixed distance is exactly a balanced string: equal and opposite
+    relative orientation, the ZFA condition on the one axis that separates the poles. -/
+theorem fixed_distance_is_balanced (es : List (Bool × Bool)) :
+    netSpace es = 0 ↔
+      (es.map (fun e => e.1 == e.2)).count true = (es.map (fun e => e.1 == e.2)).count false := by
+  rw [fixed_distance_iff, likeCount, oppositeCount, List.count_eq_countP, List.count_eq_countP,
+    List.countP_map, List.countP_map]
+  have h1 : ((fun x => x == true) ∘ fun e : Bool × Bool => e.1 == e.2) = fun e => e.1 == e.2 := by
+    funext e; obtain ⟨a, b⟩ := e; cases a <;> cases b <;> rfl
+  have h2 : ((fun x => x == false) ∘ fun e : Bool × Bool => e.1 == e.2) =
+      fun e => !(e.1 == e.2) := by
+    funext e; obtain ⟨a, b⟩ := e; cases a <;> cases b <;> rfl
+  rw [h1, h2]
+
+-- ==========================================
+-- §7  Every pairing of two bodies: moments for orientation, counts for the rest
+-- ==========================================
+
+/-! Two bodies, each a list of oriented units (up `true`, down `false`). Let every unit of one pair
+with every unit of the other. The number of pairings is the product of the sizes, blind to
+orientation. The space they make is the product of the bodies' net orientations (their moments). So
+a body with as many ups as downs holds every distance under the orientation term, whatever it is
+paired with: what is left between neutral bodies is only the orientation-blind count. -/
+
+/-- Every unit of `A` paired with every unit of `B`. -/
+def allPairings (A B : List Bool) : List (Bool × Bool) := A.flatMap (fun p => B.map (fun q => (p, q)))
+
+/-- The net orientation of a body: ups minus downs, its moment. -/
+def moment : List Bool → ℤ
+  | [] => 0
+  | p :: ps => unitArea p + moment ps
+
+theorem jointSpace_eq_mul (p q : Bool) : jointSpace p q = 2 * (unitArea p * unitArea q) := by
+  cases p <;> cases q <;> decide
+
+theorem netSpace_append (l m : List (Bool × Bool)) : netSpace (l ++ m) = netSpace l + netSpace m := by
+  induction l with
+  | nil => simp [netSpace]
+  | cons e es ih => simp only [List.cons_append, netSpace, ih]; ring
+
+theorem netSpace_row (p : Bool) (B : List Bool) :
+    netSpace (B.map (fun q => (p, q))) = 2 * (unitArea p * moment B) := by
+  induction B with
+  | nil => simp [netSpace, moment]
+  | cons q qs ih => simp only [List.map_cons, netSpace, moment, ih, jointSpace_eq_mul]; ring
+
+/-- **The space two bodies make is the product of their moments.** -/
+theorem netSpace_allPairings (A B : List Bool) :
+    netSpace (allPairings A B) = 2 * (moment A * moment B) := by
+  induction A with
+  | nil => simp [allPairings, netSpace, moment]
+  | cons p ps ih =>
+      have h : allPairings (p :: ps) B = B.map (fun q => (p, q)) ++ allPairings ps B := by
+        simp [allPairings, List.flatMap_cons]
+      rw [h, netSpace_append, netSpace_row, ih, moment]
+      ring
+
+/-- **The number of pairings is the product of the sizes**, whatever the orientations. -/
+theorem allPairings_length (A B : List Bool) : (allPairings A B).length = A.length * B.length := by
+  induction A with
+  | nil => simp [allPairings]
+  | cons p ps ih =>
+      have h : allPairings (p :: ps) B = B.map (fun q => (p, q)) ++ allPairings ps B := by
+        simp [allPairings, List.flatMap_cons]
+      rw [h, List.length_append, List.length_map, ih, List.length_cons]
+      ring
+
+/-- **Neutral bodies hold every distance under the orientation term.** If one body has zero moment,
+    the space made by all pairings with any other body is zero, while the number of pairings is still
+    the product of the sizes. -/
+theorem neutral_holds_distance (A B : List Bool) (hA : moment A = 0) :
+    netSpace (allPairings A B) = 0 ∧ (allPairings A B).length = A.length * B.length := by
+  refine ⟨?_, allPairings_length A B⟩
+  rw [netSpace_allPairings, hA]
+  ring
+
+/-- **Like poles expand, opposite poles destroy, for whole bodies.** Space is made iff the moments
+    agree in sign, destroyed iff they are opposite. -/
+theorem bodies_expand_iff (A B : List Bool) :
+    0 < netSpace (allPairings A B) ↔ 0 < moment A * moment B := by
+  rw [netSpace_allPairings]; constructor <;> intro h <;> linarith
+
+theorem bodies_destroy_iff (A B : List Bool) :
+    netSpace (allPairings A B) < 0 ↔ moment A * moment B < 0 := by
+  rw [netSpace_allPairings]; constructor <;> intro h <;> linarith
+
+-- ==========================================
+-- §8  Bending preserves balance
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"the orientation bends with curvature"*. Carried round a loop, an orientation
+comes back flipped exactly when the loop's holonomy is odd (`holonomy_eq_projected_areas`). A body
+carried round one loop is flipped as a whole: every unit by the same holonomy bit. -/
+
+/-- Carry every unit of a body round a loop of holonomy bit `h`: flip all of them iff `h`. -/
+def transport (h : Bool) (A : List Bool) : List Bool := A.map (fun p => xor h p)
+
+theorem unitArea_xor (h p : Bool) : unitArea (xor h p) = (if h then -1 else 1) * unitArea p := by
+  cases h <;> cases p <;> decide
+
+/-- Transport multiplies the moment by the holonomy sign. -/
+theorem moment_transport (h : Bool) (A : List Bool) :
+    moment (transport h A) = (if h then -1 else 1) * moment A := by
+  induction A with
+  | nil => simp [transport, moment]
+  | cons p ps ih =>
+      simp only [transport, List.map_cons, moment] at ih ⊢
+      rw [ih, unitArea_xor]; ring
+
+theorem transport_length (h : Bool) (A : List Bool) : (transport h A).length = A.length := by
+  simp [transport]
+
+/-- **Bending preserves balance.** Carried round any loop, a balanced body stays balanced, it keeps
+    its size, and so its pairing count with any other body is unchanged while the space it makes stays
+    zero. Gravity, read as the orientation-blind count, is the same in curved and flat regions. -/
+theorem bending_preserves_balance (h : Bool) (A B : List Bool) (hA : moment A = 0) :
+    moment (transport h A) = 0 ∧
+      netSpace (allPairings (transport h A) B) = 0 ∧
+      (allPairings (transport h A) B).length = A.length * B.length := by
+  have hm : moment (transport h A) = 0 := by rw [moment_transport, hA]; ring
+  refine ⟨hm, (neutral_holds_distance _ B hm).1, ?_⟩
+  rw [allPairings_length, transport_length]
+
+/-- Two bodies carried round loops with bits `h`, `k`: the space they make is multiplied by the
+    product of the two holonomy signs, and the pairing count does not change. -/
+theorem transport_pair (h k : Bool) (A B : List Bool) :
+    netSpace (allPairings (transport h A) (transport k B)) =
+        (if h then -1 else 1) * (if k then -1 else 1) * netSpace (allPairings A B) ∧
+      (allPairings (transport h A) (transport k B)).length = (allPairings A B).length := by
+  refine ⟨?_, ?_⟩
+  · rw [netSpace_allPairings, netSpace_allPairings, moment_transport, moment_transport]; ring
+  · rw [allPairings_length, allPairings_length, transport_length, transport_length]
+
+-- ==========================================
+-- §9  The vacuum is balanced in orientation
+-- ==========================================
+
+/-! The census reason gravity sees balance. Among all closures of a given length, the mirror pairs
+each one with another of the same length whose oriented area is the opposite on every plane. So the
+census of closures by signed area is exactly symmetric: as many ways enclose `+A` as `−A`, and the
+vacuum's total oriented area is zero at every length. This is a statement about counts of ways. -/
+
+private instance decCB : DecidablePred countBalanced := fun ts => by
+  unfold countBalanced; infer_instance
+
+/-- All closures of length `L`: the count-balanced twist histories. -/
+def closures (L : ℕ) : Finset (List Twist) :=
+  (words Twist L).filter (fun ts => decide (countBalanced ts))
+
+theorem conj_conj (t : Twist) : t.conj.conj = t := by cases t <;> rfl
+
+theorem mirror_mirror (u : List Twist) : mirror (mirror u) = u := by
+  simp [mirror, List.map_reverse, Function.comp_def, conj_conj]
+
+theorem countBalanced_mirror {u : List Twist} (hu : countBalanced u) : countBalanced (mirror u) := by
+  rw [zfa_iff_handedness_balanced] at hu ⊢
+  intro a
+  rw [handednessOn_mirror, hu a]
+  simp
+
+theorem returns_of_balanced {u : List Twist} (hu : countBalanced u) : Returns u := by
+  intro a
+  have h := (QLF.HolographicBoundary.position_eq_zero_iff u).mpr hu
+  exact congrFun h a
+
+theorem mirror_mem_closures {L : ℕ} {u : List Twist} (hu : u ∈ closures L) :
+    mirror u ∈ closures L := by
+  simp only [closures, Finset.mem_filter, mem_words, decide_eq_true_eq] at hu ⊢
+  exact ⟨by rw [mirror_length]; exact hu.1, countBalanced_mirror hu.2⟩
+
+/-- **The orientation census is symmetric.** At every length, as many closures enclose signed area
+    `A` on a plane as enclose `−A`. -/
+theorem closure_area_symmetric {a b : Axis} (hab : a ≠ b) (L : ℕ) (A : ℤ) :
+    ((closures L).filter (fun u => projArea a b u = A)).card =
+      ((closures L).filter (fun u => projArea a b u = -A)).card := by
+  apply Finset.card_bij' (fun u _ => mirror u) (fun u _ => mirror u)
+  · intro u hu
+    simp only [Finset.mem_filter] at hu ⊢
+    refine ⟨mirror_mem_closures hu.1, ?_⟩
+    have hb : countBalanced u := by
+      simp only [closures, Finset.mem_filter, decide_eq_true_eq] at hu; exact hu.1.2
+    rw [projArea_mirror hab (returns_of_balanced hb), hu.2]
+  · intro u hu
+    simp only [Finset.mem_filter] at hu ⊢
+    refine ⟨mirror_mem_closures hu.1, ?_⟩
+    have hb : countBalanced u := by
+      simp only [closures, Finset.mem_filter, decide_eq_true_eq] at hu; exact hu.1.2
+    rw [projArea_mirror hab (returns_of_balanced hb), hu.2, neg_neg]
+  · intro u _; exact mirror_mirror u
+  · intro u _; exact mirror_mirror u
+
+/-- **The vacuum carries zero net orientation.** Summed over every closure of length `L`, the signed
+    area on any plane is zero. -/
+theorem vacuum_net_orientation_zero {a b : Axis} (hab : a ≠ b) (L : ℕ) :
+    ∑ u ∈ closures L, projArea a b u = 0 := by
+  have h : ∑ u ∈ closures L, projArea a b u = ∑ u ∈ closures L, projArea a b (mirror u) := by
+    apply Finset.sum_nbij' mirror mirror
+    · intro u hu; exact mirror_mem_closures hu
+    · intro u hu; exact mirror_mem_closures hu
+    · intro u _; exact mirror_mirror u
+    · intro u _; exact mirror_mirror u
+    · intro u _; rw [mirror_mirror]
+  have h2 : ∑ u ∈ closures L, projArea a b (mirror u) = -∑ u ∈ closures L, projArea a b u := by
+    rw [← Finset.sum_neg_distrib]
+    apply Finset.sum_congr rfl
+    intro u hu
+    have hb : countBalanced u := by
+      simp only [closures, Finset.mem_filter, decide_eq_true_eq] at hu; exact hu.2
+    exact projArea_mirror hab (returns_of_balanced hb)
+  linarith
+
+-- ==========================================
+-- §10  The census is axis-blind: γ = 1
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"distance equals delay."* Every step runs at `c`, so a step on the gauge axis
+is delay in time and a step on a spatial axis is delay in space. In the weak field, light passing a
+mass is late by `(1 + γ)` times the Newtonian amount: `1` from slowed clocks (the time part) and `γ`
+from stretched space. GR has `γ = 1`; Cassini measured `γ − 1 = (2.1 ± 2.3) × 10⁻⁵`.
+
+What the census gives: swapping the gauge axis with any spatial axis is a bijection on closures of
+each length (count balance treats the four axes alike), so summed over all closures of length `L`,
+every axis receives exactly the same number of steps. If the delay that balance adds to each axis is
+proportional to that axis's share of the census (the reading, labelled below), the time part and the
+part along each spatial axis are equal, which is `γ = 1`. -/
+
+private instance lawfulBEqTwist : LawfulBEq Twist where
+  eq_of_beq {a b} h := by cases a <;> cases b <;> first | rfl | exact absurd h (by decide)
+  rfl {a} := by cases a <;> decide
+
+/-- Swap two axes in the frame, keeping every twist's sign. -/
+def axSwap (a b c : Axis) : Axis := if c = a then b else if c = b then a else c
+
+/-- The twist with its axis relabelled by `axSwap a b` and its handedness kept. -/
+def swapTw (a b : Axis) (t : Twist) : Twist :=
+  if isNegTwist t then leftTwist (axSwap a b (axisOf t)) else rightTwist (axSwap a b (axisOf t))
+
+theorem axSwap_invol (a b c : Axis) : axSwap a b (axSwap a b c) = c := by
+  cases a <;> cases b <;> cases c <;> decide
+
+theorem swapTw_invol (a b : Axis) (t : Twist) : swapTw a b (swapTw a b t) = t := by
+  cases a <;> cases b <;> cases t <;> decide
+
+theorem swapTw_right (a b c : Axis) : swapTw a b (rightTwist c) = rightTwist (axSwap a b c) := by
+  cases a <;> cases b <;> cases c <;> decide
+
+theorem swapTw_left (a b c : Axis) : swapTw a b (leftTwist c) = leftTwist (axSwap a b c) := by
+  cases a <;> cases b <;> cases c <;> decide
+
+theorem axisOf_swapTw (a b : Axis) (t : Twist) : axisOf (swapTw a b t) = axSwap a b (axisOf t) := by
+  cases a <;> cases b <;> cases t <;> decide
+
+theorem swapTw_injective (a b : Axis) : Function.Injective (swapTw a b) := by
+  intro x y h
+  have := congrArg (swapTw a b) h
+  rwa [swapTw_invol, swapTw_invol] at this
+
+theorem count_map_swap (a b : Axis) (u : List Twist) (t : Twist) :
+    (u.map (swapTw a b)).count t = u.count (swapTw a b t) := by
+  conv_lhs => rw [← swapTw_invol a b t]
+  exact List.count_map_of_injective u (swapTw a b) (swapTw_injective a b) _
+
+theorem handednessOn_swap (a b c : Axis) (u : List Twist) :
+    handednessOn c (u.map (swapTw a b)) = handednessOn (axSwap a b c) u := by
+  unfold handednessOn
+  rw [count_map_swap, count_map_swap, swapTw_right, swapTw_left]
+
+theorem countBalanced_swap (a b : Axis) (u : List Twist) :
+    countBalanced (u.map (swapTw a b)) ↔ countBalanced u := by
+  rw [zfa_iff_handedness_balanced, zfa_iff_handedness_balanced]
+  constructor
+  · intro h c
+    have := h (axSwap a b c)
+    rwa [handednessOn_swap, axSwap_invol] at this
+  · intro h c
+    rw [handednessOn_swap]
+    exact h _
+
+/-- Steps a history spends on axis `a`. -/
+def stepsOn (a : Axis) (u : List Twist) : ℕ := u.countP (fun t => decide (axisOf t = a))
+
+theorem stepsOn_swap (a b c : Axis) (u : List Twist) :
+    stepsOn c (u.map (swapTw a b)) = stepsOn (axSwap a b c) u := by
+  unfold stepsOn
+  rw [List.countP_map]
+  congr 1
+  funext t
+  simp only [Function.comp_apply, axisOf_swapTw]
+  apply decide_eq_decide.mpr
+  constructor
+  · intro h; rw [← h, axSwap_invol]
+  · intro h; rw [h, axSwap_invol]
+
+theorem swap_mem_closures (a b : Axis) {L : ℕ} {u : List Twist} (hu : u ∈ closures L) :
+    u.map (swapTw a b) ∈ closures L := by
+  simp only [closures, Finset.mem_filter, mem_words, decide_eq_true_eq] at hu ⊢
+  exact ⟨by rw [List.length_map]; exact hu.1, (countBalanced_swap a b u).mpr hu.2⟩
+
+theorem axSwap_right (a b : Axis) : axSwap a b b = a := by
+  cases a <;> cases b <;> decide
+
+/-- **The census is axis-blind.** Summed over all closures of length `L`, every axis receives the
+    same number of steps; in particular the gauge (time) axis gets exactly what each spatial axis
+    gets. -/
+theorem census_axis_blind (a b : Axis) (L : ℕ) :
+    ∑ u ∈ closures L, stepsOn a u = ∑ u ∈ closures L, stepsOn b u := by
+  apply Finset.sum_nbij' (fun u => u.map (swapTw a b)) (fun u => u.map (swapTw a b))
+  · intro u hu; exact swap_mem_closures a b hu
+  · intro u hu; exact swap_mem_closures a b hu
+  · intro u _; simp [List.map_map, Function.comp_def, swapTw_invol]
+  · intro u _; simp [List.map_map, Function.comp_def, swapTw_invol]
+  · intro u _; rw [stepsOn_swap, axSwap_right]
+
+/-- **`γ = 1` from the census.** Read the PPN `γ` as the delay weight of a spatial axis over that of
+    the time axis, each weight being the axis's share of the closure census. At every length where
+    the census is nonempty the ratio is exactly `1`, and the Shapiro factor `1 + γ` is `2`, GR's
+    value. The reading (delay per axis ∝ census share) is the step this theorem does not prove. -/
+noncomputable def censusGamma (L : ℕ) (s : Axis) : ℚ :=
+  ((∑ u ∈ closures L, stepsOn s u : ℕ) : ℚ) / ((∑ u ∈ closures L, stepsOn Axis.I u : ℕ) : ℚ)
+
+theorem censusGamma_eq_one (L : ℕ) (s : Axis) (h : ∑ u ∈ closures L, stepsOn Axis.I u ≠ 0) :
+    censusGamma L s = 1 ∧ 1 + censusGamma L s = 2 := by
+  have he : censusGamma L s = 1 := by
+    unfold censusGamma
+    rw [census_axis_blind s Axis.I L]
+    exact div_self (by exact_mod_cast h)
+  exact ⟨he, by rw [he]; norm_num⟩
+
+/-- The census is nonempty on the gauge axis at every even length: `+^k −^k` is a closure. -/
+theorem gauge_steps_pos (k : ℕ) : ∑ u ∈ closures (2 * (k + 1)), stepsOn Axis.I u ≠ 0 := by
+  have hmem : List.replicate (k + 1) Twist.plus ++ List.replicate (k + 1) Twist.minus ∈
+      closures (2 * (k + 1)) := by
+    simp only [closures, Finset.mem_filter, mem_words, decide_eq_true_eq]
+    refine ⟨by simp; ring, ?_⟩
+    unfold countBalanced
+    simp [List.count_replicate]
+  have hpos : 0 < stepsOn Axis.I (List.replicate (k + 1) Twist.plus ++
+      List.replicate (k + 1) Twist.minus) := by
+    unfold stepsOn
+    simp [List.countP_replicate, axisOf]
+  have hle := Finset.single_le_sum (f := fun u => stepsOn Axis.I u)
+    (fun _ _ => Nat.zero_le _) hmem
+  omega
+
+-- ==========================================
+-- §11  Classes of magnetism
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"should we consider classes of magnetism effects, anti, ferro, ferri?"* A body
+is a list of oriented units; its size `n` and moment `m` (ups minus downs) are the two numbers the
+pairing split reads. The classes separate by `m/n` and by how neighbours pair, and the count of ways
+puts them in order: the unordered (paramagnetic) moment is the mode, the fully ordered ones are the
+fewest ways. -/
+
+/-- The moment is twice the number of ups minus the size. -/
+theorem moment_eq (A : List Bool) : moment A = 2 * (A.count true : ℤ) - A.length := by
+  induction A with
+  | nil => simp [moment]
+  | cons p ps ih =>
+      rw [moment, ih, List.count_cons, List.length_cons]
+      cases p <;> simp [unitArea] <;> ring
+
+theorem count_true_le (A : List Bool) : A.count true ≤ A.length := List.count_le_length
+
+/-- **The moment never exceeds the size.** -/
+theorem abs_moment_le (A : List Bool) : |moment A| ≤ A.length := by
+  rw [moment_eq, abs_le]
+  have := count_true_le A
+  constructor <;> omega
+
+/-- **Ferromagnet: the moment is the full size exactly when every unit is up.** -/
+theorem moment_eq_length_iff (A : List Bool) : moment A = A.length ↔ ∀ p ∈ A, p = true := by
+  rw [moment_eq]
+  constructor
+  · intro h p hp
+    have hc : A.count true = A.length := by omega
+    have := List.count_eq_length.mp hc p hp
+    simpa using this.symm
+  · intro h
+    have hc : A.count true = A.length := List.count_eq_length.mpr (fun p hp => by rw [h p hp])
+    rw [hc]; ring
+
+/-- An alternating chain: up, down, up, … starting from `b`. -/
+def alt : Bool → ℕ → List Bool
+  | _, 0 => []
+  | b, n + 1 => b :: alt (!b) n
+
+/-- **Antiferromagnet: every neighbour pair in an alternating chain is opposite.** -/
+theorem alt_neighbours_opposite (b : Bool) (n : ℕ) : List.IsChain (· ≠ ·) (alt b n) := by
+  induction n generalizing b with
+  | zero => exact List.IsChain.nil
+  | succ n ih =>
+      cases n with
+      | zero => exact List.IsChain.singleton b
+      | succ n =>
+          have h := ih (!b)
+          simp only [alt] at h ⊢
+          exact List.IsChain.cons_cons (by cases b <;> simp) h
+
+/-- **Antiferromagnet: an even alternating chain has zero moment, an odd one a single unit.** -/
+theorem moment_alt (b : Bool) (k : ℕ) :
+    moment (alt b (2 * k)) = 0 ∧ moment (alt b (2 * k + 1)) = unitArea b := by
+  induction k generalizing b with
+  | zero => simp [alt, moment]
+  | succ k ih =>
+      have h1 : alt b (2 * (k + 1)) = b :: (!b) :: alt b (2 * k) := by
+        rw [show 2 * (k + 1) = 2 * k + 1 + 1 by ring]; simp [alt]
+      have h2 : alt b (2 * (k + 1) + 1) = b :: (!b) :: alt b (2 * k + 1) := by
+        rw [show 2 * (k + 1) + 1 = 2 * k + 1 + 1 + 1 by ring]; simp [alt]
+      rw [h1, h2]
+      simp only [moment, (ih b).1, (ih b).2]
+      cases b <;> simp [unitArea]
+
+theorem moment_append (A B : List Bool) : moment (A ++ B) = moment A + moment B := by
+  induction A with
+  | nil => simp [moment]
+  | cons p ps ih => simp only [List.cons_append, moment, ih]; ring
+
+theorem moment_replicate (b : Bool) (n : ℕ) : moment (List.replicate n b) = n * unitArea b := by
+  induction n with
+  | zero => simp [moment]
+  | succ n ih => rw [List.replicate_succ, moment, ih]; push_cast; ring
+
+/-- **Ferrimagnet: two opposite sublattices of sizes `n₁`, `n₂` leave moment `n₁ − n₂`.** -/
+theorem moment_ferri (n₁ n₂ : ℕ) :
+    moment (List.replicate n₁ true ++ List.replicate n₂ false) = (n₁ : ℤ) - n₂ := by
+  rw [moment_append, moment_replicate, moment_replicate]
+  simp [unitArea]; ring
+
+/-- Every body of size `n`, each once. -/
+def bodies : ℕ → List (List Bool)
+  | 0 => [[]]
+  | n + 1 => (bodies n).map (true :: ·) ++ (bodies n).map (false :: ·)
+
+theorem mem_bodies (n : ℕ) (A : List Bool) : A ∈ bodies n ↔ A.length = n := by
+  induction n generalizing A with
+  | zero => cases A <;> simp [bodies]
+  | succ n ih =>
+      cases A with
+      | nil => simp [bodies]
+      | cons p ps => cases p <;> simp [bodies, ih]
+
+theorem bodies_nodup (n : ℕ) : (bodies n).Nodup := by
+  induction n with
+  | zero => simp [bodies]
+  | succ n ih =>
+      rw [bodies, List.nodup_append]
+      refine ⟨ih.map (fun _ _ h => by simpa using h), ih.map (fun _ _ h => by simpa using h), ?_⟩
+      intro x hx y hy
+      simp only [List.mem_map] at hx hy
+      obtain ⟨_, _, rfl⟩ := hx
+      obtain ⟨_, _, rfl⟩ := hy
+      simp
+
+/-- How many bodies of size `n` have exactly `k` ups. -/
+def waysWithUps (n k : ℕ) : ℕ := (bodies n).countP (fun A => A.count true == k)
+
+/-- **The number of bodies of size `n` with `k` ups is `C(n, k)`.** -/
+theorem waysWithUps_eq_choose (n k : ℕ) : waysWithUps n k = n.choose k := by
+  induction n generalizing k with
+  | zero => cases k <;> simp [waysWithUps, bodies]
+  | succ n ih =>
+      unfold waysWithUps at ih ⊢
+      rw [bodies, List.countP_append, List.countP_map, List.countP_map]
+      cases k with
+      | zero =>
+          have h1 : (bodies n).countP ((fun A => A.count true == 0) ∘ (true :: ·)) = 0 := by
+            rw [List.countP_eq_zero]; intro A _; simp
+          have h2 : (bodies n).countP ((fun A => A.count true == 0) ∘ (false :: ·)) =
+              (bodies n).countP (fun A => A.count true == 0) := by
+            rfl
+          rw [h1, h2, ih]; simp
+      | succ k =>
+          have h1 : (bodies n).countP ((fun A => A.count true == k + 1) ∘ (true :: ·)) =
+              (bodies n).countP (fun A => A.count true == k) := by
+            congr 1; funext A; simp
+          have h2 : (bodies n).countP ((fun A => A.count true == k + 1) ∘ (false :: ·)) =
+              (bodies n).countP (fun A => A.count true == k + 1) := by
+            rfl
+          rw [h1, h2, ih, ih, Nat.choose_succ_succ]
+
+/-- **Paramagnet is the mode.** No moment class has more ways than the one closest to zero
+    (`k = n/2` ups). -/
+theorem paramagnet_most_ways (n k : ℕ) : waysWithUps n k ≤ waysWithUps n (n / 2) := by
+  rw [waysWithUps_eq_choose, waysWithUps_eq_choose]
+  exact Nat.choose_le_middle k n
+
+/-- **Ferromagnet is the fewest.** Fully aligned up is one way (and fully down is one more). -/
+theorem ferromagnet_one_way (n : ℕ) : waysWithUps n n = 1 ∧ waysWithUps n 0 = 1 := by
+  rw [waysWithUps_eq_choose, waysWithUps_eq_choose]
+  exact ⟨Nat.choose_self n, Nat.choose_zero_right n⟩
+
+-- ==========================================
+-- §12  Magnons
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"connect the idea of magnons in the classes."* Measured from the aligned
+(ferromagnetic) body, a magnon is one flipped unit. Each one lowers the moment by two half-units,
+one whole unit of spin, so the moment classes of §11 are magnon numbers: the ferromagnet has none,
+the ferrimagnet has the minority sublattice, and the paramagnetic mode has `n/2`. The count of ways
+to place `k` magnons on `n` units is `C(n, k)`, and one magnon has `n` ways, the count a spin wave
+spreads over. -/
+
+/-- The number of magnons: units flipped down from the all-up body. -/
+def magnons (A : List Bool) : ℕ := A.count false
+
+/-- **The moment is the size minus two per magnon.** -/
+theorem moment_magnons (A : List Bool) : moment A = A.length - 2 * (magnons A : ℤ) := by
+  induction A with
+  | nil => simp [moment, magnons]
+  | cons p ps ih =>
+      unfold magnons at ih ⊢
+      rw [moment, ih, List.count_cons, List.length_cons]
+      cases p <;> simp [unitArea] <;> ring
+
+/-- **A magnon carries one whole unit of spin**: flipping any up unit down, anywhere in the body,
+    lowers the moment by two half-units. -/
+theorem magnon_lowers_moment (pfx sfx : List Bool) :
+    moment (pfx ++ true :: sfx) - moment (pfx ++ false :: sfx) = 2 := by
+  rw [moment_append, moment_append]
+  simp [moment, unitArea]
+
+/-- **Ferromagnet: the aligned body has no magnons.** -/
+theorem ferromagnet_no_magnons (n : ℕ) : magnons (List.replicate n true) = 0 := by
+  simp [magnons, List.count_replicate]
+
+/-- **Ferrimagnet: the minority sublattice is the magnon number.** -/
+theorem ferri_magnons (n₁ n₂ : ℕ) :
+    magnons (List.replicate n₁ true ++ List.replicate n₂ false) = n₂ := by
+  simp [magnons, List.count_append, List.count_replicate]
+
+/-- How many bodies of size `n` carry exactly `k` magnons. -/
+def waysWithMagnons (n k : ℕ) : ℕ := (bodies n).countP (fun A => magnons A == k)
+
+/-- **Placing `k` magnons on `n` units has `C(n, k)` ways.** -/
+theorem waysWithMagnons_eq_choose (n k : ℕ) : waysWithMagnons n k = n.choose k := by
+  induction n generalizing k with
+  | zero => cases k <;> simp [waysWithMagnons, bodies, magnons]
+  | succ n ih =>
+      unfold waysWithMagnons at ih ⊢
+      rw [bodies, List.countP_append, List.countP_map, List.countP_map]
+      cases k with
+      | zero =>
+          have h1 : (bodies n).countP ((fun A => magnons A == 0) ∘ (false :: ·)) = 0 := by
+            rw [List.countP_eq_zero]; intro A _; simp [magnons]
+          have h2 : (bodies n).countP ((fun A => magnons A == 0) ∘ (true :: ·)) =
+              (bodies n).countP (fun A => magnons A == 0) := by
+            rfl
+          rw [h1, h2, ih]; simp
+      | succ k =>
+          have h1 : (bodies n).countP ((fun A => magnons A == k + 1) ∘ (false :: ·)) =
+              (bodies n).countP (fun A => magnons A == k) := by
+            congr 1; funext A; simp [magnons]
+          have h2 : (bodies n).countP ((fun A => magnons A == k + 1) ∘ (true :: ·)) =
+              (bodies n).countP (fun A => magnons A == k + 1) := by
+            rfl
+          rw [h1, h2, ih, ih, Nat.choose_succ_succ, Nat.add_comm]
+
+/-- **One magnon has `n` ways**, one for each unit it can sit on: the count a spin wave spreads over. -/
+theorem one_magnon_ways (n : ℕ) : waysWithMagnons n 1 = n := by
+  rw [waysWithMagnons_eq_choose, Nat.choose_one_right]
+
+/-- **The paramagnetic mode is half the units flipped**: no magnon number has more ways than `n/2`. -/
+theorem paramagnet_half_magnons (n k : ℕ) : waysWithMagnons n k ≤ waysWithMagnons n (n / 2) := by
+  rw [waysWithMagnons_eq_choose, waysWithMagnons_eq_choose]
+  exact Nat.choose_le_middle k n
+
+-- ==========================================
+-- §13  Averages over every way
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"consider averages, things happen every way."* Every body of size `n`
+happens, each once (`bodies`, `bodies_nodup`), so a class's average is a sum over all `2ⁿ` of them.
+Summed over every way the moment is zero, the magnon number averages `n/2`, and the squared moment
+averages exactly `n`: the units add their fluctuations independently. That last number is the
+numerator of Curie's law (`χ = ⟨M²⟩/kT` for free moments), here a count. Note (method rule 3) the
+average moment `0` is itself a way only for even `n`. -/
+
+private theorem sum_map_sub' (l : List (List Bool)) (f g : List Bool → ℤ) :
+    (l.map (fun A => f A - g A)).sum = (l.map f).sum - (l.map g).sum := by
+  induction l with
+  | nil => simp
+  | cons a l ih => simp only [List.map_cons, List.sum_cons, ih]; ring
+
+private theorem sum_map_const' (l : List (List Bool)) (c : ℤ) :
+    (l.map (fun _ => c)).sum = l.length * c := by
+  induction l with
+  | nil => simp
+  | cons a l ih => simp only [List.map_cons, List.sum_cons, ih, List.length_cons]; push_cast; ring
+
+theorem bodies_length (n : ℕ) : (bodies n).length = 2 ^ n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp [bodies, ih, pow_succ]; ring
+
+/-- **Over every way, the moment sums to zero.** -/
+theorem sum_moment_bodies (n : ℕ) : ((bodies n).map moment).sum = 0 := by
+  induction n with
+  | zero => simp [bodies, moment]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : (moment ∘ (true :: ·)) = fun A => 1 + moment A := by
+        funext A; simp [moment, unitArea]
+      have h2 : (moment ∘ (false :: ·)) = fun A => -1 + moment A := by
+        funext A; simp [moment, unitArea]
+      rw [h1, h2, List.sum_map_add, List.sum_map_add, ih]
+      simp
+
+/-- **Over every way, the squared moment sums to `n · 2ⁿ`**: the average fluctuation is `n`. -/
+theorem sum_moment_sq_bodies (n : ℕ) :
+    ((bodies n).map (fun A => moment A ^ 2)).sum = n * 2 ^ n := by
+  induction n with
+  | zero => simp [bodies, moment]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : ((fun A => moment A ^ 2) ∘ (true :: ·)) =
+          fun A => (1 + 2 * moment A) + moment A ^ 2 := by
+        funext A; simp [moment, unitArea]; ring
+      have h2 : ((fun A => moment A ^ 2) ∘ (false :: ·)) =
+          fun A => (1 - 2 * moment A) + moment A ^ 2 := by
+        funext A; simp [moment, unitArea]; ring
+      rw [h1, h2]
+      simp only [List.sum_map_add, sum_map_sub', List.sum_map_mul_left, sum_moment_bodies,
+        sum_map_const', bodies_length, ih]
+      push_cast; ring
+
+/-- **Over every way, the magnons number `n · 2ⁿ / 2`**: on average half the units are flipped. -/
+theorem sum_magnons_bodies (n : ℕ) :
+    2 * ((bodies n).map (fun A => (magnons A : ℤ))).sum = n * 2 ^ n := by
+  have h : ∀ A : List Bool, (magnons A : ℤ) = (A.length - moment A) / 2 := by
+    intro A; rw [moment_magnons]; omega
+  have e : ((bodies n).map (fun A => (magnons A : ℤ))) =
+      (bodies n).map (fun A => ((n : ℤ) - moment A) / 2) := by
+    apply List.map_congr_left; intro A hA
+    rw [h, (mem_bodies n A).mp hA]
+  have hsum : 2 * ((bodies n).map (fun A => (magnons A : ℤ))).sum =
+      ((bodies n).map (fun A => (n : ℤ) - moment A)).sum := by
+    rw [← List.sum_map_mul_left]
+    apply congrArg; apply List.map_congr_left; intro A hA
+    rw [moment_magnons, (mem_bodies n A).mp hA]; ring
+  rw [hsum, sum_map_sub', sum_moment_bodies, sum_map_const', bodies_length]
+  push_cast; ring
+
+-- ==========================================
+-- §14  The average from photon exchange with the vacuum
+-- ==========================================
+
+/-! Jim, 2026-11-11: *"we expect zfa; the average we want is from photon interactions with vacuum
+energies."* §13's flat average treats every way alike. A unit exchanges photons with the vacuum, and
+its weight up or down is the rate of that exchange: `u` for up, `d` for down. A body's weight is the
+product over its units, and the weighted sums factorise. With a symmetric vacuum (`u = d`) the
+weighted moment is zero, as ZFA expects. A field that tilts the exchange, `u = e^{βh}`,
+`d = e^{−βh}`, gives the moment `n · tanh(βh)`, the spin-½ paramagnet. That the rates take the
+Boltzmann form (detailed balance with the radiation bath) is imported; the temperature itself is
+`QLF_CensusTemperature`'s. -/
+
+/-- A body's weight: `u` for each up unit, `d` for each down unit. -/
+def weight (u d : ℝ) : List Bool → ℝ
+  | [] => 1
+  | p :: ps => (if p then u else d) * weight u d ps
+
+private theorem sum_map_mul_const (l : List (List Bool)) (f : List Bool → ℝ) (c : ℝ) :
+    (l.map (fun A => c * f A)).sum = c * (l.map f).sum := by
+  induction l with
+  | nil => simp
+  | cons a l ih => simp only [List.map_cons, List.sum_cons, ih]; ring
+
+private theorem sum_map_add_r (l : List (List Bool)) (f g : List Bool → ℝ) :
+    (l.map (fun A => f A + g A)).sum = (l.map f).sum + (l.map g).sum := by
+  induction l with
+  | nil => simp
+  | cons a l ih => simp only [List.map_cons, List.sum_cons, ih]; ring
+
+/-- **The partition sum over every way is `(u + d)ⁿ`.** -/
+theorem partition_bodies (u d : ℝ) (n : ℕ) :
+    ((bodies n).map (weight u d)).sum = (u + d) ^ n := by
+  induction n with
+  | zero => simp [bodies, weight]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : (weight u d ∘ (true :: ·)) = fun A => u * weight u d A := by
+        funext A; simp [weight]
+      have h2 : (weight u d ∘ (false :: ·)) = fun A => d * weight u d A := by
+        funext A; simp [weight]
+      rw [h1, h2, sum_map_mul_const, sum_map_mul_const, ih]; ring
+
+/-- **The weighted moment over every way**: `(u + d) · Σ w·m = n (u − d) (u + d)ⁿ`, so the average
+    moment is `n (u − d)/(u + d)`. -/
+theorem weighted_moment_bodies (u d : ℝ) (n : ℕ) :
+    (u + d) * ((bodies n).map (fun A => weight u d A * moment A)).sum
+      = n * (u - d) * (u + d) ^ n := by
+  induction n with
+  | zero => simp [bodies, weight, moment]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : ((fun A => weight u d A * (moment A : ℝ)) ∘ (true :: ·)) =
+          fun A => u * weight u d A + u * (weight u d A * moment A) := by
+        funext A; simp [weight, moment, unitArea]; ring
+      have h2 : ((fun A => weight u d A * (moment A : ℝ)) ∘ (false :: ·)) =
+          fun A => (-d) * weight u d A + d * (weight u d A * moment A) := by
+        funext A; simp [weight, moment, unitArea]; ring
+      rw [h1, h2, sum_map_add_r, sum_map_add_r, sum_map_mul_const, sum_map_mul_const,
+        sum_map_mul_const, sum_map_mul_const, partition_bodies]
+      have : (u + d) * (u * (u + d) ^ n + u * ((bodies n).map (fun A => weight u d A * moment A)).sum
+          + (-d * (u + d) ^ n + d * ((bodies n).map (fun A => weight u d A * moment A)).sum))
+          = (u + d) * (u - d) * (u + d) ^ n
+            + (u + d) * ((u + d) * ((bodies n).map (fun A => weight u d A * moment A)).sum) := by
+        ring
+      rw [this, ih]; push_cast; ring
+
+/-- **A symmetric vacuum gives ZFA**: equal exchange rates up and down leave zero weighted moment. -/
+theorem symmetric_vacuum_zero_moment (u : ℝ) (hu : u ≠ 0) (n : ℕ) :
+    ((bodies n).map (fun A => weight u u A * moment A)).sum = 0 := by
+  have h := weighted_moment_bodies u u n
+  have h2 : (u + u) ≠ 0 := by intro h'; apply hu; linarith
+  simp only [sub_self, mul_zero, zero_mul] at h
+  rcases mul_eq_zero.mp h with h3 | h3
+  · exact absurd h3 h2
+  · exact h3
+
+/-- **A tilted exchange gives the paramagnet**: with `u = e^{x}`, `d = e^{−x}` (`x = βh`) the average
+    moment is `n · tanh x`. -/
+theorem tilted_average_tanh (x : ℝ) (n : ℕ) :
+    ((bodies n).map (fun A => weight (Real.exp x) (Real.exp (-x)) A * moment A)).sum
+      / ((bodies n).map (weight (Real.exp x) (Real.exp (-x)))).sum = n * Real.tanh x := by
+  have hpos : 0 < Real.exp x + Real.exp (-x) := by positivity
+  have h := weighted_moment_bodies (Real.exp x) (Real.exp (-x)) n
+  rw [partition_bodies, Real.tanh_eq_sinh_div_cosh, Real.sinh_eq, Real.cosh_eq]
+  have hZ : (Real.exp x + Real.exp (-x)) ^ n ≠ 0 := pow_ne_zero _ hpos.ne'
+  rw [div_eq_iff hZ]
+  have hc : (Real.exp x + Real.exp (-x)) ≠ 0 := hpos.ne'
+  apply mul_left_cancel₀ hc
+  rw [h]; field_simp
+
+-- ==========================================
+-- §15  Neighbour coupling: the chain
+-- ==========================================
+
+/-! The open piece of §14 is the coupling between units. Let neighbouring units exchange too, so a
+neighbour pair weighs `a` when like and `b` when opposite (a domain wall). Then a ferromagnetic
+coupling is `a > b` and an antiferromagnetic one `b > a`. On a chain the sums over every way are
+exact: the partition sum is `2(a + b)ⁿ` for `n + 1` units, and the average number of walls is
+`n · b/(a + b)`. That is proportional to the length for every `b > 0`, so a chain at any finite
+temperature is broken into domains and carries no long-range order (Ising 1925). With Boltzmann
+weights `a = e^{βJ}`, `b = e^{−βJ}` the wall fraction is `1/(1 + e^{2βJ})`. -/
+
+/-- The chain weight of a body: `a` per like neighbour pair, `b` per opposite pair. -/
+def chainWeight (a b : ℝ) : List Bool → ℝ
+  | p :: q :: rest => (if p = q then a else b) * chainWeight a b (q :: rest)
+  | _ => 1
+
+/-- Domain walls: neighbour pairs with opposite orientation. -/
+def walls : List Bool → ℕ
+  | p :: q :: rest => (if p = q then 0 else 1) + walls (q :: rest)
+  | _ => 0
+
+/-- **Chain partition sum, from either end state**: `Σ_A w(c :: A) = (a + b)ⁿ` over bodies of size `n`. -/
+theorem chain_partition_from (a b : ℝ) (n : ℕ) (c : Bool) :
+    ((bodies n).map (fun A => chainWeight a b (c :: A))).sum = (a + b) ^ n := by
+  induction n generalizing c with
+  | zero => simp [bodies, chainWeight]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : ((fun A => chainWeight a b (c :: A)) ∘ (true :: ·)) =
+          fun A => (if c = true then a else b) * chainWeight a b (true :: A) := by
+        funext A; simp [chainWeight]
+      have h2 : ((fun A => chainWeight a b (c :: A)) ∘ (false :: ·)) =
+          fun A => (if c = false then a else b) * chainWeight a b (false :: A) := by
+        funext A; simp [chainWeight]
+      rw [h1, h2, sum_map_mul_const, sum_map_mul_const, ih true, ih false]
+      cases c <;> simp <;> ring
+
+/-- **Chain partition sum**: `2(a + b)ⁿ` over every body of `n + 1` units. -/
+theorem chain_partition (a b : ℝ) (n : ℕ) :
+    ((bodies (n + 1)).map (chainWeight a b)).sum = 2 * (a + b) ^ n := by
+  simp only [bodies, List.map_append, List.map_map, List.sum_append]
+  have e1 : (chainWeight a b ∘ (true :: ·)) = fun A => chainWeight a b (true :: A) := rfl
+  have e2 : (chainWeight a b ∘ (false :: ·)) = fun A => chainWeight a b (false :: A) := rfl
+  rw [e1, e2, chain_partition_from, chain_partition_from]; ring
+
+/-- **Weighted walls, from either end state**: `(a + b) · Σ w·walls = n b (a + b)ⁿ`. -/
+theorem chain_walls_from (a b : ℝ) (n : ℕ) (c : Bool) :
+    (a + b) * ((bodies n).map (fun A => chainWeight a b (c :: A) * walls (c :: A))).sum
+      = n * b * (a + b) ^ n := by
+  induction n generalizing c with
+  | zero => simp [bodies, chainWeight, walls]
+  | succ n ih =>
+      simp only [bodies, List.map_append, List.map_map, List.sum_append]
+      have h1 : ((fun A => chainWeight a b (c :: A) * (walls (c :: A) : ℝ)) ∘ (true :: ·)) =
+          fun A => (if c = true then a else b) * (if c = true then 0 else 1) *
+              chainWeight a b (true :: A)
+            + (if c = true then a else b) *
+              (chainWeight a b (true :: A) * walls (true :: A)) := by
+        funext A; simp only [Function.comp, chainWeight, walls]; push_cast; ring
+      have h2 : ((fun A => chainWeight a b (c :: A) * (walls (c :: A) : ℝ)) ∘ (false :: ·)) =
+          fun A => (if c = false then a else b) * (if c = false then 0 else 1) *
+              chainWeight a b (false :: A)
+            + (if c = false then a else b) *
+              (chainWeight a b (false :: A) * walls (false :: A)) := by
+        funext A; simp only [Function.comp, chainWeight, walls]; push_cast; ring
+      rw [h1, h2, sum_map_add_r, sum_map_add_r, sum_map_mul_const, sum_map_mul_const,
+        sum_map_mul_const, sum_map_mul_const, chain_partition_from, chain_partition_from]
+      have ht := ih true
+      have hf := ih false
+      push_cast
+      cases c
+      · simp only [Bool.false_eq_true, ↓reduceIte]
+        linear_combination b * ht + a * hf
+      · simp only [↓reduceIte, Bool.true_eq_false]
+        linear_combination a * ht + b * hf
+
+/-- **Average walls on a chain of `n + 1` units**: `(a + b) · Σ w·walls = 2 n b (a + b)ⁿ`, so the
+    average is `n · b/(a + b)`. -/
+theorem chain_walls (a b : ℝ) (n : ℕ) :
+    (a + b) * ((bodies (n + 1)).map (fun A => chainWeight a b A * walls A)).sum
+      = 2 * n * b * (a + b) ^ n := by
+  simp only [bodies, List.map_append, List.map_map, List.sum_append]
+  have e1 : ((fun A => chainWeight a b A * (walls A : ℝ)) ∘ (true :: ·)) =
+      fun A => chainWeight a b (true :: A) * walls (true :: A) := rfl
+  have e2 : ((fun A => chainWeight a b A * (walls A : ℝ)) ∘ (false :: ·)) =
+      fun A => chainWeight a b (false :: A) * walls (false :: A) := rfl
+  rw [e1, e2, mul_add, chain_walls_from, chain_walls_from]; ring
+
+/-- **A chain never orders at finite temperature**: with both exchange weights positive the average
+    number of walls is a positive fraction `b/(a + b)` of the length. -/
+theorem chain_has_walls (a b : ℝ) (ha : 0 < a) (hb : 0 < b) (n : ℕ) (hn : 0 < n) :
+    0 < ((bodies (n + 1)).map (fun A => chainWeight a b A * walls A)).sum
+      / ((bodies (n + 1)).map (chainWeight a b)).sum := by
+  have hab : 0 < a + b := by linarith
+  have h := chain_walls a b n
+  rw [chain_partition]
+  have hpos : 0 < ((bodies (n + 1)).map (fun A => chainWeight a b A * walls A)).sum := by
+    have : 0 < (a + b) * ((bodies (n + 1)).map (fun A => chainWeight a b A * walls A)).sum := by
+      rw [h]; have : (0 : ℝ) < n := by exact_mod_cast hn
+      positivity
+    exact pos_of_mul_pos_right this hab.le
+  positivity
+
+-- ==========================================
+-- §16  Why the plane orders: the Peierls count
+-- ==========================================
+
+/-! On a chain one wall costs a factor `x = b/a` and has `n` places, so walls always win (§15). In
+the plane a wall is a closed path. A path of length `L` costs `x^L`, and the number of such paths is
+at most the non-backtracking walks: `4 · 3^(L−1)` from a given start, and at most `L` starts for a
+path enclosing a given site. So the total weight of walls round a site is at most `Σ L (3x)^L`, which
+does not grow with the size of the body and is below `1/2` once `x ≤ 1/12`. That comparison of two
+counts is Peierls' 1936 argument. Proved here: the walk count, the divergence on the chain and the
+bound in the plane. Not proved: that the chance a site is flipped is at most that sum (the contour
+map itself), which is what turns the bound into long-range order. -/
+
+/-- The four lattice steps; the reverse of step `s` is `s + 2`. -/
+def revStep (s : Fin 4) : Fin 4 := s + 2
+
+/-- Non-backtracking continuations of length `n` after a step `c`. -/
+def nbExt : Fin 4 → ℕ → List (List (Fin 4))
+  | _, 0 => [[]]
+  | c, n + 1 =>
+      ((List.finRange 4).filter (fun s => s ≠ revStep c)).flatMap
+        (fun s => (nbExt s n).map (s :: ·))
+
+/-- Non-backtracking walks of length `n + 1` from a fixed start. -/
+def nbWalks (n : ℕ) : List (List (Fin 4)) :=
+  (List.finRange 4).flatMap (fun s => (nbExt s n).map (s :: ·))
+
+theorem three_ways_on (c : Fin 4) :
+    ((List.finRange 4).filter (fun s => s ≠ revStep c)).length = 3 := by
+  fin_cases c <;> decide
+
+theorem nbExt_length (c : Fin 4) (n : ℕ) : (nbExt c n).length = 3 ^ n := by
+  induction n generalizing c with
+  | zero => rfl
+  | succ n ih =>
+      simp only [nbExt, List.length_flatMap, List.length_map, ih]
+      rw [List.map_const', List.sum_replicate, three_ways_on]
+      simp [pow_succ]; ring
+
+/-- **Wall paths of length `n + 1` from a fixed start number `4 · 3ⁿ`.** -/
+theorem nbWalks_length (n : ℕ) : (nbWalks n).length = 4 * 3 ^ n := by
+  simp only [nbWalks, List.length_flatMap, List.length_map, nbExt_length]
+  simp
+  ring
+
+/-- **On a chain walls always win**: placements times cost, `n · x`, exceeds any bound. -/
+theorem chain_walls_unbounded (x : ℝ) (hx : 0 < x) (M : ℝ) : ∃ n : ℕ, M < n * x := by
+  obtain ⟨n, hn⟩ := exists_nat_gt (M / x)
+  exact ⟨n, by rwa [div_lt_iff₀ hx] at hn⟩
+
+/-- **In the plane the wall weight is bounded**, whatever the size of the body:
+    `Σ L (3x)^L = 3x/(1 − 3x)²` for `3x < 1`. -/
+theorem plane_wall_weight (x : ℝ) (hx : 0 ≤ x) (h3 : 3 * x < 1) :
+    (∑' L : ℕ, (L : ℝ) * (3 * x) ^ L) = 3 * x / (1 - 3 * x) ^ 2 := by
+  apply tsum_coe_mul_geometric_of_norm_lt_one
+  rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
+  exact h3
+
+/-- **Cold enough, walls lose**: for `x ≤ 1/12` the total wall weight round a site is below `1/2`. -/
+theorem plane_walls_lose (x : ℝ) (hx : 0 ≤ x) (h12 : x ≤ 1 / 12) :
+    (∑' L : ℕ, (L : ℝ) * (3 * x) ^ L) < 1 / 2 := by
+  rw [plane_wall_weight x hx (by linarith)]
+  have hpos : 0 < (1 - 3 * x) ^ 2 := by
+    have : 0 < 1 - 3 * x := by linarith
+    positivity
+  rw [div_lt_iff₀ hpos]
+  nlinarith
+
+-- ==========================================
+-- §17  The magnon as a wave
+-- ==========================================
+
+/-! §12 counts one magnon's `n` placements. Neighbour exchange (§15) moves the flipped unit one
+place left or right, so the placements are not separate states: exchange acts on an amplitude `ψ`
+over them as `(Hψ)(j) = 2ψ(j) − ψ(j+1) − ψ(j−1)`, the cost of the two walls a flip makes less what
+hopping returns. Its modes are the phase waves `ψ(j) = e^{ikj}`, with energy `2 − 2cos k`. On a ring
+of `n` units the allowed `k` are `2πm/n`, so there are `n` waves for the `n` placements: the same
+count in another basis. The uniform wave `k = 0` costs nothing (turning every unit together is
+free), and for long waves the energy is at most `k²`, the quadratic magnon dispersion. That the
+coefficient is the exchange coupling `J`, and Bloch's `T^{3/2}` law that follows in three
+dimensions, are not derived here. -/
+
+/-- A phase wave of wavenumber `k` across the placements. -/
+noncomputable def phaseWave (k : ℝ) (j : ℤ) : ℂ := Complex.exp (Complex.I * k * j)
+
+/-- Neighbour exchange acting on an amplitude over placements. -/
+def exchangeOp (ψ : ℤ → ℂ) (j : ℤ) : ℂ := 2 * ψ j - ψ (j + 1) - ψ (j - 1)
+
+/-- **A phase wave is a mode of neighbour exchange, with energy `2 − 2cos k`.** -/
+theorem magnon_mode (k : ℝ) (j : ℤ) :
+    exchangeOp (phaseWave k) j = (2 - 2 * Real.cos k : ℝ) * phaseWave k j := by
+  unfold exchangeOp phaseWave
+  have h1 : Complex.exp (Complex.I * k * ((j + 1 : ℤ) : ℂ)) =
+      Complex.exp (Complex.I * k * j) * Complex.exp (Complex.I * k) := by
+    rw [← Complex.exp_add]; congr 1; push_cast; ring
+  have h2 : Complex.exp (Complex.I * k * ((j - 1 : ℤ) : ℂ)) =
+      Complex.exp (Complex.I * k * j) * Complex.exp (-(Complex.I * k)) := by
+    rw [← Complex.exp_add]; congr 1; push_cast; ring
+  have hc : Complex.exp (Complex.I * k) + Complex.exp (-(Complex.I * k)) = 2 * Complex.cos k := by
+    rw [Complex.two_cos]; congr 2 <;> ring
+  rw [h1, h2]
+  push_cast
+  linear_combination (-Complex.exp (Complex.I * k * j)) * hc
+
+/-- **On a ring of `n` units the allowed waves are `k = 2πm/n`.** -/
+theorem magnon_ring (n : ℕ) (hn : 0 < n) (m j : ℤ) :
+    phaseWave (2 * Real.pi * m / n) (j + n) = phaseWave (2 * Real.pi * m / n) j := by
+  unfold phaseWave
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  have : Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ) * ((j + n : ℤ) : ℂ) =
+      Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ) * j + m * (2 * Real.pi * Complex.I) := by
+    push_cast; field_simp
+  rw [this, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+
+/-- **Only `n` waves are distinct**: `m` and `m + n` give the same wave on every placement. -/
+theorem magnon_ring_modes (n : ℕ) (hn : 0 < n) (m j : ℤ) :
+    phaseWave (2 * Real.pi * (m + n : ℤ) / n) j = phaseWave (2 * Real.pi * m / n) j := by
+  unfold phaseWave
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  have : Complex.I * ((2 * Real.pi * ((m + n : ℤ) : ℝ) / n : ℝ) : ℂ) * (j : ℂ) =
+      Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ) * j + j * (2 * Real.pi * Complex.I) := by
+    push_cast; field_simp
+  rw [this, Complex.exp_add, Complex.exp_int_mul_two_pi_mul_I, mul_one]
+
+/-- **The `n` ring waves are distinct**: two waves that agree one place along have `m ≡ m'` mod `n`. -/
+theorem magnon_ring_distinct (n : ℕ) (hn : 0 < n) (m : ℤ)
+    (h : phaseWave (2 * Real.pi * m / n) 1 = 1) : (n : ℤ) ∣ m := by
+  unfold phaseWave at h
+  obtain ⟨q, hq⟩ := Complex.exp_eq_one_iff.mp h
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  have hpi : (Real.pi : ℂ) ≠ 0 := by exact_mod_cast Real.pi_ne_zero
+  have hc : (2 * (Real.pi : ℂ) * Complex.I) ≠ 0 :=
+    mul_ne_zero (mul_ne_zero two_ne_zero hpi) Complex.I_ne_zero
+  have e : (m : ℂ) = ((q * n : ℤ) : ℂ) := by
+    apply mul_left_cancel₀ hc
+    have e1 : 2 * (Real.pi : ℂ) * Complex.I * m =
+        (Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ) * ((1 : ℤ) : ℂ)) * n := by
+      push_cast; field_simp
+    rw [e1, hq]; push_cast; ring
+  have : m = q * n := by exact_mod_cast e
+  exact ⟨q, by rw [this]; ring⟩
+
+/-- **A ring wave other than the uniform one sums to zero over the ring**, so the waves are
+    orthogonal and the `n` waves are a full change of basis for the `n` placements. -/
+theorem magnon_wave_sum_zero (n : ℕ) (hn : 0 < n) (m : ℤ) (h : ¬ (n : ℤ) ∣ m) :
+    ∑ j ∈ Finset.range n, phaseWave (2 * Real.pi * m / n) (j : ℤ) = 0 := by
+  have hn' : (n : ℂ) ≠ 0 := by exact_mod_cast hn.ne'
+  set x : ℂ := Complex.exp (Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ)) with hx
+  have hpow : ∀ j : ℕ, phaseWave (2 * Real.pi * m / n) (j : ℤ) = x ^ j := by
+    intro j
+    unfold phaseWave
+    rw [hx, ← Complex.exp_nat_mul]; congr 1; push_cast; ring
+  have hx1 : x ≠ 1 := by
+    intro hx1
+    apply h
+    apply magnon_ring_distinct n hn m
+    unfold phaseWave
+    rw [← hx1, hx]; congr 1; push_cast; ring
+  have hxn : x ^ n = 1 := by
+    rw [hx, ← Complex.exp_nat_mul]
+    have : (n : ℂ) * (Complex.I * ((2 * Real.pi * m / n : ℝ) : ℂ)) =
+        m * (2 * Real.pi * Complex.I) := by
+      push_cast; field_simp
+    rw [this, Complex.exp_int_mul_two_pi_mul_I]
+  simp only [hpow]
+  rw [geom_sum_eq hx1, hxn, sub_self, zero_div]
+
+/-- **The uniform wave costs nothing**: turning every unit together is free. -/
+theorem magnon_zero_mode : (2 - 2 * Real.cos 0 : ℝ) = 0 := by simp
+
+/-- **Magnon energy is never negative and at most `k²`**: the quadratic dispersion. -/
+theorem magnon_dispersion (k : ℝ) :
+    0 ≤ 2 - 2 * Real.cos k ∧ 2 - 2 * Real.cos k ≤ k ^ 2 := by
+  constructor
+  · have := Real.cos_le_one k; linarith
+  · have := Real.one_sub_sq_div_two_le_cos (x := k); linarith
+
+-- ==========================================
+-- §18  One exchanged photon is one magnon
+-- ==========================================
+
+/-! §14 weights a unit by its photon exchange with the vacuum, and §12 calls a flipped unit a magnon.
+They are one statement. Flipping a unit changes the body's weight by exactly one factor `d/u`
+(`flip_weight`), and changes its moment by one whole unit of spin (`magnon_lowers_moment`), which is
+what one photon carries. So a body's weight is set by its magnon number alone (`weight_eq_magnons`),
+and the average number of magnons under exchange with a field-tilted vacuum is `n/(e^{2βh} + 1)`
+(`magnon_occupancy`). The occupancy per unit has the exclusion form, `1/(e^{ε/T} + 1)` with
+`ε = 2h`, because a unit can be flipped only once. -/
+
+/-- **A body's vacuum weight is set by its magnon number**: `u` per up unit, `d` per magnon. -/
+theorem weight_eq_magnons (u d : ℝ) (A : List Bool) :
+    weight u d A = u ^ (A.count true) * d ^ (magnons A) := by
+  induction A with
+  | nil => simp [weight, magnons]
+  | cons p ps ih =>
+      unfold magnons at ih ⊢
+      cases p <;> simp [weight, ih, pow_succ] <;> ring
+
+theorem weight_append (u d : ℝ) (A B : List Bool) :
+    weight u d (A ++ B) = weight u d A * weight u d B := by
+  induction A with
+  | nil => simp [weight]
+  | cons p ps ih => simp only [List.cons_append, weight, ih]; ring
+
+/-- **One flip is one factor `d/u`**: creating a magnon anywhere trades one `u` for one `d`. -/
+theorem flip_weight (u d : ℝ) (pfx sfx : List Bool) :
+    weight u d (pfx ++ false :: sfx) * u = weight u d (pfx ++ true :: sfx) * d := by
+  rw [weight_append, weight_append]
+  simp [weight]; ring
+
+/-- **Weighted magnons over every way**: `(u + d) · Σ w·k = n d (u + d)ⁿ`, so the average number of
+    magnons is `n · d/(u + d)`. -/
+theorem weighted_magnons_bodies (u d : ℝ) (n : ℕ) :
+    (u + d) * ((bodies n).map (fun A => weight u d A * (magnons A : ℝ))).sum
+      = n * d * (u + d) ^ n := by
+  have hk : ∀ A ∈ bodies n, weight u d A * (magnons A : ℝ) =
+      (1 / 2) * ((n : ℝ) * weight u d A) + (-(1 / 2)) * (weight u d A * (moment A : ℝ)) := by
+    intro A hA
+    have hm := moment_magnons A
+    rw [(mem_bodies n A).mp hA] at hm
+    have hm' : (moment A : ℝ) = (n : ℝ) - 2 * (magnons A : ℝ) := by exact_mod_cast hm
+    rw [hm']; ring
+  rw [List.map_congr_left hk, sum_map_add_r, sum_map_mul_const, sum_map_mul_const,
+    sum_map_mul_const, partition_bodies]
+  have h := weighted_moment_bodies u d n
+  linear_combination (-(1 / 2 : ℝ)) * h
+
+/-- **Magnon occupancy under photon exchange**: with `u = e^{x}`, `d = e^{−x}` (`x = βh`) the
+    average number of magnons is `n/(e^{2x} + 1)`. -/
+theorem magnon_occupancy (x : ℝ) (n : ℕ) :
+    ((bodies n).map (fun A => weight (Real.exp x) (Real.exp (-x)) A * (magnons A : ℝ))).sum
+      / ((bodies n).map (weight (Real.exp x) (Real.exp (-x)))).sum
+      = n / (Real.exp (2 * x) + 1) := by
+  have hpos : 0 < Real.exp x + Real.exp (-x) := by positivity
+  have h := weighted_magnons_bodies (Real.exp x) (Real.exp (-x)) n
+  rw [partition_bodies]
+  have hZ : (Real.exp x + Real.exp (-x)) ^ n ≠ 0 := pow_ne_zero _ hpos.ne'
+  have h2 : Real.exp (2 * x) = Real.exp x * Real.exp x := by rw [← Real.exp_add]; ring_nf
+  have h1 : Real.exp x * Real.exp (-x) = 1 := by rw [← Real.exp_add]; simp
+  have hd : (0 : ℝ) < Real.exp (2 * x) + 1 := by positivity
+  rw [div_eq_div_iff hZ hd.ne']
+  apply mul_left_cancel₀ hpos.ne'
+  rw [← mul_assoc, h, h2]
+  linear_combination ((n : ℝ) * (Real.exp x + Real.exp (-x)) ^ n * Real.exp x) * h1
+
+end QLF.MagneticOrientation

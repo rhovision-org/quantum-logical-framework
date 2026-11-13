@@ -327,5 +327,7 @@ lean_lib QLF where
     `QLF_StrangeLoop,
     `QLF_StrangeLoopBorn,
     `QLF_ConservativeReturn,
-    `QLF_TensorConservativeReturn
+    `QLF_TensorConservativeReturn,
+    `QLF_MeadTransaction,
+    `QLF_MagneticOrientation
   ]

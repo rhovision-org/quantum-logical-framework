@@ -64,6 +64,8 @@ The **Methods and evidence** layer is **cross-cutting**, not a sixth domain: it 
 
 **Lepton protocol risks:** the #140 pre-registration is `B-OPEN`; `delta` is not derived. The `L = 8` tau uniqueness depends on a load-bearing 3-axis filter, and the parent-continuation rule is ambiguous at `L = 10`. These risks stay visible rather than being resolved by the protocol. See [`Lepton_Mass_Ratio_Protocol.md`](Lepton_Mass_Ratio_Protocol.md), [`claim_records/lepton_mass_ratio.json`](claim_records/lepton_mass_ratio.json), and issue [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140).
 
+**Gravity and long-range order (B-OPEN):** the orientation-blind count between balanced bodies is a gravity *hypothesis*, not a theorem; the physical return from oriented area to curvature is `NOT_STARTED`. The Peierls wall count is formal, but the contour map to long-range order is not proved. See [`Collective_Electrodynamics.md`](Collective_Electrodynamics.md) §7a, issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207), and [`Open_Problems.md`](Open_Problems.md).
+
 **Relativity split:** free Dirac-walk boost covariance is `F` in the 375-anchor baseline; interacting boost covariance and the conservative return are `B-OPEN`/`NOT_STARTED`. The census symbol's kinetic reading is an assumption, and the census-vs-walk off-axis sign remains open. See [`Relativity_Principle.md`](Relativity_Principle.md) §7a, [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json), and issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207).
 
 **Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **375-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
@@ -322,8 +324,10 @@ flowchart TD
   S --> PL["Planck scale"]
   S --> MSM["Metric singlet / lattice Einstein (F under premises; physical gravity B-OPEN)"]
   S --> MNF["Manifestation (F formal; physical selection B-OPEN)"]
+  S --> OGRAV["Gravity from balanced orientation: B-OPEN; return NOT_STARTED; long-range order open (#207)"]
   MSM --> TOE["ToE claim map"]
   MNF --> TOE
+  OGRAV --> TOE
   TOE --> CST["Claim_Status.md / Manifestation.md"]
 ```
 
@@ -530,6 +534,7 @@ flowchart TD
   AL --> SP["SPARC RAR (first-order N established; return incomplete; G5 incomplete)"]
   MTH --> MSM["Metric singlet / lattice Einstein (F under premises; physical gravity B-OPEN)"]
   MTH --> MNF["Manifestation (F formal; physical selection B-OPEN)"]
+  MTH --> OGRAV
   MSM --> TOE["ToE claim map"]
   MNF --> TOE
   MTH --> PAPER["Paper I v0.3 integrated draft"]
