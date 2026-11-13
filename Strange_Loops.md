@@ -391,7 +391,11 @@ It is **not yet a self-knowledge loop**:
 - there is no conservative return from the KB's model of itself to its actual closure records;
 - there is no formal `RhoCorrespondence` map for QKB, and no proof that QKB's query reduction is a QLF
   closure reduction;
-- the contract has not been parsed or run by rholo, and has not been deployed on a node.
+- the contract has now been parsed and executed on an isolated local rnode (quantum-os
+  `070d8f8`), including registry publication and a separate deploy's lookup, but it has not
+  been deployed on a public or production network. See
+  [`verification/qkb/rholo_acceptance.md`](verification/qkb/rholo_acceptance.md); this changes
+  the runtime gate, not the self-knowledge or claim status.
 
 To become a self-knowledge candidate, QKB would need at least: self-referential questions whose
 seed/context can name the KB's own records and query process; answers that can modify the listener's

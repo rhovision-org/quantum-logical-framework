@@ -404,4 +404,6 @@ The framework treats a stable closure not only as the end of a search, but as a 
 
 See also: [zfa-catalog-rho-notation.md](zfa-catalog-rho-notation.md) — pre-verified ZFA closure catalog in RhoLang notation; orders-of-magnitude speedup by reusing named closures instead of re-running BFS.
 
+See also: [Quantum_Knowledge_Base.md](Quantum_Knowledge_Base.md) — a knowledge base of ZFA closures written in real Rholang for rholo ([`rholang/QKB.rho`](rholang/QKB.rho)), with multiplicity, redundancy and priority queries and an MO3 quantum-logic layer.
+
 Application: [`Polarons_QLF.md`](Polarons_QLF.md) uses open prefixes, joint closure, first-return irreducibility and closure classes to formulate a dressed impurity as a composite ZFA event.
