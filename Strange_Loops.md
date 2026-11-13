@@ -861,6 +861,15 @@ of the quotient return**, not that the quotient is the physically selected
 closure equivalence, and not the entangled-sector return. It is in the
 344-anchor baseline.
 
+**Short cross-link and status boundary.** [`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean)
+is the strongest current near-example; [`QLF_TensorConservativeReturn`](lean/QLF_TensorConservativeReturn.lean)
+closes the tensor-image quotient return. The missing object is a return on the
+**physically selected closure quotient** (call it `TensorConservativeReturn_phys`),
+plus the entangled-sector return. Under the same discipline, issue
+[#213](https://github.com/rhovision-org/quantum-logical-framework/issues/213) remains
+`B-OPEN`, and all four Paper I bridges (three-polarizer, α, SPARC, Born) remain
+`B-OPEN` until those returns exist.
+
 For the entangled sector the hierarchy is:
 
 ```
