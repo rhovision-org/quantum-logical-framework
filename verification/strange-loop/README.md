@@ -22,6 +22,17 @@ Paper I v0.3 leaves the optical, α, SPARC and Born bridges `B-OPEN` / `INCOMPLE
 
 The tensor-product return target is specified in [`tensor_return_target.md`](tensor_return_target.md): `TensorConservativeReturn` is `PROVED` as a quotient construction in `lean/QLF_TensorConservativeReturn.lean`; `pair_scalar_ambiguity` requires the return to land on closure classes, not raw factor pairs. Physical selection of the equivalence remains open.
 
+## Targets and status ledger
+
+| Target | Status | What it would establish |
+|---|---|---|
+| [`tensor_return_target.md`](tensor_return_target.md) | **PROVED** (quotient construction) | `R ∘ F = id` on tensor-image closure classes; physical selection open |
+| [`rho_correspondence_target.md`](rho_correspondence_target.md) | **NOT_STARTED** | QLF ↔ pure reflective ρ-calculus: `Φ`/`Ψ`, soundness, completeness, join, reflection, conservativity, self-query |
+| [`self_knowledge_target.md`](self_knowledge_target.md) | **NOT_STARTED** | Active-inference update `U` plus self-knowledge as a bisimulation `M ~_c S|_c`, with update preservation and conservative return |
+| [`blinded_protocol.md`](blinded_protocol.md) | **AWAITING_DATA** | Three-polarizer protocol; no result claimed |
+
+The event/observer/ρ discussion is in [`Strange_Loops.md`](../../Strange_Loops.md) §2A–§3B.
+
 All four files build in project CI and are now in the **343-anchor reviewed baseline**. The claim-record proof status remains `PARTIAL`, not `PROVED`, because these are toy/quotient witnesses, not the actual operational bridges; `TESTED` still requires the real map plus a reviewed artifact.
 
 ## Run
@@ -52,4 +63,4 @@ python3 -m unittest discover -s tests -p 'test_strange_loop_observer.py' -v
 - The "self-reference" is a state used as its own screen; its fixed point is mathematically trivial and is not a physical claim.
 - The model does not show that QLF "fails" or "succeeds"; it localizes the missing operational premise.
 
-See [`Strange_Loops.md`](../../Strange_Loops.md) §4–§6 and [`Claim_Status.md`](../../Claim_Status.md).
+See [`Strange_Loops.md`](../../Strange_Loops.md) §2A–§3B and §6, and [`Claim_Status.md`](../../Claim_Status.md).

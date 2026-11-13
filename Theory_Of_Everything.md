@@ -42,7 +42,7 @@ interaction; the logical complexity inside them is far larger.
 | Every terminating computation is a ZFA string | [Universality.md](Universality.md) |
 | No finite closure is final | [Law_Of_Exceptions.md](Law_Of_Exceptions.md) |
 | Mathematics from the substrate | [Mathematics_From_QLF.md](Mathematics_From_QLF.md), [Category_Theory_QLF.md](Category_Theory_QLF.md) |
-| Two-phase / strange-loop bootstrapping; conservative return | [Mathematics_From_QLF.md](Mathematics_From_QLF.md) §2, [Philosophy.md](Philosophy.md) §3d, [Strange_Loops.md](Strange_Loops.md) |
+| Two-phase / strange-loop bootstrapping; conservative return; primitive event, ρ/QKB and observer layers | [Mathematics_From_QLF.md](Mathematics_From_QLF.md) §2, [Philosophy.md](Philosophy.md) §3d, [Strange_Loops.md](Strange_Loops.md) §2A–§3B |
 
 ## 2. The two a priori solutions
 
@@ -101,7 +101,7 @@ interaction; the logical complexity inside them is far larger.
 | Topic | Read | Flow chart |
 |---|---|---|
 | The gap registry | [Open_Problems.md](Open_Problems.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
-| Strange-loop / conservative-return bridge discipline | [Strange_Loops.md](Strange_Loops.md), [Claim_Status.md](Claim_Status.md) | [Methods and evidence](FlowChart.md#methods-and-evidence-paper-i-v03) |
+| Strange-loop / conservative-return bridge discipline; ρ/QKB and active-inference/bisimulation targets | [Strange_Loops.md](Strange_Loops.md), [rho_correspondence_target.md](verification/strange-loop/rho_correspondence_target.md), [self_knowledge_target.md](verification/strange-loop/self_knowledge_target.md), [Claim_Status.md](Claim_Status.md) | [Methods and evidence](FlowChart.md#methods-and-evidence-paper-i-v03) |
 | The six Millennium reformulations, each one bridge axiom | [Millennium.md](Millennium.md) | [9 Millennium](FlowChart.md#9-the-millennium-prize-program) |
 | Beyond the Standard Model | [Beyond_Standard_Model.md](Beyond_Standard_Model.md) | [10 Beyond the SM](FlowChart.md#10-beyond-the-sm) |
 | QFT and renormalization | [Perturbation_Theory_QLF.md](Perturbation_Theory_QLF.md) | [12 QFT](FlowChart.md#12-quantum-field-theory-and-renormalization) |

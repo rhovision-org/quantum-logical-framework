@@ -49,7 +49,7 @@ reality.
 
 ---
 
-**Strange-loop reading.** The self-model is a level-crossing self-reference: the blanket models itself, its environment, and their interaction, and its closures synthesize its local time and world. It is a loop in the reversible possibility algebra, not a closed causal curve in the realized history; `no_time_loops_from_logic` prunes the latter. The conceptual note and its limits are in [`Strange_Loops.md`](Strange_Loops.md) §3.
+**Strange-loop reading.** The self-model is a level-crossing self-reference: the blanket models itself, its environment, and their interaction, and its closures synthesize its local time and world. It is a loop in the reversible possibility algebra, not a closed causal curve in the realized history; `no_time_loops_from_logic` prunes the latter. The conceptual note and its limits are in [`Strange_Loops.md`](Strange_Loops.md) §3A–§3B. §3B adds the missing update/faithfulness criteria: active inference is a candidate update/policy rule, and self-knowledge is a candidate bisimulation `M ~_c S|_c` between the self-model and the closure-relevant quotient of the system. Both are `B-OPEN`; the target is [`verification/strange-loop/self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md), `NOT_STARTED`. This does not promote the consciousness reading to a theorem or empirical claim.
 
 ## 2. A spectrum of closures at different frequencies
 
