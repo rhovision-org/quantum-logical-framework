@@ -114,7 +114,32 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureChannels.oneWayWalk_not_reversal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.oneWayWalk_trace": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.oneWayWalk_trace_odd": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.palindrome_reversal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureChannels.rawStep_not_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.realStep_add": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -130,6 +155,11 @@
     "propext"
   ],
   "QLF.ClosureChannels.realWalk_add_star": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.realWalk_eq_wordWalk": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -164,6 +194,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureChannels.splitWalk_conj_palindrome": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.splitWalk_even_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.splitWalk_trace": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureChannels.step_forced": [
     "Classical.choice",
     "Quot.sound",
@@ -175,6 +220,16 @@
     "propext"
   ],
   "QLF.ClosureChannels.walk_dispersion_quadratic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.walk_energy_quadratic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureChannels.wordWalk_neg": [
     "Classical.choice",
     "Quot.sound",
     "propext"

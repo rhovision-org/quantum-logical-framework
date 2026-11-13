@@ -212,8 +212,10 @@ one-way order. Since `cos E` is then even in every `k_i`, the palindrome's dispe
 **proved** in Lean ([`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean), no axioms): `realStep_eq_cos_sin`
 writes each realizable step as `cos k · 1 + i sin k · M(t)`, `realWalk_trace` proves the full complex
 trace is `2 cos k_y cos k_x cos k_z` (so its imaginary part vanishes too), and `realWalk_trace_even`
-proves it is even in each `k_i`. The one-way identity stays numerical, since that order is no longer the
-Lean walk.
+proves it is even in each `k_i`. The one-way identity is proved as well (`oneWayWalk_trace`, §8 of the
+module): with the Lean twists it reads `Π cos k_i + Π sin k_i`. The sign differs from the script's because
+the Lean `left` twist is `−σ_x` and the script uses `+σ_x`; it is the same walk at `k_x → −k_x`, and the
+odd term changes sign between octants either way.
 
 The fixed order breaks time reversal and parity, and that leaves a term **linear** in energy. Its sign
 flips between octants and between the two chiralities (the Dirac walk runs the other chirality at
@@ -281,8 +283,19 @@ Take any nearest-neighbour step along one axis: it sends the spin one site forwa
 So the electron's free step follows from four things: one site per tick, unitarity at every momentum,
 no coin at zero momentum, and the twist as the spin generator. The last is QLF's realizability premise
 (§1, row A3). The coin `U` is where mass enters. That the coin is the handedness flip `β`, and that
-the three axes are composed in the palindromic order (the reversal identity `realWalk_neg`), are still
-choices rather than theorems. Two things remain physical identifications: that the electron is a
+the three axes are composed in the palindromic order, are still choices rather than theorems. For the
+order, the choice is now pinned to one premise: that the dispersion is even under `k → −k`. Every
+palindromic word of steps has the reversal identity `W(−k) = W(k)†` (`palindrome_reversal`). The one-way
+order does not, and its dispersion is odd by exactly `4 Π sin k_i` (`oneWayWalk_trace_odd`,
+`oneWayWalk_not_reversal`). For one four-step pattern, `up(a) · left(b) · up(a') · slash(c)`, the
+dispersion is even at a point exactly when `sin(a − a') sin b sin c = 0` (`splitWalk_even_iff`). Where
+`sin b sin c ≠ 0` that is `a − a' ∈ πℤ`, so the equal split follows only for nearby angles, and the equal
+split is the five-step palindrome in another frame (`splitWalk_conj_palindrome`). Two limits on this.
+`palindrome_reversal` is sufficiency only: necessity over arbitrary step words is not proved. And exact
+evenness is an additional symmetry assumption, not something the data require. It is consistent with the
+Crab and Čerenkov bounds, but so is a slightly unequal split: `a = (1+δ)k_y/2`, `a' = (1−δ)k_y/2` gives
+`η = −2δ n_x n_y n_z`, and `δ = 10⁻⁸` sits inside both bounds while evenness fails. The bounds exclude
+the one-way order (`δ = 1`), not every odd term. Two things remain physical identifications: that the electron is a
 spin-½ closure that moves this way, and that the lattice tick is the Planck time.
 
 
@@ -297,7 +310,7 @@ assumptions fix what it is a forecast about.
 | # | Forecast | Lean anchor | Kill condition | Status, 2026-11-07 |
 |---|---|---|---|---|
 | F1 | **No linear Planck-scale term**: `η = 0` exactly for electrons, in `E² = p² + m² + η p³/E_P`, in every direction. | `diracWalk_dispersion`: `cos E = cos m · Π cos k_i` is even in every `k_i`. | Any measured nonzero `η` for electrons, of either sign. For photons (with the extra assumption), any nonzero linear time-of-flight term. | **Consistent.** The Crab bound `η > −7 × 10⁻⁸` and the vacuum-Čerenkov bound `η < 0.01` (Jacobson, Liberati and Mattingly 2003). |
-| F2 | **A fixed quadratic term**: `E² = k² − (k⁴/3)(n_x²n_y² + n_y²n_z² + n_z²n_x²)` in Planck units, where `n` is the direction relative to the lattice axes. It is subluminal, exactly zero along the three axes, and largest on the body diagonal (`ξ = 1/9`, `E_QG,2 = 3.0 E_P`). There is no free coefficient. | The exact relation `cos E = Π cos k_i` is proved (`realWalk_trace`, `diracWalk_dispersion`). The fourth-order coefficient is now proved too: `walk_dispersion_quadratic` shows that `cos E` and `cos E_pred` agree to within `(Σ\|k_i\|)⁶/50` for `Σ\|k_i\| ≤ 1` (via `walk_cos_taylor`, [`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean) §7). The last step, from `cos E` to `E`, uses only that `cos` is invertible near zero and is not formalized. | A quadratic effect that is superluminal, isotropic, or nonzero along every direction. Or a bound `E_QG,2 > 3.0 E_P` in every direction. | **Untestable now.** The best time-of-flight bound is `E_QG,2 > 6 × 10⁻⁸ E_P` (LHAASO 2024), about `5 × 10⁷` short. |
+| F2 | **A fixed quadratic term**: `E² = k² − (k⁴/3)(n_x²n_y² + n_y²n_z² + n_z²n_x²)` in Planck units, where `n` is the direction relative to the lattice axes. It is subluminal, exactly zero along the three axes, and largest on the body diagonal (`ξ = 1/9`, `E_QG,2 = 3.0 E_P`). There is no free coefficient. | The exact relation `cos E = Π cos k_i` is proved (`realWalk_trace`, `diracWalk_dispersion`). The fourth-order coefficient is now proved too: `walk_dispersion_quadratic` shows that `cos E` and `cos E_pred` agree to within `(Σ\|k_i\|)⁶/50` for `Σ\|k_i\| ≤ 1` (via `walk_cos_taylor`, [`QLF_RealizableWalk`](lean/QLF_RealizableWalk.lean) §7). The step from `cos E` to `E` is proved as well: `walk_energy_quadratic` gives `\|E² − E_pred²\| ≤ (Σ\|k_i\|)⁶/10` for `E = arccos(Π cos k_i)`. What stays an identification is the choice of the branch `0 ≤ E ≤ π` and the reading of `E` as the energy of a particle on a Planck-scale lattice. | A quadratic effect that is superluminal, isotropic, or nonzero along every direction. Or a bound `E_QG,2 > 3.0 E_P` in every direction. | **Untestable now.** The best time-of-flight bound is `E_QG,2 > 6 × 10⁻⁸ E_P` (LHAASO 2024), about `5 × 10⁷` short. |
 | F3 | **Dirac physics at every reachable energy.** Mass and momentum corrections enter only at relative order `(m/E_P)²` and `(k/E_P)²`, which is about `10⁻⁴⁵` for an electron at rest. | `diracWalk_generator`, `diracWalk_dispersion`; the size of the corrections is a low-energy expansion, not a Lean theorem. | Any electron dispersion anomaly at accessible energies attributable to the walk. | **Consistent, but not distinguishing**: the Standard Model forecasts the same. |
 
 **What is not fixed.** F2's direction is measured from the lattice axes, and nothing yet says how those
