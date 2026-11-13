@@ -343,6 +343,40 @@ The precise statements, domain restrictions, and bisimulation choice are in
 [`verification/strange-loop/rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md).
 This target is **`NOT_STARTED`** and is not in the 343-anchor baseline.
 
+### 2B.11 QKB (PR #216) as a candidate listener/trigger realization
+
+The open draft [PR #216](https://github.com/rhovision-org/quantum-logical-framework/pull/216) proposes a
+Quantum Knowledge Base in Rholang. Its query layer is a concrete instance of the listener/trigger
+pattern:
+
+- `ask(seed, context)` registers an open question; it is a **listener condition** on a continuation
+  that would close the seed;
+- `answer(q, cont)` supplies a closing continuation; it is the **trigger** relative to that question;
+- `solve(q)` returns the first-reached recorded answer by the fixed cascade; it is the **match**;
+- the content-addressed `grant` id is the stable name/capability of the closure;
+- `bundle+{*QKB}` restricts callers to sending to the service, not receiving from it.
+
+So QKB is a plausible **knowledge-level** realization of the capability pattern: questions and answers
+are complementary authorities over a shared name, and a successful match closes an open strand.
+
+It is **not yet a self-knowledge loop**:
+
+- its questions are first-order; they do not necessarily refer to the KB's own state, its own
+  question-generation process, or its own capability boundary;
+- `ask`/`answer`/`solve` are not `quote`/`drop` reflection;
+- there is no conservative return from the KB's model of itself to its actual closure records;
+- there is no formal `RhoCorrespondence` map for QKB, and no proof that QKB's query reduction is a QLF
+  closure reduction;
+- the contract has not been parsed or run by rholo, and has not been deployed on a node.
+
+To become a self-knowledge candidate, QKB would need at least: self-referential questions whose
+seed/context can name the KB's own records and query process; answers that can modify the listener's
+own capability set under a stated authority; a conservative return to the KB's finite records; and a
+machine-checked correspondence theorem. Those are `NOT_STARTED`.
+
+`PR #216` is an **open draft**, not part of the 343-anchor baseline and not audited here. This section
+is a cross-link and a target, not a promotion.
+
 ## 3. Observer loops are not time loops
 
 The observer/consciousness layer has the same shape. An observer is a finite, terminating, self-referential **Markov blanket**: it models itself, its environment, and their interaction, and its ZFA closures synthesize its local time and world. The relevant documents are [`Philosophy.md`](Philosophy.md) §3d, [`Time.md`](Time.md) §7a, [`Hadrons_Markov_Blankets.md`](Hadrons_Markov_Blankets.md), and [`Consciousness.md`](Consciousness.md).
@@ -802,6 +836,7 @@ narrower: **the method now specifies what such a test would have to return.**
 - [`BraKetRhoQuCalc.md`](BraKetRhoQuCalc.md) — the ρ-calculus / bra-ket connection and `RhoQuCalc` machinery.
 - [`lean/RhoQuCalc.lean`](lean/RhoQuCalc.lean) — ρ-process algebra, Hermitian structure, ZFA stability.
 - [Rholang documentation](https://rholang.org/docs/rholang/) and [RChain resources](https://rchain.coop/resources.html) — external process-calculus and capability background; the analogy is not an implementation claim.
+- [PR #216](https://github.com/rhovision-org/quantum-logical-framework/pull/216) — open draft Quantum Knowledge Base in Rholang; a candidate listener/trigger realization, not a self-knowledge loop and not in the baseline.
 - [`ScientificApproach.md`](ScientificApproach.md) §5 — the bridge protocol.
 - [`claim_records/`](claim_records/README.md) — typed records and the `strange_loop` field.
 - [`flowchart_source.md`](tools/flowchart_source.md) / [live FlowChart](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) — the navigation map.
