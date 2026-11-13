@@ -447,6 +447,8 @@
     "propext"
   ],
   "QLF.FirstReturn.prime_event_reciprocal_open": [
+    "Classical.choice",
+    "Quot.sound",
     "propext"
   ],
   "QLF.Fredkin.fredkin_bijective": [],
