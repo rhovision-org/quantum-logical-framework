@@ -72,8 +72,9 @@ in {
   // Fail closed: true iff `ts` is a list of Int in 0..7 with length <= 64.
   contract validTwists(@ts, ret) = {
     match ts {
-      [..._] => { if (ts.length() > 64) { ret!(false) } else { allTwists!(ts, 0, *ret) } }
-      _      => ret!(false)
+      []       => ret!(true)
+      [_ ..._] => { if (ts.length() > 64) { ret!(false) } else { allTwists!(ts, 0, *ret) } }
+      _        => ret!(false)
     }
   } |
 
