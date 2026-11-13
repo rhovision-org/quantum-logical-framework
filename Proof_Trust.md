@@ -72,7 +72,11 @@ any earlier set:
   to **319**.
 - **PR #230** added twenty-five conservative-return, tensor-return and prime-closure anchors
   (StrangeLoop 7, finite Born 3, ConservativeReturn 9, tensor quotient 5, prime closure 1),
-  bringing the baseline to **344**. The current exact-footprint gate is 344 entries.
+  bringing the baseline to **344**.
+- **PR #227** added eleven realizable-walk / palindromic-order anchors, bringing the baseline
+  to **355**.
+- **PR #222** added twenty relativity/boost-covariance anchors, bringing the baseline to
+  **375**. The current exact-footprint gate is 375 entries.
 
 The original Lean build and separate 302-report audit ran in project CI at
 `41182f7` (test merge `8cf63f3`). The reviewed source preserves all Lean/build

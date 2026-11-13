@@ -34,7 +34,7 @@ The tensor-product return target is specified in [`tensor_return_target.md`](ten
 
 The event/observer/ρ discussion is in [`Strange_Loops.md`](../../Strange_Loops.md) §2A–§3B.
 
-All four files build in project CI and are now in the **344-anchor reviewed baseline**. The claim-record proof status remains `PARTIAL`, not `PROVED`, because these are toy/quotient witnesses, not the actual operational bridges; `TESTED` still requires the real map plus a reviewed artifact.
+All four files build in project CI and are now in the **375-anchor reviewed baseline**. The claim-record proof status remains `PARTIAL`, not `PROVED`, because these are toy/quotient witnesses, not the actual operational bridges; `TESTED` still requires the real map plus a reviewed artifact.
 
 ## Run
 

@@ -58,10 +58,12 @@ nulls that could fail.
 - `claim_records/kill_conditions.json` — draft falsification/test ledger; no completed preregistration is asserted.
 - `claim_records/three_polarizer.json` — migrated finite/optical bridge record.
 - `claim_records/born_rule.json` — scoped Born-assignment characterization.
+- `claim_records/relativity_boost.json` — free Dirac-walk boost covariance; interacting return `NOT_STARTED`, bridge `OPEN`.
+- `claim_records/relativity_boost.json` — free Dirac-walk boost covariance; interacting return `NOT_STARTED`, bridge `OPEN`.
 
 ## Related formal developments (not physical claims)
 
-The current 344-anchor baseline also covers four formal developments that are **not**
+The current 375-anchor baseline also covers six formal developments that are **not**
 rows in the physical-claims table and do not have physical `E` status:
 
 - **Metric singlet / lattice Einstein equations** (PR #225; 5 anchors; three
@@ -74,6 +76,13 @@ rows in the physical-claims table and do not have physical `E` status:
   isolated imbalance are `F` as formal statements. Physical selection, a
   detector/apparatus map, and empirical adequacy remain `B-OPEN`/not established.
   See `Manifestation.md`.
+- **Realizable walk / palindromic order** (PR #227; 11 anchors). The quadratic energy
+  forecast and reversal identities are `F`; the palindromic order is pinned to the
+  even-dispersion premise, not derived from logic.
+- **Relativity / boost covariance** (PR #222; 20 anchors). The census limits,
+  Lorentz-symbol identities, shared-pair marginal and free Dirac-walk boost-covariance
+  theorems are `F`; the census kinetic reading is an assumption and interacting boost
+  covariance remains open. See `Relativity_Principle.md` §7a.
 - **Prime reciprocal closure** (`QLF.FirstReturn.prime_event_reciprocal_open`, 1 anchor).
   If a prime event splits at a nontrivial cut into nonempty `A` and `B`, neither half
   closes on its own; the closure is shared. This is formal `F` for the event-level
@@ -84,7 +93,7 @@ rows in the physical-claims table and do not have physical `E` status:
   `n_composite_is_tensor`, `nTensorEquiv`. This is formal `F` for the
   representation. The conservative return on closure classes is
   now proved as `tensor_conservative_return` / `tensorTrigger_exists` in
-  `QLF_TensorConservativeReturn` (in the 344-anchor baseline). It proves
+  `QLF_TensorConservativeReturn` (in the 375-anchor baseline). It proves
   coherence of the quotient return; it does not show that the quotient is the
   physically selected closure equivalence. `pair_scalar_ambiguity` shows why the
   raw factor pair cannot be returned. The tensor bridge remains near-complete,

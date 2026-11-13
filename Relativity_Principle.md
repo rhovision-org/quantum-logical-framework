@@ -334,6 +334,21 @@ Collins's loop integrals live in field theory. That a pair's weight is its fold 
 `shared_pair_fold_axis_blind` supports, not a theorem about every possible coupling. These two
 points are now the whole of the open question.
 
+## 7a. Claim-record status and open obligations
+
+This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
+
+| Component | Status |
+|---|---|
+| Free Dirac-walk shell covariance in the long-wavelength regime | `F`; anchors in the 375-entry baseline (`shell_taylor`, `shell_lorentz_invariant`, `shell_boost_invariant`, `diracWalk_boost_covariant`) |
+| Census limits / Lorentz-symbol determinant | `F`; anchors in the same baseline |
+| Interacting boost covariance | `B-OPEN`; conservative return `NOT_STARTED` |
+| Kinetic reading of the census symbol | assumption, not a theorem |
+| Census-vs-walk off-axis sign | open; the palindromic walk has the opposite sign |
+| Identification of the spread ratio with physical `c` | open; requires the interacting case |
+
+**No Paper I bridge is promoted.** The free-shell theorem is a reusable formal fact; it is not a physical validation of the relativity principle. The open obligations are tracked in issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207), [`Open_Problems.md`](Open_Problems.md), and the [FlowChart](FlowChart.md).
+
 ## 7. How this fits the rest
 
 - The state-space side of relativity was already proven: the interval is `det(Form)`

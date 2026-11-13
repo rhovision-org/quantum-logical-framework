@@ -32,6 +32,7 @@ flowchart LR
   FRN --> D10["10 Beyond the SM"]
   FND --> MTH["Methods and evidence: Paper I v0.3"]
   FND --> SL["Two-phase / strange-loop bootstrapping"]
+  FND --> REL["Relativity: free Dirac-walk boost covariance F; interacting return NOT_STARTED (#207)"]
   FND --> MAP["Map ≡ territory under ZFA (B-OPEN interpretation; issue #213)"]
   SL -.->|frames| MTH
   MTH -.->|audits| D2
@@ -39,6 +40,7 @@ flowchart LR
   MTH -.->|audits| D8
   click MTH "#methods-and-evidence-paper-i-v03"
   click SL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md" _blank
+  click REL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Relativity_Principle.md" _blank
   click MAP "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Map_Is_Territory.md" _blank
   click MT "https://github.com/rhovision-org/quantum-logical-framework/issues/213" _blank
   click KNW "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#3a-the-deeper-loop-closure-knowledge-and-the-immanent-self-model" _blank
@@ -58,7 +60,9 @@ The **Methods and evidence** layer is **cross-cutting**, not a sixth domain: it 
 
 **Map ≡ territory (issue #213):** the formal substrate components are `F`/verified at collaborator tier; the identification itself is `B-OPEN`/conjecture; ZFA exclusivity is an `E-candidate` with kill conditions. Standard QM and classical physics are treated as incomplete maps. This is graded in [`Map_Is_Territory.md`](Map_Is_Territory.md), not asserted as a theorem. See also [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207) and [#11](https://github.com/rhovision-org/quantum-logical-framework/issues/11).
 
-**Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **344-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
+**Relativity split:** free Dirac-walk boost covariance is `F` in the 375-anchor baseline; interacting boost covariance and the conservative return are `B-OPEN`/`NOT_STARTED`. The census symbol's kinetic reading is an assumption, and the census-vs-walk off-axis sign remains open. See [`Relativity_Principle.md`](Relativity_Principle.md) §7a, [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json), and issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207).
+
+**Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **375-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
 
 **Emergent matter** is the one family that is not fundamental physics. The other four ask what the
 substrate *is*; this one asks what it **assembles** once atoms exist — and it earns a family of its own
@@ -504,7 +508,7 @@ flowchart TD
   SL --> EVT["Primitive event: mutual closure / listening both ways (B-OPEN)"]
   SL --> RHO["ρ-calculus / Rholang: name = capability, join = closure analogue (B-OPEN)"]
   SL --> QKB["QKB (PR #216 draft): ask/answer rendezvous; self-query target NOT_STARTED"]
-  MTH --> F["F - audited formal statements (344 anchors)"]
+  MTH --> F["F - audited formal statements (375 anchors)"]
   MTH --> N["N - reproduced numerical results"]
   MTH --> B["B-OPEN - interpretation bridges"]
   MTH --> E["E - empirical evidence (none established)"]
@@ -534,7 +538,7 @@ flowchart TD
 
 **Recent additions:** primitive event as reciprocal closure (§2A); ρ-calculus/Rholang capabilities and QKB (§2B); immanent observer/self-model (§3A); active-inference update and self-knowledge-as-bisimulation (§3B). The formal targets [`rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md) and [`self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md) are `NOT_STARTED`.
 
-**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 344-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge with a first-order `F`/`N` result but no conservative return is `B-OPEN` / `INCOMPLETE`; reserve `INCONCLUSIVE` for a comparator that is ambiguous or fails to discriminate. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
+**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 375-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge with a first-order `F`/`N` result but no conservative return is `B-OPEN` / `INCOMPLETE`; reserve `INCONCLUSIVE` for a comparator that is ambiguous or fails to discriminate. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
 
 ---
 
