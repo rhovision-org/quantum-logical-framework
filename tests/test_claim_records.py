@@ -47,7 +47,10 @@ class ClaimRecordTests(unittest.TestCase):
                 data["gate_outcomes"][gate]["status"] = "PASS"
             data["strange_loop"]["status"] = "TESTED"
             data["strange_loop"]["proof_obligation"]["conservative_return_status"] = "PROVED"
-            data["strange_loop"]["proof_obligation"]["proof_artifact"] = "synthetic theorem, not a real proof"
+            data["strange_loop"]["proof_obligation"]["proof_artifact"] = {
+                "path": "lean/QLF_TensorConservativeReturn.lean",
+                "anchors": ["QLF.TensorConservativeReturn.tensor_conservative_return"],
+            }
         if component == "empirical":
             data["reported_agreement"]["comparison_type"] = "prospective"
             data["measurement_protocol"]["execution_status"] = "prospective_completed"
@@ -309,6 +312,19 @@ class ClaimRecordTests(unittest.TestCase):
         bad = copy.deepcopy(good)
         bad["strange_loop"]["proof_obligation"]["proof_artifact"] = "not yet supplied"
         self.rejects(bad)
+
+    def test_proved_return_rejects_missing_or_unreviewed_artifact(self) -> None:
+        good = self.promoted("bridge")
+        validator.validate_claim_record(good, Path("synthetic.json"))
+        for artifact in (
+            "synthetic theorem, not a real proof",
+            {"path": "does/not/exist.lean", "anchors": ["QLF.TensorConservativeReturn.tensor_conservative_return"]},
+            {"path": "lean/QLF_TensorConservativeReturn.lean", "anchors": ["QLF.Does.not_exist"]},
+        ):
+            with self.subTest(artifact=artifact):
+                bad = copy.deepcopy(good)
+                bad["strange_loop"]["proof_obligation"]["proof_artifact"] = artifact
+                self.rejects(bad)
 
 
 if __name__ == "__main__":

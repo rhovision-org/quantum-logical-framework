@@ -70,6 +70,7 @@ import QLF_Tsirelson
 import QLF_Mass
 import QLF_DiracWalk
 import QLF_BornFromWays
+import QLF_FirstReturn
 import QLF_GaugeAxis
 import QLF_LocalGauge
 import QLF_LatticeGauge
@@ -642,3 +643,4 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TensorConservativeReturn.class_of_step
 #print axioms QLF.TensorConservativeReturn.F_injective
 #print axioms QLF.TensorConservativeReturn.R_forward
+#print axioms QLF.FirstReturn.prime_event_reciprocal_open

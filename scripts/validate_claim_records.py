@@ -66,6 +66,61 @@ def _text(value: object, label: str) -> None:
     _require(isinstance(value, str) and bool(value.strip()), f"{label}: expected non-empty text")
 
 
+def _audit_anchors(root: Path) -> set[str]:
+    """Qualified #print axioms names currently reviewed in the audit file."""
+    audit = root / "lean" / "QLF_AxiomAudit.lean"
+    _require(audit.is_file(), "proof artifact: lean/QLF_AxiomAudit.lean is missing")
+    text = audit.read_text(encoding="utf-8")
+    return set(re.findall(r"^\s*#print axioms\s+([A-Za-z_][A-Za-z_0-9.']*)\s*$", text, re.MULTILINE))
+
+
+def _validate_proof_artifact(value: object, label: str, status: str, root: Path) -> None:
+    """Require a real repository artifact for a PROVED return.
+
+    A PROVED obligation must use the structured form
+    ``{path: lean/File.lean, anchors: [QLF...]}``. The path must exist and every
+    anchor must be in the reviewed audit/baseline. PARTIAL/NOT_STARTED records
+    may keep descriptive text, but a leading Lean path is still existence-checked.
+    """
+    root = root.resolve()
+    if isinstance(value, dict):
+        _object(value, label, {"path", "anchors"}, exact=True)
+        _text(value["path"], f"{label}.path")
+        anchors = _texts(value["anchors"], f"{label}.anchors")
+        relative = Path(value["path"])
+        _require(not relative.is_absolute() and ".." not in relative.parts,
+                 f"{label}: proof path must be repository-relative")
+        _require(relative.parts and relative.parts[0] == "lean" and relative.suffix == ".lean",
+                 f"{label}: proof path must be a lean/*.lean file")
+        target = (root / relative).resolve()
+        _require(root in target.parents and target.is_file(),
+                 f"{label}: proof path does not exist: {relative}")
+        audit = _audit_anchors(root)
+        baseline_path = root / "lean" / "axiom_footprints.expected.json"
+        _require(baseline_path.is_file(), f"{label}: exact-footprint baseline is missing")
+        baseline = set(json.loads(baseline_path.read_text(encoding="utf-8")))
+        for anchor in anchors:
+            _require(ANCHOR.fullmatch(anchor) is not None, f"{label}: invalid anchor {anchor!r}")
+            _require(anchor in audit, f"{label}: anchor is not in QLF_AxiomAudit: {anchor}")
+            _require(anchor in baseline, f"{label}: anchor is not in the reviewed exact-footprint baseline: {anchor}")
+        return
+
+    _text(value, label)
+    if status == "PROVED":
+        raise ValidationError(
+            f"{label}: PROVED return requires structured {{path, anchors}}, not a free-text artifact"
+        )
+    # Descriptive PARTIAL strings may start with a real Lean file; check existence.
+    prefix = value.split(" (", 1)[0].strip()
+    if prefix.startswith("lean/") and prefix.endswith(".lean"):
+        relative = Path(prefix)
+        _require(not relative.is_absolute() and ".." not in relative.parts,
+                 f"{label}: proof path must be repository-relative")
+        target = (root / relative).resolve()
+        _require(root in target.parents and target.is_file(),
+                 f"{label}: proof path does not exist: {relative}")
+
+
 def _object(value: object, label: str, required: set[str], *, exact: bool = False) -> dict:
     _require(isinstance(value, dict), f"{label}: expected an object")
     _require(required <= set(value), f"{label}: missing fields {sorted(required - set(value))}")
@@ -134,7 +189,7 @@ def _receipt(data: dict, gates: dict, path: Path) -> dict | None:
     return receipt
 
 
-def validate_claim_record(data: dict, path: Path) -> None:
+def validate_claim_record(data: dict, path: Path, *, repository_root: Path = ROOT) -> None:
     _object(data, str(path), CLAIM_FIELDS, exact=True)
     _require(data["record_type"] == "claim", f"{path}: record_type must be claim")
     _metadata(data, path)
@@ -214,17 +269,18 @@ def validate_claim_record(data: dict, path: Path) -> None:
             loop["proof_obligation"], f"{path}.strange_loop.proof_obligation",
             PROOF_OBLIGATION_FIELDS, exact=True,
         )
-        for key in PROOF_OBLIGATION_FIELDS:
+        for key in PROOF_OBLIGATION_FIELDS - {"proof_artifact"}:
             _text(obligation[key], f"{path}.strange_loop.proof_obligation.{key}")
         _require(
             obligation["conservative_return_status"] in PROOF_OBLIGATION_STATUSES,
             f"{path}: invalid conservative_return_status",
         )
-        if obligation["conservative_return_status"] == "PROVED":
-            _require(
-                obligation["proof_artifact"].strip().lower() not in {"none", "not yet supplied", "n/a"},
-                f"{path}: PROVED return requires a proof artifact",
-            )
+        _validate_proof_artifact(
+            obligation["proof_artifact"],
+            f"{path}.strange_loop.proof_obligation.proof_artifact",
+            obligation["conservative_return_status"],
+            repository_root,
+        )
         if loop["status"] == "TESTED":
             _require(
                 obligation["conservative_return_status"] == "PROVED",
@@ -329,7 +385,7 @@ def validate_directory(directory: Path, *, repository_root: Path = ROOT) -> list
             _require(isinstance(data, dict), f"{path}: top level must be an object")
             kind = data.get("record_type")
             if kind == "claim":
-                validate_claim_record(data, path)
+                validate_claim_record(data, path, repository_root=repository_root)
             elif kind == "test_ledger":
                 validate_kill_conditions(data, path)
             else:

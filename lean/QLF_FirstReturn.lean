@@ -100,6 +100,28 @@ theorem prime_prefix_exists (h : List Twist) (hb : countBalanced h) (hL : 0 < h.
     intro hbal
     exact Nat.find_min hex hklt ⟨hk0, hbal⟩
 
+/-- **Prime event reciprocal openness.** If a prime (first closure) splits at a
+    nontrivial cut into two nonempty halves, neither half closes on its own: the
+    closure is shared between them. This is the formal core of the event-level
+    "open half + open half + shared closure" reading in `Strange_Loops.md` §2A;
+    the request/listener language remains interpretation. -/
+theorem prime_event_reciprocal_open {A B : List Twist}
+    (hp : IsPrime (A ++ B)) (hA : 0 < A.length) (hB : 0 < B.length) :
+    ¬ countBalanced A ∧ ¬ countBalanced B := by
+  have hBal : countBalanced (A ++ B) := hp.2.1
+  have hProper : A.length < (A ++ B).length := by
+    simp [List.length_append]
+    omega
+  have hAopen : ¬ countBalanced A := by
+    have hnot := hp.2.2 A.length hProper hA
+    simpa [List.take_left] using hnot
+  refine ⟨hAopen, ?_⟩
+  intro hBc
+  apply hAopen
+  unfold countBalanced at hBal hBc ⊢
+  simp only [List.count_append] at hBal hBc ⊢
+  omega
+
 -- ==========================================
 -- The per-closure-length fiber, then the sum over closure lengths
 -- ==========================================

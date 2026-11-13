@@ -61,7 +61,7 @@ nulls that could fail.
 
 ## Related formal developments (not physical claims)
 
-The current 343-anchor baseline also covers three formal developments that are **not**
+The current 344-anchor baseline also covers four formal developments that are **not**
 rows in the physical-claims table and do not have physical `E` status:
 
 - **Metric singlet / lattice Einstein equations** (PR #225; 5 anchors; three
@@ -74,13 +74,17 @@ rows in the physical-claims table and do not have physical `E` status:
   isolated imbalance are `F` as formal statements. Physical selection, a
   detector/apparatus map, and empirical adequacy remain `B-OPEN`/not established.
   See `Manifestation.md`.
+- **Prime reciprocal closure** (`QLF.FirstReturn.prime_event_reciprocal_open`, 1 anchor).
+  If a prime event splits at a nontrivial cut into nonempty `A` and `B`, neither half
+  closes on its own; the closure is shared. This is formal `F` for the event-level
+  reciprocal-openness lemma. The request/listener language remains `B-OPEN`.
 - **Tensor product / independent composition** (`QLF_TensorFromClosure`). The
   tensor product is derived from independent-body premises, not assumed for the
   independent sector: `composite_is_tensor`, `tensorEquiv`,
   `n_composite_is_tensor`, `nTensorEquiv`. This is formal `F` for the
   representation. The conservative return on closure classes is
   now proved as `tensor_conservative_return` / `tensorTrigger_exists` in
-  `QLF_TensorConservativeReturn` (in the 343-anchor baseline). It proves
+  `QLF_TensorConservativeReturn` (in the 344-anchor baseline). It proves
   coherence of the quotient return; it does not show that the quotient is the
   physically selected closure equivalence. `pair_scalar_ambiguity` shows why the
   raw factor pair cannot be returned. The tensor bridge remains near-complete,

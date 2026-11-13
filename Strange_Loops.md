@@ -41,7 +41,7 @@ The full ladder is in [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §1, 
 
 ### Why the loop is not vicious
 
-The safeguard is **conservativity**. The finitary content provable with the continuum apparatus is already provable in the `RCA₀` base; `WKL₀` is conservative for `Π⁰₂` statements (Friedman/Harrington). Using Mathlib's rendered algebra to certify a finitary substrate fact therefore proves nothing the computable base did not already prove. The slogan is: **borrow the pen, re-derive the ink.**
+The safeguard is **conservativity**. The finitary content provable with the continuum apparatus is already provable in the `RCA₀` base. Precisely: Harrington gives `WKL₀` as `Π¹₁`-conservative over `RCA₀`; separately, the Friedman/Parsons results give `RCA₀` as `Π⁰₂`-conservative over `PRA`, so `WKL₀` inherits the corresponding first-order conservativity. The exact statement matters because conservativity is the philosophical backbone of this section. Using Mathlib's rendered algebra to certify a finitary substrate fact therefore proves nothing the computable base did not already prove. The slogan is: **borrow the pen, re-derive the ink.**
 
 Two further qualifications keep this honest:
 
@@ -52,9 +52,9 @@ The loop is therefore a **self-consistent fixed point**: the verifier is an inst
 
 ---
 
-## 2A. The primitive event: mutual satisfaction, not recursion
+## 2A. Primitive reciprocal closure: the event-level precursor to a strange loop
 
-A single event does not become a strange loop merely because it closes. The loop appears when the event is read as **two incomplete perspectives that mutually satisfy one another**.
+A single event does not become a strange loop merely because it closes. The event is better read as **two incomplete perspectives that mutually satisfy one another**; this is the event-level precursor to a strange loop, not yet a demonstrated level-crossing return. The full strange-loop label requires typed levels and a conservative return, which §3A–§3B add.
 
 Let `A` and `B` be open actions or histories, `∘` their composition, and `Z` the ZFA free-action functional. (`Z` is used here to avoid confusing the closure functional with the forward map `F` used elsewhere.) The primitive reading is:
 
@@ -133,13 +133,23 @@ The analogy is suggestive, not a derivation. It is a `B-OPEN` reading of the sam
 
 ### 2A.5 Status
 
-**Formal/toy:** the `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger` shape, `no_event_cycle`, and the possibility-algebra results (`loopWorld_has_time_loop`, `no_time_loops_from_logic`, `loop_same_facts`, `logical_world_globally_hyperbolic`).
+**Formal/toy:** the `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger` shape, `no_event_cycle`, the possibility-algebra results (`loopWorld_has_time_loop`, `no_time_loops_from_logic`, `loop_same_facts`, `logical_world_globally_hyperbolic`), and the new prime-closure theorem `QLF.FirstReturn.prime_event_reciprocal_open` (in the 344-anchor baseline): if a prime event splits at a nontrivial cut into nonempty `A` and `B`, neither half closes on its own. That is the formal core of “open half + open half + shared closure.”
 
-**`B-OPEN`:** the claim that every realized event has this reciprocal structure; the identification of the listening condition with a physical request; the reading of consciousness as a higher-order closure of this primitive loop.
+**`B-OPEN`:** the claim that *every* realized event has this reciprocal structure; the identification of the listening condition with a physical request; the reading of consciousness as a higher-order closure of this primitive loop.
 
 **`E`:** none.
 
 **Falsifiers / defeaters:** an event that cannot be decomposed into mutually listening open actions; a closure whose completion condition is supplied only externally; or a reading that requires a realized event-time loop.
+
+The three return strengths are deliberately separate:
+
+```
+reciprocal closure:       A + B -> C
+representational return:  C -> F(C) -> C / ~
+self-model return:        S -> M(S,S) -> S / ~_c
+```
+
+The first has a formal prime-closure core (`prime_event_reciprocal_open`). The second is the tensor quotient result (`tensor_conservative_return`). The third is the observer/self-knowledge target in §3B, still `NOT_STARTED`.
 
 The observer loop in §3A is a higher-order closure of this form, not a consequence proved here.
 
@@ -167,17 +177,18 @@ Listen_A  |  Trigger_B  ->  E_AB
 when `B ∈ L(A)` and `A ∈ L(B)`, i.e. `Z(A ∘ B) = 0`. The event is a **successful capability match
 producing closure**, not one object mechanically causing another.
 
-### 2B.2 The name is the capability; read/write are its polarities
+### 2B.2 Protected names and read/write polarity
 
 The stronger formulation is not “a listener is a capability and a trigger is a capability.” It is:
 
-> **A name is the capability to participate in a relation; read and write authority provide its
-> listener and trigger polarities.**
+> **An unforgeable or otherwise protected name can serve as a capability; bundle polarity
+> attenuates that capability into receive/read or send/write authority.**
 
-Rholang's bundle system is suggestive here: `bundle-{P}` restricts to read authority, `bundle+{P}`
-to write authority, `bundle0{P}` to neither, and ordinary `bundle{P}` retains both. The channel name
-connects the complementary authorities. The QLF analogue is the conjugate pair `t ↔ t†`: neither
-polarity alone is the complete event; their compatible interaction is.
+Rholang separately distinguishes fresh unforgeable names and bundle restrictions. Its bundle system is
+suggestive here: `bundle-{P}` gives read-only authority, `bundle+{P}` write-only authority,
+`bundle0{P}` neither, and ordinary `bundle{P}` both. The channel name connects the complementary
+authorities. The QLF analogue is the conjugate pair `t ↔ t†`: neither polarity alone is the complete
+event; their compatible interaction is.
 
 ### 2B.3 The event is the rendezvous, not either participant
 
@@ -214,10 +225,11 @@ QLF writes the condition as `Σ_i Z_i = 0`; the process calculus writes it as �
 communications present.” **Join matching may be the computational analogue of ZFA closure.** That is a
 conjecture about form, not an identity theorem.
 
-### 2B.5 No external scheduler
+### 2B.5 No semantically privileged external scheduler
 
-Capability/process calculi do not require an external controller that notices a command and then
-executes an event. The authority to participate is carried in the communicating names themselves.
+Capability/process calculi do not require a semantically privileged external controller that notices a
+command and then executes an event. (A runtime may still choose an implementation schedule; the
+reduction rule does not privilege one.) The authority to participate is carried in the communicating names themselves.
 Instead of:
 
 ```
@@ -305,13 +317,13 @@ QLF and a fixed presentation of pure reflective ρ-calculus. In particular, the 
 
 1. a fixed ρ-calculus syntax and operational semantics paired with a QLF history/action syntax;
 2. a map `Φ` from QLF histories/actions to ρ-processes, and a partial return `Ψ`;
-3. a theorem that `Z(A ∘ B) = 0` corresponds to a ρ-reduction `P | Q -> P'` (soundness);
-4. a converse theorem that every relevant ρ-reduction has a QLF closure preimage (completeness);
+3. binary soundness: `Close(A,B)` implies `Φ(A) | Φ(B) →* P'` with the specified success predicate;
+4. binary completeness: every successful `Φ(A) | Φ(B)` reduction has open halves `A' ~ A`, `B' ~ B` with `Close(A',B')`;
 5. preservation of parallel composition, join, restriction, replication, quote/drop reflection, and
    read/write polarity;
 6. a bisimulation or conservative-extension result showing the translation adds no closures and loses no
    relevant ones;
-7. a no-scheduler / no-event-time-loop theorem for the translated system.
+7. a no-semantically-privileged-scheduler / no-event-time-loop theorem for the translated system.
 
 What exists is weaker:
 
@@ -326,22 +338,34 @@ None of these proves an embedding, equivalence, or completeness theorem. The cor
 
 ### 2B.10 Target: `RhoCorrespondence`
 
-A complete relation would be a theorem (or pair of theorems) of roughly this shape:
+The central theorem must be binary, not merely “a closed history reduces.” Write:
+
+```
+Close(A,B)  :=  Z(A ∘ B) = 0
+P ↓         :=  ∃ P', P →* P' ∧ Success(P')      (eventual success)
+```
+
+with `Success(P')` and the residual process specified. Then:
 
 ```
 RhoCorrespondence:
   Φ : QLF.History → Rho.Process
   Ψ : Rho.Process → Option QLF.History        (partial return)
-  soundness   : Z(h) = 0 → Φ(h) ↓
-  completeness: Φ(h) ↓ → ∃ h', h ~ h' ∧ Z(h') = 0
+  soundness   : Close(A,B) → Φ(A) | Φ(B) →* P' ∧ Success(P')
+  completeness: Φ(A) | Φ(B) →* P' ∧ Success(P')
+                  → ∃ A' ~ A, B' ~ B, Close(A',B')
+  return      : Ψ(P') = [A ∘ B]_~
+  join        : Close(A₁,…,Aₙ) ↔ Join(Φ A₁,…,Φ Aₙ) fires
   reflection  : Φ(@P) = quote(Φ(P)),  Φ(*P) = drop(Φ(P))
-  join        : Z(Σ_i h_i) = 0 ↔ join context fires
   conservativity: Φ adds no closures and loses no closure-relevant facts
 ```
 
-The precise statements, domain restrictions, and bisimulation choice are in
+`↓` is eventual success after finitely many reductions—not one step, not weak termination, and not “some
+process anywhere reduces.” The binary completeness clause is what prevents a process from succeeding
+for an unrelated reason. The precise statements, domain restrictions, residual predicate and
+bisimulation choice are in
 [`verification/strange-loop/rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md).
-This target is **`NOT_STARTED`** and is not in the 343-anchor baseline.
+This target is **`NOT_STARTED`** and is not in the 344-anchor baseline.
 
 ### 2B.11 QKB (PR #216) as a candidate listener/trigger realization
 
@@ -374,7 +398,7 @@ seed/context can name the KB's own records and query process; answers that can m
 own capability set under a stated authority; a conservative return to the KB's finite records; and a
 machine-checked correspondence theorem. Those are `NOT_STARTED`.
 
-`PR #216` is an **open draft**, not part of the 343-anchor baseline and not audited here. This section
+`PR #216` is an **open draft**, not part of the 344-anchor baseline and not audited here. This section
 is a cross-link and a target, not a promotion.
 
 ### 2B.12 Is a QKB query itself a strange loop?
@@ -429,11 +453,15 @@ So the correct statement is:
 
 The concrete target remains `RhoCorrespondence` in §2B.10, plus the self-query obligation in
 [`verification/strange-loop/rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md).
-Both are `NOT_STARTED` and outside the 343-anchor baseline.
+Both are `NOT_STARTED` and outside the 344-anchor baseline.
 
 ## 3. Observer loops are not time loops
 
-The observer/consciousness layer has the same shape. An observer is a finite, terminating, self-referential **Markov blanket**: it models itself, its environment, and their interaction, and its ZFA closures synthesize its local time and world. The relevant documents are [`Philosophy.md`](Philosophy.md) §3d, [`Time.md`](Time.md) §7a, [`Hadrons_Markov_Blankets.md`](Hadrons_Markov_Blankets.md), and [`Consciousness.md`](Consciousness.md).
+The observer/consciousness layer has the same proposed shape. The proposed QLF observer is a finite
+Markov-blanketed system whose interior may construct a model of its environment, its boundary, and
+eventually itself; its ZFA closures synthesize its local time and world. A Markov blanket alone does
+not entail a self-model—the stronger identification is exactly the `SelfKnowledgeBisimulation` target
+in §3B. The relevant documents are [`Philosophy.md`](Philosophy.md) §3d, [`Time.md`](Time.md) §7a, [`Hadrons_Markov_Blankets.md`](Hadrons_Markov_Blankets.md), and [`Consciousness.md`](Consciousness.md).
 
 The crucial distinction is between **possibility** and **record**:
 
@@ -759,7 +787,7 @@ Any one of these, if proved under the §6.1 interface, would constitute support.
 
 ### 6.3 Minimal next proofs
 
-1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (generic two-element interface) and strengthened in `QLF_ConservativeReturn.lean`, which maps a formal count/phase object to a net-zero twist history and proves `R ∘ F = id`, closure, and count/phase recovery. Both are no-Mathlib/no-axiom and now anchored in the 343-anchor baseline; the claim record remains `PARTIAL` because this is a toy, not the actual operational bridge.
+1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (generic two-element interface) and strengthened in `QLF_ConservativeReturn.lean`, which maps a formal count/phase object to a net-zero twist history and proves `R ∘ F = id`, closure, and count/phase recovery. Both are no-Mathlib/no-axiom and now anchored in the 344-anchor baseline; the claim record remains `PARTIAL` because this is a toy, not the actual operational bridge.
 2. **An instantiation for the Born uniqueness theorem** — **partial**: `QLF_StrangeLoopBorn.lean` proves the finite unit-way return on the existing `QLF_BornFromWays` register; the physical refinement remains open.
 3. **One blinded numerical check** whose protocol is committed before the numbers are looked up — three-polarizer or α residual. The three-polarizer protocol draft is [`verification/strange-loop/blinded_protocol.md`](verification/strange-loop/blinded_protocol.md); it is `AWAITING_DATA`, not executed.
 
@@ -831,7 +859,7 @@ and proves `tensor_conservative_return` / `tensorTrigger_exists`. `class_of_step
 shows that interleaving moves land in the same class. This proves the **coherence
 of the quotient return**, not that the quotient is the physically selected
 closure equivalence, and not the entangled-sector return. It is in the
-343-anchor baseline.
+344-anchor baseline.
 
 For the entangled sector the hierarchy is:
 
@@ -881,14 +909,14 @@ The result is deliberately negative: a pure MO2 meet walk gives `0` (it blocks a
 
 **Already in place:**
 
-- 343-anchor Lean baseline (post-#224/#225/#226/#230), including 17 MO2 and 18 QuantumLogic anchors, 5 metric/lattice anchors, 12 Manifestation anchors, and 24 conservative-return/tensor-return anchors.
+- 344-anchor Lean baseline (post-#224/#225/#226/#230), including 17 MO2 and 18 QuantumLogic anchors, 5 metric/lattice anchors, 12 Manifestation anchors, and 25 conservative-return/tensor-return/prime-closure anchors.
 - Complete finite MO2 enumeration: 15 comparable pairs, 36/36 orthomodular implications (15 non-vacuous), 24 distributivity failures in each direction; all 19 lattice checks pass.
 - α leading value `137`, formal comparator-residual band `(1/64, 0.04814)`, reported structural `137.032`, 0.026% leading agreement.
 - `m_p/m_e = 6π⁵`, one-loop `g−2` form, and the other reported entries in Paper I Table 1.
 - Born finite uniqueness on Gaussian integers; no continuum or Gleason continuity step.
-- `QLF_StrangeLoop.lean` — toy two-element conservative-return interface, no Mathlib/no axioms; in the 343 baseline.
-- `QLF_ConservativeReturn.lean` — toy formal → net-zero twist history return with count/phase recovery, trigger/quotient structures and no-event-cycle; no Mathlib/no axioms; in the 343 baseline.
-- `QLF_StrangeLoopBorn.lean` — finite unit-way Born return on the existing Gaussian-integer register; in the 343 baseline; physical refinement still `B-OPEN`.
+- `QLF_StrangeLoop.lean` — toy two-element conservative-return interface, no Mathlib/no axioms; in the 344 baseline.
+- `QLF_ConservativeReturn.lean` — toy formal → net-zero twist history return with count/phase recovery, trigger/quotient structures and no-event-cycle; no Mathlib/no axioms; in the 344 baseline.
+- `QLF_StrangeLoopBorn.lean` — finite unit-way Born return on the existing Gaussian-integer register; in the 344 baseline; physical refinement still `B-OPEN`.
 - `no_time_loops_from_logic` and `loop_same_facts` for realized histories; loops in the reversible possibility algebra.
 
 **What would materially strengthen the claim:**
@@ -978,7 +1006,7 @@ narrower: **the method now specifies what such a test would have to return.**
 - [`Alpha.md`](Alpha.md) — the α derivation programme and its honest scope.
 - [`SPARC.md`](SPARC.md) — the retrospective benchmark and its limits.
 - [`Claim_Status.md`](Claim_Status.md) — the human-readable claim ledger.
-- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` is proved in `QLF_TensorConservativeReturn` (in the 343 baseline).
+- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` is proved in `QLF_TensorConservativeReturn` (in the 344 baseline).
 - [`verification/strange-loop/tensor_return_target.md`](verification/strange-loop/tensor_return_target.md) — the explicit `TensorConservativeReturn` target, now `PROVED` as a quotient construction; physical selection remains open.
 - [`lean/QLF_ConservativeReturn.lean`](lean/QLF_ConservativeReturn.lean) — `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger`, the toy return and `no_event_cycle`.
 - [`Proof_to_Physics.md`](Proof_to_Physics.md) — G3 and the bridge registry.

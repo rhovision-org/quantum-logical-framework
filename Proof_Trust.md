@@ -70,9 +70,9 @@ any earlier set:
   `QLF.LatticeDivergence` theorems, bringing the baseline to **307**.
 - **PR #226** added twelve `QLF.Manifestation` anchors, bringing the baseline
   to **319**.
-- **PR #230** added twenty-four conservative-return and tensor-return anchors
-  (StrangeLoop 7, finite Born 3, ConservativeReturn 9, tensor quotient 5),
-  bringing the baseline to **343**. The current exact-footprint gate is 343 entries.
+- **PR #230** added twenty-five conservative-return, tensor-return and prime-closure anchors
+  (StrangeLoop 7, finite Born 3, ConservativeReturn 9, tensor quotient 5, prime closure 1),
+  bringing the baseline to **344**. The current exact-footprint gate is 344 entries.
 
 The original Lean build and separate 302-report audit ran in project CI at
 `41182f7` (test merge `8cf63f3`). The reviewed source preserves all Lean/build

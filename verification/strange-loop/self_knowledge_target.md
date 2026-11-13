@@ -70,7 +70,7 @@ Obligations:
 
 QKB's `ask`/`answer`/`solve` can be read as one transition system. It is a candidate listener/trigger
 layer, not a self-model: its questions are first-order, it has no quote/drop self-query, and it has no
-belief-revision layer. PR #216 is an open draft and is not in the 343-anchor baseline.
+belief-revision layer. PR #216 is an open draft and is not in the 344-anchor baseline.
 
 ## Current artifacts
 

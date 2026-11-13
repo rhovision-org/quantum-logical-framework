@@ -27,13 +27,14 @@ The tensor-product return target is specified in [`tensor_return_target.md`](ten
 | Target | Status | What it would establish |
 |---|---|---|
 | [`tensor_return_target.md`](tensor_return_target.md) | **PROVED** (quotient construction) | `R ∘ F = id` on tensor-image closure classes; physical selection open |
+| `QLF.FirstReturn.prime_event_reciprocal_open` | **PROVED** (1 anchor) | A nontrivial split of a prime event has two open halves sharing the closure; request/listener language remains interpretation |
 | [`rho_correspondence_target.md`](rho_correspondence_target.md) | **NOT_STARTED** | QLF ↔ pure reflective ρ-calculus: `Φ`/`Ψ`, soundness, completeness, join, reflection, conservativity, self-query |
 | [`self_knowledge_target.md`](self_knowledge_target.md) | **NOT_STARTED** | Active-inference update `U` plus self-knowledge as a bisimulation `M ~_c S|_c`, with update preservation and conservative return |
 | [`blinded_protocol.md`](blinded_protocol.md) | **AWAITING_DATA** | Three-polarizer protocol; no result claimed |
 
 The event/observer/ρ discussion is in [`Strange_Loops.md`](../../Strange_Loops.md) §2A–§3B.
 
-All four files build in project CI and are now in the **343-anchor reviewed baseline**. The claim-record proof status remains `PARTIAL`, not `PROVED`, because these are toy/quotient witnesses, not the actual operational bridges; `TESTED` still requires the real map plus a reviewed artifact.
+All four files build in project CI and are now in the **344-anchor reviewed baseline**. The claim-record proof status remains `PARTIAL`, not `PROVED`, because these are toy/quotient witnesses, not the actual operational bridges; `TESTED` still requires the real map plus a reviewed artifact.
 
 ## Run
 

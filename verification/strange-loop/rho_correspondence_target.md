@@ -7,19 +7,26 @@
 `Strange_Loops.md` §2B gives an explicit structural analogy between QLF events and reflective
 ρ-calculus/Rholang communication:
 
-- name = capability;
+- a protected/unforgeable name can serve as a capability;
 - read/write authority = listener/trigger polarities;
-- event = successful capability match producing closure;
+- a binary event = successful capability match producing closure;
 - join = multi-resource match;
 - quote/drop = behavior → name/capability → behavior.
 
 That analogy is not a formal embedding. This target states what a complete relation would have to prove.
+The central object is **binary**: a closed history alone is too weak, because a process might reduce for
+an unrelated reason. The theorem must connect *two complementary open actions* to one communication.
 
 ## Fixed sides
 
 **QLF side.** Histories `H`, open actions/histories `A, B`, composition `∘`, free-action functional
-`Z : H → ℕ` (or the appropriate algebraic codomain), closure predicate `Z(h) = 0`, and the physical
-closure equivalence `~` used by the claim records.
+`Z : H → ℕ` (or the appropriate algebraic codomain), and the closure predicate
+
+```
+Close(A, B)  :=  Z(A ∘ B) = 0.
+```
+
+The physical closure equivalence is `~`.
 
 **ρ side.** A fixed presentation of pure reflective higher-order ρ-calculus: processes `P`, names `N`,
 nil `0`, parallel `P | Q`, input `for(ptrn <- n).P`, output `n!(Q)`, restriction `new n in P`,
@@ -30,27 +37,42 @@ programming-language illustration, not the formal target.
 
 ```
 Φ : QLF.History → Rho.Process
-Ψ : Rho.Process → Option QLF.History
+Ψ : Rho.Process → Option QLF.History        (partial return)
 ```
 
 `Φ` should be structure-preserving on the intended fragment; `Ψ` need not recover raw syntax, only the
 closure-relevant equivalence class (compare `TensorConservativeReturn`).
 
-## Obligations
+## Success and `↓`
 
-1. **Soundness.** If `Z(h) = 0`, then `Φ(h)` reduces to a completed/nil process (or the specified
-   success predicate).
-2. **Completeness.** If `Φ(h)` reaches the success predicate, then there is `h' ~ h` with `Z(h') = 0`.
-3. **Join.** `Z(Σ_i h_i) = 0` iff the corresponding join context fires with all required resources.
-4. **Reflection.** `Φ(@P)` and `Φ(*P)` correspond to quote/drop, with the same level-crossing behavior;
+The target must say exactly what “success” means. Define a predicate `Success(P)` on processes and write
+
+```
+P ↓  :=  ∃ P', P →* P' ∧ Success(P')
+```
+
+for **eventual** success after a finite number of reductions—not a single reduction, not mere weak
+termination, and not “some process anywhere can reduce.” The residual process and `Success` predicate
+are part of the specification. A separate one-step theorem is optional and would be stronger.
+
+## Core obligations
+
+1. **Binary soundness.** `Close(A, B) → ∃ P', Φ(A) | Φ(B) →* P' ∧ Success(P')`.
+2. **Binary completeness.** If `Φ(A) | Φ(B) →* P'` and `Success(P')`, then there exist `A' ~ A` and
+   `B' ~ B` with `Close(A', B')`. This rules out a reduction that succeeds for an unrelated reason.
+3. **Return.** `Ψ(P') = [A ∘ B]_~` on the closure-relevant quotient; `Ψ` is well-defined on the chosen
+   bisimulation class. The raw pair need not be recovered.
+4. **Join.** For open actions `A₁,…,Aₙ`,
+   `Close(A₁,…,Aₙ)` iff the corresponding join context fires with all required resources.
+5. **Reflection.** `Φ(@P)` and `Φ(*P)` correspond to quote/drop, with the same level-crossing behavior;
    no event-time loop is introduced.
-5. **Capability polarity.** Read and write authority map to listener and trigger roles; a single
-   authority alone is not an event.
-6. **Conservativity.** The translation adds no closures and loses no closure-relevant facts.
-7. **Bisimulation / equivalence.** State the equivalence (strong, weak, or a purpose-built closure
-   equivalence) and prove the relevant preservation result.
-8. **No scheduler.** The translation has no external scheduler; matching is internal to the process
-   configuration.
+6. **Capability polarity.** A protected name can serve as a capability; read and write authority
+   attenuate it into listener and trigger roles. A single authority alone is not a binary event.
+7. **Conservativity.** The translation adds no closures and loses no closure-relevant facts.
+8. **Bisimulation / equivalence.** State the equivalence (strong, weak, or a purpose-built closure
+   equivalence) and prove the relevant preservation result. The binary theorem must be stable under it.
+9. **No semantically privileged scheduler.** The reduction rule requires no privileged external
+   scheduler; an implementation may still choose a schedule.
 
 ## Why a formal connection is plausible
 
@@ -60,35 +82,28 @@ The finite QLF event layer is a good target for a ρ encoding:
 - a per-axis ZFA gate can be represented as a join over axis counters (QKB's `scan` is an executable
   sketch of this);
 - `ask`/`answer`/`solve` already has the listener/trigger/reduction shape at the knowledge level;
-- reflective ρ supplies quote/drop, which is the natural candidate for self-query.
+- reflective ρ supplies quote/drop, the natural candidate for self-query.
 
 This makes a formal connection **plausible**, not automatic.
 
 ## Universality is not adequacy
 
 A universal process calculus can encode both faithful and unfaithful translations. The existence of
-*some* encoding proves only expressiveness. A correspondence theorem still needs:
-
-- a specified encoding, not an arbitrary one;
-- soundness and completeness for the intended fragment;
-- preservation of join, restriction, replication, reflection and read/write polarity;
-- conservativity (no new closures, no lost closure-relevant facts);
-- a chosen bisimulation/equivalence and a proof of it;
-- a no-scheduler / no-event-time-loop result.
+*some* encoding proves only expressiveness. A correspondence theorem still needs the specified encoding,
+soundness/completeness, conservativity, a chosen bisimulation, and the no-scheduler result.
 
 ## Self-query obligation
 
 A QKB query is a rendezvous, not automatically a strange loop. For a self-query loop, add:
 
-9. **Self-query.** The question representation can name the KB's own state/query process, and the
-   answer can update the listener's future question/capability set under a stated authority.
-10. **Conservative self-return.** The self-model returns to the finite records on the closure-relevant
+10. **Self-query.** The question representation can name the KB's own state/query process, and the
+    answer can update the listener's future question/capability set under a stated authority.
+11. **Conservative self-return.** The self-model returns to the finite records on the closure-relevant
     equivalence class: `R(F(records)) ~ records`.
 
 Both are `NOT_STARTED`. The current QKB design is first-order and does not implement them.
 
 ## Non-goals
-
 
 - Proving that QLF is *the same as* Rholang or pure ρ-calculus.
 - Treating the Rholang bundle syntax as a formal semantics without a fixed presentation.
@@ -97,9 +112,10 @@ Both are `NOT_STARTED`. The current QKB design is first-order and does not imple
 
 ## Relation to the claim records
 
-This target is formal-only. It does not change any `bridge: B-OPEN` status, `strange_loop.status`, or the
-343-anchor baseline. Until the theorem exists and is reviewed, the ρ-calculus relation remains an
-explicit structural analogy, not a complete correspondence.
+This target is formal-only. It does not change `evidence_status.bridge = OPEN`, `strange_loop.status =
+B-OPEN`, the `G3 = INCOMPLETE` or `G5 = INCOMPLETE` gate outcomes, or the 344-anchor baseline. Until the
+theorem exists and is reviewed, the ρ-calculus relation remains an explicit structural analogy, not a
+complete correspondence.
 
 ## Current artifacts
 

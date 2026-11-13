@@ -6,8 +6,8 @@ validation, publication approval or a cryptographically signed third-party certi
 
 **Scope note (post-merge):** this receipt records the PR #224 **302-anchor**
 closure. PR #225 later added five anchors (baseline **307**), PR #226 added
-twelve (baseline **319**), and PR #230 added twenty-four conservative-return/
-tensor-return anchors (baseline **343**); those deltas are recorded in their PRs
+twelve (baseline **319**), and PR #230 added twenty-five conservative-return/
+tensor-return/prime-closure anchors (baseline **344**); those deltas are recorded in their PRs
 and in the current `lean/axiom_footprints.expected.json`. This receipt is not
 rewritten.
 

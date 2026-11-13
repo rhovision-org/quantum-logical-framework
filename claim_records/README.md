@@ -45,6 +45,13 @@ Each `strange_loop` also carries a `proof_obligation` object:
 **specification**, not a proof. A `TESTED` loop requires a `PROVED` conservative
 return and a real artifact; a `bridge: CLOSED` record requires a `TESTED` loop.
 
+For a `PROVED` return, `proof_artifact` must be the structured form
+`{"path": "lean/File.lean", "anchors": ["QLF.Namespace.theorem"]}`. The validator
+checks that the path exists and that every anchor appears in both
+`lean/QLF_AxiomAudit.lean` and `lean/axiom_footprints.expected.json`. A free-text
+artifact is accepted only for `PARTIAL`/`NOT_STARTED` obligations; a descriptive
+Lean path is still existence-checked.
+
 ## Component promotion policy
 
 All listed gates must be PASS; FAIL, INCONCLUSIVE, INCOMPLETE and
@@ -67,8 +74,11 @@ merely by flipping G3/G5 to PASS.
   conservative return or prospective test has not been constructed.
 - `INCONCLUSIVE` — a comparator exists but its result is ambiguous or fails to
   discriminate. Reserve this for that case, not for a missing bridge.
-- `B-OPEN` remains the bridge status; a `bridge: CLOSED` record requires
-  `TESTED` and a `PROVED` conservative return.
+- `evidence_status.bridge = OPEN` is the bridge status; `strange_loop.status =
+  B-OPEN` is the loop status. They are related but not interchangeable. A
+  `bridge: CLOSED` record requires `strange_loop.status = TESTED` and a
+  `PROVED` conservative return with a reviewed artifact. G3 and G5 are
+  `INCOMPLETE` for the current bridge records.
 
 The four bridge records currently read "first-order `F+N` / `N` / `F` established;
 return incomplete", not "nothing established". Reviewer tiers are `self`, `collaborator` and
