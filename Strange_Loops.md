@@ -145,9 +145,9 @@ The observer loop in §3A is a higher-order closure of this form, not a conseque
 
 ## 2B. The ρ-calculus analogy: capabilities, join and reflection
 
-The event-level picture has a close structural analogue in the ρ-calculus and Rholang. The analogy is
+The event-level picture has a structural analogue in the ρ-calculus and Rholang. The analogy is
 `B-OPEN`: it is a correspondence between forms, not a proof that ZFA closure is a ρ-reduction or that
-QLF is implemented in Rholang.
+QLF is implemented in Rholang. It is **explicit but not complete**.
 
 ### 2B.1 Listener and trigger as dual capabilities
 
@@ -297,6 +297,51 @@ provide process-algebra and bra-ket machinery; they do not prove the event corre
 
 The ontological reading—“reality consists not of objects that subsequently interact, but of
 capabilities whose compatible meetings are events”—is an interpretation, not a derived result.
+
+### 2B.9 Is the relation complete?
+
+**No.** The table is explicit about the intended correspondence, but it is not a formal relation between
+QLF and a fixed presentation of pure reflective ρ-calculus. In particular, the repository does not yet have:
+
+1. a fixed ρ-calculus syntax and operational semantics paired with a QLF history/action syntax;
+2. a map `Φ` from QLF histories/actions to ρ-processes, and a partial return `Ψ`;
+3. a theorem that `Z(A ∘ B) = 0` corresponds to a ρ-reduction `P | Q -> P'` (soundness);
+4. a converse theorem that every relevant ρ-reduction has a QLF closure preimage (completeness);
+5. preservation of parallel composition, join, restriction, replication, quote/drop reflection, and
+   read/write polarity;
+6. a bisimulation or conservative-extension result showing the translation adds no closures and loses no
+   relevant ones;
+7. a no-scheduler / no-event-time-loop theorem for the translated system.
+
+What exists is weaker:
+
+- `RhoQuCalc` supplies a ρ-style process algebra, Hermitian structure, and a machine-checked
+  `rho_process_always_zfa` property of the QLF encoding;
+- `BraKetRhoQuCalc` supplies the action/lift (send/receive) reading and ZFA balance;
+- `zfa-catalog-rho-notation.md` supplies a Rholang-style notation for ZFA closures;
+- this note supplies the structural correspondence table and the capability formulation.
+
+None of these proves an embedding, equivalence, or completeness theorem. The correct status is
+**explicit analogy, `B-OPEN`, target not started**—not “QLF is pure ρ-calculus.”
+
+### 2B.10 Target: `RhoCorrespondence`
+
+A complete relation would be a theorem (or pair of theorems) of roughly this shape:
+
+```
+RhoCorrespondence:
+  Φ : QLF.History → Rho.Process
+  Ψ : Rho.Process → Option QLF.History        (partial return)
+  soundness   : Z(h) = 0 → Φ(h) ↓
+  completeness: Φ(h) ↓ → ∃ h', h ~ h' ∧ Z(h') = 0
+  reflection  : Φ(@P) = quote(Φ(P)),  Φ(*P) = drop(Φ(P))
+  join        : Z(Σ_i h_i) = 0 ↔ join context fires
+  conservativity: Φ adds no closures and loses no closure-relevant facts
+```
+
+The precise statements, domain restrictions, and bisimulation choice are in
+[`verification/strange-loop/rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md).
+This target is **`NOT_STARTED`** and is not in the 343-anchor baseline.
 
 ## 3. Observer loops are not time loops
 
