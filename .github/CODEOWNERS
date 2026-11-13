@@ -9,6 +9,10 @@
 /Proof_Trust.md                      @aixaria0
 /Proof_to_Physics.md                 @aixaria0
 /ScientificApproach.md               @aixaria0
+/Strange_Loops.md                    @aixaria0
+/tools/strange_loop_observer.py       @aixaria0
+/verification/strange-loop/          @aixaria0
+/tests/test_strange_loop_observer.py @aixaria0
 /lean/QLF_AxiomAudit.lean            @aixaria0
 /lean/QLF_MO2.lean                   @aixaria0
 /lean/QLF_QuantumLogic.lean          @aixaria0

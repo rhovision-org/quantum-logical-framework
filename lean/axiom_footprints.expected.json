@@ -279,6 +279,17 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ConservativeReturn.F_closed": [],
+  "QLF.ConservativeReturn.F_invariants": [],
+  "QLF.ConservativeReturn.conservative_return": [],
+  "QLF.ConservativeReturn.count_recovered": [],
+  "QLF.ConservativeReturn.no_event_cycle": [
+    "propext"
+  ],
+  "QLF.ConservativeReturn.phase_recovered": [],
+  "QLF.ConservativeReturn.toyQuotientTrigger_exists": [],
+  "QLF.ConservativeReturn.toyTrigger_composite": [],
+  "QLF.ConservativeReturn.toyTrigger_exists": [],
   "QLF.CoupledEvolution.evolve_covariant": [
     "Classical.choice",
     "Quot.sound",
@@ -431,6 +442,11 @@
     "propext"
   ],
   "QLF.FieldEnergy.step_energy": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.FirstReturn.prime_event_reciprocal_open": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1218,6 +1234,61 @@
     "propext"
   ],
   "QLF.StationaryPhase.ways_mode_at_balance": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.StrangeLoop.F_preserves_compl": [],
+  "QLF.StrangeLoop.F_preserves_inf": [
+    "propext"
+  ],
+  "QLF.StrangeLoop.F_preserves_le": [
+    "propext"
+  ],
+  "QLF.StrangeLoop.F_preserves_sup": [
+    "propext"
+  ],
+  "QLF.StrangeLoop.R_preserves_le": [
+    "propext"
+  ],
+  "QLF.StrangeLoop.born_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.StrangeLoop.born_two_thirds_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.StrangeLoop.conservative_return": [],
+  "QLF.StrangeLoop.refinement_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.StrangeLoop.return_forward": [],
+  "QLF.TensorConservativeReturn.F_injective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorConservativeReturn.R_forward": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorConservativeReturn.class_of_step": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorConservativeReturn.tensorTrigger_exists": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TensorConservativeReturn.tensor_conservative_return": [
     "Classical.choice",
     "Quot.sound",
     "propext"

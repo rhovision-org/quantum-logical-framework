@@ -69,15 +69,18 @@ any earlier set:
 - **PR #225** added five anchors: three `QLF.MetricSinglet` and two
   `QLF.LatticeDivergence` theorems, bringing the baseline to **307**.
 - **PR #226** added twelve `QLF.Manifestation` anchors, bringing the baseline
-  to **319**. The current exact-footprint gate is 319 entries.
+  to **319**.
+- **PR #230** added twenty-five conservative-return, tensor-return and prime-closure anchors
+  (StrangeLoop 7, finite Born 3, ConservativeReturn 9, tensor quotient 5, prime closure 1),
+  bringing the baseline to **344**. The current exact-footprint gate is 344 entries.
 
 The original Lean build and separate 302-report audit ran in project CI at
 `41182f7` (test merge `8cf63f3`). The reviewed source preserves all Lean/build
 inputs byte-for-byte. The normalized original reports, deliberately recorded
 baseline delta, numerical runs and exact provenance are archived in
 [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/). That receipt is
-scoped to the 302-anchor #224 closure; the #225 and #226 deltas are recorded in
-their PRs and in the current baseline file.
+scoped to the 302-anchor #224 closure; the #225, #226 and #230 deltas are recorded
+in their PRs and in the current baseline file.
 The baseline regeneration was a reviewed operation outside CI. It is not an
 independent local Lean rebuild; the subsequent regression CI runs are identified
 separately in the PRs. A matching footprint establishes only the exact theorem

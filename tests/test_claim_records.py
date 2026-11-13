@@ -45,6 +45,12 @@ class ClaimRecordTests(unittest.TestCase):
             data["evidence_status"]["bridge"] = "CLOSED"
             for gate in validator.PROMOTION_GATES["bridge"]:
                 data["gate_outcomes"][gate]["status"] = "PASS"
+            data["strange_loop"]["status"] = "TESTED"
+            data["strange_loop"]["proof_obligation"]["conservative_return_status"] = "PROVED"
+            data["strange_loop"]["proof_obligation"]["proof_artifact"] = {
+                "path": "lean/QLF_TensorConservativeReturn.lean",
+                "anchors": ["QLF.TensorConservativeReturn.tensor_conservative_return"],
+            }
         if component == "empirical":
             data["reported_agreement"]["comparison_type"] = "prospective"
             data["measurement_protocol"]["execution_status"] = "prospective_completed"
@@ -65,7 +71,7 @@ class ClaimRecordTests(unittest.TestCase):
                  "empirical": {"G0", "G3", "G4", "G5", "G6"}, "bridge": {"G0", "G2", "G3", "G6"}}
         for component, gates in paths.items():
             for gate in gates:
-                for outcome in ("FAIL", "INCONCLUSIVE", "NOT_APPLICABLE"):
+                for outcome in ("FAIL", "INCONCLUSIVE", "INCOMPLETE", "NOT_APPLICABLE"):
                     with self.subTest(component=component, gate=gate, outcome=outcome):
                         bad = self.promoted(component)
                         bad["gate_outcomes"][gate]["status"] = outcome
@@ -265,6 +271,61 @@ class ClaimRecordTests(unittest.TestCase):
                 (directory / "bad.json").write_text(text)
                 with self.assertRaises(validator.ValidationError):
                     validator.validate_directory(directory)
+
+    def test_closed_bridge_requires_tested_strange_loop(self) -> None:
+        good = self.promoted("bridge")
+        validator.validate_claim_record(good, Path("synthetic.json"))
+        bad = copy.deepcopy(good)
+        bad["strange_loop"]["status"] = "B-OPEN"
+        self.rejects(bad)
+        bad = copy.deepcopy(good)
+        del bad["strange_loop"]
+        self.rejects(bad)
+
+    def test_strange_loop_requires_typed_levels_and_fields(self) -> None:
+        bad = copy.deepcopy(self.alpha)
+        bad["strange_loop"]["levels"] = ["only one level"]
+        self.rejects(bad)
+        for field in ("return_level", "conservative_return", "noncircularity_witness", "defeater"):
+            bad = copy.deepcopy(self.alpha)
+            del bad["strange_loop"][field]
+            self.rejects(bad)
+        bad = copy.deepcopy(self.alpha)
+        bad["strange_loop"]["status"] = "CLOSED"
+        self.rejects(bad)
+        bad = copy.deepcopy(self.alpha)
+        del bad["strange_loop"]["proof_obligation"]["domain"]
+        self.rejects(bad)
+        bad = copy.deepcopy(self.alpha)
+        bad["strange_loop"]["proof_obligation"]["conservative_return_status"] = "DONE"
+        self.rejects(bad)
+        bad = copy.deepcopy(self.alpha)
+        bad["strange_loop"]["first_order_evidence"] = "ESTABLISHED"
+        self.rejects(bad)
+
+    def test_tested_loop_requires_proved_return_obligation(self) -> None:
+        good = self.promoted("bridge")
+        validator.validate_claim_record(good, Path("synthetic.json"))
+        bad = copy.deepcopy(good)
+        bad["strange_loop"]["proof_obligation"]["conservative_return_status"] = "NOT_STARTED"
+        self.rejects(bad)
+        bad = copy.deepcopy(good)
+        bad["strange_loop"]["proof_obligation"]["proof_artifact"] = "not yet supplied"
+        self.rejects(bad)
+
+    def test_proved_return_rejects_missing_or_unreviewed_artifact(self) -> None:
+        good = self.promoted("bridge")
+        validator.validate_claim_record(good, Path("synthetic.json"))
+        for artifact in (
+            "synthetic theorem, not a real proof",
+            {"path": "does/not/exist.lean", "anchors": ["QLF.TensorConservativeReturn.tensor_conservative_return"]},
+            {"path": "lean/QLF_TensorConservativeReturn.lean", "anchors": ["QLF.Does.not_exist"]},
+            {"path": "lean/QLF_TensorConservativeReturn.lean", "anchors": ["QLF.FirstReturn.prime_event_reciprocal_open"]},
+        ):
+            with self.subTest(artifact=artifact):
+                bad = copy.deepcopy(good)
+                bad["strange_loop"]["proof_obligation"]["proof_artifact"] = artifact
+                self.rejects(bad)
 
 
 if __name__ == "__main__":

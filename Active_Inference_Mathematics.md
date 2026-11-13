@@ -4,6 +4,8 @@
 
 This document is the meta-level entry point to QLF's mathematical foundations. Specialized derivations live in their own docs; this one names the system, fixes its primitives, states its single rule, and inventories what's been done with honest scoping (derived / partial / open).
 
+**Scope note (13 November 2026).** The observer-level active-inference *update* and the self-knowledge *bisimulation* criterion are not formalized here. [`Strange_Loops.md`](Strange_Loops.md) §3B separates the candidate update `b_{t+1}=U(b_t,o_t,a_t)` and policy selection from the candidate bisimulation `M ~_c S|_c`; the target is [`verification/strange-loop/self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md), status `NOT_STARTED`. QKB (PR #216, open draft) is a listener/trigger candidate, not a belief-revision implementation. This document's FEP derivation remains at the informal status stated in [`Hierarchical_Control.md`](Hierarchical_Control.md) §3.4.
+
 ## 1. The framing
 
 Classical mathematics (ZFC) takes propositions to be true or false in a static platonic universe. Standard constructive mathematics (Bishop, Martin-Löf, Coquand) takes propositions to be proved or unproved by terminating algorithms. QLF takes a third view:

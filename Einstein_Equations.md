@@ -227,7 +227,7 @@ interval-volume machinery of CST, the `RCA₀ → Lorentzian-analytic` boundary 
 discrete flat baseline. So the curvature side now stands on the same footing as Riemann / Yang–Mills /
 Navier–Stokes: a machine-verified discrete core (the flat reading, the branching layer-growth, the
 Poisson kernel) and one explicit continuum bridge. The remaining substrate computation is assembling
-the full tensor `G_μν = 8πG T_μν` from the Benincasa–Dowker action and general `d ≥ 3`.
+the **full dynamical Einstein-tensor equation** `G_μν = 8πG T_μν` from the Benincasa–Dowker action and general `d ≥ 3`. The composition tensor product itself is already derived in [`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean); what remains here is the curvature/dynamics step, not the derivation of `M ⊗ M`.
 
 ---
 
@@ -320,7 +320,9 @@ conservation, are likewise explicit hypotheses of the main theorem.
 ([`QLF_LatticeCalculus`](lean/QLF_LatticeCalculus.lean)) and then on the full `ℤ⁴` lattice with the
 Minkowski signature (§6e). One arrow remains: `δQ = T δS ⟹ (R_ab − κ T_ab) k^a k^b = 0`, needing the local Rindler
 construction and Raychaudhuri focusing. That is now the *single* remaining substrate question for the
-field equations, rather than "the tensor derivation" as a whole.
+field equations, rather than the **full dynamical Einstein-tensor derivation** as a whole. The
+composition tensor product is derived in [`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean);
+it is not the open object here.
 
 ## §6d The middle arrow in two-body language: the metric is the singlet
 
@@ -338,10 +340,20 @@ two-body observable `Ŝ = Σ S_ab σ_a ⊗ σ_b` on `ℂ² ⊗ ℂ²`, the space
   integer probes of §6b are nine product states with Gaussian-integer amplitudes, e.g.
   `(5,3,4,0) = k(1+2i, −1+2i)`.
 
+The tensor representation used here is no longer an assumed quantum-mechanical composition rule.
+[`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean) derives it from independent closure
+composition, and [`QLF_TensorConservativeReturn`](lean/QLF_TensorConservativeReturn.lean) proves
+`R ∘ F = id` on the quotient defined by equality of tensor image (`tensor_conservative_return`).
+This establishes **representation coherence**. It does not prove that this quotient is the physically
+selected closure equivalence, nor that the entangled-sector return uniquely selects the metric
+singlet. Those remain bridge questions.
+
 This is the shape of rung 6 of entanglement primacy (`split_strong_iff_singlet`: the singlet is the
 unique state every shared strong pair fixes). Read together, the metric is the shared pair and the
-null directions are the unshared product states. **Scope:** this changes the *reading* of the middle
-arrow, not the count of open arrows. The first arrow (local Rindler + Raychaudhuri) remains open
+null directions are the unshared product states. **Scope:** the algebraic statement is proved; the
+stronger claim that this rank-2 Hilbert/tensor representation is exactly the GR metric because its
+return is the physically selected closure class remains a bridge. The tensor quotient proof changes
+the *reading* of the middle arrow, not the count of open arrows. The first arrow (local Rindler + Raychaudhuri) remains open
 (an instance of `DivergenceCalculus` is now built, §6e), and that `R_ab − κT_ab` is a two-body observable is a reading of the
 proven isomorphism, not a derivation of curvature.
 
@@ -375,6 +387,21 @@ first arrow is untouched.
 
 ---
 
+### The next GR-specific target: `CausalMetricConservativeReturn`
+
+The quotient return above is a coherence result for the tensor image. The physically important GR
+return is stronger:
+
+```
+closure causal order  →  g_μν  →  causal/null relation
+```
+
+The return should recover the *same* causal-order relation with which the construction began: the
+geometry reconstructed from closure data must not introduce new causal distinctions or erase existing
+ones. Call this target `CausalMetricConservativeReturn` (or `MetricConservativeReturn`). It is **not
+proved**. It is stronger than `tensor_conservative_return`, which only returns the tensor-image
+equivalence class.
+
 ## §7 Honest scope
 
 This anchors the **coefficient and the thermodynamic skeleton** — `8πG = 2π/η`, both inputs being QLF
@@ -382,8 +409,9 @@ substrate results, reproducing Jacobson's "Einstein equation of state," with `Λ
 integration constant = the local-clock tick. Status marker:
 [`einstein_equations_in_progress`](lean/QLF_EinsteinEquations.lean).
 
-It does **not** carry out the full **tensor** derivation — but that derivation now splits into three
-named arrows (§6b), of which the **algebraic middle one is closed with no axiom**: a symmetric tensor
+It does **not** carry out the **full dynamical Einstein curvature-tensor derivation** — but that
+derivation now splits into three named arrows (§6b), of which the **algebraic middle one is closed
+with no axiom**: a symmetric tensor
 annihilating the null cone is a metric multiple, forced by **nine integer lattice probes** rather than a
 continuum of null directions ([`QLF_NullTensorReconstruction`](lean/QLF_NullTensorReconstruction.lean)).
 The arrow *out* of it is closed too (§6c): contracted Bianchi plus conservation force `f = R/2 − Λ`
@@ -431,7 +459,7 @@ characterisation. Logic fixes no local term: `G`, `Λ` and `T` still come from t
 | `einstein_coupling` | `8πG` — the Einstein gravitational coupling |
 | `einstein_coupling_from_thermodynamics` | `8πG = 2π/η` — the coefficient as Unruh `2π` over entropy density (Jacobson) |
 | `einstein_coupling_geometric` | `8πG = (4π·2)G = 2π·(4G)` — the same `8π = 4π·2` |
-| `einstein_equations_in_progress` | status: coefficient + thermodynamic skeleton anchored; full tensor derivation open |
+| `einstein_equations_in_progress` | status: coefficient + thermodynamic skeleton anchored; full dynamical Einstein-tensor derivation open (the composition tensor product is derived separately in `QLF_TensorFromClosure`) |
 | `finite_null_probes_force_metric` | nine **integer** null probes force `S_ab = S.tt·diag(1,−1,−1,−1)` — Jacobson eqs. (5)→(6) without a continuum of null directions (§6b) |
 | `null_annihilator_iff_metric_multiple` | the null-cone annihilators are **exactly** the metric multiples (one-dimensional, spanned by `g`); nine lattice points decide membership |
 | `contract_metricMultiple` | `contract (f·g) v = f · interval v` — a metric multiple annihilates the whole null cone |
@@ -439,6 +467,7 @@ characterisation. Logic fixes no local term: `G`, `Λ` and `T` still come from t
 | `metric_is_singlet` | ([`QLF_MetricSinglet`](lean/QLF_MetricSinglet.lean)) `Σ η_ab σ_a⊗σ_b = 4|s⟩⟨s|`: the Minkowski metric is the singlet (§6d) |
 | `expect_twoBody` | a product state `ψ⊗ψ` reads a tensor on its null vector: `⟨ψψ|Ŝ|ψψ⟩ = 4 S_ab k^a k^b` |
 | `product_annihilator_iff_singlet` | the null-cone step as two-body algebra: vanishing on every product state ⟺ a multiple of the singlet |
+| `tensor_conservative_return` | ([`QLF_TensorConservativeReturn`](lean/QLF_TensorConservativeReturn.lean)) `R ∘ F = id` on tensor-image closure classes: representation coherence, not physical selection |
 | `DivergenceCalculus` | the `∇^a`/`∂_b` interface — the differential-geometry boundary as a **structure**, so no axiom is added (§6c) |
 | `scalar_multiple_is_curvature` | contracted Bianchi + conservation ⟹ `f = R/2 − Λ` with `Λ` **constant** (the integration step) |
 | `einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` — the field equations over the interface (§6c) |

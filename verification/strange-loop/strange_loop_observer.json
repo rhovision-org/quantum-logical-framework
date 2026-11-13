@@ -1,0 +1,74 @@
+{
+  "angles_deg": [
+    0,
+    45,
+    90
+  ],
+  "conclusion": "The pure MO2 meet walk gives 0, not 1/8: inf(az, ax) = bot. A re-preparation walk gives 1/8 only with uniform or Malus-supplied weights; the same lattice pass/block pattern with different weights gives a different transmission. The lattice alone therefore does not select the optical law; the operational map is the missing premise.",
+  "details": {
+    "blanket_first_two_stages": {
+      "passed_stages": 2,
+      "reason": "stage outside blanket",
+      "transmission": 0.25,
+      "unintegrated_at": 3
+    },
+    "operational_malus": {
+      "final_state": "azp",
+      "passed_stages": 3,
+      "reason": "operational re-preparation",
+      "transmission": 0.125
+    },
+    "pure_meet": {
+      "blocked_at": 2,
+      "passed_stages": 1,
+      "reason": "inf(az, ax) = bot",
+      "screen_element": "ax",
+      "state_before": "az",
+      "transmission": 0.0
+    },
+    "reprepare_biased_0_6": {
+      "final_state": "azp",
+      "passed_stages": 3,
+      "reason": "operational re-preparation",
+      "transmission": 0.216
+    },
+    "reprepare_uniform": {
+      "final_state": "azp",
+      "passed_stages": 3,
+      "reason": "operational re-preparation",
+      "transmission": 0.125
+    },
+    "self_reference": {
+      "final_state": "azp",
+      "fixed_point": true,
+      "reason": "a lattice state used as its own screen returns itself; this is a toy fixed point, not a physical bridge",
+      "returned_state": "azp"
+    }
+  },
+  "distinct_transmissions": [
+    0.0,
+    0.125,
+    0.216,
+    0.25
+  ],
+  "malus_weights": [
+    0.5,
+    0.5,
+    0.5
+  ],
+  "model": "finite MO2 / Markov-blanket toy",
+  "outputs": {
+    "blanket_first_two_stages": 0.25,
+    "operational_malus": 0.125,
+    "pure_meet": 0.0,
+    "reprepare_biased_0_6": 0.216,
+    "reprepare_uniform": 0.125
+  },
+  "scope": "underdetermination demonstration only; not QLF evidence, not a detector model, not a physical probability derivation",
+  "screen_elements": [
+    "az",
+    "ax",
+    "azp"
+  ],
+  "underdetermined": true
+}

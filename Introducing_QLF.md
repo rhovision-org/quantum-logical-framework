@@ -185,6 +185,7 @@ The fastest way in is the **flow chart** — the whole framework as a single lin
 From there:
 
 - **The big picture** — [Philosophy.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Philosophy.md) (the possibilist foundation) and the formal [White Paper](https://github.com/rhovision-org/quantum-logical-framework/blob/main/WHITE_PAPER.md).
+- **Strange loops and the bridge discipline** — [Strange_Loops.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md): why the two-phase mathematics loop is conservative, why observer self-reference is not a time loop, and why the Paper I bridges remain `B-OPEN` until a finite return is exhibited.
 - **Why does mathematics work, and why does it sometimes fail?** — [Unreasonable_Classical_Mathematics.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Unreasonable_Classical_Mathematics.md): Wigner's "unreasonable effectiveness" read both ways, with the paradoxes, infinities and choices that fail on one side of a single line.
 - **The flagship derivation** — [Alpha.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Alpha.md): the fine-structure constant from counting.
 - **Chaos and the Mandelbrot set from one rule** — [ZFA_DNA.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/ZFA_DNA.md): QuCalc strings as DNA, generating the set exactly.

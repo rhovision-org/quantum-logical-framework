@@ -320,5 +320,9 @@ lean_lib QLF where
     `QLF_LocalAreaLaw,
     `QLF_TensorFromClosure,
     `QLF_MetricSinglet, `QLF_LatticeDivergence,
-    `QLF_Manifestation
+    `QLF_Manifestation,
+    `QLF_StrangeLoop,
+    `QLF_StrangeLoopBorn,
+    `QLF_ConservativeReturn,
+    `QLF_TensorConservativeReturn
   ]

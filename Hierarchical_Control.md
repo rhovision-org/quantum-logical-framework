@@ -70,7 +70,7 @@ This derives [active_inference.md](active_inference.md)'s claim from the algebra
 
 ### 3.4 Caveat and status
 
-The construction above is informal — a constructive argument from MRE.md plus the Markov-blanket / active-inference framework. **The Lean formalization is open work**: an actual theorem `zfa_closure_minimizes_free_energy` would require formalizing both the possibility-tree probability space and Friston's KL functional inside Lean 4. The argument is presented here as a derivation in the same standard as the rest of QLF (MRE.md, SpectralGap.md): constructive, falsifiable, with the Lean-verified step flagged.
+The construction above is informal — a constructive argument from MRE.md plus the Markov-blanket / active-inference framework. The observer-level update and faithfulness criteria are separated in [`Strange_Loops.md`](Strange_Loops.md) §3B: active inference supplies a candidate `U`/policy rule, and self-knowledge is a candidate bisimulation `M ~_c S|_c`; the target is [`verification/strange-loop/self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md), `NOT_STARTED`. QKB (PR #216, open draft) is not a belief-update implementation. **The Lean formalization is open work**: an actual theorem `zfa_closure_minimizes_free_energy` would require formalizing both the possibility-tree probability space and Friston's KL functional inside Lean 4. The argument is presented here as a derivation in the same standard as the rest of QLF (MRE.md, SpectralGap.md): constructive, falsifiable, with the Lean-verified step flagged.
 
 ## 4. Why fast controls bottom-up and slow controls top-down
 

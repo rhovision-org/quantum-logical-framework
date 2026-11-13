@@ -21,8 +21,11 @@ The repository changes are collected in [PR #224](https://github.com/rhovision-o
 - PR #226: twelve `QLF.Manifestation` anchors, baseline **319**; orientation,
   isolation-is-closure, unbounded closures, distance = delay, and the proton as
   the simplest isolated imbalance.
-- All 319 anchors have reviewed project-CI footprints; no old footprint was
-  changed by #225 or #226. The `verification/paper-i-v0.3/` receipt remains
+- PR #230: twenty-five conservative-return, tensor-return and prime-closure anchors
+  (StrangeLoop 7, finite Born 3, ConservativeReturn 9, tensor quotient 5, prime closure 1),
+  baseline **344**; the actual bridges remain `B-OPEN`.
+- All 344 anchors have reviewed project-CI footprints; no old footprint was
+  changed by #225, #226 or #230. The `verification/paper-i-v0.3/` receipt remains
   scoped to the 302-anchor #224 closure; the later deltas are in the #225/#226
   PRs and the current baseline file.
 - Recursive typed-record validation, nested content checks, applicable gate paths,
@@ -39,10 +42,22 @@ The repository changes are collected in [PR #224](https://github.com/rhovision-o
 Read [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/) for the #224
 receipt, then inspect the #225 and #226 PR diffs and the current
 [`lean/axiom_footprints.expected.json`](lean/axiom_footprints.expected.json)
-(319 entries). The original Lean execution was project CI, not a local
+(344 entries). The original Lean execution was project CI, not a local
 independent rebuild. The current exact-footprint gate is the authoritative
 formal check; the metric/Einstein and Manifestation results remain formal
 theorems under their stated premises, not physical bridge closures.
+
+## Strange-loop / conservative-return clause
+
+Paper I v0.3 should state the G3 bridge requirement in the two-phase/strange-loop form:
+
+- name the formal level, the physical level, and the finite record to which the loop returns;
+- state why the return is **conservative** — the finitary content is already available in the `RCA₀` core, not imported from the target;
+- if no such return can be exhibited, keep the bridge `B-OPEN`.
+
+The clause is implemented in [`Strange_Loops.md`](Strange_Loops.md) §6, [`Proof_to_Physics.md`](Proof_to_Physics.md), [`ScientificApproach.md`](ScientificApproach.md) §5e, and the `strange_loop`/`proof_obligation` objects in the four bridge records. The proof obligation names domain, codomain, forward/return maps, composite identity, conservative-return status, imported axioms and falsifier, and each loop records `first_order_evidence` (`F`, `N`, `F+N` or `NONE`). MO2 is `PARTIAL` with `QLF_ConservativeReturn` (plus the generic `QLF_StrangeLoop` interface); Born is `PARTIAL` with `QLF_StrangeLoopBorn`; α and SPARC remain `NOT_STARTED`. The bridges are `B-OPEN` / `INCOMPLETE`, not “inconclusive”: their first-order results stand, and `INCONCLUSIVE` is reserved for an ambiguous comparator. The validator rejects `bridge: CLOSED` unless the loop is `TESTED` and the return `PROVED` with a real artifact. The toy model in [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py) shows the optical underdetermination: pure MO2 meet gives `0`, not `1/8`; a re-preparation walk matches `1/8` only with uniform/Malus weights. This strengthens the paper's discipline rather than closing any bridge.
+
+Recent extensions in the same note: §2A reads an event as the mutual satisfaction of two incomplete perspectives (relational, not recursive); §2B relates that form to ρ-calculus/Rholang capabilities, join and reflection, with QKB (PR #216, open draft) as a candidate `ask`/`answer` listener/trigger layer; §3A gives the immanent observer/self-model reading; §3B adds active inference as a candidate update/policy rule and self-knowledge as a candidate bisimulation `M ~_c S|_c`. The formal targets [`rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md) and [`self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md) are `NOT_STARTED`; they do not change the anchor baseline or promote a physical bridge.
 
 ## Manuscript and release work
 
@@ -55,7 +70,7 @@ metric-singlet/lattice-Einstein result as a second representational case (§8.1)
 use Manifestation as formal backbone for the ToE map, not as physical evidence.
 
 Choose an immutable release head after checking CI; the current reviewed baseline is
-**319 anchors** (302 #224 + 5 #225 + 12 #226). Cite the audited source and
+**344 anchors** (302 #224 + 5 #225 + 12 #226 + 25 #230). Cite the audited source and
 execution receipts explicitly; do not silently replace old evidence with moving main.
 Confirm the human author list, CRediT roles, conflicts and license before circulation.
 Then perform a short delta review and generate the final document/PDF with real tables.

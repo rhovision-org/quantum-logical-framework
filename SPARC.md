@@ -30,7 +30,9 @@ unseen. Target-informed quality selection is not by itself proof of fitting.
 
 The appropriate status is **retrospective public-data benchmark / numerical
 reproduction**. Historical blinding, third-party chronology and independent
-physical confirmation are not established by this workflow.
+physical confirmation are not established by this workflow. Read as a
+strange loop, the return is a descriptive residual summary, not a predeclared
+prediction; see [`Strange_Loops.md`](Strange_Loops.md) §4.
 
 ## Reproduced descriptive results
 

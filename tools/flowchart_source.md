@@ -31,10 +31,21 @@ flowchart LR
   FRN --> D9["9 The Millennium Prize program"]
   FRN --> D10["10 Beyond the SM"]
   FND --> MTH["Methods and evidence: Paper I v0.3"]
+  FND --> SL["Two-phase / strange-loop bootstrapping"]
+  FND --> MAP["Map ≡ territory under ZFA (B-OPEN interpretation; issue #213)"]
+  SL -.->|frames| MTH
   MTH -.->|audits| D2
   MTH -.->|audits| D6
   MTH -.->|audits| D8
   click MTH "#methods-and-evidence-paper-i-v03"
+  click SL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md" _blank
+  click MAP "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Map_Is_Territory.md" _blank
+  click MT "https://github.com/rhovision-org/quantum-logical-framework/issues/213" _blank
+  click KNW "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#3a-the-deeper-loop-closure-knowledge-and-the-immanent-self-model" _blank
+  click AIB "https://github.com/rhovision-org/quantum-logical-framework/blob/main/verification/strange-loop/self_knowledge_target.md" _blank
+  click EVT "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#2a-the-primitive-event-mutual-satisfaction-not-recursion" _blank
+  click RHO "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#2b-the-ρ-calculus-analogy-capabilities-join-and-reflection" _blank
+  click QKB "https://github.com/rhovision-org/quantum-logical-framework/pull/216" _blank
 ```
 
 **Jump to:** [1 Space, time and the continuum](#1-space-time-and-the-continuum) &middot; [2 The fundamental constants](#2-the-fundamental-constants) &middot; [3 Forces](#3-forces) &middot; [4 Atoms and QED](#4-atoms-and-qed) &middot; [5 Gravity and GR](#5-gravity-and-gr) &middot; [6 Cosmology and the dark sector](#6-cosmology-and-the-dark-sector) &middot; [7 Particles and the Standard Model](#7-particles-and-the-standard-model) &middot; [8 Quantum-gravity / TOE pillars](#8-quantum-gravity--toe-pillars) &middot; [9 The Millennium Prize program](#9-the-millennium-prize-program) &middot; [10 Beyond the SM](#10-beyond-the-sm) &middot; [11 Chemistry, molecules and folding](#11-chemistry-molecules-and-folding) &middot; [12 Quantum field theory and renormalization](#12-quantum-field-theory-and-renormalization) &middot; [Methods and evidence](#methods-and-evidence-paper-i-v03)
@@ -43,7 +54,11 @@ The five families: **Foundations** (1-2, 12) &middot; **Matter and forces** (3, 
 
 The **Methods and evidence** layer is **cross-cutting**, not a sixth domain: it audits claims across the families without changing the taxonomy.
 
-**Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **319-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
+**Two-phase / strange-loop bootstrapping:** the controlled metalanguage ↔ substrate loop, the primitive event as mutual closure of two incomplete perspectives, the ρ-calculus/QKB listener–trigger analogy, the observer self-reference/no-time-loop distinction, and the active-inference/self-knowledge-bisimulation targets are collected in [`Strange_Loops.md`](Strange_Loops.md), with the conservativity resolution in [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §2 and the possibility/record distinction in [`Philosophy.md`](Philosophy.md) §3d.
+
+**Map ≡ territory (issue #213):** the formal substrate components are `F`/verified at collaborator tier; the identification itself is `B-OPEN`/conjecture; ZFA exclusivity is an `E-candidate` with kill conditions. Standard QM and classical physics are treated as incomplete maps. This is graded in [`Map_Is_Territory.md`](Map_Is_Territory.md), not asserted as a theorem. See also [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207) and [#11](https://github.com/rhovision-org/quantum-logical-framework/issues/11).
+
+**Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **344-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
 
 **Emergent matter** is the one family that is not fundamental physics. The other four ask what the
 substrate *is*; this one asks what it **assembles** once atoms exist — and it earns a family of its own
@@ -244,7 +259,7 @@ flowchart TD
 
 **Open:** [`Cosmological_Constant.md`](Cosmological_Constant.md) · [`Curvature.md`](Curvature.md) · [`DarkMatter.md`](DarkMatter.md) · [`SPARC.md`](SPARC.md) · [`AgeOfUniverse.md`](AgeOfUniverse.md) · [`Fusion.md`](Fusion.md) · [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §3a
 
-Dark matter is the closure-balance RAR, tested retrospectively on 147 SPARC galaxies (`a₀ = cH₀/2π`, the `2π` derived; [`SPARC.md`](SPARC.md)). The analysis uses target-informed selection and a seal before residual scoring, so it is an **`N` consistency benchmark**, not a blind/independent trial. The physical interpolation/form remains **`B-OPEN`**; G5 is open. `a₀` is constant locally (`a₀/(cH) = 1/2π`) and scales with `H(z)` across redshift; the MUSE-DARK data prefer this expansion clock over the age clock and a constant `a₀` ([`DarkMatter.md`](DarkMatter.md) §5c). On that clock the dark-matter fit votes for the local `H₀ ≈ 72.9`, a conditional vote on the **Hubble tension**, not a resolution (§5a). The dynamical `ρ_Λ ∝ H²` reading is excluded, so QLF is no longer in the early-dark-energy class. **No epoch is special, in the own-clock sense:** every observer sees the same rate profile, faster behind and slower ahead (`QLF_InflationObserver`, pre-registered; a constant `Λ` would break it). **Named tension:** `ρ_Λ ∝ H²` then keeps `Ω_Λ = log 2` at recombination and BBN, far above early dark-energy bounds ([`Curvature.md`](Curvature.md) §8a).
+Dark matter is the closure-balance RAR, tested retrospectively on 147 SPARC galaxies (`a₀ = cH₀/2π`, the `2π` derived; [`SPARC.md`](SPARC.md)). The analysis uses target-informed selection and a seal before residual scoring, so it is an **`N` consistency benchmark**, not a blind/independent trial. The physical interpolation/form remains **`B-OPEN`**; G5 is `INCOMPLETE`. `a₀` is constant locally (`a₀/(cH) = 1/2π`) and scales with `H(z)` across redshift; the MUSE-DARK data prefer this expansion clock over the age clock and a constant `a₀` ([`DarkMatter.md`](DarkMatter.md) §5c). On that clock the dark-matter fit votes for the local `H₀ ≈ 72.9`, a conditional vote on the **Hubble tension**, not a resolution (§5a). The dynamical `ρ_Λ ∝ H²` reading is excluded, so QLF is no longer in the early-dark-energy class. **No epoch is special, in the own-clock sense:** every observer sees the same rate profile, faster behind and slower ahead (`QLF_InflationObserver`, pre-registered; a constant `Λ` would break it). **Named tension:** `ρ_Λ ∝ H²` then keeps `Ω_Λ = log 2` at recombination and BBN, far above early dark-energy bounds ([`Curvature.md`](Curvature.md) §8a).
 
 **Convergence with accepted cosmology (the ledger, [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §3a).** QLF is **concordant with ΛCDM's observational core** — the hot Big Bang, CMB, BBN (`Y_p = 1/4`), the ≈13.8 Gyr age, `Ω_Λ = log 2 ≈ 0.69`, and the `w≈−1` accelerating expansion are all reproduced or left intact (*a Big-Bang-singularity alternative, not a hot-Big-Bang-observation alternative*). It **diverges only on ΛCDM's two interpretive pillars** — particle cold dark matter (→ the RAR/MOND reading above) and a static `Λ` (→ dynamical `ρ_Λ ∝ H²`), i.e. the open, contested questions. Its **deeper convergence** is with accepted **thermodynamic/emergent gravity** (Jacobson 1995, Bekenstein–Hawking, holography), from which it *derives* the Einstein `8πG` coefficient and `Λ = log 2` (`QLF_EinsteinEquations`). **Named exception:** `ρ_Λ ∝ H²` keeps `Ω_Λ = log 2` at early epochs, in tension with CMB/BBN early dark-energy bounds ([`Curvature.md`](Curvature.md) §8a).
 
@@ -480,20 +495,31 @@ This is the cross-cutting evidence layer. It does not add a thirteenth domain; i
 ```mermaid
 flowchart TD
   MTH["Paper I v0.3: claim-record methodology"]
-  MTH --> F["F - audited formal statements (319 anchors)"]
+  MTH --> SL["Two-phase / strange-loop bootstrapping"]
+  SL --> MATH["Mathematics_From_QLF.md section 2: conservative return"]
+  SL --> PHIL["Philosophy.md section 3d / Time.md section 7a: no time loops"]
+  SL --> MT["Map ≡ territory / entanglements are the only effects (B-OPEN conjecture; issue #213)"]
+  SL --> KNW["Closure → information → model → self-model (B-OPEN; no E)"]
+  KNW --> AIB["Active-inference update + self-knowledge bisimulation (B-OPEN; NOT_STARTED)"]
+  SL --> EVT["Primitive event: mutual closure / listening both ways (B-OPEN)"]
+  SL --> RHO["ρ-calculus / Rholang: name = capability, join = closure analogue (B-OPEN)"]
+  SL --> QKB["QKB (PR #216 draft): ask/answer rendezvous; self-query target NOT_STARTED"]
+  MTH --> F["F - audited formal statements (344 anchors)"]
   MTH --> N["N - reproduced numerical results"]
   MTH --> B["B-OPEN - interpretation bridges"]
   MTH --> E["E - empirical evidence (none established)"]
   F --> G1["G1 PASS: MO2/QuantumLogic + metric/lattice + Manifestation"]
-  B --> G3["G3 OPEN: ZFA histories -> QL -> detector; three-polarizer, alpha, SPARC"]
-  E --> G5["G5 OPEN: independent / prospective test"]
+  B --> G3["G3 INCOMPLETE: ZFA histories -> QL -> detector; return map missing"]
+  E --> G5["G5 INCOMPLETE: independent / prospective test not supplied"]
   G1 --> DEF["Defeaters and non-promotion rules"]
   G3 --> DEF
   G5 --> DEF
   MTH --> MO2["MO2: 16 finite laws in both namespaces (F; 35 anchors)"]
-  MO2 --> TP["Three-polarizer 1/8 (B-OPEN: imported Malus/Born; detector map open)"]
-  MTH --> AL["alpha = 1/137 leading (F + N; B-OPEN: count -> coupling at scale)"]
-  AL --> SP["SPARC RAR (N retrospective; B-OPEN / G5)"]
+  MO2 --> TP["Three-polarizer 1/8 (first-order F+N established; return incomplete)"]
+  MTH --> BORN["Born uniqueness (first-order F established; return incomplete)"]
+  BORN --> BP["Operational probability bridge (B-OPEN)"]
+  MTH --> AL["alpha = 1/137 leading (first-order F+N established; return incomplete)"]
+  AL --> SP["SPARC RAR (first-order N established; return incomplete; G5 incomplete)"]
   MTH --> MSM["Metric singlet / lattice Einstein (F under premises; physical gravity B-OPEN)"]
   MTH --> MNF["Manifestation (F formal; physical selection B-OPEN)"]
   MSM --> TOE["ToE claim map"]
@@ -502,9 +528,13 @@ flowchart TD
   PAPER --> GIST["Gist / verification/paper-i-v0.3/"]
 ```
 
-**Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html).
+**Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) · [`Strange_Loops.md`](Strange_Loops.md) · [`Map_Is_Territory.md`](Map_Is_Territory.md) · [`verification/strange-loop/`](verification/strange-loop/README.md) · [`rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md) · [`self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md) · [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py).
 
-**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 319-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
+**Issue #11 boundary:** this layer does not claim a new empirical prediction. It specifies the missing operational return and keeps first-order `F`/`N` results from being promoted to `E`; issue #11 remains open until a prediction or derivation is actually tested.
+
+**Recent additions:** primitive event as reciprocal closure (§2A); ρ-calculus/Rholang capabilities and QKB (§2B); immanent observer/self-model (§3A); active-inference update and self-knowledge-as-bisimulation (§3B). The formal targets [`rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md) and [`self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md) are `NOT_STARTED`.
+
+**The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 344-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge with a first-order `F`/`N` result but no conservative return is `B-OPEN` / `INCOMPLETE`; reserve `INCONCLUSIVE` for a comparator that is ambiguous or fails to discriminate. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
 
 ---
 

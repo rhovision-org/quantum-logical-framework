@@ -36,7 +36,7 @@ From [Gravity.md](Gravity.md): "Gravity is **not** a fundamental force or curvat
 
 The gauge folds are the source of mass ([E_mc2_derivation.md](E_mc2_derivation.md), [Frequency_Synchronization.md](Frequency_Synchronization.md)). Mass density therefore determines local ZFA event rate, which determines local proper-time tick rate, which appears as gravitational time dilation. Energy concentrations warp local geometry by altering the constructing delay $\Delta t = R/f$.
 
-General relativity emerges as the **continuum coarse-graining** of these discrete event-rate shifts. Einstein's equations are recovered in the limit where the discrete ZFA-closure events are averaged into a smooth stress-energy tensor; the discrete origin imposes a UV cutoff at the Planck time.
+General relativity emerges as the **continuum coarse-graining** of these discrete event-rate shifts. The algebraic tensor route is explicit: independent closure composition derives $M\otimes M$ (`QLF_TensorFromClosure`), the metric is the singlet in that two-body representation (`QLF_MetricSinglet`), and `QLF_TensorConservativeReturn` proves quotient coherence. The physical selection of the closure equivalence and the continuum curvature bridge remain open. Einstein's equations are recovered in the limit where the discrete ZFA-closure events are averaged into a smooth stress-energy tensor; the discrete origin imposes a UV cutoff at the Planck time.
 
 ## 4. Holography as boundary-determines-bulk
 
@@ -81,7 +81,7 @@ These are the algebraic foundation. The four faces of §1–§6 follow as physic
 
 ## 9. What is NOT (yet) derived
 
-- **Einstein's field equations in their full continuum form** — the discrete-to-continuum bridge is sketched but no Lean-verified derivation of $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ from `rho_process_always_zfa` exists.
+- **Einstein's field equations in their full continuum form** — the composition tensor product is now derived (`QLF_TensorFromClosure`) and its quotient return is machine-checked (`QLF_TensorConservativeReturn`), but no Lean-verified derivation of the full dynamical $G_{\mu\nu} = 8\pi G T_{\mu\nu}$ from `rho_process_always_zfa` exists. The open piece is curvature/dynamics, not tensor-product composition.
 - **Black-hole entropy area law $S = A/4$** — consistent with the per-atom $\log 2$ and per-Planck-area atom-count, but the precise factor of 4 (vs $\log 2 / \log e$ or similar) requires a careful continuum calculation.
 - **Cosmological constant magnitude** — qualitative story above is consistent with smallness; quantitative match to $\Lambda \approx 10^{-122}$ in Planck units is open.
 - **Gravitational waves** — coherent disturbances in the ZFA-event-rate field: the **linearized wave equation `□_d δρ = 0`** is now anchored via the density-perturbation route ([`QLF_GravitationalWaves`](lean/QLF_GravitationalWaves.lean): `boxD_dAlembert`; speed `c`, spin-2, 2 polarizations, quadrupole the leading radiative multipole). Open: deriving the wave operator from the SOC rate equations + the luminosity coefficient `G/(5c⁵)`.

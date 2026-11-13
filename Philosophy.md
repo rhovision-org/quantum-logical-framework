@@ -377,6 +377,8 @@ read once more:
 > history is a world where weakening holds, because a closure, once closed, stays closed at every wider
 > horizon (`closure_receipt_stable`). Gödel's rotation is allowed, but his time loops are not.
 
+**Strange loops, not time loops.** The observer's self-model — a finite Markov blanket modeling itself, its environment, and their interaction — has the shape of a strange loop: a level-crossing self-reference that returns to its own record. It is a loop in the **reversible possibility algebra**, not a closed causal curve in the realized history; `no_time_loops_from_logic` prunes the latter. The same two-phase/conservative-return shape is the review discipline for the still-open formal-to-physical bridges; see [`Strange_Loops.md`](Strange_Loops.md).
+
 **What this does not claim.** That the realized layer obeys weakening is partly definitional: a fact
 that can be un-made is not what QLF calls a record. Logic fixes a *global* condition on the field
 equations and nothing local; $G$, $\Lambda$ and the matter content still come from the construction, and

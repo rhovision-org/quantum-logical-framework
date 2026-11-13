@@ -70,6 +70,7 @@ import QLF_Tsirelson
 import QLF_Mass
 import QLF_DiracWalk
 import QLF_BornFromWays
+import QLF_FirstReturn
 import QLF_GaugeAxis
 import QLF_LocalGauge
 import QLF_LatticeGauge
@@ -108,6 +109,10 @@ import QLF_LocalAreaLaw
 import QLF_MetricSinglet
 import QLF_LatticeDivergence
 import QLF_Manifestation
+import QLF_StrangeLoop
+import QLF_StrangeLoopBorn
+import QLF_ConservativeReturn
+import QLF_TensorConservativeReturn
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -604,3 +609,38 @@ These anchors are added by PR #226 and reviewed in the 319-anchor baseline. -/
 #print axioms QLF.Manifestation.short_closures_unwound
 #print axioms QLF.Manifestation.proton_simplest_isolated_imbalance
 #print axioms QLF.Manifestation.proton_ways_unbounded
+
+/-! ## Conservative-return and tensor-return anchors
+
+These anchors are added by PR #230. They are the toy conservative-return
+interface, the finite Born return, the trigger/quotient structures, and the
+tensor quotient return. They are part of the 343-anchor baseline. -/
+
+#print axioms QLF.StrangeLoop.conservative_return
+#print axioms QLF.StrangeLoop.return_forward
+#print axioms QLF.StrangeLoop.F_preserves_le
+#print axioms QLF.StrangeLoop.R_preserves_le
+#print axioms QLF.StrangeLoop.F_preserves_sup
+#print axioms QLF.StrangeLoop.F_preserves_inf
+#print axioms QLF.StrangeLoop.F_preserves_compl
+
+#print axioms QLF.StrangeLoop.refinement_return
+#print axioms QLF.StrangeLoop.born_return
+#print axioms QLF.StrangeLoop.born_two_thirds_return
+
+#print axioms QLF.ConservativeReturn.conservative_return
+#print axioms QLF.ConservativeReturn.F_closed
+#print axioms QLF.ConservativeReturn.count_recovered
+#print axioms QLF.ConservativeReturn.phase_recovered
+#print axioms QLF.ConservativeReturn.F_invariants
+#print axioms QLF.ConservativeReturn.toyTrigger_exists
+#print axioms QLF.ConservativeReturn.toyTrigger_composite
+#print axioms QLF.ConservativeReturn.toyQuotientTrigger_exists
+#print axioms QLF.ConservativeReturn.no_event_cycle
+
+#print axioms QLF.TensorConservativeReturn.tensor_conservative_return
+#print axioms QLF.TensorConservativeReturn.tensorTrigger_exists
+#print axioms QLF.TensorConservativeReturn.class_of_step
+#print axioms QLF.TensorConservativeReturn.F_injective
+#print axioms QLF.TensorConservativeReturn.R_forward
+#print axioms QLF.FirstReturn.prime_event_reciprocal_open

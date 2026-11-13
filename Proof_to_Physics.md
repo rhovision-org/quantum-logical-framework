@@ -14,14 +14,34 @@ identification with a physical observable and from an experimental test.
 | P versus NP | [QLF_PvsNP](lean/QLF_PvsNP.lean): finite counting and an abstract `CostModel` | Link `PTime` and `search` to a standard uniform machine model | A stated complexity model and a separation proof without assuming the separation |
 | Riemann hypothesis | [QLF_Riemann](lean/QLF_Riemann.lean), [QLF_RiemannMRE](lean/QLF_RiemannMRE.lean): formal implications from spectral or factorization axioms | Discharge the named conjecture-strength assumptions | An unconditional kernel-checked theorem about Mathlib's analytic zeta function |
 | Causal continuum | [QLF_CausalContinuum](lean/QLF_CausalContinuum.lean), [QLF_OrderMetric](lean/QLF_OrderMetric.lean): discrete constructions and explicit continuum limit axioms | Establish convergence to Lorentzian geometric objects | Precise assumptions, convergence topology and quantitative error estimates |
-| Gravity / metric | [QLF_MetricSinglet](lean/QLF_MetricSinglet.lean), [QLF_LatticeDivergence](lean/QLF_LatticeDivergence.lean): metric = singlet; null-cone step as singlet uniqueness; lattice divergence/Einstein equations with discrete Bianchi and conservation as hypotheses | Local Rindler/Raychaudhuri derivation; substrate curvature; physical identification of the lattice metric and `Λ`; an apparatus/observable map | Exact anchors in the 319-entry baseline; explicit premises; independent GR-limit check |
+| Gravity / metric | [QLF_MetricSinglet](lean/QLF_MetricSinglet.lean), [QLF_LatticeDivergence](lean/QLF_LatticeDivergence.lean): metric = singlet; null-cone step as singlet uniqueness; lattice divergence/Einstein equations with discrete Bianchi and conservation as hypotheses; [QLF_TensorFromClosure](lean/QLF_TensorFromClosure.lean) derives the tensor composition and [QLF_TensorConservativeReturn](lean/QLF_TensorConservativeReturn.lean) proves quotient coherence | Local Rindler/Raychaudhuri derivation; substrate curvature; physical selection of the tensor quotient; the causal-order return `CausalMetricConservativeReturn`; an apparatus/observable map | Exact anchors in the 344-entry baseline, including the tensor quotient return; explicit premises; physical causal return still open |
 | Manifestation / selection | [QLF_Manifestation](lean/QLF_Manifestation.lean): orientation, isolation-is-closure, unbounded closures, `distance_eq_delay`, proton as the simplest isolated imbalance | Physical selection mechanism; apparatus/detector map; identification of the closure “proton” with the QCD proton; empirical test | [Manifestation.md](Manifestation.md); claim map only; no `E` |
 | Dark matter / RAR | [QLF_DarkMatter](lean/QLF_DarkMatter.lean), [QLF_MondScale](lean/QLF_MondScale.lean), [QLF_RarBalance](lean/QLF_RarBalance.lean): algebraic RAR and `a0 = c H0/(2 pi)`; retrospective SPARC public-data benchmark | Independent replication of the SPARC result; demonstrate the interpolation form is not selected post hoc; formalize the `a0`/H0/M-L inputs | [claim_records/sparc_rar.json](claim_records/sparc_rar.json); third-party timestamp; held-out or Bayesian model comparison |
 | Mercury perihelion | [QLF_MercuryPerihelion](lean/QLF_MercuryPerihelion.lean): perihelion form and per-century value | Show the holographic count → GR potential map is unique; compare at higher post-Newtonian order | [Claim_Status.md](Claim_Status.md); independent ephemeris comparison |
 | α cannot drift | [QLF_Discoveries2026](lean/QLF_Discoveries2026.lean): `alpha_cannot_drift` | Specify the measured-coupling bridge and residual corrections; freeze the nuclear-clock observable, comparator and rejection rule before controlled target exposure | [claim_records/kill_conditions.json](claim_records/kill_conditions.json) |
 | Born rule | [QLF_BornFromWays](lean/QLF_BornFromWays.lean): `born_from_ways`, `assignment_unique` | Prove the cylinder-measure → physical-probability step; define the apparatus/outcome map | [Claim_Status.md](Claim_Status.md); interference comparison |
+| Primitive event / mutual closure | Toy `StrangeLoopTrigger` shape, `no_event_cycle`, possibility-algebra no-time-loop results, the prime-openness theorem `QLF.FirstReturn.prime_event_reciprocal_open`, and the `RhoQuCalc` process algebra. The trigger shape is formal; the event-level and ρ-calculus readings are not | Formalize the ZFA functional `Z`, the listening conditions `L(A)`, mutual satisfaction for realized events, and the `RhoCorrespondence` target (soundness, completeness, join, reflection, conservativity) | `B-OPEN`; explicit structural analogy; `RhoCorrespondence` `NOT_STARTED`; no `E` |
+| Observer / knowledge loop | Toy `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger`, `no_event_cycle`, and the tensor quotient form. These prove the trigger shape, not that an observer instantiates it | Persistent internal model; active-inference update/policy; a self-model containing its own boundary; a bisimulation between model and system on closure-relevant labels; conservative return | `B-OPEN`; `SelfKnowledgeBisimulation` `NOT_STARTED`; proposed operational definitions; no `E` |
+| Map ≡ territory ([#213](https://github.com/rhovision-org/quantum-logical-framework/issues/213); [Map_Is_Territory.md](Map_Is_Territory.md)) | Formal substrate components are `F`: closure, MO2, pair structure, derived tensor composition. The identification itself is not a theorem | A noncircular formal-expression → physical-event map, with a conservative return and a defeater; `TensorConservativeReturn` supplies the quotient form for one construction only | `B-OPEN` / conjecture; no `E`; exclusivity remains an `E-candidate` with kill conditions |
+| Tensor product / independent composition | [QLF_TensorFromClosure](lean/QLF_TensorFromClosure.lean): `composite_is_tensor`, `tensorEquiv`, `n_composite_is_tensor`, `nTensorEquiv`; tensor product derived from independent-body premises | Quotient return `TensorConservativeReturn`: finite closure classes -> tensor algebra -> same class. `pair_scalar_ambiguity` shows raw factor pairs cannot be recovered | Quotient return proved (`tensor_conservative_return`, in the 344 baseline); physical selection and entangled-sector return open; tensor product remains a near-complete conservative bridge |
 | Strong CP / no axion | [QLF_StrongCP](lean/QLF_StrongCP.lean): `theta_zero_on_closure` | Identify the physical θ-term with the QLF CP-odd winding; distinguish an unnecessary axion from a separately posited absence hypothesis | [claim_records/kill_conditions.json](claim_records/kill_conditions.json) |
 | CPT / antiparticle time mirror | [QLF_Discoveries2026](lean/QLF_Discoveries2026.lean): `antiparticle_length`, `charge3W_antiparticle`; [QLF_Majorana](lean/QLF_Majorana.lean): `neutrino_majorana` | Bridge length equality to mass equality; compare with BASE proton/antiproton data | [claim_records/kill_conditions.json](claim_records/kill_conditions.json) |
+
+## Strange-loop / conservative-return criterion
+
+A bridge can be read as a two-phase loop: a formal level, a physical level, and a return to a finite record. The loop is admissible only if the return is **conservative** — the finitary content claimed at the physical level is already available in the `RCA₀` core, or the bridge is marked `B-OPEN`. The full conceptual note is [`Strange_Loops.md`](Strange_Loops.md); the G3 checklist remains authoritative.
+
+For each bridge, record:
+
+1. the formal level and the physical level;
+2. the map and its preservation obligations;
+3. the finite record to which the loop returns;
+4. why the return is conservative rather than target-derived;
+5. a defeater that would break the loop.
+
+A bridge with no such return is not a closed loop, however suggestive the numerical agreement. The four Paper I bridge records (`three_polarizer.json`, `alpha.json`, `sparc_rar.json`, `born_rule.json`) carry a `strange_loop` object plus a `proof_obligation` with domain, codomain, forward/return maps, composite identity, conservative-return status, imported axioms and falsifier. All four loops are `B-OPEN`; MO2 is `PARTIAL` with `QLF_ConservativeReturn` (and the generic `QLF_StrangeLoop` interface); Born is `PARTIAL` with `QLF_StrangeLoopBorn`; α and SPARC remain `NOT_STARTED`. A `TESTED` loop requires a `PROVED` return plus a real artifact; a `bridge: CLOSED` record requires a `TESTED` loop. The trigger predicate is `QLF.ConservativeReturn.StrangeLoopTrigger`; `toyTrigger_exists` checks only the toy instance, and `no_event_cycle` checks the toy no-time-loop analogue, not an operational map.
+
+**Incomplete vs inconclusive.** `INCOMPLETE` describes a bridge whose first-order `F`/`N` result and comparator stand, but whose operational map or conservative return has not been constructed. `INCONCLUSIVE` is reserved for a comparator that exists but is ambiguous or fails to discriminate. Thus the four bridge records read “first-order `F+N` / `N` / `F` established; return incomplete,” not “nothing established.” The G3 and G5 gate outcomes are `INCOMPLETE`, not `INCONCLUSIVE`; `evidence_status.bridge` remains `OPEN` and `strange_loop.status` remains `B-OPEN`—these are related but distinct fields.
 
 ## Evidence categories
 
@@ -38,9 +58,13 @@ identification with a physical observable and from an experimental test.
 1. Identify the exact Lean declaration and print its axiom footprint.
 2. List every definition or premise that contains the desired conclusion.
 3. Identify the missing map from substrate quantities to the lab observable.
-4. Record at least one counterexample or failure condition and a baseline
+4. State the two-phase / strange-loop structure: the finite record to which it
+   returns and why that return is conservative. If no return is exhibited, mark
+   the bridge `B-OPEN` / `INCOMPLETE`; reserve `INCONCLUSIVE` for an ambiguous
+   comparator.
+5. Record at least one counterexample or failure condition and a baseline
    from conventional physics.
-5. Reject promotion from conditional to derived unless the bridge itself
+6. Reject promotion from conditional to derived unless the bridge itself
    has been proved and reviewed.
 
 The current research programme is tracked in
