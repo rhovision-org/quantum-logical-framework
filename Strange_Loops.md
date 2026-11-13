@@ -571,6 +571,102 @@ Lean, implemented by physical computers inside the same universe, verifies propo
 
 **Falsifiers / defeaters:** a persistent system with the same adaptive capacity but no internal model; a model that cannot be distinguished from a fixed response; a return that imports the target value; or a self-model that requires an event-time loop.
 
+## 3B. Active inference updates and self-knowledge as bisimulation
+
+The observer loop in §3A still needs two things: an **update rule** and a **faithfulness criterion**.
+Active inference supplies a candidate for the first; bisimulation supplies a candidate for the second.
+
+### 3B.1 Active inference as an update rule
+
+A minimal active-inference loop carries:
+
+```
+b_t          internal belief/model state
+o_t          boundary observation / closure record
+a_t          action / capability use
+b_{t+1} = U(b_t, o_t, a_t)
+a_t ≈ argmin_π G(π; b_t)
+```
+
+where `G` is expected free energy and `U` is the update. In QLF terms, `o_t` is a closure record at the
+blanket boundary, `a_t` is a capability use, and `b_t` is an internal closure class. The update must be
+finite and must return to records; it may not import the target value.
+
+QLF's existing free-energy argument is informal. [`Hierarchical_Control.md`](Hierarchical_Control.md)
+§3 derives the per-event `log 2` and the active-inference selection, but explicitly flags the Lean step
+(`zfa_closure_minimizes_free_energy`) as open work. [`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md)
+and [`active_inference.md`](active_inference.md) give the broader reading. This note does not promote
+that derivation to a formal observer theorem.
+
+QKB's `assert`/`answer` updates are **monotone record additions**, not full belief updates. A QKB with
+active inference would need a separate belief/policy layer and a revision rule; grow-only records alone
+do not supply it.
+
+### 3B.2 Self-knowledge as bisimulation
+
+A candidate formal criterion for self-knowledge:
+
+> An internal model `M` knows the closure-relevant behavior of system `S` when `M` is bisimilar to the
+> closure-relevant quotient of `S`, under an embedding that preserves observations, actions and closure
+> events—and `M` can name or quote its own boundary.
+
+Write:
+
+```
+M  ~_c  S|_c
+```
+
+where `~_c` is a chosen bisimulation (strong, weak, branching, or purpose-built) and `S|_c` is the
+system restricted to closure-relevant labels. This is stronger than an arbitrary fixed point and
+stronger than “some universal encoding exists.” A universal process can simulate behavior without
+being a faithful self-model.
+
+Self-knowledge is **not** `M = S`:
+
+- `M` may be a compressed quotient of `S`;
+- the bisimulation must preserve the labels that matter for closure, not every microstate;
+- the model must be embedded in the system it models, not outside it;
+- the model must retain a self-reference/quote capability for its own boundary.
+
+### 3B.3 The update must preserve the bisimulation
+
+The active-inference update and the bisimulation criterion have to fit together. If
+
+```
+M_t ~_c S_t
+```
+
+then after observation `o_t` and action `a_t`:
+
+```
+M_{t+1} = U(M_t, o_t, a_t)
+S_{t+1} = step(S_t, o_t, a_t)
+M_{t+1} ~_c S_{t+1}
+```
+
+on closure-relevant labels. Policy selection must be internal to the model; no external scheduler may
+choose the action. The return to finite records must be conservative.
+
+This is the `SelfKnowledgeBisimulation` target. It is **`NOT_STARTED`**.
+
+### 3B.4 Status and falsifiers
+
+**`B-OPEN`:** the active-inference update rule, the free-energy selection, the bisimulation criterion,
+and the claim that an observer realizes them.
+
+**`E`:** none.
+
+**Falsifiers / defeaters:**
+
+- the update needs target-derived information;
+- the model is bisimilar only by an encoding artifact;
+- the model is observationally equivalent but causally disconnected from the system's closure events;
+- policy selection is external, not internal;
+- the self-model requires an event-time loop.
+
+QKB's `ask`/`answer`/`solve` can be read as one transition system for this target, but its current
+first-order query layer does not implement self-query or belief revision.
+
 ## 4. The strange-loop reading of the open bridges
 
 A physical bridge is a map from substrate structure to an observable, with domain, codomain, preservation conditions, a probability/outcome rule, and a defeater. The G3 checklist in [`Proof_to_Physics.md`](Proof_to_Physics.md) and Paper I v0.3 §11.2 states the minimum. The strange-loop reading adds one question:

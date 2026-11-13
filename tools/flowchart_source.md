@@ -40,6 +40,7 @@ flowchart LR
   click SL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md" _blank
   click MT "https://github.com/rhovision-org/quantum-logical-framework/issues/213" _blank
   click KNW "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#3a-the-deeper-loop-closure-knowledge-and-the-immanent-self-model" _blank
+  click AIB "https://github.com/rhovision-org/quantum-logical-framework/blob/main/verification/strange-loop/self_knowledge_target.md" _blank
   click EVT "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#2a-the-primitive-event-mutual-satisfaction-not-recursion" _blank
   click RHO "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#2b-the-ρ-calculus-analogy-capabilities-join-and-reflection" _blank
   click QKB "https://github.com/rhovision-org/quantum-logical-framework/pull/216" _blank
@@ -495,6 +496,7 @@ flowchart TD
   SL --> PHIL["Philosophy.md section 3d / Time.md section 7a: no time loops"]
   SL --> MT["Map ≡ territory / entanglements are the only effects (B-OPEN conjecture; issue #213)"]
   SL --> KNW["Closure → information → model → self-model (B-OPEN; no E)"]
+  KNW --> AIB["Active-inference update + self-knowledge bisimulation (B-OPEN; NOT_STARTED)"]
   SL --> EVT["Primitive event: mutual closure / listening both ways (B-OPEN)"]
   SL --> RHO["ρ-calculus / Rholang: name = capability, join = closure analogue (B-OPEN)"]
   SL --> QKB["QKB (PR #216 draft): ask/answer rendezvous; self-query target NOT_STARTED"]
