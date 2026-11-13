@@ -164,6 +164,18 @@ So a held distance is itself a ZFA closure, of relative orientation. The reading
 
 **Scope (method rule 4).** Most of these are identities about how oriented area composes and change no count of ways; the exceptions are the counts (`vacuum_net_orientation_zero`, `census_axis_blind`, `waysWithUps_eq_choose`, `waysWithMagnons_eq_choose`, `sum_moment_sq_bodies`). The count that would test the reading: how many closures of length `L` carry each signed area, and whether the joint census of two events favours the opposite-orientation pairing.
 
+### 7a. Claim-record status and open return maps
+
+The Mead-transaction and oriented-area results are **formal module-level results**, but they are **not yet in the 375-anchor exact-footprint baseline**. They are graded `F-CANDIDATE` until selected theorem anchors are added to `QLF_AxiomAudit.lean` and the expected-footprint file; the missing obligation is audit coverage, not the Lean proof. Their physical return maps are `NOT_STARTED`, so the physical readings remain `B-OPEN`.
+
+| Component | Formal grade | Physical return |
+|---|---|---|
+| Mead transaction: matched halves, `±c`, even spatial split, transversality from the halves | `F-CANDIDATE` — [`QLF_MeadTransaction`](lean/QLF_MeadTransaction.lean) is module-proved; exact-footprint anchors pending | `B-OPEN` / `NOT_STARTED`: no map from the transaction halves to an emitter preparation, absorber record or detector click |
+| Oriented area: shadows, synthesis, annihilation, fixed distance, balanced-body counts | `F-CANDIDATE` — [`QLF_MagneticOrientation`](lean/QLF_MagneticOrientation.lean) is module-proved; exact-footprint anchors pending | `B-OPEN` / `NOT_STARTED`: no map from signed area to a measured magnetic moment or gravitational field |
+
+**The gravity hypothesis is not a theorem.** Reading the orientation-blind count `n_A · n_B` between balanced bodies as gravity is a `B-OPEN` hypothesis; the physical return from oriented area to spacetime curvature is `NOT_STARTED`. **The long-range-order gap is also open:** the Peierls count bounds wall weight, but the contour map from that bound to long-range order is not proved. Both obligations are tracked in issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207) and in the [FlowChart](FlowChart.md); they are not evidence that Mead's transaction or the gravity reading is the physics. No claim or bridge is promoted.
+
+
 ## Examples: Collective Electrodynamics in QLF
 
 Carver Mead’s *Collective Electrodynamics* redefined electromagnetism by replacing localized point particles with the continuous coupling of quantum phases. The Quantum Logical Framework (QLF) provides the discrete, computational "source code" for these collective phenomena. 
