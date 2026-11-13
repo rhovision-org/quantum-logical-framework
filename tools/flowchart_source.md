@@ -33,6 +33,7 @@ flowchart LR
   FND --> MTH["Methods and evidence: Paper I v0.3"]
   FND --> SL["Two-phase / strange-loop bootstrapping"]
   FND --> REL["Relativity: free Dirac-walk boost covariance F; interacting return NOT_STARTED (#207)"]
+  FND --> LEP["Lepton mass-ratio protocol (#140): B-OPEN; delta not derived; L=8 filter / L=10 ambiguity"]
   FND --> MAP["Map ≡ territory under ZFA (B-OPEN interpretation; issue #213)"]
   SL -.->|frames| MTH
   MTH -.->|audits| D2
@@ -41,6 +42,7 @@ flowchart LR
   click MTH "#methods-and-evidence-paper-i-v03"
   click SL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md" _blank
   click REL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Relativity_Principle.md" _blank
+  click LEP "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Lepton_Mass_Ratio_Protocol.md" _blank
   click MAP "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Map_Is_Territory.md" _blank
   click MT "https://github.com/rhovision-org/quantum-logical-framework/issues/213" _blank
   click KNW "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#3a-the-deeper-loop-closure-knowledge-and-the-immanent-self-model" _blank
@@ -59,6 +61,8 @@ The **Methods and evidence** layer is **cross-cutting**, not a sixth domain: it 
 **Two-phase / strange-loop bootstrapping:** the controlled metalanguage ↔ substrate loop, the primitive event as mutual closure of two incomplete perspectives, the ρ-calculus/QKB listener–trigger analogy, the observer self-reference/no-time-loop distinction, and the active-inference/self-knowledge-bisimulation targets are collected in [`Strange_Loops.md`](Strange_Loops.md), with the conservativity resolution in [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §2 and the possibility/record distinction in [`Philosophy.md`](Philosophy.md) §3d.
 
 **Map ≡ territory (issue #213):** the formal substrate components are `F`/verified at collaborator tier; the identification itself is `B-OPEN`/conjecture; ZFA exclusivity is an `E-candidate` with kill conditions. Standard QM and classical physics are treated as incomplete maps. This is graded in [`Map_Is_Territory.md`](Map_Is_Territory.md), not asserted as a theorem. See also [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207) and [#11](https://github.com/rhovision-org/quantum-logical-framework/issues/11).
+
+**Lepton protocol risks:** the #140 pre-registration is `B-OPEN`; `delta` is not derived. The `L = 8` tau uniqueness depends on a load-bearing 3-axis filter, and the parent-continuation rule is ambiguous at `L = 10`. These risks stay visible rather than being resolved by the protocol. See [`Lepton_Mass_Ratio_Protocol.md`](Lepton_Mass_Ratio_Protocol.md), [`claim_records/lepton_mass_ratio.json`](claim_records/lepton_mass_ratio.json), and issue [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140).
 
 **Relativity split:** free Dirac-walk boost covariance is `F` in the 375-anchor baseline; interacting boost covariance and the conservative return are `B-OPEN`/`NOT_STARTED`. The census symbol's kinetic reading is an assumption, and the census-vs-walk off-axis sign remains open. See [`Relativity_Principle.md`](Relativity_Principle.md) §7a, [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json), and issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207).
 

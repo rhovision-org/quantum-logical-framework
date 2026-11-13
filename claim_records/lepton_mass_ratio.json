@@ -1,0 +1,190 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-LEPTON-001",
+  "version": "0.3-draft",
+  "source_revision": "dd7ff914bc46f45738f706c71df00262d3324922",
+  "informal_statement": "The charged-lepton mass ratios may be derivable from rooted ZFA closure classes through the existing Koide three-phase form. This record freezes the selection and comparison protocol before any target mass is read.",
+  "approximation_or_regime": {
+    "name": "Koide three-phase leading form",
+    "description": "m_i = M (1 + sqrt(2) cos(delta + 2*pi*i/3))^2 with Q = 2/3 fixed by the existing formal Koide result; M is the overall scale and delta is the single dimensionless input.",
+    "validity_limits": "Pole-mass charged leptons only. No running-mass, quark, neutrino or higher-order correction is in scope. The phase delta has no derivation yet."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.num_generations_eq_three",
+      "QLF.three_generations_satisfy_koide",
+      "QLF.koide_two_thirds",
+      "QLF.electronCycle_folds_negI",
+      "QLF.interleaved_xlvr_folds_to_negI"
+    ],
+    "statement_scope": "The existing Lean results fix the generation count, the Koide invariant and the electron axis/fold anchor. None of them fixes the lepton mass ratios or the Koide phase."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_Generations.lean",
+      "lean/QLF_Koide.lean",
+      "lean/QLF_ElectronClosure.lean",
+      "lepton_blind_classifier.py"
+    ],
+    "type": "finite rooted twist histories, closure classes and the Koide three-phase functional"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "Reviewed 375-entry baseline after #222; this protocol adds no Lean anchors and no new theorem claims.",
+    "qlf_bridge_axioms": "No new bridge axiom. The Koide form, the overall scale and the missing phase derivation are stated explicitly as inputs/open obligations."
+  },
+  "inputs": [
+    {
+      "name": "generation count",
+      "value": "3",
+      "provenance": "derived",
+      "source": "QLF.num_generations_eq_three / QLF.three_axis_signature"
+    },
+    {
+      "name": "Koide invariant",
+      "value": "Q = 2/3",
+      "provenance": "derived",
+      "source": "QLF.koide_two_thirds / QLF.three_generations_satisfy_koide"
+    },
+    {
+      "name": "Koide three-phase functional",
+      "value": "m_i = M (1 + sqrt(2) cos(delta + 2*pi*i/3))^2",
+      "provenance": "declared",
+      "source": "existing Koide form; the phase delta is not derived"
+    },
+    {
+      "name": "electron axis/fold anchor",
+      "value": "axes {x,y}; fold -I; rooted B = 0",
+      "provenance": "derived",
+      "source": "QLF.electronCycle_folds_negI / QLF.interleaved_xlvr_folds_to_negI"
+    },
+    {
+      "name": "electron mass scale",
+      "value": "M fixed after the ratio functional is frozen",
+      "provenance": "external",
+      "source": "charged-lepton scale only; not used to select a ratio or delta"
+    }
+  ],
+  "interpretation": {
+    "map": "Rooted ZFA closure classes -> Koide three-phase mass functional -> ordered charged-lepton ratios.",
+    "formal_status": "The generation count, Koide Q = 2/3 and the electron anchor are formal. The closure-class-to-delta map is not formalized and the conservative return is not constructed.",
+    "noncircularity_test": "No muon or tau mass may enter the selection, the functional choice or the derivation of delta. The target is read only after the prediction is committed."
+  },
+  "strange_loop": {
+    "name": "unlabeled lepton closure classes -> Koide three-phase functional -> ordered mass ratios -> comparator",
+    "levels": [
+      "rooted ZFA closure classes without lepton labels",
+      "Koide three-phase mass functional",
+      "ordered charged-lepton mass ratios",
+      "comparator read after freezing"
+    ],
+    "return_level": "closure-class invariants recovered from the mass assignment",
+    "conservative_return": "No return is constructed. The protocol requires the mass assignment to recover axis content, first-return depth, fold sign, rooted B and orbit multiplicity; until then it is not a QLF derivation.",
+    "noncircularity_witness": "The masses m_mu and m_tau are excluded from construction inputs. The electron fixes only the overall scale after the dimensionless prediction is frozen.",
+    "status": "B-OPEN",
+    "first_order_evidence": "NONE",
+    "first_order_note": "Existing formal inputs (generation count, Koide Q and electron anchor) are F, but the mass map itself has no first-order F or N result yet. This is a pre-registration, not a derivation.",
+    "defeater": "A delta selected from the target masses; an undeclared free parameter; a topology ladder whose uniqueness depends on an unstated axis filter; or a return map that cannot recover the closure invariants.",
+    "proof_obligation": {
+      "domain": "rooted ZFA closure classes with frozen axis, depth, fold and B conditions",
+      "codomain": "ordered charged-lepton mass ratios in the Koide three-phase form",
+      "forward_map": "closure class -> Koide three-phase functional with a closure-derived delta",
+      "return_map": "mass assignment -> recovered closure invariants (axis content, depth, fold, B, multiplicity)",
+      "composite_identity_on": "not yet defined; no theorem",
+      "conservative_return_status": "NOT_STARTED",
+      "proof_artifact": "not yet supplied",
+      "imported_axioms": "Koide three-phase form; overall scale M; derivation of delta absent; pole-mass regime",
+      "falsifier": "Frozen ratios miss the comparator, or delta is chosen after target access, or the return cannot recover the closure invariants."
+    }
+  },
+  "observable": {
+    "symbol": "m_mu/m_e, m_tau/m_e, Q",
+    "baseline": "not evaluated",
+    "uncertainties": "not evaluated before the frozen prediction is committed"
+  },
+  "measurement_protocol": {
+    "status": "PREREGISTERED",
+    "design": "Stage A enumerates unlabeled rooted closure classes with the frozen rules. Stage B derives delta from closure counts or records failure. Stage C reads PDG pole masses only after the ratio prediction is frozen. Stage D records pass, miss or invalid.",
+    "failure_condition": "No closure-count derivation of delta, more than the declared free inputs, a post-hoc correction, or an undeclared axis filter.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "not evaluated",
+    "comparator": "PDG charged-lepton pole masses and Koide Q, read only after the prediction is frozen",
+    "uncertainty": "not evaluated",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Existing formal inputs only: generation count, Koide Q = 2/3, electron cycle/axis/fold anchor. No formal mass map.",
+    "N": "None. No frozen mass-ratio prediction has been evaluated.",
+    "E": "None. No empirical evidence is claimed.",
+    "reviewer": "self-reviewed pre-registration; no collaborator or independent receipt"
+  },
+  "defeaters": {
+    "formal": "The formal inputs do not determine delta, or the proposed map uses more than the declared degrees of freedom.",
+    "interpretation": "The closure-class axis/depth labels do not correspond to lepton generations without the target masses.",
+    "numerical": "The frozen ratios miss the comparator outside the declared uncertainty.",
+    "empirical": "A prospective or independent test contradicts the frozen prediction.",
+    "conceptual": "The Koide phase is a coordinate artifact, or the conservative return is impossible."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope and noncircularity rules are frozen in Lepton_Mass_Ratio_Protocol.md."
+    },
+    "G1": {
+      "status": "INCOMPLETE",
+      "reason": "No mass-functional theorem or closure-class-to-delta derivation exists."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No formal map from closure classes to the mass functional has been proved."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "No operational bridge or conservative return; the protocol is B-OPEN."
+    },
+    "G4": {
+      "status": "INCOMPLETE",
+      "reason": "No frozen numerical prediction has been evaluated."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No prospective or independent comparator has been run."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt; this is a self-reviewed draft protocol."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "self",
+    "enumeration": "self",
+    "original_lean_kernel": "project CI for the existing formal inputs; no new Lean in this record",
+    "measurement": "none",
+    "independence_tier": "self",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "dd7ff914bc46f45738f706c71df00262d3324922",
+    "reference_documents": [
+      "Lepton_Mass_Ratio_Protocol.md",
+      "Claim_Status.md",
+      "Proof_to_Physics.md",
+      "lean/QLF_Generations.lean",
+      "lean/QLF_Koide.lean",
+      "lean/QLF_ElectronClosure.lean",
+      "lepton_blind_classifier.py"
+    ],
+    "status": "pre-registration draft; no result, no evidence promotion"
+  }
+}

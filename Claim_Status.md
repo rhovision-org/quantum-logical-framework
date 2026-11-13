@@ -59,7 +59,15 @@ nulls that could fail.
 - `claim_records/three_polarizer.json` — migrated finite/optical bridge record.
 - `claim_records/born_rule.json` — scoped Born-assignment characterization.
 - `claim_records/relativity_boost.json` — free Dirac-walk boost covariance; interacting return `NOT_STARTED`, bridge `OPEN`.
-- `claim_records/relativity_boost.json` — free Dirac-walk boost covariance; interacting return `NOT_STARTED`, bridge `OPEN`.
+- `claim_records/lepton_mass_ratio.json` — pre-registered lepton mass-ratio protocol; no result, `B-OPEN`.
+
+## Pre-registered protocols (not claims)
+
+- **Lepton mass ratios (#140)** — [`Lepton_Mass_Ratio_Protocol.md`](Lepton_Mass_Ratio_Protocol.md)
+  freezes rooted-closure selection and the Koide three-phase comparison order before any
+  muon or tau mass is read. The three-generation count, Koide `Q = 2/3` and the electron
+  `{x,y}`/`−I` anchor are formal inputs; the closure-to-`delta` map and the conservative
+  return are `NOT_STARTED`. Status: `B-OPEN`; no `N` or `E` claim.
 
 ## Related formal developments (not physical claims)
 
