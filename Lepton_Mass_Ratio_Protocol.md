@@ -37,6 +37,8 @@ The following rules are fixed for all selection stages:
 
 - The `L = 8` τ uniqueness used a **3-axis filter before** the parent rule. That filter is load-bearing and is not derived by the selection rule.
 - The parent rule goes **ambiguous at `L = 10`**. It is not an independent proof of “exactly three generations.”
+
+These two risks are mirrored in the [FlowChart](FlowChart.md) and in issue [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140); the protocol records them and does not resolve them.
 - Therefore the topology stage may propose an ordered candidate ladder, but it cannot by itself establish the mass ratios.
 
 ## 3. Mass functional frozen before comparison
