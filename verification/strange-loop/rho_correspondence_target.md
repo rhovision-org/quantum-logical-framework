@@ -113,7 +113,7 @@ Both are `NOT_STARTED`. The current QKB design is first-order and does not imple
 ## Relation to the claim records
 
 This target is formal-only. It does not change `evidence_status.bridge = OPEN`, `strange_loop.status =
-B-OPEN`, the `G3 = INCOMPLETE` or `G5 = INCOMPLETE` gate outcomes, or the 344-anchor baseline. Until the
+B-OPEN`, the `G3 = INCOMPLETE` or `G5 = INCOMPLETE` gate outcomes, or the 375-anchor baseline. Until the
 theorem exists and is reviewed, the ρ-calculus relation remains an explicit structural analogy, not a
 complete correspondence.
 

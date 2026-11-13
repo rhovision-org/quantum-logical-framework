@@ -133,7 +133,7 @@ The analogy is suggestive, not a derivation. It is a `B-OPEN` reading of the sam
 
 ### 2A.5 Status
 
-**Formal/toy:** the `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger` shape, `no_event_cycle`, the possibility-algebra results (`loopWorld_has_time_loop`, `no_time_loops_from_logic`, `loop_same_facts`, `logical_world_globally_hyperbolic`), and the new prime-closure theorem `QLF.FirstReturn.prime_event_reciprocal_open` (in the 344-anchor baseline): if a prime event splits at a nontrivial cut into nonempty `A` and `B`, neither half closes on its own. That is the formal core of “open half + open half + shared closure.”
+**Formal/toy:** the `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger` shape, `no_event_cycle`, the possibility-algebra results (`loopWorld_has_time_loop`, `no_time_loops_from_logic`, `loop_same_facts`, `logical_world_globally_hyperbolic`), and the new prime-closure theorem `QLF.FirstReturn.prime_event_reciprocal_open` (in the 375-anchor baseline): if a prime event splits at a nontrivial cut into nonempty `A` and `B`, neither half closes on its own. That is the formal core of “open half + open half + shared closure.”
 
 **`B-OPEN`:** the claim that *every* realized event has this reciprocal structure; the identification of the listening condition with a physical request; the reading of consciousness as a higher-order closure of this primitive loop.
 
@@ -365,7 +365,7 @@ process anywhere reduces.” The binary completeness clause is what prevents a p
 for an unrelated reason. The precise statements, domain restrictions, residual predicate and
 bisimulation choice are in
 [`verification/strange-loop/rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md).
-This target is **`NOT_STARTED`** and is not in the 344-anchor baseline.
+This target is **`NOT_STARTED`** and is not in the 375-anchor baseline.
 
 ### 2B.11 QKB (PR #216) as a candidate listener/trigger realization
 
@@ -398,7 +398,7 @@ seed/context can name the KB's own records and query process; answers that can m
 own capability set under a stated authority; a conservative return to the KB's finite records; and a
 machine-checked correspondence theorem. Those are `NOT_STARTED`.
 
-`PR #216` is an **open draft**, not part of the 344-anchor baseline and not audited here. This section
+`PR #216` is an **open draft**, not part of the 375-anchor baseline and not audited here. This section
 is a cross-link and a target, not a promotion.
 
 ### 2B.12 Is a QKB query itself a strange loop?
@@ -453,7 +453,7 @@ So the correct statement is:
 
 The concrete target remains `RhoCorrespondence` in §2B.10, plus the self-query obligation in
 [`verification/strange-loop/rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md).
-Both are `NOT_STARTED` and outside the 344-anchor baseline.
+Both are `NOT_STARTED` and outside the 375-anchor baseline.
 
 ## 3. Observer loops are not time loops
 
@@ -787,7 +787,7 @@ Any one of these, if proved under the §6.1 interface, would constitute support.
 
 ### 6.3 Minimal next proofs
 
-1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (generic two-element interface) and strengthened in `QLF_ConservativeReturn.lean`, which maps a formal count/phase object to a net-zero twist history and proves `R ∘ F = id`, closure, and count/phase recovery. Both are no-Mathlib/no-axiom and now anchored in the 344-anchor baseline; the claim record remains `PARTIAL` because this is a toy, not the actual operational bridge.
+1. **Lean statement and proof of the interface** — **done as a toy** in `QLF_StrangeLoop.lean` (generic two-element interface) and strengthened in `QLF_ConservativeReturn.lean`, which maps a formal count/phase object to a net-zero twist history and proves `R ∘ F = id`, closure, and count/phase recovery. Both are no-Mathlib/no-axiom and now anchored in the 375-anchor baseline; the claim record remains `PARTIAL` because this is a toy, not the actual operational bridge.
 2. **An instantiation for the Born uniqueness theorem** — **partial**: `QLF_StrangeLoopBorn.lean` proves the finite unit-way return on the existing `QLF_BornFromWays` register; the physical refinement remains open.
 3. **One blinded numerical check** whose protocol is committed before the numbers are looked up — three-polarizer or α residual. The three-polarizer protocol draft is [`verification/strange-loop/blinded_protocol.md`](verification/strange-loop/blinded_protocol.md); it is `AWAITING_DATA`, not executed.
 
@@ -859,7 +859,7 @@ and proves `tensor_conservative_return` / `tensorTrigger_exists`. `class_of_step
 shows that interleaving moves land in the same class. This proves the **coherence
 of the quotient return**, not that the quotient is the physically selected
 closure equivalence, and not the entangled-sector return. It is in the
-344-anchor baseline.
+375-anchor baseline.
 
 **Short cross-link and status boundary.** [`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean)
 is the strongest current near-example; [`QLF_TensorConservativeReturn`](lean/QLF_TensorConservativeReturn.lean)
@@ -918,14 +918,14 @@ The result is deliberately negative: a pure MO2 meet walk gives `0` (it blocks a
 
 **Already in place:**
 
-- 344-anchor Lean baseline (post-#224/#225/#226/#230), including 17 MO2 and 18 QuantumLogic anchors, 5 metric/lattice anchors, 12 Manifestation anchors, and 25 conservative-return/tensor-return/prime-closure anchors.
+- 375-anchor Lean baseline (post-#224/#225/#226/#230), including 17 MO2 and 18 QuantumLogic anchors, 5 metric/lattice anchors, 12 Manifestation anchors, and 25 conservative-return/tensor-return/prime-closure anchors.
 - Complete finite MO2 enumeration: 15 comparable pairs, 36/36 orthomodular implications (15 non-vacuous), 24 distributivity failures in each direction; all 19 lattice checks pass.
 - α leading value `137`, formal comparator-residual band `(1/64, 0.04814)`, reported structural `137.032`, 0.026% leading agreement.
 - `m_p/m_e = 6π⁵`, one-loop `g−2` form, and the other reported entries in Paper I Table 1.
 - Born finite uniqueness on Gaussian integers; no continuum or Gleason continuity step.
-- `QLF_StrangeLoop.lean` — toy two-element conservative-return interface, no Mathlib/no axioms; in the 344 baseline.
-- `QLF_ConservativeReturn.lean` — toy formal → net-zero twist history return with count/phase recovery, trigger/quotient structures and no-event-cycle; no Mathlib/no axioms; in the 344 baseline.
-- `QLF_StrangeLoopBorn.lean` — finite unit-way Born return on the existing Gaussian-integer register; in the 344 baseline; physical refinement still `B-OPEN`.
+- `QLF_StrangeLoop.lean` — toy two-element conservative-return interface, no Mathlib/no axioms; in the 375 baseline.
+- `QLF_ConservativeReturn.lean` — toy formal → net-zero twist history return with count/phase recovery, trigger/quotient structures and no-event-cycle; no Mathlib/no axioms; in the 375 baseline.
+- `QLF_StrangeLoopBorn.lean` — finite unit-way Born return on the existing Gaussian-integer register; in the 375 baseline; physical refinement still `B-OPEN`.
 - `no_time_loops_from_logic` and `loop_same_facts` for realized histories; loops in the reversible possibility algebra.
 
 **What would materially strengthen the claim:**
@@ -1015,7 +1015,7 @@ narrower: **the method now specifies what such a test would have to return.**
 - [`Alpha.md`](Alpha.md) — the α derivation programme and its honest scope.
 - [`SPARC.md`](SPARC.md) — the retrospective benchmark and its limits.
 - [`Claim_Status.md`](Claim_Status.md) — the human-readable claim ledger.
-- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` is proved in `QLF_TensorConservativeReturn` (in the 344 baseline).
+- [`lean/QLF_TensorFromClosure.lean`](lean/QLF_TensorFromClosure.lean) — independent composition derives the tensor universal property; the quotient return `TensorConservativeReturn` is proved in `QLF_TensorConservativeReturn` (in the 375 baseline).
 - [`verification/strange-loop/tensor_return_target.md`](verification/strange-loop/tensor_return_target.md) — the explicit `TensorConservativeReturn` target, now `PROVED` as a quotient construction; physical selection remains open.
 - [`lean/QLF_ConservativeReturn.lean`](lean/QLF_ConservativeReturn.lean) — `StrangeLoopTrigger` / `QuotientStrangeLoopTrigger`, the toy return and `no_event_cycle`.
 - [`Proof_to_Physics.md`](Proof_to_Physics.md) — G3 and the bridge registry.

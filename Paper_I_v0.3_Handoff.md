@@ -24,9 +24,11 @@ The repository changes are collected in [PR #224](https://github.com/rhovision-o
 - PR #230: twenty-five conservative-return, tensor-return and prime-closure anchors
   (StrangeLoop 7, finite Born 3, ConservativeReturn 9, tensor quotient 5, prime closure 1),
   baseline **344**; the actual bridges remain `B-OPEN`.
-- All 344 anchors have reviewed project-CI footprints; no old footprint was
-  changed by #225, #226 or #230. The `verification/paper-i-v0.3/` receipt remains
-  scoped to the 302-anchor #224 closure; the later deltas are in the #225/#226
+- PR #227: eleven realizable-walk / palindromic-order anchors, baseline **355**.
+- PR #222: twenty relativity/boost-covariance anchors, baseline **375**.
+- All 375 anchors have reviewed project-CI footprints; no old footprint was
+  changed by #225, #226, #230, #227 or #222. The `verification/paper-i-v0.3/` receipt remains
+  scoped to the 302-anchor #224 closure; the later deltas are in the #225/#226/#230/#227/#222
   PRs and the current baseline file.
 - Recursive typed-record validation, nested content checks, applicable gate paths,
   comparison/execution tiers, local receipt integrity and negative regression tests.
@@ -42,7 +44,7 @@ The repository changes are collected in [PR #224](https://github.com/rhovision-o
 Read [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/) for the #224
 receipt, then inspect the #225 and #226 PR diffs and the current
 [`lean/axiom_footprints.expected.json`](lean/axiom_footprints.expected.json)
-(344 entries). The original Lean execution was project CI, not a local
+(375 entries). The original Lean execution was project CI, not a local
 independent rebuild. The current exact-footprint gate is the authoritative
 formal check; the metric/Einstein and Manifestation results remain formal
 theorems under their stated premises, not physical bridge closures.
@@ -70,7 +72,7 @@ metric-singlet/lattice-Einstein result as a second representational case (§8.1)
 use Manifestation as formal backbone for the ToE map, not as physical evidence.
 
 Choose an immutable release head after checking CI; the current reviewed baseline is
-**344 anchors** (302 #224 + 5 #225 + 12 #226 + 25 #230). Cite the audited source and
+**375 anchors** (302 #224 + 5 #225 + 12 #226 + 25 #230 + 11 #227 + 20 #222). Cite the audited source and
 execution receipts explicitly; do not silently replace old evidence with moving main.
 Confirm the human author list, CRediT roles, conflicts and license before circulation.
 Then perform a short delta review and generate the final document/PDF with real tables.
