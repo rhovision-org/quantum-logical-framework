@@ -74,6 +74,27 @@ def _audit_anchors(root: Path) -> set[str]:
     return set(re.findall(r"^\s*#print axioms\s+([A-Za-z_][A-Za-z_0-9.']*)\s*$", text, re.MULTILINE))
 
 
+def _anchor_declared_in_file(anchor: str, text: str) -> bool:
+    """Check that the anchor's declaration actually occurs in the named file.
+
+    Accepts either the fully qualified string or a namespace declaration plus a
+    theorem/lemma/def declaration of the final name. This binds a proof artifact
+    to the file it names rather than allowing an audited anchor from another file.
+    """
+    if anchor in text:
+        return True
+    parts = anchor.split(".")
+    final = parts[-1]
+    prefix = ".".join(parts[:-1])
+    declaration = re.compile(
+        r"(?m)^\s*(?:theorem|lemma|def|abbrev|instance|structure|inductive)\s+"
+        + re.escape(final)
+        + r"\b"
+    )
+    namespace = re.compile(r"(?m)^\s*namespace\s+" + re.escape(prefix) + r"\b")
+    return bool(declaration.search(text) and namespace.search(text))
+
+
 def _validate_proof_artifact(value: object, label: str, status: str, root: Path) -> None:
     """Require a real repository artifact for a PROVED return.
 
@@ -99,10 +120,15 @@ def _validate_proof_artifact(value: object, label: str, status: str, root: Path)
         baseline_path = root / "lean" / "axiom_footprints.expected.json"
         _require(baseline_path.is_file(), f"{label}: exact-footprint baseline is missing")
         baseline = set(json.loads(baseline_path.read_text(encoding="utf-8")))
+        target_text = target.read_text(encoding="utf-8")
         for anchor in anchors:
             _require(ANCHOR.fullmatch(anchor) is not None, f"{label}: invalid anchor {anchor!r}")
             _require(anchor in audit, f"{label}: anchor is not in QLF_AxiomAudit: {anchor}")
             _require(anchor in baseline, f"{label}: anchor is not in the reviewed exact-footprint baseline: {anchor}")
+            _require(
+                _anchor_declared_in_file(anchor, target_text),
+                f"{label}: anchor {anchor} is not declared in {relative}",
+            )
         return
 
     _text(value, label)

@@ -320,6 +320,7 @@ class ClaimRecordTests(unittest.TestCase):
             "synthetic theorem, not a real proof",
             {"path": "does/not/exist.lean", "anchors": ["QLF.TensorConservativeReturn.tensor_conservative_return"]},
             {"path": "lean/QLF_TensorConservativeReturn.lean", "anchors": ["QLF.Does.not_exist"]},
+            {"path": "lean/QLF_TensorConservativeReturn.lean", "anchors": ["QLF.FirstReturn.prime_event_reciprocal_open"]},
         ):
             with self.subTest(artifact=artifact):
                 bad = copy.deepcopy(good)

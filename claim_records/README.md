@@ -47,8 +47,10 @@ return and a real artifact; a `bridge: CLOSED` record requires a `TESTED` loop.
 
 For a `PROVED` return, `proof_artifact` must be the structured form
 `{"path": "lean/File.lean", "anchors": ["QLF.Namespace.theorem"]}`. The validator
-checks that the path exists and that every anchor appears in both
-`lean/QLF_AxiomAudit.lean` and `lean/axiom_footprints.expected.json`. A free-text
+checks that the path exists, that every anchor appears in both
+`lean/QLF_AxiomAudit.lean` and `lean/axiom_footprints.expected.json`, and that
+its declaration actually occurs in the named Lean file (`namespace` plus
+`theorem`/`lemma`/`def`). A free-text
 artifact is accepted only for `PARTIAL`/`NOT_STARTED` obligations; a descriptive
 Lean path is still existence-checked.
 
