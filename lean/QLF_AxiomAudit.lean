@@ -74,6 +74,9 @@ import QLF_FirstReturn
 import QLF_GaugeAxis
 import QLF_LocalGauge
 import QLF_LatticeGauge
+import QLF_RelativityScale
+import QLF_LorentzSymbol
+import QLF_BoostCovariance
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -655,3 +658,24 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TensorConservativeReturn.F_injective
 #print axioms QLF.TensorConservativeReturn.R_forward
 #print axioms QLF.FirstReturn.prime_event_reciprocal_open
+
+#print axioms QLF.RelativityScale.step_census_frame_dependent
+#print axioms QLF.RelativityScale.covariance_isotropic
+#print axioms QLF.RelativityScale.anisotropy_ratio
+#print axioms QLF.RelativityScale.boost_not_euclidean
+#print axioms QLF.LorentzSymbol.characteristic_isotropic
+#print axioms QLF.LorentzSymbol.census_symbol
+#print axioms QLF.LorentzSymbol.symbol_eq_form
+#print axioms QLF.LorentzSymbol.symbol_det
+#print axioms QLF.LorentzSymbol.symbol_light_cone
+#print axioms QLF.LorentzSymbol.quadratic_form_frame_invariant
+#print axioms QLF.LorentzSymbol.diagonal_light_superluminal
+#print axioms QLF.LorentzSymbol.marginal_uniform
+#print axioms QLF.LorentzSymbol.marginal_normalized
+#print axioms QLF.LorentzSymbol.marginal_proportional_iff
+#print axioms QLF.LorentzSymbol.joint_symbol_swap
+#print axioms QLF.BoostCovariance.shell_taylor
+#print axioms QLF.BoostCovariance.onShell_minkowski
+#print axioms QLF.BoostCovariance.shell_lorentz_invariant
+#print axioms QLF.BoostCovariance.shell_boost_invariant
+#print axioms QLF.BoostCovariance.diracWalk_boost_covariant

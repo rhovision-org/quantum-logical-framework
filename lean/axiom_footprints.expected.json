@@ -25,6 +25,31 @@
     "propext"
   ],
   "QLF.AlphaRigidity.inverseAlpha_at_three": [],
+  "QLF.BoostCovariance.diracWalk_boost_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostCovariance.onShell_minkowski": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostCovariance.shell_boost_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostCovariance.shell_lorentz_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostCovariance.shell_taylor": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BornFromWays.assignment_unique": [
     "Classical.choice",
     "Quot.sound",
@@ -750,6 +775,61 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LorentzSymbol.census_symbol": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.characteristic_isotropic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.diagonal_light_superluminal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.joint_symbol_swap": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.marginal_normalized": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.marginal_proportional_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.marginal_uniform": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.quadratic_form_frame_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.symbol_det": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.symbol_eq_form": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LorentzSymbol.symbol_light_cone": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.MO2.compl_antitone": [
     "Classical.choice",
     "Quot.sound",
@@ -1244,6 +1324,26 @@
     "propext"
   ],
   "QLF.Realizability.no_continuum_in_finite_region": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativityScale.anisotropy_ratio": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativityScale.boost_not_euclidean": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativityScale.covariance_isotropic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativityScale.step_census_frame_dependent": [
     "Classical.choice",
     "Quot.sound",
     "propext"

@@ -72,6 +72,37 @@ The **temperature** of this radiation is Lean-anchored: the canonical Hawking te
 
 The unitarity claim above is about **information** and the **exactly-conserved signed counts**. Electric charge is such a count (`signed_count_conserved`, [`lean/QLF_BMinusL.lean`](lean/QLF_BMinusL.lean)) and every QLF closure is electrically neutral, so charge is carried as "hair" and returned by the unwind. But **`B−L` is *not* an exactly-conserved signed count** — `wcount_zero_on_ZFA` shows every conserved signed count is zero on closures, yet the deuteron closure has `B−L = 1`, and the neutrino is **Majorana** (`neutrino_majorana`, [`lean/QLF_Majorana.lean`](lean/QLF_Majorana.lean)), so lepton number / `B−L` is violated. A QLF black hole therefore does **not** carry `B−L` as a protected hair — consistent with the standard quantum-gravity expectation (Banks–Seiberg, swampland, no-hair) that gravity admits no exact *global* symmetries. What is preserved is the unitary information ledger (§3, [Conservation.md §6](Conservation.md)) and the exact *gauge* charge — not the global `B−L`.
 
+## 3b. The lattice light cone at the horizon
+
+The temperature above is the continuum one. *Everything in this section is conditional on reading
+the census symbol's singular set as light's dispersion law, an assumption
+([`Relativity_Principle.md`](Relativity_Principle.md) §5), and the palindromic walk of
+[`QM_Postulates_QLF.md`](QM_Postulates_QLF.md) §5b gives the opposite off-axis sign, which would
+brighten the diagonals instead.* Under that reading, the census's light cone is not round at the Planck
+scale ([`Relativity_Principle.md`](Relativity_Principle.md) §5a, [`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean)):
+`sin²ω = Σ sin²k_a`, exact along a lattice axis (`axis_light_exact`) and faster than `c` off-axis
+(`diagonal_light_superluminal`), by an amount quadratic in `k L_P`. Two consequences for black holes:
+
+- **The spectrum is the Hawking spectrum until the last moments.** A hole of mass `M` radiates at
+  `T = 1/(8πM)` in Planck units, so the emitted modes reach the bent part of the light cone only when
+  `M` is a few Planck masses. [`lattice_hawking.py`](lattice_hawking.py) gives the body-diagonal
+  power relative to the axis as `−0.007 %` at `10 M_P`, `−0.66 %` at `1 M_P` and `−7.3 %` at
+  `0.3 M_P`, and `10⁻⁷⁹` for the Sun. The final burst dims along the lattice diagonals. The axes are
+  read as the hole's own twist frame (`Relativity_Principle.md` §2), so there is no fixed direction in
+  the sky, and the effect averages away over many holes. Near `M_P` the semiclassical horizon is itself
+  in doubt, so those rows are indicative.
+- **Off-axis Planck-scale modes outrun `c`, so the horizon is not one surface for them.** With a
+  superluminal dispersion, a mode's effective horizon depends on its frequency and direction; this is
+  the known behaviour of superluminal dispersion at a horizon, now with a definite sign from the
+  substrate. It gives the "no event horizon in the classical sense" above a precise, limited content
+  for Planck-scale off-axis modes only; long-wavelength light still sees the ordinary horizon. Near
+  the band edge `ω → π/2` the group velocity of this lattice dispersion grows without bound, which is
+  a lattice artefact (the doublers), not a physical signal speed.
+
+Hadron-scale "black holes" ([`Hadron_BlackHoles.md`](Hadron_BlackHoles.md)) are unaffected: what
+matters is the momentum of the emitted quanta, and decay products at MeV energies sit at
+`(k L_P)² ~ 10⁻⁴⁰`.
+
 ## 4. Logical Density Gradient and Emergent Dark Energy
 
 Around every gauge-folded primordial black hole the Markov blanket induces a radial logical-density gradient:
