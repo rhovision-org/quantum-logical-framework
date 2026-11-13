@@ -957,7 +957,7 @@ The Paper I v0.3 Gist is linked from the [flow chart](FlowChart.md) and the repo
 
 ### 9.1 Map is the territory (issue #213)
 
-[Issue #213](https://github.com/rhovision-org/quantum-logical-framework/issues/213), “Map is the Territory,” is the
+[Issue #213](https://github.com/rhovision-org/quantum-logical-framework/issues/213) / [`Map_Is_Territory.md`](Map_Is_Territory.md), “Map is the Territory,” is the
 interpretive claim that under ZFA the relational rewrite network is not a map of a separate territory; its
 self-consistent closed execution *is* the territory. Standard QM and classical physics are then incomplete maps
 of that single territory.

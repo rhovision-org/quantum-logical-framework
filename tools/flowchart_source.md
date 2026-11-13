@@ -32,12 +32,14 @@ flowchart LR
   FRN --> D10["10 Beyond the SM"]
   FND --> MTH["Methods and evidence: Paper I v0.3"]
   FND --> SL["Two-phase / strange-loop bootstrapping"]
+  FND --> MAP["Map ≡ territory under ZFA (B-OPEN interpretation; issue #213)"]
   SL -.->|frames| MTH
   MTH -.->|audits| D2
   MTH -.->|audits| D6
   MTH -.->|audits| D8
   click MTH "#methods-and-evidence-paper-i-v03"
   click SL "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md" _blank
+  click MAP "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Map_Is_Territory.md" _blank
   click MT "https://github.com/rhovision-org/quantum-logical-framework/issues/213" _blank
   click KNW "https://github.com/rhovision-org/quantum-logical-framework/blob/main/Strange_Loops.md#3a-the-deeper-loop-closure-knowledge-and-the-immanent-self-model" _blank
   click AIB "https://github.com/rhovision-org/quantum-logical-framework/blob/main/verification/strange-loop/self_knowledge_target.md" _blank
@@ -53,6 +55,8 @@ The five families: **Foundations** (1-2, 12) &middot; **Matter and forces** (3, 
 The **Methods and evidence** layer is **cross-cutting**, not a sixth domain: it audits claims across the families without changing the taxonomy.
 
 **Two-phase / strange-loop bootstrapping:** the controlled metalanguage ↔ substrate loop, the primitive event as mutual closure of two incomplete perspectives, the ρ-calculus/QKB listener–trigger analogy, the observer self-reference/no-time-loop distinction, and the active-inference/self-knowledge-bisimulation targets are collected in [`Strange_Loops.md`](Strange_Loops.md), with the conservativity resolution in [`Mathematics_From_QLF.md`](Mathematics_From_QLF.md) §2 and the possibility/record distinction in [`Philosophy.md`](Philosophy.md) §3d.
+
+**Map ≡ territory (issue #213):** the formal substrate components are `F`/verified at collaborator tier; the identification itself is `B-OPEN`/conjecture; ZFA exclusivity is an `E-candidate` with kill conditions. Standard QM and classical physics are treated as incomplete maps. This is graded in [`Map_Is_Territory.md`](Map_Is_Territory.md), not asserted as a theorem. See also [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207) and [#11](https://github.com/rhovision-org/quantum-logical-framework/issues/11).
 
 **Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **344-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
 
@@ -524,7 +528,7 @@ flowchart TD
   PAPER --> GIST["Gist / verification/paper-i-v0.3/"]
 ```
 
-**Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) · [`Strange_Loops.md`](Strange_Loops.md) · [`verification/strange-loop/`](verification/strange-loop/README.md) · [`rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md) · [`self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md) · [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py).
+**Paper and evidence:** [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1) · [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md) · [`Claim_Status.md`](Claim_Status.md) · [`Proof_Trust.md`](Proof_Trust.md) · [`Proof_to_Physics.md`](Proof_to_Physics.md) · [`Manifestation.md`](Manifestation.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Paper_I_v0.3_Handoff.md`](Paper_I_v0.3_Handoff.md) · [live HTML](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html) · [`Strange_Loops.md`](Strange_Loops.md) · [`Map_Is_Territory.md`](Map_Is_Territory.md) · [`verification/strange-loop/`](verification/strange-loop/README.md) · [`rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md) · [`self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md) · [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py).
 
 **Issue #11 boundary:** this layer does not claim a new empirical prediction. It specifies the missing operational return and keeps first-order `F`/`N` results from being promoted to `E`; issue #11 remains open until a prediction or derivation is actually tested.
 

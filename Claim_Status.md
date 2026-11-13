@@ -38,7 +38,7 @@ A strange loop is a level-crossing self-reference that returns to its starting l
 
 The four corresponding JSON records carry a `strange_loop` object with `name`, `levels`, `return_level`, `conservative_return`, `noncircularity_witness`, `status`, `first_order_evidence` (`F`, `N`, `F+N` or `NONE`), `first_order_note` and `defeater`, plus a `proof_obligation` naming the domain, codomain, forward/return maps, composite identity, conservative-return status, imported axioms and falsifier. MO2 is `PARTIAL` with `QLF_ConservativeReturn` (and the generic `QLF_StrangeLoop` interface); Born is `PARTIAL` with `QLF_StrangeLoopBorn`; α and SPARC remain `NOT_STARTED`. A `TESTED` loop requires `PROVED` plus a real artifact, and a `bridge: CLOSED` record requires a `TESTED` loop. The trigger shape is formalized as `QLF.ConservativeReturn.StrangeLoopTrigger`; `toyTrigger_exists` proves only the toy instantiation, and `no_event_cycle` proves the toy no-time-loop analogue, not any operational bridge.
 
-**Map is the territory (issue #213).** The formal substrate components are `F`/verified; the identification
+**Map is the territory (issue #213).** See [`Map_Is_Territory.md`](Map_Is_Territory.md) for the graded claim table and related-issue status. The formal substrate components are `F`/verified; the identification
 “map ≡ territory / entanglements are the only effects” is `B-OPEN` / conjecture, and ZFA exclusivity is an
 `E-candidate` with kill conditions. `TensorConservativeReturn` is a worked conservative-return form for one
 conventional construction; it does not close the interpretive claim. See [issue #213](https://github.com/rhovision-org/quantum-logical-framework/issues/213).
