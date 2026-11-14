@@ -329,5 +329,6 @@ lean_lib QLF where
     `QLF_ConservativeReturn,
     `QLF_TensorConservativeReturn,
     `QLF_MeadTransaction,
-    `QLF_MagneticOrientation
+    `QLF_MagneticOrientation,
+    `QLF_ClockRedshift
   ]

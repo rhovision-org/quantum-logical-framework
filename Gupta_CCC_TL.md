@@ -101,7 +101,7 @@ python3 scripts/validate_claim_records.py
 python3 scripts/doc_network_check.py
 ```
 
-The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. No Lean code is required for the reference calculation. The later clock-ratio formalization must distinguish algebraic identities from the physical map and pass the existing Lean review workflow. There is no parent issue or five-PR publication created by this branch; these are review stages ready to be split when requested.
+The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. The reference calculation is independent of Lean. The first clock-ratio algebra is now formalized in §6; physical-map and finite-record return obligations remain separate. There is no parent issue or five-PR publication created by this branch; these are review stages ready to be split when requested.
 
 ## 5. Remaining work and review gates
 
@@ -119,3 +119,17 @@ The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, b
 | Review coordination | Parent issue, accountable reviewer and separately scoped PRs; none created yet. |
 
 The completed work is the external reference calculation and the improved research protocol. The broader program remains open for the missing evidence above.
+
+## 6. First Lean obligations
+
+[QLF_ClockRedshift](lean/QLF_ClockRedshift.lean) supplies nine algebraic statements:
+
+- `ratio_self`, `ratio_pos`, `ratio_composition`: positive clock-ratio normalization and telescoping.
+- `redshift_composition`: multiplicative redshift follows from the declared ratio convention.
+- `common_rescaling`: a shared rate-unit rescaling cancels.
+- `residual_factor_unique`: the residual is fixed once a nonzero expansion factor is fixed.
+- `positive_factorization_not_unique`: without that input, a positive total admits distinct positive factorizations.
+- `free_clock_scale_hits_any_age`: an unconstrained positive clock conversion can realize any positive target age.
+- `lapse_rate_return`: the algebraic lapse conversion returns the supplied coordinate rate.
+
+The last two are explicit boundaries: an age match with a free scale is not independent selection, and algebraic invertibility is not a return theorem for the finite QLF closure records. No project axiom or physical identification is introduced. The module is registered in the build and exact-footprint audit; verification is pending CI until recorded otherwise. The physical bridge remains B-OPEN.
