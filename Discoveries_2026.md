@@ -287,6 +287,7 @@ as dark matter, the CMB parity asymmetry) are theirs, not QLF's.
 | [10](#p10) | Vacuum-enhanced superconductivity in a cavity (NbSe₂) | The Casimir effect as a finite census ([`QLF_Casimir`](lean/QLF_Casimir.lean)) | A reading, and the disputed point it has to face | **open bridge** |
 | [11](#p11) | A 40-year-old CFT energy ladder measured (Caltech) | Ising exponents tested ([`ising_exponent_test.py`](ising_exponent_test.py)) | Where QLF would have to reproduce it | **open** |
 | [12](#p12) | Pair density waves in UTe₂ | Cooper pairs as shared closures ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md)) | A reading only | **open** |
+| [13](#p13) | CCC+TL consistency studies: BBN, rotation curves and clocks | Cosmic tick count N remains open ([`AgeOfUniverse.md`](AgeOfUniverse.md)) | External 2023 age benchmark reproduced; a QLF bridge falsification program is specified | **self-run numerical reference; B-OPEN** |
 
 <a id="p1"></a>
 
@@ -551,7 +552,21 @@ experimental picture is itself unsettled.
 
 <a id="p13"></a>
 
-## 13. Not yet covered
+## 13. CCC+TL in 2026 — a test program for the age/redshift bridge
+
+**Reported.** Gupta and Samaras published a conditional BBN consistency study in [Universe 12(7), 193](https://doi.org/10.3390/universe12070193), 26 June 2026, highlighted by the [University of Ottawa on 6 November](https://www.uottawa.ca/faculty-science/news-all/theory-predicting-older-universe-without-dark-matter-dark-energy-passes-key-cosmological). The light-element result relies on matched expansion, interaction and neutron-decay scalings. It is a model consistency test, not a measurement that the universe is 26.7 Gyr old; that age comes from Gupta's 2023 model.
+
+The 2026 [SPARC paper](https://arxiv.org/abs/2608.11575v1) uses inverse reconstruction with a fitted turn-off density per galaxy. The [chronometer paper](https://arxiv.org/abs/2606.27391v1) and [pulse-stretch paper](https://arxiv.org/abs/2609.10582v1) introduce phenomenological calibration/stretch proposals. Each needs a separate operational test; these publications do not automatically close one another's assumptions.
+
+**QLF's prior position.** [AgeOfUniverse.md](AgeOfUniverse.md) leaves N undetermined and uses H0 calibration. Its finite-positive-age theorem does not determine a numerical cosmic age. QLF's [SPARC benchmark](SPARC.md) is a forward RAR calculation with declared global inputs, a different task from the inverse CCC comparison.
+
+**Work on this branch.** [Gupta_CCC_TL.md](Gupta_CCC_TL.md) reproduces the external 2023 age equations with published fitted inputs: 26.6672, 5.8325 and 3.4633 Gyr at observed z=0,10,20, within the frozen abstract-precision tolerance. The present-age hundredth in Table 1 is unresolved. The [execution record](verification/gupta-ccc-tl/README.md) identifies the self-run scope; there is no new Lean theorem or empirical QLF result.
+
+**What can fail.** A selected QLF clock/redshift map must preserve finite clock records and independently select its evolution and scale. Compare ages only after fixing the same operational clock. A scoped invariant obstruction rejects that map; absent selection leaves it underdetermined. Matched SPARC and 2026 BBN/clock tests remain unexecuted. Status: external numerical reference established at self-run scope; QLF bridge **B-OPEN**.
+
+<a id="p14"></a>
+
+## 14. Not yet covered
 
 Later 2026 results go here, each with a source before a reading is written.
 

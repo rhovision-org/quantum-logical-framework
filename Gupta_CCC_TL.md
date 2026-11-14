@@ -2,7 +2,7 @@
 
 [QLF](README.md) · [Theory index](Theory_Of_Everything.md) · [Flow chart](FlowChart.md)
 
-**Status: B-OPEN; external reference benchmark under development.** The question is whether QLF independently derives, permits, or excludes the CCC+TL observable relations. Neither 13.8 nor 26.7 Gyr is a target for choosing QLF rules. This branch implements stage 1 and specifies the later stages; it does not adopt a new substrate rule.
+**Status: external 2023 numerical benchmark passes at abstract precision; QLF bridge B-OPEN.** The question is whether QLF independently derives, permits, or excludes the CCC+TL observable relations. Neither 13.8 nor 26.7 Gyr is a target for choosing QLF rules. This branch implements stage 1 and specifies the later stages; it does not adopt a new substrate rule.
 
 ## 1. Evidence and exposure
 
@@ -21,6 +21,36 @@ Let `I(zc) = integral[0,zc] dzc/E`. Equations 35, 42–44 give `Ht/Hc = (1+r)(3+
 Equation 45 supplies `dL = dp sqrt((1+z_obs)(1+zc))`; equation 49 supplies `dA = a f dp`. Keep these source conventions distinct from an assumed distance-duality law. Distances, pulse stretching, spectral redshift and clock aging need separate operational maps.
 
 The 2023 scaling is not a common equal power for every dimensionful constant: its discussion specifies `c ~ f`, `G ~ f³`, `h ~ f²`, `k_B ~ f²`. Dimensionless invariance requires a complete unit/observable map; it does not follow by assertion. In particular, distinguish the CCC rate alpha from the fine-structure constant alpha_EM. Later CCC versions must have separate specifications; do not splice their equations into this reference.
+
+### Reproduced values
+
+| Observed z | Published age (Gyr) | Computed age (Gyr) | Expansion zc | TL zt |
+|---|---|---|---|---|
+| 0 | 26.7 | 26.667212 | 0 | 0 |
+| 10 | 5.8 | 5.832453 | 4.659195 | 0.943739 |
+| 20 | 3.5 | 3.463280 | 7.663198 | 1.424047 |
+
+The values pass the specification frozen before computation; the present-age difference from Table 1 at hundredth precision remains unresolved. See the [full report](verification/gupta-ccc-tl/result.json) for f, expansion H, distances, quadrature and convergence residuals.
+
+### Clock and observable audit still required
+
+The 2023 metric (equation 2) includes a lapse f and a spatial scale af. If read with fixed reference c and standard comoving metric proper time, it gives `d tau = f dt` and expansion of the spatial metric `d log(af)/d tau = (H+alpha)/f`. The reproduced equation-50 age integrates the paper's t variable. Identifying that variable with atomic-clock age or QLF proper age requires an operational derivation; a coordinate transformation by itself is not a new age prediction. This is a specific stage-2 obligation, not permission to relabel the 26.7 Gyr target.
+
+When c or h varies in the stated convention, wavelength ratios, frequency ratios and photon-energy ratios are not interchangeable without tracking the emission and reception standards. Keep the source's wavelength-redshift definition and derive its frequency/clock reading. Likewise, test the source's luminosity/angular-distance prescriptions against operational distance duality rather than assuming a standard relation.
+
+### The 2026 follow-up literature
+
+These are verified source leads with their own assumptions; none has been numerically reproduced on this branch. The [2026 discoveries entry](Discoveries_2026.md#p13) connects this program to the wider research index.
+
+| Source | Result relevant to this program | Required next test |
+|---|---|---|
+| Gupta & Samaras, *A Big Bang Nucleosynthesis Consistency Test of the CCC+TL Cosmology*, [Universe 12(7), 193](https://doi.org/10.3390/universe12070193), 26 June 2026 | Conditional preservation of light-element yields under matched expansion, interaction and decay-rate scaling on the early plateau | Reproduce the network and perturb rate scalings separately; distinguish an invariant rescaling from an independent age test. |
+| Gupta, *Testing the CCC+TL cosmology with cosmic-chronometer measurements of the Hubble parameter*, [arXiv:2606.27391v1](https://arxiv.org/abs/2606.27391v1), MNRAS stag1126 | A phenomenological age-calibration factor is proposed to address the reported chronometer tension | Recompute stellar calibrations or test the proposed factor independently; do not treat its introduction as an already-derived clock bridge. |
+| Gupta, Samaras & Kumar, *Supernova Time Dilation in Hybrid Expansion-Tired-Light Cosmologies*, [arXiv:2609.10582v1](https://arxiv.org/abs/2609.10582v1) | Adds phenomenological pulse stretch using a hybrid/parent lookback-time ratio | Derive pulse transport and intrinsic light-curve calibration; do not import the 2026 stretch into the 2023 benchmark. |
+| Gupta & Samaras, [SPARC study, arXiv:2608.11575v1](https://arxiv.org/abs/2608.11575v1) | Inverse reconstruction with per-galaxy turn-off fitting | Execute the matched forward/inverse protocols in stage 3. |
+| Gupta & Samaras, *Gravitational Lensing of the Bullet Cluster in the CCC+TL Cosmology: A Controlled Proof-of-Concept Study*, [Universe 12(10), 308](https://doi.org/10.3390/universe12100308) | Compares a two-parameter density prescription against a simplified lensing reference | Compare matched image-plane likelihoods and mass priors; a source-plane diagnostic is not an equivalent image-plane fit. |
+
+The [University of Ottawa announcement, 6 November 2026](https://www.uottawa.ca/faculty-science/news-all/theory-predicting-older-universe-without-dark-matter-dark-energy-passes-key-cosmological) points to the BBN study. The announcement date is not the publication date, and the 26.7 Gyr result originates in the 2023 model. Separate a reported 2026 consistency test from discovery of a measured older universe.
 
 ## 3. Five review stages
 
@@ -58,7 +88,7 @@ A QLF value near 13.8 Gyr disfavors the Gupta value only for the **same clock de
 - **Permitted but underdetermined:** an admissible conservative realization exists, but QLF does not select it uniquely; this is one way and a lower bound on multiplicity.
 - **Incompatible within a specified class:** an invariant obstruction or counterexample excludes the frozen map/family. State the domain; do not extrapolate to all QLF constructions.
 
-Empirical rejection is separate: freeze datasets, covariance, nuisance priors, rejection statistic and multiplicity correction before tests. BBN, CMB spectra, BAO, chronometers and supernova pulse stretching are future joint consistency tests, with model-dependent calibration documented. A university announcement is a discovery lead, not acceptance evidence. Later BBN/chronometer papers require individually verified versions and equations before inclusion.
+Empirical rejection is separate: freeze datasets, covariance, nuisance priors, rejection statistic and multiplicity correction before tests. BBN, CMB spectra, BAO, chronometers and supernova pulse stretching are future joint consistency tests, with model-dependent calibration documented. A university announcement is a discovery lead, not acceptance evidence. The 2026 sources above have verified bibliographic entries; their equation sets, data and code still need separate frozen specifications before execution.
 
 ## 4. Run and review
 
@@ -72,3 +102,20 @@ python3 scripts/doc_network_check.py
 ```
 
 The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. No Lean code is required for the reference calculation. The later clock-ratio formalization must distinguish algebraic identities from the physical map and pass the existing Lean review workflow. There is no parent issue or five-PR publication created by this branch; these are review stages ready to be split when requested.
+
+## 5. Remaining work and review gates
+
+| Missing item | Completion evidence |
+|---|---|
+| Independent reproduction | A second implementation/reviewer checks the source equations, branch selection, full curves, all output fields and the present-age precision discrepancy. |
+| Parameter uncertainty | Published covariance or an explicitly conservative alternative, including parameter rounding and model-regime sensitivity; numerical convergence alone is insufficient. |
+| Model controls | Separately pinned CCC-only and LCDM controls; a no-TL limit where mathematically applicable; no reuse of one model's fitted H0 in another. |
+| Wider redshift coverage | Frozen grid for f, H, t and distances, plus convergence and approximation-domain checks; current reported targets are z=0,10,20 only. |
+| Source version archive | Obtain source equations/code with a durable provenance manifest and reconcile published/arXiv variants; the current source-byte digest is not an archived independent implementation. |
+| QLF forward/return maps | Concrete clock/count domain, selected evolution, units, apparatus map and preserved finite invariants; Lean identities alone cannot close the bridge. |
+| Independent count N | Substrate selection and a justified accumulated-tick conversion, without fitting H0 or either age target. |
+| Empirical protocols | Frozen SPARC sample/splits/scores; BBN network inputs; chronometer recalibration; pulse stretching; BAO ruler and CMB-spectrum calculations with covariance. |
+| Statistical decisions | Numerical equivalence margins, uncertainty model, rejection thresholds and multiple-test handling chosen before each new comparison. |
+| Review coordination | Parent issue, accountable reviewer and separately scoped PRs; none created yet. |
+
+The completed work is the external reference calculation and the improved research protocol. The broader program remains open for the missing evidence above.
