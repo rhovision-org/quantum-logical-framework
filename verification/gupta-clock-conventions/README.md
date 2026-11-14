@@ -29,3 +29,16 @@ The [paper](https://arxiv.org/abs/2309.13100v1) identifies Matlab curve fitting 
 The [implementation](../../tools/gupta_age_precision_audit.py) and [tests](../../tests/test_gupta_age_precision_audit.py) check the nominal value against the stored baseline without rerunning it, the rounding exclusion, specified diagnostics, the matter-dominated limit and invalid input rejection. The implementation is committed before the final report is recorded. Artifact hashes cover this audit separately from the immutable stage-1 manifest.
 
 Needed next: the author-used numerical intermediate/constants or an explicit correction reconciling Table 1. No message has been sent to the author. Until that input or equivalent published evidence exists, [Gupta_ClockConventions.md](../../Gupta_ClockConventions.md) remains a proposed contract and physical mapping is deferred.
+
+## Reproduce this audit
+
+The specification was frozen at `b85242bedfccac16e3979687e4681f6d0aae83a3`; the implementation was committed at `fe870de41c1e185c6e30c0980bd2cafa134cf65b` before recording the [result](audit_result.json). [SHA256SUMS](SHA256SUMS) covers the specification, audit implementation, tests, result and proposed convention contract.
+
+```bash
+python3 tools/gupta_age_precision_audit.py
+python3 -m unittest discover -s tests -p 'test_gupta_age_precision_audit.py' -v
+sha256sum -c verification/gupta-clock-conventions/SHA256SUMS
+sha256sum -c verification/gupta-ccc-tl/SHA256SUMS
+```
+
+The five new audit tests pass. Typed-record and document-link validation pass. No Lean source or build input changes are part of this follow-up, and no new kernel assurance or independent numerical review of this audit is claimed.
