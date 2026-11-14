@@ -4,7 +4,7 @@
 
 **Status: external 2023 numerical benchmark passes at abstract precision; QLF bridge B-OPEN.**
 
-Parent: [issue #234](https://github.com/rhovision-org/quantum-logical-framework/issues/234). Initial review: [PR #233](https://github.com/rhovision-org/quantum-logical-framework/pull/233). An independent reviewer is still to be designated; creating a parent issue does not establish pre-exposure registration. The question is whether QLF independently derives, permits, or excludes the CCC+TL observable relations. Neither 13.8 nor 26.7 Gyr is a target for choosing QLF rules. This branch implements stage 1 and specifies the later stages; it does not adopt a new substrate rule.
+Parent: [issue #234](https://github.com/rhovision-org/quantum-logical-framework/issues/234). Initial review: [PR #233](https://github.com/rhovision-org/quantum-logical-framework/pull/233). [Grok protocol review](verification/gupta-ccc-tl/grok_protocol_review.md), relayed and accepted by Jim, is recorded at document/protocol scope. [Grok's numerical rerun](verification/gupta-ccc-tl/grok_numerical_review.md) is recorded as an independent execution PASS; the source of the Table 1 residual and physical-map review remain open; creating a parent issue does not establish pre-exposure registration. The question is whether QLF independently derives, permits, or excludes the CCC+TL observable relations. Neither 13.8 nor 26.7 Gyr is a target for choosing QLF rules. This branch implements stage 1 and specifies the later stages; it does not adopt a new substrate rule.
 
 ## 1. Evidence and exposure
 
@@ -113,7 +113,7 @@ The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, b
 
 | Missing item | Completion evidence |
 |---|---|
-| Independent reproduction | A second implementation/reviewer checks the source equations, branch selection, full curves, all output fields and the present-age precision discrepancy. |
+| Independent review scope | Grok reports a successful separate execution of the existing implementation and artifact checks. A second implementation/source-equation audit and explanation of the present-age precision discrepancy remain open. |
 | Parameter uncertainty | Published covariance or an explicitly conservative alternative, including parameter rounding and model-regime sensitivity; numerical convergence alone is insufficient. |
 | Model controls | Separately pinned CCC-only and LCDM controls; a no-TL limit where mathematically applicable; no reuse of one model's fitted H0 in another. |
 | Wider redshift coverage | Frozen grid for f, H, t and distances, plus convergence and approximation-domain checks; current reported targets are z=0,10,20 only. |
@@ -138,4 +138,8 @@ The completed work is the external reference calculation and the improved resear
 - `free_clock_scale_hits_any_age`: an unconstrained positive clock conversion can realize any positive target age.
 - `lapse_rate_return`: the algebraic lapse conversion returns the supplied coordinate rate.
 
-The last two are explicit boundaries: an age match with a free scale is not independent selection, and algebraic invertibility is not a return theorem for the finite QLF closure records. No project axiom or physical identification is introduced. The module is registered in the build and exact-footprint audit; verification is pending CI until recorded otherwise. The physical bridge remains B-OPEN.
+The last two are explicit boundaries: an age match with a free scale is not independent selection, and algebraic invertibility is not a return theorem for the finite QLF closure records. No project axiom or physical identification is introduced. The module is registered in the build and exact-footprint audit; all nine statements and their exact footprints passed [CI run 43600320884](https://github.com/rhovision-org/quantum-logical-framework/actions/runs/43600320884) at `7e181c2b1d15f7b7ca4e3cde9a51c0f761751469`. The physical bridge remains B-OPEN.
+
+## 7. CI turnaround
+
+The Lean workflow restores only compatible QLF build outputs/traces after recreating pinned dependency metadata. Lake still checks the target graph and rebuilds affected modules; the full exact-axiom audit always executes. New commits cancel superseded runs for the same PR. On an empty cache, an already successful same-branch artifact may seed it only after an exact diff of Lean sources, toolchain, manifest and build configuration. Otherwise the workflow builds cold. Only successful builds that also pass the footprint gate are saved. This reduces repeated recompilation without treating a cache as a new proof or changing the promotion rules.

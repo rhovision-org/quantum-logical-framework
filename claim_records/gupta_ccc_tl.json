@@ -2,8 +2,8 @@
   "record_type": "test_ledger",
   "record_id": "QLF-GUPTA-TESTS-001",
   "version": "0.3-draft",
-  "source_revision": "843c529f3c3b3247aa3ad4ab86d31aea4a3cc298",
-  "reviewer": "Self-run development; independent review pending",
+  "source_revision": "7e181c2b1d15f7b7ca4e3cde9a51c0f761751469",
+  "reviewer": "Grok protocol review and independent numerical execution report, relayed by Jim on 2026-11-14 and accepted by him as independent; kernel verification is separate CI evidence. Source precision residual and physical-map review remain open.",
   "purpose": "External numerical reproduction and draft QLF bridge falsification program; B-OPEN. No F or E promotion.",
   "entries": [
     {

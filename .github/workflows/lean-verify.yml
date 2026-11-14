@@ -25,6 +25,15 @@ on:
       - 'tests/test_proof_trust.py'
       - '.github/workflows/lean-verify.yml'
 
+# A newer commit supersedes the previous verification of the same PR.
+concurrency:
+  group: lean-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -62,7 +71,50 @@ jobs:
       - name: Fetch Mathlib cache
         run: lake exe cache get
 
-      - name: Build all Lean files (in safe order)
+      # Recreate dependency metadata first; never restore .lake/packages or a
+      # stale Lake configuration. Cache only QLF outputs and their Lake traces.
+      - name: Restore compatible QLF build
+        id: qlf-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: .lake/build
+          key: ${{ runner.os }}-${{ runner.arch }}-qlf-v1-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.lean') }}-${{ hashFiles('lean/**') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-qlf-v1-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.lean') }}-
+
+      # Bootstrap the first cache from an already VERIFIED same-branch run only
+      # when every Lean/build input is byte-identical. This also avoids a cold
+      # rebuild if the cache was evicted but the 7-day artifact is still present.
+      - name: Seed missing cache from identical verified sources
+        if: steps.qlf-cache.outputs.cache-matched-key == '' && github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          CI_HEAD_BRANCH: ${{ github.head_ref }}
+        run: |
+          set -euo pipefail
+          candidate=$(gh run list --workflow lean-verify.yml --branch "$CI_HEAD_BRANCH" --status success --limit 1 --json databaseId,headSha --jq '.[] | "\(.databaseId) \(.headSha)"')
+          if [[ -z "$candidate" ]]; then
+            echo "No verified artifact available; use a cold build."
+            exit 0
+          fi
+          read -r prior_run prior_sha <<< "$candidate"
+          git fetch --no-tags --depth=1 origin "$prior_sha"
+          if ! git diff --quiet "$prior_sha" HEAD -- lean/ lakefile.lean lean-toolchain lake-manifest.json; then
+            echo "Lean/build inputs changed; artifact reuse refused."
+            exit 0
+          fi
+          seed_dir=$(mktemp -d)
+          trap 'rm -rf "$seed_dir"' EXIT
+          gh run download "$prior_run" --name qlf-olean-build --dir "$seed_dir"
+          mkdir -p .lake/build
+          cp -a "$seed_dir"/. .lake/build/
+          echo "Reused verified QLF artifact from run $prior_run with identical Lean/build inputs."
+
+      # Always let Lake validate traces and rebuild the affected dependency
+      # closure. A cache hit never skips source validation or the axiom gate.
+      - name: Build Lean targets incrementally (cold build on cache miss)
         run: |
           lake build
 
@@ -88,3 +140,11 @@ jobs:
           set -euo pipefail
           lake env lean lean/QLF_AxiomAudit.lean | tee /tmp/qlf_axiom_footprints.log
           python3 scripts/proof_trust.py --log /tmp/qlf_axiom_footprints.log
+
+      # Save only after both compilation AND the exact-footprint gate pass.
+      - name: Save verified QLF build
+        if: success() && steps.qlf-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .lake/build
+          key: ${{ steps.qlf-cache.outputs.cache-primary-key }}
