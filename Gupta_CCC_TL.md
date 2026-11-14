@@ -62,4 +62,13 @@ Empirical rejection is separate: freeze datasets, covariance, nuisance priors, r
 
 ## 4. Run and review
 
-The executable and output are added after the specification-only commit. No Lean code is required for the reference calculation. The later clock-ratio formalization must distinguish algebraic identities from the physical map and pass the existing Lean review workflow. There is no parent issue or five-PR publication created by this branch; these are review stages ready to be split when requested.
+The [executable](tools/gupta_ccc_tl_reference.py) follows specification-only commit `7368d89996db38165deb949961082ad83b3b3c2f`. See the [execution record](verification/gupta-ccc-tl/README.md) and [report](verification/gupta-ccc-tl/result.json). Run:
+
+```bash
+python3 tools/gupta_ccc_tl_reference.py
+python3 -m unittest discover -s tests -p 'test_gupta_ccc_tl_reference.py' -v
+python3 scripts/validate_claim_records.py
+python3 scripts/doc_network_check.py
+```
+
+The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. No Lean code is required for the reference calculation. The later clock-ratio formalization must distinguish algebraic identities from the physical map and pass the existing Lean review workflow. There is no parent issue or five-PR publication created by this branch; these are review stages ready to be split when requested.

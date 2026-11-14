@@ -255,19 +255,20 @@ flowchart TD
   DM --> SP["SPARC: 147 galaxies / 2696 points; N retrospective benchmark; B-OPEN / G5"]
   SP --> SD["Defeater: reproduced mismatch or failed independent replication"]
   OL --> DE["Dark energy"]
-  EV --> AGE["Age ~ 13.8 Gyr"]
+  EV --> AGE["Cosmic age: H0-calibrated; N open"]
   EV --> NS["^4He fraction Y_p ~ 1/4"]
   OL --> CORE["Concordant with LCDM data CMB BBN age Omega_Lambda w = -1"]
   AGE --> CORE
+  AGE --> GUPTA["Gupta CCC+TL falsification: B-OPEN"]
   NS --> CORE
   DM --> DIV["Divergent on LCDM interpretation particle CDM and static Lambda"]
   DE --> DIV
   EV --> TG["Thermodynamic gravity Jacobson Bekenstein derives 8piG"]
 ```
 
-**Connectors:** *gauge 2/8* &rarr; Horizon count closes the 10^122 catastrophe; Omega_Lambda ~ log 2 matched &middot; *high-V epoch* &rarr; Inflation (same field) &middot; *denser logic* &rarr; Dark matter (no particle) &middot; *residual w = -1* &rarr; Dark energy &middot; *event rate* &rarr; Age ~ 13.8 Gyr &middot; *freeze-out n/p* &rarr; ^4He fraction Y_p ~ 1/4 &middot; *measured values* &rarr; Concordant with LCDM data &middot; *interpretive pillars* &rarr; Divergent on LCDM interpretation &middot; *equation of state* &rarr; Thermodynamic gravity
+**Connectors:** *gauge 2/8* &rarr; Horizon count closes the 10^122 catastrophe; Omega_Lambda ~ log 2 matched &middot; *high-V epoch* &rarr; Inflation (same field) &middot; *denser logic* &rarr; Dark matter (no particle) &middot; *residual w = -1* &rarr; Dark energy &middot; *event rate* &rarr; H0-calibrated cosmic age; N open &middot; *freeze-out n/p* &rarr; ^4He fraction Y_p ~ 1/4 &middot; *measured values* &rarr; Concordant with LCDM data &middot; *interpretive pillars* &rarr; Divergent on LCDM interpretation &middot; *equation of state* &rarr; Thermodynamic gravity
 
-**Open:** [`Cosmological_Constant.md`](Cosmological_Constant.md) · [`Curvature.md`](Curvature.md) · [`DarkMatter.md`](DarkMatter.md) · [`SPARC.md`](SPARC.md) · [`AgeOfUniverse.md`](AgeOfUniverse.md) · [`Fusion.md`](Fusion.md) · [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §3a
+**Open:** [`Gupta_CCC_TL.md`](Gupta_CCC_TL.md) · [`Cosmological_Constant.md`](Cosmological_Constant.md) · [`Curvature.md`](Curvature.md) · [`DarkMatter.md`](DarkMatter.md) · [`SPARC.md`](SPARC.md) · [`AgeOfUniverse.md`](AgeOfUniverse.md) · [`Fusion.md`](Fusion.md) · [`Mysteries_Of_Physics.md`](Mysteries_Of_Physics.md) §3a
 
 Dark matter is the closure-balance RAR, tested retrospectively on 147 SPARC galaxies (`a₀ = cH₀/2π`, the `2π` derived; [`SPARC.md`](SPARC.md)). The analysis uses target-informed selection and a seal before residual scoring, so it is an **`N` consistency benchmark**, not a blind/independent trial. The physical interpolation/form remains **`B-OPEN`**; G5 is `INCOMPLETE`. `a₀` is constant locally (`a₀/(cH) = 1/2π`) and scales with `H(z)` across redshift; the MUSE-DARK data prefer this expansion clock over the age clock and a constant `a₀` ([`DarkMatter.md`](DarkMatter.md) §5c). On that clock the dark-matter fit votes for the local `H₀ ≈ 72.9`, a conditional vote on the **Hubble tension**, not a resolution (§5a). The dynamical `ρ_Λ ∝ H²` reading is excluded, so QLF is no longer in the early-dark-energy class. **No epoch is special, in the own-clock sense:** every observer sees the same rate profile, faster behind and slower ahead (`QLF_InflationObserver`, pre-registered; a constant `Λ` would break it). **Named tension:** `ρ_Λ ∝ H²` then keeps `Ω_Λ = log 2` at recombination and BBN, far above early dark-energy bounds ([`Curvature.md`](Curvature.md) §8a).
 
