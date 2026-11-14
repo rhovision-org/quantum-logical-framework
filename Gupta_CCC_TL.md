@@ -100,14 +100,14 @@ The [executable](tools/gupta_ccc_tl_reference.py) follows specification-only com
 
 ```bash
 python3 tools/gupta_ccc_tl_reference.py
-python3 -m unittest discover -s tests -p 'test_gupta_ccc_tl_reference.py' -v
+python3 -m unittest discover -s tests -p 'test_gupta_ccc_tl*.py' -v
 python3 scripts/validate_claim_records.py
 python3 scripts/doc_network_check.py
 ```
 
 The present-age residual against Table 1 is about −0.0328 Gyr. Its exact source—rounded parameters, a published intermediate, or an implementation difference—remains open. The current quadrature agreement does not identify that source; do not widen the frozen tolerance.
 
-The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. The reference calculation is independent of Lean. The first clock-ratio algebra is now formalized in §6; physical-map and finite-record return obligations remain separate. Parent issue #234 tracks the five stages; PR #233 contains the initial work. Later PRs and independent review remain to be scheduled.
+The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. The reference calculation is independent of Lean. The first clock-ratio algebra is now formalized in §6; physical-map and finite-record return obligations remain separate. Parent issue #234 tracks the five stages; PR #233 contains the initial work. Later PRs and physical-map/empirical review remain to be scheduled.
 
 ## 5. Remaining work and review gates
 
@@ -122,7 +122,7 @@ The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, b
 | Independent count N | Substrate selection and a justified accumulated-tick conversion, without fitting H0 or either age target. |
 | Empirical protocols | Frozen SPARC sample/splits/scores; BBN network inputs; chronometer recalibration; pulse stretching; BAO ruler and CMB-spectrum calculations with covariance. |
 | Statistical decisions | Numerical equivalence margins, uncertainty model, rejection thresholds and multiple-test handling chosen before each new comparison. |
-| Review coordination | Parent issue #234 and initial PR #233 exist; designate an independent reviewer and scope the later PRs before their work. |
+| Review coordination | Parent issue #234 and initial PR #233 exist; Grok protocol/numerical reports are recorded; designate later physical-map/empirical reviewers and scope the later PRs before their work. |
 
 The completed work is the external reference calculation and the improved research protocol. The broader program remains open for the missing evidence above.
 

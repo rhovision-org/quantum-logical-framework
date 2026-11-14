@@ -287,7 +287,7 @@ as dark matter, the CMB parity asymmetry) are theirs, not QLF's.
 | [10](#p10) | Vacuum-enhanced superconductivity in a cavity (NbSe₂) | The Casimir effect as a finite census ([`QLF_Casimir`](lean/QLF_Casimir.lean)) | A reading, and the disputed point it has to face | **open bridge** |
 | [11](#p11) | A 40-year-old CFT energy ladder measured (Caltech) | Ising exponents tested ([`ising_exponent_test.py`](ising_exponent_test.py)) | Where QLF would have to reproduce it | **open** |
 | [12](#p12) | Pair density waves in UTe₂ | Cooper pairs as shared closures ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md)) | A reading only | **open** |
-| [13](#p13) | CCC+TL consistency studies: BBN, rotation curves and clocks | Cosmic tick count N remains open ([`AgeOfUniverse.md`](AgeOfUniverse.md)) | External 2023 age benchmark reproduced; a QLF bridge falsification program is specified | **self-run numerical reference; B-OPEN** |
+| [13](#p13) | CCC+TL consistency studies: BBN, rotation curves and clocks | Cosmic tick count N remains open ([`AgeOfUniverse.md`](AgeOfUniverse.md)) | External 2023 age benchmark reproduced; a QLF bridge falsification program is specified | **numerical reference with independent rerun report; B-OPEN** |
 
 <a id="p1"></a>
 
