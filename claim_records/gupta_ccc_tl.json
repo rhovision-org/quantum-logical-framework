@@ -1,0 +1,165 @@
+{
+  "record_type": "test_ledger",
+  "record_id": "QLF-GUPTA-TESTS-001",
+  "version": "0.3-draft",
+  "source_revision": "7e181c2b1d15f7b7ca4e3cde9a51c0f761751469",
+  "reviewer": "Grok protocol review and independent numerical execution report, relayed by Jim on 2026-11-14 and accepted by him as independent; kernel verification is separate CI evidence. Source precision residual and physical-map review remain open.",
+  "purpose": "External numerical reproduction and draft QLF bridge falsification program; B-OPEN. No F or E promotion.",
+  "entries": [
+    {
+      "id": "GUPTA-REFERENCE",
+      "claim": "Published equations reproduce published ages",
+      "anchors": [],
+      "formal_scope": "No new formal theorem claimed; bridge and conservative return remain B-OPEN.",
+      "comparator": "Published Gupta 2023 abstract ages at z=0,10,20; rounded Table 1 inputs; no LCDM comparison executed.",
+      "kill_condition": "Any age outside frozen tolerance or unresolved numerical convergence blocks stage 1.",
+      "status": "DRAFT",
+      "source": "Gupta_CCC_TL.md",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "prior_public_data",
+        "observable": "Published equations reproduce published ages",
+        "analysis_rule": "See Gupta_CCC_TL.md and verification/gupta-ccc-tl/specification.json.",
+        "uncertainty": "Numerical tolerance is distinct from model, parameter and observational uncertainty.",
+        "rejection_rule": "Any age outside frozen tolerance or unresolved numerical convergence blocks stage 1.",
+        "dataset_or_experiment": "Published numerical targets; later observational datasets not yet selected.",
+        "chronology_evidence": "Known targets supplied by user before branch creation; no blindness claimed."
+      }
+    },
+    {
+      "id": "GUPTA-CLOCK",
+      "claim": "QLF permits a conservative clock/redshift bridge",
+      "anchors": [],
+      "formal_scope": "No physical clock-map theorem is claimed. The selected evolution and conservative return on finite closure records remain B-OPEN.",
+      "comparator": "Gupta CCC+TL and a separately pinned LCDM control; same operational observable.",
+      "kill_condition": "A counterexample to a specified invariant rejects that bridge; missing map is INCOMPLETE.",
+      "status": "DRAFT",
+      "source": "Gupta_CCC_TL.md",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "prior_public_data",
+        "observable": "QLF permits a conservative clock/redshift bridge",
+        "analysis_rule": "See Gupta_CCC_TL.md and verification/gupta-ccc-tl/specification.json.",
+        "uncertainty": "Numerical tolerance is distinct from model, parameter and observational uncertainty.",
+        "rejection_rule": "A counterexample to a specified invariant rejects that bridge; missing map is INCOMPLETE.",
+        "dataset_or_experiment": "Published numerical targets; later observational datasets not yet selected.",
+        "chronology_evidence": "Known targets supplied by user before branch creation; no blindness claimed."
+      }
+    },
+    {
+      "id": "GUPTA-SPARC",
+      "claim": "QLF predicts competitively under a common protocol",
+      "anchors": [],
+      "formal_scope": "No new formal theorem claimed; bridge and conservative return remain B-OPEN.",
+      "comparator": "Gupta CCC+TL and a separately pinned LCDM control; same operational observable.",
+      "kill_condition": "Held-out galaxy residual loss exceeds a predeclared margin; threshold and uncertainty must be frozen before execution.",
+      "status": "DRAFT",
+      "source": "Gupta_CCC_TL.md",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "prior_public_data",
+        "observable": "QLF predicts competitively under a common protocol",
+        "analysis_rule": "See Gupta_CCC_TL.md and verification/gupta-ccc-tl/specification.json.",
+        "uncertainty": "Numerical tolerance is distinct from model, parameter and observational uncertainty.",
+        "rejection_rule": "Held-out galaxy residual loss exceeds a predeclared margin; threshold and uncertainty must be frozen before execution.",
+        "dataset_or_experiment": "Published numerical targets; later observational datasets not yet selected.",
+        "chronology_evidence": "Known targets supplied by user before branch creation; no blindness claimed."
+      }
+    },
+    {
+      "id": "GUPTA-AGE",
+      "claim": "QLF independently determines a cosmic tick count",
+      "anchors": [],
+      "formal_scope": "No new formal theorem claimed; bridge and conservative return remain B-OPEN.",
+      "comparator": "Gupta CCC+TL and a separately pinned LCDM control; same operational observable.",
+      "kill_condition": "Underdetermined count or target-informed scale blocks a derived-age claim; an empirical mismatch requires a fixed clock map and uncertainty budget.",
+      "status": "DRAFT",
+      "source": "Gupta_CCC_TL.md",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "prior_public_data",
+        "observable": "QLF independently determines a cosmic tick count",
+        "analysis_rule": "See Gupta_CCC_TL.md and verification/gupta-ccc-tl/specification.json.",
+        "uncertainty": "Numerical tolerance is distinct from model, parameter and observational uncertainty.",
+        "rejection_rule": "Underdetermined count or target-informed scale blocks a derived-age claim; an empirical mismatch requires a fixed clock map and uncertainty budget.",
+        "dataset_or_experiment": "Published numerical targets; later observational datasets not yet selected.",
+        "chronology_evidence": "Known targets supplied by user before branch creation; no blindness claimed."
+      }
+    },
+    {
+      "id": "GUPTA-ALGEBRA",
+      "claim": "Endpoint rate-ratio composition and underdetermination identities hold under the stated real-algebra hypotheses.",
+      "anchors": [
+        "QLF.ClockRedshift.ratio_composition",
+        "QLF.ClockRedshift.redshift_composition",
+        "QLF.ClockRedshift.common_rescaling",
+        "QLF.ClockRedshift.residual_factor_unique",
+        "QLF.ClockRedshift.positive_factorization_not_unique",
+        "QLF.ClockRedshift.free_clock_scale_hits_any_age",
+        "QLF.ClockRedshift.lapse_rate_return"
+      ],
+      "formal_scope": "Lean algebra only: no selected QLF clock history, photon transport, physical metric map, or finite-record conservative return. CI verification is tracked in Gupta_CCC_TL.md.",
+      "comparator": "Kernel elaboration and exact axiom footprint for QLF_ClockRedshift.lean.",
+      "kill_condition": "A failed kernel build or an unreviewed footprint discrepancy blocks formal verification.",
+      "status": "DRAFT",
+      "source": "Gupta_CCC_TL.md",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "prior_public_data",
+        "observable": "Endpoint rate-ratio composition and underdetermination identities hold under the stated real-algebra hypotheses.",
+        "analysis_rule": "See Gupta_CCC_TL.md and verification/gupta-ccc-tl/specification.json.",
+        "uncertainty": "Numerical tolerance is distinct from model, parameter and observational uncertainty.",
+        "rejection_rule": "A failed kernel build or an unreviewed footprint discrepancy blocks formal verification.",
+        "dataset_or_experiment": "Formal algebra; no observational dataset or map is claimed.",
+        "chronology_evidence": "Known targets supplied by user before branch creation; no blindness claimed."
+      }
+    },
+    {
+      "id": "GUPTA-BBN",
+      "claim": "Matched plateau rate scaling preserves the declared light-element observables.",
+      "anchors": [],
+      "formal_scope": "No theorem anchors: operational map and test specification not yet constructed.",
+      "comparator": "2026 Universe 12(7),193; source equations and numerical protocol not yet frozen.",
+      "kill_condition": "A reproducible discrepancy under independently fixed rates, calibration, data and uncertainty rejects the specified map; missing inputs remain INCOMPLETE.",
+      "status": "DRAFT",
+      "source": "Gupta_CCC_TL.md",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "prior_public_data",
+        "observable": "Matched plateau rate scaling preserves the declared light-element observables.",
+        "analysis_rule": "DRAFT: freeze an operational map and separate source-version specification before execution.",
+        "uncertainty": "Numerical tolerance is distinct from model, parameter and observational uncertainty.",
+        "rejection_rule": "DRAFT: quantitative threshold and uncertainty budget not yet specified.",
+        "dataset_or_experiment": "2026 Universe 12(7),193; computational reproduction not performed.",
+        "chronology_evidence": "Known targets supplied by user before branch creation; no blindness claimed."
+      }
+    },
+    {
+      "id": "GUPTA-CHRONOMETER",
+      "claim": "The operational differential-age calibration is compatible with the selected clock map.",
+      "anchors": [],
+      "formal_scope": "No theorem anchors: operational map and test specification not yet constructed.",
+      "comparator": "arXiv:2606.27391v1; source equations and numerical protocol not yet frozen.",
+      "kill_condition": "A reproducible discrepancy under independently fixed rates, calibration, data and uncertainty rejects the specified map; missing inputs remain INCOMPLETE.",
+      "status": "DRAFT",
+      "source": "Gupta_CCC_TL.md",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "prior_public_data",
+        "observable": "The operational differential-age calibration is compatible with the selected clock map.",
+        "analysis_rule": "DRAFT: freeze an operational map and separate source-version specification before execution.",
+        "uncertainty": "Numerical tolerance is distinct from model, parameter and observational uncertainty.",
+        "rejection_rule": "DRAFT: quantitative threshold and uncertainty budget not yet specified.",
+        "dataset_or_experiment": "arXiv:2606.27391v1; computational reproduction not performed.",
+        "chronology_evidence": "Known targets supplied by user before branch creation; no blindness claimed."
+      }
+    }
+  ]
+}

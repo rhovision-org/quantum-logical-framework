@@ -27,6 +27,10 @@ The strange-loop bridge records therefore read "first-order `F+N` / `N` / `F`
 established; return incomplete"; `bridge: CLOSED` still requires `TESTED` and a
 `PROVED` conservative return.
 
+## Clock/redshift algebra
+
+[`QLF_ClockRedshift.lean`](QLF_ClockRedshift.lean) adds endpoint-ratio composition, common-unit invariance, fixed-factor uniqueness, explicit positive-factor nonuniqueness, free-clock-scale underdetermination and algebraic lapse return. [Gupta_CCC_TL.md](../Gupta_CCC_TL.md) records the scope: these are algebraic obligations, not a selected cosmic history or a conservative return on closure records. CI verification and exact footprints are required before promotion.
+
 ## Active Modules
 
 ### Core ZFA Combinatorics

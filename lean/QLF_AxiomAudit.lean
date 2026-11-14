@@ -38,6 +38,7 @@
   proofs actually consume; that one reports what exists to be consumed.
 -/
 
+import QLF_ClockRedshift
 import QLF_Axioms
 import QLF_Universality
 import QLF_TwistAlphabet
@@ -679,3 +680,14 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BoostCovariance.shell_lorentz_invariant
 #print axioms QLF.BoostCovariance.shell_boost_invariant
 #print axioms QLF.BoostCovariance.diracWalk_boost_covariant
+
+-- Clock/redshift algebra only; physical selection and return remain open.
+#print axioms QLF.ClockRedshift.ratio_self
+#print axioms QLF.ClockRedshift.ratio_pos
+#print axioms QLF.ClockRedshift.ratio_composition
+#print axioms QLF.ClockRedshift.redshift_composition
+#print axioms QLF.ClockRedshift.common_rescaling
+#print axioms QLF.ClockRedshift.residual_factor_unique
+#print axioms QLF.ClockRedshift.positive_factorization_not_unique
+#print axioms QLF.ClockRedshift.free_clock_scale_hits_any_age
+#print axioms QLF.ClockRedshift.lapse_rate_return

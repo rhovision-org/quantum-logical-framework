@@ -84,6 +84,51 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClockRedshift.common_rescaling": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockRedshift.free_clock_scale_hits_any_age": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockRedshift.lapse_rate_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockRedshift.positive_factorization_not_unique": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockRedshift.ratio_composition": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockRedshift.ratio_pos": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockRedshift.ratio_self": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockRedshift.redshift_composition": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockRedshift.residual_factor_unique": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureChannels.channel_last_exit": [
     "Classical.choice",
     "Quot.sound",
