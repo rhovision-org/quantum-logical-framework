@@ -460,6 +460,10 @@ The non-constructive parts of the Ruliad — non-terminating computations, Busy 
 
 ---
 
+## Finite clock-domain records
+
+[`QLF_ClockDomains.lean`](QLF_ClockDomains.lean) implements the closure-only model in [Time_Reversed_Clock_Domains.md](../Time_Reversed_Clock_Domains.md): nonunique completions, nonconstant accessible records, explicit counterpart collisions, no exact reconstruction on the stated class, and reconstruction on a prescribed-partner class. No physical time reversal, horizon, no-signalling or cosmic-age relation is asserted. All eleven statements passed kernel verification and the exact-footprint gate at `55a1be8`, with empty axiom footprints; see the [verification record](../verification/time-reversed-clock-domains/README.md).
+
 ## How to Build
 
 ```bash

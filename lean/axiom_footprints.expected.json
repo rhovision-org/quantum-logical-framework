@@ -84,6 +84,17 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClockDomains.accessible_nonconstant": [],
+  "QLF.ClockDomains.alternative_completions": [],
+  "QLF.ClockDomains.canonical_admissible": [],
+  "QLF.ClockDomains.collision_blocks_reconstruction": [],
+  "QLF.ClockDomains.counterparts_distinct": [],
+  "QLF.ClockDomains.extendedLeft_admissible": [],
+  "QLF.ClockDomains.extendedRight_admissible": [],
+  "QLF.ClockDomains.no_exact_reconstruction": [],
+  "QLF.ClockDomains.prescribed_counterpart_reconstructible": [],
+  "QLF.ClockDomains.records_distinct": [],
+  "QLF.ClockDomains.records_equal": [],
   "QLF.ClockRedshift.common_rescaling": [
     "Classical.choice",
     "Quot.sound",
