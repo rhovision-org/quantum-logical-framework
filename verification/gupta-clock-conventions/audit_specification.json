@@ -1,0 +1,47 @@
+{
+  "version": "1.0-draft",
+  "source_revision": "8044862c486a753136fccda33e4ca9f9f237ce22",
+  "purpose": "Retrospective source-precision audit, not a new fit or rerun/retuning of the frozen stage-1 baseline.",
+  "exposure": "Published 26.70 and existing 26.6672118588 known before specification. Not blind.",
+  "formula": "Present coordinate age = log((3+r)/(3*(1+r)))/(-r*Hc), in consistent time units; derive from the published cubic past endpoint.",
+  "inputs": {
+    "Hc": 59.51,
+    "r": -0.7997,
+    "Mpc_km": 3.085677581491367e+19,
+    "year_days": 365.25,
+    "day_seconds": 86400
+  },
+  "hypotheses": [
+    "Published displayed-parameter rounding alone may or may not explain the Table 1 discrepancy; test the entire nearest-rounding rectangle without fitting.",
+    "The existing analytic/quadrature agreement makes quadrature error an unlikely explanation, but source intermediates remain unknown.",
+    "Rounding r to two decimal places gives -0.80; test this single predeclared diagnostic without choosing a value by target inversion. A numerical match does not establish that the author used it."
+  ],
+  "rounding_intervals": {
+    "Hc": [
+      59.505,
+      59.515
+    ],
+    "r": [
+      -0.79975,
+      -0.79965
+    ]
+  },
+  "reporting_interval_Gyr": [
+    26.695,
+    26.705
+  ],
+  "diagnostics": {
+    "ratio_rounding_only": -0.8,
+    "alternative_year_days": [
+      365.0,
+      365.2425
+    ]
+  },
+  "analysis_rule": "Use 60-digit Decimal logarithms; derive monotonicity or interval bounds before claiming the rectangle excludes the published reporting interval. No optimizer, target solve, altered fit, or covariance inference.",
+  "decision_rule": "Report which rounding/unit hypotheses are sufficient. Do not declare a historical cause without a published source/intermediate. Leave the source-precision gate unresolved if provenance is absent.",
+  "constraints": [
+    "Do not modify tools/gupta_ccc_tl_reference.py or any of the four frozen checksum artifacts.",
+    "Any candidate clock convention remains a proposal while the source-precision gate is unresolved.",
+    "No physical mapping, new dynamics, or cosmic age prediction is claimed."
+  ]
+}

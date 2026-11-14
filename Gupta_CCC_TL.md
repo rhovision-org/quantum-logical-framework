@@ -36,6 +36,8 @@ The values pass the specification frozen before computation; the present-age dif
 
 ### Clock and observable audit still required
 
+The follow-up [clock-convention contract](Gupta_ClockConventions.md) specifies the candidate metric, endpoint standards and finite-record/error requirements for review. Its [source-precision audit](verification/gupta-clock-conventions/README.md) finds that nearest-rounding of the displayed fit parameters cannot recover Table 1's hundredth. The author-used intermediate remains unknown; the prerequisite gate stays open.
+
 The 2023 metric (equation 2) includes a lapse f and a spatial scale af. If read with fixed reference c and standard comoving metric proper time, it gives `d tau = f dt` and expansion of the spatial metric `d log(af)/d tau = (H+alpha)/f`. The reproduced equation-50 age integrates the paper's t variable. Identifying that variable with atomic-clock age or QLF proper age requires an operational derivation; a coordinate transformation by itself is not a new age prediction. This is a specific stage-2 obligation, not permission to relabel the 26.7 Gyr target.
 
 When c or h varies in the stated convention, wavelength ratios, frequency ratios and photon-energy ratios are not interchangeable without tracking the emission and reception standards. Keep the source's wavelength-redshift definition and derive its frequency/clock reading. Likewise, test the source's luminosity/angular-distance prescriptions against operational distance duality rather than assuming a standard relation.
