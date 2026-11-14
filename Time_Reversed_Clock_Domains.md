@@ -2,7 +2,7 @@
 
 [QLF](README.md) · [Theory index](Theory_Of_Everything.md) · [Gupta program](Gupta_CCC_TL.md) · [Clock conventions](Gupta_ClockConventions.md)
 
-**Status: proposed physical correspondence, B-OPEN.** Tracked in [issue #236](https://github.com/rhovision-org/quantum-logical-framework/issues/236). Jim proposes that our matter-world time perspective has a reversed antimatter counterpart: each side experiences events through its own local clock, while a joint closure relates the two. A horizon-like boundary would prevent reconstruction of the counterpart's internal history from our records. These physical identifications are research targets, not existing theorems.
+**Status: partial finite algebra, physical correspondence still B-OPEN.** Tracked in [issue #236](https://github.com/rhovision-org/quantum-logical-framework/issues/236). Jim proposes that our matter-world time perspective has a reversed antimatter counterpart: each side experiences events through its own local clock, while a joint closure relates the two. A horizon-like boundary would prevent reconstruction of the counterpart's internal history from our records. These physical identifications are research targets, not existing theorems.
 
 This is separate from the external Gupta numerical benchmark. Proving or excluding the correspondence is needed before using it to explain the age difference; reproducing Gupta's equations does not depend on it. No numerical age is selected by this proposal. Pure order reversal preserves duration magnitude, so an age difference also requires a derived clock-rate or origin/count relation.
 
@@ -45,7 +45,7 @@ Use the following witnesses, in the alphabet of [QLF_TwistAlphabet](lean/QLF_Twi
 - Both concatenations are count-balanced, `q₁ ≠ q₂`, and both records are `([up], 3)`.
 - `([up], [down])` is also admissible, with a different record `([up], 1)`. Thus O is nonconstant even with the local word fixed.
 
-The first proposed statements are admissibility of these witnesses, equality of their records, inequality of their counterpart words, nonconstancy of O, and the absence of an exact reconstruction function `R` satisfying `R(O(p,q)) = q` for every admissible pair. The last result follows because R would have to return both q₁ and q₂ for the same input. These statements are implemented in [QLF_ClockDomains](lean/QLF_ClockDomains.lean), with kernel verification and exact-axiom CI pending. Acceptance requires kernel verification and the repository's exact-axiom audit before adding theorem anchors or changing status to **partial algebra, still B-OPEN**.
+The first proposed statements are admissibility of these witnesses, equality of their records, inequality of their counterpart words, nonconstancy of O, and the absence of an exact reconstruction function `R` satisfying `R(O(p,q)) = q` for every admissible pair. The last result follows because R would have to return both q₁ and q₂ for the same input. These statements are implemented in [QLF_ClockDomains](lean/QLF_ClockDomains.lean) and passed kernel verification and the exact-axiom audit at `55a1be8`. The eleven new statements have empty axiom footprints; all 395 registered anchors passed the gate. The result is **partial algebra, still B-OPEN**. See the [verification record](verification/time-reversed-clock-domains/README.md).
 
 This model establishes non-identifiability only for the stated record interface and admissible class. A stricter class could exclude a witness. In particular, imposing `q = dagger p` makes the counterpart reconstructible from p and defeats this example. No no-signalling conclusion follows: O deliberately exposes length, so a permitted length-changing intervention could affect the record. Allowed interventions and their invariances need a separate model.
 
@@ -67,4 +67,8 @@ Gupta's benchmark uses fitted external inputs; its numerical reproduction does n
 
 ## Independent review record
 
-[Grok's review and disposition](verification/time-reversed-clock-domains/grok_review.md), relayed by Jim on 14 November 2026, finds the issue appropriately scoped and requests the explicit age gate, alternative completions and a concrete non-identifiability target. Those requirements are specified above. The first finite record implementation is present; kernel verification remains pending; the correspondence remains **B-OPEN**.
+[Grok's review and disposition](verification/time-reversed-clock-domains/grok_review.md), relayed by Jim on 14 November 2026, finds the issue appropriately scoped and requests the explicit age gate, alternative completions and a concrete non-identifiability target. Those requirements are specified above. The first finite record implementation is kernel-verified; the physical correspondence remains **B-OPEN**.
+
+## Verified finite-record anchors
+
+In namespace `QLF.ClockDomains`: `canonical_admissible`, `extendedLeft_admissible`, `extendedRight_admissible`, `alternative_completions`, `counterparts_distinct`, `records_equal`, `records_distinct`, `accessible_nonconstant`, `collision_blocks_reconstruction`, `no_exact_reconstruction`, and `prescribed_counterpart_reconstructible`. These discharge the concrete closure-only record target, not the paired local-clock model, event census or physical horizon.
