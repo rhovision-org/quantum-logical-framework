@@ -101,6 +101,7 @@ interaction; the logical complexity inside them is far larger.
 
 | Topic | Read | Flow chart |
 |---|---|---|
+| Time-reversed clock domains and observational boundary | [Time_Reversed_Clock_Domains.md](Time_Reversed_Clock_Domains.md) — proposed paired-history/antimatter correspondence; B-OPEN | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
 | The gap registry | [Open_Problems.md](Open_Problems.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
 | Strange-loop / conservative-return bridge discipline; ρ/QKB and active-inference/bisimulation targets; map ≡ territory | [Strange_Loops.md](Strange_Loops.md), [Map_Is_Territory.md](Map_Is_Territory.md), [rho_correspondence_target.md](verification/strange-loop/rho_correspondence_target.md), [self_knowledge_target.md](verification/strange-loop/self_knowledge_target.md), [Claim_Status.md](Claim_Status.md) | [Methods and evidence](FlowChart.md#methods-and-evidence-paper-i-v03) |
 | The six Millennium reformulations, each one bridge axiom | [Millennium.md](Millennium.md) | [9 Millennium](FlowChart.md#9-the-millennium-prize-program) |
