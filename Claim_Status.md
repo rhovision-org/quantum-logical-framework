@@ -128,3 +128,7 @@ The validator discovers every JSON record recursively by explicit record type, c
 - `ScientificApproach.md` — the governing method, bridge grades, and pre-registration rules.
 - `SPARC.md` — the retrospective public-data benchmark SPARC analysis and its receipt.
 - Paper I v0.3 §2 — the manuscript's positive-claims table and prose.
+
+## Gupta CCC+TL external reference
+
+[Gupta_CCC_TL.md](Gupta_CCC_TL.md) implements the external 2023 equation benchmark: self-run ages 26.6672, 5.8325 and 3.4633 Gyr at observed redshifts 0, 10 and 20. All pass the frozen abstract-precision tolerance; Table 1's extra present-age precision is unresolved. [Execution record](verification/gupta-ccc-tl/README.md), [draft test ledger](claim_records/gupta_ccc_tl.json). This is external numerical reproduction, with no new F or E and no promotion to independently reviewed N. The QLF clock/redshift bridge stays B-OPEN; later SPARC and age comparisons are specified, not executed.

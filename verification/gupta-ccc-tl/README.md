@@ -14,3 +14,15 @@ sha256sum -c verification/gupta-ccc-tl/SHA256SUMS
 ```
 
 The 2048/4096-panel comparison estimates numerical stability; it is not a rigorous error bound or a parameter uncertainty. Independent age quadrature and finite-difference checks of the original evolution equation check the analytic solution. The listed ages use rounded published fitted inputs. Parameter covariance, alternative source versions, observational likelihoods and an empirical model comparison remain outside this execution.
+
+## Executed result
+
+| Observed redshift | Computed age (Gyr) | Published target (Gyr) | Absolute difference (Gyr) |
+|---|---|---|---|
+| 0 | 26.667211859 | 26.7 | 0.032788141 |
+| 10 | 5.832453379 | 5.8 | 0.032453379 |
+| 20 | 3.463280173 | 3.5 | 0.036719827 |
+
+All three targets pass the frozen 0.05 Gyr tolerance. At the published rounded inputs the present age is 26.6672 Gyr, so Table 1's additional hundredth (26.70) is not recovered at that precision. The abstract-precision benchmark passes; the extra-precision discrepancy remains for independent review. This result does not constrain the open QLF age map.
+
+Validation: seven reference tests pass, including the original evolution equation, independent age quadrature, low-redshift total slope, external Hc scale sensitivity and a deliberately wrong target that must fail. The typed-record validator and document-link checker pass. Existing document-to-Lean back-link warnings for Manifestation and Maxwell are outside this change.

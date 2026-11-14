@@ -2,7 +2,7 @@
   "record_type": "test_ledger",
   "record_id": "QLF-GUPTA-TESTS-001",
   "version": "0.3-draft",
-  "source_revision": "cbaf1b397201da03a4fd9bade82816ef62c4ab59",
+  "source_revision": "843c529f3c3b3247aa3ad4ab86d31aea4a3cc298",
   "reviewer": "Self-run development; independent review pending",
   "purpose": "External numerical reproduction and draft QLF bridge falsification program; B-OPEN. No F or E promotion.",
   "entries": [
@@ -11,7 +11,7 @@
       "claim": "Published equations reproduce published ages",
       "anchors": [],
       "formal_scope": "No new formal theorem claimed; bridge and conservative return remain B-OPEN.",
-      "comparator": "Gupta CCC+TL and a separately pinned LCDM control; same operational observable.",
+      "comparator": "Published Gupta 2023 abstract ages at z=0,10,20; rounded Table 1 inputs; no LCDM comparison executed.",
       "kill_condition": "Any age outside frozen tolerance or unresolved numerical convergence blocks stage 1.",
       "status": "DRAFT",
       "source": "Gupta_CCC_TL.md",
