@@ -45,7 +45,7 @@ Use the following witnesses, in the alphabet of [QLF_TwistAlphabet](lean/QLF_Twi
 - Both concatenations are count-balanced, `q₁ ≠ q₂`, and both records are `([up], 3)`.
 - `([up], [down])` is also admissible, with a different record `([up], 1)`. Thus O is nonconstant even with the local word fixed.
 
-The first proposed statements are admissibility of these witnesses, equality of their records, inequality of their counterpart words, nonconstancy of O, and the absence of an exact reconstruction function `R` satisfying `R(O(p,q)) = q` for every admissible pair. The last result follows because R would have to return both q₁ and q₂ for the same input. These are planned statements, not yet Lean-verified results. Acceptance requires kernel verification and the repository's exact-axiom audit before adding theorem anchors or changing status to **partial algebra, still B-OPEN**.
+The first proposed statements are admissibility of these witnesses, equality of their records, inequality of their counterpart words, nonconstancy of O, and the absence of an exact reconstruction function `R` satisfying `R(O(p,q)) = q` for every admissible pair. The last result follows because R would have to return both q₁ and q₂ for the same input. These statements are implemented in [QLF_ClockDomains](lean/QLF_ClockDomains.lean), with kernel verification and exact-axiom CI pending. Acceptance requires kernel verification and the repository's exact-axiom audit before adding theorem anchors or changing status to **partial algebra, still B-OPEN**.
 
 This model establishes non-identifiability only for the stated record interface and admissible class. A stricter class could exclude a witness. In particular, imposing `q = dagger p` makes the counterpart reconstructible from p and defeats this example. No no-signalling conclusion follows: O deliberately exposes length, so a permitted length-changing intervention could affect the record. Allowed interventions and their invariances need a separate model.
 
@@ -67,4 +67,4 @@ Gupta's benchmark uses fitted external inputs; its numerical reproduction does n
 
 ## Independent review record
 
-[Grok's review and disposition](verification/time-reversed-clock-domains/grok_review.md), relayed by Jim on 14 November 2026, finds the issue appropriately scoped and requests the explicit age gate, alternative completions and a concrete non-identifiability target. Those requirements are specified above. The implementation and kernel verification remain pending; the correspondence remains **B-OPEN**.
+[Grok's review and disposition](verification/time-reversed-clock-domains/grok_review.md), relayed by Jim on 14 November 2026, finds the issue appropriately scoped and requests the explicit age gate, alternative completions and a concrete non-identifiability target. Those requirements are specified above. The first finite record implementation is present; kernel verification remains pending; the correspondence remains **B-OPEN**.

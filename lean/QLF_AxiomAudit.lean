@@ -39,6 +39,7 @@
 -/
 
 import QLF_ClockRedshift
+import QLF_ClockDomains
 import QLF_Axioms
 import QLF_Universality
 import QLF_TwistAlphabet
@@ -691,3 +692,16 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClockRedshift.positive_factorization_not_unique
 #print axioms QLF.ClockRedshift.free_clock_scale_hits_any_age
 #print axioms QLF.ClockRedshift.lapse_rate_return
+
+-- Finite accessible records only; no physical clock or causal bridge.
+#print axioms QLF.ClockDomains.canonical_admissible
+#print axioms QLF.ClockDomains.extendedLeft_admissible
+#print axioms QLF.ClockDomains.extendedRight_admissible
+#print axioms QLF.ClockDomains.alternative_completions
+#print axioms QLF.ClockDomains.counterparts_distinct
+#print axioms QLF.ClockDomains.records_equal
+#print axioms QLF.ClockDomains.records_distinct
+#print axioms QLF.ClockDomains.accessible_nonconstant
+#print axioms QLF.ClockDomains.collision_blocks_reconstruction
+#print axioms QLF.ClockDomains.no_exact_reconstruction
+#print axioms QLF.ClockDomains.prescribed_counterpart_reconstructible

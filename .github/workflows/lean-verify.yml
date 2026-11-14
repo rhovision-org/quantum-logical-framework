@@ -14,7 +14,8 @@ on:
       - '.github/workflows/lean-verify.yml'
 
   pull_request:
-    branches: [ "main" ]
+    # Verify the clock-domain implementation while it is stacked on #235.
+    branches: [ "main", "research/gupta-clock-conventions" ]
     paths:
       - 'lean/**'
       - 'lakefile.lean'
