@@ -2,7 +2,9 @@
 
 [QLF](README.md) · [Theory index](Theory_Of_Everything.md) · [Flow chart](FlowChart.md)
 
-**Status: external 2023 numerical benchmark passes at abstract precision; QLF bridge B-OPEN.** The question is whether QLF independently derives, permits, or excludes the CCC+TL observable relations. Neither 13.8 nor 26.7 Gyr is a target for choosing QLF rules. This branch implements stage 1 and specifies the later stages; it does not adopt a new substrate rule.
+**Status: external 2023 numerical benchmark passes at abstract precision; QLF bridge B-OPEN.**
+
+Parent: [issue #234](https://github.com/rhovision-org/quantum-logical-framework/issues/234). Initial review: [PR #233](https://github.com/rhovision-org/quantum-logical-framework/pull/233). An independent reviewer is still to be designated; creating a parent issue does not establish pre-exposure registration. The question is whether QLF independently derives, permits, or excludes the CCC+TL observable relations. Neither 13.8 nor 26.7 Gyr is a target for choosing QLF rules. This branch implements stage 1 and specifies the later stages; it does not adopt a new substrate rule.
 
 ## 1. Evidence and exposure
 
@@ -64,6 +66,8 @@ The [University of Ottawa announcement, 6 November 2026](https://www.uottawa.ca/
 
 ### Stage 2: obligations that can fail
 
+**First item of the next PR:** freeze the operational clock/metric convention described in §2 before constructing or comparing ages. Explicitly identify the paper's t variable, metric lapse, atomic standards and QLF proper-time candidate. The 26.7 Gyr figure keeps its source definition until that map is derived.
+
 Start with [Frequency_Synchronization.md](Frequency_Synchronization.md), [Kitada_Local_Time_GR.md](Kitada_Local_Time_GR.md) and [AgeOfUniverse.md](AgeOfUniverse.md) §4. Specify which clocks measure emission frequency, reception frequency and pulse interval, their synchronization convention, units, endpoint and rate orientation. For `f_Gupta ↔ nu_QLF(N)/nu_QLF(N0)`, derive the orientation rather than choosing it for the desired sign. Require identity calibration at the present epoch, positive monotone clocks, composition and a return preserving the finite clock/closure records. Supply finite-resolution error bounds before asserting a continuum correspondence.
 
 An arbitrary positive clock reparameterization can reproduce a chosen age; that establishes representability, not a selected physical mechanism. Exhibit distinct admissible rate histories as an underdetermination witness where possible. A derivation must select the history and its dimensional scale independently of the Gupta targets. A restricted-family obstruction must state its quantifiers and assumptions.
@@ -101,7 +105,9 @@ python3 scripts/validate_claim_records.py
 python3 scripts/doc_network_check.py
 ```
 
-The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. The reference calculation is independent of Lean. The first clock-ratio algebra is now formalized in §6; physical-map and finite-record return obligations remain separate. There is no parent issue or five-PR publication created by this branch; these are review stages ready to be split when requested.
+The present-age residual against Table 1 is about −0.0328 Gyr. Its exact source—rounded parameters, a published intermediate, or an implementation difference—remains open. The current quadrature agreement does not identify that source; do not widen the frozen tolerance.
+
+The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. The reference calculation is independent of Lean. The first clock-ratio algebra is now formalized in §6; physical-map and finite-record return obligations remain separate. Parent issue #234 tracks the five stages; PR #233 contains the initial work. Later PRs and independent review remain to be scheduled.
 
 ## 5. Remaining work and review gates
 
@@ -116,7 +122,7 @@ The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, b
 | Independent count N | Substrate selection and a justified accumulated-tick conversion, without fitting H0 or either age target. |
 | Empirical protocols | Frozen SPARC sample/splits/scores; BBN network inputs; chronometer recalibration; pulse stretching; BAO ruler and CMB-spectrum calculations with covariance. |
 | Statistical decisions | Numerical equivalence margins, uncertainty model, rejection thresholds and multiple-test handling chosen before each new comparison. |
-| Review coordination | Parent issue, accountable reviewer and separately scoped PRs; none created yet. |
+| Review coordination | Parent issue #234 and initial PR #233 exist; designate an independent reviewer and scope the later PRs before their work. |
 
 The completed work is the external reference calculation and the improved research protocol. The broader program remains open for the missing evidence above.
 
