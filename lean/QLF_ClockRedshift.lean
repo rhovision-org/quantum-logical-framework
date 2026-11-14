@@ -1,3 +1,8 @@
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.Ring
+import Mathlib.Tactic.NormNum
+
 /-!
 # Clock ratios and redshift: first algebraic obligations
 
@@ -13,7 +18,6 @@ CCC derivation, or conservative return on closure records. No physical bridge is
 assumed or closed. The lapse statement below is an algebraic conversion given
 its inputs; no differentiability or metric identification is asserted.
 -/
-import Mathlib
 
 namespace QLF.ClockRedshift
 
