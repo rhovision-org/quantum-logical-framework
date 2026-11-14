@@ -14,7 +14,14 @@ This independent closed form evaluates the same published mathematical quantity;
 
 For monotonicity put `q=-r`, with `0<q<1`, and `L(q)=log((3−q)/(3*(1−q)))`. Then `L(0)=0`, `L'(q)=1/(1−q)−1/(3−q)` and `L''(q)=1/(1−q)^2−1/(3−q)^2>0`. Since the derivative of `q*L'(q)−L(q)` is `q*L''(q)>0` and its value at zero is zero, `L(q)/q` increases strictly with q. T decreases with positive Hc. Thus the rounding rectangle's analytic extrema occur at the two corners used by the script. This calculus argument is not a new Lean proof; the reported endpoint evaluations are high-precision numerical values, not a certified interval-arithmetic artifact.
 
-The nearest-rounding model is explicitly `Hc in [59.505,59.515]` and `r in [-0.79975,-0.79965]`. It is about the printed central values, not the reported statistical fit uncertainty or its unknown covariance. Table 1's 26.70 denotes the reporting interval [26.695,26.705] at hundredth precision.
+Explicitly, with the positive unit-conversion constant C, `T=C*L(q)/(Hc*q)`, so
+
+`dT/dq = C*[q*L'(q)−L(q)]/(Hc*q²) > 0`,
+`dT/dHc = −C*L(q)/(q*Hc²) < 0`.
+
+Here `L(q)>0` for `0<q<1`; the argument above proves the first numerator positive. Since `q=−r`, age increases with −r and decreases with Hc throughout the specified rectangle, rather than merely at sampled points.
+
+The nearest-rounding model is explicitly `Hc in [59.505,59.515]` and `r in [-0.79975,-0.79965]`. It is about the printed central values, not the reported statistical fit uncertainty or its unknown covariance. Table 1's 26.70 denotes the conventional nearest-rounding half-unit interval: `26.70 ± 0.005 Gyr`, or [26.695,26.705], at hundredth precision. Both tie endpoints are included conservatively, independently of a tie-breaking rule; the exclusion has a strict gap and does not depend on those endpoints.
 
 ## Result
 
@@ -41,4 +48,10 @@ sha256sum -c verification/gupta-clock-conventions/SHA256SUMS
 sha256sum -c verification/gupta-ccc-tl/SHA256SUMS
 ```
 
-The five new audit tests pass. Typed-record and document-link validation pass. No Lean source or build input changes are part of this follow-up, and no new kernel assurance or independent numerical review of this audit is claimed.
+The five new audit tests pass. Typed-record and document-link validation pass. No Lean source or build input changes are part of this follow-up, and no new kernel assurance is claimed. [Grok's subsequent independent review and execution report](grok_review.md), relayed by Jim, records five passing tests, matching central/bound values and verified checksums.
+
+## Review disposition and progression
+
+[Grok's review](grok_review.md) reports no numerical or formal objections and recommends keeping this draft. The derivative and reporting-interval clarifications are now explicit. **The author intermediate/code or source correction remains a hard prerequisite for subsequent stage-2 physical implementation.** The prepared conventions remain proposed, not frozen or adopted. This review is not an exception to the gate. Any decision to proceed with the residual unexplained must be explicitly recorded by Jim with the revised gate and remaining limitation; no such decision has been supplied.
+
+Merge order: #233 first, then #235, or rebase/retarget #235 onto main after #233 lands. A favorable review of this draft does not authorize either merge or a draft-to-ready transition.
