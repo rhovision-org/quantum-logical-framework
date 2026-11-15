@@ -374,6 +374,15 @@ QLF reading: the path-integral sum gives $\cos(\theta/2)$ as the constructively-
     meaning. Whether 1.4% is a physical selection rule or a sign the encoding is too rigid also
     remains open. Not implicated either way: the measure (proven), the phase rule (proven), the
     depth law (proven), event identity (bracketed).
+  * **Answered, and the answer is a truncation artifact** (2026-11-15, pre-registered,
+    [`Born_Readout_Criterion.md`](Born_Readout_Criterion.md)). The spectral criterion is now a
+    theorem for every exponential-sum readout ([`QLF_ReadoutCriterion`](lean/QLF_ReadoutCriterion.lean),
+    `readout_summable_iff`, `amplitude_exists_iff`; a Vandermonde argument shows a supported dominant
+    mode can never be cancelled). Exact minimal recurrences over 180,288 geometries confirm the
+    selection rule at capacity 2 (convergent supports exactly `{5}`, `{7}`, `{5, 7}`; no irrational
+    `|λ|²` below 8), and find **no convergent geometry at capacity 3**. A rule that empties one
+    capacity up belongs to the truncation, so the `1.4%` question is settled on the encoding side:
+    the `R = 2` amplitudes are real but do not form a family that survives as capacity grows.
   * **But it does not render an angle, and that is the test that matters.** Sweeping the apparatus
     does not sweep the weight: adding transverse letters one at a time gives
     `2·arccos√P = 0°, 8.99°, 13.04°, 10.37°, 12.89°, 11.13°` for `a = 0…5` — wobbling, never

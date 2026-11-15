@@ -60,7 +60,7 @@ interaction; the logical complexity inside them is far larger.
 | Problem | The possibilist answer | Read |
 |---|---|---|
 | Why this world (fine-tuning) | Every way happens; ours is what closes first and in the most ways | [Philosophy.md](Philosophy.md) §3a, [MostWays_First.md](MostWays_First.md) |
-| Measurement | Closure is the event; no collapse postulate | [Measurement_Problem.md](Measurement_Problem.md), [Decoherence.md](Decoherence.md), [Born_Rule.md](Born_Rule.md) |
+| Measurement | Closure is the event; no collapse postulate | [Measurement_Problem.md](Measurement_Problem.md), [Decoherence.md](Decoherence.md), [Born_Rule.md](Born_Rule.md), [Born_Readout_Criterion.md](Born_Readout_Criterion.md) |
 | Isolation, the hard problem of quantum computing | A closed part is shielded up to a global phase | [Crystal_QuantumOS.md](Crystal_QuantumOS.md), [Error_Correction.md](Error_Correction.md), [QuantumOS.md](QuantumOS.md) |
 | Orientation without a coordinator | The completion is fixed by the imbalance itself | §2 above, [Spin_QLF.md](Spin_QLF.md) |
 | Infinities and singularities | No continuum in a finite region; vorticity is quantized | [TheContinuum.md](TheContinuum.md), [Navier_Stokes_Geometry.md](Navier_Stokes_Geometry.md) |

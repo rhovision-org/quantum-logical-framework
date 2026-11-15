@@ -659,7 +659,7 @@ proposals failed**, and the failures are what produced the constraints.
 | **First joint closure** (absorbing census) | direction must survive | **Survived** — direction restored; the run chooses its own stopping depth |
 | The depth weighting must be chosen | a derived measure must exist | **Resolved** — first closures are prefix-free, so Kraft forces `μ(h) = 8^{−|h|}` (`QLF_KraftMeasure`) |
 | Normalized event weight (multiplicity × squared mean phase) | must reproduce interference | **Rejected** — provably sub-additive (`merge_le_sum`), so no constructive interference |
-| Unnormalized amplitude | must converge | **Partial** — converges for 1.4% of geometries, where interference is exact in both directions |
+| Unnormalized amplitude | must converge | **Partial, and confined to capacity 2** — converges for 0.9% of 180,288 geometries at `R = 2` (supports on `{5, 7}`, interference exact in both directions) and for none at `R = 3`; criterion proved (`amplitude_exists_iff`), class read as a truncation artifact ([`Born_Readout_Criterion.md`](Born_Readout_Criterion.md)) |
 
 Two corrections belong to the record as much as the results: a `μ₂` phase-factorization claim caught
 by the inventory before it became documentation, and two growth-rate readings withdrawn after R4 and

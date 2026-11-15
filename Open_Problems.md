@@ -269,11 +269,21 @@ but **given that everything happens every way, exactly how do those ways add?**
      `5`, `7` come from. This also dissolves the "realized threshold" puzzle: `8` is *in* the
      spectrum. The earlier imbalance rules were proxies and behave like proxies (antipodal converges
      52% of the time).
-   * **What is still open:** *which apparatus words produce dominant-blind readouts* — now a
-     combinatorial question about `u_c` rather than a search over geometries — whether the excited
-     eigenvalue set means anything physically, and whether 1.4% is a selection rule or the encoding
-     being too rigid. The sub-additivity theorem is unaffected: it bounds the *normalized* weight
-     everywhere.
+   * **Answered (2026-11-15, pre-registered, [`Born_Readout_Criterion.md`](Born_Readout_Criterion.md)):
+     the criterion is now a **theorem** ([`QLF_ReadoutCriterion`](lean/QLF_ReadoutCriterion.lean),
+     `amplitude_exists_iff`, no axioms: an exponential-sum readout converges absolutely at `8^{−d/2}`
+     iff every eigenvalue it sees has `|λ|² < 8`), and the support is now read off **exact** minimal
+     recurrences rather than float overlaps. Over 180,288 geometries the capacity-2 selection rule
+     **holds** (every convergent support is on `{5, 7}`, no irrational below threshold), but at
+     capacity 3 **none of 170,400 closing geometries converges**, although the operator has six
+     eigenvalue moduli below 8. So the convergent class is an artifact of the capacity-2 truncation,
+     not a selection rule that persists; `5` and `7` are eigenvalues of that truncation (`5` enters
+     only through absorption at the apparatus targets). **Open instead:** a capacity rule under which
+     a convergent family persists, or a different readout. The sub-additivity theorem is unaffected:
+     it bounds the *normalized* weight everywhere.
+   * ~~**What was open:** *which apparatus words produce dominant-blind readouts*, whether the
+     excited eigenvalue set means anything physically, and whether 1.4% is a selection rule or the
+     encoding being too rigid.~~ Answered in the bullet above.
    * ~~**Next Lean anchor (tractable):** the Kraft bound itself~~ — ✅ **done**
      ([`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)). For a prefix-free set of twist words
      `Σ 8^{−|h|} ≤ 1` is finite counting (`8^{K−|h|}` disjoint continuation sets inside `8^K`), so
