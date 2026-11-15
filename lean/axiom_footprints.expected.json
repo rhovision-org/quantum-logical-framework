@@ -721,6 +721,51 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.InteractingKinematics.map_exactConserving": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.no_umklapp": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.process_boost_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.twoBody_conserves_momentum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.twoBody_translation_commute": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.umklapp_needs_short_wave": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.umklapp_t_not_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.umklapp_x_not_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.walk_leg_onShell": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.JointClosure.closed_iff_singlet": [
     "Classical.choice",
     "Quot.sound",

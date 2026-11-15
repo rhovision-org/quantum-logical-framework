@@ -1,7 +1,7 @@
 {
   "record_type": "claim",
   "record_id": "QLF-RELATIVITY-001",
-  "version": "0.3-draft",
+  "version": "0.3.1-draft",
   "source_revision": "d575748cb10923257442d7f7b90a7f7a3d7e9320",
   "informal_statement": "The free Dirac walk approaches Lorentz-covariant propagation in the long-wavelength regime, with a calculable lattice error, while exact invariance and interacting boost covariance remain open.",
   "approximation_or_regime": {
@@ -21,17 +21,23 @@
       "QLF.RelativityScale.anisotropy_ratio",
       "QLF.LorentzSymbol.symbol_det",
       "QLF.LorentzSymbol.diagonal_light_superluminal",
-      "QLF.LorentzSymbol.joint_symbol_swap"
+      "QLF.LorentzSymbol.joint_symbol_swap",
+      "QLF.InteractingKinematics.no_umklapp",
+      "QLF.InteractingKinematics.process_boost_covariant",
+      "QLF.InteractingKinematics.umklapp_x_not_covariant",
+      "QLF.InteractingKinematics.umklapp_t_not_covariant",
+      "QLF.InteractingKinematics.twoBody_conserves_momentum"
     ],
-    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, and free Dirac-walk shell covariance. They do not establish interacting boost covariance, a physical propagation law, or a conservative return from interacting records."
+    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and the kinematic layer of interactions: long-wavelength lattice processes conserve exactly and are frame-independent as allowed processes, umklapp processes are frame-dependent, and a two-body contact-interaction walk conserves total lattice momentum. They do not establish boost covariance of interacting amplitudes or loops, a physical propagation law, or a conservative return from interacting records."
   },
   "formal_object": {
     "primary_files": [
       "lean/QLF_RelativityScale.lean",
       "lean/QLF_LorentzSymbol.lean",
-      "lean/QLF_BoostCovariance.lean"
+      "lean/QLF_BoostCovariance.lean",
+      "lean/QLF_InteractingKinematics.lean"
     ],
-    "type": "finite census moments, signed Pauli-symbol algebra, and the unitary Dirac-walk dispersion"
+    "type": "finite census moments, signed Pauli-symbol algebra, and the unitary Dirac-walk dispersion; lattice energy-momentum conservation for interacting processes"
   },
   "dependencies": {
     "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
@@ -77,16 +83,16 @@
     "noncircularity_witness": "The walk dispersion is derived independently of the Lorentz target. The kinetic reading of the census symbol is separately labelled an assumption and is not used to prove shell covariance.",
     "status": "B-OPEN",
     "first_order_evidence": "F",
-    "first_order_note": "Free-propagation shell covariance and the census/Lorentz-symbol identities are formal F results in the 375-anchor baseline. The interacting return and physical law identification remain open.",
+    "first_order_note": "Free-propagation shell covariance and the census/Lorentz-symbol identities are formal F results in the 375-anchor baseline. The interacting return and physical law identification remain open. Interacting kinematics (allowed processes, umklapp frame dependence) is formal in QLF_InteractingKinematics; amplitudes and loops remain open.",
     "defeater": "A demonstrated failure of free-shell covariance in the stated long-wavelength regime; an interacting history whose boost behavior cannot be returned to closure invariants; or a physical propagation law incompatible with the walk.",
     "proof_obligation": {
       "domain": "finite free Dirac-walk modes in the long-wavelength regime",
       "codomain": "Lorentz-transformed shell comparisons and, ultimately, interacting closure records",
       "forward_map": "walk mode -> derived eigenvalue shell -> boosted shell comparison",
       "return_map": "interacting record -> closure invariants -> same free-shell class",
-      "composite_identity_on": "free-shell covariance only; interacting identity not defined",
+      "composite_identity_on": "free-shell covariance and the set of allowed long-wavelength interacting processes; amplitude-level interacting identity not defined",
       "conservative_return_status": "NOT_STARTED",
-      "proof_artifact": "lean/QLF_BoostCovariance.lean (free-shell covariance; no interacting return)",
+      "proof_artifact": "lean/QLF_BoostCovariance.lean (free-shell covariance); lean/QLF_InteractingKinematics.lean (interacting kinematics and umklapp; no amplitude-level return)",
       "imported_axioms": "long-wavelength regime; kinetic reading of the census symbol; physical identification of the walk with nature's propagation law",
       "falsifier": "A free-shell covariance failure in the stated regime, or an interacting boost test that cannot be returned."
     }
@@ -109,7 +115,7 @@
     "comparison_type": "not_applicable"
   },
   "evidence": {
-    "F": "Free-shell covariance, census limits, Lorentz-symbol determinant and shared-pair marginal identities are formal and audited.",
+    "F": "Free-shell covariance, census limits, Lorentz-symbol determinant and shared-pair marginal identities are formal and audited. Interacting kinematics: exact conservation at long wavelength, frame-independence of allowed processes, umklapp frame dependence, two-body momentum conservation.",
     "N": "No numerical boost-covariance benchmark is claimed.",
     "E": "None. No empirical evidence or interacting test is claimed.",
     "reviewer": "Aria reviewed the PR; the claim record is a post-merge hygiene entry"
@@ -132,7 +138,7 @@
     },
     "G2": {
       "status": "INCOMPLETE",
-      "reason": "No interacting-sector map or physical propagation-law selection is proved."
+      "reason": "Interacting kinematics is formal; no interacting amplitude map or physical propagation-law selection is proved."
     },
     "G3": {
       "status": "INCOMPLETE",
@@ -176,7 +182,8 @@
       "Proof_to_Physics.md",
       "lean/QLF_RelativityScale.lean",
       "lean/QLF_LorentzSymbol.lean",
-      "lean/QLF_BoostCovariance.lean"
+      "lean/QLF_BoostCovariance.lean",
+      "lean/QLF_InteractingKinematics.lean"
     ],
     "status": "post-merge claim record; no bridge promotion"
   }
