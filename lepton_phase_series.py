@@ -40,6 +40,18 @@ the series below was computed).  No muon or tau mass is read anywhere.
   nothing about deeper selections.
 
 RESULT: recorded below this line in the commit after the pre-registration.
+
+RESULT (run 2026-11-15, `python3 lepton_phase_series.py 22`, ~13 s): FAIL.
+  w_L checked against the classifier's brute force at L = 4, 6, 8, 10
+  (24, 72, 624, 11616).  Partial sum S_22 = 0.0399880; increments are
+  falling like L^-2 (the script's geometric tail, 6.9e-4, is the low
+  estimate; a power-law tail gives about 1.6e-3), so P is about 0.041-0.042.
+  That is 16x below 2/3.  Robust beyond the tail fit: ALL non-backtracking
+  first returns of any kind carry only 0.0965 of the measure through L = 22,
+  and for P to reach 2/3 the walk's total return probability would have to
+  exceed about 0.69, twice the simple random walk's 0.34 on Z^3 (Polya),
+  although forbidding immediate reversal removes the commonest return.
+  The route is closed; nothing else was tried after the result.
 """
 
 from __future__ import annotations
