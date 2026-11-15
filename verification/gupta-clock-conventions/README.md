@@ -31,6 +31,19 @@ The single predeclared diagnostic `r=-0.80` gives **26.68519567394 Gyr**. A 365-
 
 The [paper](https://arxiv.org/abs/2309.13100v1) identifies Matlab curve fitting and cites data sources, but the inspected text does not supply the actual age-calculation code and intermediate constants needed to identify the remaining digits. This audit does not prove that every alternative implementation is excluded. **Historical cause unresolved; source-precision gate stays open.** The nominal benchmark still passes its original, unchanged abstract-precision tolerance.
 
+## Candidate cause: a rounded megaparsec (hypothesis, reported by Aria)
+
+After this audit was frozen, @aixaria0 reported a candidate cause in [#234](https://github.com/rhovision-org/quantum-logical-framework/issues/234#issuecomment-6880690413) (2026-11-14): converting with the rounded value **1 Mpc = 3.09e19 km** instead of 3.0856775814913673e19 km. Recomputed here with the unchanged audit function `age_gyr(59.51, -0.7997, mpc_km='3.09e19')`, the central present age is **26.70456730090 Gyr**, which lies inside the reporting interval [26.695, 26.705] and so rounds to Table 1's 26.70. The audit's nominal convention gives 26.66721185884 Gyr; the ratio between them is exactly the ratio of the two megaparsec values, because the age is linear in the Mpc constant. Aria also reports that the same conversion reproduces the rounded CCC and ΛCDM+TL present-age entries; that second claim is recorded as his and has not been rechecked in this follow-up.
+
+Status of this finding:
+
+- It is a **hypothesis**, not an identified cause. A unit conversion that recovers the printed digits is one way to get them; it does not show the author used it. Aria states the same reservation.
+- It was found after the published targets were known, so it is a retrospective explanation, not a prediction. It was not produced by an optimizer or a target inversion, but it was not predeclared either.
+- The frozen specification, implementation, tests, result and checksums are unchanged. The audit's conclusion (displayed-parameter rounding alone is insufficient under the declared unit convention) still stands; this finding moves the explanation from parameter rounding to the unit constant.
+- **The source-precision gate stays open** until the author's constants or code, or an equivalent published statement, confirm the conversion. If confirmed, the gate closes with the cause documented and the frozen benchmark tolerance still unchanged.
+
+Aria's same comment raises two further points for stage 2: distance matching alone permits any positive `q = Ht/Hc`, so equation 43's choice `q = e = (1+r)(3+r)/2` (which removes the second-order term in `zt = q*zc + q*(q−e)*zc²/2 + …`) is an additional assumption; and the elapsed reading depends on an explicit clock convention (`d tau = f dt` under fixed reference `c0`). Both bear on the [proposed convention contract](../../Gupta_ClockConventions.md) and are left for its review rather than edited into the hashed contract here.
+
 ## Verification and next input
 
 The [implementation](../../tools/gupta_age_precision_audit.py) and [tests](../../tests/test_gupta_age_precision_audit.py) check the nominal value against the stored baseline without rerunning it, the rounding exclusion, specified diagnostics, the matter-dominated limit and invalid input rejection. The implementation is committed before the final report is recorded. Artifact hashes cover this audit separately from the immutable stage-1 manifest.
