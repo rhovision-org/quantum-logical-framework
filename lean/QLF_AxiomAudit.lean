@@ -40,6 +40,7 @@
 
 import QLF_ClockRedshift
 import QLF_ClockDomains
+import QLF_ClockPairing
 import QLF_Axioms
 import QLF_Universality
 import QLF_TwistAlphabet
@@ -705,3 +706,35 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClockDomains.collision_blocks_reconstruction
 #print axioms QLF.ClockDomains.no_exact_reconstruction
 #print axioms QLF.ClockDomains.prescribed_counterpart_reconstructible
+
+-- Paired local clocks and the candidate map J: finite algebra and counts only;
+-- no physical time reversal, antimatter identification or age map.
+#print axioms QLF.ClockPairing.J_involutive
+#print axioms QLF.ClockPairing.J_admissible
+#print axioms QLF.ClockPairing.J_lengths
+#print axioms QLF.ClockPairing.J_fixed_iff
+#print axioms QLF.ClockPairing.strict_admissible
+#print axioms QLF.ClockPairing.canonical_fixed
+#print axioms QLF.ClockPairing.J_not_fixed_point_free
+#print axioms QLF.ClockPairing.J_fixed_lengths
+#print axioms QLF.ClockPairing.fixedOfLength_length
+#print axioms QLF.ClockPairing.fixedOfLength_nodup
+#print axioms QLF.ClockPairing.census_one_one
+#print axioms QLF.ClockPairing.census_two_two
+#print axioms QLF.ClockPairing.extendedLeft_not_strict
+#print axioms QLF.ClockPairing.extendedRight_not_strict
+#print axioms QLF.ClockPairing.strict_unique
+#print axioms QLF.ClockPairing.strict_no_collision
+#print axioms QLF.ClockPairing.fiber_up_one
+#print axioms QLF.ClockPairing.fiber_up_three
+#print axioms QLF.ClockPairing.charge3W_reverse
+#print axioms QLF.ClockPairing.charge3W_dagger
+#print axioms QLF.ClockPairing.charge3W_balanced
+#print axioms QLF.ClockPairing.admissible_label_opposite
+#print axioms QLF.ClockPairing.J_label
+#print axioms QLF.ClockPairing.reversal_label
+#print axioms QLF.ClockPairing.dagger_tick
+#print axioms QLF.ClockPairing.J_duration
+#print axioms QLF.ClockPairing.J_equal_durations
+#print axioms QLF.ClockPairing.reversal_duration
+#print axioms QLF.ClockPairing.swap_duration

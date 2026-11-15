@@ -464,6 +464,10 @@ The non-constructive parts of the Ruliad — non-terminating computations, Busy 
 
 [`QLF_ClockDomains.lean`](QLF_ClockDomains.lean) implements the closure-only model in [Time_Reversed_Clock_Domains.md](../Time_Reversed_Clock_Domains.md): nonunique completions, nonconstant accessible records, explicit counterpart collisions, no exact reconstruction on the stated class, and reconstruction on a prescribed-partner class. No physical time reversal, horizon, no-signalling or cosmic-age relation is asserted. All eleven statements passed kernel verification and the exact-footprint gate at `55a1be8`, with empty axiom footprints; see the [verification record](../verification/time-reversed-clock-domains/README.md).
 
+## Paired clocks and the map J
+
+[`QLF_ClockPairing.lean`](QLF_ClockPairing.lean) is the second finite stage of [Time_Reversed_Clock_Domains.md](../Time_Reversed_Clock_Domains.md). For `J (p, q) = (dagger q, dagger p)`: `J_involutive`, `J_admissible`; the fixed points are exactly `q = dagger p` (`J_fixed_iff`) and number `8ⁿ` at word length `n` (`fixedOfLength_length`, `fixedOfLength_nodup`), so `J` does not double the census (`census_two_two`: 64 fixed of 168). The record `([up], 3)` has 21 admissible counterparts (`fiber_up_three`). The dagger negates the charge label and reversal does not (`charge3W_dagger`, `charge3W_reverse`); opposite label on the two sides holds for every admissible history (`admissible_label_opposite`). `J` preserves total duration (`J_duration`). No axiom; no physical time reversal, antimatter identification or age map is asserted.
+
 ## How to Build
 
 ```bash

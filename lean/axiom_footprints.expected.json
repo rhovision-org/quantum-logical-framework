@@ -95,6 +95,89 @@
   "QLF.ClockDomains.prescribed_counterpart_reconstructible": [],
   "QLF.ClockDomains.records_distinct": [],
   "QLF.ClockDomains.records_equal": [],
+  "QLF.ClockPairing.J_admissible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_duration": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_equal_durations": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_fixed_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_fixed_lengths": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_involutive": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_label": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_lengths": [
+    "propext"
+  ],
+  "QLF.ClockPairing.J_not_fixed_point_free": [],
+  "QLF.ClockPairing.admissible_label_opposite": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.canonical_fixed": [],
+  "QLF.ClockPairing.census_one_one": [],
+  "QLF.ClockPairing.census_two_two": [],
+  "QLF.ClockPairing.charge3W_balanced": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.charge3W_dagger": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.charge3W_reverse": [
+    "propext"
+  ],
+  "QLF.ClockPairing.dagger_tick": [
+    "propext"
+  ],
+  "QLF.ClockPairing.extendedLeft_not_strict": [],
+  "QLF.ClockPairing.extendedRight_not_strict": [],
+  "QLF.ClockPairing.fiber_up_one": [],
+  "QLF.ClockPairing.fiber_up_three": [],
+  "QLF.ClockPairing.fixedOfLength_length": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.fixedOfLength_nodup": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.reversal_duration": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.reversal_label": [
+    "propext"
+  ],
+  "QLF.ClockPairing.strict_admissible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.strict_no_collision": [],
+  "QLF.ClockPairing.strict_unique": [],
+  "QLF.ClockPairing.swap_duration": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClockRedshift.common_rescaling": [
     "Classical.choice",
     "Quot.sound",

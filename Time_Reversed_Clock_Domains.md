@@ -65,9 +65,9 @@ The candidate is `T_Gupta = T₊ + T₋`, with positive durations `T₊ = T₋`,
 
 Gupta's benchmark uses fitted external inputs; its numerical reproduction does not make them QLF-derived. The comparison ΛCDM age is likewise model-dependent and uses a smooth FLRW description. These approximation limitations do not supply an error bound or establish the proposed factor of two. Jim has authorized exploring the hypothesis despite the unresolved Table 1 precision residual; that exploratory decision neither resolves the residual nor adopts the physical map. The frozen artifacts and tolerance remain unchanged.
 
-## Next stage: paired local clocks and the map J (plan, not yet implemented)
+## Second stage: paired local clocks and the map J (plan, now implemented)
 
-Grok's second review, relayed by Jim on [PR #235](https://github.com/rhovision-org/quantum-logical-framework/pull/235) on 15 November 2026, proposes four Lean items and three documentation items. This section adopts them with the adjustments below and fixes what each statement may and may not be read as. Nothing here is proved yet. The counts quoted are exact enumerations, run before any Lean was written, and each is a target for a theorem.
+Grok's second review, relayed by Jim on [PR #235](https://github.com/rhovision-org/quantum-logical-framework/pull/235) on 15 November 2026, proposes four Lean items and three documentation items. This section adopts them with the adjustments below and fixes what each statement may and may not be read as. The counts quoted were exact enumerations run before any Lean was written. The plan is kept as written; the [outcome](#second-stage-outcome) follows it.
 
 **The candidate map.** On histories `h = (p, q)` put `J(p, q) = (dagger q, dagger p)`, with `dagger` from [QLF_ClosureUnitarity](lean/QLF_ClosureUnitarity.lean). It swaps the two domains and conjugate-reverses each word. This is one choice. Two others must be stated beside it so the choice is visible: the pure reversal `(q.reverse, p.reverse)` and the swap alone `(q, p)`.
 
@@ -90,10 +90,29 @@ Grok's second review, relayed by Jim on [PR #235](https://github.com/rhovision-o
 
 **Not in this stage.** No mapping of Gupta's integral onto `T₊ + T₋`. No promotion of the toy record map or of `no_exact_reconstruction` to a horizon or no-signalling statement. No new dynamics. The half-total arithmetic above stays retrospective.
 
+## Second-stage outcome
+
+Implemented in [QLF_ClockPairing](lean/QLF_ClockPairing.lean), no axiom added. Every planned statement is proved, and the counts in Lean agree with the enumeration, so the first kill condition did not fire.
+
+| Plan item | Theorems | Result |
+|---|---|---|
+| J1 | `J_involutive`, `J_admissible`, `J_lengths` | Proved. |
+| J2 | `dagger_tick` | Proved: the event at tick `i` sits, conjugated, at tick `n − 1 − i` of the dagger. Structural, as expected. |
+| J3 | `J_duration`, `J_equal_durations`, `reversal_duration`, `swap_duration` | Proved for all three maps. Order reversal gives no factor between the two durations. Bookkeeping; a no-go, not support. |
+| J4 | `J_fixed_iff`, `fixedOfLength_length`, `fixedOfLength_nodup`, `J_not_fixed_point_free`, `J_fixed_lengths`, `census_one_one`, `census_two_two` | Proved for every length: the fixed points are exactly the histories with `q = dagger p`, and there are `8ⁿ` distinct ones at word length `n`. The (1,1) and (2,2) censuses (8 of 8; 64 of 168) are decided in the kernel. The (3,3) figures stay an enumeration. |
+| L1 | `charge3W_dagger`, `charge3W_reverse`, `J_label`, `reversal_label` | Proved: the dagger negates the label, pure reversal leaves it unchanged. |
+| L2 | `charge3W_balanced`, `admissible_label_opposite` | Proved: every admissible history has opposite total label on its two sides. |
+| S1 | `strict_admissible`, `strict_unique`, `strict_no_collision`, `extendedLeft_not_strict`, `extendedRight_not_strict` | Proved. |
+| S2 | `fiber_up_one`, `fiber_up_three` | Decided in the kernel without `native_decide`: 1 and 21. The length-5 figure (640) stays an enumeration. |
+
+**One finding the plan did not state.** The stricter class of S1 and the fixed-point set of J4 are the same set (`J_fixed_iff`). So the class on which the counterpart *is* reconstructible is exactly the class on which `J` assigns a history to itself. Under this `J`, a history either has a distinct counterpart that the record does not determine, or has a determined counterpart that is not distinct. This is a property of this candidate map and this record interface, not of nature.
+
+**What the stage does and does not support.** By the criterion set above, only J4 and S2 are counts. J4 counts against the simplest reading of the hypothesis: `J` does not double the event census. L2 removes one apparent support: opposite label on the two sides is forced by closure. J3 confirms that the age gate is untouched. Nothing here is evidence that our world has a time-reversed counterpart, and nothing excludes it; the stage narrows what a later physical map would have to supply.
+
 ## Independent review record
 
 [Grok's review and disposition](verification/time-reversed-clock-domains/grok_review.md), relayed by Jim on 14 November 2026, finds the issue appropriately scoped and requests the explicit age gate, alternative completions and a concrete non-identifiability target. Those requirements are specified above. The first finite record implementation is kernel-verified; the physical correspondence remains **B-OPEN**.
 
 ## Verified finite-record anchors
 
-In namespace `QLF.ClockDomains`: `canonical_admissible`, `extendedLeft_admissible`, `extendedRight_admissible`, `alternative_completions`, `counterparts_distinct`, `records_equal`, `records_distinct`, `accessible_nonconstant`, `collision_blocks_reconstruction`, `no_exact_reconstruction`, and `prescribed_counterpart_reconstructible`. These discharge the concrete closure-only record target, not the paired local-clock model, event census or physical horizon.
+In namespace `QLF.ClockDomains`: `canonical_admissible`, `extendedLeft_admissible`, `extendedRight_admissible`, `alternative_completions`, `counterparts_distinct`, `records_equal`, `records_distinct`, `accessible_nonconstant`, `collision_blocks_reconstruction`, `no_exact_reconstruction`, and `prescribed_counterpart_reconstructible`. These discharge the concrete closure-only record target. The paired local-clock model and the fixed-point census are in [QLF_ClockPairing](lean/QLF_ClockPairing.lean), listed under the second-stage outcome above. The physical horizon and the age map remain open.

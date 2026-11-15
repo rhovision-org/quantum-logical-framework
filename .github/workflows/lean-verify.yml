@@ -15,7 +15,7 @@ on:
 
   pull_request:
     # Verify the clock-domain implementation while it is stacked on #235.
-    branches: [ "main", "research/gupta-clock-conventions" ]
+    branches: [ "main", "research/gupta-clock-conventions", "research/time-reversed-clock-domains" ]
     paths:
       - 'lean/**'
       - 'lakefile.lean'
