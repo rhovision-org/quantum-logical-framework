@@ -325,7 +325,7 @@ holders. Memetics T4 predicts R follows priority (`first`), not multiplicity (`w
 
 1. **Runtime acceptance (done 2026-11-13, isolated node).** Parse and execute
    [`QKB.rho`](rholang/QKB.rho) on the checked-in `rnode` from
-   [`quantum-os`](https://github.com/rchain-community/quantum-os) commit
+   [`quantum-os`](https://github.com/rhovision-org/quantum-os) commit
    `070d8f8254ab4d39cdf80f8a60eee37c38910588` (binary SHA-256
    `3323e67399fd0d5bf5e91fbcfa4dd157848e2b9ec5e7c0276c71288f675f6400`). The run covers assert and
    refusal, repeat attestation, duplicate questions, answer-before-ask, malformed input, solve,

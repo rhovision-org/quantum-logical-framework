@@ -8,7 +8,7 @@
 
 | Item | Value |
 |---|---|
-| Node source tree | [`quantum-os`](https://github.com/rchain-community/quantum-os) commit `070d8f8254ab4d39cdf80f8a60eee37c38910588` |
+| Node source tree | [`quantum-os`](https://github.com/rhovision-org/quantum-os) commit `070d8f8254ab4d39cdf80f8a60eee37c38910588` |
 | Binary | `/home/jimscarver/quantum-os/bin/rnode` |
 | Binary SHA-256 | `3323e67399fd0d5bf5e91fbcfa4dd157848e2b9ec5e7c0276c71288f675f6400` |
 | `rnode --version` | `rchain 0.1.0` |
@@ -123,12 +123,13 @@ The repeat attestation by the same signing key leaves `R = 1`, as designed: R co
 - the `rho:qucalc:zfa`, `rho:qucalc:grant`, deployer-key and registry natives are called on an actual node;
 - a valid closure is recorded and a malformed twist list/proposition is refused with an answer;
 - the service can be reached by a separate deploy through the registry;
-- the basic Python-reference behaviors tested by (a)–(j) agree on the same vectors.
+- on the vectors probed above, the node returns what the Python reference returns: the gate on one valid and one malformed twist list, `ways`/`redundancy`, ask/answer/solve, a repeat attestation, a duplicate ask, answer-before-ask, `compatible`, `conjoin` and a malformed proposition. That is a subset of the behaviours behind checks (a)–(j), not all of them: (a)–(c) are exhaustive enumerations, and (f) sharding and (j) mutation of captured lists are Python-only by nature.
 
 **Not established here**
 
 - production deployment or adversarial-network security;
 - independent human attesters (this run uses one deploy key; the Sybil limit in §3a remains);
+- the node refusing an attester name that is not a `deployerId` (`"attester is not a deployerId"`). The run used one key and always passed its real `deployerId`, so the negative path of the native key check was never exercised. `make_acceptance_harness.py` now emits that probe (`@"qkb-fake-attester"`, expected `{"ok": false, "error": "attester is not a deployerId"}`), but it has not yet been run on a node;
 - the sharded two-role contract (§6 remains a design checked in simulation);
 - a public-chain registry lifetime or cross-shard behavior;
 - any change to QLF claim status. QKB remains an infrastructure/design artifact, not an `E` claim or a closed physical bridge.

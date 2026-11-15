@@ -8,7 +8,8 @@ acceptance harness is the same contract body with three test-only changes:
 1. the registry URI is also sent to the public `@"qkb-uri"` channel;
 2. the deploy's own `rho:rchain:deployerId` is bound so the probes can attest;
 3. a probe block exercises assert/ways/redundancy/ask/answer/solve/
-   compatibility/conjoin and two controlled refusals.
+   compatibility/conjoin, two controlled input refusals, and one
+   authentication refusal (a fresh name in place of a deployerId).
 
 The QKB contracts and state are unchanged.  This file is the generator used for
 the evidence in `rholo_acceptance.md`; it is not a production entry point.
@@ -49,7 +50,7 @@ def build(source: str) -> str:
 
     probe = r'''
   // ---------------------------------------------------------------- acceptance probes
-  new aRet, wRet, rRet, qRet, ansRet, solveRet, compRet, cjRet, badRet, badPropRet in {
+  new aRet, wRet, rRet, qRet, ansRet, solveRet, compRet, cjRet, badRet, badPropRet, fakeKey, fakeRet in {
     QKB!("assert", "probe", [0,3,1,2], *deployerId, *aRet) |
     for (@a <- aRet) {
       @"qkb-assert"!(a) |
@@ -80,7 +81,11 @@ def build(source: str) -> str:
     QKB!("assert", "bad", [8], *deployerId, *badRet) |
     for (@b <- badRet) { @"qkb-bad"!(b) } |
     QKB!("compatible", (4,1), (0,1), *badPropRet) |
-    for (@b <- badPropRet) { @"qkb-bad-prop"!(b) }
+    for (@b <- badPropRet) { @"qkb-bad-prop"!(b) } |
+    // negative authentication probe: a fresh unforgeable name is not a deployerId,
+    // so the native key check must refuse it ("attester is not a deployerId")
+    QKB!("assert", "probe-fake", [0,3,1,2], *fakeKey, *fakeRet) |
+    for (@f <- fakeRet) { @"qkb-fake-attester"!(f) }
   }
 '''
     stripped = source.rstrip()
