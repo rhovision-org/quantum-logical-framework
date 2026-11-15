@@ -148,8 +148,8 @@ theorem readout_tendsto_iff {n : ℕ} (c lam : Fin n → ℂ) (hlam : Function.I
     -- but the dominant term has constant norm |c k1|
     have hunit : ‖mu k1‖ = 1 := by
       simp only [mu, norm_mul, Complex.norm_real, Real.norm_eq_abs, hs]
-      rw [abs_of_pos (div_pos hrpos hρpos), hρ]
-      field_simp
+      rw [abs_of_pos (div_pos hrpos hρpos), ← mul_div_assoc, hρ]
+      exact div_self (by rw [← hρ]; exact hρpos.ne')
     have hconst : (fun d => ‖c k1 * mu k1 ^ d‖) = fun _ => ‖c k1‖ := by
       funext d
       rw [norm_mul, norm_pow, hunit, one_pow, mul_one]
@@ -160,7 +160,7 @@ theorem readout_tendsto_iff {n : ℕ} (c lam : Fin n → ℂ) (hlam : Function.I
   · intro hall
     simp_rw [hexp]
     rw [show (0 : ℂ) = ∑ _k : Fin n, (0 : ℂ) by simp]
-    refine tendsto_finset_sum _ (fun k _ => ?_)
+    refine tendsto_finsetSum _ (fun k _ => ?_)
     by_cases hc : c k = 0
     · simp [hc]
     · have hlt : ‖lam k * (r : ℂ)‖ < 1 := by
@@ -179,7 +179,7 @@ theorem readout_summable_iff {n : ℕ} (c lam : Fin n → ℂ) (hlam : Function.
   constructor
   · intro hs
     rw [← readout_tendsto_iff c lam hlam hr, tendsto_zero_iff_norm_tendsto_zero]
-    simpa [hnorm] using hs.tendsto_atTop_zero
+    exact hs.tendsto_atTop_zero.congr (fun d => (hnorm d).symm)
   · intro hall
     have hgeo : Summable (fun d => ∑ k, ‖c k‖ * (‖lam k‖ * r) ^ d) := by
       refine summable_sum (fun k _ => ?_)
