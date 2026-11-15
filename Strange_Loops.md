@@ -867,9 +867,14 @@ closure equivalence, and not the entangled-sector return. It is in the
 
 **Short cross-link and status boundary.** [`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean)
 is the strongest current near-example; [`QLF_TensorConservativeReturn`](lean/QLF_TensorConservativeReturn.lean)
-closes the tensor-image quotient return. The missing object is a return on the
-**physically selected closure quotient** (call it `TensorConservativeReturn_phys`),
-plus the entangled-sector return. Under the same discipline, issue
+closes the tensor-image quotient return, and [`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean)
+proves that quotient is the **observational** one: two histories are equivalent iff no
+appended context separates them by joint closure and phase (`obsEquiv_iff_pairEquiv`), the
+separating context is itself a ZFA closure (`separating_test_is_zfa`), and phase-blind tests give
+only the coarser projective quotient (`bareEquiv_iff_projective`, `phase_is_needed`). The missing
+object is now narrower: that joint closure phase is the only physical observable, so that the
+observational quotient is the **physically selected closure quotient** (call it
+`TensorConservativeReturn_phys`), plus the entangled-sector return. Under the same discipline, issue
 [#213](https://github.com/rhovision-org/quantum-logical-framework/issues/213) remains
 `B-OPEN`, and all four Paper I bridges (three-polarizer, α, SPARC, Born) remain
 `B-OPEN` until those returns exist.
