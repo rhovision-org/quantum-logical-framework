@@ -97,15 +97,11 @@ theorem posterior_mem {p a b : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (ha : 0 < a) (hb
   have h1 : 0 < p * a := mul_pos hp0 ha
   have h2 : 0 < (1 - p) * b := mul_pos (sub_pos.2 hp1) hb
   have hm : 0 < evidence p a b := by unfold evidence; linarith
-  have e1 := evidence_mul_posterior (ne_of_gt hm)
-  have e2 := evidence_mul_one_sub_posterior (ne_of_gt hm)
   refine ⟨hm, ?_, ?_⟩
-  · by_contra hc
-    push_neg at hc
-    nlinarith
-  · by_contra hc
-    push_neg at hc
-    nlinarith
+  · unfold posterior
+    exact div_pos h1 hm
+  · rw [one_sub_posterior (ne_of_gt hm)]
+    exact div_pos h2 hm
 
 /-! ## Expected information gain = mutual information -/
 
@@ -289,8 +285,11 @@ private theorem kl_term_gt {x y : ℝ} (hx : 0 < x) (hy : 0 < y) (hne : x ≠ y)
     ring
   have hxy : x * (y / x) = y := by
     rw [mul_div_assoc', mul_comm x y, mul_div_assoc, div_self (ne_of_gt hx), mul_one]
-  rw [hneg]
-  nlinarith [mul_lt_mul_of_pos_left hlog hx, hxy]
+  have h3 : x * (y / x - 1) = y - x := by rw [mul_sub, hxy, mul_one]
+  have h4 := mul_lt_mul_of_pos_left hlog hx
+  rw [h3] at h4
+  rw [hneg, mul_neg]
+  linarith
 
 private theorem kl_term_ge {x y : ℝ} (hx : 0 ≤ x) (hy : 0 < y) :
     x - y ≤ x * Real.log (x / y) := by
