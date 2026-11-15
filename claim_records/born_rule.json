@@ -47,6 +47,33 @@
     "formal_status": "The mathematical characterization is conditional on its interface. The physical realization and interpretation of the interface are not proved here.",
     "noncircularity_test": "Derive the assignment rules from independently specified physical structure; do not assume the target probability law through an equivalent refinement rule."
   },
+  "strange_loop": {
+    "name": "Gaussian-integer register -> unit-way refinement -> ZFA closure -> operational probability",
+    "levels": [
+      "Gaussian-integer amplitude register",
+      "unit-way refinement",
+      "ZFA closure / event",
+      "operational probability record"
+    ],
+    "return_level": "finite unit-way count / detector record",
+    "conservative_return": "born_from_ways and assignment_unique prove the finite characterization; refinement is a premise, and no theorem shows QLF dynamics performs an amplitude-preserving physical refinement.",
+    "noncircularity_witness": "The refinement process must be specified independently of the target Born weights; the current refinement is mathematical, not physical.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F",
+    "first_order_note": "Finite uniqueness on Gaussian-integer registers; first-order formal result established, no numerical detector comparator.",
+    "defeater": "A refinement rule that assumes the target weights, or a detector comparison that fails under a frozen map.",
+    "proof_obligation": {
+      "domain": "Gaussian-integer amplitude registers",
+      "codomain": "unit-way refinements and detector probability records",
+      "forward_map": "register -> unit-way refinement -> ZFA closure -> outcome",
+      "return_map": "detector record -> finite unit-way count -> bornProb",
+      "composite_identity_on": "RCA0 finite unit-way count; not the physical detector",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_StrangeLoopBorn.lean (finite unit-way return; physical refinement still open)",
+      "imported_axioms": "ProbAssignment symmetry, normalization, refinement additivity, physical refinement premise",
+      "falsifier": "A refinement rule that assumes the target Born weights, or a detector comparison that fails under a frozen map."
+    }
+  },
   "observable": {
     "symbol": "operational event probability",
     "baseline": "quantum interference and detector statistics",
@@ -91,16 +118,16 @@
       "reason": "The named ProbAssignment interface, bornProb definition and two characterization/uniqueness theorems are traceable; their physical realization is a separate obligation."
     },
     "G3": {
-      "status": "INCONCLUSIVE",
-      "reason": "Physical realization of ProbAssignment and detector outcome map remain open."
+      "status": "INCOMPLETE",
+      "reason": "The physical refinement and detector-return map are incomplete."
     },
     "G4": {
       "status": "NOT_APPLICABLE",
       "reason": "No extra numerical comparison is claimed for this conditional formal characterization."
     },
     "G5": {
-      "status": "INCONCLUSIVE",
-      "reason": "No physical Born-probability or interference experiment was performed for this record."
+      "status": "INCOMPLETE",
+      "reason": "No detector-probability experiment; the empirical gate is incomplete."
     },
     "G6": {
       "status": "PASS",

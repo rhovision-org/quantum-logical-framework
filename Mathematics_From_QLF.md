@@ -326,6 +326,10 @@ The fair worry: the Lean proofs *use* Mathlib's `Ring`, `Group`, `ℂ`. If QLF m
 
 **Honest scope.** QLF does *not* re-derive all of Mathlib's algebra from ZFA inside Lean — that would be re-founding mathematics in a proof assistant, which is not the project. It machine-checks the substrate's *core* structures (rungs 1–6) and frames the rest as the *conservative rendering*. The defensible claim is the substrate **ontology** (the computable substrate is what realizable mathematics is; Brouwer, Bishop, Weyl, Gisin) plus the worked, verified emergence of its core. We assert that; we do not assert that QLF has re-founded all mathematics.
 
+### 2a. The same structure as a strange loop
+
+Read as a strange loop, §2 has two phases: the metalanguage checks the substrate, and the substrate then re-derives the mathematics with which it was checked. The loop is not vicious because the return is **conservative** — the finitary content is already available in `RCA₀`, and no substrate type imports its group or ring laws. The slogan is *borrow the pen, re-derive the ink*. The loop is a fixed point, not an escape from the metatheoretic regress; the residual trust is the universal one, "finite computation is sound." The full conceptual note, including the bridge-reading and its limits, is [`Strange_Loops.md`](Strange_Loops.md).
+
 ### Does the resolution apply to the metalanguage itself?
 
 The proofs are checked in Lean + Mathlib — the *metalanguage*. Does the same resolution apply to *it*, or is the metalanguage an unexamined foundation QLF still presupposes? The honest answer is **reflexively yes, partway, and the residue is the universal one nobody escapes** — in three layers.

@@ -4,7 +4,9 @@
 **Module:** [`lean/QLF_Manifestation.lean`](lean/QLF_Manifestation.lean)
 **Audit anchors:** twelve `QLF.Manifestation.*` entries in
 [`lean/axiom_footprints.expected.json`](lean/axiom_footprints.expected.json)
-(current baseline: 319 anchors).
+(current baseline: 375 anchors). The module also proves
+`closures_at_least_eight_pow`; it is part of the module but is not a separate
+baseline entry.
 **Merged by:** PR #226.
 
 This page is the companion document for the Manifestation module. It says what the
@@ -116,7 +118,7 @@ Cite the module and the exact theorem names, not the headline words alone:
 
 > `QLF.Manifestation.isolated_iff_closed`, `QLF.Manifestation.distance_eq_delay`,
 > and the other twelve anchored theorems in `lean/QLF_Manifestation.lean`
-> (reviewed project-CI footprints; 319-anchor baseline).
+> (reviewed project-CI footprints; 375-anchor baseline).
 
 For a physical claim, cite the bridge record or state the missing map explicitly.
 A formal theorem is not a physical result by association.

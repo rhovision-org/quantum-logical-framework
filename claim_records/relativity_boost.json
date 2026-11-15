@@ -1,0 +1,183 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-RELATIVITY-001",
+  "version": "0.3-draft",
+  "source_revision": "d575748cb10923257442d7f7b90a7f7a3d7e9320",
+  "informal_statement": "The free Dirac walk approaches Lorentz-covariant propagation in the long-wavelength regime, with a calculable lattice error, while exact invariance and interacting boost covariance remain open.",
+  "approximation_or_regime": {
+    "name": "Long-wavelength free Dirac walk",
+    "description": "The walk dispersion cos E = cos m * prod_i cos k_i is compared to the Minkowski shell through S = E^2 + |k|^2 + m^2; the shell error is O(S^2), with S approximately (L_P/lambda)^2.",
+    "validity_limits": "Free propagation only, with both the original and boosted modes in the long-wavelength regime. No interacting histories, pair creation, continuum limit, or identification of nature's propagation law with this walk is included."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.BoostCovariance.shell_taylor",
+      "QLF.BoostCovariance.shell_lorentz_invariant",
+      "QLF.BoostCovariance.shell_boost_invariant",
+      "QLF.BoostCovariance.diracWalk_boost_covariant",
+      "QLF.RelativityScale.step_census_frame_dependent",
+      "QLF.RelativityScale.covariance_isotropic",
+      "QLF.RelativityScale.anisotropy_ratio",
+      "QLF.LorentzSymbol.symbol_det",
+      "QLF.LorentzSymbol.diagonal_light_superluminal",
+      "QLF.LorentzSymbol.joint_symbol_swap"
+    ],
+    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, and free Dirac-walk shell covariance. They do not establish interacting boost covariance, a physical propagation law, or a conservative return from interacting records."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_RelativityScale.lean",
+      "lean/QLF_LorentzSymbol.lean",
+      "lean/QLF_BoostCovariance.lean"
+    ],
+    "type": "finite census moments, signed Pauli-symbol algebra, and the unitary Dirac-walk dispersion"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "Reviewed 375-entry baseline after #222; the relativity/boost anchors are enforced there.",
+    "qlf_bridge_axioms": "No project bridge axiom in the selected footprints. The kinetic reading of the census symbol is a physical assumption, not a Lean axiom."
+  },
+  "inputs": [
+    {
+      "name": "Dirac-walk dispersion",
+      "value": "cos E = cos m * cos k_x * cos k_y * cos k_z",
+      "provenance": "derived",
+      "source": "QLF.BoostCovariance.diracWalk_dispersion"
+    },
+    {
+      "name": "long-wavelength regime",
+      "value": "S = E^2 + |k|^2 + m^2 at most 1 in both frames",
+      "provenance": "declared",
+      "source": "shell_taylor hypothesis; not derived from QLF dynamics"
+    },
+    {
+      "name": "census kinetic reading",
+      "value": "zeros of the census symbol are read as light's propagation law",
+      "provenance": "declared",
+      "source": "Relativity_Principle.md 5; explicitly an assumption, not a theorem"
+    }
+  ],
+  "interpretation": {
+    "map": "Discrete Dirac walk -> long-wavelength eigenvalue shell -> Lorentz-frame comparison of the same shell.",
+    "formal_status": "The free-shell covariance and census identities are formal. The interacting bridge and the physical propagation-law identification are not formalized.",
+    "noncircularity_test": "The Dirac dispersion is derived before the Lorentz comparison. The census-symbol kinetic reading is labelled as an assumption rather than used as a premise of the covariance theorem."
+  },
+  "strange_loop": {
+    "name": "discrete step -> long-wavelength Dirac shell -> boosted frame -> same shell",
+    "levels": [
+      "discrete substrate step and census",
+      "free Dirac-walk shell",
+      "Lorentz-transformed frame",
+      "physical comparator"
+    ],
+    "return_level": "closure-relevant invariants recovered from the interacting record",
+    "conservative_return": "The free-shell covariance is checked, but no return map from interacting histories/records to the closure invariants is constructed. The interacting-sector return is NOT_STARTED.",
+    "noncircularity_witness": "The walk dispersion is derived independently of the Lorentz target. The kinetic reading of the census symbol is separately labelled an assumption and is not used to prove shell covariance.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F",
+    "first_order_note": "Free-propagation shell covariance and the census/Lorentz-symbol identities are formal F results in the 375-anchor baseline. The interacting return and physical law identification remain open.",
+    "defeater": "A demonstrated failure of free-shell covariance in the stated long-wavelength regime; an interacting history whose boost behavior cannot be returned to closure invariants; or a physical propagation law incompatible with the walk.",
+    "proof_obligation": {
+      "domain": "finite free Dirac-walk modes in the long-wavelength regime",
+      "codomain": "Lorentz-transformed shell comparisons and, ultimately, interacting closure records",
+      "forward_map": "walk mode -> derived eigenvalue shell -> boosted shell comparison",
+      "return_map": "interacting record -> closure invariants -> same free-shell class",
+      "composite_identity_on": "free-shell covariance only; interacting identity not defined",
+      "conservative_return_status": "NOT_STARTED",
+      "proof_artifact": "lean/QLF_BoostCovariance.lean (free-shell covariance; no interacting return)",
+      "imported_axioms": "long-wavelength regime; kinetic reading of the census symbol; physical identification of the walk with nature's propagation law",
+      "falsifier": "A free-shell covariance failure in the stated regime, or an interacting boost test that cannot be returned."
+    }
+  },
+  "observable": {
+    "symbol": "E^2 - |k|^2 - m^2 and its boosted image",
+    "baseline": "Minkowski shell; free-walk deviation bounded by O(S^2)",
+    "uncertainties": "S approximately (L_P/lambda)^2; the bound requires both frames to remain long-wavelength"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "Compare the derived Dirac-walk shell with its Lorentz transform under the stated long-wavelength hypotheses.",
+    "failure_condition": "A shell mismatch outside the O(S^2) bound, or an interacting case with no conservative return.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "not a numerical comparison",
+    "comparator": "Minkowski shell and the free Dirac-walk dispersion",
+    "uncertainty": "O(S^2) with S approximately (L_P/lambda)^2",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Free-shell covariance, census limits, Lorentz-symbol determinant and shared-pair marginal identities are formal and audited.",
+    "N": "No numerical boost-covariance benchmark is claimed.",
+    "E": "None. No empirical evidence or interacting test is claimed.",
+    "reviewer": "Aria reviewed the PR; the claim record is a post-merge hygiene entry"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the free-shell bound inside the stated hypotheses.",
+    "interpretation": "The census symbol's kinetic reading or the identification of the walk with nature's propagation law fails.",
+    "numerical": "A numerical boost test outside the O(S^2) bound.",
+    "empirical": "An interacting or astrophysical test inconsistent with the free-propagation approximation.",
+    "conceptual": "No conservative return exists for interacting histories, so the free result cannot be promoted to a physical bridge."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, long-wavelength regime and non-claims are stated explicitly."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "The relativity and boost anchors are in QLF_AxiomAudit and the 375-entry exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No interacting-sector map or physical propagation-law selection is proved."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "No operational bridge or conservative return for interacting histories."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No numerical comparator or reproduced data set is part of this claim."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No prospective or independent empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No kernel-audit or empirical receipt for the physical reading; this is a post-merge hygiene record."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "Aria reviewed the PR and its formal claims",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "d575748cb10923257442d7f7b90a7f7a3d7e9320",
+    "reference_documents": [
+      "Relativity_Principle.md",
+      "Open_Problems.md",
+      "QM_Postulates_QLF.md",
+      "Claim_Status.md",
+      "Proof_to_Physics.md",
+      "lean/QLF_RelativityScale.lean",
+      "lean/QLF_LorentzSymbol.lean",
+      "lean/QLF_BoostCovariance.lean"
+    ],
+    "status": "post-merge claim record; no bridge promotion"
+  }
+}

@@ -278,6 +278,9 @@ lean_lib QLF where
     `QLF_ClosureChannels,
     `QLF_ChannelZeros,
     `QLF_LightCone,
+    `QLF_RelativityScale,
+    `QLF_LorentzSymbol,
+    `QLF_BoostCovariance,
     `QLF_RealizableWalk,
     `QLF_Tsirelson,
     `QLF_Mass,
@@ -320,5 +323,11 @@ lean_lib QLF where
     `QLF_LocalAreaLaw,
     `QLF_TensorFromClosure,
     `QLF_MetricSinglet, `QLF_LatticeDivergence,
-    `QLF_Manifestation
+    `QLF_Manifestation,
+    `QLF_StrangeLoop,
+    `QLF_StrangeLoopBorn,
+    `QLF_ConservativeReturn,
+    `QLF_TensorConservativeReturn,
+    `QLF_MeadTransaction,
+    `QLF_MagneticOrientation
   ]

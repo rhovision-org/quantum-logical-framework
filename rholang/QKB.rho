@@ -1,0 +1,422 @@
+// QKB.rho — a quantum logical knowledge base on rholo
+// ===================================================
+//
+// Design: ../Quantum_Knowledge_Base.md.  Executable specification (same rules, checked
+// against twist_core.py and qucalc_search.py): ../qkb_reference.py.
+//
+// STATUS: parsed and executed on an isolated local rnode (quantum-os commit 070d8f8,
+// rnode sha256 3323e67399fd0d5bf5e91fbcfa4dd157848e2b9ec5e7c0276c71288f675f6400),
+// including registry publication and a separate deploy's lookup. NOT deployed on a public
+// or production network. Evidence: ../verification/qkb/rholo_acceptance.md.
+//
+// Twists are rholo's integers:  0 ^  1 v  2 >  3 <  4 /  5 \  6 +  7 -
+// axis(t) = t / 2  (0 y, 1 x, 2 z, 3 gauge);  sign(t) = + iff t % 2 == 0.
+//
+// ACCESS. Deploying this file registers QKB in the registry as a send-only bundle
+// (`bundle+{*QKB}`: callers can send to it, nobody can receive on it) and writes the
+// registry uri to the deploy's own `rho:rchain:deployId` channel, where the deployer reads
+// it. Any later deploy reaches the service with
+//   new lookup(`rho:registry:lookup`), ch in { lookup!(`<uri>`, *ch) | for (QKB <- ch) { ... } }
+//
+// Surface (every call answers on `ret`; a refusal is an answer, never silence):
+//
+//   QKB!("assert",     name, twists, *deployerId, ret) -> {ok, id, ways, redundancy} | {ok:false, residual | error}
+//   QKB!("ways",       name, ret)                     -> Int   distinct closures filed under name
+//   QKB!("redundancy", id, ret)                       -> Int   distinct signing keys holding one closure
+//   QKB!("first",      name, ret)                     -> id | Nil   first-reached closure (priority)
+//   QKB!("ask",        seed, context, ret)            -> {ok, q, residual} | {ok:false, error}
+//   QKB!("answer",     q, cont, *deployerId, ret)     -> {ok, id, redundancy} | {ok:false, residual | error}
+//   QKB!("solve",      q, ret)                        -> cont | Nil   the first-reached recorded answer
+//   QKB!("compatible", p, q, ret)                     -> Bool | "invalid proposition"
+//   QKB!("conjoin",    p, q, ret)                     -> prop | "incompatible" | "invalid proposition"
+//
+// QUESTIONS. A question IS its content q = (seed, context): the pair is the key. Re-asking is a
+// no-op, an id cannot be rebound, and an answer is checked against q's own seed, so answers
+// may arrive before (or without) the ask; `ask` only registers q for listing. Answers live
+// in their own map, never under `names`, so a closure asserted under a name equal to q is
+// not an answer to q.
+//
+// INPUT. Every twist list is validated first (a list of Int in 0..7, length <= 64), and every
+// question and proposition is shape-checked, before any scan or native call. Anything else is
+// refused with an answer.
+//
+// PROPOSITIONS. "bot", "top", an atom (axis: Int 0..3, sign: 1 | -1), or ("and", spatial atom,
+// gauge atom). The last is what conjoin returns for two compatible atoms in different blocks,
+// and it is accepted back as input: conjoin is closed under its own output (MO3 smashed with
+// the gauge Boolean block; the gauge twists are ±I and commute with everything).
+//
+// ATTESTERS. The caller passes its own *deployerId; the contract asks rho:rchain:deployerId:ops
+// for its public key. A fresh `new` name gets Nil and is refused. Attester sets store key
+// bytes, so R is the number of distinct signing keys (the Sybil limit is stated in doc §3a).
+
+new QKB,
+    zfaNative(`rho:qucalc:zfa`),     // -> (Bool, phase)  phase: 1 +I, -1 -I, 2 +iI, -2 -iI, 0 none
+    grant(`rho:qucalc:grant`),       // -> content-addressed uri (blake2b of the twists), persisted
+    idOps(`rho:rchain:deployerId:ops`), // "pubKeyBytes": key bytes for a deployerId, Nil otherwise
+    insertArbitrary(`rho:registry:insertArbitrary`),
+    deployId(`rho:rchain:deployId`),
+    stateCh, admit,
+    scan, absOf, abs4, lexLess, keyLess, argmin, validTwists, allTwists,
+    validQuestion, isAtom, validProp, parts, meet1, fromParts
+in {
+
+  // One linear cell, consumed and restored (MasterDictionary requirement 9).
+  stateCh!({ "records": {}, "names": {}, "answers": {}, "asked": Set() }) |
+
+  // Publish the service: send-only, so no caller can intercept another's requests.
+  new uriCh in {
+    insertArbitrary!(bundle+{*QKB}, *uriCh) |
+    for (@uri <- uriCh) { deployId!(uri) }
+  } |
+
+  // ---------------------------------------------------------------- validation
+
+  // Fail closed: true iff `ts` is a list of Int in 0..7 with length <= 64.
+  contract validTwists(@ts, ret) = {
+    match ts {
+      []       => ret!(true)
+      [_ ..._] => { if (ts.length() > 64) { ret!(false) } else { allTwists!(ts, 0, *ret) } }
+      _        => ret!(false)
+    }
+  } |
+
+  contract allTwists(@ts, @i, ret) = {
+    if (i == ts.length()) { ret!(true) } else {
+      match ts.nth(i) {
+        t /\ Int => { if (t >= 0 and t <= 7) { allTwists!(ts, i + 1, *ret) } else { ret!(false) } }
+        _        => ret!(false)
+      }
+    }
+  } |
+
+  // q = (seed, context): seed a valid twist list, context an Int in 0..3.
+  contract validQuestion(@q, ret) = {
+    match q {
+      (seed, c /\ Int) => {
+        if (c < 0 or c > 3) { ret!(false) } else { validTwists!(seed, *ret) }
+      }
+      _ => ret!(false)
+    }
+  } |
+
+  // An atom: (axis: Int 0..3, sign: 1 | -1).
+  contract isAtom(@p, ret) = {
+    match p {
+      (a /\ Int, s /\ Int) => { ret!(a >= 0 and a <= 3 and (s == 1 or s == -1)) }
+      _ => ret!(false)
+    }
+  } |
+
+  // "bot" | "top" | atom | ("and", spatial atom, gauge atom)
+  contract validProp(@p, ret) = {
+    match p {
+      "bot" => ret!(true)
+      "top" => ret!(true)
+      ("and", sp, g) => {
+        new r1, r2 in {
+          isAtom!(sp, *r1) | isAtom!(g, *r2) |
+          for (@ok1 <- r1 & @ok2 <- r2) {
+            if (ok1 and ok2) { ret!(sp.nth(0) < 3 and g.nth(0) == 3) } else { ret!(false) }
+          }
+        }
+      }
+      _ => isAtom!(p, *ret)
+    }
+  } |
+
+  // A valid proposition as (spatial part, gauge part); each part is "bot", "top" or an atom.
+  contract parts(@p, ret) = {
+    match p {
+      "bot" => ret!(("bot", "bot"))
+      "top" => ret!(("top", "top"))
+      ("and", sp, g) => ret!((sp, g))
+      (3, _) => ret!(("top", p))
+      _ => ret!((p, "top"))
+    }
+  } |
+
+  // Meet within one block, on parts already known to be compatible.
+  contract meet1(@x, @y, ret) = {
+    match (x, y) {
+      ("top", _) => ret!(y)
+      (_, "top") => ret!(x)
+      _ => { if (x == y) { ret!(x) } else { ret!("bot") } }
+    }
+  } |
+
+  contract fromParts(@sp, @g, ret) = {
+    if (sp == "bot" or g == "bot") { ret!("bot") } else {
+      if (g == "top") { ret!(sp) } else {
+        if (sp == "top") { ret!(g) } else { ret!(("and", sp, g)) }
+      }
+    }
+  } |
+
+  // ---------------------------------------------------------------- helpers
+
+  contract absOf(@x, ret) = { if (x < 0) { ret!(0 - x) } else { ret!(x) } } |
+
+  contract abs4(@w, ret) = {
+    new a, b, c, d in {
+      absOf!(w.nth(0), *a) | absOf!(w.nth(1), *b) | absOf!(w.nth(2), *c) | absOf!(w.nth(3), *d) |
+      for (@x0 <- a & @x1 <- b & @x2 <- c & @x3 <- d) { ret!(x0 + x1 + x2 + x3) }
+    }
+  } |
+
+  // One pass: the signed action vector [y, x, z, g] and the peak excursion
+  // max_prefix(|y|+|x|+|z|+|g|)  (qucalc_search.max_excursion).
+  contract scan(@ts, @i, @v, @peak, ret) = {
+    if (i == ts.length()) { ret!((v, peak)) } else {
+      new stepCh, eCh in {
+        match ts.nth(i) % 2 { 0 => stepCh!(1)  _ => stepCh!(-1) } |
+        for (@s <- stepCh) {
+          let @a <- ts.nth(i) / 2 in {
+            let @w <- v.slice(0, a) ++ [v.nth(a) + s] ++ v.slice(a + 1, 4) in {
+              abs4!(w, *eCh) |
+              for (@e <- eCh) {
+                if (e > peak) { scan!(ts, i + 1, w, e, *ret) } else { scan!(ts, i + 1, w, peak, *ret) }
+              }
+            }
+          }
+        }
+      }
+    }
+  } |
+
+  // Cascade key: least excursion -> shortest -> phase +1, -1, +i, -i -> lexicographic.
+  // The lexicographic step compares symbol code points so that the order is the one
+  // qucalc_search.solve uses on strings ('+' < '-' < '/' < '<' < '>' < '\' < '^' < 'v').
+  contract lexLess(@xs, @ys, @i, ret) = {
+    let @code <- {0: 94, 1: 118, 2: 62, 3: 60, 4: 47, 5: 92, 6: 43, 7: 45} in {
+      if (i == xs.length()) { ret!(i < ys.length()) } else {
+        if (i == ys.length()) { ret!(false) } else {
+          if (code.get(xs.nth(i)) == code.get(ys.nth(i))) { lexLess!(xs, ys, i + 1, *ret) }
+          else { ret!(code.get(xs.nth(i)) < code.get(ys.nth(i))) }
+        }
+      }
+    }
+  } |
+
+  contract keyLess(@r1, @r2, ret) = {
+    let @rank <- {1: 0, -1: 1, 2: 2, -2: 3} in {
+      let @k1 <- [r1.get("excursion"), r1.get("twists").length(), rank.get(r1.get("phase"))] in {
+        let @k2 <- [r2.get("excursion"), r2.get("twists").length(), rank.get(r2.get("phase"))] in {
+          if (k1.nth(0) != k2.nth(0)) { ret!(k1.nth(0) < k2.nth(0)) } else {
+            if (k1.nth(1) != k2.nth(1)) { ret!(k1.nth(1) < k2.nth(1)) } else {
+              if (k1.nth(2) != k2.nth(2)) { ret!(k1.nth(2) < k2.nth(2)) } else {
+                lexLess!(r1.get("twists"), r2.get("twists"), 0, *ret)
+              }
+            }
+          }
+        }
+      }
+    }
+  } |
+
+  // argmin over a list of record ids under keyLess.
+  contract argmin(@records, @ids, @i, @best, ret) = {
+    if (i == ids.length()) { ret!(best) } else {
+      match best {
+        Nil => argmin!(records, ids, i + 1, ids.nth(i), *ret)
+        _ => {
+          new lt in {
+            keyLess!(records.get(ids.nth(i)), records.get(best), *lt) |
+            for (@yes <- lt) {
+              if (yes) { argmin!(records, ids, i + 1, ids.nth(i), *ret) }
+              else     { argmin!(records, ids, i + 1, best, *ret) }
+            }
+          }
+        }
+      }
+    }
+  } |
+
+  // ---------------------------------------------------------------- layers 1–3
+
+  // Gate + record + attester, filed under no name. Shared by "assert" and "answer".
+  // The gate is PER-AXIS count balance, computed here. rho:qucalc:zfa's Bool is not used:
+  // it checks #even == #odd in aggregate, which admits e.g. ^^<< (y = +2, x = -2).
+  // Its phase is used, and is never 0 on an admitted history (count_balanced_pauli_closed).
+  contract admit(@ts, attester, ret) = {
+    new okCh, pkCh, avCh, zCh, gCh in {
+      validTwists!(ts, *okCh) | idOps!("pubKeyBytes", *attester, *pkCh) |
+      for (@valid <- okCh & @pk <- pkCh) {
+        if (not valid) { ret!({"ok": false, "error": "invalid twists"}) } else {
+          match pk {
+            Nil => ret!({"ok": false, "error": "attester is not a deployerId"})
+            _ => {
+              scan!(ts, 0, [0, 0, 0, 0], 0, *avCh) | zfaNative!(ts, *zCh) |
+              for (@(v, peak) <- avCh & @(_, ph) <- zCh) {
+                if (ts.length() >= 4 and v == [0, 0, 0, 0] and ph != 0) {
+                  grant!(ts, *gCh) |
+                  for (@cid <- gCh; @st <- stateCh) {
+                    let @rec <- st.get("records").getOrElse(cid,
+                                  {"twists": ts, "phase": ph, "excursion": peak, "attesters": Set()}) in {
+                      let @rec2 <- rec.set("attesters", rec.get("attesters").add(pk)) in {
+                        stateCh!(st.set("records", st.get("records").set(cid, rec2))) |
+                        ret!({"ok": true, "id": cid, "redundancy": rec2.get("attesters").size()})
+                      }
+                    }
+                  }
+                } else {
+                  ret!({"ok": false,
+                        "residual": [0 - v.nth(0), 0 - v.nth(1), 0 - v.nth(2), 0 - v.nth(3)]})
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  } |
+
+  contract QKB(@"assert", @name, @ts, attester, ret) = {
+    new resCh in {
+      admit!(ts, *attester, *resCh) |
+      for (@res <- resCh) {
+        if (not res.get("ok")) { ret!(res) } else {
+          for (@st <- stateCh) {
+            let @ways <- st.get("names").getOrElse(name, Set()).add(res.get("id")) in {
+              stateCh!(st.set("names", st.get("names").set(name, ways))) |
+              ret!(res.set("ways", ways.size()))
+            }
+          }
+        }
+      }
+    }
+  } |
+
+  contract QKB(@"ways", @name, ret) = {
+    for (@st <<- stateCh) { ret!(st.get("names").getOrElse(name, Set()).size()) }
+  } |
+
+  contract QKB(@"redundancy", @cid, ret) = {
+    for (@st <<- stateCh) {
+      match st.get("records").get(cid) { Nil => ret!(0)  rec => ret!(rec.get("attesters").size()) }
+    }
+  } |
+
+  contract QKB(@"first", @name, ret) = {
+    for (@st <<- stateCh) {
+      argmin!(st.get("records"), st.get("names").getOrElse(name, Set()).toList(), 0, Nil, *ret)
+    }
+  } |
+
+  // ---------------------------------------------------------------- layer 4
+
+  // Grow-only: registering q twice changes nothing; answers are untouched either way.
+  contract QKB(@"ask", @seed, @context, ret) = {
+    new okCh, avCh in {
+      validQuestion!((seed, context), *okCh) |
+      for (@valid <- okCh) {
+        if (not valid) { ret!({"ok": false, "error": "invalid question"}) } else {
+          scan!(seed, 0, [0, 0, 0, 0], 0, *avCh) |
+          for (@(v, _) <- avCh; @st <- stateCh) {
+            stateCh!(st.set("asked", st.get("asked").add((seed, context)))) |
+            ret!({"ok": true, "q": (seed, context),
+                  "residual": [0 - v.nth(0), 0 - v.nth(1), 0 - v.nth(2), 0 - v.nth(3)]})
+          }
+        }
+      }
+    }
+  } |
+
+  // Checked against q's own seed; q need not have been asked (content-addressed).
+  contract QKB(@"answer", @q, @cont, attester, ret) = {
+    new qCh, cCh, resCh in {
+      validQuestion!(q, *qCh) | validTwists!(cont, *cCh) |
+      for (@okQ <- qCh & @okC <- cCh) {
+        if (not okQ) { ret!({"ok": false, "error": "invalid question"}) } else {
+          if (not okC) { ret!({"ok": false, "error": "invalid twists"}) } else {
+            match q {
+              (seed, _) => {
+                admit!(seed ++ cont, *attester, *resCh) |
+                for (@res <- resCh) {
+                  if (not res.get("ok")) { ret!(res) } else {
+                    for (@st <- stateCh) {
+                      stateCh!(st.set("answers", st.get("answers").set(q,
+                                 st.get("answers").getOrElse(q, Set()).add(res.get("id"))))) |
+                      ret!(res)
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  } |
+
+  // No prefix-freeness filter: a recorded closing prefix of an answer has excursion <= and
+  // length <, so the cascade ranks it first anyway (checked in qkb_reference.py (e)).
+  contract QKB(@"solve", @q, ret) = {
+    new okCh, bestCh in {
+      validQuestion!(q, *okCh) |
+      for (@ok <- okCh; @st <<- stateCh) {
+        if (not ok) { ret!(Nil) } else {
+          argmin!(st.get("records"), st.get("answers").getOrElse(q, Set()).toList(), 0, Nil, *bestCh) |
+          for (@best <- bestCh) {
+            match (best, q) {
+              (Nil, _) => ret!(Nil)
+              (_, (seed, _)) => {
+                let @tw <- st.get("records").get(best).get("twists") in {
+                  ret!(tw.slice(seed.length(), tw.length()))
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  } |
+
+  // ---------------------------------------------------------------- layer 5
+
+  // Two contexts commute iff the plaquette a b a† b† folds to +I (one native call). Only the
+  // spatial parts can clash: spatial pairs on different axes fold to -I (π flux); the gauge
+  // block commutes with everything.
+  contract QKB(@"compatible", @p, @q, ret) = {
+    new vp, vq, pp, pq in {
+      validProp!(p, *vp) | validProp!(q, *vq) |
+      for (@okP <- vp & @okQ <- vq) {
+        if (not (okP and okQ)) { ret!("invalid proposition") } else {
+          parts!(p, *pp) | parts!(q, *pq) |
+          for (@(sa, _) <- pp & @(sb, _) <- pq) {
+            match (sa, sb) {
+              ((a, _), (b, _)) => {
+                new zCh in {
+                  zfaNative!([2 * a, 2 * b, 2 * a + 1, 2 * b + 1], *zCh) |
+                  for (@(_, ph) <- zCh) { ret!(ph == 1) }
+                }
+              }
+              _ => ret!(true)               // a "bot" / "top" part is compatible with everything
+            }
+          }
+        }
+      }
+    }
+  } |
+
+  // Conjunction, closed under its own output. Incompatible spatial parts are refused, never
+  // answered "bot": a client must not read "incompatible" as "contradictory" (MO3 is not
+  // distributive). Otherwise the meet is taken part by part, and a "bot" part makes it "bot".
+  contract QKB(@"conjoin", @p, @q, ret) = {
+    new cCh, pp, pq, ms, mg in {
+      QKB!("compatible", p, q, *cCh) |
+      for (@ok <- cCh) {
+        match ok {
+          "invalid proposition" => ret!(ok)
+          false => ret!("incompatible")
+          _ => {
+            parts!(p, *pp) | parts!(q, *pq) |
+            for (@(s1, g1) <- pp & @(s2, g2) <- pq) {
+              meet1!(s1, s2, *ms) | meet1!(g1, g2, *mg) |
+              for (@sm <- ms & @gm <- mg) { fromParts!(sm, gm, *ret) }
+            }
+          }
+        }
+      }
+    }
+  }
+}

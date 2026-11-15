@@ -407,6 +407,22 @@ QLF reading: the path-integral sum gives $\cos(\theta/2)$ as the constructively-
 - **Uniqueness of the probability functional — delivered by counting, not Gleason.** [`QLF_BornFromWays`](lean/QLF_BornFromWays.lean) proves that any probability assignment on a Gaussian-integer register that is symmetric under relabeling, normalized, and additive over unit ways is the Born rule (`born_from_ways`, `assignment_unique`). It is a finite uniqueness characterization under refinement additivity, following the strategy of Zurek's envariance argument (not a formalization of it); because amplitudes are Gaussian integers, every weight is rational and no continuity step is needed. Additivity over refined ways is a premise: the unit-way partition is constructed mathematically (`exists_refinement`), not yet shown to be a physical, amplitude-preserving refinement carried out by QLF dynamics. Write-up: [`Closure_Unitarity.md`](Closure_Unitarity.md) §16. What it does not settle is which census quantity is the register, and whether the substrate refines.
 - **Quantum contextuality**: Bell-Kochen-Specker theorem is the constraint that probability assignments must be consistent across measurement contexts. QLF's per-context possibility trees should derive this consistency automatically.
 
+## 9. Strange-loop reading
+
+The finite theorem is not the whole bridge. Read as a two-phase loop, the Born rule needs four levels:
+
+```
+Gaussian-integer amplitude register
+    -> unit-way refinement
+    -> ZFA closure / event
+    -> detector record
+    -> finite unit-way count
+```
+
+`born_from_ways` and `assignment_unique` prove the finite characterization; `exists_refinement` constructs the unit-way partition mathematically. What is missing is the **physical return**: no theorem here shows that QLF dynamics performs an amplitude-preserving refinement, or that the detector record is a count of the same unit ways rather than a probability law inserted to match the target. The refinement is a premise, not a derived physical process.
+
+That is why the claim record keeps `bridge: OPEN` and `strange_loop.status: B-OPEN`. The loop becomes a closure candidate only when the refinement is specified independently of the Born weights and a detector comparison can fail under a frozen map. See [`claim_records/born_rule.json`](claim_records/born_rule.json), [`Strange_Loops.md`](Strange_Loops.md) §5, and the toy underdetermination model in [`tools/strange_loop_observer.py`](tools/strange_loop_observer.py) / [`verification/strange-loop/`](verification/strange-loop/README.md).
+
 ## References
 
 ### Internal

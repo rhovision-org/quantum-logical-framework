@@ -11,6 +11,8 @@
 [`lean/QLF_LogicalPersistence.lean`](lean/QLF_LogicalPersistence.lean) ·
 [`lean/QLF_SpinorInformation.lean`](lean/QLF_SpinorInformation.lean)
 
+**Paper I status.** The finite MO2 laws are `F`; the ideal `1/8` is an imported Malus/Born comparator, and the history-to-apparatus map is `B-OPEN`. Read as a strange loop, the missing return is the finite closure count realized by the same substrate that produces the polarizers; the toy `ℂ²` embedding does not supply it. See [`claim_records/three_polarizer.json`](claim_records/three_polarizer.json) and [`Strange_Loops.md`](Strange_Loops.md) §4.
+
 ---
 
 ## 1. The experiment

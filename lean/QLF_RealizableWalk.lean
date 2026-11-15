@@ -163,12 +163,13 @@ left, slash, then a half step slash, left, up. The order is a palindrome, so the
 forwards and backwards.
 
 Why the palindrome: with the one-way order up, left, slash the walk's dispersion is
-`cos E = Π cos k_i − Π sin k_i`, which carries a term linear in energy, `E ≈ k + k_y k_x k_z / k`. At
+`cos E = Π cos k_i + Π sin k_i` (`oneWayWalk_trace`, §8; the sign of the odd part depends on the
+octant), which carries a term linear in energy, `E ≈ k ∓ k_y k_x k_z / k`. At
 Planck spacing, and if this walk describes the electron (an extra physical assumption, not proved
 here), that is `η` up to `±0.385`, against the Crab synchrotron bound `η > −7 × 10⁻⁸` (Jacobson,
 Liberati and Mattingly 2003). The palindrome has `cos E = Π cos k_i`, with no odd term, and leaves
-`E = k − k³/18` on the body diagonal. Both trace identities are checked numerically
-(`liv_dispersion.py`), not proved here; the theorems below are unitarity and the generator only. See
+`E = k − k³/18` on the body diagonal. Both trace identities are proved below (`realWalk_trace`,
+`oneWayWalk_trace`) and checked numerically (`liv_dispersion.py`). See
 `QM_Postulates_QLF.md` §5b. -/
 noncomputable def realWalk (ky kx kz : ℝ) : M :=
   realStep Twist.up (ky / 2) * realStep Twist.left (kx / 2) * realStep Twist.slash (kz / 2) *
@@ -208,7 +209,7 @@ theorem realStep_eq_cos_sin (t : Twist) (k : ℝ) :
 so its eigenvalues are `e^{±iE}` with `tr = 2 cos E`, and the trace is exactly this product at every
 momentum. `cos E` is therefore even in each `k_i`: the dispersion has no odd term, in particular no
 term linear in energy, in any direction. (The one-way order `up · left · slash` gives
-`Π cos k_i − Π sin k_i` instead, whose odd part is the linear term; see `QM_Postulates_QLF.md` §5b.)
+`Π cos k_i + Π sin k_i` instead, whose odd part is the linear term; see `oneWayWalk_trace`, §8.)
 This is the finite-momentum dispersion of the walk; reading it as a particle's physical dispersion is
 a separate assumption. -/
 theorem realWalk_trace (ky kx kz : ℝ) :
@@ -461,8 +462,10 @@ most `(|k_x| + |k_y| + |k_z|)⁶ · 7/4320`, and `walk_dispersion_quadratic` sho
 with `cos E_pred`, where `E_pred² = k² − (k_x²k_y² + k_y²k_z² + k_z²k_x²)/3`, to within
 `(|k_x| + |k_y| + |k_z|)⁶ / 50`. That is forecast F2 of `QM_Postulates_QLF.md` §5c: subluminal, zero
 along the axes, `ξ = 1/9` on the body diagonal. Momenta are in lattice units and need
-`|k_x| + |k_y| + |k_z| ≤ 1`. Turning the agreement of `cos E` into one of `E` itself uses only that
-`cos` is invertible near `0`, which is not formalized here. -/
+`|k_x| + |k_y| + |k_z| ≤ 1`. `walk_energy_quadratic` then inverts the cosine: with
+`E = arccos (Π cos k_i)`, the branch `0 ≤ E ≤ π`, `E²` agrees with `E_pred²` to within
+`(|k_x| + |k_y| + |k_z|)⁶ / 10`. Choosing that branch, and reading `E` as an energy, are not
+derived here. -/
 
 section QuadraticTerm
 
@@ -614,6 +617,238 @@ theorem walk_dispersion_quadratic (a b c : ℝ) (h : |a| + |b| + |c| ≤ 1) :
   refine this.trans ((add_le_add (add_le_add hW hgap) hE).trans ?_)
   linarith [pow_nonneg hT0 6]
 
+private theorem abs_sin_ge (y : ℝ) (hy : |y| ≤ Real.pi / 2) : 2 * |y| ≤ |Real.sin y| * Real.pi := by
+  rcases le_total 0 y with h0 | h0
+  · rw [abs_of_nonneg h0] at hy ⊢
+    have := Real.mul_le_sin h0 hy
+    rw [div_mul_eq_mul_div, div_le_iff₀ Real.pi_pos] at this
+    exact this.trans (mul_le_mul_of_nonneg_right (le_abs_self _) Real.pi_pos.le)
+  · rw [abs_of_nonpos h0] at hy ⊢
+    have := Real.mul_le_sin (neg_nonneg.mpr h0) hy
+    rw [Real.sin_neg, div_mul_eq_mul_div, div_le_iff₀ Real.pi_pos] at this
+    exact this.trans (mul_le_mul_of_nonneg_right (neg_le_abs _) Real.pi_pos.le)
+
+/-- Two angles with close cosines have close squares: for `0 ≤ p ≤ π/2` and `0 ≤ q ≤ 1`,
+`|p² − q²| ≤ (π²/2)·|cos p − cos q|`. No division by the angle is needed. -/
+private theorem sq_gap_le_cos_gap (p q : ℝ) (hp0 : 0 ≤ p) (hp : p ≤ Real.pi / 2)
+    (hq0 : 0 ≤ q) (hq : q ≤ 1) :
+    |p ^ 2 - q ^ 2| ≤ Real.pi ^ 2 / 2 * |Real.cos p - Real.cos q| := by
+  have hpi := Real.pi_gt_three
+  have h1 := abs_sin_ge ((p + q) / 2) (by rw [abs_of_nonneg (by linarith)]; linarith)
+  have h2 := abs_sin_ge ((p - q) / 2) (by rw [abs_le]; constructor <;> linarith)
+  have hc : |Real.cos p - Real.cos q| = 2 * (|Real.sin ((p + q) / 2)| * |Real.sin ((p - q) / 2)|) := by
+    rw [Real.cos_sub_cos, abs_mul, abs_mul]; norm_num; ring
+  have hprod := mul_le_mul h1 h2 (by positivity) (by positivity)
+  have hfac : |p ^ 2 - q ^ 2| = 4 * (|(p + q) / 2| * |(p - q) / 2|) := by
+    rw [← abs_mul, show (p + q) / 2 * ((p - q) / 2) = (p ^ 2 - q ^ 2) / 4 by ring, abs_div,
+      abs_of_pos (by norm_num : (0 : ℝ) < 4)]
+    ring
+  rw [hc, hfac]
+  linarith
+
+/-- **F2 at the level of the energy.** With `E = arccos (Π cos k_i)` the walk's quasi-energy on
+the branch `0 ≤ E ≤ π`, `E² = k² − (k_x²k_y² + k_y²k_z² + k_z²k_x²)/3` up to
+`(|k_x| + |k_y| + |k_z|)⁶ / 10`. -/
+theorem walk_energy_quadratic (a b c : ℝ) (h : |a| + |b| + |c| ≤ 1) :
+    |Real.arccos (Real.cos a * Real.cos b * Real.cos c) ^ 2 -
+      ((a ^ 2 + b ^ 2 + c ^ 2) - (a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2) / 3)| ≤
+      (|a| + |b| + |c|) ^ 6 / 10 := by
+  have hD := walk_dispersion_quadratic a b c h
+  have hT0 : 0 ≤ |a| + |b| + |c| := by positivity
+  have hT6 : (|a| + |b| + |c|) ^ 6 ≤ 1 := pow_le_one₀ hT0 h
+  have hrT : a ^ 2 + b ^ 2 + c ^ 2 ≤ (|a| + |b| + |c|) ^ 2 := by
+    have ha := sq_abs a; have hb := sq_abs b; have hc := sq_abs c
+    nlinarith [abs_nonneg a, abs_nonneg b, abs_nonneg c, mul_nonneg (abs_nonneg a) (abs_nonneg b),
+      mul_nonneg (abs_nonneg b) (abs_nonneg c), mul_nonneg (abs_nonneg c) (abs_nonneg a)]
+  have hSr : 3 * (a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2) ≤ (a ^ 2 + b ^ 2 + c ^ 2) ^ 2 := by
+    nlinarith [sq_nonneg (a ^ 2 - b ^ 2), sq_nonneg (b ^ 2 - c ^ 2), sq_nonneg (c ^ 2 - a ^ 2)]
+  have hS0 : 0 ≤ a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2 := by positivity
+  have hr0 : 0 ≤ a ^ 2 + b ^ 2 + c ^ 2 := by positivity
+  have hr1 : a ^ 2 + b ^ 2 + c ^ 2 ≤ 1 := by nlinarith
+  have hPle : |Real.cos a * Real.cos b * Real.cos c| ≤ 1 := by
+    rw [abs_mul, abs_mul]
+    have := Real.abs_cos_le_one a; have := Real.abs_cos_le_one b; have := Real.abs_cos_le_one c
+    calc |Real.cos a| * |Real.cos b| * |Real.cos c| ≤ 1 * 1 * 1 := by gcongr
+      _ = 1 := by norm_num
+  generalize |a| + |b| + |c| = T at h hD hT0 hT6 hrT ⊢
+  generalize a ^ 2 + b ^ 2 + c ^ 2 = r at hD hrT hSr hr0 hr1 ⊢
+  generalize a ^ 2 * b ^ 2 + b ^ 2 * c ^ 2 + c ^ 2 * a ^ 2 = S at hD hSr hS0 ⊢
+  generalize Real.cos a * Real.cos b * Real.cos c = P at hD hPle ⊢
+  have hu0 : 0 ≤ r - S / 3 := by nlinarith
+  have hu1 : r - S / 3 ≤ 1 := by linarith
+  generalize r - S / 3 = u at hD hu0 hu1 ⊢
+  have hq0 := Real.sqrt_nonneg u
+  have hq1 : Real.sqrt u ≤ 1 := by
+    calc Real.sqrt u ≤ Real.sqrt 1 := Real.sqrt_le_sqrt hu1
+      _ = 1 := Real.sqrt_one
+  have hsq : Real.sqrt u ^ 2 = u := Real.sq_sqrt hu0
+  -- `cos √u ≥ cos 1 ≥ 43/96`, so `P > 0` and the branch `E ≤ π/2` is the one in play.
+  have hcos1 : (43 : ℝ) / 96 ≤ Real.cos 1 := by
+    have := Real.cos_bound (x := 1) (by norm_num)
+    rw [abs_le] at this; norm_num at this; linarith [this.1]
+  have hcosq : Real.cos 1 ≤ Real.cos (Real.sqrt u) :=
+    Real.cos_le_cos_of_nonneg_of_le_pi hq0 (by linarith [Real.pi_gt_three]) hq1
+  have hP0 : 0 ≤ P := by
+    have := (abs_le.mp hD).1
+    linarith
+  obtain ⟨hPm, hP1⟩ := abs_le.mp hPle
+  have hE := Real.cos_arccos hPm hP1
+  have hgap := sq_gap_le_cos_gap (Real.arccos P) (Real.sqrt u) (Real.arccos_nonneg P)
+    (Real.arccos_le_pi_div_two.mpr hP0) hq0 hq1
+  rw [hE, hsq] at hgap
+  have hpi2 : Real.pi ^ 2 ≤ 10 := by
+    have := Real.pi_lt_d2; have := Real.pi_pos; nlinarith
+  calc |Real.arccos P ^ 2 - u| ≤ Real.pi ^ 2 / 2 * |P - Real.cos (Real.sqrt u)| := hgap
+    _ ≤ 10 / 2 * (T ^ 6 / 50) := by gcongr
+    _ = T ^ 6 / 10 := by ring
+
 end QuadraticTerm
+
+/-! ## 8. Why the order is a palindrome
+
+The order of the sub-steps is not derived from logic. What is proved here is what the choice turns
+on. Every palindromic word of realizable steps has the reversal identity `W(−k) = W(k)†`
+(`palindrome_reversal`), and `realWalk` is one (`realWalk_eq_wordWalk`). The one-way order does not
+have it: its dispersion is `cos E = Π cos k_i + Π sin k_i` (`oneWayWalk_trace`), odd under reversal
+by `−4 Π sin k_i` (`oneWayWalk_trace_odd`, `oneWayWalk_not_reversal`). The sign of the odd term
+follows the Lean twists (`left = −σ_x`); `liv_dispersion.py` uses `+σ_x` and so prints the other
+sign, which is the same walk at `k_x → −k_x`. For one four-step pattern, `up(a) · left(b) ·
+up(a') · slash(c)`, the dispersion is even at a given point exactly when
+`sin (a − a') sin b sin c = 0` (`splitWalk_trace`, `splitWalk_even_iff`). Where `sin b sin c ≠ 0`
+that is `a − a' ∈ πℤ`, so the equal split follows only under a local restriction such as
+`|a − a'| < π`; `a = π/2`, `a' = −π/2` is even and unequal. The equal split is the five-step
+palindrome seen in another frame (`splitWalk_conj_palindrome`).
+
+Scope. `palindrome_reversal` is sufficiency. Necessity over arbitrary step words is not proved, and
+the four-step result covers this one pattern. That the dispersion must be exactly even is a symmetry
+assumption, not a theorem, and no finite observational bound can require it: a split
+`a = (1+δ)k_y/2`, `a' = (1−δ)k_y/2` has odd part `sin (δ k_y) sin k_x sin k_z`, as small as one likes. -/
+
+section StepOrder
+
+/-- A walk read off a word: one realizable step per letter, each with its own angle. -/
+noncomputable def wordWalk (w : List (Twist × ℝ)) : M := (w.map fun p => realStep p.1 p.2).prod
+
+/-- Reversing every momentum is the adjoint of the word read backwards. -/
+theorem wordWalk_neg (w : List (Twist × ℝ)) :
+    wordWalk (w.map fun p => (p.1, -p.2)) = star (wordWalk w.reverse) := by
+  induction w with
+  | nil => simp [wordWalk]
+  | cons p w ih =>
+    have h1 : wordWalk ((p :: w).map fun p => (p.1, -p.2)) =
+        realStep p.1 (-p.2) * wordWalk (w.map fun p => (p.1, -p.2)) := by
+      simp [wordWalk]
+    have h2 : wordWalk (p :: w).reverse = wordWalk w.reverse * realStep p.1 p.2 := by
+      simp [wordWalk]
+    rw [h1, h2, ih, star_mul, realStep_neg]
+
+/-- **Every palindromic word has the reversal identity** `W(−k) = W(k)†`. -/
+theorem palindrome_reversal (w : List (Twist × ℝ)) (hw : w.reverse = w) :
+    wordWalk (w.map fun p => (p.1, -p.2)) = star (wordWalk w) := by
+  rw [wordWalk_neg, hw]
+
+/-- The one-way order: a full step up, left, slash. -/
+noncomputable def oneWayWalk (ky kx kz : ℝ) : M :=
+  realStep Twist.up ky * realStep Twist.left kx * realStep Twist.slash kz
+
+/-- **The one-way walk's dispersion: `cos E = Π cos k_i + Π sin k_i`.** -/
+theorem oneWayWalk_trace (ky kx kz : ℝ) :
+    Matrix.trace (oneWayWalk ky kx kz) =
+      2 * ((Real.cos ky * Real.cos kx * Real.cos kz +
+        Real.sin ky * Real.sin kx * Real.sin kz : ℝ) : ℂ) := by
+  simp only [oneWayWalk, realStep_eq_cos_sin, Twist.toMatrix, σx, σy, σz]
+  simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag, Matrix.mul_apply, Matrix.add_apply,
+    Matrix.smul_apply, Matrix.one_apply, Matrix.neg_apply, Matrix.of_apply, Matrix.cons_val',
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one,
+    Fin.isValue, smul_eq_mul]
+  push_cast
+  have h4 : Complex.I ^ 4 = 1 := Complex.I_pow_four
+  ring_nf
+  simp only [h4]
+  ring
+
+/-- **The one-way dispersion is odd under reversal by exactly `−4 Π sin k_i`.** -/
+theorem oneWayWalk_trace_odd (ky kx kz : ℝ) :
+    Matrix.trace (oneWayWalk (-ky) (-kx) (-kz)) - Matrix.trace (oneWayWalk ky kx kz) =
+      -(4 * ((Real.sin ky * Real.sin kx * Real.sin kz : ℝ) : ℂ)) := by
+  simp only [oneWayWalk_trace, Real.cos_neg, Real.sin_neg]
+  push_cast
+  ring
+
+/-- **The one-way order has no reversal identity.** -/
+theorem oneWayWalk_not_reversal :
+    ¬ ∀ ky kx kz : ℝ, oneWayWalk (-ky) (-kx) (-kz) = star (oneWayWalk ky kx kz) := by
+  intro h
+  have h1 := congrArg Matrix.trace (h (Real.pi / 2) (Real.pi / 2) (Real.pi / 2))
+  rw [Matrix.star_eq_conjTranspose, Matrix.trace_conjTranspose, oneWayWalk_trace,
+    oneWayWalk_trace] at h1
+  simp only [Real.cos_neg, Real.sin_neg, Real.cos_pi_div_two, Real.sin_pi_div_two] at h1
+  norm_num at h1
+
+/-- A four-step walk: the up step split in two around the left step, then slash. -/
+noncomputable def splitWalk (a a' b c : ℝ) : M :=
+  realStep Twist.up a * realStep Twist.left b * realStep Twist.up a' * realStep Twist.slash c
+
+/-- **The split walk's dispersion**: `cos E = cos (a + a') cos b cos c + sin (a − a') sin b sin c`. -/
+theorem splitWalk_trace (a a' b c : ℝ) :
+    Matrix.trace (splitWalk a a' b c) =
+      2 * ((Real.cos (a + a') * Real.cos b * Real.cos c +
+        Real.sin (a - a') * Real.sin b * Real.sin c : ℝ) : ℂ) := by
+  rw [Real.cos_add, Real.sin_sub]
+  simp only [splitWalk, realStep_eq_cos_sin, Twist.toMatrix, σx, σy, σz]
+  simp only [Matrix.trace, Fin.sum_univ_two, Matrix.diag, Matrix.mul_apply, Matrix.add_apply,
+    Matrix.smul_apply, Matrix.one_apply, Matrix.neg_apply, Matrix.of_apply, Matrix.cons_val',
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one,
+    Fin.isValue, smul_eq_mul]
+  push_cast
+  have h4 : Complex.I ^ 4 = 1 := Complex.I_pow_four
+  ring_nf
+  simp only [h4]
+  ring
+
+/-- **Pointwise evenness of the split walk**: the trace at the reversed angles equals the trace
+exactly when `sin (a − a') sin b sin c = 0`. Where `sin b sin c ≠ 0` this is `a − a' ∈ πℤ`, which
+is the equal split only under a local restriction on the angles. -/
+theorem splitWalk_even_iff (a a' b c : ℝ) :
+    Matrix.trace (splitWalk (-a) (-a') (-b) (-c)) = Matrix.trace (splitWalk a a' b c) ↔
+      Real.sin (a - a') * Real.sin b * Real.sin c = 0 := by
+  rw [splitWalk_trace, splitWalk_trace, show -a + -a' = -(a + a') by ring,
+    show -a - -a' = -(a - a') by ring]
+  simp only [Real.cos_neg, Real.sin_neg]
+  constructor
+  · intro h
+    have h' := Complex.ofReal_injective (mul_left_cancel₀ (two_ne_zero) h)
+    linarith
+  · intro h
+    congr 2
+    linarith
+
+/-- Steps along one twist add their angles. -/
+theorem realStep_add (t : Twist) (x y : ℝ) : realStep t x * realStep t y = realStep t (x + y) := by
+  simp only [realStep_eq_cos_sin, Real.cos_add, Real.sin_add]
+  cases t <;>
+  · ext i j
+    fin_cases i <;> fin_cases j <;>
+    simp [Twist.toMatrix, σx, σy, σz, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    ring_nf <;> simp [Complex.I_sq] <;> ring
+
+/-- **The equal split is the palindrome in another frame.** -/
+theorem splitWalk_conj_palindrome (a b c : ℝ) :
+    realStep Twist.slash (c / 2) * splitWalk a a b c =
+      wordWalk [(Twist.slash, c / 2), (Twist.up, a), (Twist.left, b), (Twist.up, a),
+        (Twist.slash, c / 2)] * realStep Twist.slash (c / 2) := by
+  have hc : realStep Twist.slash c = realStep Twist.slash (c / 2) * realStep Twist.slash (c / 2) := by
+    rw [realStep_add]; congr 1; ring
+  simp only [wordWalk, splitWalk, List.map_cons, List.map_nil, List.prod_cons, List.prod_nil,
+    mul_one, hc, mul_assoc]
+
+/-- The Lean walk is a palindromic word. -/
+theorem realWalk_eq_wordWalk (ky kx kz : ℝ) :
+    realWalk ky kx kz = wordWalk [(Twist.up, ky / 2), (Twist.left, kx / 2), (Twist.slash, kz / 2),
+      (Twist.slash, kz / 2), (Twist.left, kx / 2), (Twist.up, ky / 2)] := by
+  simp only [wordWalk, realWalk, List.map_cons, List.map_nil, List.prod_cons, List.prod_nil,
+    mul_one, mul_assoc]
+
+end StepOrder
 
 end QLF.ClosureChannels

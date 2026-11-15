@@ -52,7 +52,7 @@ At the foundation of mathematics lie the integers — discrete, indivisible unit
 
 **'t Hooft**: Gerard ‘t Hooft has long advocated for a deterministic cellular automaton beneath quantum mechanics. The quantum logical framework realizes this exact vision.
 
-**Hofstadter**: Douglas Hofstadter explored strange loops and self-reference. The quantum logical framework naturally incorporates these concepts into its logical structure.
+**Hofstadter**: Douglas Hofstadter explored strange loops and self-reference. QLF has a controlled two-phase loop (metalanguage ↔ substrate) and a no-time-loop theorem for realized histories; the bridge discipline is in [`Strange_Loops.md`](Strange_Loops.md).
 
 **Hawking**: Stephen Hawking grappled with the black hole information paradox. The quantum logical framework resolves this by ensuring information is never lost through fully deterministic evolution.
 

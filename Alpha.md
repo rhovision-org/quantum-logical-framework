@@ -27,6 +27,8 @@
 > is not suggested as a number, and the census provably reaches only to 4-loop QED
 > ([`Alpha_Residual.md`](Alpha_Residual.md) §9d–§9g).
 
+> **Paper I v0.3 claim-record status (12 November 2026).** The claim record does **not** treat α as a closed derivation. The count-to-renormalized-coupling map is `B-OPEN`; the formal comparator-residual band is `(1/64, 0.04814)`, not a strict physical `137.048` bound; `137.032` is reported/structural, not re-derived; `w = 1/2` is structural but the multiplicity/resummation is open. See [`Claim_Status.md`](Claim_Status.md), [`claim_records/alpha.json`](claim_records/alpha.json), and [`Strange_Loops.md`](Strange_Loops.md) §4.
+
 **The canonical QLF document for the fine-structure constant `α ≈ 1/137`.** It collects, in one place,
 everything QLF says about α and links every related proof:
 

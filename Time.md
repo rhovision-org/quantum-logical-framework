@@ -107,7 +107,8 @@ events returns to its start, and two states that each follow the other are the s
 This excludes Gödel's rotating universe as a global solution of the field equations while leaving
 rotation unrestricted ([`UniversalRelativity.md`](UniversalRelativity.md) §4b). Loops remain possible in
 the reversible algebra of possibility, where nothing is recorded, and that is exactly why they are not
-time ([`Philosophy.md`](Philosophy.md) §3d).
+time ([`Philosophy.md`](Philosophy.md) §3d). The observer's self-model is therefore a strange loop in
+possibility, not a time loop in the record; see [`Strange_Loops.md`](Strange_Loops.md) §3.
 
 ## 8. Experimental Agreement
 

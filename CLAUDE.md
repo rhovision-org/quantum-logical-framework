@@ -6,7 +6,7 @@ Project context for Claude Code sessions. Read this before making any changes.
 
 ## Project overview
 
-**Quantum Logical Framework (QLF)** is a formal proof system machine-verified in Lean 4 across **298 modules with zero `sorry` blocks**. It encodes quantum mechanics and spacetime dynamics using phase-string combinatorics (ZFA — Zero-phase Flux Algebra).
+**Quantum Logical Framework (QLF)** is a formal proof system machine-verified in Lean 4 across **308 modules with zero `sorry` blocks**. It encodes quantum mechanics and spacetime dynamics using phase-string combinatorics (ZFA — Zero-phase Flux Algebra).
 
 Core claim: *ZFA balance is the selection principle for physical reality.* Every terminating computation is a ZFA string; every ZFA string is symmetric (lies on the critical line). The Church-Turing universe filtered to ZFA-balanced strings is our physical universe.
 
@@ -28,9 +28,9 @@ setup notes are in the session memory (`local-lean-impractical`).
 
 ---
 
-## Modules — 298, machine-verified, zero `sorry`
+## Modules — 308, machine-verified, zero `sorry`
 
-Registered in `lakefile.lean` roots array (build order); sources in `lean/`. **The full per-module table — descriptions + key-theorem lists for all 298 — lives in [`lean/README.md`](lean/README.md); consult it when working on any specific module.** Thematic families and every individual result are also mapped in [`FlowChart.md`](FlowChart.md). The core anchors a session references most often:
+Registered in `lakefile.lean` roots array (build order); sources in `lean/`. **The full per-module table — descriptions + key-theorem lists for all 300 — lives in [`lean/README.md`](lean/README.md); consult it when working on any specific module.** Thematic families and every individual result are also mapped in [`FlowChart.md`](FlowChart.md). The core anchors a session references most often:
 
 | Module | What it proves |
 |---|---|
@@ -51,6 +51,7 @@ Registered in `lakefile.lean` roots array (build order); sources in `lean/`. **T
 | `QLF_Minkowski` | The state IS Minkowski space; `det(Form) = interval` |
 | `QLF_LorentzCover` | `SL(2,ℂ)→SO⁺(1,3)` double cover |
 | `QLF_Realizability` | No continuum in a finite-information region (Bekenstein) |
+| `QLF_RelativityScale` | **What the census proves about the relativity principle — not the principle itself**: the step-level census has a preferred frame (`step_census_frame_dependent`); in the large the unsigned census becomes *Euclidean*-isotropic, its cubic anisotropy falling as `4/(3L+1)` ≈ `(1/3)(L_P/r)²` (`covariance_isotropic`, `anisotropy_ratio`), which is **not** boost invariance (`boost_not_euclidean`). `QLF_LorentzSymbol`: the signed census's momentum symbol is `2i·Form(sin k)`, `det` = Minkowski interval (`symbol_det`), no Wick rotation; reading its zeros as light's dispersion is an **assumption** (the kinetic reading), and the palindromic walk gives the opposite off-axis sign. The frame group permits one quadratic violation, the time/space ratio (`quadratic_form_frame_invariant`); shared-pair interactions cannot change the normalized spread ratio when the coupling is axis-blind, as every shared pair's fold (`−I`) is, for `8 + g ≠ 0` (`marginal_normalized`, `marginal_proportional_iff`). Open: boost covariance, the kinetic reading, pair creation. See `Relativity_Principle.md` |
 | `QLF_Riemann` · `QLF_MassGap` · `QLF_BSD` · `QLF_Hodge` · `QLF_PvsNP` · `QLF_NavierStokes` | The six Millennium reformulations — each a verified discrete core + one named bridge axiom (see **Axiom inventory** below) |
 
 ---
@@ -461,7 +462,7 @@ was where it slipped. Apply these to new work:
 | Path | Purpose |
 |---|---|
 | `lean/` | All Lean source files |
-| `lakefile.lean` | Build config; `roots` array lists all 298 modules |
+| `lakefile.lean` | Build config; `roots` array lists all 308 modules |
 | `lean/README.md` | Module table and proof chain documentation |
 | `README.md` | Project overview with citations and convergence themes |
 | `CLAUDE.md` | This file — project context for new Claude sessions |
