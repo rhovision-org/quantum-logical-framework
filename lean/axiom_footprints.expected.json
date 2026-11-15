@@ -1110,6 +1110,41 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.MrEUpdate.eig_eq_expected_kl": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.eig_eq_log_two_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.eig_le_log_two": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.mre_update_unique": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.pointwise_bound_false": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.prior_unique_minimizer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.sequential_update": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.NonAbelian.step_covariant": [
     "Classical.choice",
     "Quot.sound",

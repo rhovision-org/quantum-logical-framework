@@ -39,6 +39,7 @@
 -/
 
 import QLF_ClockRedshift
+import QLF_MrEUpdate
 import QLF_Axioms
 import QLF_Universality
 import QLF_TwistAlphabet
@@ -691,3 +692,12 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClockRedshift.positive_factorization_not_unique
 #print axioms QLF.ClockRedshift.free_clock_scale_hits_any_age
 #print axioms QLF.ClockRedshift.lapse_rate_return
+
+-- MrE update for one binary observation (#221): expected gain ≤ log 2, Bayes = unique MrE.
+#print axioms QLF.MrEUpdate.eig_le_log_two
+#print axioms QLF.MrEUpdate.eig_eq_expected_kl
+#print axioms QLF.MrEUpdate.eig_eq_log_two_iff
+#print axioms QLF.MrEUpdate.pointwise_bound_false
+#print axioms QLF.MrEUpdate.mre_update_unique
+#print axioms QLF.MrEUpdate.prior_unique_minimizer
+#print axioms QLF.MrEUpdate.sequential_update
