@@ -67,8 +67,18 @@ physical equivalence classes, not syntax.
 A Lean theorem instantiating `QuotientStrangeLoopTrigger` with the actual tensor
 algebra, using the existing `composite_is_tensor` / `tensorEquiv` results, and
 proving `composite_id_on_quotient`. **This is now done at the quotient level**;
-the physical selection of the equivalence and the entangled-sector return remain
-open. The theorem is in the 375-anchor baseline.
+the theorem is in the 375-anchor baseline.
+
+**The equivalence is now characterized observationally**
+([`QLF_ObservationalEquivalence`](../../lean/QLF_ObservationalEquivalence.lean)). Define
+`ObsEquiv w w'` as: for every context `c` and phase `z`, `w ++ c` closes jointly with
+phase `z` iff `w' ++ c` does. Then `obsEquiv_iff_pairEquiv` proves `ObsEquiv` is the
+tensor-image relation, so the quotient above is not chosen by definition. One test
+suffices, each body's dagger completion, and it is count-balanced on both bodies
+(`separating_test_is_zfa`). Without the phase the relation is strictly coarser
+(`bareEquiv_iff_projective`, `phase_is_needed`). `obsTrigger_exists` rebuilds the trigger
+on the observational classes. Still open: that joint closure phase is the only physical
+observable (an apparatus map), and the entangled-sector return.
 
 ## Non-goals
 
