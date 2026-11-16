@@ -44,8 +44,7 @@ theorem equal_event_count (d : ℕ) :
     (nested d).length = (adjacentHistory d).length := by
   calc
     (nested d).length = 2 * d := by
-      simp [nested, poss, negs]
-      omega
+      simp [nested, poss, negs] <;> omega
     _ = (adjacentHistory d).length := by
       simp [adjacentHistory, pairMatching_length]
 

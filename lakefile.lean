@@ -222,6 +222,7 @@ lean_lib QLF where
     `QLF_LawOfExceptions,
     `QLF_ClosureDepthLaw,
     `QLF_ZFAFirstPassageClock,
+    `QLF_SubstratePeriodicClock,
     `QLF_LineSpectra,
     `QLF_BornCounting,
     `QLF_Degeneracy,
