@@ -93,7 +93,7 @@ interaction; the logical complexity inside them is far larger.
 | Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs in PR #223) | [3 Forces](FlowChart.md#3-forces) |
 | Gravity from balance; distance equals delay | [Gravity_From_Delay.md](Gravity_From_Delay.md), [Gravity.md](Gravity.md), [Quantum_Gravity.md](Quantum_Gravity.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
 | **Metric = singlet; lattice divergence/Einstein equations** | [Einstein_Equations.md](Einstein_Equations.md) §6d–§6e, `QLF_MetricSinglet`, `QLF_LatticeDivergence` — formal representational result under explicit premises; physical gravity bridge **open** | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
-| Cosmic age/redshift: external CCC+TL benchmark and open QLF clock bridge | [Gupta_CCC_TL.md](Gupta_CCC_TL.md), [AgeOfUniverse.md](AgeOfUniverse.md) — B-OPEN; substrate tick count N remains open | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
+| Cosmic age/redshift: external CCC+TL benchmark and open QLF clock bridge | [Gupta_CCC_TL.md](Gupta_CCC_TL.md), [Gupta_ClockConventions.md](Gupta_ClockConventions.md), [AgeOfUniverse.md](AgeOfUniverse.md) — B-OPEN; substrate tick count N remains open | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
 | Cosmic expansion by delay; dark energy and dark matter | [Cosmological_Constant.md](Cosmological_Constant.md), [DarkMatter.md](DarkMatter.md) | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
 | Holography, stated precisely | [Holography_Audit.md](Holography_Audit.md) | [8 Quantum gravity](FlowChart.md#8-quantum-gravity--toe-pillars) |
 
