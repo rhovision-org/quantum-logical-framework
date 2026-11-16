@@ -342,5 +342,6 @@ lean_lib QLF where
     `QLF_ClockDomains,
     `QLF_ClockPairing,
     `QLF_ClockIntervention,
-    `QLF_MrEUpdate
+    `QLF_MrEUpdate,
+    `QLF_GuptaPrefixClock
   ]
