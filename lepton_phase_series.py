@@ -41,17 +41,32 @@ the series below was computed).  No muon or tau mass is read anywhere.
 
 RESULT: recorded below this line in the commit after the pre-registration.
 
-RESULT (run 2026-11-15, `python3 lepton_phase_series.py 22`, ~13 s): FAIL.
+RESULT (run 2026-11-15, `python3 lepton_phase_series.py 22`, ~13 s): FAIL
+  on the estimated bracket (exploratory; see the review correction below).
   w_L checked against the classifier's brute force at L = 4, 6, 8, 10
   (24, 72, 624, 11616).  Partial sum S_22 = 0.0399880; increments are
   falling like L^-2 (the script's geometric tail, 6.9e-4, is the low
-  estimate; a power-law tail gives about 1.6e-3), so P is about 0.041-0.042.
-  That is 16x below 2/3.  Robust beyond the tail fit: ALL non-backtracking
+  estimate; a power-law tail gives about 1.6e-3), so P is ESTIMATED at about 0.041-0.042.
+  That is 16x below 2/3.  Supporting (not a proof): ALL non-backtracking
   first returns of any kind carry only 0.0965 of the measure through L = 22,
   and for P to reach 2/3 the walk's total return probability would have to
   exceed about 0.69, twice the simple random walk's 0.34 on Z^3 (Polya),
   although forbidding immediate reversal removes the commonest return.
-  The route is closed; nothing else was tried after the result.
+  Nothing else was tried after the result.
+
+REVIEW CORRECTION (2026-11-16, after aixaria0's review on PR #240).  The
+FAIL above is EXPLORATORY, not certified.  (a) T_N extrapolates the last
+increment ratio; no eventual ratio bound is proved, so [S_N, S_N + T_N] is
+an estimate, not an enclosure of P.  (b) The only certified enclosure this
+instrument computes is [S_N, S_N + (1 - F_N)], where F_N is the exact mass
+of all non-backtracking first returns of length <= N (any B, any fold) and
+1 - F_N is the exact surviving mass: every later closure lies inside it.
+At N = 22 that is [0.0400, 0.9435], which does NOT exclude 2/3.  Turning the
+estimate into a proof needs a bound on the walk's total return probability
+(for example via the non-backtracking Green's function), not done here.
+(c) Reading P as an angle in radians is an added hypothesis H, not a
+consequence of rules 1-6; "adds no choice" above refers only to the
+construction of P, not to that identification.
 """
 
 from __future__ import annotations
@@ -129,6 +144,30 @@ def series(n_max):
     return w
 
 
+def all_first_returns(n_max):
+    """Exact mass F_N of ALL non-backtracking first returns of length <= n_max."""
+    st = defaultdict(int)
+    for t in range(6):
+        pos = [0, 0, 0]
+        pos[AX[t]] += SG[t]
+        st[(tuple(pos), t)] += 1
+    F = Fraction(0)
+    for n in range(1, n_max):
+        new = defaultdict(int)
+        for (pos, last), c in st.items():
+            for t in range(6):
+                if t == CONJ[last]:
+                    continue
+                q = list(pos)
+                q[AX[t]] += SG[t]
+                if q == [0, 0, 0]:
+                    F += Fraction(c, 6 * 5 ** n)
+                    continue
+                new[(tuple(q), t)] += c
+        st = new
+    return F
+
+
 def main():
     n_max = int(sys.argv[1]) if len(sys.argv) > 1 else 20
     w = series(n_max)
@@ -151,7 +190,7 @@ def main():
         tail = i3 * r / (1 - r) if r < 1 else float("inf")
         print(f"\nlast ratio per step-pair r = {r:.4f}; geometric tail T_N = {tail:.6e}")
         lo, hi = float(S), float(S) + tail
-        print(f"bracket [S_N, S_N + T_N] = [{lo:.8f}, {hi:.8f}], width {hi - lo:.2e}")
+        print(f"estimated bracket [S_N, S_N + T_N] = [{lo:.8f}, {hi:.8f}], width {hi - lo:.2e}")
         target = 2 / 3
         if lo <= target <= hi:
             verdict = "PASS-CAND" if hi - lo < 0.01 else "UNDECIDED"
@@ -159,7 +198,12 @@ def main():
             verdict = "FAIL"
         else:
             verdict = "UNDECIDED"
-        print(f"verdict against Delta = 2/3: {verdict}")
+        print(f"verdict against Delta = 2/3 (ESTIMATE, exploratory): {verdict}")
+        F = all_first_returns(n_max)
+        print(f"\ncertified: all first returns to L={n_max} carry F_N = {float(F):.6f}")
+        print(f"certified enclosure [S_N, S_N + (1 - F_N)] = "
+              f"[{float(S):.6f}, {float(S + 1 - F):.6f}]"
+              f" -> {'excludes' if float(S + 1 - F) < 2/3 else 'does NOT exclude'} 2/3")
 
 
 if __name__ == "__main__":
