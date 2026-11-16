@@ -1130,6 +1130,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.MrEUpdate.mre_update_unique_on_support": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.MrEUpdate.pointwise_bound_false": [
     "Classical.choice",
     "Quot.sound",
@@ -1141,6 +1146,11 @@
     "propext"
   ],
   "QLF.MrEUpdate.sequential_update": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.unrestricted_objective_fails": [
     "Classical.choice",
     "Quot.sound",
     "propext"
