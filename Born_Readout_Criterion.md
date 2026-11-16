@@ -15,6 +15,12 @@ recurrence** of each branch sequence (Berlekamp–Massey modulo many primes, lif
 verified on every computed integer term), and reads the joint support as the roots of that
 recurrence. No float eigen-decomposition and no growth fit enter the verdict.
 
+> *Note added after review (2026-11-16), the registration above left unchanged.* That claim was
+> stronger than the first instrument delivered. It still placed the roots against `|λ|² = 8` with
+> `numpy.roots`, and it checked each recurrence on a finite prefix only. Both gaps are now closed by
+> [`born_readout_certified.py`](born_readout_certified.py) (§2), which reproduces every count in §1.
+> The hypotheses and kill conditions are untouched.
+
 Survey: capacities `R = 2` and `R = 3`; preparations = every word of length 1 or 2; apparatus =
 every word of length 1 or 2; every unordered pair of apparatus words with distinct targets. Geometries
 in which nothing closes are counted separately and are not "convergent".
@@ -45,9 +51,11 @@ the apparatus. The transverse branch sequences satisfy `x² + 5` exactly and the
 ## 1. Results
 
 Both surveys ran over the same **180,288 geometries** (72 preparations × 2,504 apparatus pairs with
-distinct targets). The capacity-2 run used the exact instrument (23 minutes on four cores); the
+distinct targets). The capacity-2 run used the first instrument (23 minutes on four cores); its
 vectorised `--fast` mode, added afterwards to make `R = 3` affordable, reproduced every one of its
-category counts and support sets exactly before it was used at `R = 3`.
+category counts and support sets before it was used at `R = 3`. Every number below has since been
+**reproduced by the certified pipeline of §2** (`R = 2`: 2 minutes, `R = 3`: 66 minutes, both on four
+cores). Each is therefore a certified computation, with no float and no unverified depth.
 
 | | `R = 2` | `R = 3` |
 |---|---:|---:|
@@ -81,13 +89,14 @@ Irrational `|λ|²` at or below the threshold: **none**, at either capacity.
   geometries; `9 − 4√3 ≈ 2.07`, which is in the operator's own spectrum, never appears in any
   support. The `Born_Rule.md` reading, made on 39 cases, holds on 3,192.
 * **I — passes.** No irrational `|λ|²` at or below the threshold, in 180,288 geometries.
-* **C — the convergent class is a truncation artifact.** At `R = 3` not one of the 170,400
-  geometries that close carries an amplitude, although the `R = 3` operator has six distinct
-  eigenvalue moduli below 8 for a readout to live on (among them the integer `6`). So the amplitudes
-  of `R = 2` are not the first members of a family that persists as the capacity grows: they are a
-  property of the smallest capacity at which anything interferes. By the outcome stated in advance,
-  this reads the convergent class as an artifact of the capacity-2 truncation, and the integers `5`
-  and `7` as eigenvalues of that truncation rather than physical constants.
+* **C — the registered artifact outcome occurs.** At `R = 3` not one of the 170,400 geometries
+  that close carries an amplitude (a certified count, §2), although the `R = 3` operator has six
+  distinct eigenvalue moduli below 8 for a readout to live on, among them the integer `6`. So the
+  `R = 2` amplitudes do not continue one capacity up. They belong to the smallest capacity at which
+  anything interferes. The outcome stated in advance reads this as an artifact of the capacity-2
+  truncation, and reads `5` and `7` as eigenvalues of that truncation rather than physical
+  constants. That reading is an interpretation of a certified count, not a theorem: only two
+  capacities were surveyed, under one capacity rule.
 * **P — not evaluated.** The instrument does not compute the proxy rules; nothing is claimed
   about them here.
 
@@ -99,15 +108,42 @@ gives a family that persists is a separate, open question, and it is the one thi
 pressing. The earlier "1.4 %" was a different survey (1,326 pairs, never committed); 0.90 % is this
 one, and the fraction matters less than its collapse to zero one step up.
 
-## 2. Exactness
+## 2. Certification
 
-A branch sequence `A(d) = u·Mᵈ·v` satisfies a linear recurrence whose characteristic polynomial
-divides the minimal polynomial of `M`, so `2·deg + 8` terms certify it. The instrument computes
-`4·deg + 60` terms (96 at `R = 2`, 176 at `R = 3`), raises an error if any recurrence needs more,
-and none did. The exact mode verifies the lifted integer recurrence on every integer term; the fast
-mode lifts from six 31-bit primes and checks the lift modulo two further primes on every term.
-Every recurrence found was square-free, so every readout is an exponential sum over distinct
-eigenvalues and §3 applies to it.
+The first instrument (`born_readout_survey.py`) had two gaps, both pointed out in review. It placed
+roots against the threshold with `numpy.roots`, and it verified each lifted recurrence on a finite
+prefix of computed terms only. [`born_readout_certified.py`](born_readout_certified.py) closes both
+gaps. A run fails loudly rather than return an uncertified verdict.
+
+* **An annihilator valid at every depth.** For each of the 820 absorbing operators `M`, with `X₀` the
+  matrix of all 72 preparation vectors, a candidate `m` is found (Wiedemann, lifted by CRT) and then
+  checked as the integer identity `m(M)·X₀ = 0`. The check is computed modulo enough primes that
+  their product exceeds twice an explicit bound on the entries (`Σ|mᵢ|·ρ^deg m·‖X₀‖∞`, with `ρ` the
+  maximum absolute row sum of `M`). A residue of zero modulo that product is therefore zero over `ℤ`.
+  Because `m(M)` kills every preparation vector, every branch sequence `u·Mᵈ·X₀` satisfies the
+  recurrence `m` at **every** depth `d`, not only on the terms computed. When a random projection
+  misses a component the certificate fails, and the run retries with a fresh projection.
+  Certified degrees: 6–15 at `R = 2` and 24–48 at `R = 3`, using 6–13 and 19–37 primes.
+* **The exact support of each readout.** `m` is factored over `ℤ`, and the multiplicity of each
+  irreducible factor in each sequence's minimal polynomial is decided by testing `m / fᵏ`. A sequence
+  that obeys `m` is annihilated by a divisor `g` iff `g(shift)·A` vanishes on its first `deg m` terms,
+  because that residual sequence obeys `m` too. Each test is again exact modulo primes, under a bound.
+* **Root position by exact arithmetic.** For a factor `f`, the polynomial `P` with
+  `P(x²) = ±f(x)f(−x)` has the `λ²` as its roots. `S(w) = P(8w)` moves the threshold to the unit
+  circle, and the verdict comes from rational arithmetic only. *Summable* means all roots are strictly
+  inside: a Schur–Cohn test. *Marginal* means `S = g·h`, where `g = gcd(S, S*)` has every root on the
+  circle (decided by Sturm counting of `g`'s Chebyshev image on `[−2, 2]`) and `h` passes Schur–Cohn.
+  Anything else is *divergent*. Labels such as `5` or `7` are exact for `x² + n` factors, and any
+  other factor would have been reported as non-integer: none occurred at or below the threshold.
+  A self-test checks the disk test against 3,000 random polynomials with prescribed roots, including
+  repeated roots on the circle.
+* **No repeated roots in any support**, at either capacity. So every readout is an exponential sum
+  over distinct eigenvalues, and §3 applies to it exactly.
+
+What the certificate covers: the census as encoded in [`contextual_census.py`](contextual_census.py),
+at the two capacities surveyed. It certifies the counts. The reading of `C` as a truncation artifact
+remains the interpretation registered in §0 *before* the run, applied to a certified count. It is not
+a theorem about every capacity rule, and §4 says what would overturn it.
 
 ## 3. The criterion, proved
 
@@ -123,7 +159,7 @@ sum `A(d) = Σ_k c_k λ_kᵈ` with distinct `λ_k`:
   eigenvalue in the joint support has `|λ|² < 8`.
 
 So the `90 of 90` agreement in [`Born_Rule.md`](Born_Rule.md) §8 is a theorem, and the
-survey above decides the support exactly rather than by float overlaps. The theorem is general
+survey above decides the support by certified arithmetic rather than by float overlaps. The theorem is general
 linear algebra; it carries no physics, and its value here is that it turns the survey's exact
 recurrences into exact verdicts.
 
@@ -136,5 +172,6 @@ truncation. The route to a Born weight through the *unnormalized* amplitude ther
 capacity rule under which convergence persists, or it needs a different readout; the
 arbitrary-angle `cos²(θ/2)` target is not reached by either capacity.
 
-Reproduce: `python3 born_readout_survey.py --R 2` (exact, ~25 min on four cores) and
-`python3 born_readout_survey.py --R 3 --fast`.
+Reproduce (certified): `python3 born_readout_certified.py --selftest`, then `--R 2` (~2 min on four
+cores) and `--R 3` (~66 min). The first, uncertified instrument remains as
+[`born_readout_survey.py`](born_readout_survey.py).

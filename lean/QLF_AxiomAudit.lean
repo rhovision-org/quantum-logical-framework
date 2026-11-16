@@ -39,6 +39,7 @@
 -/
 
 import QLF_ClockRedshift
+import QLF_ReadoutCriterion
 import QLF_Axioms
 import QLF_Universality
 import QLF_TwistAlphabet
@@ -702,3 +703,9 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClockRedshift.positive_factorization_not_unique
 #print axioms QLF.ClockRedshift.free_clock_scale_hits_any_age
 #print axioms QLF.ClockRedshift.lapse_rate_return
+
+-- Readout criterion: general exponential-sum linear algebra, no QLF axiom.
+#print axioms QLF.ReadoutCriterion.terms_tendsto_zero
+#print axioms QLF.ReadoutCriterion.readout_tendsto_iff
+#print axioms QLF.ReadoutCriterion.readout_summable_iff
+#print axioms QLF.ReadoutCriterion.amplitude_exists_iff
