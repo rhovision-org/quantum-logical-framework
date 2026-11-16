@@ -84,6 +84,156 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClockDomains.accessible_nonconstant": [],
+  "QLF.ClockDomains.alternative_completions": [],
+  "QLF.ClockDomains.canonical_admissible": [],
+  "QLF.ClockDomains.collision_blocks_reconstruction": [],
+  "QLF.ClockDomains.counterparts_distinct": [],
+  "QLF.ClockDomains.extendedLeft_admissible": [],
+  "QLF.ClockDomains.extendedRight_admissible": [],
+  "QLF.ClockDomains.no_exact_reconstruction": [],
+  "QLF.ClockDomains.prescribed_counterpart_reconstructible": [],
+  "QLF.ClockDomains.records_distinct": [],
+  "QLF.ClockDomains.records_equal": [],
+  "QLF.ClockIntervention.admissible_parity": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.ageMap_hits_any": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.ageMap_nonempty": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.balanced_length_even": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.channel_unbounded": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.equal_durations_not_fixed": [],
+  "QLF.ClockIntervention.fiber_up_three_classes": [],
+  "QLF.ClockIntervention.half_total_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.half_total_not_forced": [],
+  "QLF.ClockIntervention.insert_pair_admissible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.insert_pair_record": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.length_preserving_record": [],
+  "QLF.ClockIntervention.parity_record_no_signal": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.perm_admissible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.perm_record": [
+    "propext"
+  ],
+  "QLF.ClockIntervention.record_signals": [],
+  "QLF.ClockIntervention.strict_half_total": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_admissible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_duration": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_equal_durations": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_fixed_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_fixed_lengths": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_involutive": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_label": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.J_lengths": [
+    "propext"
+  ],
+  "QLF.ClockPairing.J_not_fixed_point_free": [],
+  "QLF.ClockPairing.admissible_label_opposite": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.canonical_fixed": [],
+  "QLF.ClockPairing.census_one_one": [],
+  "QLF.ClockPairing.census_two_two": [],
+  "QLF.ClockPairing.charge3W_balanced": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.charge3W_dagger": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.charge3W_reverse": [
+    "propext"
+  ],
+  "QLF.ClockPairing.dagger_tick": [
+    "propext"
+  ],
+  "QLF.ClockPairing.extendedLeft_not_strict": [],
+  "QLF.ClockPairing.extendedRight_not_strict": [],
+  "QLF.ClockPairing.fiber_up_one": [],
+  "QLF.ClockPairing.fiber_up_three": [],
+  "QLF.ClockPairing.fixedOfLength_length": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.fixedOfLength_nodup": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.reversal_duration": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.reversal_label": [
+    "propext"
+  ],
+  "QLF.ClockPairing.strict_admissible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockPairing.strict_no_collision": [],
+  "QLF.ClockPairing.strict_unique": [],
+  "QLF.ClockPairing.swap_duration": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClockRedshift.common_rescaling": [
     "Classical.choice",
     "Quot.sound",

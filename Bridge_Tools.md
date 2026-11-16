@@ -19,7 +19,7 @@ A bridge closes only with a theorem or a decided, pre-registered test ([Scientif
 | **Bisimulation** | The greatest relation compatible with continuation and an observable is unique, so a bridge's equivalence can be *derived* rather than chosen | **Theorem (§2).** One closing context decides the class, the first closure included. It closes the "why this equivalence" part of Paper I §11.2 on the two-body domain. The physical half of map ≡ territory (that the joint-closure phase is the only observable) stays open, but it is now one statement. |
 | **Strange loops** | A level-crossing return to a finite record. QLF already uses it as the review shape of every bridge ([Strange_Loops.md](Strange_Loops.md), `QLF_StrangeLoop`) | No new closure. A loop is closed by a conservative return, and for Born and MO2 the return needs a physical refinement or detector map that no loop supplies. |
 | **Return bounds (transience)** | Exact control of how much possibility ever comes back. This is the Pólya property behind `QLF_PolyaTransience` | **Decided a pre-registered test (§3):** the Koide census limit `P` fails, now with a certificate. |
-| **Zipf** | Rank-frequency of closures | **Measured (§4).** The exponent `−1` is Miller's random-typing bookkeeping. The `(ln r)^{−d/2}` correction counts axes. It decides no bridge. |
+| **Zipf** | Rank-frequency of closures | **Measured (§4).** A staircase with `f = Θ(1/(r (ln r)^{d/2}))`. The exponent `−1` is Miller's random-typing bookkeeping. The `(ln r)^{−d/2}` correction counts axes. It decides no bridge. |
 | **Fractals / self-similarity** | Self-similar closures exist ([self_similar_closures.py](self_similar_closures.py)). Through the bifibration, self-similarity already rules out log-periodic corrections, so `w = ½` is structural ([Category_Theory_QLF.md](Category_Theory_QLF.md) §3a) | Self-similarity forces the octave-to-scale map to be geometric, `Q(R) = Q₀λ^R`, but leaves `Q₀` and `λ` free. That is exactly what the α bridge lacks, so this route stops one step short (§5). |
 | **Turbulence** | An inertial-range cascade would supply a per-octave exponent for the α residual | Already run twice, pre-registered: [intermittency_bridge.py](intermittency_bridge.py) on the vacuum census and [intermittency_seeded.py](intermittency_seeded.py) on seeded censuses. Neither shows an inertial range at the census depths reached. That is incomplete rather than negative, because physical closures are far deeper, but nothing new is available to try without a physical injection scale. The side result `C₀ = 2` stands. |
 
@@ -35,10 +35,11 @@ Paper I §11.2 asks every bridge to state a physical-equivalence relation on his
 **One way suffices (§8 of the module).** The definition of observational equivalence asks about every context and every phase. None of that is needed:
 
 - `one_closure_decides`: if any one context `c` closes `w` with phase `z`, then `w'` is in `w`'s class exactly when `c` closes `w'` with the same phase.
-- `exists_first_closure`: every history has a first closure, a closing context none of whose proper prefixes closes.
-- `first_closure_decides`: the first closure alone tells apart everything that all contexts together could.
+- `IsFirstClosure w c z`: `c` closes `w` and no proper prefix of `c` does. This is first **along the chosen context** `c`.
+- `exists_first_closure`: every history has one. The proof takes the shortest closing prefix of the dagger completion.
+- `first_closure_decides`: such a closure alone tells apart everything that all contexts together could.
 
-So the first closure is the strongest way in a precise sense: no later or longer closure distinguishes two histories that the first one does not. The reason is that a fold is invertible, so a closing context loses nothing. This also removes the quantifier a reviewer would otherwise have to trust. To check that two histories are the same event class, run one closure.
+Scope of "first". `IsFirstClosure` is prefix-minimality inside one context. It does not say the context is the globally earliest closure among all contexts, and it does not single out a physically privileged first observation. The theorem does not need either: `one_closure_decides` holds for **every** closing context, so whichever closure comes first under any ordering is covered. In that sense no later or longer closure distinguishes two histories that an earlier one does not. The reason is that a fold is invertible, so a closing context loses nothing. This also removes the quantifier a reviewer would otherwise have to trust. To check that two histories are the same event class, run one closure.
 
 **What this closes.** On the two-body domain the bridge equivalence is no longer a choice. Any bridge that respects continuation and joint-closure outcomes can only use `PairEquiv` or something finer, and `PairEquiv` is the coarsest. A coarser relation would merge histories that some continuation tells apart. This is the Myhill–Nerode right congruence (Nerode 1958) read as a bisimulation, and the step is standard. The QLF-specific content is `obsEquiv_iff_pairEquiv`, which says the greatest bisimulation is the tensor quotient.
 
@@ -51,26 +52,35 @@ So the first closure is the strongest way in a precise sense: no later or longer
 **The bound.** Every electron-like first return of length `n` is a walk at the origin at step `n`. So `P ≤ E`, where `E` is the expected number of returns, and `P − S_N ≤ E − U_N`. Non-backtracking counts obey `A_{n+1} = A·A_n − 5A_{n−1}`, which gives `Σ A_n z^n = (1 − z²)/(1 − Az + 5z²)` (standard; Alon, Benjamini, Lubetzky, Sodin 2007). At `z = 1/5` the denominator becomes `(6/5)(1 − D(k))`, which gives
 
 ```
-E = (2/3)·G − 5/6 = 0.177591,   G = 1.516386…  (Watson's integral, 1939)
+E = (2/3)·G − 5/6,   G = Watson's integral (1939), the simple walk's expected visits to the origin
 ```
 
-The script also justifies the interchange of sum and integral. It checks the recurrence against direct enumeration for every `n ≤ 22`, and checks `G` in two independent forms: Glasser and Zucker's Gamma-function product (1977) and the Bessel integral `∫₀^∞ e^{−t} I₀(t/3)³ dt`.
+**What is proved and what is computed.** The reduction `P ≤ E = (2/3)G − 5/6` is an analytic argument, written out in the script's docstring with the interchange of sum and integral; it is not machine-checked. The numerical inequality is certified in exact rational arithmetic, with no floating point. `G` is the sum of the simple walk's return probabilities `u_{2n}`. The script sums the first 400 exactly and bounds the rest by `u_{2n} < 1.001 · 0.467 · (n − 2)^{−3/2}`, which follows from Robbins' (1955) factorial bounds, the balanced maximum of the trinomial, and `C(2n,n)/4ⁿ ≤ 1/√(πn)`. It asserts that term bound against every exact `u_{2n}` it computes. This gives
 
-**Result.** `P ∈ [0.03999, 0.11331]`, and `P ≤ 0.1776` at any depth. The verdict is **FAIL (certified)**: `2/3` is outside the bracket by a factor of six. The verdict needs only `G < 9/4`.
+```
+G ≤ 1.493079 + 0.046864 = 1.539943 < 9/4        (rational arithmetic)
+```
+
+It also checks the non-backtracking recurrence against direct enumeration for every `n ≤ 22`. Watson's value `G = 1.516386` in Glasser and Zucker's Gamma form (1977) and in the Bessel form `∫₀^∞ e^{−t} I₀(t/3)³ dt` is printed as a floating-point cross-check only, and is not part of the certificate.
+
+**Result.** With the certified `G`, `E ≤ 0.193295`, so `P ∈ [0.03999, 0.12902]` and `P ≤ 0.1933` at any depth. `2/3` lies outside by a factor of five, by exact comparison. The route does not close, given the analytic reduction. With Watson's value the same bound reads `E = 0.17759`.
 
 **Scope.** This is a statement about one route, the one limit built from the frozen protocol rules. Since one way suffices, a route that does not close is no evidence against the Koide phase having a way; it only stops this route from being offered again. It says nothing about deeper selections or other limits, and the Lindemann fork in [Weak_Force.md](Weak_Force.md) §5c⁗ item 7 still applies: an exact `Δ = 2/3` must be a limit, and it must be forced. The Koide phase stays open (#140).
 
 ## 4. Zipf: the closure inventory's rank-frequency law
 
-[`zipf_closures.py`](zipf_closures.py) ranks every prime (first-return) closure by its frequency, the cylinder weight `(2d)^{−L}`, using exact counts. The frequency at rank `r` follows
+[`zipf_closures.py`](zipf_closures.py) ranks every prime (first-return) closure by its frequency, the cylinder weight `(2d)^{−L}`, using exact counts. The law is a **staircase**: every prime closure of one length has the same frequency, so a block of ranks whose size grows like `(2d)^L` shares one value. Two statements hold, and they are different:
 
 ```
-f(r) ~ C / ( r · (ln r)^{d/2} )
+arbitrary ranks:   f(r) = Θ( 1 / ( r · (ln r)^{d/2} ) )
+endpoint ranks:    f(r_L) · r_L · (ln r_L)^{d/2} → C      (r_L = number of primes of length ≤ L)
 ```
 
-At `L = 300` the local exponent `d ln f / d ln r` is `−1.020` for `d = 4` and `−1.019` for `d = 3`, still approaching `−1`. The prime counts settle as `I_L·L²/8^L → 0.52` for `d = 4` and `I_L·L^{3/2}/6^L → 0.287` for `d = 3`, with slow `O(ln L / L)` corrections. The `d = 4` total prime mass, `0.1923` through `L = 300`, matches [Closure_Walk.md](Closure_Walk.md)'s `p₄ = 0.1932`.
+Inside one block `f` is constant while `r` grows by `(2d)²`, so the normalized product varies by about that factor (measured at `L = 40`: 36.2 for `d = 3`, 64.8 for `d = 4`). No single constant holds on all ranks.
 
-**What is content (method rule 4).** The exponent `−1` is not. It holds for any inventory whose words of length `L` share one weight and whose number grows like `(2d)^L` times a subexponential factor. That is Miller's random-typing argument (1957), after Mandelbrot (1953), and no distribution over ways would make it false. The correction `(ln r)^{−d/2}` is content: it is the `L^{−d/2}` decay of first returns, so it counts the independent axes and would be different with two axes or five. So Zipf gives the closure inventory a **dimension fingerprint**, not a bridge. A physical frequency table read as closure frequencies would have to show the `(ln r)^{−2}` correction, which makes the reading testable. No such table has been identified, so nothing is claimed.
+At endpoints, the finite-difference slope `Δ ln f / Δ ln r` between successive lengths is `−1.003` at `L = 300` for both `d`, approaching `−1`. The endpoint product is `2.18` (`d = 4`) and `0.69` (`d = 3`) there and still rising slowly, consistent with `O(ln L / L)` corrections; the prime counts behave as `I_L·L²/8^L ≈ 0.52` and `I_L·L^{3/2}/6^L ≈ 0.287`. The `d = 4` total prime mass, `0.1923` through `L = 300`, matches [Closure_Walk.md](Closure_Walk.md)'s `p₄ = 0.1932`.
+
+**What is content (method rule 4).** The exponent `−1` is not. It holds for any inventory whose words of length `L` share one weight and whose number grows like `(2d)^L` times a subexponential factor. That is Miller's random-typing argument (1957), after Mandelbrot (1953), and no distribution over ways would make it false. The correction `(ln r)^{−d/2}` is content: it is the `L^{−d/2}` decay of first returns, so it counts the independent axes and would be different with two axes or five. So Zipf gives the closure inventory a **dimension fingerprint**, not a bridge. A physical frequency table read as closure frequencies would have to show the `(ln r)^{−2}` correction and the equal-frequency blocks, which makes the reading testable. No such table has been identified, so nothing is claimed.
 
 ## 5. The other open bridges
 
@@ -91,4 +101,5 @@ Under the possibilist standard each of these needs **one** exhibited way, and it
 - Milner, R. (1989). *Communication and Concurrency.* Prentice Hall.
 - Nerode, A. (1958). Linear automaton transformations. *Proc. AMS* 9, 541–544.
 - Park, D. (1981). Concurrency and automata on infinite sequences. *LNCS* 104, 167–183.
+- Robbins, H. (1955). A remark on Stirling's formula. *Am. Math. Monthly* 62, 26–29.
 - Watson, G. N. (1939). Three triple integrals. *Q. J. Math.* 10, 266–276.

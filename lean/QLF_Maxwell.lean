@@ -3,7 +3,7 @@ import QLF_LatticeGauge
 /-!
 # QLF_Maxwell — the walk carries a conserved current, and that is what Gauss's law needs
 
-Issue #207. [`QLF_LatticeGauge`](QLF_LatticeGauge.lean) gave the source-free half of Maxwell's
+Issue #207. Companion document: `Maxwell.md` (Lean status table). [`QLF_LatticeGauge`](QLF_LatticeGauge.lean) gave the source-free half of Maxwell's
 equations (the Bianchi identity). The other half couples the field to charge: Gauss's law
 `div E = ρ` and the Ampère–Maxwell update `E' = E + curl B − J`. This module shows what QLF supplies
 for that half and what it does not.

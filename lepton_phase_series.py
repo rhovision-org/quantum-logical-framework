@@ -70,9 +70,10 @@ construction of P, not to that identification.
 
 CERTIFIED (2026-11-16, lepton_phase_certify.py).  The missing bound is
 supplied: P <= E, the NB walk's expected number of returns, and
-P - S_N <= E - U_N.  The NB recurrence gives E = (2/3) G - 5/6 = 0.17759 with
-G = 1.516386 Watson's integral.  Certified bracket P in [0.0400, 0.1133];
-2/3 is excluded, so the verdict is FAIL (certified).  See Bridge_Tools.md 3.
+P - S_N <= E - U_N.  The NB recurrence gives E = (2/3) G - 5/6 (analytic
+reduction), and G <= 1.5400 is certified in exact rational arithmetic, so
+E <= 0.1933 and P lies in [0.0400, 0.1291].  2/3 is excluded: FAIL, certified
+given the analytic reduction.  See Bridge_Tools.md 3.
 """
 
 from __future__ import annotations

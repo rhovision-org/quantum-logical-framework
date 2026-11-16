@@ -46,6 +46,10 @@ lean_lib QLF where
     `QLF_VacuumAlignment,
     `QLF_RhoProcessBridge,
     `QLF_LocalClock,
+    `QLF_ClockBridge,
+    `QLF_ClockComparison,
+    `QLF_FrequencyBridge,
+    `QLF_GeneratorClockBridge,
     `QLF_EinsteinGeometricFactor,
     `QLF_SubstrateLightSpeed,
     `QLF_FineStructureSubstrate,
@@ -221,6 +225,8 @@ lean_lib QLF where
     `QLF_ClosureDepth,
     `QLF_LawOfExceptions,
     `QLF_ClosureDepthLaw,
+    `QLF_ZFAFirstPassageClock,
+    `QLF_SubstratePeriodicClock,
     `QLF_LineSpectra,
     `QLF_BornCounting,
     `QLF_Degeneracy,
@@ -333,5 +339,8 @@ lean_lib QLF where
     `QLF_MeadTransaction,
     `QLF_MagneticOrientation,
     `QLF_ClockRedshift,
+    `QLF_ClockDomains,
+    `QLF_ClockPairing,
+    `QLF_ClockIntervention,
     `QLF_MrEUpdate
   ]

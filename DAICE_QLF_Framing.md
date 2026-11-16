@@ -3,7 +3,7 @@
 **Program:** DARPA **DAICE / DICE** — *Decentralized AI through Controlled Emergence* (solicitation
 **HR001126S0010**, IPTO, PM Susmit Jha; published 10 Jun 2026). Simulation-only; no real-world
 deployment.
-**Origin:** Allen's issue [#91](https://github.com/jimscarver/quantum-logical-framework/issues/91).
+**Origin:** Allen's issue [#91](https://github.com/rhovision-org/quantum-logical-framework/issues/91).
 **Status:** *draft technical framing for the team to mine for an abstract.* Not a commitment document.
 
 > **Roles & boundaries (binding, read first).**

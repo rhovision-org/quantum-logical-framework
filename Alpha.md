@@ -263,7 +263,7 @@ catastrophe ([`TheContinuum.md`](TheContinuum.md) §3.1). The strong β-coeffici
 `b₀=7` (`beta_coefficient_eq_seven`, [`lean/QLF_BetaFunction.lean`](lean/QLF_BetaFunction.lean)), feeding
 the `14π` hierarchy ([`lean/QLF_AlphaS.lean`](lean/QLF_AlphaS.lean)).
 
-### 4a. The QED vacuum-polarization running from the census (issue [#117](https://github.com/jimscarver/quantum-logical-framework/issues/117))
+### 4a. The QED vacuum-polarization running from the census (issue [#117](https://github.com/rhovision-org/quantum-logical-framework/issues/117))
 
 The *matter* vacuum-polarization running — the piece the dimension-flow leaves to the β-coefficient
 sector — is now derived from census counting, three modules, every factor value-free (committed
@@ -305,7 +305,7 @@ census) value-free; the residual for the full running *magnitude* / the `0.036` 
 plus the **non-perturbative hadronic** `Δα_had` (open in the Standard Model itself). **Not fitted.**
 
 **How the α-residual improves once the electroweak scale is pinned** (issue
-[#136](https://github.com/jimscarver/quantum-logical-framework/issues/136)). The absolute scale that
+[#136](https://github.com/rhovision-org/quantum-logical-framework/issues/136)). The absolute scale that
 sets the threshold octaves `R_f` is `v ↔ R_stable`, now closed *structurally* to a single self-organized-
 critical observable `ρ* = √(c/k)` (frontier #1: `QLF_ClosureAttraction` → `QLF_SteadyStateDensity` →
 `QLF_ElectroweakScale`, `R_stable = 1/ρ*`). So the `0.036` residual splits cleanly into **three
@@ -382,7 +382,7 @@ inside a **frozen, substrate-motivated grammar of derivations, no other value is
 the construction come out 136, QLF would be **refuted, not revised** — it cannot follow a moving
 measurement. This is *rigidity*, not existence (the value is already derived above); the
 motivation-first design and the Lean build program are tracked in
-[issue #116](https://github.com/jimscarver/quantum-logical-framework/issues/116).
+[issue #116](https://github.com/rhovision-org/quantum-logical-framework/issues/116).
 
 **The construction, operation by operation** (each motivated *without reference to 137*): `α⁻¹ = 128 + 9
 = 2⁷ + 3²` — the **product** of the four physical selectivities gives `1/128 = 2⁻⁷` (`alpha_bare`); the
@@ -411,7 +411,7 @@ which reclassifies a bare charge out of scope rather than making it a counterexa
 improving stability is recorded as *motivation*; dynamical stability is not counting-theoretic and is
 not claimed — the chain routes through elementarity = ZFE-closed ∧ not decomposable.)
 
-**The proof shape** ([`QLF_AlphaRigidity`](lean/QLF_AlphaRigidity.lean); [issue #116](https://github.com/jimscarver/quantum-logical-framework/issues/116)):
+**The proof shape** ([`QLF_AlphaRigidity`](lean/QLF_AlphaRigidity.lean); [issue #116](https://github.com/rhovision-org/quantum-logical-framework/issues/116)):
 invariants kill infinite families, the finite residue is checked directly. **The elementarity spine is
 machine-checked:** a prime count admits no factorization, so it is *atomic* (`prime_implies_atomic`, I2);
 P1 is the single explicit `axiom` (`realization`); together they give *elementary ⟺ prime*

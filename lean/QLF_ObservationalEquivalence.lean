@@ -449,7 +449,10 @@ theorem obsEquiv_iff_one_closure {w w' c : PairHistory} {z : ℂ} (h : ClosesWit
     ObsEquiv w w' ↔ ClosesWith w' c z :=
   (obsEquiv_iff_pairEquiv w w').trans (one_closure_decides h).symm
 
-/-- A **first closure** of `w`: a context that closes `w`, no proper prefix of which does. -/
+/-- A **first closure** of `w`: a context that closes `w`, no proper prefix of which does.
+    This is prefix-minimality along the chosen context `c`. It does not assert that `c` is the
+    globally earliest closure among all contexts, nor a physically privileged first observation;
+    `one_closure_decides` needs neither, since it holds for every closing context. -/
 def IsFirstClosure (w c : PairHistory) (z : ℂ) : Prop :=
   ClosesWith w c z ∧ ∀ c' : PairHistory, c' <+: c → c' ≠ c → ∀ z' : ℂ, ¬ ClosesWith w c' z'
 

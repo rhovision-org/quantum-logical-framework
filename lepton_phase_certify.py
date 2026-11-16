@@ -45,17 +45,44 @@ and uniformly for z < 1/5; b_n >= 0 gives monotone convergence on the left as
 z -> 1/5, and the integrand is bounded by 1/(6 z (1 - D)), integrable in d = 3,
 which gives dominated convergence on the right.
 
-What this script checks numerically, all exact integers except G:
+WHAT IS PROVED AND WHAT IS COMPUTED.  The reduction P <= E = (2/3) G - 5/6 is an
+analytic argument (above), not machine-checked.  The numerical inequality is
+certified in exact rational arithmetic, with no floating point:
+
+    G = sum_{n>=0} u_2n,   u_2n = W_2n / 6^2n   (simple-walk return probabilities),
+
+    u_2n = [C(2n,n)/4^n] * sum_{i+j+k=n} t(i,j,k)^2  <=  [C(2n,n)/4^n] * max t,
+
+where t(i,j,k) = n!/(i!j!k!) 3^-n sums to 1.  The maximum is at a balanced
+triple (moving one unit from i to j when i >= j+2 multiplies t by i/(j+1) > 1),
+so i,j,k >= (n-2)/3.  Robbins' (1955) bounds
+sqrt(2 pi m) (m/e)^m < m! < sqrt(2 pi m) (m/e)^m e^(1/(12m)), with the
+relative-entropy factor <= 1, give max t <= e^(1/(12n)) sqrt(n) 3 sqrt(3) /
+(2 pi (n-2)^(3/2)); with C(2n,n)/4^n <= 1/sqrt(pi n) this is, for n >= 5,
+
+    u_2n  <=  e^(1/(12n)) * 3 sqrt(3) / (2 pi^(3/2)) * (n-2)^(-3/2)
+          <   1.001 * 0.467 * (n-2)^(-3/2)        for n > 400,
+
+using 3.14 < pi, sqrt(3) < 1.7321 and e^(1/(12n)) < 1.001 there.  (For
+5 <= n <= 400 the same numerical bound is asserted directly against the exact
+u_2n.)  Summing the tail n > M = 400 by the integral test,
+
+    G  <=  S_M + 1.001 * 0.467 * 2 / sqrt(M - 2),   S_M = sum_{n<=M} u_2n exact.
+
+The script evaluates this with Fractions (the square root is replaced by a
+rational lower bound from an integer square root), asserts the term bound
+against the exact u_2n for every 5 <= n <= M, and reports the rational G_hi.
+Everything downstream (E_hi, the bracket, the verdict) uses G_hi.
+
+What the script checks:
   1. b_n by direct enumeration agrees with the recurrence (moments of a(k) are
      the simple-walk closed-walk counts) for every n <= N;
-  2. G from the Gamma-function closed form agrees with the independent Bessel
-     representation G = int_0^inf e^-t I_0(t/3)^3 dt;
-  3. the certified bracket on P and the verdict.
+  2. the rational certificate G <= G_hi < 9/4 (which alone gives P <= E < 2/3);
+  3. the bracket on P from G_hi, and the verdict;
+  4. if mpmath is installed, a floating-point cross-check only: Watson's value
+     of G in its Gamma and Bessel forms (not part of the certificate).
 
-The verdict needs much less than the value of G: P <= E < 2/3 holds as soon as
-G < 9/4, and Watson's integral is 1.516.
-
-Usage: python3 lepton_phase_certify.py [N]   (default 22; uses mpmath)
+Usage: python3 lepton_phase_certify.py [N]   (default 22; mpmath optional)
 """
 
 from __future__ import annotations
@@ -65,7 +92,6 @@ import sys
 from collections import defaultdict
 from fractions import Fraction
 
-from mpmath import besseli, exp, gamma, inf, mp, mpf, pi, quad, sqrt
 
 AX = [0, 0, 1, 1, 2, 2]
 SG = [1, -1, 1, -1, 1, -1]
@@ -128,44 +154,77 @@ def recurrence_counts(n_max):
     return [sum(c * srw_closed(j) for j, c in enumerate(p)) for p in polys[: n_max + 1]]
 
 
+def watson_upper(m_max=400):
+    """Rational upper bound G_hi >= G, exact arithmetic only (see docstring)."""
+    # W_2n = (2n)! [x^2n] (sum_k x^2k / k!^2)^3, by exact convolution
+    one = [Fraction(1, math.factorial(k) ** 2) for k in range(m_max + 1)]
+    p = one
+    for _ in range(2):
+        q = [Fraction(0)] * (m_max + 1)
+        for i, a in enumerate(p):
+            for j in range(m_max + 1 - i):
+                q[i + j] += a * one[j]
+        p = q
+    u = [p[n] * math.factorial(2 * n) / 6 ** (2 * n) for n in range(m_max + 1)]
+    assert all(u[n] == Fraction(srw_closed(2 * n), 6 ** (2 * n)) for n in range(12))
+    const = Fraction(1001, 1000) * Fraction(467, 1000)
+    # term bound u_2n <= const * (n-2)^(-3/2), checked as u^2 (n-2)^3 <= const^2
+    for n in range(5, m_max + 1):
+        assert u[n] ** 2 * (n - 2) ** 3 <= const ** 2, n
+    # rational lower bound on sqrt(m_max - 2): floor(sqrt((m_max-2) * 10^12)) / 10^6
+    root_lo = Fraction(math.isqrt((m_max - 2) * 10 ** 12), 10 ** 6)
+    tail = const * 2 / root_lo
+    return sum(u) + tail, sum(u), tail
+
+
 def main():
     n_max = int(sys.argv[1]) if len(sys.argv) > 1 else 22
-    mp.dps = 30
 
     b = nb_origin_counts(n_max)
     rec = recurrence_counts(n_max)
     assert b == rec, "enumeration and recurrence disagree"
     print(f"1. NB origin counts b_n match the recurrence for n <= {n_max}")
 
-    G_gamma = (
-        sqrt(6) / (32 * pi**3)
-        * gamma(mpf(1) / 24) * gamma(mpf(5) / 24)
-        * gamma(mpf(7) / 24) * gamma(mpf(11) / 24)
-    )
-    G_bessel = quad(lambda t: exp(-t) * besseli(0, t / 3) ** 3, [0, 1, 10, 100, inf])
-    assert abs(G_gamma - G_bessel) < mpf(10) ** -12, (G_gamma, G_bessel)
-    print(f"2. Watson's integral G = {mp.nstr(G_gamma, 15)} (Gamma form) "
-          f"= {mp.nstr(G_bessel, 15)} (Bessel form)")
+    G_hi, S_M, tail_G = watson_upper()
+    assert G_hi < Fraction(9, 4)
+    print(f"2. exact certificate: G <= S_400 + tail = {float(S_M):.6f} + {float(tail_G):.6f}"
+          f" = {float(G_hi):.6f} < 9/4   (rational arithmetic)")
 
-    E = mpf(2) / 3 * G_gamma - mpf(5) / 6
+    E_hi = Fraction(2, 3) * G_hi - Fraction(5, 6)
     U = sum(Fraction(b[n], 6 * 5 ** (n - 1)) for n in range(1, n_max + 1))
-    tail = E - mpf(U.numerator) / U.denominator
-    print(f"   expected NB returns E = (2/3)G - 5/6 = {mp.nstr(E, 12)}")
-    print(f"   U_{n_max} = {float(U):.10f}, so sum_(n>{n_max}) u_n = {mp.nstr(tail, 10)}")
+    tail = E_hi - U
+    print(f"   expected NB returns E <= (2/3)G_hi - 5/6 = {float(E_hi):.6f}")
+    print(f"   U_{n_max} = {float(U):.10f}, so sum_(n>{n_max}) u_n <= {float(tail):.6f}")
 
     # S_N from lepton_phase_series (exact partial sum of the pre-registered statistic)
     from lepton_phase_series import series
 
     w = series(n_max)
     S = sum(Fraction(w[L], 6 * 5 ** (L - 1)) for L in range(1, n_max + 1))
-    lo = mpf(S.numerator) / S.denominator
-    hi = lo + tail
-    print(f"3. certified bracket P in [S_{n_max}, S_{n_max} + (E - U_{n_max})] = "
-          f"[{mp.nstr(lo, 8)}, {mp.nstr(hi, 8)}]")
-    print(f"   and P <= E = {mp.nstr(E, 8)} independently of N")
-    target = mpf(2) / 3
-    verdict = "FAIL (certified)" if not (lo <= target <= hi) else "UNDECIDED"
-    print(f"   2/3 = {mp.nstr(target, 8)}: {verdict}")
+    hi = S + tail
+    print(f"3. bracket P in [S_{n_max}, S_{n_max} + (E_hi - U_{n_max})] = "
+          f"[{float(S):.8f}, {float(hi):.8f}]")
+    print(f"   and P <= E_hi = {float(E_hi):.6f} independently of N")
+    target = Fraction(2, 3)
+    assert E_hi < target and hi < target
+    print("   2/3 lies above the bracket (exact comparison): this route does not close,"
+          "\n   given the analytic reduction P <= E in the docstring")
+
+    try:
+        from mpmath import besseli, exp, gamma, inf, mp, mpf, pi, quad, sqrt
+    except ImportError:
+        print("4. mpmath not installed: floating-point cross-check skipped")
+        return
+    mp.dps = 30
+    G_gamma = (
+        sqrt(6) / (32 * pi**3)
+        * gamma(mpf(1) / 24) * gamma(mpf(5) / 24)
+        * gamma(mpf(7) / 24) * gamma(mpf(11) / 24)
+    )
+    G_bessel = quad(lambda t: exp(-t) * besseli(0, t / 3) ** 3, [0, 1, 10, 100, inf])
+    print(f"4. cross-check (floating point, not part of the certificate): Watson's G = "
+          f"{mp.nstr(G_gamma, 12)} (Gamma form), {mp.nstr(G_bessel, 12)} (Bessel form); "
+          f"E = {mp.nstr(mpf(2) / 3 * G_gamma - mpf(5) / 6, 9)}")
 
 
 if __name__ == "__main__":

@@ -174,7 +174,7 @@ And `m_t` is not a separate mystery: the top is the one fermion with an `O(1)` Y
 
 **So the whole Standard-Model mass spectrum collapses to two scales:** the Planck floor (by construction) and *one* dynamically generated low scale. Everything above reduces `M_H → λ → m_t → v → R_stable → G`, and the chain bottoms out in a single substrate quantity.
 
-**What each attempt on that last step settled** — the round-by-round record is [issue #121](https://github.com/jimscarver/quantum-logical-framework/issues/121):
+**What each attempt on that last step settled** — the round-by-round record is [issue #121](https://github.com/rhovision-org/quantum-logical-framework/issues/121):
 
 | attempt | outcome |
 |---|---|

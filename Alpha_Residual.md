@@ -615,7 +615,7 @@ nameable obstacles. Stated so the work can resume against a concrete target:
 - **(a) Derive the kinematic weighting from the substrate** — show how the closure census acquires the
   running's higher-order coefficients (the logs / phase space *from counting*). Shared open frontier with
   the RG sector (`QLF_RunningCouplings`, `QLF_BetaFunction`). **Sharpened, falsifiable form**
-  ([issue #117](https://github.com/jimscarver/quantum-logical-framework/issues/117)): the residual is the
+  ([issue #117](https://github.com/rhovision-org/quantum-logical-framework/issues/117)): the residual is the
   substrate reading of **vacuum polarization** as a census-weighted, **horizon-scale-dependent** sum over
   the elementary (prime-count) closure **tower** (`closedAtHorizon`); the value-free first target is to
   derive the **one-loop running coefficient** (`2/3π` per unit charge per fermion) from census counting
