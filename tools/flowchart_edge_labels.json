@@ -65,8 +65,9 @@
    "EV>IN": "high-V epoch",
    "EV>DM": "denser logic",
    "OL>DE": "residual w = -1",
-   "EV>AGE": "event rate",
-   "EV>NS": "freeze-out n/p"
+   "EV>AGE": "event rate; scale calibrated",
+   "EV>NS": "freeze-out n/p",
+   "AGE>GUPTA": "test independent clock/redshift bridge"
   },
   {
    "H7>TH": "domain 7",

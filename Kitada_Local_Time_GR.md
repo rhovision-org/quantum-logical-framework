@@ -10,6 +10,8 @@ QLF already has substantial general-relativistic structure: emergent spacetime f
 
 This doc proposes that Hitoshi Kitada's local-time framework ([Kitada 1996, gr-qc/9612043](https://arxiv.org/abs/gr-qc/9612043)) is the natural structural lens for closing all three. It does not derive 8π or G itself — that is the next-tier research target — but it sharpens the question, identifies the specific calculation, and gives the framework's commitments a Mach-style relational backbone.
 
+**Clock-calibration scope.** [AgeOfUniverse.md](AgeOfUniverse.md) is the authority for the current numerical status: N is not independently derived; the H0-defined depth gives Hubble time `1/H0`, not by itself the integrated ≈13.8 Gyr cosmic age. The age statements in §4 below are a proposed relational interpretation with that calibration, not an independent numerical derivation. The Gupta comparison's [clock-convention contract](Gupta_ClockConventions.md) keeps coordinate time, metric proper time, atomic standards and finite closure counts separate.
+
 ---
 
 ## §1 Background and motivation
@@ -68,19 +70,19 @@ with `f_interior` the Planck-event rate (substrate clock) and `f_exterior` the c
 
 - **Interior rate**: `f_Planck = 1 / τ_Planck ≈ 1.85 × 10⁴³ Hz` (Planck-event substrate).
 - **Exterior rate**: `f_Hubble ≈ H₀ ≈ 2.3 × 10⁻¹⁸ Hz`.
-- **Ratio**: `f_Planck / f_Hubble ≈ 8 × 10⁶⁰` — the dimensionless geometric depth `n` of [`HadronicDepth.md`](HadronicDepth.md) (the primordial-blanket count `v(R_H) ≈ 6.7 × 10⁶⁰`, §2.1). The proton cube `(m_Planck / m_p)³ ≈ 2.2 × 10⁵⁷` reproduces this only to ~3–4 orders — a large-number coincidence, not an exact match.
+- **Clock-depth ratio**: `f_Planck/f_Hubble = 1/(H0*tau_Planck)`, of order `8 × 10⁶⁰`. This H0-defined clock depth is distinct from the geometric blanket count `v(R_H) ≈ 6.7 × 10⁶⁰` in [`HadronicDepth.md`](HadronicDepth.md). The proton cube `(m_Planck/m_p)³ ≈ 2.2 × 10⁵⁷` is several thousand times too small to supply the proposed cosmic tick count.
 
-The cosmic age in Planck units is then `n` ticks of the substrate clock, equivalently `1` tick of the cosmic-horizon clock, which converts to `13.8 Gyr` under the standard time-unit conversion. This is the **relational derivation** of 13.8 Gyr: cosmic time is the cosmic-horizon clock's proper time, which is one tick of its own local clock, which equals `n` ticks of the substrate clock, which equals `13.8 Gyr` by unit conversion.
+The proposed clock reading can be written as `n` substrate ticks once a physical clock and count have been supplied. It gives `1/H0` when n is the H0-defined depth. This is the Hubble time; obtaining integrated cosmic proper age additionally requires an expansion history. Identifying the geometric blanket count with a physical tick count is a separate, open step.
 
 The structural payoff:
 
-- The cosmic-age derivation in [`AgeOfUniverse.md`](AgeOfUniverse.md) becomes a consequence of (a) the Gap-1 identity and (b) the cosmic-horizon Markov blanket having depth `R_cosmic = n ≈ 6.7 × 10⁶⁰` (geometric).
-- The [`HadronicDepth.md`](HadronicDepth.md) Hadronic Depth Hypothesis (`n ~ (m_P/m_p)³`) becomes a structural prediction about the cosmic clock's relation to the proton clock — both are Markov blankets with specific depths in a Kitada-style hierarchy.
+- The local-clock identity provides a form `tau = N*tau_Planck` after a clock and tick conversion are specified. Neither the geometric blanket count nor the H0-defined depth independently derives the cosmic proper-age count N; see [`AgeOfUniverse.md`](AgeOfUniverse.md).
+- A relation between proton and cosmic blanket depths remains a hypothesis. The proton cube fails as the numerical cosmic-age clock; the shared Markov-blanket language alone does not repair that mismatch.
 - The "no absolute t = 0" follows: cosmic time is the proper time of an extant Markov blanket, not a universal external coordinate.
 
-**Honest scoping.** This is a **structural reframing** of the [`AgeOfUniverse.md`](AgeOfUniverse.md) derivation, not new physics. The numerical value `13.8 Gyr` is already derived in that doc; what Kitada's framework supplies is the relational meaning (cosmic time = cosmic-horizon-clock proper time) and the explicit hierarchical bridge from substrate clock to cosmic clock via local-clock comparison.
+**Honest scoping.** This is a **structural reframing** of the [`AgeOfUniverse.md`](AgeOfUniverse.md) derivation, not new physics. The numerical cosmic age is calibrated in that doc, and N remains open; what this Kitada-style proposal supplies is a candidate relational meaning and a hierarchical local-clock comparison, rather than an independent numerical selection.
 
-**Lean target.** `cosmic_proper_time_from_local_clocks`: with the Gap-1 identity, derive `τ_cosmic = R_cosmic × τ_Planck` from the cosmic-horizon Markov blanket's local-clock depth, with `R_cosmic = n` supplied by [`HadronicDepth.md`](HadronicDepth.md).
+**Lean target.** `cosmic_proper_time_from_local_clocks`: with the Gap-1 identity, derive `τ_cosmic = R_cosmic × τ_Planck` from the cosmic-horizon Markov blanket's local-clock depth, with an independently justified physical clock/count and a noncircular tick conversion. The geometric count in [`HadronicDepth.md`](HadronicDepth.md) is a candidate input, not an established identification.
 
 ---
 

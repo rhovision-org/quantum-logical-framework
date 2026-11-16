@@ -17,6 +17,8 @@ allowlist. JSON-only changes trigger the Python workflow.
 | `strange_loop` fields | Typed two-phase/return specification in the four bridge records; all four are `B-OPEN` |
 | `kill_conditions.json` | Draft falsification/test ledger, not a completed preregistration |
 
+The [Gupta CCC+TL ledger](gupta_ccc_tl.json) tracks a retrospective external numerical benchmark and draft bridge tests. It is a `test_ledger`, with no invented theorem anchors or component promotion.
+
 ## Structural requirements
 
 Claim records contain typed, non-empty approximation, formal statement/object,

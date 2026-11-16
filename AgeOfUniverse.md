@@ -22,6 +22,8 @@ They differ because `H₀t₀ = 0.951`, a measured fact about the expansion hist
 
 ---
 
+**External comparator:** [Gupta CCC+TL falsification program](Gupta_CCC_TL.md) separates numerical reproduction from a QLF clock/redshift bridge. A different age can be compared only after its operational clock, redshift decomposition and calibration are fixed. The substrate count `N` remains open.
+
 ## 1. Why the Age Is Finite and Emergent
 
 Every ZFA-closed history generates a tiny spacetime interval.  

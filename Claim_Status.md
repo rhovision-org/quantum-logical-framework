@@ -102,8 +102,12 @@ rows in the physical-claims table and do not have physical `E` status:
   representation. The conservative return on closure classes is
   now proved as `tensor_conservative_return` / `tensorTrigger_exists` in
   `QLF_TensorConservativeReturn` (in the 375-anchor baseline). It proves
-  coherence of the quotient return; it does not show that the quotient is the
-  physically selected closure equivalence. `pair_scalar_ambiguity` shows why the
+  coherence of the quotient return. `QLF_ObservationalEquivalence` adds that the
+  quotient is the observational one: two histories are equivalent exactly when no
+  appended context separates them by joint closure and phase
+  (`obsEquiv_iff_pairEquiv`), and the separating context is itself a ZFA closure
+  (`separating_test_is_zfa`). It does not show that joint closure phase is the only
+  physical observable, so the physically selected equivalence is still not established. `pair_scalar_ambiguity` shows why the
   raw factor pair cannot be returned. The tensor bridge remains near-complete,
   not a closed physical bridge.
 
@@ -128,3 +132,7 @@ The validator discovers every JSON record recursively by explicit record type, c
 - `ScientificApproach.md` — the governing method, bridge grades, and pre-registration rules.
 - `SPARC.md` — the retrospective public-data benchmark SPARC analysis and its receipt.
 - Paper I v0.3 §2 — the manuscript's positive-claims table and prose.
+
+## Gupta CCC+TL external reference
+
+[Gupta_CCC_TL.md](Gupta_CCC_TL.md) implements the external 2023 equation benchmark: self-run ages 26.6672, 5.8325 and 3.4633 Gyr at observed redshifts 0, 10 and 20. All pass the frozen abstract-precision tolerance; Table 1's extra present-age precision is unresolved. [Execution record](verification/gupta-ccc-tl/README.md), [draft test ledger](claim_records/gupta_ccc_tl.json). This is external numerical reproduction with [Grok's independent execution PASS report](verification/gupta-ccc-tl/grok_numerical_review.md), relayed and accepted by Jim. Separately, nine clock/redshift algebraic statements passed Lean CI and the exact-footprint gate. No empirical promotion or physical clock-map theorem is claimed. The QLF clock/redshift bridge stays B-OPEN; later SPARC and age comparisons are specified, not executed.

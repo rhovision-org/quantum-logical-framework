@@ -281,6 +281,7 @@ lean_lib QLF where
     `QLF_RelativityScale,
     `QLF_LorentzSymbol,
     `QLF_BoostCovariance,
+    `QLF_InteractingKinematics,
     `QLF_RealizableWalk,
     `QLF_Tsirelson,
     `QLF_Mass,
@@ -322,12 +323,15 @@ lean_lib QLF where
     `QLF_PlaquetteArea,
     `QLF_LocalAreaLaw,
     `QLF_TensorFromClosure,
-    `QLF_MetricSinglet, `QLF_LatticeDivergence,
+    `QLF_MetricSinglet, `QLF_LatticeDivergence, `QLF_LatticeBianchi,
     `QLF_Manifestation,
     `QLF_StrangeLoop,
     `QLF_StrangeLoopBorn,
     `QLF_ConservativeReturn,
     `QLF_TensorConservativeReturn,
+    `QLF_ObservationalEquivalence,
     `QLF_MeadTransaction,
-    `QLF_MagneticOrientation
+    `QLF_MagneticOrientation,
+    `QLF_ClockRedshift,
+    `QLF_MrEUpdate
   ]

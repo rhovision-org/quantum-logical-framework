@@ -1,0 +1,32 @@
+{
+  "scope": "Retrospective diagnostic; original benchmark and tolerance unchanged; no historical cause inferred.",
+  "central_coordinate_age_Gyr": "26.6672118588425594992793327971578531360026571466061748605104",
+  "nearest_rounding_bounds_Gyr": [
+    "26.6619775664899882337435527038915769167211067241930741114719",
+    "26.6724479261204197866360504077149293468360654965794228342189"
+  ],
+  "published_reporting_interval_Gyr": [
+    "26.695",
+    "26.705"
+  ],
+  "displayed_parameter_rounding_sufficient": false,
+  "ratio_rounding_diagnostic": {
+    "r": -0.8,
+    "age_Gyr": "26.6851956739365905235164028969441816109131828664969312053910",
+    "interpretation": "Predeclared rounding diagnostic; not evidence of an author-used intermediate or a refitted input."
+  },
+  "year_diagnostics": [
+    {
+      "year_days": 365.0,
+      "age_Gyr": "26.6854770724445064578404830251011119395204671857476859391820"
+    },
+    {
+      "year_days": 365.2425,
+      "age_Gyr": "26.6677594514390982897986305103100155593200969843265922443348"
+    }
+  ],
+  "source_precision_gate": "UNRESOLVED: author-used intermediate/constants/code not available in the cited source.",
+  "specification_sha256": "60c6728339f256dea292ed9ec4857f1f6936a504b5aa64579f3edf2b4d876f8b",
+  "implementation_sha256": "6b9fb04aff42c64146097659883980e70f613cff98ab301f1d3a03c7201c0bbb",
+  "executed_source_revision": "fe870de41c1e185c6e30c0980bd2cafa134cf65b"
+}

@@ -1,0 +1,49 @@
+{
+  "reference": "https://arxiv.org/abs/2309.13100v1",
+  "doi": "10.1093/mnras/stad2032",
+  "source_sha256": "a6a4076e93fb519c4700c8a6dcfbbd19c4be91db23f026986405d56af4cfc750",
+  "parameters": {
+    "Hc_km_s_Mpc": 59.51,
+    "alpha_over_Hc": -0.7997
+  },
+  "equations": [
+    19,
+    20,
+    25,
+    26,
+    35,
+    42,
+    43,
+    44,
+    45,
+    49,
+    50
+  ],
+  "targets": [
+    {
+      "z": 0,
+      "age_Gyr": 26.7,
+      "tolerance_Gyr": 0.05
+    },
+    {
+      "z": 10,
+      "age_Gyr": 5.8,
+      "tolerance_Gyr": 0.05
+    },
+    {
+      "z": 20,
+      "age_Gyr": 3.5,
+      "tolerance_Gyr": 0.05
+    }
+  ],
+  "tolerance_policy": "Half the 0.1 Gyr reporting unit; present age uses abstract precision, not Table 1 extra digits. Do not widen after execution.",
+  "numerics": {
+    "bisection_iterations": 80,
+    "simpson_panels": 2048,
+    "refinement_panels": 4096,
+    "age_convergence_Gyr": 1e-06
+  },
+  "prior": "Published age targets should be recoverable without refitting. QLF mapping is undetermined.",
+  "exposure": "Targets and fitted parameters known before specification; retrospective, not blind preregistration.",
+  "failure_policy": "Any target failure blocks benchmark acceptance. Retain discrepancy; do not refit or relabel as a QLF exclusion."
+}
