@@ -1180,6 +1180,55 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ObservationalEquivalence.bareEquiv_iff_projective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.closesWith_completion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.foldPair_append": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.foldPair_ne_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.obsEquiv_iff_pairEquiv": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.obsTrigger_exists": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.obs_conservative_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.pairEquiv_of_completion_test": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.phase_is_needed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.separating_test_is_zfa": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Omega_Lambda_0_gauge_eq": [
     "Classical.choice",
     "Quot.sound",
