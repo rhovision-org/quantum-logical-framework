@@ -23,7 +23,7 @@ Traditional quantum software architectures treat hardware like a legacy mechanic
 
 ## 1. Introduction to the Quantum Logical Framework (QLF)
 
-The Quantum Logical Framework (QLF) is a machine-verified, information-theoretic foundation that refactors physics into the strict combinatorics of finite, terminating logical computations. The full formal core is zero `sorry`-block Lean 4 across 316 modules. See [`Philosophy.md`](Philosophy.md) for the ontological grounding and [`TheBigProblem.md`](TheBigProblem.md) for how QLF addresses measurement, entanglement, and spacetime.
+The Quantum Logical Framework (QLF) is a machine-verified, information-theoretic foundation that refactors physics into the strict combinatorics of finite, terminating logical computations. The full formal core is zero `sorry`-block Lean 4 across hundreds of modules (the full count is in [`lean/README.md`](lean/README.md)). See [`Philosophy.md`](Philosophy.md) for the ontological grounding and [`TheBigProblem.md`](TheBigProblem.md) for how QLF addresses measurement, entanglement, and spacetime.
 
 ### Core Tenets
 
