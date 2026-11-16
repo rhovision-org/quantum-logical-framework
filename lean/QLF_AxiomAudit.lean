@@ -39,6 +39,9 @@
 -/
 
 import QLF_ClockRedshift
+import QLF_ClockDomains
+import QLF_ClockPairing
+import QLF_ClockIntervention
 import QLF_MrEUpdate
 import QLF_Axioms
 import QLF_Universality
@@ -725,6 +728,71 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClockRedshift.positive_factorization_not_unique
 #print axioms QLF.ClockRedshift.free_clock_scale_hits_any_age
 #print axioms QLF.ClockRedshift.lapse_rate_return
+
+-- Finite accessible records only; no physical clock or causal bridge.
+#print axioms QLF.ClockDomains.canonical_admissible
+#print axioms QLF.ClockDomains.extendedLeft_admissible
+#print axioms QLF.ClockDomains.extendedRight_admissible
+#print axioms QLF.ClockDomains.alternative_completions
+#print axioms QLF.ClockDomains.counterparts_distinct
+#print axioms QLF.ClockDomains.records_equal
+#print axioms QLF.ClockDomains.records_distinct
+#print axioms QLF.ClockDomains.accessible_nonconstant
+#print axioms QLF.ClockDomains.collision_blocks_reconstruction
+#print axioms QLF.ClockDomains.no_exact_reconstruction
+#print axioms QLF.ClockDomains.prescribed_counterpart_reconstructible
+
+-- Paired local clocks and the candidate map J: finite algebra and counts only;
+-- no physical time reversal, antimatter identification or age map.
+#print axioms QLF.ClockPairing.J_involutive
+#print axioms QLF.ClockPairing.J_admissible
+#print axioms QLF.ClockPairing.J_lengths
+#print axioms QLF.ClockPairing.J_fixed_iff
+#print axioms QLF.ClockPairing.strict_admissible
+#print axioms QLF.ClockPairing.canonical_fixed
+#print axioms QLF.ClockPairing.J_not_fixed_point_free
+#print axioms QLF.ClockPairing.J_fixed_lengths
+#print axioms QLF.ClockPairing.fixedOfLength_length
+#print axioms QLF.ClockPairing.fixedOfLength_nodup
+#print axioms QLF.ClockPairing.census_one_one
+#print axioms QLF.ClockPairing.census_two_two
+#print axioms QLF.ClockPairing.extendedLeft_not_strict
+#print axioms QLF.ClockPairing.extendedRight_not_strict
+#print axioms QLF.ClockPairing.strict_unique
+#print axioms QLF.ClockPairing.strict_no_collision
+#print axioms QLF.ClockPairing.fiber_up_one
+#print axioms QLF.ClockPairing.fiber_up_three
+#print axioms QLF.ClockPairing.charge3W_reverse
+#print axioms QLF.ClockPairing.charge3W_dagger
+#print axioms QLF.ClockPairing.charge3W_balanced
+#print axioms QLF.ClockPairing.admissible_label_opposite
+#print axioms QLF.ClockPairing.J_label
+#print axioms QLF.ClockPairing.reversal_label
+#print axioms QLF.ClockPairing.dagger_tick
+#print axioms QLF.ClockPairing.J_duration
+#print axioms QLF.ClockPairing.J_equal_durations
+#print axioms QLF.ClockPairing.reversal_duration
+#print axioms QLF.ClockPairing.swap_duration
+
+-- Interventions on the counterpart and the age-map interface: the record
+-- signals through length; the bare age interface excludes nothing.
+#print axioms QLF.ClockIntervention.perm_admissible
+#print axioms QLF.ClockIntervention.perm_record
+#print axioms QLF.ClockIntervention.length_preserving_record
+#print axioms QLF.ClockIntervention.fiber_up_three_classes
+#print axioms QLF.ClockIntervention.insert_pair_admissible
+#print axioms QLF.ClockIntervention.insert_pair_record
+#print axioms QLF.ClockIntervention.record_signals
+#print axioms QLF.ClockIntervention.channel_unbounded
+#print axioms QLF.ClockIntervention.balanced_length_even
+#print axioms QLF.ClockIntervention.admissible_parity
+#print axioms QLF.ClockIntervention.parity_record_no_signal
+#print axioms QLF.ClockIntervention.ageMap_nonempty
+#print axioms QLF.ClockIntervention.ageMap_hits_any
+#print axioms QLF.ClockIntervention.half_total_iff
+#print axioms QLF.ClockIntervention.strict_half_total
+#print axioms QLF.ClockIntervention.half_total_not_forced
+#print axioms QLF.ClockIntervention.equal_durations_not_fixed
 
 -- MrE update for one binary observation (#221): expected gain ≤ log 2, Bayes = unique MrE.
 #print axioms QLF.MrEUpdate.eig_le_log_two
