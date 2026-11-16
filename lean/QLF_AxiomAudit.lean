@@ -41,6 +41,7 @@
 import QLF_ClockRedshift
 import QLF_ClockDomains
 import QLF_ClockPairing
+import QLF_ClockIntervention
 import QLF_Axioms
 import QLF_Universality
 import QLF_TwistAlphabet
@@ -738,3 +739,23 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClockPairing.J_equal_durations
 #print axioms QLF.ClockPairing.reversal_duration
 #print axioms QLF.ClockPairing.swap_duration
+
+-- Interventions on the counterpart and the age-map interface: the record
+-- signals through length; the bare age interface excludes nothing.
+#print axioms QLF.ClockIntervention.perm_admissible
+#print axioms QLF.ClockIntervention.perm_record
+#print axioms QLF.ClockIntervention.length_preserving_record
+#print axioms QLF.ClockIntervention.fiber_up_three_classes
+#print axioms QLF.ClockIntervention.insert_pair_admissible
+#print axioms QLF.ClockIntervention.insert_pair_record
+#print axioms QLF.ClockIntervention.record_signals
+#print axioms QLF.ClockIntervention.channel_unbounded
+#print axioms QLF.ClockIntervention.balanced_length_even
+#print axioms QLF.ClockIntervention.admissible_parity
+#print axioms QLF.ClockIntervention.parity_record_no_signal
+#print axioms QLF.ClockIntervention.ageMap_nonempty
+#print axioms QLF.ClockIntervention.ageMap_hits_any
+#print axioms QLF.ClockIntervention.half_total_iff
+#print axioms QLF.ClockIntervention.strict_half_total
+#print axioms QLF.ClockIntervention.half_total_not_forced
+#print axioms QLF.ClockIntervention.equal_durations_not_fixed

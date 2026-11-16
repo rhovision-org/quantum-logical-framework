@@ -332,5 +332,6 @@ lean_lib QLF where
     `QLF_MagneticOrientation,
     `QLF_ClockRedshift,
     `QLF_ClockDomains,
-    `QLF_ClockPairing
+    `QLF_ClockPairing,
+    `QLF_ClockIntervention
   ]

@@ -11,3 +11,9 @@ The module verifies admissibility of three concrete histories; nonunique count-b
 Local checks passed: document-network validation, declared-axiom audit, proof-placeholder scan, ten proof-trust regression tests, whitespace validation, and both existing Gupta checksum manifests. Those manifests and their covered artifacts are unchanged.
 
 These results establish no physical time-reversal map, matter/antimatter identification, no-signalling law, Hawking-only exchange, two-domain count theorem or Gupta half-age correspondence. Imposing a prescribed counterpart can remove the collision; admissible classes and observation interfaces cannot be changed while silently retaining the obstruction. The age-interpretation gate remains open.
+
+## Second and third stages
+
+[QLF_ClockPairing](../../lean/QLF_ClockPairing.lean) (29 registered statements) was verified at `4b33ce0` by [GitHub Actions run 43755290234](https://github.com/rhovision-org/quantum-logical-framework/actions/runs/43755290234) on 15 November 2026: full Lake build and exact-footprint gate passed, no project axiom. @aixaria0 reviewed and approved that revision on [PR #246](https://github.com/rhovision-org/quantum-logical-framework/pull/246) for the finite algebraic stage, noting that the counts are claims about the stated toy alphabet and counting rule, not evidence for a physical antimatter sector or a Gupta age map.
+
+[QLF_ClockIntervention](../../lean/QLF_ClockIntervention.lean) (17 registered statements) was added afterwards and is not covered by that approval. Its footprints are Lean's own or empty. Both modules were also built in a cloud session container on the pinned toolchain before pushing; CI on the pull request is the verification of record.

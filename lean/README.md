@@ -468,6 +468,10 @@ The non-constructive parts of the Ruliad — non-terminating computations, Busy 
 
 [`QLF_ClockPairing.lean`](QLF_ClockPairing.lean) is the second finite stage of [Time_Reversed_Clock_Domains.md](../Time_Reversed_Clock_Domains.md). For `J (p, q) = (dagger q, dagger p)`: `J_involutive`, `J_admissible`; the fixed points are exactly `q = dagger p` (`J_fixed_iff`) and number `8ⁿ` at word length `n` (`fixedOfLength_length`, `fixedOfLength_nodup`), so `J` does not double the census (`census_two_two`: 64 fixed of 168). The record `([up], 3)` has 21 admissible counterparts (`fiber_up_three`). The dagger negates the charge label and reversal does not (`charge3W_dagger`, `charge3W_reverse`); opposite label on the two sides holds for every admissible history (`admissible_label_opposite`). `J` preserves total duration (`J_duration`). No axiom; no physical time reversal, antimatter identification or age map is asserted.
 
+## Interventions and the age-map interface
+
+[`QLF_ClockIntervention.lean`](QLF_ClockIntervention.lean) is the third finite stage of [Time_Reversed_Clock_Domains.md](../Time_Reversed_Clock_Domains.md). Reordering the counterpart is always admissible and never changes the record (`perm_admissible`, `perm_record`); the 21 counterparts of `([up], 3)` form 4 reorder classes (`fiber_up_three_classes`). Inserting a conjugate pair is admissible and changes the record (`insert_pair_admissible`, `insert_pair_record`), and the channel is unbounded (`channel_unbounded`), so the record is not a no-signalling interface (`record_signals`). The length parity is fixed by the local word (`admissible_parity`, `parity_record_no_signal`). The bare age-map interface is satisfied by a constant and fixes no value (`ageMap_nonempty`, `ageMap_hits_any`); with word length as tick count, half-total is exactly equal durations (`half_total_iff`), which closure does not force (`half_total_not_forced`). No axiom.
+
 ## How to Build
 
 ```bash

@@ -109,6 +109,34 @@ Implemented in [QLF_ClockPairing](lean/QLF_ClockPairing.lean), no axiom added. E
 
 **What the stage does and does not support.** By the criterion set above, only J4 and S2 are counts. J4 counts against the simplest reading of the hypothesis: `J` does not double the event census. L2 removes one apparent support: opposite label on the two sides is forced by closure. J3 confirms that the age gate is untouched. Nothing here is evidence that our world has a time-reversed counterpart, and nothing excludes it; the stage narrows what a later physical map would have to supply.
 
+## Third stage: interventions and the age-map interface
+
+Implemented in [QLF_ClockIntervention](lean/QLF_ClockIntervention.lean), no axiom added. It tests two rows of the obligations table on the finite model: causal noninterference and the age bridge. Both come out as limits on the toy model, which is what the table's "what would defeat or limit it" column asked for.
+
+**The record is not a no-signalling interface.** An intervention replaces the counterpart `q` by another admissible `q'`.
+
+| Intervention | Theorems | Effect on the record `(p, q.length)` |
+|---|---|---|
+| Reorder the counterpart | `perm_admissible`, `perm_record` | Always admissible, never visible. |
+| Any length-preserving change | `length_preserving_record` | Never visible. True by the definition of the record, so structural. |
+| Insert a conjugate pair | `insert_pair_admissible`, `insert_pair_record` | Always admissible, always visible. |
+
+So `record_signals`: there are admissible interventions that change what our side reads. The channel is unbounded (`channel_unbounded`): for every local word and every `k` there is an admissible counterpart of length `p.length + 2k`, so the counterpart could transmit any natural number through its length. Stage one proved the counterpart cannot be *reconstructed* from the record. That is a weaker property than the counterpart being unable to *influence* the record, and this record has the first without the second. A horizon reading needs the second.
+
+**What cannot signal is only what the local word already fixes.** The parity of the counterpart's length equals the parity of ours (`admissible_parity`), so a record exposing only that parity is invariant under every admissible intervention (`parity_record_no_signal`). It is invariant because it carries no information about the counterpart. This is the table's warning made exact for this model: among records built from the counterpart's length, the one that hides everything is empty and the one that says anything signals.
+
+**The hidden part, counted.** The 21 counterparts of `([up], 3)` form exactly 4 reorder classes (`fiber_up_three_classes`): which twist pair accompanies the `down`, with 3, 6, 6 and 6 orderings. The record hides both the class and the order.
+
+**The age-map interface, measured (R6a).** The target frozen above asked for a positive tick count on admissible histories. Bundled as `AgeMap` and tested:
+
+- `ageMap_nonempty`: a constant satisfies it. `ageMap_hits_any`: any positive number is the age of any history under some instance. So the bare interface excludes nothing and fixes no value; a later stage must add constraints before it can be wrong. This agrees with `free_clock_scale_hits_any_age` in [QLF_ClockRedshift](lean/QLF_ClockRedshift.lean).
+- With the one tick count the model has, word length, "our age is half the total" is exactly equality of the two durations (`half_total_iff`). It holds on the strict class (`strict_half_total`).
+- Closure does not force it (`half_total_not_forced`): `([up], [down, left, right])` is admissible with durations 1 and 3. And equal durations do not make a history a fixed point of `J` (`equal_durations_not_fixed`).
+
+So the two-way age-counting hypothesis needs equal durations as a separate premise. Count balance does not supply it, and neither does `J`, which only exchanges the two durations. What would supply it is a pairing rule that ties each of our events to one counterpart event; on the strict class that rule is the dagger, and there the counterpart is not distinct. That tension is now the sharpest statement of what a physical map must resolve.
+
+**Status after three stages.** Finite algebra only; physical correspondence B-OPEN. Open rows of the table: a boundary record that neither signals nor is empty (it cannot be a function of the counterpart's length alone), boundary exchange, and an age map with constraints that some instance could fail.
+
 ## Independent review record
 
 [Grok's review and disposition](verification/time-reversed-clock-domains/grok_review.md), relayed by Jim on 14 November 2026, finds the issue appropriately scoped and requests the explicit age gate, alternative completions and a concrete non-identifiability target. Those requirements are specified above. The first finite record implementation is kernel-verified; the physical correspondence remains **B-OPEN**.

@@ -95,6 +95,62 @@
   "QLF.ClockDomains.prescribed_counterpart_reconstructible": [],
   "QLF.ClockDomains.records_distinct": [],
   "QLF.ClockDomains.records_equal": [],
+  "QLF.ClockIntervention.admissible_parity": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.ageMap_hits_any": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.ageMap_nonempty": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.balanced_length_even": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.channel_unbounded": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.equal_durations_not_fixed": [],
+  "QLF.ClockIntervention.fiber_up_three_classes": [],
+  "QLF.ClockIntervention.half_total_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.half_total_not_forced": [],
+  "QLF.ClockIntervention.insert_pair_admissible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.insert_pair_record": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.length_preserving_record": [],
+  "QLF.ClockIntervention.parity_record_no_signal": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.perm_admissible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockIntervention.perm_record": [
+    "propext"
+  ],
+  "QLF.ClockIntervention.record_signals": [],
+  "QLF.ClockIntervention.strict_half_total": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClockPairing.J_admissible": [
     "Classical.choice",
     "Quot.sound",
