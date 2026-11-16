@@ -186,7 +186,7 @@ QLF *synthesises* (one operation, three names, persistent output, falsehood-filt
 
 [`AI.md`](AI.md)'s "Neuro-Symbolic Solution" already gestures at this distinction (LLM as sensory layer, QLF as logic coprocessor). This section makes the structural claim sharper: it is not that LLMs are *worse at intelligence* — it is that they are *structurally not performing the operation we call intelligence*. They perform a different operation (statistical retrieval) that happens to mimic intelligence in well-covered domains.
 
-### §6a A QLF-native runtime: closure tokens vs float logits (issue [#65](https://github.com/jimscarver/quantum-logical-framework/issues/65))
+### §6a A QLF-native runtime: closure tokens vs float logits (issue [#65](https://github.com/rhovision-org/quantum-logical-framework/issues/65))
 
 A sharper, *computational* question (Allen): not just "are LLMs the wrong model of mind," but **could
 an AI run and learn better if its runtime basis were integer closure tokens instead of real-valued

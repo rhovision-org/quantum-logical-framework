@@ -1,7 +1,7 @@
 # SEX — higher-order closure through complementary specialists
 
-*From the deuteron to the group. Issues [#53](https://github.com/jimscarver/quantum-logical-framework/issues/53)
-and [#57](https://github.com/jimscarver/quantum-logical-framework/issues/57).*
+*From the deuteron to the group. Issues [#53](https://github.com/rhovision-org/quantum-logical-framework/issues/53)
+and [#57](https://github.com/rhovision-org/quantum-logical-framework/issues/57).*
 
 Sex, in QLF, is the formation of a **higher-order closure from two *complementary* specialists** —
 parts that are *not* copies of each other. The thesis, all the way down: **distinguishable
@@ -10,7 +10,7 @@ has capabilities (stability, fertility, intelligence) neither part has alone. Th
 instance is nuclear — the proton and the neutron — and it is *modelled*, not just asserted:
 [`proton_neutron_demo.py`](proton_neutron_demo.py).
 
-> **Terminology (for the formal reader; issue [#58](https://github.com/jimscarver/quantum-logical-framework/issues/58)).**
+> **Terminology (for the formal reader; issue [#58](https://github.com/rhovision-org/quantum-logical-framework/issues/58)).**
 > "Sex" here names one precise relation — **complementary non-identical closure**: two
 > *distinguishable* closures binding into a higher closure that *identical copies cannot form*
 > (Pauli-blocked, `pauli_exclusion`). Neutral synonyms, if the word distracts: **complementary
@@ -78,7 +78,7 @@ The deuteron is not just "two nucleons." It does two things **neither partner ca
 **(a) It stabilizes the unstable — a higher-order immune response.** A *free* neutron β-decays in
 ~880 s: the vacuum's ZFA pruning kills it. **Bound** in the deuteron, the neutron is **stable** —
 the pairing *protects it from the decay that kills it alone*. This answers Allen's question
-([#57](https://github.com/jimscarver/quantum-logical-framework/issues/57)): there **is** an immune
+([#57](https://github.com/rhovision-org/quantum-logical-framework/issues/57)): there **is** an immune
 response in fundamental physics beyond blanket error correction — the higher closure error-corrects
 its members, conferring a stability the free parts lack. And the "evolution from information-horizon
 issues" is the same selection: only closures that survive the vacuum's pruning persist

@@ -212,7 +212,7 @@ bridges, already present in the repo, make this precise — and one of them is n
   `∇`; the entropy gradient `dS/dx` across the holographic boundary gives the force law
   ([`Gravity_From_Delay.md`](Gravity_From_Delay.md)).
 - **Lie algebras = discrete infinitesimal generators → differential operators.** The discrete twist
-  commutators of Rung 6 (`su2_comm`, [`QLF_StrongAlgebra`](lean/QLF_StrongAlgebra.lean)) *are* the Lie
+  commutators of Rung 6 (`su2_comm_xy/yz/zx`, [`QLF_Spin`](lean/QLF_Spin.lean); `trace_commutator_zero`, [`QLF_StrongAlgebra`](lean/QLF_StrongAlgebra.lean)) *are* the Lie
   algebras; in standard mathematics a Lie algebra is the tangent/infinitesimal structure of a Lie group,
   represented by vector fields = differential operators — so the discrete algebra already carries the
   seed of the continuum differential structure. **The geometric instance: curvature is the Lie bracket**

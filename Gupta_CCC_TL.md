@@ -36,6 +36,8 @@ The values pass the specification frozen before computation; the present-age dif
 
 ### Clock and observable audit still required
 
+The follow-up [clock-convention contract](Gupta_ClockConventions.md) specifies the candidate metric, endpoint standards and finite-record/error requirements for review. Its [source-precision audit](verification/gupta-clock-conventions/README.md) finds that nearest-rounding of the displayed fit parameters cannot recover Table 1's hundredth. A candidate cause has since been reported by @aixaria0: a rounded megaparsec, 1 Mpc = 3.09e19 km, gives 26.7046 Gyr, which rounds to 26.70 (recorded in the audit README as a retrospective hypothesis). The author-used constants remain unconfirmed; the prerequisite gate stays open.
+
 The 2023 metric (equation 2) includes a lapse f and a spatial scale af. If read with fixed reference c and standard comoving metric proper time, it gives `d tau = f dt` and expansion of the spatial metric `d log(af)/d tau = (H+alpha)/f`. The reproduced equation-50 age integrates the paper's t variable. Identifying that variable with atomic-clock age or QLF proper age requires an operational derivation; a coordinate transformation by itself is not a new age prediction. This is a specific stage-2 obligation, not permission to relabel the 26.7 Gyr target.
 
 When c or h varies in the stated convention, wavelength ratios, frequency ratios and photon-energy ratios are not interchangeable without tracking the emission and reception standards. Keep the source's wavelength-redshift definition and derive its frequency/clock reading. Likewise, test the source's luminosity/angular-distance prescriptions against operational distance duality rather than assuming a standard relation.
@@ -105,15 +107,15 @@ python3 scripts/validate_claim_records.py
 python3 scripts/doc_network_check.py
 ```
 
-The present-age residual against Table 1 is about −0.0328 Gyr. Its exact source—rounded parameters, a published intermediate, or an implementation difference—remains open. The current quadrature agreement does not identify that source; do not widen the frozen tolerance.
+The present-age residual against Table 1 is about −0.0328 Gyr. Its exact source remains open. The [source-precision audit](verification/gupta-clock-conventions/README.md) excludes nearest-rounding of the two displayed parameters, and records one candidate, a rounded megaparsec constant, as an unconfirmed retrospective hypothesis. The current quadrature agreement does not identify that source; do not widen the frozen tolerance.
 
-The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. The reference calculation is independent of Lean. The first clock-ratio algebra is now formalized in §6; physical-map and finite-record return obligations remain separate. Parent issue #234 tracks the five stages; PR #233 contains the initial work. Later PRs and physical-map/empirical review remain to be scheduled.
+The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, but does **not** reproduce Table 1's 26.70 at its extra decimal place. Retain this precision discrepancy; do not change the fitted inputs. The benchmark uses the frozen abstract-precision criterion. The reference calculation is independent of Lean. The first clock-ratio algebra is now formalized in §6; physical-map and finite-record return obligations remain separate. Parent issue #234 tracks the five stages; PR #233 (merged 15 November 2026) contains the initial work; PR #235 adds the source-precision audit and the proposed clock conventions. Physical-map and empirical review remain to be scheduled.
 
 ## 5. Remaining work and review gates
 
 | Missing item | Completion evidence |
 |---|---|
-| Independent review scope | Grok reports a successful separate execution of the existing implementation and artifact checks. A second implementation/source-equation audit and explanation of the present-age precision discrepancy remain open. |
+| Independent review scope | Grok reports a successful separate execution of the existing implementation and artifact checks. A second, quadrature-free closed-form calculation now agrees with the baseline (the [audit](verification/gupta-clock-conventions/README.md), and independently @aixaria0 in [#234](https://github.com/rhovision-org/quantum-logical-framework/issues/234#issuecomment-6880690413)). A confirmed explanation of the present-age precision discrepancy remains open. |
 | Parameter uncertainty | Published covariance or an explicitly conservative alternative, including parameter rounding and model-regime sensitivity; numerical convergence alone is insufficient. |
 | Model controls | Separately pinned CCC-only and LCDM controls; a no-TL limit where mathematically applicable; no reuse of one model's fitted H0 in another. |
 | Wider redshift coverage | Frozen grid for f, H, t and distances, plus convergence and approximation-domain checks; current reported targets are z=0,10,20 only. |
@@ -122,7 +124,7 @@ The present-age result is 26.6672 Gyr: it recovers 26.7 at abstract precision, b
 | Independent count N | Substrate selection and a justified accumulated-tick conversion, without fitting H0 or either age target. |
 | Empirical protocols | Frozen SPARC sample/splits/scores; BBN network inputs; chronometer recalibration; pulse stretching; BAO ruler and CMB-spectrum calculations with covariance. |
 | Statistical decisions | Numerical equivalence margins, uncertainty model, rejection thresholds and multiple-test handling chosen before each new comparison. |
-| Review coordination | Parent issue #234 and initial PR #233 exist; Grok protocol/numerical reports are recorded; designate later physical-map/empirical reviewers and scope the later PRs before their work. |
+| Review coordination | Parent issue #234 exists and initial PR #233 is merged; PR #235 carries the audit and proposed conventions; Grok protocol/numerical reports are recorded; designate later physical-map/empirical reviewers and scope the later PRs before their work. |
 
 The completed work is the external reference calculation and the improved research protocol. The broader program remains open for the missing evidence above.
 
@@ -145,3 +147,7 @@ The last two are explicit boundaries: an age match with a free scale is not inde
 The Lean workflow restores only compatible QLF build outputs/traces after recreating pinned dependency metadata. Lake still checks the target graph and rebuilds affected modules; the full exact-axiom audit always executes. New commits cancel superseded runs for the same PR. On an empty cache, an already successful same-branch artifact may seed it only after an exact diff of Lean sources, toolchain, manifest and build configuration. Otherwise the workflow builds cold. Only successful builds that also pass the footprint gate are saved. This reduces repeated recompilation without treating a cache as a new proof or changing the promotion rules.
 
 **GitHub review:** [aixaria0's review](https://github.com/rhovision-org/quantum-logical-framework/pull/233#pullrequestreview-5904556943) reports a separate adaptive-quadrature comparison matching the ages, f, expansion H and distances to relative differences below approximately 5e−15. The import-order blocker is fixed and the subsequent full build/footprint audit passed. Follow-ups add a positive frozen-spec regression and reconcile the formal-scope summaries. The review's requested-changes state awaits the reviewer's reconsideration; no approval is inferred.
+
+## Separate clock-perspective hypothesis
+
+[Issue #236](https://github.com/rhovision-org/quantum-logical-framework/issues/236) and [Time_Reversed_Clock_Domains.md](Time_Reversed_Clock_Domains.md) specify the proposed reversed antimatter counterpart, paired events and observational boundary. Proving this correspondence would support a clock-perspective explanation of the Gupta age relation; it is separate from external numerical reproduction. The suggestion that Gupta counts both time directions is an unverified source-audit hypothesis, not an established explanation.

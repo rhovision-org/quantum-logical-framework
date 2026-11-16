@@ -1,13 +1,13 @@
 # Pointer-Swap Fuzz as the Pre-Geometric Mechanism Behind Operational 3D
 
-**Resolves:** [#62](https://github.com/jimscarver/quantum-logical-framework/issues/62)
-**Status:** Mechanism specification, more speculative than the closure-token spec ([#65](https://github.com/jimscarver/quantum-logical-framework/issues/65), [`Closure_Token_Basis.md`](Closure_Token_Basis.md)). Each stage below is tagged **[Definition]**, **[Analogy]**, or **[Open]**. Only Stage 4 currently yields a computation that could falsify the picture; that computation is the proposed resolution artifact — and a first cut of it is run in [`pointer_swap_fuzz.py`](pointer_swap_fuzz.py) (see §Stage 4).
+**Resolves:** [#62](https://github.com/rhovision-org/quantum-logical-framework/issues/62)
+**Status:** Mechanism specification, more speculative than the closure-token spec ([#65](https://github.com/rhovision-org/quantum-logical-framework/issues/65), [`Closure_Token_Basis.md`](Closure_Token_Basis.md)). Each stage below is tagged **[Definition]**, **[Analogy]**, or **[Open]**. Only Stage 4 currently yields a computation that could falsify the picture; that computation is the proposed resolution artifact — and a first cut of it is run in [`pointer_swap_fuzz.py`](pointer_swap_fuzz.py) (see §Stage 4).
 
 The [Quantum Logical Framework](README.md) settled the *counting* layer of dimension elsewhere; this doc isolates the *mechanism* layer.
 
 ## Scope boundary (what #42 settled, what this covers)
 
-[#42](https://github.com/jimscarver/quantum-logical-framework/issues/42) settled the *counting* layer: 8-twist alphabet → 6+2 split → 3 axis-pairs → apparent 3D. That is combinatorics ([`QLF_Generations`](lean/QLF_Generations.lean), [`SpaceTime.md`](SpaceTime.md) §3a) and stays closed.
+[#42](https://github.com/rhovision-org/quantum-logical-framework/issues/42) settled the *counting* layer: 8-twist alphabet → 6+2 split → 3 axis-pairs → apparent 3D. That is combinatorics ([`QLF_Generations`](lean/QLF_Generations.lean), [`SpaceTime.md`](SpaceTime.md) §3a) and stays closed.
 
 This document covers the *mechanism* layer #62 isolates: how n-dimensional pointer-swap dynamics becomes sparse operational 3D *for an embedded observer*. The pipeline, in Allen's framing:
 
@@ -27,7 +27,7 @@ Allen's intuition: information cannot disconnect; incessant swapping is the "gre
 
 **Definition (fuzz).** No admissible substrate state is static: connectivity (the no-disconnection constraint) forces every state to lie on a nontrivial swap orbit. The *fuzz* is the orbit itself — the equivalence class of states under rapid swapping. **Observables are swap-invariants only.** Anything that changes under a swap is below the resolution of any embedded observer, by construction.
 
-This is the load-bearing definitional move of the whole document: "fuzz" is not noise added to a geometry; it is the statement that pre-geometric state is only defined up to swap orbit, and geometry can only be built from orbit invariants. It is the same pre-spatial discipline as the spin guardrail ([`Spin_QLF.md`](Spin_QLF.md) §9, [#107](https://github.com/jimscarver/quantum-logical-framework/issues/107)): the primitive is a process over closures, not a thing moving in existing space.
+This is the load-bearing definitional move of the whole document: "fuzz" is not noise added to a geometry; it is the statement that pre-geometric state is only defined up to swap orbit, and geometry can only be built from orbit invariants. It is the same pre-spatial discipline as the spin guardrail ([`Spin_QLF.md`](Spin_QLF.md) §9, [#107](https://github.com/rhovision-org/quantum-logical-framework/issues/107)): the primitive is a process over closures, not a thing moving in existing space.
 
 *Status:* internally consistent as a definition. Not yet connected to the Lean substrate — the swap group action on twist signatures is definable in Lean today and would be a legitimate (nontrivial) formalization target.
 
@@ -54,7 +54,7 @@ Structural reading in QLF terms: confinement admits only color-neutral composite
 
 The claim: apparent volume is not filled space; it is delayed relational rendering — relational addresses resolved on demand when interactions require them.
 
-**Correction (per [#112](https://github.com/jimscarver/quantum-logical-framework/issues/112) — the fuzz is not the test object).** The raw pointer fuzz must not be reified into a geometry. Stated sharply:
+**Correction (per [#112](https://github.com/rhovision-org/quantum-logical-framework/issues/112) — the fuzz is not the test object).** The raw pointer fuzz must not be reified into a geometry. Stated sharply:
 
 > **Raw pointer fuzz has no geometry to measure. Operational geometry appears only after matter integrates recurring bit-flip coincidence patterns into stable closure receipts.**
 
