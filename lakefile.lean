@@ -48,6 +48,7 @@ lean_lib QLF where
     `QLF_LocalClock,
     `QLF_GeneratorClockBridge,
     `QLF_FieldClockStability,
+    `QLF_EnergyFrequencyClock,
     `QLF_EinsteinGeometricFactor,
     `QLF_SubstrateLightSpeed,
     `QLF_FineStructureSubstrate,
