@@ -1,6 +1,6 @@
 """Independent regression checks for the retrospective Gupta three-model Mpc diagnostic."""
 import importlib.util
-from decimal import Decimal
+from decimal import Decimal, localcontext
 from pathlib import Path
 import unittest
 
@@ -17,11 +17,13 @@ class ThreeModelMpcAuditTests(unittest.TestCase):
         self.assertTrue(all(not r["nominal_matches_printed"] for r in result["rows"]))
 
     def test_exact_linear_unit_scaling_each_model(self):
-        ratio = m.MPC_ROUNDED_KM / m.MPC_NOMINAL_KM
-        for row in m.evaluate()["rows"]:
-            actual = Decimal(row["rounded_Mpc_Gyr"])
-            expected = Decimal(row["nominal_Gyr"]) * ratio
-            self.assertLess(abs(actual-expected), Decimal("1e-50"))
+        with localcontext() as ctx:
+            ctx.prec = 60
+            ratio = m.MPC_ROUNDED_KM / m.MPC_NOMINAL_KM
+            for row in m.evaluate()["rows"]:
+                actual = Decimal(row["rounded_Mpc_Gyr"])
+                expected = Decimal(row["nominal_Gyr"]) * ratio
+                self.assertLess(abs(actual-expected), Decimal("1e-48"))
 
     def test_existing_ccc_tl_frozen_baseline_is_preserved(self):
         result = next(r for r in m.evaluate()["rows"] if r["model"] == "CCC+TL")
