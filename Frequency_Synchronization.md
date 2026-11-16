@@ -65,7 +65,7 @@ mass=frequency, the primes, the firebreak, universality) into one named model �
 
 §0.2 states that a closure **is** a quantum-logical computation — a Feynman-diagram set. That slogan is
 now a **machine-checked inductive correspondence** ([`QLF_FractalDiagram`](lean/QLF_FractalDiagram.lean),
-CI-green; issue [#138](https://github.com/jimscarver/quantum-logical-framework/issues/138)). The map
+CI-green; issue [#138](https://github.com/rhovision-org/quantum-logical-framework/issues/138)). The map
 carries every ZFA closure to an abstract combinatorial (Feynman) diagram of a definite **order**, built
 entirely inside the substrate (`TopoString` / `achieves_ZFA`) — no continuum, no continuum QFT assumed.
 
@@ -98,7 +98,7 @@ the discrete images of tree-level, a vertex, and a loop insertion:
   coefficient `2/(3π)` derived value-free in [`QLF_VacuumPolarization`](lean/QLF_VacuumPolarization.lean).
   Weighted by the charge census `Σ Nᶜ Q_f² = 8` ([`QLF_ChargeCensus`](lean/QLF_ChargeCensus.lean)) this is
   the SM electromagnetic slope `16/(3π)` (`orderOne_tower_slope`) — the tie into the α-residual tower
-  ([#117](https://github.com/jimscarver/quantum-logical-framework/issues/117), [`Alpha.md`](Alpha.md) §4a).
+  ([#117](https://github.com/rhovision-org/quantum-logical-framework/issues/117), [`Alpha.md`](Alpha.md) §4a).
 
 So "a closure is a set of Feynman diagrams" is no longer only a slogan: the inductive definition plus
 both consistency gates are machine-checked, with the census generating function `𝒵(x) = Σ_{h ZFA}

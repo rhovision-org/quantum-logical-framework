@@ -182,7 +182,7 @@ $ python3 qucalc_search.py "^^<" --solve
 
 `arrangements: 20 = C(6,3)`, the central binomial — the **multiplicity** of that leading closure, its
 residue. Because the cascade is deterministic, independent callers agree without negotiating: the physical
-point is **scheme-free**, and in [quantum-os](https://github.com/jimscarver/quantum-logical-framework) a
+point is **scheme-free**, and in [quantum-os](https://github.com/rhovision-org/quantum-logical-framework) a
 room running `/solve` on its joint position reaches a consensus *the substrate dictated*
 ([`QucalcSearch.md`](QucalcSearch.md)). This is the substrate analogue of the pole of the dressed
 propagator being the one frame-independent thing in an otherwise scheme-dependent calculation.

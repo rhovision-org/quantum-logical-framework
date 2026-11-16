@@ -256,7 +256,7 @@ The whole ladder is a single loop, both directions:
   (`O(1)` rational in radians, forced, of arc-over-radius shape, and a **limit** rather than a finite
   closure, since by Lindemann–Weierstrass no non-zero rational is the argument of an algebraic number,
   [`Weak_Force.md`](Weak_Force.md) §5c⁗ item 7); full
-  history in [#140](https://github.com/jimscarver/quantum-logical-framework/issues/140).
+  history in [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140).
 - **The pair-production rate — reduced to one measurement (#141, closed).** The *mechanism* is modeled
   (deterministic census creation + thermal freeze-out, [`pair_production_demo.py`](pair_production_demo.py)),
   the **onsets are calibrated** ([`pair_freezeout_calibration.py`](pair_freezeout_calibration.py)) to the

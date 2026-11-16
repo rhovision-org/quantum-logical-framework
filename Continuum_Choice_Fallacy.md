@@ -79,7 +79,7 @@ needs ≤ 15 digits for the most demanding measured physics ([pi_precision_demo.
 finite-information substrate — never a completed physical totality.
 
 **The boundary of the Shannon argument — transmitted novelty, not activated structure** (issue
-[#79](https://github.com/jimscarver/quantum-logical-framework/issues/79)). Shannon's finiteness bounds
+[#79](https://github.com/rhovision-org/quantum-logical-framework/issues/79)). Shannon's finiteness bounds
 the **novel distinction transmitted through a channel** — it does *not* bound the **pre-existing
 structure a finite codeword selects, activates, or renders operational**. A short codeword (`FGD 135 →
 Wing Attack Plan R`) carries one selection but triggers an enormous pre-shared plan; the plan was

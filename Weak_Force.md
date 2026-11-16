@@ -343,7 +343,7 @@ So the `L = 8` uniqueness is plausibly a small-numbers accident, and **this ladd
 
 ### 5c‴. The `(R, axis) → mass-ratio` map — a shape theorem
 
-The map [#140](https://github.com/jimscarver/quantum-logical-framework/issues/140) originally asked for does **not exist in the form requested.** Every census integer at the three rungs is 5-smooth (`L = 4,6,8`; `orbit = ways = 24,48,96`; `axes = 2,2,3`; `conj-pairs = 2,5,6`; `parent-edges = 192,96`), hence so is every product and ratio of them — but the mass ratios are not: the closest small-exponent `2^a3^b5^c` misses `m_μ/m_e` by `0.286%`, `m_τ/m_e` by `0.610%`, `m_τ/m_μ` by `0.232%`, orders of magnitude outside the `10⁻⁵` at which the three-phase picture holds, and a 64 000-expression brute search over the census pool does no better. A real negative, not a failed fit.
+The map [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140) originally asked for does **not exist in the form requested.** Every census integer at the three rungs is 5-smooth (`L = 4,6,8`; `orbit = ways = 24,48,96`; `axes = 2,2,3`; `conj-pairs = 2,5,6`; `parent-edges = 192,96`), hence so is every product and ratio of them — but the mass ratios are not: the closest small-exponent `2^a3^b5^c` misses `m_μ/m_e` by `0.286%`, `m_τ/m_e` by `0.610%`, `m_τ/m_μ` by `0.232%`, orders of magnitude outside the `10⁻⁵` at which the three-phase picture holds, and a 64 000-expression brute search over the census pool does no better. A real negative, not a failed fit.
 
 **So the map must factor: `census → Δ → masses`.** Analytically the ratios are cosine values at an `O(1)` phase, transcendental in `Δ`, which a census cannot produce directly — only the phase, with the cosine doing the rest; structurally, any correct map must reproduce the derived `Q = 2/3`, automatic for a map onto `(M, Δ)` and accidental for one onto three independent masses. **The ask is thereby reshaped from three masses to one small rational, which is well posed** — that reshaping is the result. Whether a census can then *reach* that rational is answered in §5c⁗: no.
 
@@ -351,7 +351,7 @@ The map [#140](https://github.com/jimscarver/quantum-logical-framework/issues/14
 
 ### 5c⁗. Deriving `Δ = 2/3` — what stands, what is closed, and the specification that remains
 
-`Δ` is the sole remaining ratio freedom (§5c″), so this is where the lepton sector's open work is. Seven rounds of attack are recorded in [#140](https://github.com/jimscarver/quantum-logical-framework/issues/140); this section keeps the **results** and delegates the dead ends to a list. All of it is reproducible with [`lepton_blind_classifier.py`](lepton_blind_classifier.py) (parts H–N).
+`Δ` is the sole remaining ratio freedom (§5c″), so this is where the lepton sector's open work is. Seven rounds of attack are recorded in [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140); this section keeps the **results** and delegates the dead ends to a list. All of it is reproducible with [`lepton_blind_classifier.py`](lepton_blind_classifier.py) (parts H–N).
 
 **1. The hierarchy needs no large number.** `1 + √2·cos θ = 0` at `θ = 3π/4` **exactly** — a massless wall. At `Δ = 2/3` the electron's phase sits `2.2676°` from it, and `√m_e/M = 0.040350` **is** that angular deficit to first order. The heaviest/lightest amplitude ratio is `58.970`; squared, `3477.5` against the measured `m_τ/m_e = 3477.2`. So the `~3500×` lepton hierarchy is **proximity to a wall, quadratically amplified** — not a hierarchy of scales, and not a fine-tuning: the deficit is `15.1%` of the available gap `π/12`, an `O(1)` fraction.
 
@@ -365,7 +365,7 @@ The map [#140](https://github.com/jimscarver/quantum-logical-framework/issues/14
 - **Forced, not selected.** Pricing hypothesis classes by description length, `Δ = 2/3` costs `log₂6 = 2.58` bits and already sits at the experimental floor, where circle-division needs `14` bits and improves at every budget on the way. Hence the criterion that has done most of the work here: **a derivation costing more bits than the constant it derives is a re-encoding, not a derivation.** Any route offering a menu of `N` options costs `log₂N` bits and must beat `3`.
 - **Not a dynamics on the phase circle.** A rotation number is a fraction of a *turn*, and by the first clause `Δ` is `1/(3π)` of one — so no circle map on the generation-phase circle can mode-lock at it (§6, the closing of the last candidate). Whatever produces `Δ` must produce a rational number of **radians**, and the only quantity with that unit is an arc over a radius: `n` unit steps at integer radius `R`. That fixes the *shape* of any future candidate before it is written down.
 
-**5. Closed routes.** Each was attacked and failed; details in [#140](https://github.com/jimscarver/quantum-logical-framework/issues/140).
+**5. Closed routes.** Each was attacked and failed; details in [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140).
 
 | route | why it is closed |
 |---|---|

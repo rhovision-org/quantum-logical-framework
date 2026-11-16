@@ -153,7 +153,7 @@ parameters ([`Standard_Model.md`](Standard_Model.md)):
   at different logical densities; electroweak breaking is the density threshold (`QLF_GaugeUnification`,
   [`Forces_From_Three_Axes.md`](Forces_From_Three_Axes.md) §3a). One generation is the `5̄⊕10 = 15` of
   SU(5) as the antisymmetric content of the substrate's `3⊕2` (`QLF_SU5`).
-- **The fine-structure constant** `α = 1/137` from substrate combinatorics alone ([Alpha.md](Alpha.md); `only_3d` gives
+- **The fine-structure constant** `α = 1/137` from substrate combinatorics alone ([Alpha.md](Alpha.md); `only_3d_substrate_gives_137` gives
   137; 2D→132, 4D→144), to 0.026%.
 - **The mass spectrum from one scale**: `m_p/m_e = 6π⁵` (0.002%), the charged-pion ratio `2/α`, Koide
   `Q = 2/3` fixing `m_τ` to 0.006%; the entire 10¹⁹ Planck/proton hierarchy collapses to the single

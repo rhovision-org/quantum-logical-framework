@@ -2,7 +2,7 @@
 
 **Module:** [`lean/QLF_PhysicalPi.lean`](lean/QLF_PhysicalPi.lean)
 **Companions:** [`lean/QLF_LoopClosure.lean`](lean/QLF_LoopClosure.lean) (the closure machine vs the *chosen* `2π` rendering), [`TheContinuum.md`](TheContinuum.md), [`Continuum_Choice_Fallacy.md`](Continuum_Choice_Fallacy.md) (`π` is a *computable* real; the continuum is the fallacy, not the target).
-**Origin:** Allen's issues [#86](https://github.com/jimscarver/quantum-logical-framework/issues/86) / [#89](https://github.com/jimscarver/quantum-logical-framework/issues/89) and his [`fundamentalPi.md`](https://github.com/lightrock/CharacteristicImpedancePython/blob/main/docs/references/fundamentalPi.md) — *"stop worshiping the notation, find the machine**s**."*
+**Origin:** Allen's issues [#86](https://github.com/rhovision-org/quantum-logical-framework/issues/86) / [#89](https://github.com/rhovision-org/quantum-logical-framework/issues/89) and his [`fundamentalPi.md`](https://github.com/lightrock/CharacteristicImpedancePython/blob/main/docs/references/fundamentalPi.md) — *"stop worshiping the notation, find the machine**s**."*
 
 > **Status (after Allen's #89 review).** Allen's review has two kinds of points, and QLF answers them
 > differently.
@@ -104,7 +104,7 @@ convergence facts QLF *reads*):
   central-binomial ratio as §1 (the Mathlib Wallis product underlying §1's asymptotic).
 - **Inverse-square sum (Basel / ζ).** `π² = 6·∑_{n≥1} 1/n² = 6·ζ(2)` — `π` from a sum over the integers,
   no circle. The honest bridge to §4.
-- **Allen's `Z0_AsBinary`** ([#98](https://github.com/jimscarver/quantum-logical-framework/issues/98), his
+- **Allen's `Z0_AsBinary`** ([#98](https://github.com/rhovision-org/quantum-logical-framework/issues/98), his
   [`fundamentalPi.md`](https://github.com/lightrock/CharacteristicImpedancePython/blob/main/docs/references/fundamentalPi.md)
   — the characteristic-impedance / binary machine) is **another machine of this kind** — a finite,
   computable "go around and test closure" generator, not a circle-sampler. Recorded here so it is not lost
