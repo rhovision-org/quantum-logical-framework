@@ -39,6 +39,7 @@
 -/
 
 import QLF_ClockRedshift
+import QLF_GuptaPrefixClock
 import QLF_Axioms
 import QLF_Universality
 import QLF_TwistAlphabet
@@ -702,3 +703,7 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClockRedshift.positive_factorization_not_unique
 #print axioms QLF.ClockRedshift.free_clock_scale_hits_any_age
 #print axioms QLF.ClockRedshift.lapse_rate_return
+
+#print axioms QLF.GuptaPrefixClock.inverse_period_ratio
+#print axioms QLF.GuptaPrefixClock.prefix_lapse_le_one
+#print axioms QLF.GuptaPrefixClock.gupta_past_prefix_obstruction
