@@ -32,6 +32,9 @@ exactly when `w' ++ c` does. Nothing about tensors enters that definition. Then:
   one-token extension is contained in it (`bisim_le_obsEquiv`, `bisim_le_pairEquiv`). The
   equivalence a bridge must state is therefore the coarsest one compatible with continuation and
   closure outcomes ([`Bridge_Tools.md`](../Bridge_Tools.md) §2).
+* `one_closure_decides`, `first_closure_decides` (§8) — **one way suffices.** Any single context
+  that closes `w` is a complete test of its class, and the first closure (`exists_first_closure`)
+  is one such, so no later closure can tell apart what the first one cannot.
 
 **Scope.** The premises are those of `QLF_TensorFromClosure`: two independent bodies, each
 acting through its own fold, a multiplicative joint fold, and no relative order between the
@@ -402,5 +405,80 @@ theorem pairEquiv_isBisim : IsBisim PairEquiv := by
 theorem obsEquiv_equivalence : Equivalence ObsEquiv :=
   ⟨fun _ _ _ => Iff.rfl, fun h c z => (h c z).symm,
     fun h₁ h₂ c z => (h₁ c z).trans (h₂ c z)⟩
+
+-- ==========================================
+-- §8. One way suffices: any single closure decides, the first one included
+-- ==========================================
+
+/-! `ObsEquiv` quantifies over every context, and §4 showed that one particular context,
+the dagger completion, already decides it. Possibilism asks for less: **one way**. Here any
+single context that closes `w` is a complete test, with no condition on which. In
+particular the **first closure** of `w`, the closing context none of whose proper prefixes
+closes, decides everything every other context could. Later and longer closures add no
+power to tell histories apart. The reason is that a fold is invertible, so a closing
+context loses nothing. -/
+
+/-- **One closure decides.** If `c` closes `w` with phase `z`, then `w'` has the same tensor
+    image as `w` exactly when `c` closes `w'` with the same phase. -/
+theorem one_closure_decides {w w' c : PairHistory} {z : ℂ} (h : ClosesWith w c z) :
+    ClosesWith w' c z ↔ PairEquiv w w' := by
+  unfold ClosesWith at h ⊢
+  rw [foldPair_append] at h ⊢
+  constructor
+  · intro h'
+    have e : foldPair w * foldPair c = foldPair w' * foldPair c := by rw [h, h']
+    have key : completionSign c • foldPair w = completionSign c • foldPair w' := by
+      calc completionSign c • foldPair w
+          = foldPair w * (completionSign c • (1 : M ⊗[ℂ] M)) := by rw [mul_smul_comm, mul_one]
+        _ = (foldPair w * foldPair c) * foldPair (completion c) := by
+            rw [← fold_mul_completion, mul_assoc]
+        _ = (foldPair w' * foldPair c) * foldPair (completion c) := by rw [e]
+        _ = foldPair w' * (completionSign c • (1 : M ⊗[ℂ] M)) := by
+            rw [mul_assoc, fold_mul_completion]
+        _ = completionSign c • foldPair w' := by rw [mul_smul_comm, mul_one]
+    have := congrArg (fun x => (completionSign c)⁻¹ • x) key
+    simp only [smul_smul, inv_mul_cancel₀ (completionSign_ne_zero c), one_smul] at this
+    exact this
+  · intro hp
+    unfold PairEquiv at hp
+    rw [← hp, h]
+
+/-- The same statement for observational equivalence: one closing context replaces the
+    quantifier over all contexts and phases. -/
+theorem obsEquiv_iff_one_closure {w w' c : PairHistory} {z : ℂ} (h : ClosesWith w c z) :
+    ObsEquiv w w' ↔ ClosesWith w' c z :=
+  (obsEquiv_iff_pairEquiv w w').trans (one_closure_decides h).symm
+
+/-- A **first closure** of `w`: a context that closes `w`, no proper prefix of which does. -/
+def IsFirstClosure (w c : PairHistory) (z : ℂ) : Prop :=
+  ClosesWith w c z ∧ ∀ c' : PairHistory, c' <+: c → c' ≠ c → ∀ z' : ℂ, ¬ ClosesWith w c' z'
+
+/-- **Every history has a first closure.** Its completion closes it, so some shortest
+    prefix of the completion does. -/
+theorem exists_first_closure (w : PairHistory) : ∃ c z, IsFirstClosure w c z := by
+  classical
+  let P : ℕ → Prop := fun n => ∃ z : ℂ, ClosesWith w ((completion w).take n) z
+  have hP : ∃ n, P n :=
+    ⟨(completion w).length, completionSign w, by
+      simpa [P, List.take_length] using closesWith_completion w⟩
+  obtain ⟨z, hz⟩ := Nat.find_spec hP
+  refine ⟨(completion w).take (Nat.find hP), z, hz, ?_⟩
+  intro c' hpre hne z' hc'
+  have hlen : c'.length < ((completion w).take (Nat.find hP)).length := by
+    rcases Nat.lt_or_ge c'.length ((completion w).take (Nat.find hP)).length with hl | hl
+    · exact hl
+    · exact absurd (hpre.eq_of_length_le hl) hne
+  have hk : c'.length < Nat.find hP :=
+    lt_of_lt_of_le hlen (by simp [List.length_take])
+  have hc'eq : c' = (completion w).take c'.length := by
+    have h1 : c' <+: completion w := hpre.trans (List.take_prefix _ _)
+    exact List.prefix_iff_eq_take.1 h1
+  exact Nat.find_min hP hk ⟨z', by rw [← hc'eq]; exact hc'⟩
+
+/-- **The first closure is a complete test.** What every context and phase could tell apart,
+    the first closure of `w` alone tells apart. -/
+theorem first_closure_decides {w c : PairHistory} {z : ℂ} (h : IsFirstClosure w c z)
+    (w' : PairHistory) : ObsEquiv w w' ↔ ClosesWith w' c z :=
+  obsEquiv_iff_one_closure h.1
 
 end QLF.ObservationalEquivalence

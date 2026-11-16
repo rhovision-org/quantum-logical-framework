@@ -1325,6 +1325,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ObservationalEquivalence.exists_first_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.first_closure_decides": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ObservationalEquivalence.foldPair_append": [
     "Classical.choice",
     "Quot.sound",
@@ -1351,6 +1361,11 @@
     "propext"
   ],
   "QLF.ObservationalEquivalence.obs_conservative_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.one_closure_decides": [
     "Classical.choice",
     "Quot.sound",
     "propext"
