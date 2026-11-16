@@ -102,8 +102,12 @@ rows in the physical-claims table and do not have physical `E` status:
   representation. The conservative return on closure classes is
   now proved as `tensor_conservative_return` / `tensorTrigger_exists` in
   `QLF_TensorConservativeReturn` (in the 375-anchor baseline). It proves
-  coherence of the quotient return; it does not show that the quotient is the
-  physically selected closure equivalence. `pair_scalar_ambiguity` shows why the
+  coherence of the quotient return. `QLF_ObservationalEquivalence` adds that the
+  quotient is the observational one: two histories are equivalent exactly when no
+  appended context separates them by joint closure and phase
+  (`obsEquiv_iff_pairEquiv`), and the separating context is itself a ZFA closure
+  (`separating_test_is_zfa`). It does not show that joint closure phase is the only
+  physical observable, so the physically selected equivalence is still not established. `pair_scalar_ambiguity` shows why the
   raw factor pair cannot be returned. The tensor bridge remains near-complete,
   not a closed physical bridge.
 

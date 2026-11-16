@@ -42,6 +42,7 @@ import QLF_ClockRedshift
 import QLF_ClockDomains
 import QLF_ClockPairing
 import QLF_ClockIntervention
+import QLF_MrEUpdate
 import QLF_Axioms
 import QLF_Universality
 import QLF_TwistAlphabet
@@ -81,6 +82,7 @@ import QLF_LatticeGauge
 import QLF_RelativityScale
 import QLF_LorentzSymbol
 import QLF_BoostCovariance
+import QLF_InteractingKinematics
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -115,11 +117,13 @@ import QLF_PlaquetteArea
 import QLF_LocalAreaLaw
 import QLF_MetricSinglet
 import QLF_LatticeDivergence
+import QLF_LatticeBianchi
 import QLF_Manifestation
 import QLF_StrangeLoop
 import QLF_StrangeLoopBorn
 import QLF_ConservativeReturn
 import QLF_TensorConservativeReturn
+import QLF_ObservationalEquivalence
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -506,6 +510,12 @@ import QLF_Majorana
 #print axioms QLF.MetricSinglet.product_annihilator_iff_singlet
 #print axioms QLF.LatticeDivergence.latticeCalculus
 #print axioms QLF.LatticeDivergence.lattice_einstein_field_equations
+#print axioms QLF.LatticeDivergence.lattice_contracted_bianchi
+#print axioms QLF.LatticeDivergence.einstein_divergence_free
+#print axioms QLF.LatticeDivergence.conservation_of_field_equations
+#print axioms QLF.LatticeDivergence.conservation_iff_constant_lambda
+#print axioms QLF.LatticeDivergence.linearized_lattice_einstein_field_equations
+#print axioms QLF.LatticeDivergence.linRicci_gauge_invariant
 
 
 /-! ## Paper I v0.3 — MO2 / QuantumLogic G1 anchors
@@ -661,6 +671,16 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TensorConservativeReturn.class_of_step
 #print axioms QLF.TensorConservativeReturn.F_injective
 #print axioms QLF.TensorConservativeReturn.R_forward
+#print axioms QLF.ObservationalEquivalence.obsEquiv_iff_pairEquiv
+#print axioms QLF.ObservationalEquivalence.pairEquiv_of_completion_test
+#print axioms QLF.ObservationalEquivalence.separating_test_is_zfa
+#print axioms QLF.ObservationalEquivalence.closesWith_completion
+#print axioms QLF.ObservationalEquivalence.bareEquiv_iff_projective
+#print axioms QLF.ObservationalEquivalence.phase_is_needed
+#print axioms QLF.ObservationalEquivalence.foldPair_append
+#print axioms QLF.ObservationalEquivalence.foldPair_ne_zero
+#print axioms QLF.ObservationalEquivalence.obsTrigger_exists
+#print axioms QLF.ObservationalEquivalence.obs_conservative_return
 #print axioms QLF.FirstReturn.prime_event_reciprocal_open
 
 #print axioms QLF.RelativityScale.step_census_frame_dependent
@@ -683,6 +703,20 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BoostCovariance.shell_lorentz_invariant
 #print axioms QLF.BoostCovariance.shell_boost_invariant
 #print axioms QLF.BoostCovariance.diracWalk_boost_covariant
+
+-- Interacting kinematics (conditional): exact conservation at long wavelength, elementary umklapp.
+-- Tree-level kinematics only; amplitudes, loops and pair creation as strand number stay open.
+#print axioms QLF.InteractingKinematics.no_umklapp
+#print axioms QLF.InteractingKinematics.umklapp_needs_short_wave
+#print axioms QLF.InteractingKinematics.umklapp_leg_bound
+#print axioms QLF.InteractingKinematics.soft_umklapp
+#print axioms QLF.InteractingKinematics.map_exactConserving
+#print axioms QLF.InteractingKinematics.process_boost_covariant
+#print axioms QLF.InteractingKinematics.walk_leg_onShell
+#print axioms QLF.InteractingKinematics.umklapp_x_not_covariant
+#print axioms QLF.InteractingKinematics.umklapp_t_not_covariant
+#print axioms QLF.InteractingKinematics.twoBody_translation_commute
+#print axioms QLF.InteractingKinematics.twoBody_conserves_momentum
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self
@@ -759,3 +793,14 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClockIntervention.strict_half_total
 #print axioms QLF.ClockIntervention.half_total_not_forced
 #print axioms QLF.ClockIntervention.equal_durations_not_fixed
+
+-- MrE update for one binary observation (#221): expected gain ≤ log 2, Bayes = unique MrE.
+#print axioms QLF.MrEUpdate.eig_le_log_two
+#print axioms QLF.MrEUpdate.eig_eq_expected_kl
+#print axioms QLF.MrEUpdate.eig_eq_log_two_iff
+#print axioms QLF.MrEUpdate.pointwise_bound_false
+#print axioms QLF.MrEUpdate.mre_update_unique
+#print axioms QLF.MrEUpdate.mre_update_unique_on_support
+#print axioms QLF.MrEUpdate.unrestricted_objective_fails
+#print axioms QLF.MrEUpdate.prior_unique_minimizer
+#print axioms QLF.MrEUpdate.sequential_update

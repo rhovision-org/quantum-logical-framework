@@ -871,6 +871,61 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.InteractingKinematics.map_exactConserving": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.no_umklapp": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.process_boost_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.soft_umklapp": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.twoBody_conserves_momentum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.twoBody_translation_commute": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.umklapp_leg_bound": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.umklapp_needs_short_wave": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.umklapp_t_not_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.umklapp_x_not_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.walk_leg_onShell": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.JointClosure.closed_iff_singlet": [
     "Classical.choice",
     "Quot.sound",
@@ -891,12 +946,42 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LatticeDivergence.conservation_iff_constant_lambda": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.conservation_of_field_equations": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.einstein_divergence_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LatticeDivergence.latticeCalculus": [
     "Classical.choice",
     "Quot.sound",
     "propext"
   ],
+  "QLF.LatticeDivergence.lattice_contracted_bianchi": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LatticeDivergence.lattice_einstein_field_equations": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.linRicci_gauge_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.linearized_lattice_einstein_field_equations": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1260,6 +1345,51 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.MrEUpdate.eig_eq_expected_kl": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.eig_eq_log_two_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.eig_le_log_two": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.mre_update_unique": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.mre_update_unique_on_support": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.pointwise_bound_false": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.prior_unique_minimizer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.sequential_update": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MrEUpdate.unrestricted_objective_fails": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.NonAbelian.step_covariant": [
     "Classical.choice",
     "Quot.sound",
@@ -1327,6 +1457,55 @@
   ],
   "QLF.NonAbelianGauss.noether": [
     "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.bareEquiv_iff_projective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.closesWith_completion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.foldPair_append": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.foldPair_ne_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.obsEquiv_iff_pairEquiv": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.obsTrigger_exists": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.obs_conservative_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.pairEquiv_of_completion_test": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.phase_is_needed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.separating_test_is_zfa": [
     "Quot.sound",
     "propext"
   ],
