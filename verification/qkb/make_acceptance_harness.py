@@ -101,10 +101,18 @@ def build_lookup(uri: str) -> str:
     """A separate deploy that resolves the published bundle and exercises it."""
     if not uri.startswith("rho:id:"):
         raise SystemExit("--lookup-uri must be a rho:id: URI")
-    return f'''new lookup(`rho:registry:lookup`), deployerId(`rho:rchain:deployerId`), ch,
+    # rho:registry:lookup answers with the bare value on the playground's rholo
+    # (a5259969) and with a (uri, value) pair on some builds; accept either.
+    return f'''new lookup(`rho:registry:lookup`), deployerId(`rho:rchain:deployerId`), ch, svc,
     a1, a2, q1, q2, ans, solve, comp, cj in {{
   lookup!(`{uri}`, *ch) |
-  for (@(_, QKB) <- ch) {{
+  for (@found <- ch) {{
+    match found {{
+      (_, s) => svc!(s)
+      s => svc!(s)
+    }}
+  }} |
+  for (@QKB <- svc) {{
     @QKB!("assert", "probe", [0,3,1,2], *deployerId, *a1) |
     for (@x <- a1) {{
       @"qkb-repeat-assert"!(x) |
@@ -133,11 +141,17 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("/tmp/QKB_acceptance.rho"))
     parser.add_argument("--lookup-uri", help="emit a separate-deploy lookup probe for this URI")
+    parser.add_argument("--tag", help="rename every @\"qkb-...\" output channel to @\"qkb-TAG-...\", "
+                        "so a run on a shared chain (the playground) cannot read another run's values")
     args = parser.parse_args()
     if args.lookup_uri:
         probe = build_lookup(args.lookup_uri)
     else:
         probe = build(SOURCE.read_text(encoding="utf-8"))
+    if args.tag:
+        if not args.tag.replace("-", "").isalnum():
+            raise SystemExit("--tag must be letters, digits and hyphens")
+        probe = probe.replace('@"qkb-', f'@"qkb-{args.tag}-')
     args.output.write_text(probe, encoding="utf-8")
     print(f"wrote {args.output} ({len(probe)} bytes)")
 

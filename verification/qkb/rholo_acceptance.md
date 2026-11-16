@@ -1,8 +1,8 @@
-# QKB runtime acceptance — isolated rholo node
+# QKB runtime acceptance — isolated rholo node and playground
 
-**Date:** 2026-11-13
+**Date:** 2026-11-13 (deploys 1–3, isolated node); 2026-11-16 (deploy 4, public playground)
 
-**Result:** the Rholang contract parses, deploys, executes its closure gate and native calls, publishes a registry URI, and answers a separate deploy that resolves that URI. This is **isolated-node acceptance**, not a production deployment.
+**Result:** the Rholang contract parses, deploys, executes its closure gate and native calls, publishes a registry URI, and answers a separate deploy that resolves that URI. This is **isolated-node and playground acceptance**, not a production deployment. Deploy 4 reran the harness on the public rholang playground and added the attester-refusal probe.
 
 ## Runtime pin
 
@@ -115,6 +115,49 @@ The lookup deploy does not import or reuse the first deploy's process. It resolv
 
 The repeat attestation by the same signing key leaves `R = 1`, as designed: R counts distinct keys, not supplied names. The answer-before-ask case shows that the content-addressed question does not require an `ask` leg to have arrived first.
 
+## Deploy 4 — the harness on the public playground (2026-11-16)
+
+The same harness, generated from this branch with `--tag r1794823896` so that its output channels
+(`@"qkb-r1794823896-..."`) cannot collide with any other run on a shared chain, was deployed to the
+rholang playground (`https://rnodeapi.rhobot.net`, `networkId` `playground`, shard `/playground`,
+`rholo node 0.1.0 (a5259969a7c5673ccdfc5dad97981d0a3607fcf0)`, `devMode`). It was signed with the
+throwaway `alice` key from quantum-os
+[`scripts/localnet/pk.txt`](https://github.com/rhovision-org/quantum-os/blob/main/scripts/localnet/pk.txt)
+and read back with `explore-deploy-by-block-hash` peeks (`for (@x <<- @"qkb-r1794823896-NAME")`)
+against the block that included it.
+
+| Item | Value |
+|---|---|
+| Deploy signature | `3044022001ec7db6afab03301e4f8e46919fc2d7487b40137cd485afacdb39cd1464e7980220635c64548164ca2be91d409fb61f062a694930d4b0f336b552d6598a70aeadc6` |
+| Block | `4747` |
+| Block hash | `e46043c7be1aeeed45b2594bda2679cb300e37831e186e980a840eff0ac26d64` |
+| Rejected deploys | none |
+
+| Channel | Observed value |
+|---|---|
+| `uri` | `rho:id:tqzpbz4w9hazaipn5arp3ke8cuxgyab6nprmtwgc6dmfojg7tzno` |
+| `assert` | `{ok: true, id: rho:id:w3ihj8nksaqftkwpuc6o8rtotmxtqjsacaw45qysetcndoydxoay, ways: 1, redundancy: 1}` |
+| `ways` / `redundancy` | `1` / `1` |
+| `ask` | `{ok: true, q: ([0], 0), residual: [-1,0,0,0]}` |
+| `answer` | `{ok: true, id: rho:id:w3ihj..., redundancy: 1}` |
+| `solve` | `[3, 1, 2]` |
+| `compatible` `(0,1)` with `(0,1)` | `true` |
+| `conjoin` `(0,1)` with `(1,1)` | `"incompatible"` (Python reference: `"incompatible"`) |
+| `bad` (`[8]`) | `{ok: false, error: "invalid twists"}` |
+| `bad-prop` (`(4,1)`) | `"invalid proposition"` |
+| **`fake-attester`** (fresh `new` name as attester) | **`{ok: false, error: "attester is not a deployerId"}`** |
+
+Two things are new relative to deploys 1–3. The closure id is the same `rho:id:w3ihj...` on a
+different node build and chain, so content addressing does not depend on the node. And the native key
+check refuses a name that is not a `deployerId`, which the single-key isolated run could not show.
+
+A lookup deploy against this URI (block `4748`, signed with the throwaway `bob` key) was processed
+without error but wrote nothing to its output channels. Peeking at `rho:registry:lookup` directly
+shows why: on this build it answers with the bare `bundle+` value, not a `(uri, value)` pair, so the
+generator's `for (@(_, QKB) <- ch)` never matched. The generator now accepts either shape. That
+corrected lookup deploy has **not** been run on the playground, so the playground has no
+separate-deploy or second-key result yet.
+
 ## What this establishes and what it does not
 
 **Established here**
@@ -122,14 +165,16 @@ The repeat attestation by the same signing key leaves `R = 1`, as designed: R co
 - the contract is accepted by rholo's parser/normalizer, not just Python-simulated;
 - the `rho:qucalc:zfa`, `rho:qucalc:grant`, deployer-key and registry natives are called on an actual node;
 - a valid closure is recorded and a malformed twist list/proposition is refused with an answer;
+- a name that is not a `deployerId` is refused as attester (`"attester is not a deployerId"`, deploy 4 on the playground);
+- the closure id is the same on two node builds (deploys 1 and 4);
 - the service can be reached by a separate deploy through the registry;
 - on the vectors probed above, the node returns what the Python reference returns: the gate on one valid and one malformed twist list, `ways`/`redundancy`, ask/answer/solve, a repeat attestation, a duplicate ask, answer-before-ask, `compatible`, `conjoin` and a malformed proposition. That is a subset of the behaviours behind checks (a)–(j), not all of them: (a)–(c) are exhaustive enumerations, and (f) sharding and (j) mutation of captured lists are Python-only by nature.
 
 **Not established here**
 
 - production deployment or adversarial-network security;
-- independent human attesters (this run uses one deploy key; the Sybil limit in §3a remains);
-- the node refusing an attester name that is not a `deployerId` (`"attester is not a deployerId"`). The run used one key and always passed its real `deployerId`, so the negative path of the native key check was never exercised. `make_acceptance_harness.py` now emits that probe (`@"qkb-fake-attester"`, expected `{"ok": false, "error": "attester is not a deployerId"}`), but it has not yet been run on a node;
+- independent human attesters (every assert so far used one deploy key; the Sybil limit in §3a remains);
+- `R = 2` from a second key on one closure, and the registry lookup on the playground (the corrected lookup deploy has not been run there);
 - the sharded two-role contract (§6 remains a design checked in simulation);
 - a public-chain registry lifetime or cross-shard behavior;
 - any change to QLF claim status. QKB remains an infrastructure/design artifact, not an `E` claim or a closed physical bridge.
