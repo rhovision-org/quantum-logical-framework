@@ -114,6 +114,7 @@ import QLF_PlaquetteArea
 import QLF_LocalAreaLaw
 import QLF_MetricSinglet
 import QLF_LatticeDivergence
+import QLF_LatticeBianchi
 import QLF_Manifestation
 import QLF_StrangeLoop
 import QLF_StrangeLoopBorn
@@ -506,6 +507,12 @@ import QLF_Majorana
 #print axioms QLF.MetricSinglet.product_annihilator_iff_singlet
 #print axioms QLF.LatticeDivergence.latticeCalculus
 #print axioms QLF.LatticeDivergence.lattice_einstein_field_equations
+#print axioms QLF.LatticeDivergence.lattice_contracted_bianchi
+#print axioms QLF.LatticeDivergence.einstein_divergence_free
+#print axioms QLF.LatticeDivergence.conservation_of_field_equations
+#print axioms QLF.LatticeDivergence.conservation_iff_constant_lambda
+#print axioms QLF.LatticeDivergence.linearized_lattice_einstein_field_equations
+#print axioms QLF.LatticeDivergence.linRicci_gauge_invariant
 
 
 /-! ## Paper I v0.3 — MO2 / QuantumLogic G1 anchors

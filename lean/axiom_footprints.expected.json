@@ -796,12 +796,42 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LatticeDivergence.conservation_iff_constant_lambda": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.conservation_of_field_equations": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.einstein_divergence_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LatticeDivergence.latticeCalculus": [
     "Classical.choice",
     "Quot.sound",
     "propext"
   ],
+  "QLF.LatticeDivergence.lattice_contracted_bianchi": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LatticeDivergence.lattice_einstein_field_equations": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.linRicci_gauge_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LatticeDivergence.linearized_lattice_einstein_field_equations": [
     "Classical.choice",
     "Quot.sound",
     "propext"

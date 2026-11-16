@@ -76,7 +76,11 @@ any earlier set:
 - **PR #227** added eleven realizable-walk / palindromic-order anchors, bringing the baseline
   to **355**.
 - **PR #222** added twenty relativity/boost-covariance anchors, bringing the baseline to
-  **375**. The current exact-footprint gate is 375 entries.
+  **375**. Later merges brought `main` to 384, and **PR #241**
+  (`QLF_ObservationalEquivalence`) to **394**.
+- **PR #244** (`QLF_LatticeBianchi`) added six linearized Bianchi / conservation anchors
+  (`QLF.LatticeDivergence.*`), bringing the baseline from 394 to **400**. The current
+  exact-footprint gate is 400 entries.
 
 The original Lean build and separate 302-report audit ran in project CI at
 `41182f7` (test merge `8cf63f3`). The reviewed source preserves all Lean/build
