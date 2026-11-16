@@ -40,7 +40,7 @@ The identification needs a bridge with:
 
 The current targets are:
 
-- `TensorConservativeReturn` — **proved** on the tensor-image quotient; the physically selected quotient (`TensorConservativeReturn_phys`) is missing.
+- `TensorConservativeReturn` — **proved** on the tensor-image quotient. [`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean) proves that quotient is the observational one: two histories are equivalent exactly when no appended context separates them by joint closure and phase (`obsEquiv_iff_pairEquiv`). What is still missing for `TensorConservativeReturn_phys` is that joint closure phase is the only physical observable (an apparatus map) and the entangled-sector return.
 - `RhoCorrespondence` — **`NOT_STARTED`**; binary closure ↔ process reduction, with soundness, completeness, conservativity and self-query.
 - `SelfKnowledgeBisimulation` — **`NOT_STARTED`**; active-inference update and model/system bisimulation.
 - `CausalMetricConservativeReturn` — **`NOT_STARTED`**; closure causal order → metric → same causal order.

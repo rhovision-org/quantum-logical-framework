@@ -118,6 +118,7 @@ import QLF_StrangeLoop
 import QLF_StrangeLoopBorn
 import QLF_ConservativeReturn
 import QLF_TensorConservativeReturn
+import QLF_ObservationalEquivalence
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -659,6 +660,16 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TensorConservativeReturn.class_of_step
 #print axioms QLF.TensorConservativeReturn.F_injective
 #print axioms QLF.TensorConservativeReturn.R_forward
+#print axioms QLF.ObservationalEquivalence.obsEquiv_iff_pairEquiv
+#print axioms QLF.ObservationalEquivalence.pairEquiv_of_completion_test
+#print axioms QLF.ObservationalEquivalence.separating_test_is_zfa
+#print axioms QLF.ObservationalEquivalence.closesWith_completion
+#print axioms QLF.ObservationalEquivalence.bareEquiv_iff_projective
+#print axioms QLF.ObservationalEquivalence.phase_is_needed
+#print axioms QLF.ObservationalEquivalence.foldPair_append
+#print axioms QLF.ObservationalEquivalence.foldPair_ne_zero
+#print axioms QLF.ObservationalEquivalence.obsTrigger_exists
+#print axioms QLF.ObservationalEquivalence.obs_conservative_return
 #print axioms QLF.FirstReturn.prime_event_reciprocal_open
 
 #print axioms QLF.RelativityScale.step_census_frame_dependent
