@@ -172,6 +172,34 @@ truncation. The route to a Born weight through the *unnormalized* amplitude ther
 capacity rule under which convergence persists, or it needs a different readout; the
 arbitrary-angle `cos²(θ/2)` target is not reached by either capacity.
 
+## 5. Does any capacity rule keep the amplitude? (pre-registration, committed before the run)
+
+§4 leaves one question pressing: is the collapse at `R = 3` a property of the `ℓ¹` cut, or of growing
+the capacity under any rule? The capacity rule is the one modelling choice in the census that the
+substrate does not fix. `free_action` cuts on `|v|+|h|+|d|+|l|`, a single budget shared by spatial
+and gauge imbalance. This section tests other cuts with the same certified pipeline, on the same
+180,288 geometries (`--R <rule>`; `parse_rule` in the instrument):
+
+| family | members run | states | what it varies |
+|---|---|---|---|
+| `l1:R` (the census's own rule) | `R = 1, 2, 3` | 72, 328, 1032 | the shared budget |
+| `split:S,1`, with spatial `ℓ¹ ≤ S` and `\|l\| ≤ 1` | `S = 1, 2, 3` | 168, 600, 1512 | spatial capacity, gauge fixed |
+| `split:2,G` | `G = 1, 2, 3` | 600, 1000, 1400 | gauge capacity, spatial fixed |
+| `linf:1`, every `\|x_a\| ≤ 1` | one member | 648 | the shape of the cut, at a comparable size |
+
+Hypotheses and outcomes, stated before the run:
+
+* **P (persistence).** A family *persists* if it has summable geometries at its two largest members
+  run. *P holds* if any family persists. Then the `R = 3` collapse belongs to the `ℓ¹` rule rather
+  than to growth, and §1's truncation reading is withdrawn for that family. *P fails* if no family
+  persists. Then the collapse is the same under every rule tried, which strengthens the truncation
+  reading without making it a theorem.
+* **Prior, recorded so that it can be wrong:** P fails. Each step up in capacity adds operator modes
+  with `|λ|² ≥ 8`, and a readout must be blind to every one of them. Nothing in a rule that only
+  enlarges the state space supplies that blindness.
+* **Q (the integers).** In any summable geometry, under any rule, are the supports still integer
+  `|λ|²`, and still among `{5, 7}`? Recorded descriptively, not a kill condition.
+
 Reproduce (certified): `python3 born_readout_certified.py --selftest`, then `--R 2` (~2 min on four
 cores) and `--R 3` (~66 min). The first, uncertified instrument remains as
 [`born_readout_survey.py`](born_readout_survey.py).

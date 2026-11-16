@@ -236,16 +236,48 @@ def factor_class(f):
 _OPER = {}
 
 
+def parse_rule(rule):
+    """A capacity rule: which running imbalances (v, h, d, l) a horizon can hold.
+
+    l1:R      |v|+|h|+|d|+|l| <= R   (the census's own rule, contextual_census.free_action)
+    linf:R    max(|v|,|h|,|d|,|l|) <= R
+    split:S,G |v|+|h|+|d| <= S and |l| <= G   (spatial and gauge capacities separately)
+    Returns (allowed(imb) -> bool, box bound B with every allowed |x_a| <= B).
+    """
+    kind, _, arg = str(rule).partition(":")
+    if not arg:                                   # a bare integer is the l1 rule
+        kind, arg = "l1", kind
+    if kind == "l1":
+        R = int(arg)
+        return (lambda imb: sum(abs(x) for x in imb) <= R), R
+    if kind == "linf":
+        R = int(arg)
+        return (lambda imb: max(abs(x) for x in imb) <= R), R
+    if kind == "split":
+        Sp, G = (int(x) for x in arg.split(","))
+        return (lambda imb: abs(imb[0]) + abs(imb[1]) + abs(imb[2]) <= Sp and abs(imb[3]) <= G), max(Sp, G)
+    raise ValueError(f"unknown capacity rule {rule!r}")
+
+
+def _install_rule(rule):
+    """Route contextual_census's capacity test through `rule`: with capacity 0 the census drops
+    exactly the extensions whose free action exceeds 0, and free_action is now 0 iff allowed."""
+    allowed, _ = parse_rule(rule)
+    cc.free_action = lambda imb: 0 if allowed(imb) else 1
+
+
 def _init_oper(R):
     import numpy as np
-    rng = range(-R, R + 1)
+    allowed, B = parse_rule(R)
+    _install_rule(R)
+    rng = range(-B, B + 1)
     S = [((a, b, c, d), (p & 1, (p >> 1) & 1, (p >> 2) & 1))
          for a in rng for b in rng for c in rng for d in rng
-         if abs(a) + abs(b) + abs(c) + abs(d) <= R for p in range(8)]
+         if allowed((a, b, c, d)) for p in range(8)]
     idx = {s: i for i, s in enumerate(S)}
     rows, cols, vals = [], [], []
     for s, i in idx.items():
-        for t, x in cc._step({s: 1}, R).items():
+        for t, x in cc._step({s: 1}, 0).items():
             if x:
                 rows.append(idx[t]); cols.append(i); vals.append(x)
     _OPER[R] = (S, idx, np.array(rows), np.array(cols), np.array(vals, dtype=np.int64))
@@ -273,7 +305,7 @@ def _target_set(args):
 
     X0 = np.zeros((n, len(preps)), dtype=object)
     for k, prep in enumerate(preps):
-        for s, a in cc._feed(cc.START, prep, R).items():
+        for s, a in cc._feed(cc.START, prep, 0).items():
             X0[idx[s], k] += a
     x0max = max(1, max(abs(int(x)) for x in X0.flat))
     words = sorted({w for pr in pairs for w in pr})
@@ -283,7 +315,7 @@ def _target_set(args):
         tgt = tuple(-x for x in cc.imbalance(w))
         for s, i in idx.items():
             if s[0] == tgt:
-                closed = cc._feed({s: 1}, w, R)
+                closed = cc._feed({s: 1}, w, 0)
                 u[i] = sum(a for (imb, _), a in closed.items() if imb == (0, 0, 0, 0))
         U[w] = u
     umax = max(1, max(sum(abs(x) for x in u) for u in U.values()))
@@ -416,7 +448,7 @@ def _target_set(args):
     return res, D, K
 
 
-def survey(R, procs, seed=1):
+def survey(R, procs, seed=1, only=None):
     words = [''.join(w) for L in (1, 2) for w in itertools.product(cc.ALPHABET, repeat=L)]
     groups = {}
     for bp, bm in itertools.combinations(words, 2):
@@ -425,6 +457,8 @@ def survey(R, procs, seed=1):
         if tp != tm:
             groups.setdefault(frozenset((tp, tm)), []).append((bp, bm))
     jobs = [(R, *sorted(key), pairs, words, seed) for key, pairs in groups.items()]
+    if only is not None:
+        jobs = [j for j in jobs if (j[1], j[2]) in only]
     _init_oper(R)
     with Pool(procs, initializer=_init_oper, initargs=(R,)) as pool:
         parts = list(pool.imap_unordered(_target_set, jobs))
@@ -436,7 +470,8 @@ def survey(R, procs, seed=1):
 
 def report(rows, Ds, Ks, R):
     v = Counter(r[3] for r in rows)
-    print(f"\n===== CERTIFIED capacity R = {R}: {len(rows)} geometries, {len(Ds)} absorbing operators")
+    print(f"\n===== CERTIFIED capacity R = {R}: {len(rows)} geometries, {len(Ds)} absorbing operators, "
+          f"{len(_OPER[R][0])} states")
     print(f"  certified annihilator degree: {min(Ds)}..{max(Ds)};  primes per certificate: "
           f"{min(Ks)}..{max(Ks)}")
     for k in ("nothing-closes", "finite", "summable", "marginal", "divergent"):
@@ -486,7 +521,8 @@ def selftest(trials=3000):
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--R", type=int, default=0)
+    ap.add_argument("--R", default="",
+                    help="capacity rule: an integer (l1), or l1:R, linf:R, split:S,G (see parse_rule)")
     ap.add_argument("--procs", type=int, default=4)
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
