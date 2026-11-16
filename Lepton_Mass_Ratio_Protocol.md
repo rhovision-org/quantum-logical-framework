@@ -38,6 +38,8 @@ The following rules are fixed for all selection stages:
 - The `L = 8` τ uniqueness used a **3-axis filter before** the parent rule. That filter is load-bearing and is not derived by the selection rule.
 - The parent rule goes **ambiguous at `L = 10`**. It is not an independent proof of “exactly three generations.”
 
+**Freeze decision (2026-11-15, Jim Whitescarver).** The parent rule (rule 9) is frozen as applying only through `L = 8`. The ladder is the three rungs `e = ^<v>`, `μ = ^^<vv>` and `τ = ^^</>vv\`, and the `L = 8` three-axis filter is a **declared input**, not an output. The `L = 10` ambiguity is recorded as a limitation and is **not** read as evidence for a fourth generation; the generation count stays with `QLF_Generations`. This freeze does not supply `delta`: by [`Weak_Force.md`](Weak_Force.md) §5c⁗ item 7, no phase read off a finite closure can equal a non-zero rational number of radians.
+
 These two risks are mirrored in the [FlowChart](FlowChart.md) and in issue [#140](https://github.com/rhovision-org/quantum-logical-framework/issues/140); the protocol records them and does not resolve them.
 - Therefore the topology stage may propose an ordered candidate ladder, but it cannot by itself establish the mass ratios.
 

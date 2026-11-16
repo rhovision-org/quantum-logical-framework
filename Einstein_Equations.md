@@ -380,10 +380,48 @@ over the `ℤ` one is that all four directions are live and the divergence contr
 `(+,−,−,−)` signature, so metric compatibility uses the Minkowski metric rather than one component of
 it; and that lattice connectedness in four directions is what makes `Λ` one constant everywhere.
 
-**Scope.** The discrete contracted Bianchi identity and discrete conservation remain hypotheses.
-Forward differences obey no exact Leibniz rule, so a lattice Ricci tensor need not satisfy
-`∇^a R_ab = ½ ∂_b R` exactly; whether the substrate's curvature (§6a) does is not settled here. The
-first arrow is untouched.
+**Scope.** As built in this module, the discrete contracted Bianchi identity and discrete
+conservation are hypotheses of `lattice_einstein_field_equations`. For the linearized curvature both
+are now settled (§6f); for a full nonlinear lattice Ricci tensor, and for the substrate's own
+curvature (§6a), Bianchi is not settled. The first arrow is untouched.
+
+## §6f Discrete Bianchi and conservation, proved (linearized)
+
+[`QLF_LatticeBianchi`](lean/QLF_LatticeBianchi.lean) (no axioms) turns the two hypotheses of §6e into
+theorems for the linearized theory. Take any metric perturbation `h_ab` on `ℤ⁴` and build its
+linearized Ricci tensor from the same forward differences the divergence uses:
+
+`R_ab = ½ (Δ^c Δ_a h_cb + Δ^c Δ_b h_ca − □ h_ab − Δ_a Δ_b h)`.
+
+* **Contracted Bianchi holds exactly** (`lattice_contracted_bianchi`): `∇^a R_ab = ½ ∂_b R` on every
+  site, for every `h`, with no error term. Equivalently `∇^a G_ab = 0` (`einstein_divergence_free`).
+  The reason is the one behind `d² = 0` in discrete exterior calculus: lattice shifts commute
+  (`p + e_a + e_b = p + e_b + e_a`, `D_comm`), so the continuum cancellation goes through term for
+  term. The missing Leibniz rule of §6e never enters, because the linearized tensor has no products
+  of fields.
+* **Conservation follows from the field equations** (`conservation_of_field_equations`): if
+  `G_ab + Λ g_ab = κ T_ab` with `κ ≠ 0`, then `∇^a T_ab = 0`, as in general relativity.
+* **On Jacobson's route, conservation is a constant `Λ`** (`conservation_iff_constant_lambda`): given
+  only the metric form `R_ab = κ T_ab + f g_ab`, the source is conserved **if and only if**
+  `f = R/2 − Λ` for one constant `Λ`. With Bianchi a theorem, the remaining hypothesis says exactly
+  that the cosmological term does not vary from site to site; nothing weaker will do.
+* **The field equations with Bianchi discharged** (`linearized_lattice_einstein_field_equations`):
+  from the metric form and conservation alone, `G_ab + Λ g_ab = κ T_ab` with one `Λ`.
+* **Gauge invariance** (`linRicci_gauge_invariant`, `ricC_pureGauge`): `h_ab ↦ h_ab + Δ_a ξ_b + Δ_b ξ_a`
+  (a discrete infinitesimal diffeomorphism) leaves the linearized Ricci tensor unchanged. By
+  Noether's second theorem this is the other face of `∇^a G_ab = 0`.
+
+**R6a, and what this is.** Every identity here holds for every `h`, random noise included, so by the
+method's rule 4 it is mathematics of the forward map, not evidence about the substrate. It is also
+known mathematics: the linearized Bianchi identity and its gauge invariance are textbook (Fierz–Pauli;
+Carroll, *Spacetime and Geometry*, §7.1), and the exact lattice version rests on the commuting
+difference operators of lattice field theory. Its gauge-field analogue, `dF = 0` on plaquettes, is
+[`QLF_LatticeGauge`](lean/QLF_LatticeGauge.lean) `bianchi`. So this strengthens the gravity side of the
+derivation and adds **no new bridge**.
+
+**Scope.** Linearized only: a nonlinear lattice Ricci tensor (Regge calculus, for example) satisfies
+Bianchi only approximately, and nothing here touches it. Conservation of a source counted from the
+substrate's closures is not derived. The first arrow (local Rindler + Raychaudhuri) is still open.
 
 ---
 
@@ -474,7 +512,13 @@ characterisation. Logic fixes no local term: `G`, `Λ` and `T` still come from t
 | `metric_form_from_null_probes` | chains §6b into §6c: nine integer null probes deliver the metric form `einstein_field_equations` needs |
 | `interface_is_inhabited` | ([`QLF_LatticeCalculus`](lean/QLF_LatticeCalculus.lean)) a nondegenerate forward-difference instance on `ℤ`, one live direction: the interface is consistent |
 | `latticeCalculus` | ([`QLF_LatticeDivergence`](lean/QLF_LatticeDivergence.lean)) the interface built on `ℤ⁴` from forward differences along the twist steps (§6e) |
-| `lattice_einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` on the lattice with the calculus discharged; one `Λ` for every site. Discrete Bianchi and conservation are still hypotheses |
+| `lattice_einstein_field_equations` | `G_ab + Λ g_ab = κ T_ab` on the lattice with the calculus discharged; one `Λ` for every site. Discrete Bianchi and conservation are hypotheses here (settled for the linearized theory in §6f) |
+| `lattice_contracted_bianchi` | ([`QLF_LatticeBianchi`](lean/QLF_LatticeBianchi.lean)) `∇^a R_ab = ½ ∂_b R` exactly on `ℤ⁴` for the linearized Ricci tensor of every perturbation (§6f) |
+| `einstein_divergence_free` | `∇^a G_ab = 0` for the linearized Einstein tensor |
+| `conservation_of_field_equations` | `G_ab + Λ g_ab = κ T_ab`, `κ ≠ 0` ⟹ `∇^a T_ab = 0` |
+| `conservation_iff_constant_lambda` | given the metric form, conservation ⟺ `f = R/2 − Λ` with one constant `Λ` |
+| `linearized_lattice_einstein_field_equations` | the lattice field equations with `hbianchi` discharged |
+| `linRicci_gauge_invariant` | `h_ab ↦ h_ab + Δ_a ξ_b + Δ_b ξ_a` leaves the linearized Ricci tensor unchanged |
 | `no_time_loops_from_logic` | ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)) from the law of weakening alone, no event lies in its own strict past; `loopWorld_has_time_loop` shows the law is needed |
 | `logical_world_globally_hyperbolic` | no time loops + finite causal intervals: the discrete global hyperbolicity the field equations need as a global condition (§7) |
 | `rotation_without_time_loops` | ([`QLF_NoTimeLoops`](lean/QLF_NoTimeLoops.lean)) unbounded circulation coexists with no time loops: Gödel's rotation allowed, his closed timelike curves excluded |
