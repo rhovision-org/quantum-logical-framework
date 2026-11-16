@@ -7,7 +7,8 @@
 [`lean/QLF_RelativityScale.lean`](lean/QLF_RelativityScale.lean) (the unsigned census) and
 [`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean) (the signed census, its symbol, and
 shared-pair interactions), and [`lean/QLF_BoostCovariance.lean`](lean/QLF_BoostCovariance.lean) (boost
-covariance of the Dirac walk). Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py).
+covariance of the Dirac walk), and [`lean/QLF_InteractingKinematics.lean`](lean/QLF_InteractingKinematics.lean)
+(interacting kinematics and umklapp, §6a). Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py).
 **The relativity principle is proved for free propagation in the large, and not beyond that** (§5b).
 With interactions it is open, and for the census symbol the step to a propagation law is still an
 assumption, labelled where it is used.
@@ -32,8 +33,16 @@ motion. QLF does not assume it. What the census of histories proves is narrower:
    up to a relative correction of order `(L_P/λ)²`, in every frame where the wavelengths stay long
    (`shell_lorentz_invariant`, `diracWalk_boost_covariant`).
 
+6. **Interacting kinematics is boost-covariant in the large** (§6a). At long wavelength a lattice
+   process conserves energy–momentum exactly, so the set of allowed processes is the same in every
+   frame to the same order (`process_boost_covariant`). The elementary umklapp vectors along a
+   boost axis are carried off the reciprocal lattice by any non-trivial boost
+   (`umklapp_x_not_covariant`); whether that is the main source of frame dependence in loops is
+   open.
+
 So the principle is not postulated. It is derived for one free particle on the Dirac walk, as an
-approximation with a stated error, and it is open for interacting histories.
+approximation with a stated error, and for which interacting processes are allowed. It is open for
+interacting amplitudes and loops.
 
 ## 1. The question is precise because every twist is a spacetime unit vector
 
@@ -334,6 +343,61 @@ Collins's loop integrals live in field theory. That a pair's weight is its fold 
 `shared_pair_fold_axis_blind` supports, not a theorem about every possible coupling. These two
 points are now the whole of the open question.
 
+## 6a. Interacting processes: the kinematic layer, and where the lattice frame enters
+
+§5b is one free mode. An interaction adds a vertex, and a vertex has to conserve energy–momentum.
+On a translation-invariant lattice with a time-periodic step it conserves **lattice**
+energy–momentum: incoming total minus outgoing total is a reciprocal-lattice vector `2π·n`,
+`n ∈ ℤ⁴` (Bloch's theorem; quasi-energy is a phase `e^{iE}`, so it is conserved mod `2π` too).
+Processes with `n ≠ 0` are **umklapp** processes. [`lean/QLF_InteractingKinematics.lean`](lean/QLF_InteractingKinematics.lean)
+takes that conservation law as the definition of a lattice process and proves, with no axioms:
+
+| Theorem | Statement |
+|---|---|
+| `no_umklapp` | if, for every component, the legs' total `Σ\|p\|` is below `2π`, a lattice process conserves energy–momentum **exactly** |
+| `umklapp_needs_short_wave` | so a genuine umklapp process has a component whose **leg total** reaches `2π`. This bounds the sum over legs, not any single leg |
+| `umklapp_leg_bound` | in an umklapp process with `N + M` legs, some leg has a component of magnitude at least `2π/(N + M)`: a lattice-scale leg is forced only at bounded valence |
+| `soft_umklapp` | the bound is needed: four incoming legs of `π/2` along `x` are an umklapp process with no leg at the lattice scale (and `n` legs of `2π/n` work for any `n`) |
+| `map_exactConserving` | exact conservation is linear, so every Lorentz map (linear, preserving `E² − \|k\|²`) keeps it |
+| **`process_boost_covariant`** | a long-wavelength lattice process with every leg on the Dirac walk's shell, seen from any Lorentz frame that keeps the legs long-wavelength, is again an exactly conserving lattice process, with every leg on the walk's shell to `S²/4 + S′²/4` |
+| `walk_leg_onShell` | the walk's actual eigenmodes meet the leg hypothesis |
+| `twoBody_translation_commute`, `twoBody_conserves_momentum` | a two-body walk with any contact interaction (a phase depending on relative position) commutes with joint translation, so it carries a state of definite total lattice momentum to one of the same momentum: the conservation law above, for an actual interacting step |
+| **`umklapp_x_not_covariant`**, **`umklapp_t_not_covariant`** | for every boost along `x` with `u ≠ 0`, the elementary umklapp vectors `2π e_x` and `2π e_t` are carried **off** the reciprocal lattice, so the boosted observer sees a process that conserves nothing, exactly or mod `2π` (the proof reduces to: integers with `a² − b² = 1` have `b = 0`) |
+
+The number of incoming and outgoing legs is arbitrary, so pair creation and annihilation are
+covered **as kinematics**.
+
+**What this settles.** Which interacting processes are allowed is the same in every frame, in the
+long-wavelength sector, to the order of §5b. Umklapp is one place the lattice frame shows in
+interacting kinematics: the two elementary umklapp vectors along a boost axis do not survive a
+boost. It is not shown to be the only place. The finite-spacing shell corrections of §5b are frame
+dependence that is present even when momentum is conserved exactly, and the two no-go theorems do
+not classify every reciprocal vector (a boost with rational `γ`, `u` can map some of them into the
+lattice, for example `γ = 5/3`, `u = 4/3` takes `2π·(3,0,0,0)` to `2π·(5,4,0,0)`). Nor does umklapp
+need a Planck-scale leg in general: at a vertex of valence `N + M` the forced scale is
+`2π/(N + M)` (`umklapp_leg_bound`, `soft_umklapp`).
+
+**What it does not settle.** This is tree-level kinematics, not dynamics. No amplitude is compared
+between frames, and no loop is treated. A loop sums over every intermediate momentum, including the
+lattice-scale ones where neither `no_umklapp` nor the shell bound of §5b applies. That region is
+where the [Collins et al. (2004)](https://arxiv.org/abs/gr-qc/0403053) leakage would come from.
+Loops are not constructed here, so no decomposition of a loop into frame-dependent and
+frame-independent parts is proved; bounding the lattice-scale contribution to low-energy
+observables is an open obligation, and a test the framework could fail.
+The conservation law is the definition of a process; its translation half is proved for a two-body contact-interaction walk, but the bridge from that walk's conserved character to the real reciprocal-vector form is not.
+
+**The dependency chain to interacting boost covariance.**
+
+| Stage | Status | What it needs |
+|---|---|---|
+| 1. Free propagation covariant in the large | proved (§5b, `diracWalk_boost_covariant`) | — |
+| 2. Interacting kinematics covariant in the large, given lattice conservation and the summed long-wavelength bound; elementary umklapp vectors along a boost axis are not boost-stable | proved (this section, `process_boost_covariant`, `umklapp_x_not_covariant`) | — |
+| 3. Lattice conservation derived for a concrete interacting walk | **half proved**: a two-body contact-interaction walk conserves total lattice momentum as a character (`twoBody_conserves_momentum`) | identify the character with the reciprocal-vector form `Process` uses (Fourier on `ZMod N`), and extend to `N` bodies; labour, not missing mathematics |
+| 4. Amplitudes covariant at tree level | open, **blocked on a definition** | an interacting walk (stage 3) and a frame-comparison map for amplitudes, not just shells; the walk has no boost acting on its Hilbert space, so the comparison has to be stated on long-wavelength wave packets |
+| 5. Loops: lattice-scale contribution small at low energy (Collins) | open, **blocked on a definition and on analysis** | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
+| 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
+| 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
@@ -342,7 +406,8 @@ This result is **formal `F` for free propagation** and **`B-OPEN` for the physic
 |---|---|
 | Free Dirac-walk shell covariance in the long-wavelength regime | `F`; anchors in the 375-entry baseline (`shell_taylor`, `shell_lorentz_invariant`, `shell_boost_invariant`, `diracWalk_boost_covariant`) |
 | Census limits / Lorentz-symbol determinant | `F`; anchors in the same baseline |
-| Interacting boost covariance | `B-OPEN`; conservative return `NOT_STARTED` |
+| Interacting kinematics (allowed processes) covariant in the large, conditional on lattice conservation; elementary umklapp vectors not boost-stable | `F`; `QLF_InteractingKinematics` (§6a), audit anchors added |
+| Interacting boost covariance (amplitudes, loops) | `B-OPEN`; conservative return `NOT_STARTED`; dependency chain in §6a |
 | Kinetic reading of the census symbol | assumption, not a theorem |
 | Census-vs-walk off-axis sign | open; the palindromic walk has the opposite sign |
 | Identification of the spread ratio with physical `c` | open; requires the interacting case |

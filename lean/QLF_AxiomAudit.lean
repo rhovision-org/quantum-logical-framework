@@ -78,6 +78,7 @@ import QLF_LatticeGauge
 import QLF_RelativityScale
 import QLF_LorentzSymbol
 import QLF_BoostCovariance
+import QLF_InteractingKinematics
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -691,6 +692,20 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BoostCovariance.shell_lorentz_invariant
 #print axioms QLF.BoostCovariance.shell_boost_invariant
 #print axioms QLF.BoostCovariance.diracWalk_boost_covariant
+
+-- Interacting kinematics (conditional): exact conservation at long wavelength, elementary umklapp.
+-- Tree-level kinematics only; amplitudes, loops and pair creation as strand number stay open.
+#print axioms QLF.InteractingKinematics.no_umklapp
+#print axioms QLF.InteractingKinematics.umklapp_needs_short_wave
+#print axioms QLF.InteractingKinematics.umklapp_leg_bound
+#print axioms QLF.InteractingKinematics.soft_umklapp
+#print axioms QLF.InteractingKinematics.map_exactConserving
+#print axioms QLF.InteractingKinematics.process_boost_covariant
+#print axioms QLF.InteractingKinematics.walk_leg_onShell
+#print axioms QLF.InteractingKinematics.umklapp_x_not_covariant
+#print axioms QLF.InteractingKinematics.umklapp_t_not_covariant
+#print axioms QLF.InteractingKinematics.twoBody_translation_commute
+#print axioms QLF.InteractingKinematics.twoBody_conserves_momentum
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self
