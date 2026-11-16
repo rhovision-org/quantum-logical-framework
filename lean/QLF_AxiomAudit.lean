@@ -693,10 +693,12 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BoostCovariance.shell_boost_invariant
 #print axioms QLF.BoostCovariance.diracWalk_boost_covariant
 
--- Interacting kinematics: exact conservation at long wavelength, umklapp frame dependence.
+-- Interacting kinematics (conditional): exact conservation at long wavelength, elementary umklapp.
 -- Tree-level kinematics only; amplitudes, loops and pair creation as strand number stay open.
 #print axioms QLF.InteractingKinematics.no_umklapp
 #print axioms QLF.InteractingKinematics.umklapp_needs_short_wave
+#print axioms QLF.InteractingKinematics.umklapp_leg_bound
+#print axioms QLF.InteractingKinematics.soft_umklapp
 #print axioms QLF.InteractingKinematics.map_exactConserving
 #print axioms QLF.InteractingKinematics.process_boost_covariant
 #print axioms QLF.InteractingKinematics.walk_leg_onShell

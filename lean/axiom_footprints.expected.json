@@ -736,12 +736,22 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.InteractingKinematics.soft_umklapp": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.InteractingKinematics.twoBody_conserves_momentum": [
     "Classical.choice",
     "Quot.sound",
     "propext"
   ],
   "QLF.InteractingKinematics.twoBody_translation_commute": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.umklapp_leg_bound": [
     "Classical.choice",
     "Quot.sound",
     "propext"

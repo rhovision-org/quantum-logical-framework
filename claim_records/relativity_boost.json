@@ -26,9 +26,11 @@
       "QLF.InteractingKinematics.process_boost_covariant",
       "QLF.InteractingKinematics.umklapp_x_not_covariant",
       "QLF.InteractingKinematics.umklapp_t_not_covariant",
-      "QLF.InteractingKinematics.twoBody_conserves_momentum"
+      "QLF.InteractingKinematics.twoBody_conserves_momentum",
+      "QLF.InteractingKinematics.umklapp_leg_bound",
+      "QLF.InteractingKinematics.soft_umklapp"
     ],
-    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and the kinematic layer of interactions: long-wavelength lattice processes conserve exactly and are frame-independent as allowed processes, umklapp processes are frame-dependent, and a two-body contact-interaction walk conserves total lattice momentum. They do not establish boost covariance of interacting amplitudes or loops, a physical propagation law, or a conservative return from interacting records."
+    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and a conditional kinematic layer of interactions: given reciprocal-lattice conservation and a summed long-wavelength bound, processes conserve exactly and remain allowed in every Lorentz frame to the free-shell order; the two elementary umklapp vectors along a boost axis are not boost-stable; an umklapp process forces a leg of size only 2*pi/(N+M); a two-body contact-interaction walk conserves total lattice momentum. They do not establish boost covariance of interacting amplitudes or loops, any decomposition of loops into frame-dependent and frame-independent parts, a physical propagation law, or a conservative return from interacting records."
   },
   "formal_object": {
     "primary_files": [
@@ -83,7 +85,7 @@
     "noncircularity_witness": "The walk dispersion is derived independently of the Lorentz target. The kinetic reading of the census symbol is separately labelled an assumption and is not used to prove shell covariance.",
     "status": "B-OPEN",
     "first_order_evidence": "F",
-    "first_order_note": "Free-propagation shell covariance and the census/Lorentz-symbol identities are formal F results in the 375-anchor baseline. The interacting return and physical law identification remain open. Interacting kinematics (allowed processes, umklapp frame dependence) is formal in QLF_InteractingKinematics; amplitudes and loops remain open.",
+    "first_order_note": "Free-propagation shell covariance and the census/Lorentz-symbol identities are formal F results in the 375-anchor baseline. The interacting return and physical law identification remain open. Interacting kinematics (allowed processes at long wavelength, conditional on lattice conservation) is formal in QLF_InteractingKinematics; amplitudes and loops remain open.",
     "defeater": "A demonstrated failure of free-shell covariance in the stated long-wavelength regime; an interacting history whose boost behavior cannot be returned to closure invariants; or a physical propagation law incompatible with the walk.",
     "proof_obligation": {
       "domain": "finite free Dirac-walk modes in the long-wavelength regime",
@@ -115,7 +117,7 @@
     "comparison_type": "not_applicable"
   },
   "evidence": {
-    "F": "Free-shell covariance, census limits, Lorentz-symbol determinant and shared-pair marginal identities are formal and audited. Interacting kinematics: exact conservation at long wavelength, frame-independence of allowed processes, umklapp frame dependence, two-body momentum conservation.",
+    "F": "Free-shell covariance, census limits, Lorentz-symbol determinant and shared-pair marginal identities are formal and audited. Interacting kinematics: exact conservation at long wavelength, frame-independence of allowed processes, boost-instability of the two elementary umklapp vectors, the per-leg umklapp bound, two-body momentum conservation.",
     "N": "No numerical boost-covariance benchmark is claimed.",
     "E": "None. No empirical evidence or interacting test is claimed.",
     "reviewer": "Aria reviewed the PR; the claim record is a post-merge hygiene entry"

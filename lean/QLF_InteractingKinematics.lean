@@ -3,7 +3,7 @@ import QLF_BoostCovariance
 set_option linter.unusedVariables false
 
 /-!
-# QLF_InteractingKinematics — interacting processes are boost-covariant in the large, and umklapp is where the lattice frame enters
+# QLF_InteractingKinematics — long-wavelength interacting kinematics is boost-covariant; elementary umklapp is not
 
 [`QLF_BoostCovariance`](QLF_BoostCovariance.lean) proved that one free Dirac-walk mode, boosted, is
 still on the walk's mass shell up to `S²/4 + S′²/4`, `S ≈ (L_P/λ)²`. Interactions add one thing
@@ -22,7 +22,10 @@ specific interacting walk is not done here (see *Not here* below).
   long-wavelength condition, `Process.longWave`), the reciprocal vector is zero: the process
   conserves energy–momentum *exactly*, as in the continuum.
 * **`umklapp_needs_short_wave`** — contrapositive: a genuine umklapp process has some component
-  whose leg total reaches `2π`, so it involves a leg at the lattice scale.
+  whose leg *total* reaches `2π`. That is a bound on the sum, not on any single leg.
+* **`umklapp_leg_bound`, `soft_umklapp`** — the per-leg statement: with `N + M` legs, some leg has
+  a component of size at least `2π/(N + M)`, and this cannot be improved to "a lattice-scale leg"
+  without bounding the valence, because four legs of `π/2` already make an umklapp process.
 * **`map_exactConserving`** — exact conservation is linear, so every Lorentz map
   (`Lorentz`: linear, preserves `E² − |k|²`) carries an exactly conserving process to an exactly
   conserving one.
@@ -36,9 +39,9 @@ specific interacting walk is not done here (see *Not here* below).
 * **`umklapp_x_not_covariant`, `umklapp_t_not_covariant`** — the converse side. The elementary
   umklapp vectors along the boost axis, `2π e_x` and `2π e_t`, are carried by any boost with
   `u ≠ 0` **off** the reciprocal lattice. So an observer boosted along `x` sees an elementary
-  `x`- or `t`-umklapp as a process that conserves nothing, neither exactly nor mod `2π`: the
-  lattice's preferred frame enters interacting kinematics exactly through umklapp, and umklapp
-  needs a Planck-scale leg.
+  `x`- or `t`-umklapp as a process that conserves nothing, neither exactly nor mod `2π`. These
+  are two vectors, not a classification: a boost with rational `γ`, `u` can carry other
+  reciprocal vectors into the lattice.
 * **`twoBody_translation_commute`, `twoBody_conserves_momentum`** — a two-body walk with any
   contact (relative-position) interaction commutes with moving both particles together, so it
   carries a state of definite total lattice momentum to one of the same total momentum: the
@@ -51,9 +54,10 @@ same in every frame. In the long-wavelength sector it is, to the order of `QLF_B
 
 It is **not** dynamical boost covariance. Amplitudes are not compared between frames, and loops are
 not treated. A loop integrates over all intermediate momenta, including the lattice-scale ones
-where `no_umklapp` fails, which is the substrate form of the Collins et al. (2004) leakage problem:
-`umklapp_x_not_covariant` shows that the frame-dependent part of a loop is its umklapp part, but
-whether its contribution to low-energy observables is suppressed is not proved. The census-side
+where neither `no_umklapp` nor the free shell bound applies; that region is where the Collins et
+al. (2004) leakage would come from. Nothing here decomposes a loop into frame-dependent and
+frame-independent parts: the finite-spacing shell corrections are frame dependence without any
+umklapp. Bounding the lattice-scale contribution is an open obligation. The census-side
 partial answer (axis-blind shared pairs keep the spread ratio at `1`) is
 [`QLF_LorentzSymbol`](QLF_LorentzSymbol.lean) §5.
 
@@ -169,6 +173,55 @@ theorem umklapp_needs_short_wave {N M : ℕ} (P : Process N M) (hl : P.latticeCo
   by_contra h
   push Not at h
   exact hu (no_umklapp P hl h)
+
+/-- **The per-leg bound.** In an umklapp process with `N + M` legs, some leg has a component of
+    magnitude at least `2π/(N + M)`. So a leg at the lattice scale is forced only at bounded
+    valence: many soft legs can add up to a reciprocal vector (`soft_umklapp` below). -/
+theorem umklapp_leg_bound {N M : ℕ} (P : Process N M) (hl : P.latticeConserving)
+    (hu : ¬ P.exactConserving) :
+    ∃ c : Fin 4, (∃ i, 2 * Real.pi ≤ ((N + M : ℕ) : ℝ) * |P.pin i c|) ∨
+      (∃ j, 2 * Real.pi ≤ ((N + M : ℕ) : ℝ) * |P.pout j c|) := by
+  obtain ⟨c, hc⟩ := umklapp_needs_short_wave P hl hu
+  by_contra h
+  push Not at h
+  have hpi : (0 : ℝ) < 2 * Real.pi := by positivity
+  let f : Fin N ⊕ Fin M → ℝ := Sum.elim (fun i => |P.pin i c|) (fun j => |P.pout j c|)
+  have hsum : ∑ a, f a = ∑ i, |P.pin i c| + ∑ j, |P.pout j c| := by
+    simp [f, Fintype.sum_sum_type]
+  have hlt : ∀ a, ((N + M : ℕ) : ℝ) * f a < 2 * Real.pi := by
+    rintro (i | j)
+    · exact (h c).1 i
+    · exact (h c).2 j
+  rw [← hsum] at hc
+  by_cases hne : (Finset.univ : Finset (Fin N ⊕ Fin M)).Nonempty
+  · have hs := Finset.sum_lt_sum_of_nonempty hne (fun a _ => hlt a)
+    rw [← Finset.mul_sum, Finset.sum_const, Finset.card_univ, Fintype.card_sum, Fintype.card_fin,
+      Fintype.card_fin, nsmul_eq_mul] at hs
+    have hcard : 0 < (Finset.univ : Finset (Fin N ⊕ Fin M)).card := Finset.card_pos.mpr hne
+    rw [Finset.card_univ, Fintype.card_sum, Fintype.card_fin, Fintype.card_fin] at hcard
+    have hK : (0 : ℝ) < ((N + M : ℕ) : ℝ) := by exact_mod_cast hcard
+    nlinarith
+  · rw [Finset.not_nonempty_iff_eq_empty] at hne
+    rw [hne, Finset.sum_empty] at hc
+    linarith
+
+/-- **Soft umklapp exists.** Four incoming legs, each carrying `π/2` along `x`, have mismatch
+    `2π e_x`: a genuine umklapp process in which no single leg is at the lattice scale. With `n`
+    legs of `2π/n` the same holds for any `n`, so umklapp does not by itself require a
+    Planck-scale leg; `umklapp_leg_bound` is the sharp statement. -/
+theorem soft_umklapp :
+    ∃ P : Process 4 0, P.latticeConserving ∧ ¬ P.exactConserving ∧
+      ∀ i c, |P.pin i c| ≤ Real.pi / 2 := by
+  refine ⟨⟨fun _ => ![0, Real.pi / 2, 0, 0], Fin.elim0, fun _ => 0, Fin.elim0⟩, ⟨![0, 1, 0, 0], ?_⟩,
+    ?_, ?_⟩
+  · funext c
+    fin_cases c <;> simp [Process.mismatch, latticeVec, Finset.sum_const] <;> ring
+  · intro h
+    have h1 := congrFun h 1
+    simp [Process.mismatch, Finset.sum_const] at h1
+  · intro i c
+    have := Real.pi_pos
+    fin_cases c <;> simp [abs_of_pos, this] <;> linarith
 
 /-- Exact conservation is linear: a Lorentz map carries the mismatch to its image. -/
 theorem map_mismatch {N M : ℕ} (P : Process N M) (Λ : Lorentz) :
