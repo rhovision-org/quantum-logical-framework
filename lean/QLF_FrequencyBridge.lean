@@ -46,7 +46,6 @@ theorem equal_frequency_gives_squared_delay (R : ℝ) (hR : R ≠ 0) :
     constructionDelay R (internalFrequency R) = R * R := by
   unfold constructionDelay internalFrequency
   field_simp
-  ring
 
 /-- A unit exterior reference rate gives delay equal to structural depth. -/
 theorem unit_external_frequency (R : ℝ) :
