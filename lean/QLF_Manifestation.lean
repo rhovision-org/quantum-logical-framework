@@ -61,7 +61,7 @@ This module adds only what was missing. No axiom.
 **Scope.** These are theorems about the possibility space, not about which world is ours. That
 selection is the first closure (`QLF_ClosureDepth`, `/solve`); the physics readings (magnetism from
 orientation, gravity from balance, expansion from delay) are mapped with their status in the
-companion document.
+companion document, `Manifestation.md`.
 -/
 
 namespace QLF.Manifestation

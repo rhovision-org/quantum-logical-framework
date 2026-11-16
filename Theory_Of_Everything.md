@@ -41,19 +41,20 @@ interaction; the logical complexity inside them is far larger.
 | Closure is a walk back to the origin of `ℤ⁴`; most of possibility never closes | [Closure_Walk.md](Closure_Walk.md) |
 | Every terminating computation is a ZFA string | [Universality.md](Universality.md) |
 | No finite closure is final | [Law_Of_Exceptions.md](Law_Of_Exceptions.md) |
+| Learning from one observation: the MrE update, specified and proved | [MrE_Update.md](MrE_Update.md), [MRE.md](MRE.md) |
 | Mathematics from the substrate | [Mathematics_From_QLF.md](Mathematics_From_QLF.md), [Category_Theory_QLF.md](Category_Theory_QLF.md) |
-| Two-phase / strange-loop bootstrapping; conservative return; primitive event, ρ/QKB and observer layers | [Mathematics_From_QLF.md](Mathematics_From_QLF.md) §2, [Philosophy.md](Philosophy.md) §3d, [Strange_Loops.md](Strange_Loops.md) §2A–§3B |
+| Two-phase / strange-loop bootstrapping; conservative return; primitive event, ρ/QKB and observer layers | [Mathematics_From_QLF.md](Mathematics_From_QLF.md) §2, [Philosophy.md](Philosophy.md) §3d, [Strange_Loops.md](Strange_Loops.md) §2A–§3B, [Quantum_Knowledge_Base.md](Quantum_Knowledge_Base.md) |
 
 ## 2. The two a priori solutions
 
 | Solution | What is proved | Where |
 |---|---|---|
 | **Orientation (top down).** Every history completes to a closure using only itself | the dagger completes every history; a history joined to its mirror closes | [Reversibility.md](Reversibility.md), `QLF_ClosureUnitarity`, `QLF_Discoveries2026` (`mirror_closes`) |
-| The shortest completion is the history's distance from closure | *distance equals delay* | [Manifestation.md](Manifestation.md) (`distance_eq_delay`), `QLF_Manifestation` |
-| **Isolation (bottom up).** A part is isolated exactly when it is closed | *isolation is closure*; a closed part inserted anywhere costs only a global phase | [Manifestation.md](Manifestation.md) (`isolated_iff_closed`, `closed_insertion_is_phase`), `QLF_Manifestation`; `QLF_ClosureRenewal` |
+| The shortest completion is the history's distance from closure | *distance equals delay* | [Manifestation.md](Manifestation.md) (`distance_eq_delay`), [`QLF_Manifestation`](lean/QLF_Manifestation.lean) |
+| **Isolation (bottom up).** A part is isolated exactly when it is closed | *isolation is closure*; a closed part inserted anywhere costs only a global phase | [Manifestation.md](Manifestation.md) (`isolated_iff_closed`, `closed_insertion_is_phase`), [`QLF_Manifestation`](lean/QLF_Manifestation.lean); [`QLF_ClosureRenewal`](lean/QLF_ClosureRenewal.lean) |
 | An open part cannot be hidden | forced sharing | [Discoveries_2026.md](Discoveries_2026.md) §3 |
 | Isolation in practice: Markov blankets | blankets at every scale | [Emergent_Markov_Blankets.md](Emergent_Markov_Blankets.md), [Hadrons_Markov_Blankets.md](Hadrons_Markov_Blankets.md), [Primordial_Markov_Blankets.md](Primordial_Markov_Blankets.md) |
-| Unbounded complexity | at least `8ⁿ` closures of length `2n`; a prime closure of every even length | [Manifestation.md](Manifestation.md) (`closures_unbounded`, `prime_closure_every_length`), `QLF_Manifestation` |
+| Unbounded complexity | at least `8ⁿ` closures of length `2n`; a prime closure of every even length | [Manifestation.md](Manifestation.md) (`closures_unbounded`, `prime_closure_every_length`), [`QLF_Manifestation`](lean/QLF_Manifestation.lean) |
 
 ## 3. The hard problems possibility solves
 
@@ -75,9 +76,9 @@ interaction; the logical complexity inside them is far larger.
 |---|---|---|
 | The first distinction and the logical bang | [Genesis.md](Genesis.md), `QLF_LogicalBang` | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
 | Space and time synthesized, event by event | [SpaceTime.md](SpaceTime.md), [Spacetime_Constructor.md](Spacetime_Constructor.md), [spacetime-matter-emergence.md](spacetime-matter-emergence.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
-| The constants: the `6 spatial + 2 gauge` split of the eight twists fixes a family, with α the flagship | α⁻¹ ≈ 137: [Alpha.md](Alpha.md), [Alpha_Residual.md](Alpha_Residual.md); weak mixing `sin²θ_W = 3/8` and the Koide `2/3`: [Weak_Force.md](Weak_Force.md), [Lepton_Generations_Fourier.md](Lepton_Generations_Fourier.md); `m_p/m_e = 6π⁵`: [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md); `m_π/m_e ≈ 2/α`: [Pion_QLF.md](Pion_QLF.md); the coupling strengths: [Forces_From_Alpha.md](Forces_From_Alpha.md); the Planck scale and `c`, `ℏ`, `G`: [Planck_Scale.md](Planck_Scale.md), [Per_Qubit_Mass_Quantum.md](Per_Qubit_Mass_Quantum.md), [Gravity_From_Delay.md](Gravity_From_Delay.md); `Ω_Λ ≈ log 2`: [Cosmological_Constant.md](Cosmological_Constant.md); nuclear magic numbers: [Magic_numbers.md](Magic_numbers.md) | [2 Constants](FlowChart.md#2-the-fundamental-constants) |
+| The constants: the `6 spatial + 2 gauge` split of the eight twists fixes a family, with α the flagship | α⁻¹ ≈ 137: [Alpha.md](Alpha.md), [Alpha_Residual.md](Alpha_Residual.md); weak mixing `sin²θ_W = 3/8` and the Koide `2/3`: [Weak_Force.md](Weak_Force.md), [Lepton_Generations_Fourier.md](Lepton_Generations_Fourier.md) (the mass ratios are open, with a pre-registered attempt in [Lepton_Mass_Ratio_Protocol.md](Lepton_Mass_Ratio_Protocol.md)); `m_p/m_e = 6π⁵`: [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md); `m_π/m_e ≈ 2/α`: [Pion_QLF.md](Pion_QLF.md); the coupling strengths: [Forces_From_Alpha.md](Forces_From_Alpha.md); the Planck scale and `c`, `ℏ`, `G`: [Planck_Scale.md](Planck_Scale.md), [Per_Qubit_Mass_Quantum.md](Per_Qubit_Mass_Quantum.md), [Gravity_From_Delay.md](Gravity_From_Delay.md); `Ω_Λ ≈ log 2`: [Cosmological_Constant.md](Cosmological_Constant.md); nuclear magic numbers: [Magic_numbers.md](Magic_numbers.md) | [2 Constants](FlowChart.md#2-the-fundamental-constants) |
 | The electron: the simplest closure, a plane loop | [Spin_QLF.md](Spin_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
-| **The proton: the simplest isolated imbalance.** No closure shorter than six carries baryon number (the junction winding); the proton word closes at six with baryon number +1, and at least `2ⁿ` histories of length `6 + 2n` carry it | [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md), [SEX.md](SEX.md), `QLF_BaryonWinding`, [Manifestation.md](Manifestation.md) (`proton_simplest_isolated_imbalance`, `proton_ways_unbounded`), `QLF_Manifestation` | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
+| **The proton: the simplest isolated imbalance.** No closure shorter than six carries baryon number (the junction winding); the proton word closes at six with baryon number +1, and at least `2ⁿ` histories of length `6 + 2n` carry it | [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md), [SEX.md](SEX.md), `QLF_BaryonWinding`, [Manifestation.md](Manifestation.md) (`proton_simplest_isolated_imbalance`, `proton_ways_unbounded`), [`QLF_Manifestation`](lean/QLF_Manifestation.lean) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Particles and the Standard Model | [Standard_Model.md](Standard_Model.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Atoms | [Atomic_Structure_QLF.md](Atomic_Structure_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
 | Molecules: a bond is a shared closure | [Chemistry.md](Chemistry.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
@@ -90,7 +91,8 @@ interaction; the logical complexity inside them is far larger.
 | Reading | Read | Flow chart |
 |---|---|---|
 | Three gauge forces as one substrate interaction | [Forces_From_Three_Axes.md](Forces_From_Three_Axes.md) | [3 Forces](FlowChart.md#3-forces) |
-| Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs in PR #223) | [3 Forces](FlowChart.md#3-forces) |
+| The relativity principle: what the census proves and what it does not yet | [Relativity_Principle.md](Relativity_Principle.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
+| Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs: [`QLF_MeadTransaction`](lean/QLF_MeadTransaction.lean), [`QLF_MagneticOrientation`](lean/QLF_MagneticOrientation.lean)) | [3 Forces](FlowChart.md#3-forces) |
 | Gravity from balance; distance equals delay | [Gravity_From_Delay.md](Gravity_From_Delay.md), [Gravity.md](Gravity.md), [Quantum_Gravity.md](Quantum_Gravity.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
 | **Metric = singlet; lattice divergence/Einstein equations** | [Einstein_Equations.md](Einstein_Equations.md) §6d–§6e, `QLF_MetricSinglet`, `QLF_LatticeDivergence` — formal representational result under explicit premises; physical gravity bridge **open** | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
 | Cosmic age/redshift: external CCC+TL benchmark and open QLF clock bridge | [Gupta_CCC_TL.md](Gupta_CCC_TL.md), [Gupta_ClockConventions.md](Gupta_ClockConventions.md), [AgeOfUniverse.md](AgeOfUniverse.md) — B-OPEN; substrate tick count N remains open | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |

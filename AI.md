@@ -52,7 +52,7 @@ QLF-native AI is a different kind of claim: it applies the mathematical logic of
 
 ### What's Machine-Verified vs. What's Named Open
 
-The claims in this document are backed by machine-checked Lean 4 theorems in this repository (213 modules, zero `sorry`), not by informal argument. What each claim's status *means* — proved vs. bracketed vs. open axiom, and the two epistemic axes a finding is placed on — is defined in [ScientificApproach.md §3 (epistemic status)](https://github.com/rhovision-org/quantum-logical-framework/blob/main/ScientificApproach.md) and §9 (the role of formal proof):
+The claims in this document are backed by machine-checked Lean 4 theorems in this repository (313 modules, zero `sorry`), not by informal argument. What each claim's status *means* — proved vs. bracketed vs. open axiom, and the two epistemic axes a finding is placed on — is defined in [ScientificApproach.md §3 (epistemic status)](https://github.com/rhovision-org/quantum-logical-framework/blob/main/ScientificApproach.md) and §9 (the role of formal proof):
 
 * **Closure as an Objective Predicate.** Whether a history achieves ZFA/Pauli closure is identical for all peers regardless of intent — `rho_process_always_zfa` ([`lean/RhoQuCalc.lean`](https://github.com/rhovision-org/quantum-logical-framework/blob/main/lean/RhoQuCalc.lean)) and `count_balanced_pauli_closed` ([`lean/QLF_TwistAlphabet.lean`](https://github.com/rhovision-org/quantum-logical-framework/blob/main/lean/QLF_TwistAlphabet.lean)).
 * **ZFA-Balanced Room Maintenance.** A shared multi-peer process is proven to remain a balanced ZFA process under composition ([`lean/QLF_MultiObserver.lean`](https://github.com/rhovision-org/quantum-logical-framework/blob/main/lean/QLF_MultiObserver.lean)).

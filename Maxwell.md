@@ -87,7 +87,7 @@ Every ZFA-closed event has zero magnetic divergence. Magnetic monopoles are alge
 | Equation | Status | Lean anchor |
 |---|---|---|
 | ∇·B = 0 | **Machine-verified** | `no_magnetic_monopoles` — ZFAEventDynamics.lean |
-| ∇·E = ρ/ε₀ | Provable (discrete form) | `gauss_electric` (discrete gauge-imbalance count) |
+| ∇·E = ρ/ε₀ | **Machine-verified (consistency)** | `continuity`, `div_curl`, `gauss_preserved`, `gauss_preserved_by_walk` — [`QLF_Maxwell.lean`](lean/QLF_Maxwell.lean): the walk carries a conserved current, so Gauss's law is kept by the Ampère–Maxwell update. The update itself is not derived there |
 | ∇×E = −∂B/∂t | **Machine-verified (conservation form)** | `faraday_integral` / `faraday_closed_cycle` — QLF_MaxwellCurl.lean |
 | ∇×B = μ₀J + μ₀ε₀∂E/∂t | **Machine-verified (conservation form)** | `ampere_integral` — QLF_MaxwellCurl.lean |
 

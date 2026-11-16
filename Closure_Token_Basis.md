@@ -1,6 +1,6 @@
 # A QLF-Native Closure-Token Basis for Semantic Intelligence
 
-**Resolves:** [#65](https://github.com/jimscarver/quantum-logical-framework/issues/65)
+**Resolves:** [#65](https://github.com/rhovision-org/quantum-logical-framework/issues/65)
 **Status:** Definitional specification, with §1's token and its quotient now machine-verified — [`QLF_ClosureEquivalence`](lean/QLF_ClosureEquivalence.lean) defines `closureToken h := (ledger h, twistMatrixFold h)`, proves the induced relation is an equivalence strictly between `=` and count-equivalence, and shows which quantities descend to its classes (the displacement, charge and phase do; `baryonNumber` does not). The rest of this document (§§2–5: the scoring, the grounding map, the learning rule) remains unverified. Each section states explicitly whether it is a definition, a derivation target, or an open problem.
 
 The question #65 forces, sharpened from #52: not "are LLMs semantic engines" but *could a semantic engine run on integer closure machinery instead of float probability machinery, and what exactly is the token, the ledger, and the score?* This document answers each acceptance criterion in turn.

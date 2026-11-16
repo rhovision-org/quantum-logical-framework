@@ -6,7 +6,7 @@ closure selecting which persist** — with the tokens being genotypes instead of
 variation stream is quantum, quantum is ZFA, and selection is closure. So quantum-logical causality is
 not merely *compatible* with evolution; under QLF it is the substrate evolution runs on. This page states
 that plainly and shows biology has been converging on it. It answers
-[issue #119](https://github.com/jimscarver/quantum-logical-framework/issues/119).
+[issue #119](https://github.com/rhovision-org/quantum-logical-framework/issues/119).
 
 The one thing QLF does *not* claim: a derived mutation-spectrum number. QLF supplies the *structure* of
 evolution (generate-and-select as census-and-closure), not a biological constant. That is the honest

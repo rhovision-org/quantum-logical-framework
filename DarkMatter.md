@@ -503,7 +503,7 @@ The two limits are exact:
 | sparse `g_bar ≪ a₀` | `g_obs → √(g_bar·a₀)` (Tully–Fisher) | `radialAccel_ge_geometric_mean` |
 | everywhere | `g_obs ≥ g_bar` (extra accel `a_cl = g_obs−g_bar ≥ 0`) | `radialAccel_ge_baryonic` |
 
-**Confronting SPARC ([#77](https://github.com/jimscarver/quantum-logical-framework/issues/77)).** This is
+**Confronting SPARC ([#77](https://github.com/rhovision-org/quantum-logical-framework/issues/77)).** This is
 a *parameter-free* prediction of the measured **radial acceleration relation** (McGaugh–Lelli–Schombert
 2016, `g_obs = g_bar/(1−e^{−√(g_bar/g†)})`, `g† = 1.20×10⁻¹⁰ m/s²`):
 
@@ -536,7 +536,7 @@ and the radial gradient of [BLACK-HOLES.md §4](BLACK-HOLES.md)):
   (Its share was once derived as `Ω_Λ = log 2`; that derivation does not survive the first law, and the
   search for another route is [`Log2_Search.md`](Log2_Search.md).)
 
-**Honest scope (issue [#69](https://github.com/jimscarver/quantum-logical-framework/issues/69)).**
+**Honest scope (issue [#69](https://github.com/rhovision-org/quantum-logical-framework/issues/69)).**
 This is a *thesis, not yet a closure*: the two sides share the same Hubble horizon and the same `2π`
 loop phase (`a₀ = cH₀/2π`), but **the exact operator tying enhancement and screening
 into one derived field remains open** — as does the generator of `ρ_logic(r)` itself (§5, the open
