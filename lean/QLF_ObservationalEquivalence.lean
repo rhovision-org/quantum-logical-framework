@@ -27,6 +27,11 @@ exactly when `w' ++ c` does. Nothing about tensors enters that definition. Then:
   Rauch et al. 1975 and Werner et al. 1975).
 * `obsTrigger` — the quotient strange-loop trigger rebuilt on the observational classes, so its
   `coreEquiv` is no longer chosen by definition.
+* `obsEquiv_iff_exists_bisim` (§7) — observational equivalence is the **greatest bisimulation**
+  of the append system: every relation that agrees on the joint closure now and survives every
+  one-token extension is contained in it (`bisim_le_obsEquiv`, `bisim_le_pairEquiv`). The
+  equivalence a bridge must state is therefore the coarsest one compatible with continuation and
+  closure outcomes ([`Bridge_Tools.md`](../Bridge_Tools.md) §2).
 
 **Scope.** The premises are those of `QLF_TensorFromClosure`: two independent bodies, each
 acting through its own fold, a multiplicative joint fold, and no relative order between the
@@ -321,5 +326,81 @@ theorem obsTrigger_exists : Nonempty QuotientStrangeLoopTrigger :=
 theorem obs_conservative_return (c : ObsClass) :
     obsClassEquiv.symm (R (forwardImage (obsClassEquiv c))) = c := by
   rw [R_forward, Equiv.symm_apply_apply]
+
+-- ==========================================
+-- §7. Observational equivalence is the greatest bisimulation
+-- ==========================================
+
+/-! The relation above quantifies over whole contexts. The same relation arises
+step by step, which is the form a bridge specification needs: a relation on histories
+that (i) agrees on the observable *now* (does the history close jointly, and with which
+phase) and (ii) is preserved by every one-token extension is a **bisimulation** of the
+append transition system (Park 1981; Milner 1989). Every such relation is contained in
+`ObsEquiv`, and `ObsEquiv` is one. So the equivalence is not a choice among many: it is
+the unique coarsest relation compatible with continuation and closure outcomes, and any
+bridge that preserves those two things can use only a refinement of it. This is the
+Myhill–Nerode right congruence (Nerode 1958) of the joint-closure observable, read as a
+bisimulation; the content particular to QLF is `obsEquiv_iff_pairEquiv` above. -/
+
+/-- The observable of a history now: whether it closes jointly with phase `z`. -/
+def ObsNow (w : PairHistory) (z : ℂ) : Prop :=
+  ClosesWith w [] z
+
+/-- **Bisimulation** of the append transition system for the joint-closure observable. -/
+def IsBisim (R : PairHistory → PairHistory → Prop) : Prop :=
+  ∀ w w', R w w' →
+    (∀ z : ℂ, ObsNow w z ↔ ObsNow w' z) ∧ ∀ x : Tok, R (w ++ [x]) (w' ++ [x])
+
+/-- A bisimulation is preserved by any appended context, not just one token. -/
+theorem IsBisim.append {R : PairHistory → PairHistory → Prop} (hR : IsBisim R) :
+    ∀ (c w w' : PairHistory), R w w' → R (w ++ c) (w' ++ c) := by
+  intro c
+  induction c with
+  | nil => intro w w' h; simpa using h
+  | cons x c ih =>
+    intro w w' h
+    have h1 := (hR w w' h).2 x
+    have h2 := ih _ _ h1
+    simpa [List.append_assoc] using h2
+
+/-- **Every bisimulation is contained in observational equivalence.** -/
+theorem bisim_le_obsEquiv {R : PairHistory → PairHistory → Prop} (hR : IsBisim R)
+    {w w' : PairHistory} (h : R w w') : ObsEquiv w w' := by
+  intro c z
+  have hc := hR.append c w w' h
+  have := (hR _ _ hc).1 z
+  simpa [ObsNow, ClosesWith] using this
+
+/-- **Observational equivalence is a bisimulation.** -/
+theorem obsEquiv_isBisim : IsBisim ObsEquiv := by
+  intro w w' h
+  refine ⟨fun z => by simpa [ObsNow] using h [] z, fun x c z => ?_⟩
+  have := h ([x] ++ c) z
+  simpa [ClosesWith, List.append_assoc] using this
+
+/-- **The greatest bisimulation.** Two histories are observationally equivalent exactly
+    when some bisimulation relates them. -/
+theorem obsEquiv_iff_exists_bisim (w w' : PairHistory) :
+    ObsEquiv w w' ↔ ∃ R : PairHistory → PairHistory → Prop, IsBisim R ∧ R w w' :=
+  ⟨fun h => ⟨ObsEquiv, obsEquiv_isBisim, h⟩, fun ⟨_, hR, h⟩ => bisim_le_obsEquiv hR h⟩
+
+/-- The tensor relation is therefore the greatest bisimulation too: any relation on
+    two-body histories that respects one-token continuation and joint-closure outcomes
+    (phase included) identifies only histories with the same tensor image. -/
+theorem bisim_le_pairEquiv {R : PairHistory → PairHistory → Prop} (hR : IsBisim R)
+    {w w' : PairHistory} (h : R w w') : PairEquiv w w' :=
+  (obsEquiv_iff_pairEquiv w w').1 (bisim_le_obsEquiv hR h)
+
+/-- `PairEquiv` is itself a bisimulation. -/
+theorem pairEquiv_isBisim : IsBisim PairEquiv := by
+  intro w w' h
+  have h' := (obsEquiv_iff_pairEquiv w w').2 h
+  refine ⟨(obsEquiv_isBisim w w' h').1, fun x => ?_⟩
+  exact (obsEquiv_iff_pairEquiv _ _).1 ((obsEquiv_isBisim w w' h').2 x)
+
+/-- Observational equivalence is an equivalence relation. -/
+theorem obsEquiv_equivalence : Equivalence ObsEquiv :=
+  ⟨fun _ _ _ => Iff.rfl, fun h c z => (h c z).symm,
+    fun h₁ h₂ c z => (h₁ c z).trans (h₂ c z)⟩
 
 end QLF.ObservationalEquivalence

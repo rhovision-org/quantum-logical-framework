@@ -677,6 +677,9 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ObservationalEquivalence.foldPair_append
 #print axioms QLF.ObservationalEquivalence.foldPair_ne_zero
 #print axioms QLF.ObservationalEquivalence.obsTrigger_exists
+#print axioms QLF.ObservationalEquivalence.obsEquiv_iff_exists_bisim
+#print axioms QLF.ObservationalEquivalence.bisim_le_pairEquiv
+#print axioms QLF.ObservationalEquivalence.pairEquiv_isBisim
 #print axioms QLF.ObservationalEquivalence.obs_conservative_return
 #print axioms QLF.FirstReturn.prime_event_reciprocal_open
 

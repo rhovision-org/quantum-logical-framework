@@ -52,6 +52,10 @@ Obligations:
 
 7. **Embedding.** `ι` maps model states to system states and preserves closure-relevant labels.
 8. **Bisimulation.** `~_c` is proved, not assumed; the choice of equivalence is stated.
+   *Partial (2026-11-16):* for the two-body joint-closure observable, the greatest bisimulation of
+   the append system is proved to be observational equivalence = the tensor relation
+   (`QLF_ObservationalEquivalence` §7, `obsEquiv_iff_exists_bisim`), so that choice is canonical.
+   The model `M`, its embedding and the update are not constructed.
 9. **Self-reference.** `M` can quote/name itself (reflection), not merely model an external world.
 10. **Update preservation.** If `M_t ~_c S_t`, then `M_{t+1} ~_c S_{t+1}` after `U`/`step`.
 11. **Conservativity.** The model adds no closure-relevant facts and loses none.
