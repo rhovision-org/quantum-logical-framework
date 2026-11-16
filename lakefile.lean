@@ -332,5 +332,6 @@ lean_lib QLF where
     `QLF_ObservationalEquivalence,
     `QLF_MeadTransaction,
     `QLF_MagneticOrientation,
-    `QLF_ClockRedshift
+    `QLF_ClockRedshift,
+    `QLF_MrEUpdate
   ]
