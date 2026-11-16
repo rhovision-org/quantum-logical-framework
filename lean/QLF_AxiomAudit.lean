@@ -699,5 +699,7 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.MrEUpdate.eig_eq_log_two_iff
 #print axioms QLF.MrEUpdate.pointwise_bound_false
 #print axioms QLF.MrEUpdate.mre_update_unique
+#print axioms QLF.MrEUpdate.mre_update_unique_on_support
+#print axioms QLF.MrEUpdate.unrestricted_objective_fails
 #print axioms QLF.MrEUpdate.prior_unique_minimizer
 #print axioms QLF.MrEUpdate.sequential_update

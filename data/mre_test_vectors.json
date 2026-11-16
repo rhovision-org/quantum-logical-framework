@@ -3,6 +3,18 @@
   "lean": "lean/QLF_MrEUpdate.lean",
   "units": "nats",
   "arithmetic": "update exact rational; logs float64",
+  "boundary_policy": {
+    "impossible_observation": "P(E) = 0: reject, no update",
+    "zero_likelihood": "candidate with mass off the prior support has divergence +inf; posterior is 0 or 1",
+    "naive_objective_counterexample": {
+      "prior": "1/2",
+      "p_E_given_H": "1",
+      "p_E_given_notH": "0",
+      "candidate": "0",
+      "naive_value": 0.0,
+      "correct_value": "+inf"
+    }
+  },
   "vectors": [
     {
       "name": "aria_counterexample",
@@ -79,6 +91,32 @@
       "posterior_given_notE": "3/10",
       "kl_posterior_given_E_from_prior_nats": 0.0,
       "expected_information_gain_nats": 0.0,
+      "pointwise_exceeds_log2": false,
+      "expected_within_log2": true
+    },
+    {
+      "name": "boundary_b_zero",
+      "prior": "1/4",
+      "p_E_given_H": "3/5",
+      "p_E_given_notH": "0",
+      "evidence": "3/20",
+      "posterior_given_E": "1",
+      "posterior_given_notE": "2/17",
+      "kl_posterior_given_E_from_prior_nats": 1.38629436112,
+      "expected_information_gain_nats": 0.254456171054,
+      "pointwise_exceeds_log2": true,
+      "expected_within_log2": true
+    },
+    {
+      "name": "boundary_a_zero",
+      "prior": "1/4",
+      "p_E_given_H": "0",
+      "p_E_given_notH": "3/5",
+      "evidence": "9/20",
+      "posterior_given_E": "0",
+      "posterior_given_notE": "5/11",
+      "kl_posterior_given_E_from_prior_nats": 0.287682072452,
+      "expected_information_gain_nats": 0.183380063457,
       "pointwise_exceeds_log2": false,
       "expected_within_log2": true
     },

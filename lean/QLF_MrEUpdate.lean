@@ -29,9 +29,12 @@ issue #221 asked for and proves the properties that hold in it.
 4. `pointwise_bound_false` — the **pointwise** bound is false: one outcome can move the posterior
    by more than `log 2`. Aria's counterexample on #221: prior `0.01`, `P(E|H) = 1`,
    `P(E|¬H) = 1/9801`, posterior `0.99`, divergence `0.98·log 99 ≈ 4.50 > log 2`.
-5. `mre_update_unique` — Caticha's MrE: among joint distributions that put all mass on the
-   observed outcome, the one closest to the prior joint in relative entropy is **unique** and is
-   the Bayes posterior (`mre_eq_kl_posterior`).
+5. `mre_update_unique` — Caticha's MrE, for strictly positive likelihoods: among joint
+   distributions that put all mass on the observed outcome, the one closest to the prior joint in
+   relative entropy is **unique** and is the Bayes posterior (`mre_eq_kl_posterior`).
+   `mre_update_unique_on_support` extends this to `a, b ∈ [0, 1]` with `P(E) > 0`, for candidates
+   on the prior's support (`Admissible`); `unrestricted_objective_fails` shows the restriction
+   is necessary, because the real-valued expression is not relative entropy off the support.
 6. `prior_unique_minimizer`, `uninformative_posterior`, `uninformative_eig` — with no constraint
    the update returns the prior, and an observation with `a = b` changes nothing.
 7. `sequential_update` — two **conditionally independent** observations compose: updating on
@@ -385,7 +388,7 @@ theorem mre_eq_kl_posterior {p a b : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (ha : 0 < 
   unfold binary_kl
   ring
 
-/-- **MrE uniqueness (Caticha).** Under the constraint "E was observed", the distribution of
+/-- **MrE uniqueness (Caticha), strictly positive likelihoods.** Under the constraint "E was observed", the distribution of
 least relative entropy to the prior is the Bayes posterior, and it is the only minimiser. -/
 theorem mre_update_unique {p a b s : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (ha : 0 < a) (hb : 0 < b)
     (hs0 : 0 ≤ s) (hs1 : s ≤ 1) :
@@ -403,6 +406,79 @@ theorem mre_update_unique {p a b s : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (ha : 0 < 
   · constructor
     · intro h; exact hz.1 (by linarith)
     · intro h; rw [hz.2 h]
+
+/-! ## Zero-support boundary (review of PR #242)
+
+`mreDivergence` is a real-valued expression. Where the prior joint gives an event probability
+zero, Lean's `x / 0 = 0` and `Real.log 0 = 0` make it finite, whereas the true relative entropy
+of a candidate with mass there is `+∞`. So on the boundary the unrestricted expression is not
+relative entropy, and minimising it is wrong (`unrestricted_objective_fails`, Aria's example).
+The correct statement restricts candidates to the prior's support (`Admissible`). -/
+
+/-- Candidates absolutely continuous with respect to the prior joint restricted to `E`: no mass
+on `H ∧ E` if `p·a = 0`, none on `¬H ∧ E` if `(1−p)·b = 0`. -/
+structure Admissible (s p a b : ℝ) : Prop where
+  nonneg : 0 ≤ s
+  le_one : s ≤ 1
+  left : p * a = 0 → s = 0
+  right : (1 - p) * b = 0 → s = 1
+
+theorem posterior_zero_left (p b : ℝ) : posterior p 0 b = 0 := by
+  unfold posterior
+  rw [mul_zero, zero_div]
+
+theorem posterior_zero_right {p a : ℝ} (hpa : p * a ≠ 0) : posterior p a 0 = 1 := by
+  have h : evidence p a 0 = p * a := by unfold evidence; ring
+  unfold posterior
+  rw [h, div_self hpa]
+
+/-- **Why the support restriction is needed** (Aria, review of PR #242). With `p = 1/2`,
+`a = 1`, `b = 0` the Bayes posterior is `1`, yet the unrestricted real-valued expression scores
+the zero-support candidate `s = 0` at `0` and the posterior at `log 2`. -/
+theorem unrestricted_objective_fails :
+    mreDivergence 0 (1 / 2) 1 0 = 0 ∧ mreDivergence 1 (1 / 2) 1 0 = Real.log 2 := by
+  constructor
+  · unfold mreDivergence; simp
+  · have h : (1 : ℝ) / (1 / 2 * 1) = 2 := by norm_num
+    unfold mreDivergence
+    rw [h]
+    simp
+
+/-- **MrE uniqueness on the full likelihood domain.** For `a, b ∈ [0, 1]` with a possible
+observation (`P(E) > 0`), among candidates on the prior's support the Bayes posterior is
+admissible and is the unique minimiser. When one likelihood is zero the support leaves a single
+candidate, which is the posterior (`1` if `b = 0`, `0` if `a = 0`). -/
+theorem mre_update_unique_on_support {p a b s : ℝ} (hp0 : 0 < p) (hp1 : p < 1) (ha0 : 0 ≤ a)
+    (hb0 : 0 ≤ b) (hm : 0 < evidence p a b) (hs : Admissible s p a b) :
+    Admissible (posterior p a b) p a b ∧
+      mreDivergence (posterior p a b) p a b ≤ mreDivergence s p a b ∧
+      (mreDivergence s p a b = mreDivergence (posterior p a b) p a b ↔
+        s = posterior p a b) := by
+  obtain ⟨hs0, hs1, hsa, hsb⟩ := hs
+  have h1p : 0 < 1 - p := sub_pos.2 hp1
+  rcases ha0.eq_or_lt with ha | ha
+  · subst ha
+    have hs' : s = 0 := hsa (mul_zero p)
+    have hq : posterior p 0 b = 0 := posterior_zero_left p b
+    have hb' : (1 - p) * b ≠ 0 := by
+      intro h
+      unfold evidence at hm
+      linarith
+    rw [hq, hs']
+    exact ⟨⟨le_refl _, zero_le_one, fun _ => rfl, fun h => absurd h hb'⟩, le_refl _,
+      ⟨fun _ => rfl, fun _ => rfl⟩⟩
+  · rcases hb0.eq_or_lt with hb | hb
+    · subst hb
+      have hpa : p * a ≠ 0 := ne_of_gt (mul_pos hp0 ha)
+      have hs' : s = 1 := hsb (mul_zero (1 - p))
+      have hq : posterior p a 0 = 1 := posterior_zero_right hpa
+      rw [hq, hs']
+      exact ⟨⟨zero_le_one, le_refl _, fun h => absurd h hpa, fun _ => rfl⟩, le_refl _,
+        ⟨fun _ => rfl, fun _ => rfl⟩⟩
+    · obtain ⟨_, hq0, hq1⟩ := posterior_mem hp0 hp1 ha hb
+      have hu := mre_update_unique hp0 hp1 ha hb hs0 hs1
+      exact ⟨⟨hq0.le, by linarith, fun h => absurd h (ne_of_gt (mul_pos hp0 ha)),
+        fun h => absurd h (ne_of_gt (mul_pos h1p hb))⟩, hu.1, hu.2⟩
 
 /-! ## Composition -/
 

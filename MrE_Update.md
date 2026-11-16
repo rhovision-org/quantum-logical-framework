@@ -53,11 +53,21 @@ assert `D(posterior ‖ prior) ≤ log 2` on the outcome it receives.
 
 **The update is MrE, and unique.**
 
-- `mre_update_unique`: among joint distributions that put all their mass on the observed
-  outcome, exactly one has least relative entropy to the prior joint, and it is the Bayes
-  posterior. The proof shows the constrained divergence equals `D(s ‖ P(H|E)) − log P(E)`
-  (`mre_eq_kl_posterior`), so it is minimised only at `s = P(H|E)`. This is Caticha's result that
-  MrE with a data constraint reproduces Bayes' rule, specialised to two hypotheses.
+- `mre_update_unique` (likelihoods strictly positive, `0 < a`, `0 < b`): among joint
+  distributions that put all their mass on the observed outcome, exactly one has least relative
+  entropy to the prior joint, and it is the Bayes posterior. The proof shows the constrained
+  divergence equals `D(s ‖ P(H|E)) − log P(E)` (`mre_eq_kl_posterior`), so it is minimised only
+  at `s = P(H|E)`. This is Caticha's result that MrE with a data constraint reproduces Bayes'
+  rule, specialised to two hypotheses.
+- `mre_update_unique_on_support` (the full domain `a, b ∈ [0, 1]` with `P(E) > 0`): the same
+  conclusion for candidates on the prior's support (`Admissible`: no mass on `H ∧ E` if
+  `p·a = 0`, none on `¬H ∧ E` if `(1−p)·b = 0`). When one likelihood is zero the support leaves
+  a single candidate, and it is the posterior (`1` if `b = 0`, `0` if `a = 0`).
+- `unrestricted_objective_fails`: the support restriction is necessary. Aria (aixaria0) found
+  this in review of PR #242. A candidate with mass where the prior joint has none has relative
+  entropy `+∞`, but the real-valued formula returns a finite number there. With `p = 1/2`,
+  `a = 1`, `b = 0` it scores the impossible candidate `s = 0` at `0` and the Bayes posterior
+  `s = 1` at `log 2`. See the boundary policy in §3.
 - `prior_unique_minimizer`: with no constraint the minimiser is the prior itself.
 - `uninformative_posterior`, `uninformative_eig`: an observation with `a = b` leaves the prior
   unchanged and carries zero expected information.
@@ -81,6 +91,18 @@ reject an observation whose probability under the prior is zero. Divergences and
 floating-point diagnostics; [`mre_update.py`](mre_update.py) reports them in nats rounded to 12
 places.
 
+**Boundary policy.**
+
+| Case | Rule |
+|---|---|
+| `P(E) = 0` (for example `a = b = 0`) and `E` is reported | Reject the observation. No update is defined |
+| `b = 0 < a`, `E` observed | Posterior is exactly `1` |
+| `a = 0 < b`, `E` observed | Posterior is exactly `0` |
+| Any code that evaluates the MrE objective itself | A candidate with mass where the prior joint is zero has divergence `+∞`. Never evaluate the bare formula there |
+
+The reference `mre_divergence` in [`mre_update.py`](mre_update.py) implements the last row, and
+the vectors include both zero-likelihood cases and the impossible observation.
+
 ## 4. Worked example: the four FreeTrust risk areas
 
 Each area is a two-hypothesis question with its own prior and one binary signal. The numbers are
@@ -99,8 +121,8 @@ posterior by more than one bit (1.63 nats), while its expected gain is small (0.
 ## 5. Test vectors
 
 `python3 mre_update.py` checks every invariant above on the vectors (bound, non-negativity, the
-KL form, the saturation case, Aria's counterexample, the uninformative case, sequential
-composition), and `--write` regenerates the JSON. The crate in quantum-os #260 can check against
+KL form, the saturation case, Aria's counterexample, the uninformative case, the zero-likelihood
+and impossible-observation boundaries, MrE minimality on a grid, sequential composition), and `--write` regenerates the JSON. The crate in quantum-os #260 can check against
 the same file.
 
 ## 6. Open
