@@ -460,19 +460,37 @@ def survey(R, procs, seed=1, only=None, checkpoint=None):
     if only is not None:
         jobs = [j for j in jobs if (j[1], j[2]) in only]
     # optional checkpoint: one JSON line per finished target pair, so a restart loses only the
-    # pairs in progress (each pair's result is certified on its own, so resuming changes nothing)
+    # pairs in progress. The first line is a provenance header (rule, seed, the geometry set, and
+    # SHA-256 of the three source files); a checkpoint whose header does not match this run is
+    # refused, so resuming can never mix rows from different code, rules or geometries.
     parts, done = [], set()
+    meta = None
     if checkpoint:
+        import hashlib
         import json
         import os
-        if os.path.exists(checkpoint):
+        here = os.path.dirname(os.path.abspath(__file__))
+        meta = {"rule": str(R), "seed": seed,
+                "geometries": hashlib.sha256(repr([(j[1], j[2], j[3], j[4]) for j in jobs])
+                                             .encode()).hexdigest(),
+                "sources": {f: hashlib.sha256(open(os.path.join(here, f), "rb").read()).hexdigest()
+                            for f in ("born_readout_certified.py", "contextual_census.py",
+                                      "born_readout_survey.py")}}
+        if os.path.exists(checkpoint) and os.path.getsize(checkpoint):
             with open(checkpoint) as fh:
+                head = json.loads(fh.readline())
+                if head.get("meta") != meta:
+                    raise RuntimeError(f"checkpoint {checkpoint} was written by a different "
+                                       f"rule, seed, geometry set or source; refusing to resume")
                 for line in fh:
                     rec = json.loads(line)
                     key = (tuple(rec["key"][0]), tuple(rec["key"][1]))
                     rows = [(a, b, c, v, tuple(lab), rep_) for a, b, c, v, lab, rep_ in rec["rows"]]
                     parts.append((rows, rec["D"], rec["K"]))
                     done.add(key)
+        else:
+            with open(checkpoint, "w") as fh:
+                fh.write(json.dumps({"meta": meta}) + "\n")
         jobs = [j for j in jobs if (j[1], j[2]) not in done]
         print(f"checkpoint {checkpoint}: {len(done)} target pairs done, {len(jobs)} to run", flush=True)
     _init_oper(R)

@@ -214,11 +214,11 @@ Summable geometries out of the same 180,288:
 No member of any family has a repeated root in a support. Certified annihilator degrees reach 80
 (at `split:2,3`), with up to 60 primes per certificate.
 
-* **P fails, as the prior said.** No family has summable geometries at its two largest members.
-  Under every rule tried, convergence lives only at the smallest state space in which anything
-  interferes. It is gone at the next member and stays gone. The `ℓ¹` family shows this most
-  clearly, because it has two convergent members before the collapse (`R = 1` and `R = 2`) and
-  still empties at `R = 3`. The collapse is therefore not a feature of the shared `ℓ¹` budget. It
+* **P fails for the three multi-member families, as the prior said.** None of them has summable
+  geometries at its two largest members. (`linf:1` was run at one size only, so persistence is not
+  evaluated for it.) In each of the three, convergence appears only at the smallest sizes, and
+  once gone it stays gone. The `ℓ¹` family shows this most clearly: it has two convergent members
+  before the collapse (`R = 1` and `R = 2`) and still empties at `R = 3`. The collapse is therefore not a feature of the shared `ℓ¹` budget. It
   happens when spatial capacity grows alone (`split:S,1`), and gauge capacity never opens a
   convergent class at all (`split:2,G`).
 * **Q, recorded.** The integer supports are a property of the rule, not of the substrate. At
@@ -228,9 +228,8 @@ No member of any family has a repeated root in a support. Certified annihilator 
   form `x² + n`, and the verdicts are exact). So the `{5, 7}` selection of §1 does not survive a
   change of rule at fixed small size. That fits reading it as a feature of one truncation.
 
-What this adds to §4: across nine capacity-limited state spaces in three families, an
-unnormalized amplitude exists only where the state space is too small for the transfer operator to
-have spread past the readouts. Any route to a Born weight through this amplitude has to explain a
+What this adds to §4: across nine capacity-limited state spaces in three multi-member families, an
+unnormalized amplitude exists only at the smallest sizes of each multi-member family. Any route to a Born weight through this amplitude has to explain a
 convergent class that persists. These rules give none, so the remaining options are a readout
 other than first closure at fixed targets, or a weight that is not this amplitude. The
 reproduction commands are `python3 born_readout_certified.py --R <rule>`, with `--checkpoint

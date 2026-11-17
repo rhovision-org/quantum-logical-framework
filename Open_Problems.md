@@ -286,7 +286,7 @@ but **given that everything happens every way, exactly how do those ways add?**
      artifact of the capacity-2 truncation and not a selection rule that persists. That reading is
      an interpretation of certified counts at two capacities, not a theorem. A pre-registered test of
      other capacity rules (§5 there: separate spatial and gauge cuts, an `ℓ∞` cut) found the same
-     collapse in every family, so no rule tried keeps a convergent class as capacity grows; `5` and `7` are eigenvalues of that truncation (`5` enters
+     collapse in each of the three multi-member families, so none of those rules keeps a convergent class as capacity grows (an `ℓ∞` cut was run at one size only); `5` and `7` are eigenvalues of that truncation (`5` enters
      only through absorption at the apparatus targets). **Open instead:** a readout other than first
      closure at fixed targets, or a weight that is not this amplitude. The sub-additivity theorem is unaffected:
      it bounds the *normalized* weight everywhere.
