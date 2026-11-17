@@ -1,8 +1,8 @@
 {
   "record_type": "claim",
   "record_id": "QLF-RELATIVITY-001",
-  "version": "0.3.2-draft",
-  "source_revision": "d575748cb10923257442d7f7b90a7f7a3d7e9320",
+  "version": "0.3.3-draft",
+  "source_revision": "00af579e8553d6da78fffed59c2f3bf3082797f0",
   "informal_statement": "The free Dirac walk approaches Lorentz-covariant propagation in the long-wavelength regime, with a calculable lattice error, while exact invariance and interacting boost covariance remain open.",
   "approximation_or_regime": {
     "name": "Long-wavelength free Dirac walk",
@@ -122,7 +122,7 @@
     "F": "Free-shell covariance, census limits, Lorentz-symbol determinant and shared-pair marginal identities are formal and audited. Interacting kinematics: exact conservation at long wavelength, frame-independence of allowed processes, boost-instability of the two elementary umklapp vectors, the per-leg umklapp bound, two-body momentum conservation.",
     "N": "No numerical boost-covariance benchmark is claimed.",
     "E": "None. No empirical evidence or interacting test is claimed.",
-    "reviewer": "Aria reviewed the PR; the claim record is a post-merge hygiene entry"
+    "reviewer": "Aria (aixaria0) approved PR #243 (review 5915765638, head 82209818) and PR #257 (review 5924938224, head a1e4c279) at source level; CI ran the Lean build and exact-footprint gate on both heads. Earlier entries (#222) were reviewed separately."
   },
   "defeaters": {
     "formal": "A counterexample to the free-shell bound inside the stated hypotheses.",
@@ -168,16 +168,16 @@
     "bridge": "OPEN"
   },
   "reviewer_independence": {
-    "source_inspection": "Aria reviewed the PR and its formal claims",
+    "source_inspection": "Aria (aixaria0): PR #243 review 5915765638 at 82209818, PR #257 review 5924938224 at a1e4c279; source-level, not an independent build",
     "enumeration": "project CI for the formal anchors",
     "original_lean_kernel": "project CI build and exact-footprint gate",
     "measurement": "none",
     "independence_tier": "collaborator",
-    "receipt": null
+    "receipt": "https://github.com/rhovision-org/quantum-logical-framework/pull/257#pullrequestreview-5924938224"
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
-    "source_revision": "d575748cb10923257442d7f7b90a7f7a3d7e9320",
+    "source_revision": "00af579e8553d6da78fffed59c2f3bf3082797f0",
     "reference_documents": [
       "Relativity_Principle.md",
       "Open_Problems.md",
@@ -189,6 +189,6 @@
       "lean/QLF_BoostCovariance.lean",
       "lean/QLF_InteractingKinematics.lean"
     ],
-    "status": "post-merge claim record; no bridge promotion"
+    "status": "post-merge claim record pinned to the #257 merge commit; no bridge promotion"
   }
 }
