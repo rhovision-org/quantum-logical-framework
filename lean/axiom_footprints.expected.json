@@ -812,6 +812,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.GuptaPrefixClock.gupta_past_prefix_obstruction": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GuptaPrefixClock.inverse_period_ratio": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GuptaPrefixClock.prefix_lapse_le_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.HiddenZeros.A4_zero": [
     "Classical.choice",
     "Quot.sound",

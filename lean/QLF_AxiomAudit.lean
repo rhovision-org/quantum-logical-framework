@@ -43,6 +43,7 @@ import QLF_ClockDomains
 import QLF_ClockPairing
 import QLF_ClockIntervention
 import QLF_MrEUpdate
+import QLF_GuptaPrefixClock
 import QLF_ReadoutCriterion
 import QLF_Axioms
 import QLF_Universality
@@ -805,6 +806,9 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.MrEUpdate.unrestricted_objective_fails
 #print axioms QLF.MrEUpdate.prior_unique_minimizer
 #print axioms QLF.MrEUpdate.sequential_update
+#print axioms QLF.GuptaPrefixClock.inverse_period_ratio
+#print axioms QLF.GuptaPrefixClock.prefix_lapse_le_one
+#print axioms QLF.GuptaPrefixClock.gupta_past_prefix_obstruction
 
 -- Readout criterion: general exponential-sum linear algebra, no QLF axiom.
 #print axioms QLF.ReadoutCriterion.terms_tendsto_zero
