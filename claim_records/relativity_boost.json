@@ -168,12 +168,12 @@
     "bridge": "OPEN"
   },
   "reviewer_independence": {
-    "source_inspection": "Aria (aixaria0): PR #243 review 5915765638 at 82209818, PR #257 review 5924938224 at a1e4c279; source-level, not an independent build",
+    "source_inspection": "Aria (aixaria0): PR #243 review 5915765638 at 82209818, PR #257 review 5924938224 at a1e4c279; source-level, not an independent build; review URLs: https://github.com/rhovision-org/quantum-logical-framework/pull/243#pullrequestreview-5915765638 and https://github.com/rhovision-org/quantum-logical-framework/pull/257#pullrequestreview-5924938224 (no hashed receipt artifact, so receipt stays null and G6 stays INCOMPLETE)",
     "enumeration": "project CI for the formal anchors",
     "original_lean_kernel": "project CI build and exact-footprint gate",
     "measurement": "none",
     "independence_tier": "collaborator",
-    "receipt": "https://github.com/rhovision-org/quantum-logical-framework/pull/257#pullrequestreview-5924938224"
+    "receipt": null
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
