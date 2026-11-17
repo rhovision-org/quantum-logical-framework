@@ -1480,7 +1480,22 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ObservationalEquivalence.bisim_le_pairEquiv": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ObservationalEquivalence.closesWith_completion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.exists_first_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.first_closure_decides": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1491,6 +1506,11 @@
     "propext"
   ],
   "QLF.ObservationalEquivalence.foldPair_ne_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.obsEquiv_iff_exists_bisim": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1506,6 +1526,16 @@
     "propext"
   ],
   "QLF.ObservationalEquivalence.obs_conservative_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.one_closure_decides": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ObservationalEquivalence.pairEquiv_isBisim": [
     "Classical.choice",
     "Quot.sound",
     "propext"

@@ -67,6 +67,13 @@ estimate into a proof needs a bound on the walk's total return probability
 (c) Reading P as an angle in radians is an added hypothesis H, not a
 consequence of rules 1-6; "adds no choice" above refers only to the
 construction of P, not to that identification.
+
+CERTIFIED (2026-11-16, lepton_phase_certify.py).  The missing bound is
+supplied: P <= E, the NB walk's expected number of returns, and
+P - S_N <= E - U_N.  The NB recurrence gives E = (2/3) G - 5/6 (analytic
+reduction), and G <= 1.5400 is certified in exact rational arithmetic, so
+E <= 0.1933 and P lies in [0.0400, 0.1291].  2/3 is excluded: FAIL, certified
+given the analytic reduction.  See Bridge_Tools.md 3.
 """
 
 from __future__ import annotations
