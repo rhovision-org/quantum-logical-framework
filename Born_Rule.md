@@ -385,7 +385,9 @@ QLF reading: the path-integral sum gives $\cos(\theta/2)$ as the constructively-
     `|λ|²` below 8), and find **no convergent geometry at capacity 3**. A rule that empties one
     capacity up reads as belonging to the truncation, the outcome registered in advance. So the
     `1.4%` question is settled on the encoding side, as an interpretation of certified counts at two
-    capacities: the `R = 2` amplitudes are real but do not continue as capacity grows.
+    capacities: the `R = 2` amplitudes are real but do not continue as capacity grows. A pre-registered
+    test of other capacity rules (separate spatial and gauge cuts, an `ℓ∞` cut) found the same
+    collapse in every family ([`Born_Readout_Criterion.md`](Born_Readout_Criterion.md) §5).
   * **But it does not render an angle, and that is the test that matters.** Sweeping the apparatus
     does not sweep the weight: adding transverse letters one at a time gives
     `2·arccos√P = 0°, 8.99°, 13.04°, 10.37°, 12.89°, 11.13°` for `a = 0…5` — wobbling, never

@@ -284,9 +284,11 @@ but **given that everything happens every way, exactly how do those ways add?**
      capacity 3 **none of 170,400 closing geometries converges**, although the operator has six
      eigenvalue moduli below 8. Read by the outcome registered in advance, the convergent class is an
      artifact of the capacity-2 truncation and not a selection rule that persists. That reading is
-     an interpretation of certified counts at two capacities, not a theorem; `5` and `7` are eigenvalues of that truncation (`5` enters
-     only through absorption at the apparatus targets). **Open instead:** a capacity rule under which
-     a convergent family persists, or a different readout. The sub-additivity theorem is unaffected:
+     an interpretation of certified counts at two capacities, not a theorem. A pre-registered test of
+     other capacity rules (§5 there: separate spatial and gauge cuts, an `ℓ∞` cut) found the same
+     collapse in every family, so no rule tried keeps a convergent class as capacity grows; `5` and `7` are eigenvalues of that truncation (`5` enters
+     only through absorption at the apparatus targets). **Open instead:** a readout other than first
+     closure at fixed targets, or a weight that is not this amplitude. The sub-additivity theorem is unaffected:
      it bounds the *normalized* weight everywhere.
    * ~~**What was open:** *which apparatus words produce dominant-blind readouts*, whether the
      excited eigenvalue set means anything physically, and whether 1.4% is a selection rule or the

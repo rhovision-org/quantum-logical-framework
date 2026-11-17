@@ -200,6 +200,43 @@ Hypotheses and outcomes, stated before the run:
 * **Q (the integers).** In any summable geometry, under any rule, are the supports still integer
   `|λ|²`, and still among `{5, 7}`? Recorded descriptively, not a kill condition.
 
+### 5a. Results (certified, every member of every family run in full)
+
+Summable geometries out of the same 180,288:
+
+| family | smallest member | middle member | largest member | persists? |
+|---|---:|---:|---:|---|
+| `l1:R` | `R = 1`: **7,112** | `R = 2`: **1,536** | `R = 3`: 0 | no |
+| `split:S,1` | `S = 1`: **7,744** | `S = 2`: 0 | `S = 3`: 0 | no |
+| `split:2,G` | `G = 1`: 0 | `G = 2`: 0 | `G = 3`: 0 | no |
+| `linf:1` | **496** | – | – | (one member) |
+
+No member of any family has a repeated root in a support. Certified annihilator degrees reach 80
+(at `split:2,3`), with up to 60 primes per certificate.
+
+* **P fails, as the prior said.** No family has summable geometries at its two largest members.
+  Under every rule tried, convergence lives only at the smallest state space in which anything
+  interferes. It is gone at the next member and stays gone. The `ℓ¹` family shows this most
+  clearly, because it has two convergent members before the collapse (`R = 1` and `R = 2`) and
+  still empties at `R = 3`. The collapse is therefore not a feature of the shared `ℓ¹` budget. It
+  happens when spatial capacity grows alone (`split:S,1`), and gauge capacity never opens a
+  convergent class at all (`split:2,G`).
+* **Q, recorded.** The integer supports are a property of the rule, not of the substrate. At
+  `l1:1` the supports are `{6}` and `{7}`, and at `l1:2` they are `{5}`, `{7}` and `{5, 7}`. At
+  `split:1,1` and `linf:1`, every summable support is a non-integer `|λ|²` below 8 (shown as ≈ 0.26
+  and 7.74, ≈ 0.84 and 7.16, and ≈ 0.97, 5.49 and 7.55; the factors are irreducible and not of the
+  form `x² + n`, and the verdicts are exact). So the `{5, 7}` selection of §1 does not survive a
+  change of rule at fixed small size. That fits reading it as a feature of one truncation.
+
+What this adds to §4: across nine capacity-limited state spaces in three families, an
+unnormalized amplitude exists only where the state space is too small for the transfer operator to
+have spread past the readouts. Any route to a Born weight through this amplitude has to explain a
+convergent class that persists. These rules give none, so the remaining options are a readout
+other than first closure at fixed targets, or a weight that is not this amplitude. The
+reproduction commands are `python3 born_readout_certified.py --R <rule>`, with `--checkpoint
+<file>` making long runs resumable: `l1:1` takes seconds, and `split:2,3` about 7 hours on two
+cores.
+
 Reproduce (certified): `python3 born_readout_certified.py --selftest`, then `--R 2` (~2 min on four
 cores) and `--R 3` (~66 min). The first, uncertified instrument remains as
 [`born_readout_survey.py`](born_readout_survey.py).

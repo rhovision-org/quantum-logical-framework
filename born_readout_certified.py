@@ -448,7 +448,7 @@ def _target_set(args):
     return res, D, K
 
 
-def survey(R, procs, seed=1, only=None):
+def survey(R, procs, seed=1, only=None, checkpoint=None):
     words = [''.join(w) for L in (1, 2) for w in itertools.product(cc.ALPHABET, repeat=L)]
     groups = {}
     for bp, bm in itertools.combinations(words, 2):
@@ -459,9 +459,30 @@ def survey(R, procs, seed=1, only=None):
     jobs = [(R, *sorted(key), pairs, words, seed) for key, pairs in groups.items()]
     if only is not None:
         jobs = [j for j in jobs if (j[1], j[2]) in only]
+    # optional checkpoint: one JSON line per finished target pair, so a restart loses only the
+    # pairs in progress (each pair's result is certified on its own, so resuming changes nothing)
+    parts, done = [], set()
+    if checkpoint:
+        import json
+        import os
+        if os.path.exists(checkpoint):
+            with open(checkpoint) as fh:
+                for line in fh:
+                    rec = json.loads(line)
+                    key = (tuple(rec["key"][0]), tuple(rec["key"][1]))
+                    rows = [(a, b, c, v, tuple(lab), rep_) for a, b, c, v, lab, rep_ in rec["rows"]]
+                    parts.append((rows, rec["D"], rec["K"]))
+                    done.add(key)
+        jobs = [j for j in jobs if (j[1], j[2]) not in done]
+        print(f"checkpoint {checkpoint}: {len(done)} target pairs done, {len(jobs)} to run", flush=True)
     _init_oper(R)
     with Pool(procs, initializer=_init_oper, initargs=(R,)) as pool:
-        parts = list(pool.imap_unordered(_target_set, jobs))
+        for job, part in zip(jobs, pool.imap(_target_set, jobs)):
+            parts.append(part)
+            if checkpoint:
+                with open(checkpoint, "a") as fh:
+                    fh.write(json.dumps({"key": [job[1], job[2]], "rows": part[0],
+                                         "D": part[1], "K": part[2]}) + "\n")
     rows = [r for part, _, _ in parts for r in part]
     Ds = [D for _, D, _ in parts]
     Ks = [K for _, _, K in parts]
@@ -524,12 +545,14 @@ def main():
     ap.add_argument("--R", default="",
                     help="capacity rule: an integer (l1), or l1:R, linf:R, split:S,G (see parse_rule)")
     ap.add_argument("--procs", type=int, default=4)
+    ap.add_argument("--checkpoint", default=None,
+                    help="JSON-lines file: finished target pairs are appended and skipped on rerun")
     ap.add_argument("--selftest", action="store_true")
     a = ap.parse_args()
     if a.selftest:
         return 1 if selftest() else 0
     if a.R:
-        rows, Ds, Ks = survey(a.R, a.procs)
+        rows, Ds, Ks = survey(a.R, a.procs, checkpoint=a.checkpoint)
         report(rows, Ds, Ks, a.R)
     return 0
 
