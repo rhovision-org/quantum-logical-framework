@@ -1762,6 +1762,26 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ReadoutCriterion.amplitude_exists_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ReadoutCriterion.readout_summable_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ReadoutCriterion.readout_tendsto_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ReadoutCriterion.terms_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Realizability.no_continuum_in_finite_region": [
     "Classical.choice",
     "Quot.sound",

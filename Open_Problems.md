@@ -274,11 +274,25 @@ but **given that everything happens every way, exactly how do those ways add?**
      `5`, `7` come from. This also dissolves the "realized threshold" puzzle: `8` is *in* the
      spectrum. The earlier imbalance rules were proxies and behave like proxies (antipodal converges
      52% of the time).
-   * **What is still open:** *which apparatus words produce dominant-blind readouts* — now a
-     combinatorial question about `u_c` rather than a search over geometries — whether the excited
-     eigenvalue set means anything physically, and whether 1.4% is a selection rule or the encoding
-     being too rigid. The sub-additivity theorem is unaffected: it bounds the *normalized* weight
-     everywhere.
+   * **Answered (2026-11-15, pre-registered, [`Born_Readout_Criterion.md`](Born_Readout_Criterion.md)):
+     the criterion is now a **theorem** ([`QLF_ReadoutCriterion`](lean/QLF_ReadoutCriterion.lean),
+     `amplitude_exists_iff`, no axioms: an exponential-sum readout converges absolutely at `8^{−d/2}`
+     iff every eigenvalue it sees has `|λ|² < 8`), and the support is now read off **certified**
+     minimal recurrences rather than float overlaps: an annihilator checked over `ℤ` at every depth,
+     with root positions decided by exact Schur–Cohn and Sturm tests. Over 180,288 geometries the capacity-2 selection rule
+     **holds** (every convergent support is on `{5, 7}`, no irrational below threshold), but at
+     capacity 3 **none of 170,400 closing geometries converges**, although the operator has six
+     eigenvalue moduli below 8. Read by the outcome registered in advance, the convergent class is an
+     artifact of the capacity-2 truncation and not a selection rule that persists. That reading is
+     an interpretation of certified counts at two capacities, not a theorem. A pre-registered test of
+     other capacity rules (§5 there: separate spatial and gauge cuts, an `ℓ∞` cut) found the same
+     collapse in each of the three multi-member families, so none of those rules keeps a convergent class as capacity grows (an `ℓ∞` cut was run at one size only); `5` and `7` are eigenvalues of that truncation (`5` enters
+     only through absorption at the apparatus targets). **Open instead:** a readout other than first
+     closure at fixed targets, or a weight that is not this amplitude. The sub-additivity theorem is unaffected:
+     it bounds the *normalized* weight everywhere.
+   * ~~**What was open:** *which apparatus words produce dominant-blind readouts*, whether the
+     excited eigenvalue set means anything physically, and whether 1.4% is a selection rule or the
+     encoding being too rigid.~~ Answered in the bullet above.
    * ~~**Next Lean anchor (tractable):** the Kraft bound itself~~ — ✅ **done**
      ([`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)). For a prefix-free set of twist words
      `Σ 8^{−|h|} ≤ 1` is finite counting (`8^{K−|h|}` disjoint continuation sets inside `8^K`), so
