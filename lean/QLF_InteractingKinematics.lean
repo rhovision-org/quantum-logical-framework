@@ -61,10 +61,10 @@ umklapp. Bounding the lattice-scale contribution is an open obligation. The cens
 partial answer (axis-blind shared pairs keep the spread ratio at `1`) is
 [`QLF_LorentzSymbol`](QLF_LorentzSymbol.lean) §5.
 
-**Not here.** (i) The translation half of `latticeConserving` *is* here for a general two-body
-walk with a contact interaction (`twoBody_conserves_momentum`, last section); identifying its
-conserved character with the real reciprocal-vector form used by `Process` (Fourier on `ZMod N`)
-and extending it to more than two bodies is not; (ii) the amplitude or S-matrix
+**Not here.** (i) For a two-body contact-interaction walk on `ℤ³` the conservation law is
+derived (`twoBody_lattice_conservation`, `scattering_latticeConserving`, last two sections); for
+more than two bodies, and for the full set of out-states of a given step (which total momenta
+actually occur), it is still the definition of a process; (ii) the amplitude or S-matrix
 comparison between frames; (iii) loops and the size of their umklapp contribution; (iv) pair
 creation as a change in the number of census strands, which is a statement about the census, not
 about kinematics. See [`Relativity_Principle.md`](../Relativity_Principle.md) §6a. No axioms.
@@ -400,5 +400,124 @@ theorem twoBody_conserves_momentum (e : ι → S) (C : ι → ι → W →ₗ[�
   exact smul_comm _ _ _
 
 end TwoBody
+
+/-! ## Stage 3, the reciprocal half: the conserved character is momentum mod `2π`
+
+`twoBody_conserves_momentum` conserves a character. On the lattice `ℤ³` a two-body plane wave of
+momenta `k₁`, `k₂` has the character of total momentum `k₁ + k₂` (`planeWave_jointShift`), a
+non-zero state has only one character (`char_unique`), and two momenta give the same character
+exactly when they differ by a reciprocal vector (`momChar_eq`). So if the interacting step sends
+the plane wave to a non-zero state of total momentum `K'`, then `k₁ + k₂ − K' ∈ 2π ℤ³`
+(`twoBody_lattice_conservation`): the spatial part of `Process.latticeConserving`, derived for
+this walk instead of assumed. Quasi-energy is a phase, so it is conserved mod `2π` as well
+(`quasiEnergy_mod`), and `scattering_latticeConserving` assembles the two into the `Process`
+form for a two-to-two scattering. -/
+
+section Reciprocal
+
+variable {W : Type*} [AddCommGroup W] [Module ℂ W] {ι : Type*} [Fintype ι]
+
+/-- A site of the spatial lattice `ℤ³`. -/
+abbrev Site := Fin 3 → ℤ
+
+/-- The translation character of total momentum `K`. -/
+noncomputable def momChar (K : Fin 3 → ℝ) (a : Site) : ℂ :=
+  Complex.exp (-(∑ c, (K c : ℂ) * (a c : ℂ)) * Complex.I)
+
+/-- A two-body plane wave with momenta `k₁`, `k₂` and internal state `w`. -/
+noncomputable def planeWave (k₁ k₂ : Fin 3 → ℝ) (w : W) : Site × Site → W :=
+  fun x => Complex.exp ((∑ c, ((k₁ c : ℂ) * (x.1 c : ℂ) + (k₂ c : ℂ) * (x.2 c : ℂ))) *
+    Complex.I) • w
+
+/-- A two-body plane wave has the character of its total momentum. -/
+theorem planeWave_jointShift (k₁ k₂ : Fin 3 → ℝ) (w : W) (a : Site) :
+    jointShift a (planeWave k₁ k₂ w) = momChar (k₁ + k₂) a • planeWave k₁ k₂ w := by
+  funext x
+  simp only [jointShift, planeWave, momChar, Pi.smul_apply, smul_smul, ← Complex.exp_add]
+  congr 2
+  have h : ∑ c, ((k₁ c : ℂ) * ((x.1 - a) c : ℤ) + (k₂ c : ℂ) * ((x.2 - a) c : ℤ)) =
+      ∑ c, ((k₁ c : ℂ) * (x.1 c : ℂ) + (k₂ c : ℂ) * (x.2 c : ℂ)) -
+        ∑ c, (((k₁ + k₂) c : ℝ) : ℂ) * (a c : ℂ) := by
+    rw [← Finset.sum_sub_distrib]
+    refine Finset.sum_congr rfl fun c _ => ?_
+    simp only [Pi.sub_apply, Pi.add_apply, Int.cast_sub, Complex.ofReal_add]
+    ring
+  rw [h]
+  ring
+
+/-- A non-zero state has at most one translation character. -/
+theorem char_unique {S : Type*} [AddCommGroup S] {ψ : S × S → W} (hψ : ψ ≠ 0) (χ χ' : S → ℂ)
+    (h : ∀ a, jointShift a ψ = χ a • ψ) (h' : ∀ a, jointShift a ψ = χ' a • ψ) : χ = χ' := by
+  obtain ⟨x, hx⟩ := Function.ne_iff.mp hψ
+  funext a
+  have e : (χ a - χ' a) • ψ x = 0 := by
+    rw [sub_smul]
+    have := congrFun ((h a).symm.trans (h' a)) x
+    simp only [Pi.smul_apply] at this
+    rw [this, sub_self]
+  rcases smul_eq_zero.mp e with h0 | h0
+  · exact sub_eq_zero.mp h0
+  · exact absurd h0 hx
+
+/-- Two phases agree exactly when their angles differ by a multiple of `2π`. -/
+theorem quasiEnergy_mod {E E' : ℝ}
+    (h : Complex.exp (E * Complex.I) = Complex.exp (E' * Complex.I)) :
+    ∃ n : ℤ, E - E' = 2 * Real.pi * n := by
+  obtain ⟨n, hn⟩ := Complex.exp_eq_exp_iff_exists_int.mp h
+  refine ⟨n, ?_⟩
+  have := congrArg Complex.im hn
+  simp at this
+  linarith
+
+/-- Equal momentum characters differ by a reciprocal-lattice vector. -/
+theorem momChar_eq {K K' : Fin 3 → ℝ} (h : momChar K = momChar K') (c : Fin 3) :
+    ∃ n : ℤ, K c - K' c = 2 * Real.pi * n := by
+  have hc := congrFun h (Pi.single c (-1))
+  simp only [momChar, Pi.single_apply] at hc
+  have e : ∀ L : Fin 3 → ℝ,
+      -(∑ d, (L d : ℂ) * ((if d = c then (-1 : ℤ) else 0 : ℤ) : ℂ)) * Complex.I =
+        (L c : ℂ) * Complex.I := by
+    intro L
+    rw [Finset.sum_eq_single c]
+    · simp
+    · intro d _ hd; simp [hd]
+    · simp
+  rw [e K, e K'] at hc
+  exact quasiEnergy_mod hc
+
+/-- **Lattice momentum conservation, derived.** If the interacting two-body step sends the plane
+    wave of momenta `k₁`, `k₂` to a non-zero state of definite total momentum `K'`, then
+    `k₁ + k₂ − K'` is a reciprocal-lattice vector. -/
+theorem twoBody_lattice_conservation (e : ι → Site) (C : ι → ι → W →ₗ[ℂ] W) (g : Site → ℂ)
+    (k₁ k₂ K' : Fin 3 → ℝ) (w : W)
+    (hne : twoBodyStep e C g (planeWave k₁ k₂ w) ≠ 0)
+    (hout : ∀ a, jointShift a (twoBodyStep e C g (planeWave k₁ k₂ w)) =
+      momChar K' a • twoBodyStep e C g (planeWave k₁ k₂ w)) (c : Fin 3) :
+    ∃ n : ℤ, k₁ c + k₂ c - K' c = 2 * Real.pi * n := by
+  have hin := twoBody_conserves_momentum e C g (momChar (k₁ + k₂)) (planeWave k₁ k₂ w)
+    (planeWave_jointShift k₁ k₂ w)
+  have := momChar_eq (char_unique hne _ _ hin hout) c
+  simpa using this
+
+/-- **The `Process` form.** A two-to-two scattering whose quasi-energies agree mod `2π` and whose
+    momenta agree mod the reciprocal lattice is a lattice-conserving `Process`: the definition of
+    the first sections is met by the two-body walk. -/
+theorem scattering_latticeConserving (E₁ E₂ E₃ E₄ : ℝ) (k₁ k₂ k₃ k₄ : Fin 3 → ℝ)
+    (m : Fin 2 → ℝ) (m' : Fin 2 → ℝ)
+    (hE : ∃ n : ℤ, E₁ + E₂ - (E₃ + E₄) = 2 * Real.pi * n)
+    (hk : ∀ c, ∃ n : ℤ, k₁ c + k₂ c - (k₃ c + k₄ c) = 2 * Real.pi * n) :
+    (Process.mk ![Fin.cons E₁ k₁, Fin.cons E₂ k₂] ![Fin.cons E₃ k₃, Fin.cons E₄ k₄]
+      m m').latticeConserving := by
+  obtain ⟨n0, h0⟩ := hE
+  choose ns hns using hk
+  refine ⟨Fin.cons n0 ns, ?_⟩
+  funext c
+  refine Fin.cases ?_ (fun d => ?_) c
+  · simp [Process.mismatch, latticeVec, Fin.sum_univ_two]
+    linarith
+  · simp [Process.mismatch, latticeVec, Fin.sum_univ_two]
+    linarith [hns d]
+
+end Reciprocal
 
 end QLF.InteractingKinematics

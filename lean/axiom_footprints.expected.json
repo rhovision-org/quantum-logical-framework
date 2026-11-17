@@ -886,7 +886,17 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.InteractingKinematics.char_unique": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.InteractingKinematics.map_exactConserving": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.momChar_eq": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -901,12 +911,22 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.InteractingKinematics.scattering_latticeConserving": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.InteractingKinematics.soft_umklapp": [
     "Classical.choice",
     "Quot.sound",
     "propext"
   ],
   "QLF.InteractingKinematics.twoBody_conserves_momentum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.InteractingKinematics.twoBody_lattice_conservation": [
     "Classical.choice",
     "Quot.sound",
     "propext"

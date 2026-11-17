@@ -1,7 +1,7 @@
 {
   "record_type": "claim",
   "record_id": "QLF-RELATIVITY-001",
-  "version": "0.3.1-draft",
+  "version": "0.3.2-draft",
   "source_revision": "d575748cb10923257442d7f7b90a7f7a3d7e9320",
   "informal_statement": "The free Dirac walk approaches Lorentz-covariant propagation in the long-wavelength regime, with a calculable lattice error, while exact invariance and interacting boost covariance remain open.",
   "approximation_or_regime": {
@@ -28,9 +28,11 @@
       "QLF.InteractingKinematics.umklapp_t_not_covariant",
       "QLF.InteractingKinematics.twoBody_conserves_momentum",
       "QLF.InteractingKinematics.umklapp_leg_bound",
-      "QLF.InteractingKinematics.soft_umklapp"
+      "QLF.InteractingKinematics.soft_umklapp",
+      "QLF.InteractingKinematics.twoBody_lattice_conservation",
+      "QLF.InteractingKinematics.scattering_latticeConserving"
     ],
-    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and a conditional kinematic layer of interactions: given reciprocal-lattice conservation and a summed long-wavelength bound, processes conserve exactly and remain allowed in every Lorentz frame to the free-shell order; the two elementary umklapp vectors along a boost axis are not boost-stable; an umklapp process forces a leg of size only 2*pi/(N+M); a two-body contact-interaction walk conserves total lattice momentum. They do not establish boost covariance of interacting amplitudes or loops, any decomposition of loops into frame-dependent and frame-independent parts, a physical propagation law, or a conservative return from interacting records."
+    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and a conditional kinematic layer of interactions: given reciprocal-lattice conservation and a summed long-wavelength bound, processes conserve exactly and remain allowed in every Lorentz frame to the free-shell order; the two elementary umklapp vectors along a boost axis are not boost-stable; an umklapp process forces a leg of size only 2*pi/(N+M); a two-body contact-interaction walk on Z^3 conserves total momentum mod the reciprocal lattice, derived from its translation symmetry (for more than two bodies reciprocal-lattice conservation remains the definition of a process). They do not establish boost covariance of interacting amplitudes or loops, any decomposition of loops into frame-dependent and frame-independent parts, a physical propagation law, or a conservative return from interacting records."
   },
   "formal_object": {
     "primary_files": [

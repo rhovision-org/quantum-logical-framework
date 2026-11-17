@@ -724,6 +724,10 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.InteractingKinematics.umklapp_t_not_covariant
 #print axioms QLF.InteractingKinematics.twoBody_translation_commute
 #print axioms QLF.InteractingKinematics.twoBody_conserves_momentum
+#print axioms QLF.InteractingKinematics.char_unique
+#print axioms QLF.InteractingKinematics.momChar_eq
+#print axioms QLF.InteractingKinematics.twoBody_lattice_conservation
+#print axioms QLF.InteractingKinematics.scattering_latticeConserving
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self

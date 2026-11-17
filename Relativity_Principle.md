@@ -362,6 +362,9 @@ takes that conservation law as the definition of a lattice process and proves, w
 | **`process_boost_covariant`** | a long-wavelength lattice process with every leg on the Dirac walk's shell, seen from any Lorentz frame that keeps the legs long-wavelength, is again an exactly conserving lattice process, with every leg on the walk's shell to `S²/4 + S′²/4` |
 | `walk_leg_onShell` | the walk's actual eigenmodes meet the leg hypothesis |
 | `twoBody_translation_commute`, `twoBody_conserves_momentum` | a two-body walk with any contact interaction (a phase depending on relative position) commutes with joint translation, so it carries a state of definite total lattice momentum to one of the same momentum: the conservation law above, for an actual interacting step |
+| `planeWave_jointShift`, `char_unique`, `momChar_eq` | on `ℤ³` a two-body plane wave has the character of its total momentum `k₁ + k₂`; a non-zero state has one character; two momenta give the same character exactly when they differ by a reciprocal vector |
+| **`twoBody_lattice_conservation`** | so if the interacting step sends the plane wave `(k₁, k₂)` to a non-zero state of total momentum `K′`, then `k₁ + k₂ − K′ ∈ 2π ℤ³`: lattice momentum conservation **derived** for this walk |
+| `quasiEnergy_mod`, `scattering_latticeConserving` | equal step phases have energies differing by a multiple of `2π`, and a two-to-two scattering with both properties is a lattice-conserving `Process` in the sense of the first rows |
 | **`umklapp_x_not_covariant`**, **`umklapp_t_not_covariant`** | for every boost along `x` with `u ≠ 0`, the elementary umklapp vectors `2π e_x` and `2π e_t` are carried **off** the reciprocal lattice, so the boosted observer sees a process that conserves nothing, exactly or mod `2π` (the proof reduces to: integers with `a² − b² = 1` have `b = 0`) |
 
 The number of incoming and outgoing legs is arbitrary, so pair creation and annihilation are
@@ -384,7 +387,7 @@ where the [Collins et al. (2004)](https://arxiv.org/abs/gr-qc/0403053) leakage w
 Loops are not constructed here, so no decomposition of a loop into frame-dependent and
 frame-independent parts is proved; bounding the lattice-scale contribution to low-energy
 observables is an open obligation, and a test the framework could fail.
-The conservation law is the definition of a process; its translation half is proved for a two-body contact-interaction walk, but the bridge from that walk's conserved character to the real reciprocal-vector form is not.
+For a two-body contact-interaction walk on `ℤ³` the conservation law is now derived, not assumed (`twoBody_lattice_conservation`). For more than two bodies it is still the definition of a process, and which out-momenta a given step actually produces is dynamics, not covered.
 
 **The dependency chain to interacting boost covariance.**
 
@@ -392,7 +395,7 @@ The conservation law is the definition of a process; its translation half is pro
 |---|---|---|
 | 1. Free propagation covariant in the large | proved (§5b, `diracWalk_boost_covariant`) | — |
 | 2. Interacting kinematics covariant in the large, given lattice conservation and the summed long-wavelength bound; elementary umklapp vectors along a boost axis are not boost-stable | proved (this section, `process_boost_covariant`, `umklapp_x_not_covariant`) | — |
-| 3. Lattice conservation derived for a concrete interacting walk | **half proved**: a two-body contact-interaction walk conserves total lattice momentum as a character (`twoBody_conserves_momentum`) | identify the character with the reciprocal-vector form `Process` uses (Fourier on `ZMod N`), and extend to `N` bodies; labour, not missing mathematics |
+| 3. Lattice conservation derived for a concrete interacting walk | **proved for two bodies on `ℤ³`** with any contact interaction (`twoBody_lattice_conservation`, `scattering_latticeConserving`) | `N` bodies: the same argument with an `N`-fold joint shift; labour |
 | 4. Amplitudes covariant at tree level | open, **blocked on a definition** | an interacting walk (stage 3) and a frame-comparison map for amplitudes, not just shells; the walk has no boost acting on its Hilbert space, so the comparison has to be stated on long-wavelength wave packets |
 | 5. Loops: lattice-scale contribution small at low energy (Collins) | open, **blocked on a definition and on analysis** | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
 | 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
