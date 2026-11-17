@@ -7,10 +7,10 @@ This directory holds the runtime-acceptance record for
 | Artifact | What it is |
 |---|---|
 | [`rholo_acceptance.md`](rholo_acceptance.md) | Isolated-node acceptance run: parser, deploy, native calls, refusals, registry publication and separate-deploy lookup. |
-| [`make_acceptance_harness.py`](make_acceptance_harness.py) | Generates the test harness from the production contract; `--lookup-uri` generates the separate-deploy lookup probe. |
+| [`make_acceptance_harness.py`](make_acceptance_harness.py) | Generates the test harness from the production contract; `--lookup-uri` generates the separate-deploy lookup probe; `--tag T` renames every output channel to `@"qkb-T-..."` so a run on a shared chain such as the playground cannot read another run's values. |
 
 The acceptance run used the checked-in `rnode` from
-[`quantum-os`](https://github.com/rchain-community/quantum-os) at commit
+[`quantum-os`](https://github.com/rhovision-org/quantum-os) at commit
 `070d8f8254ab4d39cdf80f8a60eee37c38910588`, binary SHA-256
 `3323e67399fd0d5bf5e91fbcfa4dd157848e2b9ec5e7c0276c71288f675f6400`.
 

@@ -8,7 +8,8 @@ acceptance harness is the same contract body with three test-only changes:
 1. the registry URI is also sent to the public `@"qkb-uri"` channel;
 2. the deploy's own `rho:rchain:deployerId` is bound so the probes can attest;
 3. a probe block exercises assert/ways/redundancy/ask/answer/solve/
-   compatibility/conjoin and two controlled refusals.
+   compatibility/conjoin, two controlled input refusals, and one
+   authentication refusal (a fresh name in place of a deployerId).
 
 The QKB contracts and state are unchanged.  This file is the generator used for
 the evidence in `rholo_acceptance.md`; it is not a production entry point.
@@ -49,7 +50,7 @@ def build(source: str) -> str:
 
     probe = r'''
   // ---------------------------------------------------------------- acceptance probes
-  new aRet, wRet, rRet, qRet, ansRet, solveRet, compRet, cjRet, badRet, badPropRet in {
+  new aRet, wRet, rRet, qRet, ansRet, solveRet, compRet, cjRet, badRet, badPropRet, fakeKey, fakeRet in {
     QKB!("assert", "probe", [0,3,1,2], *deployerId, *aRet) |
     for (@a <- aRet) {
       @"qkb-assert"!(a) |
@@ -80,7 +81,11 @@ def build(source: str) -> str:
     QKB!("assert", "bad", [8], *deployerId, *badRet) |
     for (@b <- badRet) { @"qkb-bad"!(b) } |
     QKB!("compatible", (4,1), (0,1), *badPropRet) |
-    for (@b <- badPropRet) { @"qkb-bad-prop"!(b) }
+    for (@b <- badPropRet) { @"qkb-bad-prop"!(b) } |
+    // negative authentication probe: a fresh unforgeable name is not a deployerId,
+    // so the native key check must refuse it ("attester is not a deployerId")
+    QKB!("assert", "probe-fake", [0,3,1,2], *fakeKey, *fakeRet) |
+    for (@f <- fakeRet) { @"qkb-fake-attester"!(f) }
   }
 '''
     stripped = source.rstrip()
@@ -96,10 +101,18 @@ def build_lookup(uri: str) -> str:
     """A separate deploy that resolves the published bundle and exercises it."""
     if not uri.startswith("rho:id:"):
         raise SystemExit("--lookup-uri must be a rho:id: URI")
-    return f'''new lookup(`rho:registry:lookup`), deployerId(`rho:rchain:deployerId`), ch,
+    # rho:registry:lookup answers with the bare value on the playground's rholo
+    # (a5259969) and with a (uri, value) pair on some builds; accept either.
+    return f'''new lookup(`rho:registry:lookup`), deployerId(`rho:rchain:deployerId`), ch, svc,
     a1, a2, q1, q2, ans, solve, comp, cj in {{
   lookup!(`{uri}`, *ch) |
-  for (@(_, QKB) <- ch) {{
+  for (@found <- ch) {{
+    match found {{
+      (_, s) => svc!(s)
+      s => svc!(s)
+    }}
+  }} |
+  for (@QKB <- svc) {{
     @QKB!("assert", "probe", [0,3,1,2], *deployerId, *a1) |
     for (@x <- a1) {{
       @"qkb-repeat-assert"!(x) |
@@ -128,11 +141,17 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("/tmp/QKB_acceptance.rho"))
     parser.add_argument("--lookup-uri", help="emit a separate-deploy lookup probe for this URI")
+    parser.add_argument("--tag", help="rename every @\"qkb-...\" output channel to @\"qkb-TAG-...\", "
+                        "so a run on a shared chain (the playground) cannot read another run's values")
     args = parser.parse_args()
     if args.lookup_uri:
         probe = build_lookup(args.lookup_uri)
     else:
         probe = build(SOURCE.read_text(encoding="utf-8"))
+    if args.tag:
+        if not args.tag.replace("-", "").isalnum():
+            raise SystemExit("--tag must be letters, digits and hyphens")
+        probe = probe.replace('@"qkb-', f'@"qkb-{args.tag}-')
     args.output.write_text(probe, encoding="utf-8")
     print(f"wrote {args.output} ({len(probe)} bytes)")
 
