@@ -18,11 +18,12 @@ class GluonClosureDynamicsTests(unittest.TestCase):
         self.assertEqual(g.symp((1, 0), (2, 0)), 0)
         self.assertEqual(g.total(((1, 0), (0, 1))), (1, 1))
 
-    def test_vertex_gluing_is_independent_move(self) -> None:
+    def test_vertex_moves_are_independent(self) -> None:
         state = ((1, 0), (0, 1))
         self.assertEqual(g.glue_moves(state), {((2, 2),)})
-        # The move is defined by the vertex condition, not by distance.
-        self.assertIsNone(g.distance_to_singlet(state))
+        self.assertEqual(g.create_moves(state), {((0, 1), (1, 0), (2, 2))})
+        # Moves are defined by the vertex condition, not by distance.
+        self.assertEqual(g.distance_to_singlet(state), 1)
 
     def test_gluing_state_reaches_singlet(self) -> None:
         state = ((0, 1), (1, 0), (1, 1))
@@ -34,13 +35,18 @@ class GluonClosureDynamicsTests(unittest.TestCase):
         self.assertTrue(g.is_singlet(state))
         self.assertEqual(g.distance_to_singlet(state), 0)
         self.assertEqual(g.glue_moves(state), set())
+        self.assertEqual(g.create_moves(state), set())
 
-    def test_census_has_both_distance_directions(self) -> None:
+    def test_census_has_all_distance_directions(self) -> None:
         result = g.census()
-        classes = result["move_classes"]
-        self.assertGreater(classes.get("distance_reducing", 0), 0)
-        self.assertGreater(classes.get("distance_increasing", 0), 0)
-        self.assertGreater(result["first_singlet_moves"].get("distance_reducing", 0), 0)
+        for kind in ("create", "glue"):
+            classes = result["move_classes"][kind]
+            self.assertGreater(classes.get("distance_reducing", 0), 0)
+            self.assertGreater(classes.get("distance_neutral", 0), 0)
+            self.assertGreater(classes.get("distance_increasing", 0), 0)
+            self.assertGreater(
+                result["first_singlet_moves"][kind].get("distance_reducing", 0), 0
+            )
 
     def test_harmonic_binding(self) -> None:
         self.assertEqual(g.binding_period([5, 3]), 3)

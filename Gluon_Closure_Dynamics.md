@@ -1,8 +1,8 @@
-# Gluon Closure Dynamics — singlet distance, vertex gluing, and harmonic binding
+# Gluon Closure Dynamics — singlet distance, vertex creation/gluing, and harmonic binding
 
 **Status:** first slice for issue [#286](https://github.com/rhovision-org/quantum-logical-framework/issues/286).
-GL0–GL6 are implemented as a finite vertex-gluing model. GL7 (logical → physical spatial distance)
-and GL8 (string tension) remain open. This is not full QCD.
+GL0–GL6 are implemented as a finite two-channel vertex model. GL7 (logical → physical spatial
+distance) and GL8 (string tension) remain open. This is not full QCD.
 
 ---
 
@@ -38,27 +38,31 @@ tau_event  = 0
 
 ---
 
-## 2. GL2 — vertex-gluing move
+## 2. GL2 — vertex creation and gluing
 
 The colour labels are the eight nonzero vectors of `F₃²` (the `colVec` image of the twists in
 `QLF_ColourFlux`). A state is a multiset of labels.
 
-The GL2 move is **vertex gluing**:
+The GL2 move has two channels, both defined **before** any distance is computed:
 
 ```
-choose q, r in the state with symp(q, r) ≠ 0
-p = -(q + r)
-replace q and r by p
+create: choose q, r in the state with symp(q, r) ≠ 0
+        p = -(q + r)
+        add p
+
+glue:   choose q, r in the state with symp(q, r) ≠ 0
+        p = -(q + r)
+        replace q and r by p
 ```
 
 The condition `symp(q, r) ≠ 0` is exactly the non-collinearity condition behind the nonzero
-three-gluon vertex in `QLF_GluonVertex`. The move is defined **before** any distance is computed.
-It does not consult `d_G`.
+three-gluon vertex in `QLF_GluonVertex`. Neither channel consults `d_G`.
 
 A colour singlet is a state whose total colour label is `(0,0)`. `d_G` is the shortest number of
-vertex-gluing moves to a singlet, or undefined if no such path exists within the declared state space.
+vertex moves to a singlet, or undefined if no such path exists within the declared search bound.
 
-This is a toy: it models gluon-label gluing, not quark emission/absorption, kinematics, or a coupling.
+This is a toy: it models gluon-label creation/gluing, not quark emission/absorption, kinematics, or a
+coupling.
 
 ---
 
@@ -68,46 +72,58 @@ Enumeration: all colour multisets of size 1–4 over the eight labels.
 
 ```
 states: 494
-with a singlet path: 246
-without a singlet path: 248
+with a singlet path: 454
+without a singlet path: 40
 ```
 
-Move classification:
+Move classification, separated by channel:
 
 ```
-distance_reducing:  264
-distance_increasing: 72
-distance_neutral:    0
-blocked:            384
+create:
+  distance_reducing:  216
+  distance_neutral:    24
+  distance_increasing: 72
+  blocked:            744
+
+glue:
+  distance_reducing:  456
+  distance_neutral:   192
+  distance_increasing:336
+  blocked:             96
 ```
 
-`blocked` means the successor has no singlet path in the glue-only graph; it is not “increasing.”
+`blocked` means the successor has no singlet path within the declared search bound (states up to
+size 5); it is not “increasing.”
 
 First-singlet moves:
 
 ```
-120 moves, all distance_reducing
+create: 120, all distance_reducing
+glue:   120, all distance_reducing
 ```
 
 So, in this toy:
 
-- **not** every gluon move reduces distance — there are 72 increasing moves;
+- **not** every gluon move reduces distance — both channels have neutral and increasing moves;
 - moves that actually produce a first singlet are reducing, as expected for a `d=1 → 0` step;
 - the result does not establish that physical gluon interactions are attractive.
 
-The increasing moves are important: they prevent “gluon interaction = contraction” from being built
-into the model.
+The neutral and increasing moves are important: they prevent “gluon interaction = contraction” from
+being built into the model.
 
 ### Worked states
 
 ```
-open pair ((1,0),(0,1)): glues to ((2,2),), but no singlet path
+open pair ((1,0),(0,1)): d = 1
+  create -> ((0,1),(1,0),(2,2)), a singlet
+  glue   -> ((2,2),), not a singlet
+
 two-gluon singlet ((1,0),(2,0)): d = 0, no moves
-gluing state ((0,1),(1,0),(1,1)): d = 1, one move reaches a singlet
+gluing state ((0,1),(1,0),(1,1)): d = 1; both channels contain a singlet move
 ```
 
-The `open pair` example is deliberately not a closure: the gluing move changes the state, but does
-not by itself produce a singlet.
+The `open pair` example is not a closure under gluing alone; the creation channel supplies the
+singlet. This is why the reverse channel matters.
 
 ---
 
@@ -141,7 +157,8 @@ strictly falls.
 - No quark emission/absorption, kinematics, coupling `g_s`, or loops.
 - No string tension or `V(r) = σr`.
 - No physical spatial contraction from logical distance (GL7).
-- No claim that every gluon interaction is attractive; the census has 72 increasing moves.
+- No claim that every gluon interaction is attractive; the census has 72 increasing create moves
+  and 336 increasing glue moves.
 - No change to #322 or the frozen AI experiment.
 
 ---
@@ -173,7 +190,7 @@ The run writes `data/gluon_closure_dynamics_census.json`.
 
 “Constructing delay grows with separation, giving the linear potential” should be read as the
 confinement obstruction plus an **open** spatial bridge, not as a derived gluon pull. The finite model
-here is a vertex-gluing distance toy; it does not derive a potential.
+here is a vertex-creation/gluing distance toy; it does not derive a potential.
 
 ---
 

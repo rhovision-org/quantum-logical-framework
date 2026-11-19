@@ -26,6 +26,7 @@ from typing import Sequence
 
 OUTPUT = Path("data/gluon_closure_dynamics_census.json")
 MAX_STATE_SIZE = 4
+MAX_SEARCH_SIZE = 5
 
 Colour = tuple[int, int]
 State = tuple[Colour, ...]
@@ -59,10 +60,26 @@ def is_singlet(state: State) -> bool:
     return total(state) == (0, 0)
 
 
-def glue_moves(state: State) -> set[State]:
-    """Vertex gluing: q + r + p = 0, with q, r non-collinear.
+def create_moves(state: State) -> set[State]:
+    """Vertex creation: add the third leg p = -(q + r) for non-collinear q, r.
 
     Defined independently of `d_G`.
+    """
+    out: set[State] = set()
+    for i, j in combinations(range(len(state)), 2):
+        q, r = state[i], state[j]
+        if symp(q, r) == 0:
+            continue
+        p = neg(add(q, r))
+        out.add(tuple(sorted(state + (p,))))
+    return out
+
+
+def glue_moves(state: State) -> set[State]:
+    """Vertex gluing: replace q, r by p = -(q + r) for non-collinear q, r.
+
+    The reverse channel of :func:`create_moves`; both are defined independently
+    of `d_G`.
     """
     out: set[State] = set()
     for i, j in combinations(range(len(state)), 2):
@@ -78,15 +95,21 @@ def glue_moves(state: State) -> set[State]:
     return out
 
 
-def distance_to_singlet(state: State) -> int | None:
-    """Shortest vertex-gluing path to a colour singlet, or None."""
+def all_moves(state: State) -> set[State]:
+    return create_moves(state) | glue_moves(state)
+
+
+def distance_to_singlet(state: State, max_size: int = MAX_SEARCH_SIZE) -> int | None:
+    """Shortest path to a colour singlet using creation + gluing, or None."""
     if is_singlet(state):
         return 0
     queue = deque([(state, 0)])
     seen = {state}
     while queue:
         current, depth = queue.popleft()
-        for nxt in glue_moves(current):
+        if len(current) >= max_size:
+            continue
+        for nxt in all_moves(current):
             if nxt in seen:
                 continue
             if is_singlet(nxt):
@@ -118,48 +141,57 @@ def binding_frequency(periods: Sequence[int]) -> float:
 def census(max_size: int = MAX_STATE_SIZE) -> dict[str, object]:
     states = enumerate_states(max_size)
     distances = {state: distance_to_singlet(state) for state in states}
-    classes: Counter[str] = Counter()
-    first_singlet: Counter[str] = Counter()
-    examples: dict[str, dict[str, object]] = {}
+    classes: dict[str, Counter[str]] = {"create": Counter(), "glue": Counter()}
+    first_singlet: dict[str, Counter[str]] = {"create": Counter(), "glue": Counter()}
+    examples: dict[str, dict[str, object]] = {"create": {}, "glue": {}}
     for state in states:
         d = distances[state]
         if d is None:
             continue
-        for nxt in glue_moves(state):
-            d_next = distances.get(nxt)
-            if d_next is None:
-                cls = "blocked"
-            elif d_next < d:
-                cls = "distance_reducing"
-            elif d_next == d:
-                cls = "distance_neutral"
-            else:
-                cls = "distance_increasing"
-            classes[cls] += 1
-            if is_singlet(nxt):
-                first_singlet[cls] += 1
-            examples.setdefault(
-                cls,
-                {
-                    "before": state,
-                    "after": nxt,
-                    "d_before": d,
-                    "d_after": d_next,
-                    "gluon": nxt if len(nxt) == 1 else None,
-                },
-            )
+        for kind, moves in (("create", create_moves(state)), ("glue", glue_moves(state))):
+            for nxt in moves:
+                if is_singlet(nxt):
+                    d_next = 0
+                elif nxt in distances:
+                    d_next = distances[nxt]
+                else:
+                    d_next = distance_to_singlet(nxt)
+                if d_next is None:
+                    cls = "blocked"
+                elif d_next < d:
+                    cls = "distance_reducing"
+                elif d_next == d:
+                    cls = "distance_neutral"
+                else:
+                    cls = "distance_increasing"
+                classes[kind][cls] += 1
+                if is_singlet(nxt):
+                    first_singlet[kind][cls] += 1
+                examples[kind].setdefault(
+                    cls,
+                    {
+                        "before": state,
+                        "after": nxt,
+                        "d_before": d,
+                        "d_after": d_next,
+                    },
+                )
     return {
         "max_state_size": max_size,
+        "max_search_size": MAX_SEARCH_SIZE,
         "states": len(states),
         "with_distance": sum(1 for d in distances.values() if d is not None),
         "without_distance": sum(1 for d in distances.values() if d is None),
         "distance_counts": dict(Counter(str(d) for d in distances.values())),
-        "move_classes": dict(classes),
-        "first_singlet_moves": dict(first_singlet),
+        "move_classes": {kind: dict(counter) for kind, counter in classes.items()},
+        "first_singlet_moves": {
+            kind: dict(counter) for kind, counter in first_singlet.items()
+        },
         "examples": examples,
         "note": (
-            "Vertex-gluing toy only. Moves are defined from symp != 0 and "
-            "p + q + r = 0; distance is computed afterward. Not full QCD."
+            "Two-channel vertex toy: creation adds p = -(q+r); gluing replaces "
+            "q, r by p. Both are defined from symp != 0 and p + q + r = 0, "
+            "independently of d_G. Not full QCD."
         ),
     }
 
@@ -171,17 +203,20 @@ def worked_examples() -> dict[str, object]:
         "open_pair": {
             "state": open_pair,
             "d": distance_to_singlet(open_pair),
-            "moves": sorted(glue_moves(open_pair)),
+            "create_moves": sorted(create_moves(open_pair)),
+            "glue_moves": sorted(glue_moves(open_pair)),
         },
         "gluing_to_singlet": {
             "state": gluing_state,
             "d": distance_to_singlet(gluing_state),
-            "moves": sorted(glue_moves(gluing_state)),
+            "create_moves": sorted(create_moves(gluing_state)),
+            "glue_moves": sorted(glue_moves(gluing_state)),
         },
         "two_gluon_singlet": {
             "state": ((1, 0), (2, 0)),
             "d": distance_to_singlet(((1, 0), (2, 0))),
-            "moves": sorted(glue_moves(((1, 0), (2, 0)))),
+            "create_moves": sorted(create_moves(((1, 0), (2, 0)))),
+            "glue_moves": sorted(glue_moves(((1, 0), (2, 0)))),
         },
         "harmonic": {
             "periods": [5, 3],
@@ -205,8 +240,8 @@ def build_summary() -> dict[str, object]:
         "gates": {
             "GL0_definition": "finite; d_G, T, f, tau_event separated",
             "GL1_confinement": "cited charged_not_closed / singlet_closure",
-            "GL2_gluon_move": "vertex gluing: p + q + r = 0, symp(q,r) != 0",
-            "GL3_distance_effect": "finite census; not all moves reduce",
+            "GL2_gluon_move": "vertex creation + gluing: p + q + r = 0, symp(q,r) != 0",
+            "GL3_distance_effect": "finite census; both channels reduce, neutral, increase",
             "GL4_first_closure": "first singlet is d=0; commit atomic",
             "GL5_harmonic": "T_bind = min(T_parts); f_bind >= each f_part",
             "GL6_atomic": "tau_event = 0, cited #281",
@@ -223,13 +258,16 @@ def self_test() -> None:
     assert total(((1, 0), (0, 1))) == (1, 1)
     assert is_singlet(((1, 0), (2, 0)))
     assert glue_moves(((1, 0), (0, 1))) == {((2, 2),)}
-    assert distance_to_singlet(((1, 0), (0, 1))) is None
+    assert create_moves(((1, 0), (0, 1))) == {((0, 1), (1, 0), (2, 2))}
+    assert distance_to_singlet(((1, 0), (0, 1))) == 1
     assert distance_to_singlet(((0, 1), (1, 0), (1, 1))) == 1
     assert distance_to_singlet(((1, 0), (2, 0))) == 0
     result = census()
-    assert result["move_classes"].get("distance_reducing", 0) > 0
-    assert result["move_classes"].get("distance_increasing", 0) > 0
-    assert result["first_singlet_moves"].get("distance_reducing", 0) > 0
+    for kind in ("create", "glue"):
+        assert result["move_classes"][kind].get("distance_reducing", 0) > 0
+        assert result["move_classes"][kind].get("distance_neutral", 0) > 0
+        assert result["move_classes"][kind].get("distance_increasing", 0) > 0
+        assert result["first_singlet_moves"][kind].get("distance_reducing", 0) > 0
     assert binding_period([5, 3]) == 3
     assert binding_frequency([5, 3]) > 1 / 5
     print("self-test: OK")

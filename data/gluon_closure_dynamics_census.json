@@ -2,126 +2,307 @@
   "census": {
     "distance_counts": {
       "0": 54,
-      "1": 96,
-      "2": 96,
-      "None": 248
+      "1": 192,
+      "2": 144,
+      "3": 64,
+      "None": 40
     },
     "examples": {
-      "blocked": {
-        "after": [
-          [
-            1,
-            0
+      "create": {
+        "blocked": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
           ],
-          [
-            2,
-            1
-          ]
-        ],
-        "before": [
-          [
-            0,
-            1
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
           ],
-          [
-            1,
-            0
+          "d_after": null,
+          "d_before": 3
+        },
+        "distance_increasing": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ]
           ],
-          [
-            1,
-            1
-          ]
-        ],
-        "d_after": null,
-        "d_before": 1,
-        "gluon": null
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "d_after": 3,
+          "d_before": 1
+        },
+        "distance_neutral": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "d_after": 1,
+          "d_before": 1
+        },
+        "distance_reducing": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "d_after": 0,
+          "d_before": 1
+        }
       },
-      "distance_increasing": {
-        "after": [
-          [
-            0,
-            1
+      "glue": {
+        "blocked": {
+          "after": [
+            [
+              2,
+              2
+            ]
           ],
-          [
-            1,
-            0
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
           ],
-          [
-            1,
-            1
-          ]
-        ],
-        "before": [
-          [
-            0,
-            1
+          "d_after": null,
+          "d_before": 1
+        },
+        "distance_increasing": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              1
+            ]
           ],
-          [
-            0,
-            1
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
           ],
-          [
-            1,
-            0
+          "d_after": 2,
+          "d_before": 1
+        },
+        "distance_neutral": {
+          "after": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              1
+            ]
           ],
-          [
-            2,
-            1
-          ]
-        ],
-        "d_after": 1,
-        "d_before": 0,
-        "gluon": null
-      },
-      "distance_reducing": {
-        "after": [
-          [
-            1,
-            1
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
           ],
-          [
-            2,
-            2
-          ]
-        ],
-        "before": [
-          [
-            0,
-            1
+          "d_after": 1,
+          "d_before": 1
+        },
+        "distance_reducing": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              2
+            ]
           ],
-          [
-            1,
-            0
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
           ],
-          [
-            1,
-            1
-          ]
-        ],
-        "d_after": 0,
-        "d_before": 1,
-        "gluon": null
+          "d_after": 1,
+          "d_before": 2
+        }
       }
     },
     "first_singlet_moves": {
-      "distance_reducing": 120
+      "create": {
+        "distance_reducing": 120
+      },
+      "glue": {
+        "distance_reducing": 120
+      }
     },
+    "max_search_size": 5,
     "max_state_size": 4,
     "move_classes": {
-      "blocked": 384,
-      "distance_increasing": 72,
-      "distance_reducing": 264
+      "create": {
+        "blocked": 744,
+        "distance_increasing": 72,
+        "distance_neutral": 24,
+        "distance_reducing": 216
+      },
+      "glue": {
+        "blocked": 96,
+        "distance_increasing": 336,
+        "distance_neutral": 192,
+        "distance_reducing": 456
+      }
     },
-    "note": "Vertex-gluing toy only. Moves are defined from symp != 0 and p + q + r = 0; distance is computed afterward. Not full QCD.",
+    "note": "Two-channel vertex toy: creation adds p = -(q+r); gluing replaces q, r by p. Both are defined from symp != 0 and p + q + r = 0, independently of d_G. Not full QCD.",
     "states": 494,
-    "with_distance": 246,
-    "without_distance": 248
+    "with_distance": 454,
+    "without_distance": 40
   },
   "gates": {
     "GL0_definition": "finite; d_G, T, f, tau_event separated",
     "GL1_confinement": "cited charged_not_closed / singlet_closure",
-    "GL2_gluon_move": "vertex gluing: p + q + r = 0, symp(q,r) != 0",
-    "GL3_distance_effect": "finite census; not all moves reduce",
+    "GL2_gluon_move": "vertex creation + gluing: p + q + r = 0, symp(q,r) != 0",
+    "GL3_distance_effect": "finite census; both channels reduce, neutral, increase",
     "GL4_first_closure": "first singlet is d=0; commit atomic",
     "GL5_harmonic": "T_bind = min(T_parts); f_bind >= each f_part",
     "GL6_atomic": "tau_event = 0, cited #281",
@@ -136,8 +317,64 @@
   },
   "worked": {
     "gluing_to_singlet": {
+      "create_moves": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
       "d": 1,
-      "moves": [
+      "glue_moves": [
         [
           [
             0,
@@ -197,8 +434,24 @@
       ]
     },
     "open_pair": {
-      "d": null,
-      "moves": [
+      "create_moves": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "d": 1,
+      "glue_moves": [
         [
           [
             2,
@@ -218,8 +471,9 @@
       ]
     },
     "two_gluon_singlet": {
+      "create_moves": [],
       "d": 0,
-      "moves": [],
+      "glue_moves": [],
       "state": [
         [
           1,
