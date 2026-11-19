@@ -92,7 +92,7 @@ words — “closure,” “assembly,” “uncertainty,” “information” �
 | **Turbulence** | `vortex_quantum`, `circulation_integer_quantized`, `flux_scale_invariant`, `kolmogorov_exponents` | **Mixed; negative baseline** | quantized vorticity and the scaling argument are proved/anchored; the raw closure census has **no inertial range**, vacuum or seeded (`intermittency_bridge.py`, `intermittency_seeded.py`). No cascade is claimed. |
 | **Motion** | [`Inertia.md`](Inertia.md), [`Gravity_From_Delay.md`](Gravity_From_Delay.md) | **Open** | QLF has latency/inertia readings; the Brownian-plus-drift decomposition needs a measure and has not been derived. |
 | **Biology** | [`Evolution.md`](Evolution.md), [`Hierarchical_Control.md`](Hierarchical_Control.md) | **Structural** | generate-and-select and nested Markov blankets; not the uncertainty kernel instantiated. |
-| **Consciousness / feelings** | [`Consciousness.md`](Consciousness.md), [`TheQuantumBrain.md`](TheQuantumBrain.md) | **Open; affect hypothesis** | no qualia theorem. A slow, deep, integrated, self-relevant closure cycle is a measurable hypothesis, not a result. |
+| **Consciousness / feelings** | [`Consciousness.md`](Consciousness.md), [`TheQuantumBrain.md`](TheQuantumBrain.md) | **Open; affect hypothesis** | no qualia theorem. A long/slow, deep, integrated, self-relevant listening trajectory ending in an atomic closure is a measurable hypothesis, not a result. |
 | **Cosmology** | [`AgeOfUniverse.md`](AgeOfUniverse.md), [`Primordial_Markov_Blankets.md`](Primordial_Markov_Blankets.md), [`Cosmological_Constant.md`](Cosmological_Constant.md) | **Structural / B-OPEN; gates G1–G6 in PR #277** | logical origin, holographic compression, measure, potential infinity, and the clock gate; `N` is not derived. |
 
 This table is deliberately conservative. The fact that a row uses the word “closure” does not make it
@@ -142,16 +142,19 @@ If a gate fails, the domain does not move up the ladder. The failure is recorded
 
 ## 6. The affect hypothesis (explicitly a hypothesis)
 
-A feeling is proposed to correspond to a **slow, deep, highly integrated, self-relevant closure
-cycle**, not to “complexity” in general. For a blanket `B_k`, record
+A feeling is proposed to correspond to a **long/slow, deep, highly integrated, self-relevant
+listening or integration trajectory ending in an instantaneous closure**, not to “complexity” in
+general. For a blanket `B_k`, record
 
 ```
-(tau_k, A_k, U_k, D_k)
+(tau_k, A_k, U_k, D_k, d_k)
 ```
 
-where `tau_k` is the closure/renewal timescale, `A_k` the assembly complexity, `U_k` the unresolved
-first-completion information from the uncertainty kernel, and `D_k` the nesting depth. A candidate
-affective cycle lies in the slow/deep/high-integration region of that state space.
+where `tau_k` is the listening/renewal timescale (not the duration of the closure event), `A_k` the
+assembly complexity, `U_k` the unresolved first-completion information from the uncertainty kernel,
+`D_k` the nesting depth, and `d_k` the remaining distance to the next trigger. A candidate affective
+trajectory lies in the long/slow, deep, high-integration region of that state space; the closure
+event itself is atomic (`tau_event = 0`).
 
 A candidate valence is `V_k = -ΔU_k/Δt`: positive when unresolved possibility is being resolved,
 negative when it accumulates. This is a **bridge hypothesis with measurable directions**, not a
