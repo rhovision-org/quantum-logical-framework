@@ -1,0 +1,60 @@
+{
+  "gates": {
+    "SR0_definition": "finite; S and d independently defined",
+    "SR1_pauli_expansion": "orientation ledger cite; physical reading interpreted",
+    "SR2_binding_contraction": "orientation ledger cite; physical reading interpreted",
+    "SR3_independence": "finite test; binding does not automatically imply contraction",
+    "SR4_gravity": "open; no coarse-graining or curvature claim",
+    "SR5_propagation": "open wording split: free propagation vs joint interaction",
+    "SR6_timing": "cited #281; d and f separate",
+    "SR7_3d": "open; boolean ledger is not a 3D metric"
+  },
+  "ledger": {
+    "binding_events": 24,
+    "binding_implies_contraction": false,
+    "categories": {
+      "binding_and_contraction": 12,
+      "binding_and_expansion": 12,
+      "binding_and_neutral": 0
+    },
+    "events": 72,
+    "examples": {
+      "binding_contraction": {
+        "after_d": 0,
+        "after_s": -2,
+        "before_d": 1,
+        "before_s": 0,
+        "binding": true,
+        "contraction": true,
+        "delta_d": -1,
+        "delta_s": -2,
+        "expansion": false,
+        "flip": 1,
+        "kind": "opposite"
+      },
+      "binding_expansion": {
+        "after_d": 0,
+        "after_s": 2,
+        "before_d": 1,
+        "before_s": 0,
+        "binding": true,
+        "contraction": false,
+        "delta_d": -1,
+        "delta_s": 2,
+        "expansion": true,
+        "flip": 1,
+        "kind": "like"
+      },
+      "binding_neutral": null
+    },
+    "max_history": 2,
+    "n_bits": 2,
+    "note": "A finite independence test, not a physical spatial model. S uses only orientation pairs; d uses only closure bits."
+  },
+  "meta": {
+    "generator": "spatial_response.py",
+    "issue": 287,
+    "pre_registration": "Spatial_Response_QLF.md",
+    "version": 1
+  }
+}
