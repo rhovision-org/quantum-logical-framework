@@ -159,13 +159,59 @@ Two distinct claims:
    ```
 
 Only claim 2 supports “nothing happens individually.” Claim 1 supports “every interaction is a
-co-incidence.” CO3 is the census that decides which claim survives.
+co-incidence.” CO3 is the census for claim 1; CO4 bounds claim 2.
+
+---
+
+## 6a. CO4 — Law-of-Exceptions boundary (open)
+
+The direct target
+
+```
+∀ E ∈ Events, CoIncidence(E)
+```
+
+is not the right final claim for a finite resolver. `lean/QLF_LawOfExceptions.lean` proves:
+
+```
+∀ R, ∃ s : TopoString,
+  closedAtHorizon (R+1) s ∧ ¬ closedAtHorizon R s
+```
+
+and `closure_hierarchy_strict` gives `C_R ⊊ C_R'` for `R < R'`, where
+`C_R = {s : closedAtHorizon R s}`. No finite `closedAtHorizon` is final.
+
+The missing bridge is:
+
+```
+a capacity-R co-incidence resolver is a finite restrictive closure
+```
+
+If that bridge is proved, the Law supplies a deeper real exception, and no finite
+provenance/schedule resolution is universal. The intended shape is an expanding hierarchy:
+
+```
+CO_1 ⊊ CO_2 ⊊ CO_3 ⊊ ⋯
+```
+
+with no final finite co-incidence inventory.
+
+Important qualifications:
+
+- The Law does **not** prove that every imaginable structural theorem has an exception; it is a
+  theorem about finite closures.
+- It does **not** by itself prove `W_{R+1} > W_R` for every starting history. A particular inventory
+  can stabilize; the Law is global. See the open U6 bridge in
+  [closure uncertainty (PR #271)](https://github.com/rhovision-org/quantum-logical-framework/pull/271).
+- CO4 is an **open bridge**, not an implemented theorem. The finite `coincidence.py` model does not
+  attempt it.
 
 ---
 
 ## 7. What this does not claim
 
 - No claim that every event is a co-incidence.
+- No claim that a finite co-incidence resolver is universal; CO4's Law-of-Exceptions bridge is open.
 - No theorem that causation is a succession of co-incidences.
 - No consciousness, feeling, or memory claim. D8 is a finite toy; it does not establish separate
   provenance for feeling and memory.

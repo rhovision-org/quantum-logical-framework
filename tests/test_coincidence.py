@@ -69,7 +69,11 @@ class CoincidenceTests(unittest.TestCase):
         summary = co.build_summary()
         self.assertEqual(summary["meta"]["issue"], 283)
         self.assertTrue(summary["co0"]["all_pass"])
-        self.assertEqual(summary["gates"]["CO3_universality"], "open; not implemented here")
+        self.assertEqual(
+            summary["gates"]["CO3_universality"],
+            "interaction-event census open; not implemented here",
+        )
+        self.assertIn("open bridge", summary["gates"]["CO4_law_of_exceptions"])
         self.assertTrue(summary["co1_co2"]["primordial"]["strong"])
         self.assertFalse(summary["co1_co2"]["gauge_pair"]["strong"])
 

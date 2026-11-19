@@ -43,7 +43,8 @@
     "CO0_triviality": "finite check; bare split is vacuous",
     "CO1_typed_origins": "origins fixed in the event record",
     "CO2_first_joint_closure": "first prefix with joint closure",
-    "CO3_universality": "open; not implemented here",
+    "CO3_universality": "interaction-event census open; not implemented here",
+    "CO4_law_of_exceptions": "open bridge; finite resolver not claimed universal",
     "strong_coincidence": "non-product-sector witness"
   },
   "meta": {
