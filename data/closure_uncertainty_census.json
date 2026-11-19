@@ -1,0 +1,124 @@
+{
+  "game_tighter_context": {
+    "W": {
+      "0": 0,
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1
+    },
+    "start": "SH"
+  },
+  "games": {
+    "HH": {
+      "U": {
+        "0": 0.0,
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "W": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1
+      }
+    },
+    "HS": {
+      "U": {
+        "0": null,
+        "1": 1.0,
+        "2": 1.0,
+        "3": 1.0,
+        "4": 1.0
+      },
+      "W": {
+        "0": 0,
+        "1": 2,
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    "SH": {
+      "U": {
+        "0": null,
+        "1": 1.0,
+        "2": 1.0,
+        "3": 1.0,
+        "4": 1.0
+      },
+      "W": {
+        "0": 0,
+        "1": 2,
+        "2": 2,
+        "3": 2,
+        "4": 2
+      }
+    },
+    "SS": {
+      "U": {
+        "0": 0.0,
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0
+      },
+      "W": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1
+      }
+    }
+  },
+  "gates": {
+    "U0_definition": "frozen",
+    "U1_finite_checks": "pass",
+    "U1_lean": "open",
+    "U2_sector": "flat only",
+    "U3_reuse": "cited, formal lemma open",
+    "U4_domains": "game theory exact; confinement U(1) toy; full colour open"
+  },
+  "joint_pair": {
+    "W": {
+      "0": 0,
+      "1": 0,
+      "2": 2,
+      "3": 2,
+      "4": 6
+    }
+  },
+  "meta": {
+    "U": "log2(W), undefined when W = 0",
+    "W": "integer count of first-completion paths",
+    "first_completion": "paths ending at the first closed state, length <= R",
+    "generator": "closure_uncertainty.py",
+    "issue": 269,
+    "pre_registration": "Closure_Uncertainty_QLF.md",
+    "version": 1
+  },
+  "u1_charge": {
+    "W": {
+      "0": 0,
+      "1": 1,
+      "2": 1,
+      "3": 2,
+      "4": 2,
+      "5": 4,
+      "6": 4
+    },
+    "W_tight_band": {
+      "0": 0,
+      "1": 1,
+      "2": 1,
+      "3": 1,
+      "4": 1,
+      "5": 1,
+      "6": 1
+    }
+  }
+}
