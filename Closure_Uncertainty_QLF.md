@@ -55,6 +55,11 @@ completable within the horizon.
 **Why integer first.** `W` is finitary and computable on finite systems. `U` is defined afterward
 only where `W > 0`. Lean does not need to begin with real logarithms.
 
+**Timing reading.** `R` is a **reachability/listening horizon** measured in steps, not an event
+duration. The path or listening history may be long; the completion itself is an **atomic closure**
+(`tau_event = 0`). This is the timing semantics used by the conscious-dynamics D9 gate: recurrence
+period and trigger distance are separate, and the first eligible trigger fires atomically.
+
 ---
 
 ## 2. What is being counted
