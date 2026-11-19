@@ -143,6 +143,59 @@ closure class is a coarse “ways” quantity. It is **not** AT copy number. A p
 `W(x)` and an observed abundance `N(x)` are different objects; this census contains one copy of
 each word and says nothing about abundance.
 
+### 2.1 Sector boundary: flat shared closure vs independent tensor closure
+
+The phrase “entanglement is the join” is only unambiguous after choosing a sector. QLF has two, and
+they give different answers for the primordial pair `^ | v`.
+
+**Flat history sector.** A history is one word in one Pauli algebra; `SharedClosure A B` is defined
+in [`ER_EPR_QLF`](lean/ER_EPR_QLF.lean) as `achieves_ZFA (A ++ B)`. At the twist level,
+`QLF.IndexedFactors.shared_closure_not_factorizable` proves `countBalanced ([up] ++ [down])` while
+neither `[up]` nor `[down]` folds to a scalar. This is the precise “neither half closes alone, the
+joint does” witness. It is also the model the census uses: a join concatenates words, and a closed
+word is a reusable object.
+
+**Independent-body tensor sector.** If the two halves are placed on separate bodies, the joint
+object is `fold A ⊗ fold B`. A Kronecker product is scalar only when both factors are scalar
+(`QLF.TensorFromClosure.independent_closure_factors`), so an open factor is never closed by an
+independent partner (`open_factor_never_closes_jointly`). In particular the flat pair `^ | v` does
+not lift: `shared_closure_not_independent` proves its composite fold is non-scalar for every phase.
+The entangled object in this sector is the singlet, not a product of two open histories
+(`singlet_not_product`, `product_never_joint_closure`).
+
+So “A open, B open, A∘B closed” is true in the flat sector and false in the independent tensor
+sector. The word-level index `a_ZFA` is the flat-sector closure-constrained index. It is not
+automatically the tensor-sector entanglement index, and the two should not be identified.
+
+**Not every closure is non-factorizable.** `QLF.EntanglementPrimacy.closure_is_pairs` proves every
+count-balanced history is a reordering of conjugate pairs, but the gauge pair `+−` is product-sector
+(`QLF.IndexedFactors.gauge_pair_is_product_sector`; see also `no_gauge_all_strongly_entangled`).
+“Entirely from non-factorizable shared closures” is therefore too strong as a global statement.
+
+**Open is not the same as bra/ket.** `bra_ket_always_balanced` proves both `action f` and `lift f`
+individually achieve ZFA. The open objects in the strand reading are histories whose `strandForm` is
+non-zero (`countBalanced_iff_strandForm_zero`), not bra/ket perspectives.
+
+**Pauli scalar is not ZFA closure.** `scalar_fold_not_zfa` proves `^^` folds to `I` but is not
+count-balanced. The assembly restriction uses count balance, not scalar fold; the runtime's second
+conjunct is redundant only when the first is checked.
+
+#### What a tensor-sector `A_E` would require
+
+An entanglement assembly index in the tensor sector needs its own assembly space: nodes are
+systems/states, the primitive entangled object is the singlet, and a join is a tensor/joint-closure
+construction. That is a separate research program, not a corollary of the word census. In
+particular, the coarse-graining inequality
+
+$$
+A_{\mathrm{AT}}(U(C)) \le A_E(C)
+$$
+
+is only a theorem once `U` is shown to map every QLF-valid construction to an ordinary AT
+construction. Equality for molecular bonds is a conjecture with no evidence yet; molecular AT uses
+chemical graph operations, not QLF entanglement joins. The word-level `a ≤ a_ZFA` is the immediate
+flat-sector analogue.
+
 ---
 
 ## 3. Exact method
