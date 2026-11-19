@@ -419,6 +419,13 @@ reusable structure that QLF does not certify as isolated.
   ([Marshall et al. 2021](https://doi.org/10.1038/s41467-021-23258-x)).
 - No claim that `a_ZFA` is the assembly index nature uses. It is a QLF-motivated restriction, and
   the census is a first test of whether it is worth pursuing.
+- No dynamics. `a_ZFA` is a static minimum construction cost, not a state variable that carries
+  memory across scales. The cooperative assembly transport proposal is a separate program
+  ([#267](https://github.com/rhovision-org/quantum-logical-framework/issues/267)).
+- No turbulence. The closure-census transfer has no inertial range, vacuum or seeded
+  ([`intermittency_bridge.py`](intermittency_bridge.py),
+  [`intermittency_seeded.py`](intermittency_seeded.py)). Persistent assembly is a proposed new
+  state space, not a demonstrated cascade.
 - No length-12 census. There are 357,713,664 balanced words of length 12; the length-10 run is the
   current exhaustive boundary.
 
