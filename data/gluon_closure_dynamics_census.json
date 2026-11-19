@@ -1,0 +1,235 @@
+{
+  "census": {
+    "distance_counts": {
+      "0": 54,
+      "1": 96,
+      "2": 96,
+      "None": 248
+    },
+    "examples": {
+      "blocked": {
+        "after": [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "before": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "d_after": null,
+        "d_before": 1,
+        "gluon": null
+      },
+      "distance_increasing": {
+        "after": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "before": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "d_after": 1,
+        "d_before": 0,
+        "gluon": null
+      },
+      "distance_reducing": {
+        "after": [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "before": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "d_after": 0,
+        "d_before": 1,
+        "gluon": null
+      }
+    },
+    "first_singlet_moves": {
+      "distance_reducing": 120
+    },
+    "max_state_size": 4,
+    "move_classes": {
+      "blocked": 384,
+      "distance_increasing": 72,
+      "distance_reducing": 264
+    },
+    "note": "Vertex-gluing toy only. Moves are defined from symp != 0 and p + q + r = 0; distance is computed afterward. Not full QCD.",
+    "states": 494,
+    "with_distance": 246,
+    "without_distance": 248
+  },
+  "gates": {
+    "GL0_definition": "finite; d_G, T, f, tau_event separated",
+    "GL1_confinement": "cited charged_not_closed / singlet_closure",
+    "GL2_gluon_move": "vertex gluing: p + q + r = 0, symp(q,r) != 0",
+    "GL3_distance_effect": "finite census; not all moves reduce",
+    "GL4_first_closure": "first singlet is d=0; commit atomic",
+    "GL5_harmonic": "T_bind = min(T_parts); f_bind >= each f_part",
+    "GL6_atomic": "tau_event = 0, cited #281",
+    "GL7_spatial": "open bridge; no physical distance claim",
+    "GL8_string_tension": "open; not claimed"
+  },
+  "meta": {
+    "generator": "gluon_closure_dynamics.py",
+    "issue": 286,
+    "pre_registration": "Gluon_Closure_Dynamics.md",
+    "version": 1
+  },
+  "worked": {
+    "gluing_to_singlet": {
+      "d": 1,
+      "moves": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "state": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "harmonic": {
+      "T_bind": 3,
+      "f_bind": 0.3333333333333333,
+      "f_parts": [
+        0.2,
+        0.3333333333333333
+      ],
+      "periods": [
+        5,
+        3
+      ]
+    },
+    "open_pair": {
+      "d": null,
+      "moves": [
+        [
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "state": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "two_gluon_singlet": {
+      "d": 0,
+      "moves": [],
+      "state": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    }
+  }
+}
