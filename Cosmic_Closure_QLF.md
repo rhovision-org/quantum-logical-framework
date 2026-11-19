@@ -71,6 +71,10 @@ minimal ZFA closure = theorem
 
 The second line is G2 and is not proved by the first.
 
+**Timing.** The logical bang is an **event**, not an extended process: `first_distinction_closes` is
+an atomic closure (`tau_event = 0`). Any duration belongs to the listening/construction history that
+precedes it, not to the closure itself.
+
 ---
 
 ## 3. G2 — the information reading
@@ -142,6 +146,11 @@ extensions (`no_terminal_phase`, `order_at_every_scale`; see
 ∀ n, n < ∞
 ∀ n, ∃ m > n  with a longer balanced extension.
 ```
+
+**Timing.** Cosmic time accumulates **between and nested among atomic closures**, not during a
+closure. The unbounded extension is a sequence of events with `tau_event = 0`, not a single event of
+infinite duration. This is the same listening-vs-event distinction as the D9 gate in
+[PR #279](https://github.com/rhovision-org/quantum-logical-framework/pull/279).
 
 That is **potential infinity**. It does not prove that the physical cosmos actualizes an endless
 sequence of those extensions. The distinction is:
