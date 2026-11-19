@@ -51,6 +51,16 @@ class ClosureUncertaintyTests(unittest.TestCase):
         self.assertEqual(len(flat.closed), 177)
         self.assertEqual([cu.W(flat, r) for r in range(5)], [0, 1, 1, 14, 14])
 
+    def test_measure_gate(self) -> None:
+        flat = cu.flat_word_system(4, "^")
+        measure = cu.completion_measure(flat, 3, start_length=1)
+        self.assertEqual(measure["W_micro"], 14)
+        self.assertAlmostEqual(sum(measure["normalized"]), 1.0)
+        self.assertGreater(
+            measure["by_steps"]["1"]["P_total"],
+            measure["by_steps"]["3"]["P_total"],
+        )
+
     def test_finiteness(self) -> None:
         for system in (
             cu.game_system(),
@@ -66,10 +76,12 @@ class ClosureUncertaintyTests(unittest.TestCase):
         self.assertEqual(summary["meta"]["issue"], 269)
         self.assertIn("games", summary)
         self.assertIn("flat_zfa", summary)
+        self.assertIn("measure", summary)
         self.assertIn("u1_charge", summary)
         self.assertIn("joint_pair", summary)
         self.assertEqual(summary["gates"]["U1_lean"], "open")
         self.assertIn("flat-history ZFA exact", summary["gates"]["U4_domains"])
+        self.assertIn("U5_measure", summary["gates"])
 
 
 if __name__ == "__main__":

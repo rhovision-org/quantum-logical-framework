@@ -69,6 +69,26 @@ therefore cannot increase `W`. The closure predicate itself is not changed by th
 admissible paths are. That is the formal version of “the observer conditions access, not the
 closure rule.”
 
+### 2a. Measure gate (U5)
+
+`W_R` is a raw path count. A physical probability requires a declared measure `μ` on completion
+histories. The natural QLF candidate is the cylinder/Kraft weight
+
+```
+μ(c) = 8^(-|c|)
+P(c | h, B) = μ(c) / Σ_{c' ∈ Ω_R(h|B)} μ(c').
+```
+
+The count and the probability answer different questions:
+
+- `W_R = |Ω_R|` is the number of alternatives;
+- `P` is the normalized weight of those alternatives;
+- `U_R = log₂ W_R` is count-information, not physical entropy.
+
+No motion, affect, or cosmology use of `U`/`W` is allowed until the measure is declared. The
+reference implementation computes the cylinder weights for the flat-ZFA completions and checks that
+they normalize to one.
+
 ---
 
 ## 3. Gates
@@ -80,10 +100,12 @@ closure rule.”
 | **U2** | flat-history statements never cross silently into tensor independence | **done**: this document is flat-sector only; #266 controls the boundary |
 | **U3** | closed/isolated component is reusable | **cited**: `isolated_iff_closed`, `closed_insertion_is_phase`; formal reuse lemma open |
 | **U4** | at least two nontrivial domains instantiate the kernel without changing its definitions | **pass (two exact)**: game theory and flat-history ZFA (`countBalanced`); confinement is a charge toy plus theorem citations, full colour enumeration open |
+| **U5** | raw `W` is separated from a declared measure before physical use | **defined**: cylinder/Kraft `μ(c)=8^(-|c|)`, normalized `P`; finite check in `closure_uncertainty.py` |
 
 The PR remains draft until U1 is Lean-checked. U4 now has two exact instantiations; the confinement
-row is a partial extra, not one of the two required domains. If the exact instantiations fail on
-inspection, “emergent uncertainty” is terminology and should not be elevated.
+row is a partial extra, not one of the two required domains. U5 is a prerequisite for using `W`/`U`
+in motion, affect, or cosmology; it is not a claim that the cylinder weight is the final physical
+measure.
 
 ---
 

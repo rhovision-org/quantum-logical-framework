@@ -97,6 +97,40 @@ def U(system: FiniteClosureSystem, horizon: int) -> float | None:
     return math.log2(count) if count else None
 
 
+def completion_measure(
+    system: FiniteClosureSystem,
+    horizon: int,
+    start_length: int,
+    base: int = 8,
+) -> dict[str, object]:
+    """Cylinder/Kraft weights and their normalization (gate U5).
+
+    ``mu(c) = base ** (-(start_length + steps(c)))``.  The raw count ``W`` is
+    unchanged; this function only supplies the declared measure needed before
+    using ``W``/``U`` as a physical probability.
+    """
+    if start_length < 1:
+        raise ValueError("start_length must be positive")
+    paths = first_completions(system, horizon)
+    weights = [base ** (-(start_length + len(path))) for path in paths]
+    total = sum(weights)
+    by_steps: dict[str, dict[str, float | int]] = {}
+    for path, weight in zip(paths, weights):
+        key = str(len(path))
+        row = by_steps.setdefault(key, {"count": 0, "mu_each": weight, "P_total": 0.0})
+        row["count"] = int(row["count"]) + 1
+        if total:
+            row["P_total"] = float(row["P_total"]) + weight / total
+    return {
+        "W_micro": len(paths),
+        "base": base,
+        "start_length": start_length,
+        "mu_total": total,
+        "normalized": [weight / total for weight in weights] if total else [],
+        "by_steps": dict(sorted(by_steps.items(), key=lambda item: int(item[0]))),
+    }
+
+
 # ---------------------------------------------------------------------------
 # Instantiation 1: finite normal-form games, Nash = closure
 # ---------------------------------------------------------------------------
@@ -249,6 +283,14 @@ def self_test() -> None:
     _assert([W(flat, r) for r in range(5)] == [0, 1, 1, 14, 14],
             "flat-ZFA first-completion counts changed")
 
+    # Gate U5: the raw count is unchanged, and the cylinder weights normalize.
+    measure = completion_measure(flat, 3, start_length=1)
+    _assert(measure["W_micro"] == 14, "measure gate changed the raw count")
+    _assert(abs(sum(measure["normalized"]) - 1.0) < 1e-12,
+            "cylinder weights must normalize to one")
+    _assert(measure["by_steps"]["1"]["P_total"] > measure["by_steps"]["3"]["P_total"],
+            "shorter completions should carry more cylinder weight")
+
     # Finiteness: the enumeration is bounded by the horizon.
     for system in (game, charge, joint, flat):
         paths = first_completions(system, 4)
@@ -273,15 +315,17 @@ def build_summary() -> dict[str, object]:
     band = charge.with_context(q for q in charge.states if -1 <= q <= 1)
     joint = joint_system()
     flat = flat_word_system(4, "^")
+    flat_measure = completion_measure(flat, 3, start_length=1)
     return {
         "meta": {
             "generator": "closure_uncertainty.py",
-            "version": 2,
+            "version": 3,
             "issue": 269,
             "pre_registration": "Closure_Uncertainty_QLF.md",
             "first_completion": "paths ending at the first closed state, length <= R",
             "W": "integer count of first-completion paths",
             "U": "log2(W), undefined when W = 0",
+            "measure": "cylinder/Kraft mu(c)=8^(-|c|); P normalized over Omega_R",
         },
         "games": games,
         "game_tighter_context": {
@@ -295,6 +339,7 @@ def build_summary() -> dict[str, object]:
             "closed": len(flat.closed),
             "W": {str(r): W(flat, r) for r in range(0, 5)},
         },
+        "measure": flat_measure,
         "u1_charge": {
             "W": {str(r): W(charge, r) for r in range(0, 7)},
             "W_tight_band": {str(r): W(band, r) for r in range(0, 7)},
@@ -312,6 +357,7 @@ def build_summary() -> dict[str, object]:
                 "game theory exact; flat-history ZFA exact; "
                 "confinement U(1) toy; full colour open"
             ),
+            "U5_measure": "cylinder/Kraft weights normalized; raw W unchanged",
         },
     }
 
@@ -330,6 +376,10 @@ def print_summary(summary: dict[str, object]) -> None:
     flat = summary["flat_zfa"]  # type: ignore[index]
     print(f"  states = {flat['states']}, closed = {flat['closed']}")
     print(f"  W = {flat['W']}")
+    print("\nmeasure gate (cylinder/Kraft, R=3):")
+    measure = summary["measure"]  # type: ignore[index]
+    print(f"  W_micro = {measure['W_micro']}, mu_total = {measure['mu_total']:.10f}")
+    print(f"  by_steps = {measure['by_steps']}")
     print("\njoint pair:")
     print(f"  W = {summary['joint_pair']['W']}")  # type: ignore[index]
 
