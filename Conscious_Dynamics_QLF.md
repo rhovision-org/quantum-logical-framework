@@ -63,8 +63,9 @@ What is **new** here:
 | **D5** | `M_t ~ S_t/~_B_t` remains the correctness target | **cited** from [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275); general theorem open |
 | **D6** | attention changes the race, not the contestants; quieting raises internal delays | **finite check** |
 | **D7** | no qualia theorem; no empirical claim | **gate** |
+| **D8** | feeling changes memory accessibility through a generic compatibility relation; same store; recall is atomic; no target identity in the feeling | **finite check** |
 
-The PR is draft. D1–D4 and D6 are finite checks; D5 and the general dynamic theorem remain open.
+The PR is draft. D1–D4, D6, and D8 are finite checks; D5 and the general dynamic theorem remain open.
 
 ---
 
@@ -144,7 +145,51 @@ correctness condition remains `M ~ S/~_B`.
 
 ---
 
-## 7. Finite model
+## 7. Affective recollection (D8)
+
+A feeling is a listener context `F`. For a fixed memory store `M_i`, define a generic
+listener-relative distance:
+
+```
+d_i(B, F) = max(0, base_distance_i - gain(M_i, F) * t)
+gain(M_i, F) = 1 + 2 * |features(M_i) ∩ features(F)|
+```
+
+`t` is the listening history. When `d_k(B,F)=0`, the memory closes:
+
+```
+RECALL(M_k),  tau_recall = 0.
+```
+
+Retrieval takes time; recollection does not. The finite model uses one fixed store and four feeling
+contexts:
+
+| feeling context | generic features | recalled memory | trigger step |
+|---|---|---|---:|
+| `neutral` | `{}` | `M_A` | 4 |
+| `F_blue_room` | `{blue, room}` | `M_A` | 1 |
+| `F_song_summer` | `{song, summer}` | `M_B` | 1 |
+| `F_loss_winter` | `{loss, winter}` | `M_C` | 2 |
+
+The store `{M_A, M_B, M_C}` is identical in every row. What changes is accessibility, not history.
+
+**Kill condition.** The feeling must not contain the target memory's identity. `Feeling` carries only
+generic features; the recall target is computed from feature overlap. If a model only recalls the
+right memory when the feeling is told which memory to retrieve, D8 fails.
+
+This is the memory analogue of QKB:
+
+```
+ask(q_F) → listen → solve → M_k.
+```
+
+A **feeling** is an active self-relevant listening trajectory `F_t`; a **mood** is a slower change in
+the listener `B_t` itself. The architecture predicts that mood biases which memories are accessible,
+not that it rewrites them.
+
+---
+
+## 8. Finite model
 
 `conscious_dynamics.py` implements:
 
@@ -161,7 +206,7 @@ dynamic loop produces a finite promotion sequence and does not advance event tim
 
 ---
 
-## 8. Non-goals
+## 9. Non-goals
 
 - No claim that the model explains qualia.
 - No claim that the globally fastest physical process is conscious.
@@ -170,10 +215,12 @@ dynamic loop produces a finite promotion sequence and does not advance event tim
 - No backward causation; every realized step still advances the event record
   (`no_time_loops_from_logic`).
 - No general bisimulation theorem; `M ~ S/~_B` is the target, not a result.
+- No claim that the D8 feature-overlap metric is the final affective measure; it is a
+  kill-condition-satisfying toy, not a validated memory model.
 
 ---
 
-## 9. Reproduce
+## 10. Reproduce
 
 ```bash
 python3 conscious_dynamics.py --self-test

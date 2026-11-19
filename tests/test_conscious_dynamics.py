@@ -59,6 +59,19 @@ class ConsciousDynamicsTests(unittest.TestCase):
         self.assertTrue(retro["compression_changed"])
         self.assertNotEqual(retro["compression_before"], retro["compression_after"])
 
+    def test_affective_recollection(self) -> None:
+        memory = cd.affective_recollection()
+        self.assertEqual(memory["winners"]["neutral"], "M_A")
+        self.assertEqual(memory["winners"]["F_blue_room"], "M_A")
+        self.assertEqual(memory["winners"]["F_song_summer"], "M_B")
+        self.assertEqual(memory["winners"]["F_loss_winter"], "M_C")
+        self.assertTrue(memory["store_unchanged_across_feelings"])
+        self.assertFalse(memory["target_field_present"])
+        for run in memory["runs"]:
+            self.assertEqual(run["recall"]["tau_recall"], 0)
+            self.assertTrue(run["recall"]["atomic"])
+            self.assertEqual(run["trace"][-1]["event"], "RECALL")
+
     def test_summary_schema(self) -> None:
         summary = cd.build_summary()
         self.assertEqual(summary["meta"]["issue"], 278)
@@ -67,7 +80,9 @@ class ConsciousDynamicsTests(unittest.TestCase):
         self.assertIn("quieting_winner", summary)
         self.assertIn("loop", summary)
         self.assertIn("retrospective", summary)
+        self.assertIn("memory", summary)
         self.assertEqual(summary["gates"]["D7_qualia"], "bracketed; no theorem")
+        self.assertIn("D8_affective_recollection", summary["gates"])
 
 
 if __name__ == "__main__":

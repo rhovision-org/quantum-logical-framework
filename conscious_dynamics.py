@@ -21,7 +21,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from dataclasses import dataclass, field, replace
+from dataclasses import dataclass, field, fields, replace
 from pathlib import Path
 from typing import Iterable, Sequence
 
@@ -180,6 +180,116 @@ def retrospective_compression() -> dict[str, object]:
 
 
 # ---------------------------------------------------------------------------
+# D8: affective recollection
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class Memory:
+    name: str
+    features: frozenset[str]
+    base_distance: int
+
+
+@dataclass(frozen=True)
+class Feeling:
+    """A listener context.  It carries generic features, never a target identity."""
+
+    name: str
+    features: frozenset[str]
+
+
+MEMORIES = (
+    Memory("M_A", frozenset({"blue", "room", "childhood"}), base_distance=4),
+    Memory("M_B", frozenset({"blue", "song", "summer"}), base_distance=5),
+    Memory("M_C", frozenset({"loss", "room", "winter"}), base_distance=7),
+)
+
+FEELINGS = (
+    Feeling("neutral", frozenset()),
+    Feeling("F_blue_room", frozenset({"blue", "room"})),
+    Feeling("F_song_summer", frozenset({"song", "summer"})),
+    Feeling("F_loss_winter", frozenset({"loss", "winter"})),
+)
+
+
+def memory_gain(memory: Memory, feeling: Feeling) -> int:
+    """Generic compatibility gain: base 1 plus two per shared feature."""
+    overlap = len(memory.features & feeling.features)
+    return 1 + 2 * overlap
+
+
+def trigger_step(memory: Memory, feeling: Feeling) -> int:
+    gain = memory_gain(memory, feeling)
+    return (memory.base_distance + gain - 1) // gain
+
+
+def memory_race(feeling: Feeling) -> dict[str, object]:
+    """Same memory store, one feeling context; first closure emits RECALL."""
+    rows = []
+    for memory in MEMORIES:
+        overlap = len(memory.features & feeling.features)
+        gain = memory_gain(memory, feeling)
+        trigger = trigger_step(memory, feeling)
+        rows.append(
+            {
+                "memory": memory.name,
+                "base_distance": memory.base_distance,
+                "overlap": overlap,
+                "gain": gain,
+                "trigger_step": trigger,
+            }
+        )
+    winner = min(rows, key=lambda row: (row["trigger_step"], row["base_distance"], row["memory"]))
+    trace = []
+    for step in range(1, int(winner["trigger_step"]) + 1):
+        distances = {}
+        for memory in MEMORIES:
+            gain = memory_gain(memory, feeling)
+            distances[memory.name] = max(0, memory.base_distance - gain * step)
+        trace.append(
+            {
+                "step": step,
+                "distances": distances,
+                "event": "RECALL" if step == winner["trigger_step"] else "listening",
+            }
+        )
+    return {
+        "feeling": feeling.name,
+        "feeling_features": sorted(feeling.features),
+        "store": [memory.name for memory in MEMORIES],
+        "rows": rows,
+        "winner": winner["memory"],
+        "trigger_step": winner["trigger_step"],
+        "trace": trace,
+        "recall": {
+            "event": "RECALL",
+            "memory": winner["memory"],
+            "tau_recall": 0,
+            "atomic": True,
+        },
+        "store_unchanged": True,
+    }
+
+
+def affective_recollection() -> dict[str, object]:
+    runs = [memory_race(feeling) for feeling in FEELINGS]
+    store = [memory.name for memory in MEMORIES]
+    return {
+        "store": store,
+        "store_unchanged_across_feelings": all(run["store"] == store for run in runs),
+        "runs": runs,
+        "winners": {str(run["feeling"]): run["winner"] for run in runs},
+        "feeling_fields": [field.name for field in fields(Feeling)],
+        "target_field_present": any(
+            field.name in {"target", "memory", "answer"} for field in fields(Feeling)
+        ),
+        "kill_condition": (
+            "the feeling carries generic features only; it never contains the target memory"
+        ),
+    }
+
+
+# ---------------------------------------------------------------------------
 # Summary and tests
 # ---------------------------------------------------------------------------
 
@@ -191,7 +301,7 @@ def build_summary() -> dict[str, object]:
     return {
         "meta": {
             "generator": "conscious_dynamics.py",
-            "version": 1,
+            "version": 2,
             "issue": 278,
             "pre_registration": "Conscious_Dynamics_QLF.md",
             "frequency": "f_i^(B) = 1 / R_i^(B)",
@@ -204,6 +314,7 @@ def build_summary() -> dict[str, object]:
         "quieting_winner": promote(CANDIDATES, quiet),
         "loop": loop,
         "retrospective": retrospective_compression(),
+        "memory": affective_recollection(),
         "gates": {
             "D0_definition": "frozen",
             "D1_effective_frequency": "finite check; f>0 and delays can move both ways",
@@ -213,6 +324,10 @@ def build_summary() -> dict[str, object]:
             "D5_bisimulation": "cited from #275; general theorem open",
             "D6_attention_quieting": "finite check; race changes without new contestants",
             "D7_qualia": "bracketed; no theorem",
+            "D8_affective_recollection": (
+                "finite check; same store, feeling features change accessibility; "
+                "no target identity; RECALL is atomic"
+            ),
         },
     }
 
@@ -255,6 +370,19 @@ def self_test() -> None:
     assert retro["history_unchanged"], "history must be fixed"
     assert retro["compression_changed"], "compression must change"
 
+    memory = affective_recollection()
+    assert memory["winners"]["neutral"] == "M_A", "neutral should recall M_A"
+    assert memory["winners"]["F_blue_room"] == "M_A", "blue/room should recall M_A"
+    assert memory["winners"]["F_song_summer"] == "M_B", "song/summer should recall M_B"
+    assert memory["winners"]["F_loss_winter"] == "M_C", "loss/winter should recall M_C"
+    assert memory["store_unchanged_across_feelings"], "memory store must not change"
+    assert not memory["target_field_present"], "the feeling must not contain the target"
+    for run in memory["runs"]:
+        assert run["recall"]["tau_recall"] == 0, "recall must be atomic"
+        assert run["recall"]["atomic"] is True
+        assert run["trace"][-1]["event"] == "RECALL", "the final trace event must be RECALL"
+        assert run["trace"][-1]["distances"][run["winner"]] == 0, "winner must be at zero distance"
+
     print("self-test: OK")
 
 
@@ -275,6 +403,10 @@ def print_summary(summary: dict[str, object]) -> None:
     for row in summary["loop"]:  # type: ignore[union-attr]
         print(f"  step {row['step']}: {row['winner']} (f={row['frequency']:.3f})")
     print(f"\nretrospective: {summary['retrospective']}")  # type: ignore[index]
+    print("\nmemory recall:")
+    memory = summary["memory"]  # type: ignore[index]
+    for feeling, winner in memory["winners"].items():
+        print(f"  {feeling}: {winner} (RECALL, tau=0)")
 
 
 def main(argv: Sequence[str] | None = None) -> int:

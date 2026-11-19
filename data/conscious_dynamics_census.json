@@ -66,7 +66,8 @@
     "D4_retrospective_compression": "finite check; history fixed, compression changes",
     "D5_bisimulation": "cited from #275; general theorem open",
     "D6_attention_quieting": "finite check; race changes without new contestants",
-    "D7_qualia": "bracketed; no theorem"
+    "D7_qualia": "bracketed; no theorem",
+    "D8_affective_recollection": "finite check; same store, feeling features change accessibility; no target identity; RECALL is atomic"
   },
   "loop": [
     {
@@ -127,6 +128,281 @@
       "winner": "external"
     }
   ],
+  "memory": {
+    "feeling_fields": [
+      "name",
+      "features"
+    ],
+    "kill_condition": "the feeling carries generic features only; it never contains the target memory",
+    "runs": [
+      {
+        "feeling": "neutral",
+        "feeling_features": [],
+        "recall": {
+          "atomic": true,
+          "event": "RECALL",
+          "memory": "M_A",
+          "tau_recall": 0
+        },
+        "rows": [
+          {
+            "base_distance": 4,
+            "gain": 1,
+            "memory": "M_A",
+            "overlap": 0,
+            "trigger_step": 4
+          },
+          {
+            "base_distance": 5,
+            "gain": 1,
+            "memory": "M_B",
+            "overlap": 0,
+            "trigger_step": 5
+          },
+          {
+            "base_distance": 7,
+            "gain": 1,
+            "memory": "M_C",
+            "overlap": 0,
+            "trigger_step": 7
+          }
+        ],
+        "store": [
+          "M_A",
+          "M_B",
+          "M_C"
+        ],
+        "store_unchanged": true,
+        "trace": [
+          {
+            "distances": {
+              "M_A": 3,
+              "M_B": 4,
+              "M_C": 6
+            },
+            "event": "listening",
+            "step": 1
+          },
+          {
+            "distances": {
+              "M_A": 2,
+              "M_B": 3,
+              "M_C": 5
+            },
+            "event": "listening",
+            "step": 2
+          },
+          {
+            "distances": {
+              "M_A": 1,
+              "M_B": 2,
+              "M_C": 4
+            },
+            "event": "listening",
+            "step": 3
+          },
+          {
+            "distances": {
+              "M_A": 0,
+              "M_B": 1,
+              "M_C": 3
+            },
+            "event": "RECALL",
+            "step": 4
+          }
+        ],
+        "trigger_step": 4,
+        "winner": "M_A"
+      },
+      {
+        "feeling": "F_blue_room",
+        "feeling_features": [
+          "blue",
+          "room"
+        ],
+        "recall": {
+          "atomic": true,
+          "event": "RECALL",
+          "memory": "M_A",
+          "tau_recall": 0
+        },
+        "rows": [
+          {
+            "base_distance": 4,
+            "gain": 5,
+            "memory": "M_A",
+            "overlap": 2,
+            "trigger_step": 1
+          },
+          {
+            "base_distance": 5,
+            "gain": 3,
+            "memory": "M_B",
+            "overlap": 1,
+            "trigger_step": 2
+          },
+          {
+            "base_distance": 7,
+            "gain": 3,
+            "memory": "M_C",
+            "overlap": 1,
+            "trigger_step": 3
+          }
+        ],
+        "store": [
+          "M_A",
+          "M_B",
+          "M_C"
+        ],
+        "store_unchanged": true,
+        "trace": [
+          {
+            "distances": {
+              "M_A": 0,
+              "M_B": 2,
+              "M_C": 4
+            },
+            "event": "RECALL",
+            "step": 1
+          }
+        ],
+        "trigger_step": 1,
+        "winner": "M_A"
+      },
+      {
+        "feeling": "F_song_summer",
+        "feeling_features": [
+          "song",
+          "summer"
+        ],
+        "recall": {
+          "atomic": true,
+          "event": "RECALL",
+          "memory": "M_B",
+          "tau_recall": 0
+        },
+        "rows": [
+          {
+            "base_distance": 4,
+            "gain": 1,
+            "memory": "M_A",
+            "overlap": 0,
+            "trigger_step": 4
+          },
+          {
+            "base_distance": 5,
+            "gain": 5,
+            "memory": "M_B",
+            "overlap": 2,
+            "trigger_step": 1
+          },
+          {
+            "base_distance": 7,
+            "gain": 1,
+            "memory": "M_C",
+            "overlap": 0,
+            "trigger_step": 7
+          }
+        ],
+        "store": [
+          "M_A",
+          "M_B",
+          "M_C"
+        ],
+        "store_unchanged": true,
+        "trace": [
+          {
+            "distances": {
+              "M_A": 3,
+              "M_B": 0,
+              "M_C": 6
+            },
+            "event": "RECALL",
+            "step": 1
+          }
+        ],
+        "trigger_step": 1,
+        "winner": "M_B"
+      },
+      {
+        "feeling": "F_loss_winter",
+        "feeling_features": [
+          "loss",
+          "winter"
+        ],
+        "recall": {
+          "atomic": true,
+          "event": "RECALL",
+          "memory": "M_C",
+          "tau_recall": 0
+        },
+        "rows": [
+          {
+            "base_distance": 4,
+            "gain": 1,
+            "memory": "M_A",
+            "overlap": 0,
+            "trigger_step": 4
+          },
+          {
+            "base_distance": 5,
+            "gain": 1,
+            "memory": "M_B",
+            "overlap": 0,
+            "trigger_step": 5
+          },
+          {
+            "base_distance": 7,
+            "gain": 5,
+            "memory": "M_C",
+            "overlap": 2,
+            "trigger_step": 2
+          }
+        ],
+        "store": [
+          "M_A",
+          "M_B",
+          "M_C"
+        ],
+        "store_unchanged": true,
+        "trace": [
+          {
+            "distances": {
+              "M_A": 3,
+              "M_B": 4,
+              "M_C": 2
+            },
+            "event": "listening",
+            "step": 1
+          },
+          {
+            "distances": {
+              "M_A": 2,
+              "M_B": 3,
+              "M_C": 0
+            },
+            "event": "RECALL",
+            "step": 2
+          }
+        ],
+        "trigger_step": 2,
+        "winner": "M_C"
+      }
+    ],
+    "store": [
+      "M_A",
+      "M_B",
+      "M_C"
+    ],
+    "store_unchanged_across_feelings": true,
+    "target_field_present": false,
+    "winners": {
+      "F_blue_room": "M_A",
+      "F_loss_winter": "M_C",
+      "F_song_summer": "M_B",
+      "neutral": "M_A"
+    }
+  },
   "meta": {
     "frequency": "f_i^(B) = 1 / R_i^(B)",
     "generator": "conscious_dynamics.py",
@@ -134,7 +410,7 @@
     "pre_registration": "Conscious_Dynamics_QLF.md",
     "promotion": "argmax over eligible self-relevant integrated closures",
     "update": "B_{t+1} = U(B_t, C_t*)",
-    "version": 1
+    "version": 2
   },
   "quieting_winner": {
     "delay": 8,
