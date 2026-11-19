@@ -358,6 +358,10 @@ def build_summary() -> dict[str, object]:
                 "confinement U(1) toy; full colour open"
             ),
             "U5_measure": "cylinder/Kraft weights normalized; raw W unchanged",
+            "U6_law_of_exceptions": (
+                "open bridge; C_R strict by law_of_exceptions; "
+                "Omega_R horizon-relative; local W may stabilize"
+            ),
         },
     }
 

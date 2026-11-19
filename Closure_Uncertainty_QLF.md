@@ -106,11 +106,44 @@ they normalize to one.
 | **U3** | closed/isolated component is reusable | **cited**: `isolated_iff_closed`, `closed_insertion_is_phase`; formal reuse lemma open |
 | **U4** | at least two nontrivial domains instantiate the kernel without changing its definitions | **pass (two exact)**: game theory and flat-history ZFA (`countBalanced`); confinement is a charge toy plus theorem citations, full colour enumeration open |
 | **U5** | raw `W` is separated from a declared measure before physical use | **defined**: cylinder/Kraft `μ(c)=8^(-|c|)`, normalized `P`; finite check in `closure_uncertainty.py` |
+| **U6** | `W_R`/`U_R` are horizon-relative; no finite closure inventory is complete | **open bridge**: `law_of_exceptions` gives strict `C_R ⊊ C_{R+1}`; the bridge from `closedAtHorizon` to `Ω_R(h\|B)` is not proved; local `W_R` may stabilize |
 
 The PR remains draft until U1 is Lean-checked. U4 now has two exact instantiations; the confinement
 row is a partial extra, not one of the two required domains. U5 is a prerequisite for using `W`/`U`
 in motion, affect, or cosmology; it is not a claim that the cylinder weight is the final physical
 measure.
+
+### U6 — Law-of-Exceptions boundary (open bridge)
+
+`lean/QLF_LawOfExceptions.lean` proves:
+
+```
+∀ R, ∃ s : TopoString,
+  closedAtHorizon (R+1) s ∧ ¬ closedAtHorizon R s
+```
+
+and `closure_hierarchy_strict` gives `C_R ⊊ C_{R'}` for `R < R'`, where
+`C_R = {s : closedAtHorizon R s}`. So no finite `closedAtHorizon` is final.
+
+This is **not yet** a theorem about `Ω_R(h | B)`. A particular starting history can stabilize: for
+the flat `^` system, `W = [0, 1, 1, 14, 14]` for `R = 0..4`. For fixed system, context, and listener,
+`Ω_R ⊆ Ω_{R+1}`, so `W_R ≤ W_{R+1}`; but the global Law of Exceptions does not imply
+`W_{R+1} > W_R` for every `h`.
+
+The missing bridge is:
+
+```
+C_R^B ⊇ Ω_R(h | B)
+C_R^B is a finite restrictive closure
+```
+
+If that bridge is proved, the Law supplies a deeper realized closure outside `C_R^B`, and no finite
+listener has a final possibility inventory. Until then U6 is **open**, and `Closed(q | B_R)` is the
+correct form — not an absolute `Closed(q)`.
+
+This is also the timing distinction: the closure event is exact (`tau_event = 0`), while the finite
+listener's possibility inventory is horizon-relative
+([Event timing](Event_Timing_QLF.md)).
 
 ---
 

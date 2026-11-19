@@ -71,6 +71,17 @@ class ClosureUncertaintyTests(unittest.TestCase):
             paths = cu.first_completions(system, 4)
             self.assertTrue(all(len(path) <= 4 for path in paths))
 
+    def test_u6_horizon_boundary(self) -> None:
+        flat = cu.flat_word_system(4, "^")
+        ws = [cu.W(flat, r) for r in range(5)]
+        self.assertEqual(ws, [0, 1, 1, 14, 14])
+        self.assertTrue(all(ws[i] <= ws[i + 1] for i in range(len(ws) - 1)))
+        self.assertEqual(ws[-1], ws[-2])  # a local inventory can stabilize
+        summary = cu.build_summary()
+        gate = summary["gates"]["U6_law_of_exceptions"]
+        self.assertIn("open bridge", gate)
+        self.assertIn("local W may stabilize", gate)
+
     def test_summary_schema(self) -> None:
         summary = cu.build_summary()
         self.assertEqual(summary["meta"]["issue"], 269)
