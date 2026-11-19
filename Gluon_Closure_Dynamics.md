@@ -127,6 +127,33 @@ singlet. This is why the reverse channel matters.
 
 ---
 
+## 3a. Witness audit and atomic closure
+
+Every move carries a GL2 witness `(q, r, p)` with:
+
+```
+p + q + r = 0
+symp(q, r) ≠ 0
+```
+
+The census audits **1,584** witnesses: all triples close and all pairs are non-collinear. The move
+relation therefore has an explicit algebraic witness; it is not inferred from `d_G`.
+
+A first closure now has a path witness:
+
+```
+open pair ((1,0),(0,1))
+  create -> ((0,1),(1,0),(2,2))
+  event  = CLOSE
+  tau_event = 0
+  atomic = true
+```
+
+This makes GL4/GL6 executable rather than only cited: listening has a path, but the closure event
+itself is atomic.
+
+---
+
 ## 4. Harmonic binding
 
 For constituent periods `R_A`, `R_B`:

@@ -60,36 +60,36 @@ def is_singlet(state: State) -> bool:
     return total(state) == (0, 0)
 
 
-def create_moves(state: State) -> set[State]:
-    """Vertex creation: add the third leg p = -(q + r) for non-collinear q, r.
+def vertex_witnesses(state: State) -> list[tuple[Colour, Colour, Colour]]:
+    """Return every closing triple `(q, r, p)` with q, r non-collinear.
 
-    Defined independently of `d_G`.
+    The triple satisfies `q + r + p = 0`. It is the GL2 witness; it never
+    consults `d_G`.
     """
-    out: set[State] = set()
+    witnesses: list[tuple[Colour, Colour, Colour]] = []
     for i, j in combinations(range(len(state)), 2):
         q, r = state[i], state[j]
         if symp(q, r) == 0:
             continue
-        p = neg(add(q, r))
-        out.add(tuple(sorted(state + (p,))))
-    return out
+        witnesses.append((q, r, neg(add(q, r))))
+    return witnesses
+
+
+def create_moves(state: State) -> set[State]:
+    """Vertex creation: add the third leg p = -(q + r) for non-collinear q, r."""
+    return {
+        tuple(sorted(state + (p,)))
+        for _q, _r, p in vertex_witnesses(state)
+    }
 
 
 def glue_moves(state: State) -> set[State]:
-    """Vertex gluing: replace q, r by p = -(q + r) for non-collinear q, r.
-
-    The reverse channel of :func:`create_moves`; both are defined independently
-    of `d_G`.
-    """
+    """Vertex gluing: replace q, r by p = -(q + r) for non-collinear q, r."""
     out: set[State] = set()
-    for i, j in combinations(range(len(state)), 2):
-        q, r = state[i], state[j]
-        if symp(q, r) == 0:
-            continue
-        p = neg(add(q, r))
+    for q, r, p in vertex_witnesses(state):
         rest = list(state)
-        rest.pop(j)
-        rest.pop(i)
+        rest.remove(q)
+        rest.remove(r)
         rest.append(p)
         out.add(tuple(sorted(rest)))
     return out
@@ -99,24 +99,61 @@ def all_moves(state: State) -> set[State]:
     return create_moves(state) | glue_moves(state)
 
 
-def distance_to_singlet(state: State, max_size: int = MAX_SEARCH_SIZE) -> int | None:
-    """Shortest path to a colour singlet using creation + gluing, or None."""
+def shortest_path(
+    state: State, max_size: int = MAX_SEARCH_SIZE
+) -> dict[str, object] | None:
+    """Shortest creation/gluing path to a singlet, with states and move kinds."""
     if is_singlet(state):
-        return 0
-    queue = deque([(state, 0)])
-    seen = {state}
+        return {"distance": 0, "path": [state], "moves": []}
+    queue = deque([state])
+    parent: dict[State, State | None] = {state: None}
+    kind: dict[State, str] = {}
     while queue:
-        current, depth = queue.popleft()
+        current = queue.popleft()
         if len(current) >= max_size:
             continue
-        for nxt in all_moves(current):
-            if nxt in seen:
-                continue
-            if is_singlet(nxt):
-                return depth + 1
-            seen.add(nxt)
-            queue.append((nxt, depth + 1))
+        for move_kind, nxts in (
+            ("create", create_moves(current)),
+            ("glue", glue_moves(current)),
+        ):
+            for nxt in nxts:
+                if nxt in parent:
+                    continue
+                parent[nxt] = current
+                kind[nxt] = move_kind
+                if is_singlet(nxt):
+                    path: list[State] = [nxt]
+                    moves: list[str] = [move_kind]
+                    node = current
+                    while parent[node] is not None:
+                        path.append(node)
+                        moves.append(kind[node])
+                        node = parent[node]  # type: ignore[assignment]
+                    path.append(state)
+                    path.reverse()
+                    moves.reverse()
+                    return {"distance": len(moves), "path": path, "moves": moves}
+                queue.append(nxt)
     return None
+
+
+def distance_to_singlet(state: State, max_size: int = MAX_SEARCH_SIZE) -> int | None:
+    """Shortest path to a colour singlet using creation + gluing, or None."""
+    result = shortest_path(state, max_size)
+    return None if result is None else int(result["distance"])
+
+
+def closure_event(state: State, max_size: int = MAX_SEARCH_SIZE) -> dict[str, object] | None:
+    """The atomic first-singlet event, including a path witness."""
+    result = shortest_path(state, max_size)
+    if result is None:
+        return None
+    return {
+        **result,
+        "event": "CLOSE",
+        "tau_event": 0,
+        "atomic": True,
+    }
 
 
 def enumerate_states(max_size: int = MAX_STATE_SIZE) -> list[State]:
@@ -176,9 +213,17 @@ def census(max_size: int = MAX_STATE_SIZE) -> dict[str, object]:
                         "d_after": d_next,
                     },
                 )
+    witnesses = [w for state in states for w in vertex_witnesses(state)]
     return {
         "max_state_size": max_size,
         "max_search_size": MAX_SEARCH_SIZE,
+        "witness_audit": {
+            "witnesses": len(witnesses),
+            "all_triples_close": all(
+                add(add(q, r), p) == (0, 0) for q, r, p in witnesses
+            ),
+            "all_pairs_noncollinear": all(symp(q, r) != 0 for q, r, _p in witnesses),
+        },
         "states": len(states),
         "with_distance": sum(1 for d in distances.values() if d is not None),
         "without_distance": sum(1 for d in distances.values() if d is None),
@@ -205,6 +250,7 @@ def worked_examples() -> dict[str, object]:
             "d": distance_to_singlet(open_pair),
             "create_moves": sorted(create_moves(open_pair)),
             "glue_moves": sorted(glue_moves(open_pair)),
+            "closure": closure_event(open_pair),
         },
         "gluing_to_singlet": {
             "state": gluing_state,
@@ -262,7 +308,23 @@ def self_test() -> None:
     assert distance_to_singlet(((1, 0), (0, 1))) == 1
     assert distance_to_singlet(((0, 1), (1, 0), (1, 1))) == 1
     assert distance_to_singlet(((1, 0), (2, 0))) == 0
+    for state in (
+        ((1, 0), (0, 1)),
+        ((0, 1), (1, 0), (1, 1)),
+        ((0, 1), (1, 0), (1, 1), (2, 1)),
+    ):
+        for q, r, p in vertex_witnesses(state):
+            assert add(add(q, r), p) == (0, 0)
+            assert symp(q, r) != 0
+    event = closure_event(((1, 0), (0, 1)))
+    assert event is not None
+    assert event["event"] == "CLOSE"
+    assert event["tau_event"] == 0
+    assert event["distance"] == 1
     result = census()
+    audit = result["witness_audit"]
+    assert audit["all_triples_close"]
+    assert audit["all_pairs_noncollinear"]
     for kind in ("create", "glue"):
         assert result["move_classes"][kind].get("distance_reducing", 0) > 0
         assert result["move_classes"][kind].get("distance_neutral", 0) > 0

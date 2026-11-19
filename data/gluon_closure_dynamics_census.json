@@ -296,7 +296,12 @@
     "note": "Two-channel vertex toy: creation adds p = -(q+r); gluing replaces q, r by p. Both are defined from symp != 0 and p + q + r = 0, independently of d_G. Not full QCD.",
     "states": 494,
     "with_distance": 454,
-    "without_distance": 40
+    "without_distance": 40,
+    "witness_audit": {
+      "all_pairs_noncollinear": true,
+      "all_triples_close": true,
+      "witnesses": 1584
+    }
   },
   "gates": {
     "GL0_definition": "finite; d_G, T, f, tau_event separated",
@@ -434,6 +439,41 @@
       ]
     },
     "open_pair": {
+      "closure": {
+        "atomic": true,
+        "distance": 1,
+        "event": "CLOSE",
+        "moves": [
+          "create"
+        ],
+        "path": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        ],
+        "tau_event": 0
+      },
       "create_moves": [
         [
           [

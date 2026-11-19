@@ -48,6 +48,28 @@ class GluonClosureDynamicsTests(unittest.TestCase):
                 result["first_singlet_moves"][kind].get("distance_reducing", 0), 0
             )
 
+    def test_vertex_witnesses_close(self) -> None:
+        for state in (
+            ((1, 0), (0, 1)),
+            ((0, 1), (1, 0), (1, 1)),
+            ((0, 1), (1, 0), (1, 1), (2, 1)),
+        ):
+            witnesses = g.vertex_witnesses(state)
+            self.assertTrue(witnesses)
+            for q, r, p in witnesses:
+                self.assertEqual(g.add(g.add(q, r), p), (0, 0))
+                self.assertNotEqual(g.symp(q, r), 0)
+
+    def test_closure_event_is_atomic(self) -> None:
+        event = g.closure_event(((1, 0), (0, 1)))
+        self.assertIsNotNone(event)
+        self.assertEqual(event["event"], "CLOSE")
+        self.assertEqual(event["tau_event"], 0)
+        self.assertTrue(event["atomic"])
+        self.assertEqual(event["distance"], 1)
+        self.assertEqual(event["moves"], ["create"])
+        self.assertTrue(g.is_singlet(event["path"][-1]))
+
     def test_harmonic_binding(self) -> None:
         self.assertEqual(g.binding_period([5, 3]), 3)
         self.assertAlmostEqual(g.binding_frequency([5, 3]), 1 / 3)
