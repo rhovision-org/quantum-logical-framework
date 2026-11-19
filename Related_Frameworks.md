@@ -20,6 +20,7 @@
 | **Fredkin / 't Hooft / Wolfram** | reality is discrete computation | *no action-zero admissibility criterion* — everything runs, nothing is selected. Fredkin's own gate is built on the substrate in [`Fredkin_QLF.md`](Fredkin_QLF.md), where his conservation law turns out to **be** ZFA count balance — he had the law and not the selection principle | Fredkin 1990, 't Hooft 2016, Wolfram 2020 |
 | **Superdeterminism** ('t Hooft, Hossenfelder–Palmer) | settings are not exogenous free variables — "free choice" deflated | its *mechanism* is a hidden state **correlated with the settings**; QLF has no pre-assigned values to correlate, and independent factors commute (`indexed_factors_commute`), so the Bell escape is contextual rather than conspiratorial | 't Hooft 2016, Hossenfelder–Palmer 2020 |
 | **Deutsch–Marletto — Constructor Theory** | possibilist modality (possible vs. impossible) | no counting, no action, no constants | Deutsch–Marletto 2015 |
+| **Cronin–Walker — Assembly Theory** | construction, reuse, and selection; the assembly index | AT's reuse is unrestricted; QLF adds a precise closure boundary (`isolated_iff_closed`) and separates way multiplicity `W(x)` from copy number `N(x)`. Exact short-word census: the closure constraint changes 7.06% of 8.13M balanced histories and adds 0.164 bits beyond ordinary assembly + LZ78 — testable, but not yet chemistry | Sharma et al. 2023 |
 
 ### 1. Friston's Free Energy Principle — the nearest relative (already linked in the repo)
 
@@ -65,6 +66,33 @@ never needs the credit either: the correlations come from a shared **past** that
 ### 7. Constructor Theory (Deutsch–Marletto) — the possibilist cousin
 
 A fundamental ontology of *possible vs. impossible transformations*. This is the **possibilist cousin**: it shares QLF's modal framing (physics as what can and cannot happen — the possibilism of [`Philosophy.md`](Philosophy.md) §3) but has **no counting, no action, no constants**. Constructor theory says what is possible; ZFA says which possibilities close, and how many, and what values fall out.
+
+### 7a. Assembly Theory (Cronin–Walker) — the construction-cost neighbour
+
+Assembly Theory is the sharpest existing formalization of a different component: **construction**. Its
+assembly index is the minimum number of joining operations needed to build an object from elementary
+objects, with previously built subobjects reusable
+([Sharma et al. 2023](https://doi.org/10.1038/s41586-023-06600-9)). That is close to QLF's own
+generate-and-select vocabulary: QLF histories are built by concatenating twists, and a closed
+subhistory is precisely the kind of thing that can be treated as an independent unit
+(`isolated_iff_closed`).
+
+The differentiation is equally sharp. AT's reuse rule is unconstrained: any constructed subobject may
+be reused. QLF supplies a candidate *physical* boundary for reuse — only count-balanced subhistories
+are isolated from every environment (`isolated_iff_closed`) and change the rest only by a global phase
+(`closed_insertion_is_phase`). The resulting **closure-constrained assembly index** is a QLF variant,
+not a restatement of AT, and it is falsifiable: if it adds nothing beyond ordinary assembly, length,
+and compression, it should be withdrawn. The exhaustive short-word census in
+[`Assembly_Index_QLF.md`](Assembly_Index_QLF.md) finds a real but modest effect (7.06% of 8.13M
+balanced histories; 0.164 bits beyond `(length, a, LZ78)`), and makes **no** chemistry or selection
+claim.
+
+Two disciplines matter. First, AT's empirical quantity combines assembly complexity with **copy
+number**; QLF's possibility counts `W(x)` are not observed abundances `N(x)`, and the two must not be
+identified. Second, the often-quoted “about 15” molecular threshold came from a particular 2021 sample
+and is not a universal constant ([Marshall et al. 2021](https://doi.org/10.1038/s41467-021-23258-x)).
+The honest relation is: AT supplies the operational construction measure; QLF supplies a closure
+boundary worth testing against it.
 
 ### 8. Hegelian dialectic — a formal semantics, one direction only
 
