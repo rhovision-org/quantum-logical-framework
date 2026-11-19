@@ -55,12 +55,24 @@ collection, inference — collapse to a single operation on QuantumOS: ZFA enfor
 call is the whole OS, and that call *is* the quantum act (measurement without collapse,
 [`Measurement_Problem.md`](Measurement_Problem.md)).
 
-**What runs on it is a quantum AI in the strong sense.** Not a classical model with a QPU
-accelerator bolted on — an agent whose unit of thought is a spin-½ ZFA closure (a 2×2 Hermitian
-Pauli fold), whose memory is a set of Curry-Howard `cap:` tokens each of which is literally a
-quantum amplitude's phase, and whose multi-peer consensus operation is a *joint* closure — i.e.
-entanglement (ER=EPR). The abstraction step and the quantum-measurement step are the same step.
-The full case is [`QLF_as_Intelligence.md`](QLF_as_Intelligence.md) §7b–§7c and §8a; the neuro-symbolic
+**What runs on it is a quantum AI in the strong sense — with a status boundary.** Not a classical
+model with a QPU accelerator bolted on — an agent whose unit of thought is a spin-½ ZFA closure (a
+2×2 Hermitian Pauli fold), whose **proof memory** is a set of Curry-Howard `cap:` tokens each of
+which is literally a quantum amplitude's phase, and whose multi-peer consensus operation is a *joint*
+closure — i.e. entanglement (ER=EPR). The abstraction step and the quantum-measurement step are the
+same step.
+
+**What is actually running today:** LLM peers, role agents, persistent room memory, deterministic
+ZFA/Pauli checks, collective `/search` and `/solve`, governance, and advisory synthesis. **What is
+proposed, not running:** listener-controlled cognition — selective recollection, multiple open
+hypotheses, verifier-gated atomic commitment, and a compressed self-model. That layer is tracked in
+[quantum-os#132](https://github.com/rhovision-org/quantum-os/issues/132) (workstream 4) and has a
+draft controller slice in [quantum-os#322](https://github.com/rhovision-org/quantum-os/pull/322);
+the running/proposed split and gates A0–A6 are in [`AI.md`](AI.md#listener-cognition-the-next-architecture).
+The cognitive listener scheduler is **not** the QOS kernel scheduler
+([quantum-os#278](https://github.com/rhovision-org/quantum-os/issues/278)).
+
+The full case is [`QLF_as_Intelligence.md`](QLF_as_Intelligence.md) §6a and §7b–§7c; the neuro-symbolic
 split (LLM as fluent language layer, QLF as the structural quantum coprocessor where synthesis and
 theorem-persistence happen) is in [`AI.md`](AI.md).
 
