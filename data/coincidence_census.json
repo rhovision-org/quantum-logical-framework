@@ -1,0 +1,55 @@
+{
+  "co0": {
+    "all_pass": true,
+    "closed_words_checked": 5296,
+    "failures": [],
+    "max_length": 6,
+    "note": "This is a finite check of the CO0 proof sketch, not a Lean theorem. The analytic argument covers arbitrary length."
+  },
+  "co1_co2": {
+    "early_joint_closure": {
+      "a": "^",
+      "b": "v",
+      "first_joint_closure": 2,
+      "joint": "^v",
+      "origin_a": "A",
+      "origin_b": "B",
+      "product_sector": false,
+      "strong": true
+    },
+    "gauge_pair": {
+      "a": "+",
+      "b": "-",
+      "first_joint_closure": 2,
+      "joint": "+-",
+      "origin_a": "A",
+      "origin_b": "B",
+      "product_sector": true,
+      "strong": false
+    },
+    "primordial": {
+      "a": "^",
+      "b": "v",
+      "first_joint_closure": 2,
+      "joint": "^v",
+      "origin_a": "A",
+      "origin_b": "B",
+      "product_sector": false,
+      "strong": true
+    },
+    "same_origin": null
+  },
+  "gates": {
+    "CO0_triviality": "finite check; bare split is vacuous",
+    "CO1_typed_origins": "origins fixed in the event record",
+    "CO2_first_joint_closure": "first prefix with joint closure",
+    "CO3_universality": "open; not implemented here",
+    "strong_coincidence": "non-product-sector witness"
+  },
+  "meta": {
+    "generator": "coincidence.py",
+    "issue": 283,
+    "pre_registration": "Coincidence_QLF.md",
+    "version": 1
+  }
+}
