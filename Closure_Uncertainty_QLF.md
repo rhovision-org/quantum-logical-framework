@@ -79,10 +79,11 @@ closure rule.”
 | **U1** | finiteness; tighter context ⇒ subset and `W' ≤ W`; unique completion ⇒ `U = 0`; context changes `Ω` not `closed`; joint closure can resolve what neither component resolves alone | **finite Python checks** in `closure_uncertainty.py`; **Lean open** |
 | **U2** | flat-history statements never cross silently into tensor independence | **done**: this document is flat-sector only; #266 controls the boundary |
 | **U3** | closed/isolated component is reusable | **cited**: `isolated_iff_closed`, `closed_insertion_is_phase`; formal reuse lemma open |
-| **U4** | at least two nontrivial domains instantiate the kernel without changing its definitions | **partial**: game theory exact; confinement is a charge toy plus theorem citations; full color enumeration open |
+| **U4** | at least two nontrivial domains instantiate the kernel without changing its definitions | **pass (two exact)**: game theory and flat-history ZFA (`countBalanced`); confinement is a charge toy plus theorem citations, full colour enumeration open |
 
-The PR remains draft until U1 is Lean-checked and U4 has two exact instantiations. If U4 fails,
-“emergent uncertainty” is terminology and should not be elevated.
+The PR remains draft until U1 is Lean-checked. U4 now has two exact instantiations; the confinement
+row is a partial extra, not one of the two required domains. If the exact instantiations fail on
+inspection, “emergent uncertainty” is terminology and should not be elevated.
 
 ---
 
@@ -110,7 +111,31 @@ closure predicate, not that players literally compute `Ω_R`.
 
 ---
 
-## 5. Instantiation 2 — confinement (partial)
+## 5. Instantiation 2 — flat-history ZFA (exact)
+
+The second exact instantiation uses the real QLF closure predicate:
+
+- states = all twist words up to length 4 (4,681 states);
+- `step` = append one twist (until the length bound);
+- `closed` = `countBalanced` / `is_closed` from `assembly_index.py` (177 closed words);
+- `context` = all states;
+- start = the single twist `^`.
+
+From `^`, the first-completion counts are
+
+| `R` | 0 | 1 | 2 | 3 | 4 |
+|---|---:|---:|---:|---:|---:|
+| `W_R` | 0 | 1 | 1 | 14 | 14 |
+
+The first completion is the unique conjugate pair `^v` at path length 1. Beyond that, first
+completions can only occur at odd path lengths (the start has length 1 and closures have even
+length), so `R = 4` adds nothing over `R = 3`. The 14 length-3 paths are the first-return histories
+that avoid the length-1 closure. This is an exact enumeration of the flat QLF closure predicate, not
+a toy.
+
+---
+
+## 6. Instantiation 3 — confinement (partial)
 
 The confinement reading is:
 
@@ -121,12 +146,12 @@ The confinement reading is:
 The reference implementation includes a **U(1) charge toy**: states are net charge counts, `step`
 adds a charge or anticharge, `closed` is net zero, and `context` is the confinement band. It
 reports the first-completion count from a lone charge. This is an illustration of the counting
-kernel, **not** the full SU(3)/Borromean colour theory. A full colour enumeration is an open U4
-item, not a claim of this PR.
+kernel, **not** the full SU(3)/Borromean colour theory. A full colour enumeration is an open extra,
+not one of the two exact domains that satisfy U4.
 
 ---
 
-## 6. Instantiation 3 — flat shared closure (illustration)
+## 7. Instantiation 4 — flat shared closure (illustration)
 
 The flat-sector witness `^ | v` is jointly count-balanced while neither half is scalar
 (`shared_closure_not_factorizable`). In the kernel, a joint completion can exist where each
@@ -135,7 +160,7 @@ system to check the joint-closure gate; it is an illustration, not a new theorem
 
 ---
 
-## 7. Non-goals
+## 8. Non-goals
 
 - No claim that `U` is thermodynamic entropy, physical randomness, or a measure of qualia.
 - No claim that a domain with the same vocabulary shares a mechanism; see gate U4.
@@ -146,7 +171,7 @@ system to check the joint-closure gate; it is an illustration, not a new theorem
 
 ---
 
-## 8. Reproduce
+## 9. Reproduce
 
 ```bash
 python3 closure_uncertainty.py --self-test

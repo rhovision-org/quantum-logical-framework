@@ -45,8 +45,19 @@ class ClosureUncertaintyTests(unittest.TestCase):
         self.assertEqual(cu.W(joint, 1), 0)
         self.assertEqual(cu.W(joint, 2), 2)
 
+    def test_flat_zfa_first_completions(self) -> None:
+        flat = cu.flat_word_system(4, "^")
+        self.assertEqual(len(flat.states), 4681)
+        self.assertEqual(len(flat.closed), 177)
+        self.assertEqual([cu.W(flat, r) for r in range(5)], [0, 1, 1, 14, 14])
+
     def test_finiteness(self) -> None:
-        for system in (cu.game_system(), cu.charge_system(), cu.joint_system()):
+        for system in (
+            cu.game_system(),
+            cu.charge_system(),
+            cu.joint_system(),
+            cu.flat_word_system(4, "^"),
+        ):
             paths = cu.first_completions(system, 4)
             self.assertTrue(all(len(path) <= 4 for path in paths))
 
@@ -54,9 +65,11 @@ class ClosureUncertaintyTests(unittest.TestCase):
         summary = cu.build_summary()
         self.assertEqual(summary["meta"]["issue"], 269)
         self.assertIn("games", summary)
+        self.assertIn("flat_zfa", summary)
         self.assertIn("u1_charge", summary)
         self.assertIn("joint_pair", summary)
         self.assertEqual(summary["gates"]["U1_lean"], "open")
+        self.assertIn("flat-history ZFA exact", summary["gates"]["U4_domains"])
 
 
 if __name__ == "__main__":

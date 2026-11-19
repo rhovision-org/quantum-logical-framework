@@ -28,6 +28,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Sequence
 
+import assembly_index as ai
+
 OUTPUT = Path("data/closure_uncertainty_census.json")
 
 
@@ -172,6 +174,37 @@ def joint_system() -> FiniteClosureSystem:
 
 
 # ---------------------------------------------------------------------------
+# Instantiation 3: flat-history ZFA (the actual count-balanced predicate)
+# ---------------------------------------------------------------------------
+
+def flat_word_system(max_length: int = 4, start: str = "^") -> FiniteClosureSystem:
+    """Exact flat-history closure system: all twist words up to max_length.
+
+    ``closed`` is the real QLF ``is_closed`` / ``countBalanced`` predicate from
+    ``assembly_index.py``.  This is an exact instantiation, not a toy.
+    """
+    if start not in ai.TWISTS:
+        raise ValueError(f"start must be one of {ai.TWISTS!r}")
+    states: list[str] = [""]
+    frontier: list[str] = [""]
+    for _ in range(max_length):
+        frontier = [word + twist for word in frontier for twist in ai.TWISTS]
+        states.extend(frontier)
+    step = {
+        word: tuple(word + twist for twist in ai.TWISTS) if len(word) < max_length else ()
+        for word in states
+    }
+    return FiniteClosureSystem(
+        name=f"flat-zfa/L{max_length}/{start}",
+        states=tuple(states),
+        step=step,
+        closed=frozenset(word for word in states if ai.is_closed(word)),
+        context=frozenset(states),
+        start=start,
+    )
+
+
+# ---------------------------------------------------------------------------
 # Self-test and report
 # ---------------------------------------------------------------------------
 
@@ -209,8 +242,15 @@ def self_test() -> None:
     _assert(W(joint, 2) == 2, "joint closure should have two length-2 paths")
     _assert(W(joint, 3) == 2, "first-completions stop at the joint closure")
 
+    # Flat-history ZFA: the real countBalanced predicate, exact enumeration.
+    flat = flat_word_system(4, "^")
+    _assert(len(flat.states) == 4681, "flat system should have 4681 words through length 4")
+    _assert(len(flat.closed) == 177, "flat system should have 177 count-balanced words")
+    _assert([W(flat, r) for r in range(5)] == [0, 1, 1, 14, 14],
+            "flat-ZFA first-completion counts changed")
+
     # Finiteness: the enumeration is bounded by the horizon.
-    for system in (game, charge, joint):
+    for system in (game, charge, joint, flat):
         paths = first_completions(system, 4)
         _assert(all(len(p) <= 4 for p in paths), "path exceeded the horizon")
 
@@ -232,10 +272,11 @@ def build_summary() -> dict[str, object]:
     charge = charge_system()
     band = charge.with_context(q for q in charge.states if -1 <= q <= 1)
     joint = joint_system()
+    flat = flat_word_system(4, "^")
     return {
         "meta": {
             "generator": "closure_uncertainty.py",
-            "version": 1,
+            "version": 2,
             "issue": 269,
             "pre_registration": "Closure_Uncertainty_QLF.md",
             "first_completion": "paths ending at the first closed state, length <= R",
@@ -246,6 +287,13 @@ def build_summary() -> dict[str, object]:
         "game_tighter_context": {
             "start": "SH",
             "W": {str(r): W(tight_game, r) for r in range(0, 5)},
+        },
+        "flat_zfa": {
+            "start": "^",
+            "max_length": 4,
+            "states": len(flat.states),
+            "closed": len(flat.closed),
+            "W": {str(r): W(flat, r) for r in range(0, 5)},
         },
         "u1_charge": {
             "W": {str(r): W(charge, r) for r in range(0, 7)},
@@ -260,7 +308,10 @@ def build_summary() -> dict[str, object]:
             "U1_lean": "open",
             "U2_sector": "flat only",
             "U3_reuse": "cited, formal lemma open",
-            "U4_domains": "game theory exact; confinement U(1) toy; full colour open",
+            "U4_domains": (
+                "game theory exact; flat-history ZFA exact; "
+                "confinement U(1) toy; full colour open"
+            ),
         },
     }
 
@@ -275,6 +326,10 @@ def print_summary(summary: dict[str, object]) -> None:
     print("\nU(1) charge toy:")
     print(f"  W = {summary['u1_charge']['W']}")  # type: ignore[index]
     print(f"  W (context band [-1,1]) = {summary['u1_charge']['W_tight_band']}")  # type: ignore[index]
+    print("\nflat-history ZFA (countBalanced, lengths <= 4):")
+    flat = summary["flat_zfa"]  # type: ignore[index]
+    print(f"  states = {flat['states']}, closed = {flat['closed']}")
+    print(f"  W = {flat['W']}")
     print("\njoint pair:")
     print(f"  W = {summary['joint_pair']['W']}")  # type: ignore[index]
 
