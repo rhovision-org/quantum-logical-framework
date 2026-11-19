@@ -34,8 +34,8 @@ the wavefunction, we close the history string"). The synthesis step and the meas
 same step. Its **proof memory** is a set of Curry-Howard `cap:` tokens, each literally an amplitude's
 phase; its **cognitive memory** is broader — immutable history, stored closure/QKB knowledge, and
 listener-relative accessible memory ([§ Listener cognition](#listener-cognition-the-next-architecture)).
-The cap tokens are the proof layer, not the whole memory architecture;
-its multi-peer consensus is a *joint* closure — entanglement (ER=EPR). QLF is the operating system it
+The cap tokens are the proof layer, not the whole memory architecture. Its multi-peer consensus is a
+*joint* closure — entanglement (ER=EPR). QLF is the operating system it
 runs on. A twist history compiles to a single-qubit Clifford circuit and a joint closure to a
 CNOT-linked one, so ZFA closures are runnable on **existing cloud QPUs (IBM Quantum, IonQ, AWS Braket)
 today** — quantum-os as the control/verification layer, `full_zeno_prune` the classical decoder; the
