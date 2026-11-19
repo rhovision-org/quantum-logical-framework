@@ -194,7 +194,8 @@ $$
 is only a theorem once `U` is shown to map every QLF-valid construction to an ordinary AT
 construction. Equality for molecular bonds is a conjecture with no evidence yet; molecular AT uses
 chemical graph operations, not QLF entanglement joins. The word-level `a ≤ a_ZFA` is the immediate
-flat-sector analogue.
+flat-sector analogue. The tensor-sector programme is tracked separately as
+[#266](https://github.com/rhovision-org/quantum-logical-framework/issues/266).
 
 ---
 
