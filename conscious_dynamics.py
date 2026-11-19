@@ -30,8 +30,16 @@ OUTPUT = Path("data/conscious_dynamics_census.json")
 
 @dataclass(frozen=True)
 class Candidate:
+    """A candidate closure with a recurrence period and a trigger distance.
+
+    ``intrinsic_period`` is the characteristic listening/retrigger period ``T``.
+    ``base_distance`` is the remaining distance to the next trigger ``d``.
+    They are deliberately separate: a fast recurrent mode need not be nearest.
+    """
+
     name: str
-    intrinsic_delay: int
+    intrinsic_period: int
+    base_distance: int
     integration: float
     self_relevant: bool
 
@@ -39,84 +47,174 @@ class Candidate:
 @dataclass(frozen=True)
 class Listener:
     name: str
-    delay_bonus: dict[str, int] = field(default_factory=dict)
+    period_bonus: dict[str, int] = field(default_factory=dict)
+    distance_bonus: dict[str, int] = field(default_factory=dict)
 
-    def with_bonus(self, candidate: str, delta: int) -> "Listener":
-        bonuses = dict(self.delay_bonus)
+    def with_period_bonus(self, candidate: str, delta: int) -> "Listener":
+        bonuses = dict(self.period_bonus)
         bonuses[candidate] = bonuses.get(candidate, 0) + delta
-        return Listener(name=self.name + f"/{candidate}{delta:+d}", delay_bonus=bonuses)
+        return Listener(
+            name=self.name + f"/T{candidate}{delta:+d}",
+            period_bonus=bonuses,
+            distance_bonus=dict(self.distance_bonus),
+        )
+
+    def with_distance_bonus(self, candidate: str, delta: int) -> "Listener":
+        bonuses = dict(self.distance_bonus)
+        bonuses[candidate] = bonuses.get(candidate, 0) + delta
+        return Listener(
+            name=self.name + f"/d{candidate}{delta:+d}",
+            period_bonus=dict(self.period_bonus),
+            distance_bonus=bonuses,
+        )
 
 
-CANDIDATES = (
-    Candidate("percept", intrinsic_delay=2, integration=0.80, self_relevant=True),
-    Candidate("thought", intrinsic_delay=5, integration=0.90, self_relevant=True),
-    Candidate("feeling", intrinsic_delay=7, integration=0.95, self_relevant=True),
-    Candidate("external", intrinsic_delay=8, integration=0.85, self_relevant=True),
+CONSCIOUS_CANDIDATES = (
+    Candidate("percept", intrinsic_period=2, base_distance=2, integration=0.80, self_relevant=True),
+    Candidate("thought", intrinsic_period=5, base_distance=5, integration=0.90, self_relevant=True),
+    Candidate("feeling", intrinsic_period=7, base_distance=7, integration=0.95, self_relevant=True),
+    Candidate("external", intrinsic_period=8, base_distance=8, integration=0.85, self_relevant=True),
     # Fast but ineligible: the globally fastest event is not automatically conscious.
-    Candidate("micro", intrinsic_delay=1, integration=0.20, self_relevant=False),
+    Candidate("micro", intrinsic_period=1, base_distance=0, integration=0.20, self_relevant=False),
+)
+
+# The frequency/priority separation check.  fast_recurrent has the higher
+# frequency; slow_near is closer to its next trigger.
+PRIORITY_CANDIDATES = (
+    Candidate("fast_recurrent", intrinsic_period=1, base_distance=5, integration=0.80, self_relevant=True),
+    Candidate("slow_near", intrinsic_period=10, base_distance=1, integration=0.90, self_relevant=True),
+    Candidate("percept", intrinsic_period=2, base_distance=2, integration=0.80, self_relevant=True),
+)
+
+LOOP_CANDIDATES = tuple(
+    candidate
+    for candidate in CONSCIOUS_CANDIDATES
+    if candidate.name in {"percept", "thought", "feeling", "external"}
 )
 
 
-def effective_delay(candidate: Candidate, listener: Listener) -> int:
-    return max(1, candidate.intrinsic_delay + listener.delay_bonus.get(candidate.name, 0))
+def effective_period(candidate: Candidate, listener: Listener) -> int:
+    """Characteristic listening/retrigger period T_i^(B)."""
+    return max(1, candidate.intrinsic_period + listener.period_bonus.get(candidate.name, 0))
 
 
 def frequency(candidate: Candidate, listener: Listener) -> float:
-    return 1.0 / effective_delay(candidate, listener)
+    """Recurrence frequency f_i^(B) = 1 / T_i^(B)."""
+    return 1.0 / effective_period(candidate, listener)
+
+
+def remaining_distance(candidate: Candidate, listener: Listener) -> int:
+    """Remaining distance to the next trigger d_i^(B)."""
+    return max(0, candidate.base_distance + listener.distance_bonus.get(candidate.name, 0))
 
 
 def eligible(candidate: Candidate) -> bool:
     return candidate.self_relevant and candidate.integration >= 0.5
 
 
-def promote(
-    candidates: Iterable[Candidate] = CANDIDATES, listener: Listener | None = None
+def next_trigger(
+    candidates: Iterable[Candidate] = CONSCIOUS_CANDIDATES,
+    listener: Listener | None = None,
 ) -> dict[str, object] | None:
+    """The next conscious expression: minimum remaining distance, not max frequency."""
     listener = listener or Listener("default")
-    pool = [c for c in candidates if eligible(c)]
+    pool = [candidate for candidate in candidates if eligible(candidate)]
     if not pool:
         return None
-    winner = max(pool, key=lambda c: (frequency(c, listener), c.integration, c.name))
+    winner = min(
+        pool,
+        key=lambda candidate: (
+            remaining_distance(candidate, listener),
+            -frequency(candidate, listener),
+            candidate.name,
+        ),
+    )
     return {
         "name": winner.name,
-        "delay": effective_delay(winner, listener),
+        "distance": remaining_distance(winner, listener),
+        "period": effective_period(winner, listener),
         "frequency": frequency(winner, listener),
         "integration": winner.integration,
     }
 
 
-def race_table(listener: Listener | None = None) -> list[dict[str, object]]:
+def highest_frequency(
+    candidates: Iterable[Candidate] = CONSCIOUS_CANDIDATES,
+    listener: Listener | None = None,
+) -> dict[str, object] | None:
+    """The recurring-dominance winner: maximum frequency, used only as a contrast."""
+    listener = listener or Listener("default")
+    pool = [candidate for candidate in candidates if eligible(candidate)]
+    if not pool:
+        return None
+    winner = max(pool, key=lambda candidate: (frequency(candidate, listener), candidate.integration, candidate.name))
+    return {
+        "name": winner.name,
+        "distance": remaining_distance(winner, listener),
+        "period": effective_period(winner, listener),
+        "frequency": frequency(winner, listener),
+        "integration": winner.integration,
+    }
+
+
+def race_table(
+    candidates: Iterable[Candidate] = CONSCIOUS_CANDIDATES,
+    listener: Listener | None = None,
+) -> list[dict[str, object]]:
     listener = listener or Listener("default")
     rows = []
-    for candidate in CANDIDATES:
+    for candidate in candidates:
         rows.append(
             {
                 "name": candidate.name,
-                "intrinsic_delay": candidate.intrinsic_delay,
-                "effective_delay": effective_delay(candidate, listener),
+                "intrinsic_period": candidate.intrinsic_period,
+                "base_distance": candidate.base_distance,
+                "period": effective_period(candidate, listener),
                 "frequency": frequency(candidate, listener),
+                "distance": remaining_distance(candidate, listener),
                 "integration": candidate.integration,
                 "self_relevant": candidate.self_relevant,
                 "eligible": eligible(candidate),
             }
         )
-    return sorted(rows, key=lambda row: (-float(row["frequency"]), str(row["name"])))
+    return sorted(
+        rows,
+        key=lambda row: (int(row["distance"]), -float(row["frequency"]), str(row["name"])),
+    )
 
 
 # ---------------------------------------------------------------------------
 # Attention and quieting
 # ---------------------------------------------------------------------------
 
-def attention(listener: Listener, target: str, acceleration: int = 4) -> Listener:
-    """Attention changes the race: accelerate one existing candidate."""
-    return listener.with_bonus(target, -acceleration)
-
-
-def quiet_internal(listener: Listener, penalty: int = 20) -> Listener:
-    """Quieting slows the internal candidates so an external joint closure can win."""
+def attention(
+    listener: Listener,
+    target: str,
+    distance_acceleration: int = 4,
+    period_acceleration: int = 0,
+) -> Listener:
+    """Attention changes the race: move one candidate nearer or make it recur faster."""
     out = listener
-    for name in ("percept", "thought", "feeling"):
-        out = out.with_bonus(name, penalty)
+    if distance_acceleration:
+        out = out.with_distance_bonus(target, -distance_acceleration)
+    if period_acceleration:
+        out = out.with_period_bonus(target, -period_acceleration)
+    return out
+
+
+def quiet_internal(
+    listener: Listener,
+    names: tuple[str, ...] = ("percept", "thought", "feeling"),
+    distance_penalty: int = 20,
+    period_penalty: int = 0,
+) -> Listener:
+    """Quieting pushes internal candidates away so an external joint closure can win."""
+    out = listener
+    for name in names:
+        if distance_penalty:
+            out = out.with_distance_bonus(name, distance_penalty)
+        if period_penalty:
+            out = out.with_period_bonus(name, period_penalty)
     return replace(out, name=out.name + "/quiet")
 
 
@@ -133,16 +231,16 @@ SUCCESSOR = {
 
 
 def loop_step(listener: Listener) -> tuple[Listener, dict[str, object]]:
-    winner = promote(CANDIDATES, listener)
+    winner = next_trigger(LOOP_CANDIDATES, listener)
     if winner is None:
         return listener, {"winner": None}
     name = str(winner["name"])
-    # The winner becomes context: its own refractory delay rises, and its
-    # successor is accelerated.  This is the listener update U(B_t, C_t*).
-    nxt = listener.with_bonus(name, 6)
+    # The winner becomes context: its own refractory distance rises, and its
+    # successor is brought nearer.  This is the listener update U(B_t, C_t*).
+    nxt = listener.with_distance_bonus(name, 6)
     successor = SUCCESSOR.get(name)
     if successor is not None:
-        nxt = nxt.with_bonus(successor, -2)
+        nxt = nxt.with_distance_bonus(successor, -2)
     winner["next_successor"] = successor
     winner["winner"] = name
     return nxt, winner
@@ -154,7 +252,10 @@ def run_loop(steps: int = 4) -> list[dict[str, object]]:
     for step in range(1, steps + 1):
         listener, winner = loop_step(listener)
         winner["step"] = step
-        winner["listener_after"] = dict(listener.delay_bonus)
+        winner["listener_after"] = {
+            "period_bonus": dict(listener.period_bonus),
+            "distance_bonus": dict(listener.distance_bonus),
+        }
         trace.append(winner)
     return trace
 
@@ -301,24 +402,28 @@ def build_summary() -> dict[str, object]:
     return {
         "meta": {
             "generator": "conscious_dynamics.py",
-            "version": 2,
+            "version": 3,
             "issue": 278,
             "pre_registration": "Conscious_Dynamics_QLF.md",
-            "frequency": "f_i^(B) = 1 / R_i^(B)",
-            "promotion": "argmax over eligible self-relevant integrated closures",
+            "frequency": "f_i^(B) = 1 / T_i^(B), a recurrence frequency",
+            "distance": "d_i^(B) = remaining distance to the next trigger",
+            "priority": "i_next = argmin d_i over eligible closures",
             "update": "B_{t+1} = U(B_t, C_t*)",
         },
-        "default_race": race_table(default),
-        "default_winner": promote(CANDIDATES, default),
-        "attention_winner": promote(CANDIDATES, attended),
-        "quieting_winner": promote(CANDIDATES, quiet),
+        "default_race": race_table(CONSCIOUS_CANDIDATES, default),
+        "default_winner": next_trigger(CONSCIOUS_CANDIDATES, default),
+        "priority_race": race_table(PRIORITY_CANDIDATES, default),
+        "priority_next": next_trigger(PRIORITY_CANDIDATES, default),
+        "priority_fastest": highest_frequency(PRIORITY_CANDIDATES, default),
+        "attention_winner": next_trigger(CONSCIOUS_CANDIDATES, attended),
+        "quieting_winner": next_trigger(CONSCIOUS_CANDIDATES, quiet),
         "loop": loop,
         "retrospective": retrospective_compression(),
         "memory": affective_recollection(),
         "gates": {
             "D0_definition": "frozen",
-            "D1_effective_frequency": "finite check; f>0 and delays can move both ways",
-            "D2_promotion_filter": "finite check; fast micro-event is ineligible",
+            "D1_effective_frequency": "finite check; T>0, f=1/T, d separate",
+            "D2_promotion_filter": "finite check; next trigger is argmin d; fast micro-event is ineligible",
             "D3_finite_loop": "finite promotion sequence; event step increases",
             "D4_retrospective_compression": "finite check; history fixed, compression changes",
             "D5_bisimulation": "cited from #275; general theorem open",
@@ -328,31 +433,48 @@ def build_summary() -> dict[str, object]:
                 "finite check; same store, feeling features change accessibility; "
                 "no target identity; RECALL is atomic"
             ),
+            "D9_frequency_priority_separation": (
+                "finite check; fast_recurrent has f=1.0 but slow_near has d=1; "
+                "the next trigger is slow_near"
+            ),
         },
     }
 
 
 def self_test() -> None:
     default = Listener("default")
-    race = race_table(default)
-    assert all(row["effective_delay"] >= 1 for row in race), "delay must stay positive"
+    race = race_table(CONSCIOUS_CANDIDATES, default)
+    assert all(row["period"] >= 1 for row in race), "period must stay positive"
     assert all(row["frequency"] > 0 for row in race), "frequency must stay positive"
+    assert all(row["distance"] >= 0 for row in race), "distance must stay non-negative"
 
     micro = next(row for row in race if row["name"] == "micro")
-    assert micro["effective_delay"] == 1, "micro should be the fastest candidate"
+    assert micro["period"] == 1, "micro should have the shortest period"
+    assert micro["distance"] == 0, "micro should be at zero distance"
     assert not micro["eligible"], "micro must be ineligible"
 
-    winner = promote(CANDIDATES, default)
+    winner = next_trigger(CONSCIOUS_CANDIDATES, default)
     assert winner is not None and winner["name"] == "percept", "default winner should be percept"
 
-    attended = attention(default, "thought")
-    attended_winner = promote(CANDIDATES, attended)
+    # D9: frequency and event priority are distinct.
+    priority_next = next_trigger(PRIORITY_CANDIDATES, default)
+    priority_fastest = highest_frequency(PRIORITY_CANDIDATES, default)
+    assert priority_next is not None and priority_next["name"] == "slow_near"
+    assert priority_fastest is not None and priority_fastest["name"] == "fast_recurrent"
+    assert priority_next["name"] != priority_fastest["name"], "frequency and priority were conflated"
+    fast = next(row for row in race_table(PRIORITY_CANDIDATES, default) if row["name"] == "fast_recurrent")
+    slow = next(row for row in race_table(PRIORITY_CANDIDATES, default) if row["name"] == "slow_near")
+    assert float(fast["frequency"]) > float(slow["frequency"]), "fast_recurrent should recur faster"
+    assert int(slow["distance"]) < int(fast["distance"]), "slow_near should be nearer to trigger"
+
+    attended = attention(default, "thought", distance_acceleration=4)
+    attended_winner = next_trigger(CONSCIOUS_CANDIDATES, attended)
     assert attended_winner is not None and attended_winner["name"] == "thought", (
-        "attention should promote thought"
+        "attention should bring thought to the next trigger"
     )
 
     quiet = quiet_internal(default)
-    quiet_winner = promote(CANDIDATES, quiet)
+    quiet_winner = next_trigger(CONSCIOUS_CANDIDATES, quiet)
     assert quiet_winner is not None and quiet_winner["name"] == "external", (
         "quieting should promote the external joint closure"
     )
@@ -393,10 +515,12 @@ def print_summary(summary: dict[str, object]) -> None:
     print("\ndefault race:")
     for row in summary["default_race"]:  # type: ignore[union-attr]
         print(
-            f"  {row['name']}: R={row['effective_delay']} f={row['frequency']:.3f} "
-            f"eligible={row['eligible']}"
+            f"  {row['name']}: T={row['period']} f={row['frequency']:.3f} "
+            f"d={row['distance']} eligible={row['eligible']}"
         )
-    print(f"\ndefault winner: {summary['default_winner']}")  # type: ignore[index]
+    print(f"\ndefault winner (min d): {summary['default_winner']}")  # type: ignore[index]
+    print(f"priority next (min d): {summary['priority_next']}")  # type: ignore[index]
+    print(f"priority fastest (max f): {summary['priority_fastest']}")  # type: ignore[index]
     print(f"attention winner: {summary['attention_winner']}")  # type: ignore[index]
     print(f"quieting winner: {summary['quieting_winner']}")  # type: ignore[index]
     print("\nloop:")

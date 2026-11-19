@@ -17,31 +17,45 @@ class ConsciousDynamicsTests(unittest.TestCase):
 
     def test_effective_frequency(self) -> None:
         listener = cd.Listener("default")
-        percept = next(c for c in cd.CANDIDATES if c.name == "percept")
-        self.assertEqual(cd.effective_delay(percept, listener), 2)
+        percept = next(c for c in cd.CONSCIOUS_CANDIDATES if c.name == "percept")
+        thought = next(c for c in cd.CONSCIOUS_CANDIDATES if c.name == "thought")
+        self.assertEqual(cd.effective_period(percept, listener), 2)
         self.assertEqual(cd.frequency(percept, listener), 0.5)
-        attended = cd.attention(listener, "thought")
-        thought = next(c for c in cd.CANDIDATES if c.name == "thought")
-        self.assertLess(cd.effective_delay(thought, attended), thought.intrinsic_delay)
+        self.assertEqual(cd.remaining_distance(percept, listener), 2)
+        attended = cd.attention(listener, "thought", distance_acceleration=0, period_acceleration=2)
+        self.assertEqual(cd.effective_period(thought, attended), 3)
         self.assertGreater(cd.frequency(thought, attended), cd.frequency(thought, listener))
 
     def test_promotion_filter(self) -> None:
-        winner = cd.promote(cd.CANDIDATES, cd.Listener("default"))
+        winner = cd.next_trigger(cd.CONSCIOUS_CANDIDATES, cd.Listener("default"))
         self.assertIsNotNone(winner)
         self.assertEqual(winner["name"], "percept")
-        micro = next(c for c in cd.CANDIDATES if c.name == "micro")
+        micro = next(c for c in cd.CONSCIOUS_CANDIDATES if c.name == "micro")
         self.assertFalse(cd.eligible(micro))
-        self.assertEqual(micro.intrinsic_delay, 1)
+        self.assertEqual(micro.intrinsic_period, 1)
+        self.assertEqual(cd.remaining_distance(micro, cd.Listener("default")), 0)
+
+    def test_frequency_priority_separation(self) -> None:
+        default = cd.Listener("default")
+        priority_next = cd.next_trigger(cd.PRIORITY_CANDIDATES, default)
+        priority_fastest = cd.highest_frequency(cd.PRIORITY_CANDIDATES, default)
+        self.assertEqual(priority_next["name"], "slow_near")
+        self.assertEqual(priority_fastest["name"], "fast_recurrent")
+        self.assertNotEqual(priority_next["name"], priority_fastest["name"])
+        fast = next(c for c in cd.PRIORITY_CANDIDATES if c.name == "fast_recurrent")
+        slow = next(c for c in cd.PRIORITY_CANDIDATES if c.name == "slow_near")
+        self.assertGreater(cd.frequency(fast, default), cd.frequency(slow, default))
+        self.assertLess(cd.remaining_distance(slow, default), cd.remaining_distance(fast, default))
 
     def test_attention_changes_race(self) -> None:
         default = cd.Listener("default")
-        attended = cd.attention(default, "thought")
-        self.assertEqual(cd.promote(cd.CANDIDATES, default)["name"], "percept")
-        self.assertEqual(cd.promote(cd.CANDIDATES, attended)["name"], "thought")
+        attended = cd.attention(default, "thought", distance_acceleration=4)
+        self.assertEqual(cd.next_trigger(cd.CONSCIOUS_CANDIDATES, default)["name"], "percept")
+        self.assertEqual(cd.next_trigger(cd.CONSCIOUS_CANDIDATES, attended)["name"], "thought")
 
     def test_quieting_shifts_external(self) -> None:
         quiet = cd.quiet_internal(cd.Listener("default"))
-        winner = cd.promote(cd.CANDIDATES, quiet)
+        winner = cd.next_trigger(cd.CONSCIOUS_CANDIDATES, quiet)
         self.assertIsNotNone(winner)
         self.assertEqual(winner["name"], "external")
 
@@ -76,6 +90,8 @@ class ConsciousDynamicsTests(unittest.TestCase):
         summary = cd.build_summary()
         self.assertEqual(summary["meta"]["issue"], 278)
         self.assertIn("default_race", summary)
+        self.assertIn("priority_next", summary)
+        self.assertIn("priority_fastest", summary)
         self.assertIn("attention_winner", summary)
         self.assertIn("quieting_winner", summary)
         self.assertIn("loop", summary)
@@ -83,6 +99,7 @@ class ConsciousDynamicsTests(unittest.TestCase):
         self.assertIn("memory", summary)
         self.assertEqual(summary["gates"]["D7_qualia"], "bracketed; no theorem")
         self.assertIn("D8_affective_recollection", summary["gates"])
+        self.assertIn("D9_frequency_priority_separation", summary["gates"])
 
 
 if __name__ == "__main__":

@@ -1,129 +1,158 @@
 {
   "attention_winner": {
-    "delay": 1,
-    "frequency": 1.0,
+    "distance": 1,
+    "frequency": 0.2,
     "integration": 0.9,
-    "name": "thought"
+    "name": "thought",
+    "period": 5
   },
   "default_race": [
     {
-      "effective_delay": 1,
+      "base_distance": 0,
+      "distance": 0,
       "eligible": false,
       "frequency": 1.0,
       "integration": 0.2,
-      "intrinsic_delay": 1,
+      "intrinsic_period": 1,
       "name": "micro",
+      "period": 1,
       "self_relevant": false
     },
     {
-      "effective_delay": 2,
+      "base_distance": 2,
+      "distance": 2,
       "eligible": true,
       "frequency": 0.5,
       "integration": 0.8,
-      "intrinsic_delay": 2,
+      "intrinsic_period": 2,
       "name": "percept",
+      "period": 2,
       "self_relevant": true
     },
     {
-      "effective_delay": 5,
+      "base_distance": 5,
+      "distance": 5,
       "eligible": true,
       "frequency": 0.2,
       "integration": 0.9,
-      "intrinsic_delay": 5,
+      "intrinsic_period": 5,
       "name": "thought",
+      "period": 5,
       "self_relevant": true
     },
     {
-      "effective_delay": 7,
+      "base_distance": 7,
+      "distance": 7,
       "eligible": true,
       "frequency": 0.14285714285714285,
       "integration": 0.95,
-      "intrinsic_delay": 7,
+      "intrinsic_period": 7,
       "name": "feeling",
+      "period": 7,
       "self_relevant": true
     },
     {
-      "effective_delay": 8,
+      "base_distance": 8,
+      "distance": 8,
       "eligible": true,
       "frequency": 0.125,
       "integration": 0.85,
-      "intrinsic_delay": 8,
+      "intrinsic_period": 8,
       "name": "external",
+      "period": 8,
       "self_relevant": true
     }
   ],
   "default_winner": {
-    "delay": 2,
+    "distance": 2,
     "frequency": 0.5,
     "integration": 0.8,
-    "name": "percept"
+    "name": "percept",
+    "period": 2
   },
   "gates": {
     "D0_definition": "frozen",
-    "D1_effective_frequency": "finite check; f>0 and delays can move both ways",
-    "D2_promotion_filter": "finite check; fast micro-event is ineligible",
+    "D1_effective_frequency": "finite check; T>0, f=1/T, d separate",
+    "D2_promotion_filter": "finite check; next trigger is argmin d; fast micro-event is ineligible",
     "D3_finite_loop": "finite promotion sequence; event step increases",
     "D4_retrospective_compression": "finite check; history fixed, compression changes",
     "D5_bisimulation": "cited from #275; general theorem open",
     "D6_attention_quieting": "finite check; race changes without new contestants",
     "D7_qualia": "bracketed; no theorem",
-    "D8_affective_recollection": "finite check; same store, feeling features change accessibility; no target identity; RECALL is atomic"
+    "D8_affective_recollection": "finite check; same store, feeling features change accessibility; no target identity; RECALL is atomic",
+    "D9_frequency_priority_separation": "finite check; fast_recurrent has f=1.0 but slow_near has d=1; the next trigger is slow_near"
   },
   "loop": [
     {
-      "delay": 2,
+      "distance": 2,
       "frequency": 0.5,
       "integration": 0.8,
       "listener_after": {
-        "percept": 6,
-        "thought": -2
+        "distance_bonus": {
+          "percept": 6,
+          "thought": -2
+        },
+        "period_bonus": {}
       },
       "name": "percept",
       "next_successor": "thought",
+      "period": 2,
       "step": 1,
       "winner": "percept"
     },
     {
-      "delay": 3,
-      "frequency": 0.3333333333333333,
+      "distance": 3,
+      "frequency": 0.2,
       "integration": 0.9,
       "listener_after": {
-        "feeling": -2,
-        "percept": 6,
-        "thought": 4
+        "distance_bonus": {
+          "feeling": -2,
+          "percept": 6,
+          "thought": 4
+        },
+        "period_bonus": {}
       },
       "name": "thought",
       "next_successor": "feeling",
+      "period": 5,
       "step": 2,
       "winner": "thought"
     },
     {
-      "delay": 5,
-      "frequency": 0.2,
+      "distance": 5,
+      "frequency": 0.14285714285714285,
       "integration": 0.95,
       "listener_after": {
-        "external": -2,
-        "feeling": 4,
-        "percept": 6,
-        "thought": 4
+        "distance_bonus": {
+          "external": -2,
+          "feeling": 4,
+          "percept": 6,
+          "thought": 4
+        },
+        "period_bonus": {}
       },
       "name": "feeling",
       "next_successor": "external",
+      "period": 7,
       "step": 3,
       "winner": "feeling"
     },
     {
-      "delay": 6,
-      "frequency": 0.16666666666666666,
+      "distance": 6,
+      "frequency": 0.125,
       "integration": 0.85,
       "listener_after": {
-        "external": 4,
-        "feeling": 4,
-        "percept": 6,
-        "thought": 4
+        "distance_bonus": {
+          "external": 4,
+          "feeling": 4,
+          "percept": 6,
+          "thought": 4
+        },
+        "period_bonus": {}
       },
       "name": "external",
       "next_successor": null,
+      "period": 8,
       "step": 4,
       "winner": "external"
     }
@@ -404,19 +433,70 @@
     }
   },
   "meta": {
-    "frequency": "f_i^(B) = 1 / R_i^(B)",
+    "distance": "d_i^(B) = remaining distance to the next trigger",
+    "frequency": "f_i^(B) = 1 / T_i^(B), a recurrence frequency",
     "generator": "conscious_dynamics.py",
     "issue": 278,
     "pre_registration": "Conscious_Dynamics_QLF.md",
-    "promotion": "argmax over eligible self-relevant integrated closures",
+    "priority": "i_next = argmin d_i over eligible closures",
     "update": "B_{t+1} = U(B_t, C_t*)",
-    "version": 2
+    "version": 3
   },
+  "priority_fastest": {
+    "distance": 5,
+    "frequency": 1.0,
+    "integration": 0.8,
+    "name": "fast_recurrent",
+    "period": 1
+  },
+  "priority_next": {
+    "distance": 1,
+    "frequency": 0.1,
+    "integration": 0.9,
+    "name": "slow_near",
+    "period": 10
+  },
+  "priority_race": [
+    {
+      "base_distance": 1,
+      "distance": 1,
+      "eligible": true,
+      "frequency": 0.1,
+      "integration": 0.9,
+      "intrinsic_period": 10,
+      "name": "slow_near",
+      "period": 10,
+      "self_relevant": true
+    },
+    {
+      "base_distance": 2,
+      "distance": 2,
+      "eligible": true,
+      "frequency": 0.5,
+      "integration": 0.8,
+      "intrinsic_period": 2,
+      "name": "percept",
+      "period": 2,
+      "self_relevant": true
+    },
+    {
+      "base_distance": 5,
+      "distance": 5,
+      "eligible": true,
+      "frequency": 1.0,
+      "integration": 0.8,
+      "intrinsic_period": 1,
+      "name": "fast_recurrent",
+      "period": 1,
+      "self_relevant": true
+    }
+  ],
   "quieting_winner": {
-    "delay": 8,
+    "distance": 8,
     "frequency": 0.125,
     "integration": 0.85,
-    "name": "external"
+    "name": "external",
+    "period": 8
   },
   "retrospective": {
     "compression_after": {

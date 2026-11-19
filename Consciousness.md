@@ -95,10 +95,11 @@ conscious closure.
 and coherent is what is experienced; the rest is unconscious substrate.
 
 **Dynamic promotion.** The static “highest available” reading is extended in
-[`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md): the delay is listener-relative
-(`f_i^(B) = 1/R_i^(B)`), promotion is restricted to eligible self-relevant integrated closures, the
-winner updates the listener (`B_{t+1} = U(B_t, C_t*)`), and attention/quieting changes the race
-rather than adding contestants. The model is finite and functional; qualia remain bracketed (D7).
+[`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md): recurrence uses `f_i^(B) = 1/T_i^(B)`, but
+the next expression is the first eligible trigger `argmin d_i^(B)`, not the highest recurrence
+frequency. Promotion is restricted to eligible self-relevant integrated closures; the winner updates
+the listener (`B_{t+1} = U(B_t, i_next)`), and attention/quieting changes the race rather than adding
+contestants. The model is finite and functional; qualia remain bracketed (D7).
 
 **The unit of that integrated information is machine-verified — *it from bit*.** What binding integrates,
 and what the frequency-hierarchy carries, is *information* — and its atom is now a theorem. The smallest

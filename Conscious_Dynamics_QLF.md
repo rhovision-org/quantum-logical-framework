@@ -13,19 +13,32 @@ silently upgraded.
 ## 0. The core equations
 
 ```
-f_i^(B)   = 1 / R_i^(B)
-C_t*      = argmax_{i ∈ S_t} f_i^(B_t)
-B_{t+1}   = U(B_t, C_t*)
+T_i^(B)   = characteristic listening/retrigger period
+f_i^(B)   = 1 / T_i^(B)                  (recurrence frequency)
+d_i^(B)   = remaining distance to trigger
+i_next    = argmin_{i ∈ S_t} d_i^(B_t)   (first eligible trigger)
+d_i = 0   ⇒  Close(i),  tau_event = 0    (atomic expression)
+B_{t+1}   = U(B_t, i_next)
 ```
 
-- `R_i^(B)` — completion delay of candidate closure `i` relative to blanket/listener `B`;
+- `T_i^(B)` — the listener-relative recurrence period;
+- `f_i^(B)` — the recurrence frequency, used for recurring dominance;
+- `d_i^(B)` — the remaining distance to the next trigger, used for event priority;
 - `S_t` — sufficiently integrated, self-relevant bound closures;
-- `C_t*` — the promoted closure (provisional conscious content);
+- `i_next` — the next conscious expression;
 - `U` — the listener/self-model update.
 
-The three lines are: **listening determines effective frequency; the highest eligible frequency
-determines content; content updates the listener.** That is a finite strange loop across levels of
-description, not backward causation in event time.
+The key distinction:
+
+```
+high frequency governs recurring dominance;
+first trigger governs the next conscious expression.
+```
+
+A faster recurrent mode need not be the next one to fire if a slower mode is already nearer
+closure. The event itself is atomic (`tau_event = 0`); the listening/retrieval history is what takes
+time. This is a finite strange loop across levels of description, not backward causation in event
+time.
 
 ---
 
@@ -43,10 +56,12 @@ The repository already proves:
 
 What is **new** here:
 
-1. the delay is **listener-relative**: `R_i^(B)`, not only intrinsic;
-2. the promotion rule is filtered by **self-relevance and integration**, not raw global frequency;
-3. the winner **updates the listener**, so the next race is different;
-4. the past is fixed but its **listener-relative compression changes**, which is the formal version
+1. the recurrence period and trigger distance are **separated**: `T_i^(B)` vs `d_i^(B)`;
+2. event priority is `argmin d_i`, not `argmax f_i`; the existing highest-frequency layer describes
+   **recurring dominance**, not which event fires next;
+3. the promotion rule is filtered by **self-relevance and integration**, not raw global frequency;
+4. the winner **updates the listener**, so the next race is different;
+5. the past is fixed but its **listener-relative compression changes**, which is the formal version
    of “that was what I was thinking all along.”
 
 ---
@@ -56,16 +71,17 @@ What is **new** here:
 | gate | requirement | status |
 |---|---|---|
 | **D0** | candidates, intrinsic delay, listener context, effective delay, eligibility, promotion, update frozen | **done** here |
-| **D1** | `f=1/R>0`; listening can shorten or lengthen `R`; no free-quark clock | **finite check**; general theorem open |
-| **D2** | winner is the highest-frequency eligible self-relevant integrated closure, not the globally fastest event | **finite check** |
-| **D3** | `B_t → listening → C_t* → B_{t+1}` is finite and does not loop event time | **finite check**; `no_time_loops_from_logic` cited |
+| **D1** | `T>0`, `f=1/T`; listening can change `T` and `d`; no free-quark clock | **finite check**; general theorem open |
+| **D2** | next expression is the minimum-`d` eligible closure, not the highest-frequency event | **finite check** |
+| **D3** | `B_t → listening → i_next → B_{t+1}` is finite and does not loop event time | **finite check**; `no_time_loops_from_logic` cited |
 | **D4** | history fixed, listener compression changes; no past rewrite | **finite check** |
 | **D5** | `M_t ~ S_t/~_B_t` remains the correctness target | **cited** from [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275); general theorem open |
-| **D6** | attention changes the race, not the contestants; quieting raises internal delays | **finite check** |
+| **D6** | attention changes the race, not the contestants; quieting raises internal distances | **finite check** |
 | **D7** | no qualia theorem; no empirical claim | **gate** |
 | **D8** | feeling changes memory accessibility through a generic compatibility relation; same store; recall is atomic; no target identity in the feeling | **finite check** |
+| **D9** | frequency and event priority are distinct; a faster recurrent mode need not be the next trigger | **finite check** |
 
-The PR is draft. D1–D4, D6, and D8 are finite checks; D5 and the general dynamic theorem remain open.
+The PR is draft. D1–D4 and D6–D9 are finite checks; D5 and the general dynamic theorem remain open.
 
 ---
 
@@ -95,8 +111,9 @@ A fast microscopic event can be ineligible. The promotion set `S_t` filters for:
 - **self-relevance** — it is about the listener's own boundary, body, or goals;
 - **bound closure** — it is not an open strand that only exists as part of a deeper composite.
 
-The globally fastest physical process is therefore not automatically conscious. The winner is the
-highest-frequency member of the eligible integrated set.
+The globally fastest physical process is therefore not automatically conscious. The next expression
+is the **nearest eligible trigger** (minimum `d`), not necessarily the highest-frequency recurrence.
+A faster recurrent mode can lose to a slower mode that is already nearer closure.
 
 ---
 
@@ -105,15 +122,15 @@ highest-frequency member of the eligible integrated set.
 Attention is a change of listener context:
 
 ```
-B → B'  ⇒  R_i^(B) → R_i^(B').
+B → B'  ⇒  T_i^(B) → T_i^(B'),  d_i^(B) → d_i^(B').
 ```
 
-It does not create a new contestant. It changes which existing candidate is accelerated enough to
-win. In compact form: **attention changes the race, not the contestants.**
+It does not create a new contestant. It changes which existing candidate is moved nearer or made to
+recur faster. In compact form: **attention changes the race, not the contestants.**
 
-Quieting is the inverse move. It raises the effective delay of the currently dominant internal
-closures, so a normally subdominant external/joint closure can become the maximum among the remaining
-eligible modes. This is the finite-model reading of `quieting_shifts_to_external`.
+Quieting is the inverse move. It raises the effective distance of the currently dominant internal
+closures, so a normally subdominant external/joint closure can become the nearest remaining eligible
+trigger. This is the finite-model reading of `quieting_shifts_to_external`.
 
 ---
 
@@ -193,16 +210,20 @@ not that it rewrites them.
 
 `conscious_dynamics.py` implements:
 
-- a candidate set with intrinsic delays, integration, and self-relevance;
-- a listener with per-candidate delay bonuses;
-- `effective_delay`, `frequency`, `eligible`, `promote`;
-- attention (bonus to one candidate) and quieting (penalty to internal candidates);
-- a dynamic loop with winner refractory and successor acceleration;
-- a fixed-history / changing-compression toy.
+- a candidate set with intrinsic period, base trigger distance, integration, and self-relevance;
+- a listener with per-candidate period and distance bonuses;
+- `effective_period`, `frequency`, `remaining_distance`, `eligible`, `next_trigger`,
+  `highest_frequency`;
+- attention (distance/period change) and quieting (internal distance penalty);
+- a dynamic loop with winner refractory distance and successor acceleration;
+- a fixed-history / changing-compression toy;
+- the D9 separation check.
 
-The default race promotes the fast self-relevant perception; a fast but ineligible micro-event is
-excluded. Attention promotes a slower thought; quieting lets the external joint closure win. The
-dynamic loop produces a finite promotion sequence and does not advance event time backward.
+The default race promotes the nearest self-relevant perception (`d=2`); a faster but ineligible
+micro-event (`d=0`) is excluded. The D9 check has `fast_recurrent` at `f=1.0, d=5` and `slow_near` at
+`f=0.1, d=1`: the next trigger is `slow_near`, while the fastest recurrence is `fast_recurrent`.
+Attention brings thought to `d=1` and it wins; quieting lets the external joint closure win. The
+dynamic loop produces a finite trigger sequence, and each trigger is atomic.
 
 ---
 
@@ -215,6 +236,8 @@ dynamic loop produces a finite promotion sequence and does not advance event tim
 - No backward causation; every realized step still advances the event record
   (`no_time_loops_from_logic`).
 - No general bisimulation theorem; `M ~ S/~_B` is the target, not a result.
+- No claim that frequency is event priority; D9 is the separation.
+- No claim that the D9 update rule is derived active inference; it is a finite toy.
 - No claim that the D8 feature-overlap metric is the final affective measure; it is a
   kill-condition-satisfying toy, not a validated memory model.
 
