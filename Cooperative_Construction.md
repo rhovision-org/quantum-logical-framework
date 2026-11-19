@@ -93,7 +93,7 @@ words — “closure,” “assembly,” “uncertainty,” “information” �
 | **Motion** | [`Inertia.md`](Inertia.md), [`Gravity_From_Delay.md`](Gravity_From_Delay.md) | **Open** | QLF has latency/inertia readings; the Brownian-plus-drift decomposition needs a measure and has not been derived. |
 | **Biology** | [`Evolution.md`](Evolution.md), [`Hierarchical_Control.md`](Hierarchical_Control.md) | **Structural** | generate-and-select and nested Markov blankets; not the uncertainty kernel instantiated. |
 | **Consciousness / feelings** | [`Consciousness.md`](Consciousness.md), [`TheQuantumBrain.md`](TheQuantumBrain.md) | **Open; affect hypothesis** | no qualia theorem. A slow, deep, integrated, self-relevant closure cycle is a measurable hypothesis, not a result. |
-| **Cosmology** | [`AgeOfUniverse.md`](AgeOfUniverse.md), [`Cosmological_Constant.md`](Cosmological_Constant.md) | **Structural / B-OPEN** | the largest-scale closure hierarchy; the clock/cosmology bridge remains open. |
+| **Cosmology** | [`AgeOfUniverse.md`](AgeOfUniverse.md), [`Primordial_Markov_Blankets.md`](Primordial_Markov_Blankets.md), [`Cosmological_Constant.md`](Cosmological_Constant.md) | **Structural / B-OPEN; gates G1–G6 in PR #277** | logical origin, holographic compression, measure, potential infinity, and the clock gate; `N` is not derived. |
 
 This table is deliberately conservative. The fact that a row uses the word “closure” does not make it
 an instance of the cooperative step.
@@ -159,7 +159,34 @@ theory of qualia. It is gated by C4 and is not used anywhere else in this docume
 
 ---
 
-## 7. Relation to the TOE index
+## 7. Cosmological instantiation
+
+Cosmology is no longer a one-line placeholder. The chain is gated in
+[PR #277](https://github.com/rhovision-org/quantum-logical-framework/pull/277) (issue #276):
+
+```
+first distinction → logical/information bang → nested closures
+→ primordial Markov blankets → holographic compression
+→ cosmic blanket → open-ended time
+```
+
+| gate | status |
+|---|---|
+| G1 logical origin | `first_distinction_closes`; no metric singularity |
+| G2 information | one-bit/`log 2` reading; no information-energy identity |
+| G3 holographic compression | `C_B` must preserve the closure observable; two-body theorem exists, N-body open |
+| G4 measure | cylinder/Kraft `μ(c)=8^(-|c|)`; raw `W` vs normalized `P` |
+| G5 time | finite at every realized horizon + unbounded possible extension; physical eternity is interpretation |
+| G6 cosmic clock | no numerical age until `N` is independently derived |
+
+The correction matters: `^<v` is **not** a count-balanced ZFA word (the `<` has no `>` conjugate).
+[`Primordial_Markov_Blankets.md`](Primordial_Markov_Blankets.md) §4 now distinguishes a triangular
+**blanket cell** from a **ZFA closure**; the Euler/Fuller face count is unchanged, but the literal
+3-twist ZFA identification is withdrawn.
+
+---
+
+## 8. Relation to the TOE index
 
 [`Theory_Of_Everything.md`](Theory_Of_Everything.md) remains the map. This document supplies one
 organizing spine for the map:
@@ -172,11 +199,13 @@ The TOE rows keep their own status labels. The spine does not upgrade them.
 
 ---
 
-## 8. References
+## 9. References
 
 - [`Assembly_Index_QLF.md`](Assembly_Index_QLF.md) — static flat-history assembly.
 - [PR #271](https://github.com/rhovision-org/quantum-logical-framework/pull/271) — finite
   first-completion uncertainty kernel (`Closure_Uncertainty_QLF.md`).
+- [PR #277](https://github.com/rhovision-org/quantum-logical-framework/pull/277) — cosmic closure
+  gates G1–G6 (`Cosmic_Closure_QLF.md`), including the `^<v` correction.
 - [PR #268](https://github.com/rhovision-org/quantum-logical-framework/pull/268) — pre-registered
   transport screen (`Cooperative_Assembly_QLF.md`), negative.
 - [`Hierarchical_Control.md`](Hierarchical_Control.md) — bottom-up synthesis / top-down blanket
