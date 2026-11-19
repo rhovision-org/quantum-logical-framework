@@ -169,6 +169,11 @@ relation while realized history does not run backward
 ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean),
 [`Strange_Loops.md`](Strange_Loops.md) §3B).
 
+**Timing convention.** `S_t` and `M_t` are **open listener states** between closures. `T` includes
+the listening/delay history and ends in an **atomic closure event** (`tau_event = 0`); `U` is the
+compression/update triggered by that event. The square therefore alternates open listening and
+instantaneous closure, rather than treating the closure itself as an extended process.
+
 ---
 
 ## 6. Feelings as slow self-relevant queries (hypothesis)
