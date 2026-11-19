@@ -61,15 +61,26 @@ The **12 vertices of the base icosahedron** are the minimal set of stable ZFA cl
 
 ---
 
-## §4 The triangle as minimal causal loop
+## §4 The triangle as minimal blanket cell
 
-In QLF, a triangle is the **minimal non-trivial closed loop of causal history** — the smallest cycle of twists that closes under ZFA without residual free action.
+A triangle is the **minimal non-trivial blanket-combinatorics cell** — the smallest cycle of the
+discrete boundary tiling. It is not, by itself, a 3-twist ZFA closure.
 
-- **Three orthogonal twists** form the minimum directional loop: e.g., `^ < v` or any similar 3-twist sequence that closes onto its starting state with net free action zero.
-- Each **vertex of the triangle** is a logic gate where histories intersect — by Curry-Howard, a verification step ([`QLF_as_Intelligence.md`](QLF_as_Intelligence.md) §5).
-- Each **edge of the triangle** is a minimal logical geodesic: the shortest admissible twist string that connects two ZFA-balanced points while keeping the whole surface ZFA-closed.
+- **Correction (2026-11-19).** A 3-twist sequence such as `^ < v` is **not count-balanced**: `^` and
+  `v` cancel on the up/down axis, but `<` has no `>` conjugate, so the net action is one unit on the
+  left/right axis. It is not a ZFA closure and cannot be used as the substrate witness for a
+  geometric triangle.
+- The minimal ZFA closure is a conjugate pair (`^v`, `+-`, `<>`, …), not a three-edge triangle.
+- Each **vertex of the triangle** is a logic gate where blanket histories intersect — by
+  Curry-Howard, a verification step ([`QLF_as_Intelligence.md`](QLF_as_Intelligence.md) §5).
+- Each **edge of the triangle** is a minimal logical geodesic between blanket vertices; the edge is
+  not itself a closed 3-twist word.
 
-The full geodesic sphere is then a tiling of these triangular ZFA closures. At frequency `v`, the surface has `F_v = 20 v²` triangular faces — each one a substrate event.
+The full geodesic sphere is then a tiling of these **triangular blanket cells**. At frequency `v`,
+the surface has `F_v = 20 v²` triangular faces. The Fuller/Euler face count and the 12-pentamon
+curvature result are unchanged; what is withdrawn is the literal identification “each face is the
+3-twist ZFA word `^<v`.” The corrected logical-origin/holographic reading is in
+[`Cosmic_Closure_QLF.md`](Cosmic_Closure_QLF.md) §8.
 
 ---
 
