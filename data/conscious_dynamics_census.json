@@ -1,0 +1,168 @@
+{
+  "attention_winner": {
+    "delay": 1,
+    "frequency": 1.0,
+    "integration": 0.9,
+    "name": "thought"
+  },
+  "default_race": [
+    {
+      "effective_delay": 1,
+      "eligible": false,
+      "frequency": 1.0,
+      "integration": 0.2,
+      "intrinsic_delay": 1,
+      "name": "micro",
+      "self_relevant": false
+    },
+    {
+      "effective_delay": 2,
+      "eligible": true,
+      "frequency": 0.5,
+      "integration": 0.8,
+      "intrinsic_delay": 2,
+      "name": "percept",
+      "self_relevant": true
+    },
+    {
+      "effective_delay": 5,
+      "eligible": true,
+      "frequency": 0.2,
+      "integration": 0.9,
+      "intrinsic_delay": 5,
+      "name": "thought",
+      "self_relevant": true
+    },
+    {
+      "effective_delay": 7,
+      "eligible": true,
+      "frequency": 0.14285714285714285,
+      "integration": 0.95,
+      "intrinsic_delay": 7,
+      "name": "feeling",
+      "self_relevant": true
+    },
+    {
+      "effective_delay": 8,
+      "eligible": true,
+      "frequency": 0.125,
+      "integration": 0.85,
+      "intrinsic_delay": 8,
+      "name": "external",
+      "self_relevant": true
+    }
+  ],
+  "default_winner": {
+    "delay": 2,
+    "frequency": 0.5,
+    "integration": 0.8,
+    "name": "percept"
+  },
+  "gates": {
+    "D0_definition": "frozen",
+    "D1_effective_frequency": "finite check; f>0 and delays can move both ways",
+    "D2_promotion_filter": "finite check; fast micro-event is ineligible",
+    "D3_finite_loop": "finite promotion sequence; event step increases",
+    "D4_retrospective_compression": "finite check; history fixed, compression changes",
+    "D5_bisimulation": "cited from #275; general theorem open",
+    "D6_attention_quieting": "finite check; race changes without new contestants",
+    "D7_qualia": "bracketed; no theorem"
+  },
+  "loop": [
+    {
+      "delay": 2,
+      "frequency": 0.5,
+      "integration": 0.8,
+      "listener_after": {
+        "percept": 6,
+        "thought": -2
+      },
+      "name": "percept",
+      "next_successor": "thought",
+      "step": 1,
+      "winner": "percept"
+    },
+    {
+      "delay": 3,
+      "frequency": 0.3333333333333333,
+      "integration": 0.9,
+      "listener_after": {
+        "feeling": -2,
+        "percept": 6,
+        "thought": 4
+      },
+      "name": "thought",
+      "next_successor": "feeling",
+      "step": 2,
+      "winner": "thought"
+    },
+    {
+      "delay": 5,
+      "frequency": 0.2,
+      "integration": 0.95,
+      "listener_after": {
+        "external": -2,
+        "feeling": 4,
+        "percept": 6,
+        "thought": 4
+      },
+      "name": "feeling",
+      "next_successor": "external",
+      "step": 3,
+      "winner": "feeling"
+    },
+    {
+      "delay": 6,
+      "frequency": 0.16666666666666666,
+      "integration": 0.85,
+      "listener_after": {
+        "external": 4,
+        "feeling": 4,
+        "percept": 6,
+        "thought": 4
+      },
+      "name": "external",
+      "next_successor": null,
+      "step": 4,
+      "winner": "external"
+    }
+  ],
+  "meta": {
+    "frequency": "f_i^(B) = 1 / R_i^(B)",
+    "generator": "conscious_dynamics.py",
+    "issue": 278,
+    "pre_registration": "Conscious_Dynamics_QLF.md",
+    "promotion": "argmax over eligible self-relevant integrated closures",
+    "update": "B_{t+1} = U(B_t, C_t*)",
+    "version": 1
+  },
+  "quieting_winner": {
+    "delay": 8,
+    "frequency": 0.125,
+    "integration": 0.85,
+    "name": "external"
+  },
+  "retrospective": {
+    "compression_after": {
+      "h1": "A",
+      "h2": "B",
+      "h3": "B",
+      "h4": "B"
+    },
+    "compression_before": {
+      "h1": "A",
+      "h2": "A",
+      "h3": "B",
+      "h4": "C"
+    },
+    "compression_changed": true,
+    "history": [
+      "h1",
+      "h2",
+      "h3",
+      "h4"
+    ],
+    "history_unchanged": true,
+    "note": "the past is fixed; the listener-relative compression changes"
+  }
+}
