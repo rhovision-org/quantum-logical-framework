@@ -86,6 +86,20 @@ interaction; the logical complexity inside them is far larger.
 | Life: generate and select | [Evolution.md](Evolution.md), [Quantum_Biology.md](Quantum_Biology.md), [ZFA_DNA.md](ZFA_DNA.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
 | Minds and collectives | [Consciousness.md](Consciousness.md), [QLF_as_Intelligence.md](QLF_as_Intelligence.md), [Game_Theory_QLF.md](Game_Theory_QLF.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
 
+### 4a. The cooperative-construction spine
+
+[`Cooperative_Construction.md`](Cooperative_Construction.md) adds one organizing spine to this ladder:
+
+```
+possibility → uncertainty → entanglement → closure → information → reuse → assembly → new possibility
+```
+
+with bottom-up construction and top-down blanket constraint as the two directions. It is an **index,
+not an upgrade**: every rung above keeps its own status label, and the no-analogy gate C0 says a
+domain joins the spine only when its existing objects instantiate the common definitions or a
+pre-registered bridge succeeds. The same document carries the turbulence negative result and the
+affect-hypothesis gate.
+
 ## 5. Forces and the cosmos
 
 | Reading | Read | Flow chart |
