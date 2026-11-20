@@ -1,0 +1,156 @@
+{
+  "clock": {
+    "N_derived": false,
+    "numerical_age_claim": null,
+    "relation": "t0 = N * tau_Planck",
+    "status": "N is not independently derived; the numerical age is calibrated through H0/expansion history (AgeOfUniverse.md)"
+  },
+  "gates": {
+    "G1_logical_origin": "theorem cited; no metric singularity",
+    "G2_information": "one-bit interpretation; no information-energy identity",
+    "G3_holographic_compression": "finite toy; safe vs lossy checked; general N-body open",
+    "G4_measure": "candidate cylinder/Kraft weight; raw W vs P checked",
+    "G5_time": "unbounded extension witnessed; physical eternity interpretation",
+    "G6_cosmic_clock": "N not derived; no numerical age claim"
+  },
+  "holography": {
+    "lossy": {
+      "boundary_classes": 3,
+      "classes": {
+        "A": [
+          "h1",
+          "h2"
+        ],
+        "B": [
+          "h3",
+          "h4",
+          "h5"
+        ],
+        "C": [
+          "h6"
+        ]
+      },
+      "interiors": 6,
+      "preserves": false,
+      "ratio": 0.5
+    },
+    "safe": {
+      "boundary_classes": 3,
+      "classes": {
+        "A": [
+          "h1",
+          "h2",
+          "h3"
+        ],
+        "B": [
+          "h4",
+          "h5"
+        ],
+        "C": [
+          "h6"
+        ]
+      },
+      "interiors": 6,
+      "preserves": true,
+      "ratio": 0.5
+    }
+  },
+  "logical_origin": {
+    "minimal_closure_closed": true,
+    "minimal_closures": [
+      "+-",
+      "^v"
+    ],
+    "stale_triangle_closed": false,
+    "stale_triangle_net": [
+      0,
+      -1,
+      0,
+      0
+    ],
+    "stale_triangle_word": "^<v"
+  },
+  "measure": {
+    "W_micro": 14,
+    "base": 8,
+    "by_length": {
+      "2": {
+        "P_total": 0.8311688311688312,
+        "count": 1,
+        "mu_each": 0.015625
+      },
+      "4": {
+        "P_total": 0.16883116883116886,
+        "count": 13,
+        "mu_each": 0.000244140625
+      }
+    },
+    "mu_total": 0.018798828125,
+    "normalized": [
+      0.012987012987012988,
+      0.8311688311688312,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988,
+      0.012987012987012988
+    ]
+  },
+  "meta": {
+    "generator": "cosmic_closure.py",
+    "issue": 276,
+    "pre_registration": "Cosmic_Closure_QLF.md",
+    "version": 1
+  },
+  "time": {
+    "finite_at_every_witness": true,
+    "physical_eternal": "interpretation, not proved",
+    "status": "unbounded possible extension proved; physical eternity open",
+    "unbounded_witness_family": "for every n, (^v)^n is count-balanced",
+    "witnesses": [
+      {
+        "closed": true,
+        "length": 2,
+        "n": 1,
+        "word": "^v"
+      },
+      {
+        "closed": true,
+        "length": 4,
+        "n": 2,
+        "word": "^v^v"
+      },
+      {
+        "closed": true,
+        "length": 6,
+        "n": 3,
+        "word": "^v^v^v"
+      },
+      {
+        "closed": true,
+        "length": 8,
+        "n": 4,
+        "word": "^v^v^v^v"
+      },
+      {
+        "closed": true,
+        "length": 10,
+        "n": 5,
+        "word": "^v^v^v^v^v"
+      },
+      {
+        "closed": true,
+        "length": 12,
+        "n": 6,
+        "word": "^v^v^v^v^v^v"
+      }
+    ]
+  }
+}
