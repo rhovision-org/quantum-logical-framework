@@ -32,11 +32,9 @@ From `lean/QLF_BaryonWinding.lean`:
 - `junctionBaryon` — the gauge-invariant winding read on the spatial projection.
 - `junctionBaryon_eq_of_noGauge` — on gauge-free words it agrees with `baryonNumber`.
 
-From `lean/QLF_Manifestation.lean`:
-
-- `protonClosure = >^/<\\v`;
-- `proton_simplest_isolated_imbalance` — `countBalanced protonClosure`,
-  `junctionBaryon protonClosure = 1`, and no shorter closure carries baryon number.
+The same proton witness is also in `lean/QLF_Manifestation.lean`
+(`protonClosure`, `proton_simplest_isolated_imbalance`). The new module restates the word locally and
+checks `countBalanced` / `junctionBaryon = 1` by decision, keeping the import graph small.
 
 ---
 
