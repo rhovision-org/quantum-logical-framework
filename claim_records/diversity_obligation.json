@@ -12,7 +12,7 @@
       "anchors": [],
       "formal_scope": "Finite two-origin typed histories over the 8-twist alphabet. Panel A: open base length 3, extension bound 3. Panel B: open base length 4, extension bound 2. Whole-history phase: closed two-origin histories of lengths 4 and 6. The relation uses net action, Pauli product, provenance, and typed first closure only. No diversity advantage, D8c2 result, physical phase identification, persistence, or holographic-dictionary claim.",
       "comparator": "Exhaustive census in diversity_obligation.py and data/diversity_obligation_census.json; aggregate control keeps bases, extensions, openness, and first closure but ignores per-origin matching. Diagnostic controls add the extension origin schedule and the full extension word to the phase grouping.",
-      "kill_condition": "Any boundary group with multiple continuation profiles (D3T.5 failure), any admitted join not ZFA-closed, any earlier all-origin closure, or any whole-history/extension phase group with a single phase that would restore phase sufficiency. A phase failure is a stop condition for the phase observable, not a reason to add a post-hoc field or weight.",
+      "kill_condition": "Any boundary group with multiple continuation profiles (D3T.5 failure), any admitted join not ZFA-closed, any earlier all-origin closure, or any failure to reproduce the stated counts from the frozen module and data. The phase ambiguity is itself the registered D3T.6 failure; it is not a reason to add a post-hoc field, weight, or tie-breaker.",
       "status": "DRAFT",
       "source": "Diversity_Obligation_Census_D3T.md; diversity_obligation.py; tests/test_diversity_obligation.py",
       "registration": {
