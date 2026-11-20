@@ -102,6 +102,9 @@ interfaces or obligations**, not merely the count/weight of appended closed bloc
 - substitution or assembly composition rather than concatenation.
 
 Any new relation must pass D3.1 interface dependence first and must be frozen before the D8c2 test.
+The first such relation is pre-registered in
+[`Diversity_Obligation_D3T.md`](Diversity_Obligation_D3T.md) (typed provenance plus residual
+obligations); it is not a D8c2 pass and it does not reopen the append/weight family.
 
 ---
 
