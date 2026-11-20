@@ -1,9 +1,10 @@
 # Co-incidence — typed provenance and first shared closure
 
 **Status:** first slice for issue [#283](https://github.com/rhovision-org/quantum-logical-framework/issues/283).
-CO0 and the CO1/CO2 provenance schedule are implemented as a finite model. CO3 — the universality
-census — remains open. This document does **not** claim that every event is a co-incidence, and it
-does not touch the frozen `quantum-os#322` experiment.
+CO0 and the CO1/CO2 provenance schedule are implemented as a finite model. CO3 (interaction-event
+census) and CO4 (Law-of-Exceptions bridge) are **out of scope for this PR**, tracked in #283; they are
+not claimed. This document does **not** claim that every event is a co-incidence, and it does not
+touch the frozen `quantum-os#322` experiment.
 
 ---
 
@@ -233,7 +234,21 @@ The run writes `data/coincidence_census.json`.
 
 ---
 
-## 9. Anchors
+## 9. Scope closure for review
+
+CO0 and CO1/CO2 are the complete gates of this PR: the triviality trap is demonstrated, provenance is
+typed before the split, and the first joint closure is computed on the declared schedule.
+
+CO3 (interaction-event census) and CO4 (a capacity-R co-incidence resolver is a finite restrictive
+closure) are **out of scope**, tracked in #283; they are not claimed. This is a finite schedule/model
+slice, not an all-events theorem.
+
+Methods hygiene: DRAFT test ledger `claim_records/coincidence_slice.json`; registry note in
+`Open_Problems.md`; FlowChart entry in Methods and evidence.
+
+---
+
+## 10. Anchors
 
 - [`lean/ER_EPR_QLF.lean`](lean/ER_EPR_QLF.lean) — `SharedClosure`, `Spacelike`, `ERBridge`,
   `no_ftl_in_epr`.
