@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-DIVERSITY-D3T-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "1c817e71b765b0f34db121f9559e9f148247fddc",
+  "reviewer": "jimscarver",
+  "purpose": "Draft D3T gate-census ledger (#290): the typed-provenance residual-obligation relation passes interface dependence, closure preservation, provenance separation, first-closure integrity, and continuation-profile boundary sufficiency, but fails phase-boundary sufficiency. D8c2 was not run and remains unpassed.",
+  "entries": [
+    {
+      "id": "diversity_d3t_typed_obligation_census",
+      "claim": "For two-origin open typed histories, the frozen D3T relation is interface-dependent (264 distinct continuation profiles over 1,536 length-3 bases; 33 over 27,496 length-4 bases), closure-preserving (0 closure failures among obligation-matching candidates; 12,096 + 8,736 admitted joins), provenance-separating (same aggregate data but different profile in 150/158 and 62/402 aggregate groups; same raw word but different provenance profile in 504/512 and 2,048/3,928 word groups), and first-closure-correct (0 earlier all-origin closures). The boundary record determines the continuation profile in both panels (0 boundary groups with multiple profiles out of 360 and 2,238), but does not determine the closure phase: 34/46 whole-history boundary groups at length 4 and 178/199 at length 6 contain both phases, and 1,368/2,112 (panel A) and 2,016/4,704 (panel B) extension groups are phase-ambiguous. Adding the extension origin schedule reduces panel-A ambiguity to 432 groups but does not eliminate it; the full extension word eliminates it.",
+      "anchors": [],
+      "formal_scope": "Finite two-origin typed histories over the 8-twist alphabet. Panel A: open base length 3, extension bound 3. Panel B: open base length 4, extension bound 2. Whole-history phase: closed two-origin histories of lengths 4 and 6. The relation uses net action, Pauli product, provenance, and typed first closure only. No diversity advantage, D8c2 result, physical phase identification, persistence, or holographic-dictionary claim.",
+      "comparator": "Exhaustive census in diversity_obligation.py and data/diversity_obligation_census.json; aggregate control keeps bases, extensions, openness, and first closure but ignores per-origin matching. Diagnostic controls add the extension origin schedule and the full extension word to the phase grouping.",
+      "kill_condition": "Any boundary group with multiple continuation profiles (D3T.5 failure), any admitted join not ZFA-closed, any earlier all-origin closure, or any whole-history/extension phase group with a single phase that would restore phase sufficiency. A phase failure is a stop condition for the phase observable, not a reason to add a post-hoc field or weight.",
+      "status": "DRAFT",
+      "source": "Diversity_Obligation_Census_D3T.md; diversity_obligation.py; tests/test_diversity_obligation.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}
