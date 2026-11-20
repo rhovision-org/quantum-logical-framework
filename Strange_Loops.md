@@ -660,6 +660,10 @@ Self-knowledge is **not** `M = S`:
 - the model must be embedded in the system it models, not outside it;
 - the model must retain a self-reference/quote capability for its own boundary.
 
+The listener-relative form `S|_c = S/~_B`, the separation of `W_micro` from `W_B`, and the finite
+commuting-square check are in [`Listener_Equivalence_QLF.md`](Listener_Equivalence_QLF.md). That
+document is a finite pre-registration; it does not close the general self-model theorem.
+
 ### 3B.3 The update must preserve the bisimulation
 
 The active-inference update and the bisimulation criterion have to fit together. If
