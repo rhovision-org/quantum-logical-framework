@@ -162,6 +162,14 @@ Two distinct claims:
 Only claim 2 supports “nothing happens individually.” Claim 1 supports “every interaction is a
 co-incidence.” CO3 is the census for claim 1; CO4 bounds claim 2.
 
+**Participatory reading (B-OPEN).** The Law of Exceptions blocks only the claim that a single finite
+schedule resolves every event. It does **not** erase the participatory character of an individual
+joint closure: CO1/CO2 show two origin-typed open histories participating in one scheduled ZFA
+closure. The broader reading — that every event is participatory in this strong sense, or that the
+universe performs an active-inference/self-modeling version of it — remains `B-OPEN` in
+[`Strange_Loops.md`](Strange_Loops.md) and [`Map_Is_Territory.md`](Map_Is_Territory.md). The finite
+schedule is not a universal theorem and does not upgrade that status.
+
 ---
 
 ## 6a. CO4 — Law-of-Exceptions boundary (open)
