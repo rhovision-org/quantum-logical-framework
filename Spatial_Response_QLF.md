@@ -1,8 +1,9 @@
 # Spatial Response of Closure — expansion, contraction, and the ΔS/Δd test
 
 **Status:** first slice for issue [#287](https://github.com/rhovision-org/quantum-logical-framework/issues/287).
-SR0–SR3 are implemented as a finite **independence ledger**. SR4–SR7 remain open. This is not a
-physical spatial model, not a gravity derivation, and not a 3D metric.
+SR0–SR3 are implemented as a finite **independence ledger**. SR4–SR7 are **out of scope for this PR**,
+tracked in #287; they are not claimed. This is not a physical spatial model, not a gravity derivation,
+and not a 3D metric.
 
 ---
 
@@ -107,7 +108,7 @@ contraction example; it is not the definition of contraction.
 
 ---
 
-## 5. Open gates
+## 5. Scope closure
 
 | gate | status |
 |---|---|
@@ -115,14 +116,20 @@ contraction example; it is not the definition of contraction.
 | **SR1** electron/Pauli expansion | **cited**; physical reading interpreted |
 | **SR2** singlet/binding contraction | **cited**; physical reading interpreted |
 | **SR3** ΔS/Δd independence | **finite test**; implication fails in the toy |
-| **SR4** aggregation / gravity | **open**; no coarse-graining or curvature claim |
-| **SR5** propagation vs interaction | **open**; free carrier ≠ joint spatial response |
+| **SR4** aggregation / gravity | **out of scope**; follow-up #287; no coarse-graining or curvature claim |
+| **SR5** propagation vs interaction | **out of scope**; follow-up #287; free carrier ≠ joint spatial response |
 | **SR6** timing | **cited** #281; `d` and `f` separate |
-| **SR7** 3D spatial relation | **open**; boolean ledger is not a 3D metric |
+| **SR7** 3D spatial relation | **out of scope**; follow-up #287; boolean ledger is not a 3D metric |
 
-`Frequency_Synchronization.md` says a gluon creates local space. That can survive as a statement about
-free carrier propagation, not the sign of every gluon interaction. A wording correction is needed
-before SR5 can pass.
+SR0–SR3 are the complete gates of this PR. SR4–SR7 are not open gates here; they are separate
+follow-ups under #287.
+
+Methods hygiene: DRAFT test ledger `claim_records/spatial_response_slice.json`; registry row in
+`Open_Problems.md`; FlowChart entry in §1.
+
+`Frequency_Synchronization.md` says a gluon creates local space. That remains a propagation reading,
+not the sign of every gluon interaction; the wording correction is part of the SR5 follow-up, not this
+finite slice.
 
 ---
 

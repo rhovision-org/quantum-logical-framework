@@ -636,6 +636,11 @@ a product state, and the null-cone step is singlet uniqueness (`product_annihila
 
 ## Open — structural / Lean-anchoring
 
+**Draft finite slice (PR #288):** [`Spatial_Response_QLF.md`](Spatial_Response_QLF.md) tests `ΔS` and
+`Δd` as independent finite ledgers. Binding (`Δd < 0`) splits evenly between contraction and expansion,
+so the physical bridge is not proved; SR4–SR7 (gravity, propagation/interaction, timing, 3D) are
+out-of-scope follow-ups under #287. Ledger: [`claim_records/spatial_response_slice.json`](claim_records/spatial_response_slice.json).
+
 | Item | Status | Where |
 |---|---|---|
 | **Holography: the locality of shared closures** (2026-11-09 audit) | 🟡 **Conditional result.** Before the audit, no Lean theorem related bulk to boundary, and the area law was a definition (`holographic_event_count := 4πR²`). Now proved, no axioms ([`QLF_HolographicBoundary`](lean/QLF_HolographicBoundary.lean)): closure is a boundary property (`closure_iff_boundary_silent`, bookkeeping by rule 4); the bulk is the prefix closure of the boundary because every prefix closes (`every_prefix_closes`), so this constrains no finite path; and **an area law `S_A ≤ \|∂A\|·log 2` follows from locality of shared pairs** (`cutEntropy_le_area`), which is necessary (`nonlocal_pairs_break_area_law`). **Resolved since** ([`QLF_HolographicArea`](lean/QLF_HolographicArea.lean)): the ℓ¹ sphere's `R²` is proved (`horizon_area_law`, `Θ(R²)` sites) and pairs born at one event and carried `k` steps stay within `2k` (`pair_range_le`). **Open:** that the ℓ¹ sphere is the physical capacity horizon (a geometric bridge); that a shared pair is born at one event (PR #219's posit). Given the locality principle (pairs within a fixed step distance `d`), the area law is now a theorem (`local_area_law`, [`QLF_LocalAreaLaw`](lean/QLF_LocalAreaLaw.lean)); the Bekenstein–Hawking ¼ stays the `4 log 2` residual | [`Holography_Audit.md`](Holography_Audit.md) |

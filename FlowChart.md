@@ -96,6 +96,10 @@ projection that no gauge twist can move ([`QLF_BaryonWinding`](lean/QLF_BaryonWi
 
 **Open:** [`README.md`](README.md) · [`SpaceTime.md`](SpaceTime.md) · [`TheContinuum.md`](TheContinuum.md)
 
+**Draft finite slice:** [`Spatial_Response_QLF.md`](Spatial_Response_QLF.md) — independent `ΔS`/`Δd`
+ledger; binding does not automatically imply contraction. Gravity, 3D metric and string tension are
+out of scope.
+
 `3` is the minimal dimension that renders any relational structure faithfully — and it reappears
 everywhere below ([`SpaceTime.md`](SpaceTime.md) §3a).
 
