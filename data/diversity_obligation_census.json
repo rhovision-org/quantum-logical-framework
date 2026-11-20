@@ -1,0 +1,955 @@
+{
+  "gates": {
+    "D3T.1_interface_dependence": "PASS: 264 distinct typed profiles over 1536 bases (panel A); 33 over 27496 (panel B)",
+    "D3T.2_closure_preservation": "PASS: 0 closure failures among obligation-matching candidates; 12096 + 8736 admitted joins",
+    "D3T.3_provenance_separation": "PASS: same aggregate data, different profile in 150/158 groups (panel A) and 62/402 (panel B); same raw word, different provenance profile in 504/512 and 2048/3928; typed differs from aggregate control on 1512/1536 and 9632/27496 bases",
+    "D3T.4_first_closure_integrity": "PASS: 0 earlier all-origin closures among obligation-matching candidates",
+    "D3T.5_continuation_boundary_sufficiency": "PASS: 0 boundary groups with multiple continuation profiles (360 groups panel A; 2238 panel B)",
+    "D3T.6_phase_boundary_sufficiency": "FAIL: whole-history phase ambiguous in 34/46 boundary groups at length 4 and 178/199 at length 6; extension phase ambiguous in 1368/2112 groups (panel A) and 2016/4704 (panel B)",
+    "D3T.7_no_target_geometry": "PASS by construction: twist, net, Pauli product, provenance, and first closure only",
+    "D8c2": "NOT RUN: D3T.1-D3T.5 pass, but D3T.6 fails for the closure phase; no advantage test is run under a boundary record that does not determine the phase. D8c2 remains NOT PASSED."
+  },
+  "meta": {
+    "census": "Diversity_Obligation_Census_D3T.md",
+    "gate": "D3T typed-provenance residual obligations",
+    "generator": "diversity_obligation.py",
+    "issue": 290,
+    "pre_registration": "Diversity_Obligation_D3T.md",
+    "version": 1
+  },
+  "panels": {
+    "A": {
+      "aggregate_groups": 158,
+      "aggregate_groups_with_multiple_profiles": 150,
+      "aggregate_joins": 46080,
+      "aggregate_profiles_nonempty": 1536,
+      "aggregate_witness": {
+        "aggregate": [
+          [
+            1,
+            0,
+            0,
+            0
+          ],
+          2,
+          2
+        ],
+        "bases": [
+          {
+            "boundary": [
+              [
+                [
+                  -1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                2
+              ],
+              [
+                [
+                  2,
+                  0,
+                  0,
+                  0
+                ],
+                0,
+                0
+              ]
+            ],
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "v"
+              ]
+            ],
+            "profile_size": 1
+          },
+          {
+            "boundary": [
+              [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                0,
+                2
+              ],
+              [
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                0
+              ]
+            ],
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "^"
+              ],
+              [
+                0,
+                "v"
+              ]
+            ],
+            "profile_size": 1
+          }
+        ]
+      },
+      "base_histories": 1536,
+      "base_length": 3,
+      "boundary_groups": 360,
+      "boundary_groups_with_multiple_profiles": 0,
+      "closed_bases_excluded": 0,
+      "closure_failures": 0,
+      "distinct_aggregate_profiles": 96,
+      "distinct_typed_profiles": 264,
+      "extension_bound": 3,
+      "extensions": 1536,
+      "first_closure_failures": 0,
+      "open_bases": 1536,
+      "origin_count": 2,
+      "phase_ambiguous_groups": 1368,
+      "phase_groups": 2112,
+      "phase_pattern_ambiguous_groups": 432,
+      "phase_pattern_groups": 6336,
+      "phase_set_distribution": {
+        "0": 144,
+        "0,2": 1368,
+        "2": 600
+      },
+      "phase_witness": {
+        "base": [
+          [
+            0,
+            "+"
+          ],
+          [
+            0,
+            "-"
+          ],
+          [
+            1,
+            "/"
+          ]
+        ],
+        "boundary": [
+          [
+            [
+              0,
+              0,
+              -1,
+              0
+            ],
+            3,
+            2
+          ],
+          [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            0,
+            2
+          ]
+        ],
+        "extensions": [
+          {
+            "extension": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "v"
+              ],
+              [
+                1,
+                "\\"
+              ]
+            ],
+            "phase": 2,
+            "word": "^v\\"
+          },
+          {
+            "extension": [
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "\\"
+              ],
+              [
+                0,
+                "v"
+              ]
+            ],
+            "phase": 0,
+            "word": "^\\v"
+          }
+        ],
+        "word": "+-/"
+      },
+      "phase_word_ambiguous_groups": 0,
+      "phase_word_groups": 10752,
+      "representative_profile": {
+        "base": [
+          [
+            0,
+            "+"
+          ],
+          [
+            0,
+            "+"
+          ],
+          [
+            1,
+            "+"
+          ]
+        ],
+        "boundary": [
+          [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            0,
+            0
+          ],
+          [
+            [
+              0,
+              0,
+              0,
+              2
+            ],
+            0,
+            0
+          ]
+        ],
+        "profile": [
+          [
+            [
+              [
+                0,
+                0,
+                0,
+                -2
+              ],
+              0,
+              0
+            ],
+            [
+              [
+                0,
+                0,
+                0,
+                -1
+              ],
+              0,
+              2
+            ]
+          ]
+        ],
+        "profile_size": 1,
+        "word": "+++"
+      },
+      "typed_differs_from_aggregate": 1512,
+      "typed_joins": 12096,
+      "typed_profiles_nonempty": 1536,
+      "word_groups": 512,
+      "word_groups_with_multiple_profiles": 504,
+      "word_witness": {
+        "bases": [
+          {
+            "boundary": [
+              [
+                [
+                  -1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                2
+              ],
+              [
+                [
+                  2,
+                  0,
+                  0,
+                  0
+                ],
+                0,
+                0
+              ]
+            ],
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "v"
+              ]
+            ],
+            "profile_size": 1
+          },
+          {
+            "boundary": [
+              [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                0,
+                2
+              ],
+              [
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                0
+              ]
+            ],
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "^"
+              ],
+              [
+                0,
+                "v"
+              ]
+            ],
+            "profile_size": 1
+          }
+        ],
+        "word": "^^v"
+      }
+    },
+    "B": {
+      "aggregate_groups": 402,
+      "aggregate_groups_with_multiple_profiles": 62,
+      "aggregate_joins": 26432,
+      "aggregate_profiles_nonempty": 14336,
+      "aggregate_witness": {
+        "aggregate": [
+          [
+            2,
+            0,
+            0,
+            0
+          ],
+          0,
+          2
+        ],
+        "bases": [
+          {
+            "boundary": [
+              [
+                [
+                  -1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                2
+              ],
+              [
+                [
+                  3,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                0
+              ]
+            ],
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "v"
+              ]
+            ],
+            "profile_size": 0
+          },
+          {
+            "boundary": [
+              [
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                0
+              ],
+              [
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                2
+              ]
+            ],
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "^"
+              ],
+              [
+                0,
+                "v"
+              ]
+            ],
+            "profile_size": 1
+          }
+        ]
+      },
+      "base_histories": 28672,
+      "base_length": 4,
+      "boundary_groups": 2238,
+      "boundary_groups_with_multiple_profiles": 0,
+      "closed_bases_excluded": 1176,
+      "closure_failures": 0,
+      "distinct_aggregate_profiles": 33,
+      "distinct_typed_profiles": 33,
+      "extension_bound": 2,
+      "extensions": 56,
+      "first_closure_failures": 0,
+      "open_bases": 27496,
+      "origin_count": 2,
+      "phase_ambiguous_groups": 2016,
+      "phase_groups": 4704,
+      "phase_pattern_ambiguous_groups": 2016,
+      "phase_pattern_groups": 4704,
+      "phase_set_distribution": {
+        "0": 480,
+        "0,2": 2016,
+        "2": 2208
+      },
+      "phase_witness": {
+        "base": [
+          [
+            0,
+            "+"
+          ],
+          [
+            0,
+            "-"
+          ],
+          [
+            0,
+            "/"
+          ],
+          [
+            1,
+            "<"
+          ]
+        ],
+        "boundary": [
+          [
+            [
+              0,
+              0,
+              -1,
+              0
+            ],
+            3,
+            2
+          ],
+          [
+            [
+              0,
+              1,
+              0,
+              0
+            ],
+            1,
+            0
+          ]
+        ],
+        "extensions": [
+          {
+            "extension": [
+              [
+                0,
+                ">"
+              ],
+              [
+                1,
+                "\\"
+              ]
+            ],
+            "phase": 2,
+            "word": ">\\"
+          },
+          {
+            "extension": [
+              [
+                0,
+                "\\"
+              ],
+              [
+                1,
+                ">"
+              ]
+            ],
+            "phase": 0,
+            "word": "\\>"
+          }
+        ],
+        "word": "+-/<"
+      },
+      "phase_word_ambiguous_groups": 0,
+      "phase_word_groups": 8736,
+      "representative_profile": {
+        "base": [
+          [
+            0,
+            "+"
+          ],
+          [
+            0,
+            "+"
+          ],
+          [
+            0,
+            "-"
+          ],
+          [
+            1,
+            "+"
+          ]
+        ],
+        "boundary": [
+          [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            0,
+            0
+          ],
+          [
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            0,
+            2
+          ]
+        ],
+        "profile": [
+          [
+            [
+              [
+                0,
+                0,
+                0,
+                -1
+              ],
+              0,
+              2
+            ],
+            [
+              [
+                0,
+                0,
+                0,
+                -1
+              ],
+              0,
+              2
+            ]
+          ]
+        ],
+        "profile_size": 1,
+        "word": "++-+"
+      },
+      "typed_differs_from_aggregate": 9632,
+      "typed_joins": 8736,
+      "typed_profiles_nonempty": 4704,
+      "word_groups": 3928,
+      "word_groups_with_multiple_profiles": 2048,
+      "word_witness": {
+        "bases": [
+          {
+            "boundary": [
+              [
+                [
+                  -1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                2
+              ],
+              [
+                [
+                  3,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                0
+              ]
+            ],
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "v"
+              ]
+            ],
+            "profile_size": 0
+          },
+          {
+            "boundary": [
+              [
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                0
+              ],
+              [
+                [
+                  1,
+                  0,
+                  0,
+                  0
+                ],
+                2,
+                2
+              ]
+            ],
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                1,
+                "^"
+              ],
+              [
+                0,
+                "v"
+              ]
+            ],
+            "profile_size": 1
+          }
+        ],
+        "word": "^^^v"
+      }
+    }
+  },
+  "parameters": {
+    "origin_count": 2,
+    "panels": [
+      {
+        "base_length": 3,
+        "extension_bound": 3,
+        "id": "A"
+      },
+      {
+        "base_length": 4,
+        "extension_bound": 2,
+        "id": "B"
+      }
+    ],
+    "whole_history_lengths": [
+      4,
+      6
+    ]
+  },
+  "verdict": {
+    "d8c2": "NOT RUN; NOT PASSED",
+    "interface_gates": "D3T.1-D3T.5 PASS",
+    "next": "Decide whether the closure phase is in scope. If yes, pre-register a schedule-resolved boundary relation and retest D3T.6 from scratch. If no, a matched D8c2 continuation-profile test is a separate pre-registration under the frozen D3T relation.",
+    "phase_dictionary": "D3T.6 FAIL",
+    "relation": "D3T typed-provenance residual obligations"
+  },
+  "whole_history_phase": {
+    "4": {
+      "boundary_groups": 46,
+      "closed_typed_histories": 1176,
+      "length": 4,
+      "origin_count": 2,
+      "phase_ambiguous_groups": 34,
+      "phase_set_distribution": {
+        "0": 12,
+        "0,2": 34
+      },
+      "witness": {
+        "boundary": [
+          [
+            [
+              -1,
+              0,
+              0,
+              0
+            ],
+            2,
+            2
+          ],
+          [
+            [
+              1,
+              0,
+              0,
+              0
+            ],
+            2,
+            2
+          ]
+        ],
+        "histories": [
+          {
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "v"
+              ],
+              [
+                1,
+                "v"
+              ]
+            ],
+            "phase": 0,
+            "word": "^^vv"
+          },
+          {
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "<"
+              ],
+              [
+                1,
+                "v"
+              ],
+              [
+                0,
+                ">"
+              ]
+            ],
+            "phase": 2,
+            "word": "^<v>"
+          }
+        ],
+        "phases": [
+          0,
+          2
+        ]
+      }
+    },
+    "6": {
+      "boundary_groups": 199,
+      "closed_typed_histories": 158720,
+      "length": 6,
+      "origin_count": 2,
+      "phase_ambiguous_groups": 178,
+      "phase_set_distribution": {
+        "0": 2,
+        "0,2": 178,
+        "2": 19
+      },
+      "witness": {
+        "boundary": [
+          [
+            [
+              -1,
+              0,
+              0,
+              0
+            ],
+            2,
+            2
+          ],
+          [
+            [
+              1,
+              0,
+              0,
+              0
+            ],
+            2,
+            0
+          ]
+        ],
+        "histories": [
+          {
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "v"
+              ],
+              [
+                0,
+                "<"
+              ],
+              [
+                1,
+                "v"
+              ],
+              [
+                0,
+                ">"
+              ]
+            ],
+            "phase": 0,
+            "word": "^^v<v>"
+          },
+          {
+            "history": [
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "^"
+              ],
+              [
+                0,
+                "v"
+              ],
+              [
+                0,
+                "v"
+              ],
+              [
+                1,
+                "v"
+              ]
+            ],
+            "phase": 2,
+            "word": "^^^vvv"
+          }
+        ],
+        "phases": [
+          0,
+          2
+        ]
+      }
+    }
+  }
+}
