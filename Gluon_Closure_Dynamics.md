@@ -1,8 +1,9 @@
 # Gluon Closure Dynamics — singlet distance, vertex creation/gluing, and harmonic binding
 
 **Status:** first slice for issue [#286](https://github.com/rhovision-org/quantum-logical-framework/issues/286).
-GL0–GL6 are implemented as a finite two-channel vertex model. GL7 (logical → physical spatial
-distance) and GL8 (string tension) remain open. This is not full QCD.
+GL0–GL6 are implemented and tested as a finite two-channel vertex model. GL7 (logical → physical
+spatial distance) and GL8 (string tension) are **out of scope for this PR**, tracked in the parent
+issue #287; they are not claimed. This is not full QCD.
 
 ---
 
@@ -221,7 +222,21 @@ here is a vertex-creation/gluing distance toy; it does not derive a potential.
 
 ---
 
-## 9. Anchors
+## 9. Scope closure for review
+
+GL0–GL6 are the complete gates of this PR: finite two-channel vertex moves, witness audit, first
+singlet distance, atomic `CLOSE`, and non-strict harmonic binding.
+
+GL7 (logical distance → physical separation) and GL8 (string tension / `V(r)=σr`) are **not open gates
+of this PR**. They are out of scope and tracked in the parent issue #287. Marking this PR ready means
+the finite model is reviewable, not that the physical bridge is closed.
+
+Methods hygiene: this is a finite test slice, not a bridge claim; no claim-record promotion is
+requested. The registry entry is a DRAFT test ledger (`claim_records/gluon_closure_slice.json`).
+
+---
+
+## 10. Anchors
 
 - `lean/QLF_Confinement.lean` — `charged_not_closed`, `singlet_closure`.
 - `lean/QLF_ColourFlux.lean` — `F₃²`, `colVec`, `symp`.

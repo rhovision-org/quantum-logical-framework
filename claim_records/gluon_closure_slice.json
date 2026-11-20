@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-GLUON-CLOSURE-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "b48b8c79cf4e728127d99c9d47fd864021b1afa0",
+  "reviewer": "jimscarver",
+  "purpose": "Draft finite-slice ledger for the two-channel gluon vertex-gluing model (#286 / PR #289). This is not a QCD claim and does not promote GL7 or GL8.",
+  "entries": [
+    {
+      "id": "gluon_vertex_gluing_two_channel",
+      "claim": "On the eight nonzero colour labels of F3^2, every create/glue move has a witness (q,r,p) with p+q+r=0 and symp(q,r)!=0. The finite census classifies moves by the resulting change in shortest singlet distance; first-singlet moves are distance-reducing in both channels, but not every move is.",
+      "anchors": [],
+      "formal_scope": "Finite F3^2 colour multisets of size 1-4, with a search bound of size 5. The model is a declared vertex toy; it is not full QCD, does not derive a physical spatial distance, and does not derive a string tension or potential.",
+      "comparator": "Exhaustive finite census in gluon_closure_dynamics.py and data/gluon_closure_dynamics_census.json.",
+      "kill_condition": "An allowed vertex move without a closing witness (p+q+r != 0 or symp(q,r)=0), a first-singlet move that does not reduce d_G, or a claimed physical spatial/potential conclusion not backed by a separate bridge.",
+      "status": "DRAFT",
+      "source": "Gluon_Closure_Dynamics.md; gluon_closure_dynamics.py; tests/test_gluon_closure_dynamics.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}
