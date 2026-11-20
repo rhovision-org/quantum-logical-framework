@@ -129,6 +129,7 @@ lean_lib QLF where
     `QLF_CKM,
     `QLF_QuarkMass,
     `QLF_QuarkStructure,
+    `QLF_DiversityEmergence,
     `QLF_NeutrinoMass,
     `QLF_PMNS,
     `QLF_Supersymmetry,
