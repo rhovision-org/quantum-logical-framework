@@ -1,0 +1,12 @@
+checkpoint /tmp/claude-0/-home-user/d4303421-6c39-541c-a1a9-91d5765bfae4/scratchpad/bundle_ck/l1_3.jsonl: 0 target pairs done, 820 to run
+
+===== CERTIFIED capacity R = l1:3: 180288 geometries, 820 absorbing operators, 1032 states
+  certified annihilator degree: 24..48;  primes per certificate: 19..37
+  nothing-closes  9888
+  finite          11952
+  summable        0
+  marginal        0
+  divergent       158448
+  with a repeated root in the support: none
+  supports at or below the threshold (|lambda|^2 exact for x^2+n factors; ~ = other):
+started 2026-11-17T09:43:28Z finished 2026-11-17T10:47:06Z
