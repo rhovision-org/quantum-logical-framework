@@ -130,6 +130,8 @@ One gauge-twist mechanism, seen from three projections of the 3-axis structure.
 
 **Open:** [`Forces_From_Three_Axes.md`](Forces_From_Three_Axes.md) · [`Electricity.md`](Electricity.md) · [`Weak_Force.md`](Weak_Force.md) · [`Alpha.md`](Alpha.md) · [`Forces_From_Alpha.md`](Forces_From_Alpha.md)
 
+**Draft finite slice:** [`Gluon_Closure_Dynamics.md`](Gluon_Closure_Dynamics.md) — two-channel `F₃²` vertex-gluing model with a finite `d_G` census. GL7 (logical → physical distance) and GL8 (string tension) are out of scope; no QCD/potential claim.
+
 ---
 
 ## 4. Atoms and QED
