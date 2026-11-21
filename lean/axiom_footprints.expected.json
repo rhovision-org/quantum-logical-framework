@@ -1938,6 +1938,31 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SpatialResponseDerived.joint_step_identity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpatialResponseDerived.opposite_pushes_apart": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpatialResponseDerived.orthogonal_brings_closer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpatialResponseDerived.symmetric_mean": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpatialResponseDerived.unit_symmetric_mean": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.StationaryAction.balance_is_stationary_mode": [
     "Classical.choice",
     "Quot.sound",
