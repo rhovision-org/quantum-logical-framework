@@ -677,6 +677,11 @@ admissibility by ZFA closure. The short census finds 112 cross-type / 0 same-typ
 depth 2. D8b (novel outcome), D8c (measured advantage), and any Penrose/golden-ratio reading remain
 open. Ledger: [`claim_records/diversity_d8a.json`](claim_records/diversity_d8a.json).
 
+**Draft finite slice (PR #284):** [`Coincidence_QLF.md`](Coincidence_QLF.md) implements the CO0
+triviality trap and the CO1/CO2 typed-provenance first-joint-closure schedule. CO3 (interaction-event
+census) and CO4 (capacity-R resolver → finite closure bridge) are out-of-scope follow-ups under #283.
+Ledger: [`claim_records/coincidence_slice.json`](claim_records/coincidence_slice.json).
+
 ---
 
 ## Future work (scope-limited by specification)
