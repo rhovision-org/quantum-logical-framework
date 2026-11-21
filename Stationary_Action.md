@@ -216,6 +216,9 @@ the torus without balancing, have none. On four axes the balanced count at lengt
 closed-plaquette count. This is the link sector at fixed time (#303 S-PHYS candidate, not S-PHYS);
 it does not identify the link action with the census cost of §2a.
 
+The same current, used as fluxoid labels for a Regge geometry, is the next roadmap step (#301
+milestone 1). Its kill conditions are pre-registered in [`Continuum_Limit.md`](Continuum_Limit.md).
+
 ## §3 Why this is not bookkeeping — the kill condition
 
 Method rule 4 ([`CLAUDE.md`](CLAUDE.md), [`ScientificApproach.md`](ScientificApproach.md)): a claim has
