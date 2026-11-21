@@ -47,6 +47,36 @@ The current targets are:
 
 No one of these closes “map ≡ territory.” They specify the form a closure of the identity would have to take.
 
+## 3a. Does the closure record return the territory? — pre-registration
+
+This section was committed before `territory_return.py` existed.
+
+**The question.** The strongest return in hand is observational. Two two-body histories are
+equivalent when no appended context separates them by joint closure and phase
+(`QLF_ObservationalEquivalence`, `obsEquiv_iff_pairEquiv`). That record is complete for every
+tensor/Hilbert observable built from the fold, and minimal among records that reconstruct the
+closure test (`QLF_PerspectiveHolography`, `joint_record_minimal`). Its "closure" is fold closure:
+the joint fold is a scalar. The territory's closure is ZFA. Count balance implies fold closure
+(`count_balanced_pauli_closed`), but the converse fails: `^^` folds to `I` and is not balanced.
+So the test is whether the record returns ZFA, the territory's own event predicate.
+
+**Set-up.** Two-body histories over the 16 tokens `(body, twist)`, every history of length `≤ 4`.
+ZFA for a two-body history means each body's projection is count-balanced. The record is the joint
+fold `foldA ⊗ foldB`. The ledger is the pair of signed action vectors in `ℤ⁴ × ℤ⁴`.
+
+| | Claim under test | Passes if | Prior |
+|---|---|---|---|
+| M1 | ZFA is a function of the observational class | no class holds both a ZFA and a non-ZFA history | **fail**: `[(A,^),(A,^)]` and `[]` are equivalent, and only `[]` is ZFA |
+| M2 | what the record keeps of the ledger | the class is determined by, and determines, `(K_A, K_B, phase)`: each body's Klein class of spatial count parities (`(ZMod 2)³` modulo `(1,1,1)`) and the product phase | pass, since each fold is `phase · σ_K` |
+| M3 | the ledger returns ZFA | ZFA is a function of `(record, ledger)`, and of the ledger alone | pass, by construction (structural) |
+| M4 | how much of the territory the record misses | count, within each class that holds a ZFA history, the non-ZFA histories | reported, no prior |
+
+**Verdict rule.** If M1 fails, the reading "the territory is what joint-closure-and-phase records
+can distinguish" is refuted. The fold-based map would then keep the ledger only through the Klein
+classes of M2, and any conservative return for #213 must include an apparatus that reads the
+integer ledger, which is the walk's displacement. If M1 passes, the observational return already
+covers ZFA, and the gap left in `TensorConservativeReturn_phys` is only the apparatus map.
+
 ## 4. The tensor near-example
 
 `QLF_TensorFromClosure` derives the tensor representation from independent closure composition. `QLF_TensorConservativeReturn` proves `R ∘ F = id` on tensor-image closure classes. This is the strongest current **near-example** of a conservative return:
