@@ -50,6 +50,10 @@ while still admitting a lower-dimensional boundary encoding.
 
 ---
 
+## Perspective reconstruction experiments
+
+Stage B/C finite surrogate experiments, component-wise reconstruction results, and explicit collision witnesses are tracked in [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md). These experiments use action-coordinate projections only; they are not physical Markov blankets and do not establish holographic reconstruction.
+
 ## Closure-aware projection record (research slice)
 
 `holographic.py` now exposes `closure_aware_projection(history)`, which keeps the
