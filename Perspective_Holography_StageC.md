@@ -32,11 +32,13 @@ The shared horizontal action coordinate is reconstructible by both screens on th
 
 The witnesses demonstrate information loss in this chosen action-projection surrogate, not a failure of a derived physical holographic dictionary.
 
-## Next Lean targets (not yet implemented)
+## Lean targets (now proved in [`QLF_PerspectiveHolography`](lean/QLF_PerspectiveHolography.lean))
 
-1. **Closure preservation:** boundary/record construction must not identify an open history with a ZFA closure when closure verdict is part of the record.
-2. **Factorization criterion:** prove the finite/general factorization criterion `D(h₁)=D(h₂) → O(h₁)=O(h₂)` iff a reconstruction map exists, with a concrete counterexample.
-3. **Overlapping blankets:** define a non-circular shared-observable interface and prove compatibility for the existing frame-invariant closure/Pauli observables before assigning physical meaning to blankets.
+1. **Factorization criterion:** `reconstructs_iff` proves `D(h₁)=D(h₂) → O(h₁)=O(h₂)` iff a reconstruction map exists, for any types; `not_reconstructs_iff` makes every failure a collision witness, which is what `factor_reconstruction` reports on a finite sample.
+2. **Closure preservation:** `closure_verdict_reconstructible` proves the joint fold determines whether a two-body history closes now, so a record containing it cannot identify an open history with a closure.
+3. **Overlapping perspectives:** `shared_respects_chain` is the non-circular shared-observable interface: an observable both records reconstruct is constant along every chain of histories that share a record in either one. On the two-body system, `single_body_perspectives_share_only_constants` shows the two one-body perspectives share only constant observables, while `joint_record_reconstructs` and `joint_record_minimal` show the joint fold is the coarsest record that reconstructs the full joint-closure test. `phase_blind_record_fails` is the collision for a record that drops the phase.
+
+These are statements about record maps. A physical Markov blanket, causal accessibility and metric reconstruction remain open.
 
 ## Decision
 

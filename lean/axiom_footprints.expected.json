@@ -751,6 +751,27 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.FluxoidRegge.axisLabel_closed": [],
+  "QLF.FluxoidRegge.current_not_class_function": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.FluxoidRegge.div_smooth": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.FluxoidRegge.plaquette_circulates": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.FluxoidRegge.smooth_preserves_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Fredkin.fredkin_bijective": [],
   "QLF.Fredkin.fredkin_preserves_zfa": [
     "Classical.choice",
@@ -1081,6 +1102,26 @@
     "propext"
   ],
   "QLF.LinkAction.stationary_iff_ampere": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LinkClosure.closed_history_gauge_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LinkClosure.link_stationarity_forces_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LinkClosure.stationary_forces_count_balance": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LinkClosure.stationary_forces_return": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1634,6 +1675,41 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.PerspectiveHolography.closure_verdict_reconstructible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveHolography.reconstructs_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveHolography.shared_respects_chain": [],
+  "QLF.PerspectiveHolography.single_body_perspectives_share_only_constants": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveHolography.two_body_dictionary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PhaseAction.fold_action_form": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PhaseAction.phase_action_form": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PhaseAction.two_negCount_of_balanced": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.PhaseRule.phase_rule": [
     "Classical.choice",
     "Quot.sound",
@@ -1862,6 +1938,31 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SpatialResponseDerived.joint_step_identity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpatialResponseDerived.opposite_pushes_apart": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpatialResponseDerived.orthogonal_brings_closer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpatialResponseDerived.symmetric_mean": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpatialResponseDerived.unit_symmetric_mean": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.StationaryAction.balance_is_stationary_mode": [
     "Classical.choice",
     "Quot.sound",
@@ -1988,6 +2089,27 @@
     "propext"
   ],
   "QLF.TensorFromClosure.split_strong_iff_singlet": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TerritoryReturn.joint_record_with_ledger_returns_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TerritoryReturn.ledger_returns_zfa": [],
+  "QLF.TerritoryReturn.zfa_not_class_function": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TerritoryReturn.zfa_not_from_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TerritoryReturn.zfa_not_reconstructible": [
     "Classical.choice",
     "Quot.sound",
     "propext"

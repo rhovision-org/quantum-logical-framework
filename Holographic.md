@@ -71,6 +71,30 @@ check of the standard factorization criterion, not a Lean proof or a claim over 
 infinite history domain. It does not invent the boundary encoding or observable;
 those must be supplied and justified independently.
 
+## Perspective reconstruction, proved for two-body joint closure
+
+[`QLF_PerspectiveHolography`](lean/QLF_PerspectiveHolography.lean) proves the factorization
+criterion that `perspective_holography.py` audits (`reconstructs_iff`) and instantiates it on the
+two-body joint-closure system of [`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean).
+There the observable is the full closure test (which continuations close a history, with which
+phase). The joint fold reconstructs it, and every record that reconstructs it refines the joint
+fold (`joint_record_minimal`), so the joint fold is the coarsest boundary record for joint
+closure; this is the greatest-bisimulation theorem read as a dictionary entry. Dropping the phase
+loses it (`phase_blind_record_fails`, the gauge-flip collision). Two perspectives that each see one
+body share only constant observables (`single_body_perspectives_share_only_constants`): joint
+closure is visible to neither alone. A perspective here is a record map, not a physical Markov
+blanket, and no geometry is reconstructed.
+
+## A Regge interior from fluxoid labels: rejected
+
+Issue #301 proposed reading a history's fluxoid labels as Regge edge lengths, so that the boundary
+record would determine interior deficit angles. The pre-registered test in
+[`Continuum_Limit.md`](Continuum_Limit.md) rejects it. A current labeling gives a geometry finer
+than the closure class (143 deficit vectors in the closed class alone, `current_not_class_function`),
+so no closure-test record can reconstruct it. An axis labeling is constant on closure, so there is
+nothing to reconstruct. ZFA is the vertex identity `div = 0`, not a face identity
+([`QLF_FluxoidRegge`](lean/QLF_FluxoidRegge.lean)).
+
 ## 1. The QuCalc source of truth
 
 The refactored QLF core is `twist_core.py`. It supplies the canonical:
