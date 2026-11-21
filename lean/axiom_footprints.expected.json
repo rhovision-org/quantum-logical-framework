@@ -751,6 +751,27 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.FluxoidRegge.axisLabel_closed": [],
+  "QLF.FluxoidRegge.current_not_class_function": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.FluxoidRegge.div_smooth": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.FluxoidRegge.plaquette_circulates": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.FluxoidRegge.smooth_preserves_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Fredkin.fredkin_bijective": [],
   "QLF.Fredkin.fredkin_preserves_zfa": [
     "Classical.choice",

@@ -63,4 +63,69 @@ check, not as a result.
 
 ## §2 Results
 
-To be filled from `fluxoid_regge.py` after this section is committed.
+Run: [`fluxoid_regge.py`](fluxoid_regge.py) on the `10 × 10` torus, every two-axis history of length
+`≤ 8` (87,381 histories, 5,341 of them closed). The output is
+[`data/fluxoid_regge.json`](data/fluxoid_regge.json). Lengths 4 and 6 give the same verdicts.
+
+| | Outcome | What was found |
+|---|---|---|
+| K1 | **fail** | 2,984 of 5,341 closed histories have a nonzero face obligation. The smallest is `>^<v`, whose current circulates around its plaquette with total `4` (proved: `plaquette_circulates`) |
+| K2 | **fail** | the same 2,984 closed histories are Regge-curved under every length map. For `g = 1 + m`, 8 of them violate a triangle inequality instead |
+| K3 | **fail** | 137 of the 145 closure classes hold more than one geometry. The closed class alone holds 143 different deficit vectors (140 for `g = 1 + m`). The Lean core is `current_not_class_function`: `[]` and `>^<v` share a class and differ in current |
+| K4 | pass | the Regge-flat closed histories are the same set under all four maps. It is exactly the set with zero current, the retraced walks (`<>`, `^v`, `<>^v`, …): 2,357 of 5,341 |
+| K5 | pass (structural) | binomial smoothing of degrees 2 and 4 commutes with the divergence on every history and leaves `div = 0` on every closed one, in exact arithmetic. Proved for every kernel: `div_smooth`, `smooth_preserves_closure`. On an open history it smears the endpoint charges. It never keeps integrality, so the smoothed field is no longer a fluxoid labeling |
+| K6 | pass (structural) | the per-body closure order is the same across each of the 4,097 `Step` classes. The cross-body order is not: in all 672 classes where both bodies close, some interleaving reorders the two bodies' closures |
+| K7 | **fail** | labeling B gives one geometry, the flat reference, for every closed history (proved: `axisLabel_closed`) |
+
+Gauss–Bonnet held to `9·10⁻¹⁵` on every labeled torus, as a code check.
+
+### Verdict
+
+**The construction is rejected as a fluxoid→Regge identification.** Labeling A fails K3. Labeling B
+passes K3 only by being constant on closure, so it fails K7. By the verdict rule the toy model does
+not derive Regge geometry from ZFA.
+
+### What the run establishes instead
+
+* **ZFA is the vertex identity, not the face identity.** Closure is `div J = 0`
+  (`div_walkCurrent`). The face identity `∂f ≡ 0`, imposed on a closed history, holds exactly when
+  the current is zero. It would select only the retraced walks, so it is not ZFA in any form.
+* **On this complex, curvature is the circulation.** Under every monotone map tested, a closed
+  history is Regge-flat exactly when it carries no current. The flat set is map-independent, so K4
+  passes in a strong form, but the deficits themselves change with the map.
+* **The geometry is finer than the class.** A deficit vector records the walk's current, which the
+  closure tests of [`lean/QLF_PerspectiveHolography.lean`](lean/QLF_PerspectiveHolography.lean)
+  cannot see: the closed class alone holds 143 geometries. A post-hoc note, not pre-registered: the
+  fold phase cannot repair this, because it takes two values and the class holds 143 geometries.
+  This is the #296 failure mode from the other side. Here the interior observable is too fine for
+  the boundary record, where #296's scalar records were too coarse.
+* **Perspectival time is a partial order, never a total one.** K6 is Mazurkiewicz trace order: each
+  body's own closures keep their order, and the order between bodies is not invariant. That is the
+  issue's "partial order of residual-obligation discharges", and it holds by construction.
+* **Smoothing is harmless and empty.** It preserves the closure identity for any kernel, so it
+  carries no closure content, and it destroys the integer labels it was meant to transport.
+
+### What stays open
+
+* A labeling that is a class function **and** varies on closure. Neither labeling tested is both,
+  and K3 with K7 is the test any candidate must pass.
+* `d ≥ 3`, where the Regge action is not topological and Cheeger–Müller–Schrader applies (the
+  issue's deliverable 4).
+* The `Continuum_Limit` claim record,
+  [`claim_records/continuum_limit.json`](claim_records/continuum_limit.json), stays `B-OPEN`.
+
+## §3 Lean anchors
+
+[`lean/QLF_FluxoidRegge.lean`](lean/QLF_FluxoidRegge.lean), no axioms, built on
+[`lean/QLF_LinkClosure.lean`](lean/QLF_LinkClosure.lean):
+
+| Theorem | Statement |
+|---|---|
+| `div_smooth` | smoothing a link field by any kernel commutes with the divergence |
+| `smooth_div_free`, `smooth_preserves_closure` | so the smoothed current of a returning history is divergence-free everywhere (K5) |
+| `plaquette_closed`, `plaquette_balanced` | `>^<v` on `(ℤ₃)²` returns and is count-balanced |
+| `plaquette_circulates` | yet its current circulates around its plaquette with total `4` (K1) |
+| `current_not_class_function` | `[]` and `>^<v` share a closure class and differ in current (K3) |
+| `axisLabel_closed` | the axis labeling is zero on every count-balanced history (K7) |
+
+The angle computations (K2, K3 on deficits, K4) are numerical: floats compared at `10⁻⁹`.

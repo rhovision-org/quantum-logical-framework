@@ -85,6 +85,16 @@ body share only constant observables (`single_body_perspectives_share_only_const
 closure is visible to neither alone. A perspective here is a record map, not a physical Markov
 blanket, and no geometry is reconstructed.
 
+## A Regge interior from fluxoid labels: rejected
+
+Issue #301 proposed reading a history's fluxoid labels as Regge edge lengths, so that the boundary
+record would determine interior deficit angles. The pre-registered test in
+[`Continuum_Limit.md`](Continuum_Limit.md) rejects it. A current labeling gives a geometry finer
+than the closure class (143 deficit vectors in the closed class alone, `current_not_class_function`),
+so no closure-test record can reconstruct it. An axis labeling is constant on closure, so there is
+nothing to reconstruct. ZFA is the vertex identity `div = 0`, not a face identity
+([`QLF_FluxoidRegge`](lean/QLF_FluxoidRegge.lean)).
+
 ## 1. The QuCalc source of truth
 
 The refactored QLF core is `twist_core.py`. It supplies the canonical:

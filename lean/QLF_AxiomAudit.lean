@@ -129,6 +129,7 @@ import QLF_ConservativeReturn
 import QLF_TensorConservativeReturn
 import QLF_ObservationalEquivalence
 import QLF_PerspectiveHolography
+import QLF_FluxoidRegge
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -167,6 +168,11 @@ import QLF_Majorana
 #print axioms QLF.PerspectiveHolography.single_body_perspectives_share_only_constants
 #print axioms QLF.LinkClosure.stationary_forces_count_balance
 #print axioms QLF.LinkClosure.stationary_forces_return
+#print axioms QLF.FluxoidRegge.div_smooth
+#print axioms QLF.FluxoidRegge.smooth_preserves_closure
+#print axioms QLF.FluxoidRegge.plaquette_circulates
+#print axioms QLF.FluxoidRegge.current_not_class_function
+#print axioms QLF.FluxoidRegge.axisLabel_closed
 #print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit
