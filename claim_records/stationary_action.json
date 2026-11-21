@@ -1,0 +1,176 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-STATIONARY-ACTION-001",
+  "version": "0.3.0-draft",
+  "source_revision": "1c817e71b765b0f34db121f9559e9f148247fddc",
+  "informal_statement": "The one-axis closure census, rendered at the census scale x = d/sqrt(n) with hbar held fixed, converges to the stationary Euclidean functional x^2 in value, first variation and curvature; this is one continuum rendering of the proved discrete stationarity at ZFA balance, not the physical (Lorentzian) action principle.",
+  "approximation_or_regime": {
+    "name": "Central census scaling",
+    "description": "d = floor(x sqrt n) up-steps off balance in a 2n-step one-axis history, n -> infinity; the cost is I_n(d) = log W_n(n) - log W_n(n+d) with W_n(k) = C(2n,k).",
+    "validity_limits": "One axis, unsigned census, x >= 0 (the other side by conjugate symmetry). Euclidean large-deviation weight only. No phase e^{iS/hbar}, no field or geometry reconstruction, no gravity, no event-selection claim (first closure is priority)."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.CensusActionLimit.census_action_limit",
+      "QLF.CensusActionLimit.censusCost_sandwich",
+      "QLF.CensusActionLimit.censusCost_gaussian_limit",
+      "QLF.CensusActionLimit.censusCost_variation_limit",
+      "QLF.CensusActionLimit.censusCost_curvature_limit",
+      "QLF.StationaryAction.balance_is_stationary_mode"
+    ],
+    "statement_scope": "Exact finite sandwich d^2/(n+d) <= I_n(d) <= d^2/(n-d+1) for d <= n; I_n(floor(x sqrt n)) -> x^2; sqrt(n)(I_n(d+1) - I_n(d)) -> 2x proved separately from the value limit; n(I_n(1) + I_n(-1) - 2 I_n(0)) -> 2; I_n(d) = 0 iff d = 0. These establish #303 level S-MATH for this functional. They do not identify the functional with a physical action (S3-S5), do not construct a reconstruction map on fields (S6-S7), and say nothing about Benincasa-Dowker/Einstein-Hilbert (S8-S10)."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_CensusActionLimit.lean",
+      "lean/QLF_StationaryAction.lean"
+    ],
+    "type": "normalized log-binomial census cost and its scaling limit"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "Five new anchors added to QLF_AxiomAudit and the exact-footprint baseline (499 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound only."
+  },
+  "inputs": [
+    {
+      "name": "census multiplicity",
+      "value": "W_n(k) = C(2n,k)",
+      "provenance": "derived",
+      "source": "QLF.StationaryAction.ways"
+    },
+    {
+      "name": "census scale",
+      "value": "x = d / sqrt(n)",
+      "provenance": "declared",
+      "source": "choice of rendering; the central-limit scale of the census width"
+    },
+    {
+      "name": "action scale",
+      "value": "hbar > 0 fixed, S^E = hbar I",
+      "provenance": "declared",
+      "source": "QLF.CensusActionLimit.euclidean_action_limit; no limit in hbar is taken"
+    }
+  ],
+  "interpretation": {
+    "map": "balanced one-axis census -> log-count cost I_n -> scaled functional x^2 -> minimizer and curvature returned to the count",
+    "formal_status": "The census-to-functional limit and its variations are formal. The reading of -log W as a physical action is an identification, not a theorem.",
+    "noncircularity_test": "The limit x^2 is computed from C(2n,k) by elementary log bounds; no quadratic form is assumed. Derivative convergence is proved separately (K3 of #303). K4 is run numerically: 1 - W(n+d)/W(n) has the same discrete mode but limit 1 - exp(-x^2), so the log normalization is a choice the limit inherits."
+  },
+  "strange_loop": {
+    "name": "census stationarity -> continuum functional -> mode and curvature returned",
+    "levels": [
+      "finite one-axis census W_n(k)",
+      "normalized cost I_n(d)",
+      "continuum functional x^2 at scale x = d/sqrt n",
+      "finite census invariants"
+    ],
+    "return_level": "the discrete mode (balance) and the exact second difference at balance",
+    "conservative_return": "The continuum minimizer x = 0 returns to d = 0, which is balance_is_mode (censusCost_eq_zero_iff), and the continuum curvature 2 is recovered from the exact count as the limit of n times the second difference at balance (censusCost_curvature_limit). This is a return on the census functional only; no return through a physical action or reconstructed field exists.",
+    "noncircularity_witness": "The quadratic limit, its derivative 2x and curvature 2 are outputs of exact binomial identities and log bounds, not inputs. A biased alphabet (biased_first_variation) moves the mode off balance, so the return could fail.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: the Lean anchors listed. N: census_action_limit.py reproduces the limits numerically (floating point, not a certificate).",
+    "defeater": "A census in which conjugate symmetry holds but the scaled variation fails to converge to the derivative of the limit; or a physical action whose stationary point is not returned by this functional.",
+    "proof_obligation": {
+      "domain": "balanced one-axis census histories of length 2n",
+      "codomain": "scaled Euclidean functional on x >= 0",
+      "forward_map": "d -> I_n(d), x = d/sqrt n",
+      "return_map": "continuum minimizer and curvature -> d = 0 and the exact second difference at balance",
+      "composite_identity_on": "the mode and the curvature at balance",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_CensusActionLimit.lean (censusCost_eq_zero_iff, censusCost_curvature_limit); census functional only",
+      "imported_axioms": "none in Lean; physical reading of -log W as action is an identification",
+      "falsifier": "a stationary physical action (link action, signed propagator) whose discrete stationary point differs from the census mode"
+    }
+  },
+  "observable": {
+    "symbol": "I_n(floor(x sqrt n)), sqrt(n) Delta I_n, n Delta^2 I_n(0)",
+    "baseline": "x^2, 2x, 2",
+    "uncertainties": "exact sandwich; error O(1/n) when x sqrt n is an integer, O(1/sqrt n) from the floor otherwise"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "Formal limits in Lean; numerical companion census_action_limit.py.",
+    "failure_condition": "A Lean counterexample to the sandwich, or a companion run violating the sandwich.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "not a physical comparison",
+    "comparator": "the functional x^2",
+    "uncertainty": "see observable",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Exact sandwich, value limit, variation limit, curvature return and unique minimizer, no QLF axiom.",
+    "N": "census_action_limit.py: sandwich checked against exact binomials for n in {5, 12, 40}; limits shown to n = 10^6.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to censusCost_sandwich.",
+    "interpretation": "-log W is not a physical action; the Lorentzian phase needs a separate signed construction (S3-S5).",
+    "numerical": "A companion run outside the sandwich.",
+    "empirical": "Not applicable at this level.",
+    "conceptual": "The census mode is a frequency statistic, not the priority rule (depth_one_not_modal)."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope and non-claims stated; S-MATH level only."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No physical action map; the functional is a census cost."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return is PARTIAL: census functional only."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "1c817e71b765b0f34db121f9559e9f148247fddc",
+    "reference_documents": [
+      "Stationary_Action.md",
+      "Open_Problems.md",
+      "Claim_Status.md",
+      "lean/QLF_CensusActionLimit.lean",
+      "lean/QLF_StationaryAction.lean",
+      "census_action_limit.py"
+    ],
+    "status": "pre-merge draft record for the census action limit; no bridge promotion"
+  }
+}

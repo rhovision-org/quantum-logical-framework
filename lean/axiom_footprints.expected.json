@@ -60,6 +60,31 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.CensusActionLimit.censusCost_curvature_limit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CensusActionLimit.censusCost_gaussian_limit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CensusActionLimit.censusCost_sandwich": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CensusActionLimit.censusCost_variation_limit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CensusActionLimit.census_action_limit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ChannelGroupoid.dag_comp": [
     "Quot.sound",
     "propext"
