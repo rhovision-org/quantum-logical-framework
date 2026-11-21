@@ -550,6 +550,10 @@ flowchart TD
 
 **The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 375-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge with a first-order `F`/`N` result but no conservative return is `B-OPEN` / `INCOMPLETE`; reserve `INCONCLUSIVE` for a comparator that is ambiguous or fails to discriminate. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
 
+**Draft finite slice:** [`Coincidence_QLF.md`](Coincidence_QLF.md) — CO0 triviality plus the
+CO1/CO2 typed-provenance first-joint-closure schedule. CO3/CO4 remain out-of-scope follow-ups under
+#283; no all-events or causation claim.
+
 ---
 
 ## See also
