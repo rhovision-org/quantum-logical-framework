@@ -38,7 +38,7 @@ jobs:
         run: python3 scripts/validate_claim_records.py
 
       - name: Install Python test dependencies
-        run: python3 -m pip install --upgrade numpy
+        run: python3 -m pip install --upgrade numpy matplotlib
 
       - name: Run regression tests
         run: python3 -m unittest discover -s tests -p 'test_*.py' -v
