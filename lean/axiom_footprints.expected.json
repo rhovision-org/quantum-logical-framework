@@ -1654,6 +1654,27 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.PerspectiveHolography.closure_verdict_reconstructible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveHolography.reconstructs_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveHolography.shared_respects_chain": [],
+  "QLF.PerspectiveHolography.single_body_perspectives_share_only_constants": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveHolography.two_body_dictionary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.PhaseRule.phase_rule": [
     "Classical.choice",
     "Quot.sound",
