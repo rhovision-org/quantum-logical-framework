@@ -50,6 +50,15 @@ while still admitting a lower-dimensional boundary encoding.
 
 ---
 
+## Closure-aware projection record (research slice)
+
+`holographic.py` now exposes `closure_aware_projection(history)`, which keeps the
+exact ZFA verdict, unnormalized action vector, ordered Pauli fold, and the existing
+normalized spinor/Bloch/phase projections in one audit record. This is closure-aware
+detection, not a faithful encoding of the full history: distinct histories can still
+share the same action and Pauli record. Perspective-specific Markov-blanket data and
+observable reconstruction are not implemented by this record.
+
 ## 1. The QuCalc source of truth
 
 The refactored QLF core is `twist_core.py`. It supplies the canonical:

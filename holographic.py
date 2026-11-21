@@ -43,6 +43,8 @@ from twist_core import (
     adjoint_history,
     generate_histories,
     is_admissible_history,
+    is_zfa,
+    pauli_fold,
     validate_history,
 )
 
@@ -65,6 +67,34 @@ class LogicalProjection:
     spinor: np.ndarray
     xyz: np.ndarray
     relative_phase: float
+
+
+@dataclass(frozen=True)
+class ClosureAwareProjection:
+    """Lossy projection plus exact closure/action/fold facts for one history.
+
+    This record is *not* a history-faithful holographic encoding. It preserves
+    closure detection and algebraic projections while retaining the original
+    history as an audit reference.
+    """
+    history: str
+    closure: bool
+    action: Tuple[int, int, int, int]
+    pauli_fold: Tuple[complex, complex, complex, complex]
+    spinor: np.ndarray
+    xyz: np.ndarray
+    relative_phase: float
+
+
+    def __post_init__(self) -> None:
+        # The frozen dataclass must also prevent mutation through NumPy buffers.
+        spinor = np.array(self.spinor, dtype=complex, copy=True)
+        xyz = np.array(self.xyz, dtype=float, copy=True)
+        spinor.setflags(write=False)
+        xyz.setflags(write=False)
+        object.__setattr__(self, "spinor", spinor)
+        object.__setattr__(self, "xyz", xyz)
+
 
 
 # ---------------------------------------------------------------------------
@@ -145,6 +175,31 @@ def relative_phase(psi: np.ndarray) -> float:
         return 0.0
 
     return float(np.angle(beta) - np.angle(alpha))
+
+
+def closure_aware_projection(history: str) -> ClosureAwareProjection:
+    """Return the projection with exact closure, action, and Pauli-fold data.
+
+
+    Closure is evaluated by the canonical `twist_core.is_zfa` predicate; the
+    action and matrix fold are unnormalized exact algebraic records. The spinor,
+    Bloch vector, and relative phase remain lossy views. This function makes no
+    perspective/Markov-blanket reconstruction claim.
+    """
+    validate_history(history)
+    if not is_admissible_history(history):
+        raise ValueError("history is not admissible under the canonical branching law")
+    action = calculate_action(history)
+    psi = spinor_from_action(action)
+    return ClosureAwareProjection(
+        history=history,
+        closure=is_zfa(history),
+        action=action,
+        pauli_fold=pauli_fold(history),
+        spinor=psi,
+        xyz=bloch_projection(psi),
+        relative_phase=relative_phase(psi),
+    )
 
 
 def project_history(history: str) -> List[LogicalProjection]:
