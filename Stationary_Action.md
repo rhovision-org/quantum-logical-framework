@@ -312,6 +312,38 @@ S1 (`|A(x)| = |A(−x)|`) **PASS**; S2 (signed mode at balance) **PASS**, and th
 **FAIL**, and it failed because it was badly posed rather than because of the physics: any endpoint
 reached by a single path has coherence exactly `1`. It is recorded as a failure and not reworded.
 
+## §5b Is the phase an action? (#303 S4–S5, K5–K7) — pre-registration
+
+This section was committed before `signed_phase_track.py` existed.
+
+**What is already proved.** For a balanced history the fold is
+`(−1)^{#neg} · (−1)^{Φ}`, where `Φ = A_XY + A_XZ + A_YZ` is the sum of the three projected areas
+([`QLF_PlaquetteArea`](lean/QLF_PlaquetteArea.lean), `fold_eq_projected_phase`). Count balance makes
+`#neg = L/2`. So the phase reads `θ(h) = π·(L/2) + π·Φ(h)` mod `2π`: a constant phase per step pair
+plus a uniform flux `π` through every spatial plaquette. This is derived from the matrices, not
+assigned, and it is the S4 candidate. It composes under concatenation (`amp_add`) and is fixed by
+reversal on closed histories, since `−θ ≡ θ` for a ℤ₂ phase.
+
+**The family of countermodels.** Replace the QLF connection by a U(1) connection with flux `φ`
+through every spatial plaquette and sign `σ` on every negative step. QLF is `(φ, σ) = (π, −1)`. The
+test family is `φ ∈ {0, π/2, 2π/3, π}`, `σ ∈ {+1, −1}`, on all of `ℤ⁴` with the gauge axis flux-free
+as in `QLF_EdgeSign`.
+
+| | Claim under test | Passes if | Prior |
+|---|---|---|---|
+| P1 (K5) | the stationary-phase bound identifies the phase | `\|A(2m; 0, x)\| ≤ \|A(2m; 0, 0)\|` **fails** for some `(φ, σ) ≠ (π, −1)` at some `2m ≤ 10` | **fail**: the transfer operator is Hermitian or anti-Hermitian with translation-covariant diagonal for every `(φ, σ)`, so Cauchy–Schwarz gives the bound for all of them |
+| P2 (K6) | the Pauli fold fixes the action | `(π, −1)` is the only member whose weight equals the fold on every balanced history of length `≤ 6` | pass, with `φ = −π` indistinguishable from `π`: the phase fixes the plaquette action only mod `2πħ` and up to sign |
+| P3 (S4 laws) | the phase composes and reverses | weight(`u ++ w`) = weight(`u`)·weight(`w`) for closed `u, w`; weight(reverse `h`) = conjugate(weight `h`)·`σ^L` | pass, structural |
+| P4 (K7) | the action has a smooth limit with `ħ` fixed | recorded before the run, not computed | **fail** for an Aharonov–Bohm reading: flux `π` per plaquette of side `a` is a field `π/a²`, which diverges as `a → 0` |
+
+**Verdict rule.** If P1 fails as expected, the bound `signed_mode_at_balance` is supporting evidence
+only (as #303 says) and no phase/action identification may rest on it. If P2 passes, the phase
+fixes the plaquette action to the ℤ₂ class `π` mod `2π`, and that, not the bound, is what the
+identification must use. P4 failing means the S4 candidate does not render as a smooth classical
+action. The standing continuum reading of a uniform π-flux lattice is a Dirac operator (staggered
+fermions, Kogut & Susskind 1975; the symbol is `QLF_LorentzSymbol`'s `2i·Form(sin k)`), so S5 must
+be posed for that kinetic phase, not for an area action.
+
 ## §6 Honest scope
 
 * **Signed = quantum half, in the stationary-phase sense only.** §5a proves the signed amplitude
