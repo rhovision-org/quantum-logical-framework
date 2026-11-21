@@ -59,6 +59,14 @@ detection, not a faithful encoding of the full history: distinct histories can s
 share the same action and Pauli record. Perspective-specific Markov-blanket data and
 observable reconstruction are not implemented by this record.
 
+`perspective_holography.py` adds `factor_reconstruction(boundary_values,
+observable_values)`: on an explicit finite sample it constructs a reconstruction map
+iff every repeated boundary value has the same observable value. Otherwise it returns
+indices and values of the first collision counterexample. This is a computational
+check of the standard factorization criterion, not a Lean proof or a claim over an
+infinite history domain. It does not invent the boundary encoding or observable;
+those must be supplied and justified independently.
+
 ## 1. The QuCalc source of truth
 
 The refactored QLF core is `twist_core.py`. It supplies the canonical:
