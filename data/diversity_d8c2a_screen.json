@@ -1,0 +1,181 @@
+{
+  "gates": {
+    "D8c2_matched_population": "not run; blocked by the screen",
+    "D8c2a_heterogeneous_advantage": "fail: no length shows higher mean K for support 2/3",
+    "D8c2a_null_separation": "fail: null continuation sets match ZFA exactly"
+  },
+  "meta": {
+    "gate": "D8c2a base-level screen",
+    "generator": "diversity_advantage.py",
+    "issue": 290,
+    "pre_registration": "Diversity_Advantage_D8c2a.md",
+    "version": 1
+  },
+  "screen": {
+    "base_lengths": [
+      3,
+      4,
+      5
+    ],
+    "by_length": {
+      "3": {
+        "groups": {
+          "0": {
+            "K_counts": {
+              "1": 4,
+              "4": 4
+            },
+            "bases": 8,
+            "mean_K": 2.5
+          },
+          "1": {
+            "K_counts": {
+              "1": 36,
+              "2": 96,
+              "4": 12,
+              "6": 24
+            },
+            "bases": 168,
+            "mean_K": 2.5
+          },
+          "2": {
+            "K_counts": {
+              "1": 24,
+              "2": 240,
+              "6": 24
+            },
+            "bases": 288,
+            "mean_K": 2.25
+          },
+          "3": {
+            "K_counts": {
+              "2": 48
+            },
+            "bases": 48,
+            "mean_K": 2.0
+          }
+        },
+        "heterogeneous_advantage": false,
+        "heterogeneous_support_2_3": {
+          "bases": 336,
+          "mean_K": 2.2142857142857144
+        },
+        "homogeneous_support_1": {
+          "bases": 168,
+          "mean_K": 2.5
+        }
+      },
+      "4": {
+        "groups": {
+          "0": {
+            "K_counts": {
+              "0": 4,
+              "1": 12
+            },
+            "bases": 16,
+            "mean_K": 0.75
+          },
+          "1": {
+            "K_counts": {
+              "0": 324,
+              "1": 396
+            },
+            "bases": 720,
+            "mean_K": 0.55
+          },
+          "2": {
+            "K_counts": {
+              "0": 1608,
+              "1": 792
+            },
+            "bases": 2400,
+            "mean_K": 0.33
+          },
+          "3": {
+            "K_counts": {
+              "0": 816,
+              "1": 144
+            },
+            "bases": 960,
+            "mean_K": 0.15
+          }
+        },
+        "heterogeneous_advantage": false,
+        "heterogeneous_support_2_3": {
+          "bases": 3360,
+          "mean_K": 0.2785714285714286
+        },
+        "homogeneous_support_1": {
+          "bases": 720,
+          "mean_K": 0.55
+        }
+      },
+      "5": {
+        "groups": {
+          "0": {
+            "K_counts": {
+              "0": 4,
+              "1": 16,
+              "4": 12
+            },
+            "bases": 32,
+            "mean_K": 2.0
+          },
+          "1": {
+            "K_counts": {
+              "0": 708,
+              "1": 720,
+              "2": 1152,
+              "4": 36,
+              "6": 360
+            },
+            "bases": 2976,
+            "mean_K": 1.7903225806451613
+          },
+          "2": {
+            "K_counts": {
+              "0": 6888,
+              "1": 1536,
+              "2": 8064,
+              "6": 360,
+              "8": 432
+            },
+            "bases": 17280,
+            "mean_K": 1.3472222222222223
+          },
+          "3": {
+            "K_counts": {
+              "0": 7440,
+              "1": 288,
+              "2": 4608,
+              "8": 144
+            },
+            "bases": 12480,
+            "mean_K": 0.8538461538461538
+          }
+        },
+        "heterogeneous_advantage": false,
+        "heterogeneous_support_2_3": {
+          "bases": 29760,
+          "mean_K": 1.1403225806451613
+        },
+        "homogeneous_support_1": {
+          "bases": 2976,
+          "mean_K": 1.7903225806451613
+        }
+      }
+    },
+    "d8c2": "not run; base-level screen blocks it under this relation/measure",
+    "extension_bound": 3,
+    "note": "Homogeneous and heterogeneous groups are not population-size matched; this is a screen, not the full D8c2 test. No post-hoc subgroup was used.",
+    "null_differences": 0,
+    "null_matches_exactly": true,
+    "screen_advantages": [
+      false,
+      false,
+      false
+    ],
+    "total_bases": 37376,
+    "verdict": "negative_no_heterogeneous_advantage"
+  }
+}

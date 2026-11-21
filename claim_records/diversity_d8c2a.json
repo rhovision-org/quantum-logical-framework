@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-DIVERSITY-D8C2A-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "c800e8310cabf5f3d32345e3aba9dc04849a61a8",
+  "reviewer": "jimscarver",
+  "purpose": "Draft D8c2a base-level screen ledger (#290): under the frozen D3 conjugate-boundary relation, support 2/3 bases have lower mean K than one-axis bases at lengths 3-5, and the null model matches ZFA continuation sets exactly on all 37,376 bases. D8c2 was not run.",
+  "entries": [
+    {
+      "id": "diversity_d8c2a_negative_screen",
+      "claim": "For bases of length 3, 4, and 5 with extension bound 3 under the D3 conjugate-boundary join, mean continuation-class count K is lower for support 2/3 bases than for support 1 bases at every length. The net-zero null model produces exactly the same continuation sets as ZFA on all 37,376 bases (0 differences).",
+      "anchors": [],
+      "formal_scope": "Finite twist words of length 3-5 over the 8-twist alphabet; frozen D3 conjugate-boundary join; extension bound 3; canonical word equivalence; support classes 1 vs 2/3. This is a base-level screen, not the population-size-matched D8c2 test. No Penrose, persistence, or physical claim.",
+      "comparator": "Exhaustive screen in diversity_advantage.py and data/diversity_d8c2a_screen.json; null model replaces ZFA closure with net-action zero.",
+      "kill_condition": "Any tested length where heterogeneous support has a strictly higher mean K than homogeneous support, or any null/ZFA continuation-set difference (which would reopen a ZFA-specific reading).",
+      "status": "DRAFT",
+      "source": "Diversity_Advantage_D8c2a.md; diversity_advantage.py; tests/test_diversity_advantage.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}

@@ -152,6 +152,43 @@ rendering. It does **not** establish that the substrate chooses that path becaus
 count. Event priority has already been fixed by first closure; this theorem says where the census is
 stationary and most concentrated.
 
+## §2a The continuum rendering of §2 (census action limit)
+
+[`QLF_CensusActionLimit`](lean/QLF_CensusActionLimit.lean) renders §2 at the census scale and proves
+the rendering converges. The cost of displacing a balanced history by `d` up-steps is
+`I_n(d) = log W(n) − log W(n+d)`. One exact identity, `W(n+j+1)(n+j+1) = W(n+j)(n−j)`, makes each
+increment a single logarithm, and the two elementary log bounds give an exact sandwich with no
+asymptotics:
+
+\[
+\frac{d^2}{n+d} \;\le\; I_n(d) \;\le\; \frac{d^2}{n-d+1}\qquad (0 \le d \le n).
+\]
+
+| Theorem | Statement | Reading |
+|---|---|---|
+| `censusCost_sandwich` | the bound above, every `d ≤ n` | finite and exact |
+| `censusCost_gaussian_limit` | `I_n(⌊x√n⌋) → x²` | the value limit (#303 S1) |
+| `censusCost_variation_limit` | `√n·(I_n(d+1) − I_n(d)) → 2x` | the **variations** converge to the derivative of the limit (#303 S2), proved on their own because value convergence does not give it (`sin(nx)/n`) |
+| `censusCost_curvature_limit` | `n·(I_n(1) + I_n(−1) − 2I_n(0)) → 2` | the return: the continuum curvature, recovered from the exact count |
+| `censusCost_eq_zero_iff` | `I_n(d) = 0 ⟺ d = 0` | the limit's minimizer `x = 0` returns to balance, `balance_is_mode` |
+| `euclidean_action_limit` | `ħ·I_n → ħx²` | `ħ` is a fixed constant; the limit is in `x = d/√n`, never in `ħ` |
+
+So the continuum is a rendering at large census scale with `S ≫ ħ`, and the quantum of action does
+not vanish. What this fixes and what it does not:
+
+* It is **one** stationary continuum functional for a specified finite counting functional (#303
+  level S-MATH). The log normalization is a choice the limit inherits: the cost `1 − W(n+d)/W(n)` has
+  the same discrete mode and limit `1 − e^{−x²}` ([`census_action_limit.py`](census_action_limit.py),
+  check K4).
+* `−ħ log W` is a Euclidean, large-deviation weight. The Lorentzian action with its phase `e^{iS/ħ}`
+  needs the signed construction of §5a carried to a limit (#303 S3–S5), and that is open.
+* The mode is a frequency statistic. Priority is still first closure.
+
+The companion [`census_action_limit.py`](census_action_limit.py) shows the rates numerically (error
+`O(1/n)` when `x√n` is an integer, `O(1/√n)` from the floor otherwise). It is evidence, not a
+certificate; the proof is the Lean module. Claim record:
+[`claim_records/stationary_action.json`](claim_records/stationary_action.json) (`B-OPEN`).
+
 ## §3 Why this is not bookkeeping — the kill condition
 
 Method rule 4 ([`CLAUDE.md`](CLAUDE.md), [`ScientificApproach.md`](ScientificApproach.md)): a claim has
