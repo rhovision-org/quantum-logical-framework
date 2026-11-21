@@ -131,6 +131,7 @@ import QLF_ObservationalEquivalence
 import QLF_PerspectiveHolography
 import QLF_FluxoidRegge
 import QLF_PhaseAction
+import QLF_TerritoryReturn
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -177,6 +178,11 @@ import QLF_Majorana
 #print axioms QLF.PhaseAction.two_negCount_of_balanced
 #print axioms QLF.PhaseAction.phase_action_form
 #print axioms QLF.PhaseAction.fold_action_form
+#print axioms QLF.TerritoryReturn.zfa_not_class_function
+#print axioms QLF.TerritoryReturn.zfa_not_reconstructible
+#print axioms QLF.TerritoryReturn.zfa_not_from_fold
+#print axioms QLF.TerritoryReturn.ledger_returns_zfa
+#print axioms QLF.TerritoryReturn.joint_record_with_ledger_returns_zfa
 #print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit

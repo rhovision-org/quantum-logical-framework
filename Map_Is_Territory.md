@@ -40,7 +40,7 @@ The identification needs a bridge with:
 
 The current targets are:
 
-- `TensorConservativeReturn` — **proved** on the tensor-image quotient. [`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean) proves that quotient is the observational one: two histories are equivalent exactly when no appended context separates them by joint closure and phase (`obsEquiv_iff_pairEquiv`). What is still missing for `TensorConservativeReturn_phys` is that joint closure phase is the only physical observable (an apparatus map) and the entangled-sector return.
+- `TensorConservativeReturn` — **proved** on the tensor-image quotient, which returns fold closure and not ZFA (§3b). [`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean) proves that quotient is the observational one: two histories are equivalent exactly when no appended context separates them by joint closure and phase (`obsEquiv_iff_pairEquiv`). What is still missing for `TensorConservativeReturn_phys` is that joint closure phase is the only physical observable (an apparatus map) and the entangled-sector return.
 - `RhoCorrespondence` — **`NOT_STARTED`**; binary closure ↔ process reduction, with soundness, completeness, conservativity and self-query.
 - `SelfKnowledgeBisimulation` — **`NOT_STARTED`**; active-inference update and model/system bisimulation.
 - `CausalMetricConservativeReturn` — **`NOT_STARTED`**; closure causal order → metric → same causal order.
@@ -49,7 +49,7 @@ No one of these closes “map ≡ territory.” They specify the form a closure 
 
 ## 3a. Does the closure record return the territory? — pre-registration
 
-This section was committed before `territory_return.py` existed.
+This section was committed before [`territory_return.py`](territory_return.py) existed. Results are in §3b.
 
 **The question.** The strongest return in hand is observational. Two two-body histories are
 equivalent when no appended context separates them by joint closure and phase
@@ -76,6 +76,36 @@ can distinguish" is refuted. The fold-based map would then keep the ledger only 
 classes of M2, and any conservative return for #213 must include an apparatus that reads the
 integer ledger, which is the walk's displacement. If M1 passes, the observational return already
 covers ZFA, and the gap left in `TensorConservativeReturn_phys` is only the apparatus map.
+
+## 3b. The territory-return test — results
+
+Run: [`territory_return.py`](territory_return.py), all 69,905 two-body histories of length `≤ 4`,
+output [`data/territory_return.json`](data/territory_return.json). Lean:
+[`QLF_TerritoryReturn`](lean/QLF_TerritoryReturn.lean), no axioms.
+
+| | Outcome | What was found |
+|---|---|---|
+| M1 | **fail** | ZFA is not a function of the observational class. Both classes that hold a ZFA history also hold non-ZFA ones. The shortest witness is one token, not the `^^` of the prior: the gauge twist `+` folds to `I`, so `[(A,+)]` is equivalent to `[]`, and only `[]` is ZFA (`zfa_not_class_function`). Hence no record of joint closure tests with phase, and not the joint fold, returns ZFA (`zfa_not_reconstructible`, `zfa_not_from_fold`) |
+| M2 | pass | there are exactly 64 observational classes, one for each `(K_A, K_B, phase)`. Each body's Klein class equals the class of its spatial count parities modulo `(1,1,1)` on every history. The gauge count enters only through the phase sign |
+| M3 | pass, structurally | the integer ledger returns ZFA, alone or with the closure record (`ledger_returns_zfa`, `joint_record_with_ledger_returns_zfa`) |
+| M4 | reported | in the class with phase `+1`, 673 of the 2,247 members are ZFA (211 distinct ledgers). In the class with phase `−1`, 64 of the 2,246 are ZFA (107 ledgers) |
+
+### Verdict
+
+**The reading "the territory is what joint-closure-and-phase records can distinguish" is refuted.**
+The fold-based map is the whole tensor/Hilbert map of `QLF_TensorFromClosure`. It keeps the
+territory's ledger in `ℤ⁴ × ℤ⁴` only through two Klein classes and a phase, which is 64 values. Two
+of those values hold all of ZFA, mixed with histories that never close.
+
+This does not refute "map ≡ territory". It locates the gap. The quantum-mechanical map is
+incomplete in a specific way: it cannot tell a closure from an unbalanced history that folds to a
+scalar, of which `+` is the shortest. A conservative return for #213 has to include an apparatus
+that reads the integer ledger, which is the walk's displacement, as `QLF_LinkClosure`'s current and
+the census do. With that apparatus the return is immediate (M3). The open question is what physical
+apparatus reads it.
+
+This matches the runtime. Since `twist_core.py` 8f02273, `is_zfa` requires count balance as well
+as Pauli closure, because the fold alone is not enough.
 
 ## 4. The tensor near-example
 

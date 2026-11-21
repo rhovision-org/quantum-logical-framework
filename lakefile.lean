@@ -342,6 +342,7 @@ lean_lib QLF where
     `QLF_TensorConservativeReturn,
     `QLF_ObservationalEquivalence,
     `QLF_PerspectiveHolography,
+    `QLF_TerritoryReturn,
     `QLF_MeadTransaction,
     `QLF_MagneticOrientation,
     `QLF_ClockRedshift,

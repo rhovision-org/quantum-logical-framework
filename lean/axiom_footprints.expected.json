@@ -2068,6 +2068,27 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TerritoryReturn.joint_record_with_ledger_returns_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TerritoryReturn.ledger_returns_zfa": [],
+  "QLF.TerritoryReturn.zfa_not_class_function": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TerritoryReturn.zfa_not_from_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TerritoryReturn.zfa_not_reconstructible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Tsirelson.chsh_classical": [
     "propext"
   ],
