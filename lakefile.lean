@@ -300,6 +300,7 @@ lean_lib QLF where
     `QLF_LatticeGauge,
     `QLF_Maxwell,
     `QLF_LinkAction,
+    `QLF_LinkClosure,
     `QLF_MaxwellTime,
     `QLF_GaussLaw,
     `QLF_WalkCoupling,

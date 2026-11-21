@@ -189,6 +189,33 @@ The companion [`census_action_limit.py`](census_action_limit.py) shows the rates
 certificate; the proof is the Lean module. Claim record:
 [`claim_records/stationary_action.json`](claim_records/stationary_action.json) (`B-OPEN`).
 
+## §2b A physical action whose stationarity forces closure (link sector)
+
+[`QLF_LinkAction`](lean/QLF_LinkAction.lean) has a genuine variational equation: the finite link
+action is stationary under every single-link variation iff `curl F = J`. [`QLF_LinkClosure`](lean/QLF_LinkClosure.lean)
+sources it with a history. A history of signed axis steps, started at a site, deposits a current
+`J` that counts each link traversal with its sign; nothing about the action enters that map.
+
+| Theorem | Statement |
+|---|---|
+| `sum_walkCurrent` | the total current on axis `k` is the history's net count `#(k,+) − #(k,−)` |
+| `div_walkCurrent` | `div J = δ_start − δ_end` |
+| `stationary_forces_count_balance` | if **any** link configuration is stationary for this `J`, the history is count-balanced on every axis |
+| `stationary_forces_return` | and it returns to its start |
+| `open_history_no_stationary` | an unbalanced history has no stationary configuration at all (one step is the minimal witness) |
+| `closed_history_gauge_invariant` | a returning history makes the coupling gauge invariant |
+
+So stationarity of a physical-style action, under all variations rather than closure-preserving
+ones, forces ZFA's count condition on its source, and with `count_balanced_pauli_closed` full
+closure. The reason is short: `curl F` has zero total on every axis, and the current's total is the
+net count. The converse, that every count-balanced history admits a stationary configuration, is a
+finite Hodge decomposition and is not proved. [`link_closure.py`](link_closure.py) checks it in
+exact rational arithmetic on `(ℤ₃)²`, `(ℤ₄)²` (lengths ≤ 6), `(ℤ₃)³` (≤ 5) and `(ℤ₃)⁴` (≤ 4):
+stationary exists exactly for the count-balanced histories, and winding histories, which return on
+the torus without balancing, have none. On four axes the balanced count at length 4 is 168, the
+closed-plaquette count. This is the link sector at fixed time (#303 S-PHYS candidate, not S-PHYS);
+it does not identify the link action with the census cost of §2a.
+
 ## §3 Why this is not bookkeeping — the kill condition
 
 Method rule 4 ([`CLAUDE.md`](CLAUDE.md), [`ScientificApproach.md`](ScientificApproach.md)): a claim has

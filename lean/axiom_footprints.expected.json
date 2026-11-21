@@ -1085,6 +1085,26 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LinkClosure.closed_history_gauge_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LinkClosure.link_stationarity_forces_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LinkClosure.stationary_forces_count_balance": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LinkClosure.stationary_forces_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LocalAreaLaw.local_area_law": [
     "Classical.choice",
     "Quot.sound",

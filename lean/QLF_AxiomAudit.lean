@@ -67,6 +67,7 @@ import QLF_LorentzCover
 import QLF_RiemannMRE
 import QLF_StationaryAction
 import QLF_CensusActionLimit
+import QLF_LinkClosure
 import QLF_StationaryPhase
 import QLF_ClosureKernel
 import QLF_ClosureLeakage
@@ -157,6 +158,10 @@ import QLF_Majorana
 #print axioms QLF.LawOfExceptions.law_of_exceptions
 #print axioms QLF.StationaryAction.balance_is_stationary_mode
 #print axioms QLF.CensusActionLimit.census_action_limit
+#print axioms QLF.LinkClosure.link_stationarity_forces_closure
+#print axioms QLF.LinkClosure.stationary_forces_count_balance
+#print axioms QLF.LinkClosure.stationary_forces_return
+#print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit
 #print axioms QLF.CensusActionLimit.censusCost_variation_limit
