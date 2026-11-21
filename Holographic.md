@@ -85,6 +85,13 @@ body share only constant observables (`single_body_perspectives_share_only_const
 closure is visible to neither alone. A perspective here is a record map, not a physical Markov
 blanket, and no geometry is reconstructed.
 
+The two-body closure test above is scalar **fold closure**, not territorial count-balanced ZFA.
+[`QLF_TerritoryReturn`](lean/QLF_TerritoryReturn.lean) proves that an empty history and a single
+gauge twist share the fold while differing in ZFA; the integer ledger restores the ZFA verdict.
+See [Nested-frontier reconstruction audit](Perspective_Holography_Frontier.md) for the bounded
+overlap and counting targets. The physical Markov-blanket map, operational clock, metric and
+horizon face identification remain B-OPEN.
+
 ## A Regge interior from fluxoid labels: rejected
 
 Issue #301 proposed reading a history's fluxoid labels as Regge edge lengths, so that the boundary
