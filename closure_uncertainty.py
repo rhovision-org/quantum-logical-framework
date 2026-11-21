@@ -111,6 +111,8 @@ def completion_measure(
     """
     if start_length < 1:
         raise ValueError("start_length must be positive")
+    if isinstance(base, bool) or not isinstance(base, int) or base <= 1:
+        raise ValueError("base must be an integer greater than 1")
     paths = first_completions(system, horizon)
     weights = [base ** (-(start_length + len(path))) for path in paths]
     total = sum(weights)

@@ -15,6 +15,20 @@ class ClosureUncertaintyTests(unittest.TestCase):
     def test_self_test(self) -> None:
         cu.self_test()
 
+    def test_completion_measure_rejects_invalid_base(self) -> None:
+        game = cu.game_system(("S", "H"))
+        for bad in (1, 0, -8, 8.0, True):
+            with self.assertRaises(ValueError):
+                cu.completion_measure(game, 3, 1, base=bad)
+
+    def test_completion_measure_base_8(self) -> None:
+        game = cu.game_system(("S", "H"))
+        m = cu.completion_measure(game, 3, 1, base=8)
+        self.assertEqual(m["W_micro"], cu.W(game, 3))
+        self.assertEqual(m["base"], 8)
+        self.assertTrue(all(w > 0 for w in m["normalized"]))
+        self.assertAlmostEqual(sum(m["normalized"]), 1.0)
+
     def test_closed_start_is_unique(self) -> None:
         game = cu.game_system(("S", "S"))
         self.assertEqual(cu.first_completions(game, 3), ((),))
