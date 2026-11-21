@@ -94,6 +94,11 @@ conscious closure.
 [`QLF_Consciousness.lean`](lean/QLF_Consciousness.lean)). At each moment, whichever closure is fastest
 and coherent is what is experienced; the rest is unconscious substrate.
 
+**Timing refinement.** The highest-frequency reading describes **recurring dominance**. The next event
+is the first eligible trigger by remaining distance, not necessarily the fastest recurrence; listening
+takes time and the closure event is atomic. The shared semantics are stated once in
+[`Event_Timing_QLF.md`](Event_Timing_QLF.md).
+
 **The unit of that integrated information is machine-verified — *it from bit*.** What binding integrates,
 and what the frequency-hierarchy carries, is *information* — and its atom is now a theorem. The smallest
 closure is the two-valued **spin-½**, carrying exactly one bit (`binary_kl 1 (1/2) = log 2`) while a

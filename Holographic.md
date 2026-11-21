@@ -50,6 +50,27 @@ while still admitting a lower-dimensional boundary encoding.
 
 ---
 
+## Perspective reconstruction experiments
+
+Stage B/C finite surrogate experiments, component-wise reconstruction results, and explicit collision witnesses are tracked in [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md). These experiments use action-coordinate projections only; they are not physical Markov blankets and do not establish holographic reconstruction.
+
+## Closure-aware projection record (research slice)
+
+`holographic.py` now exposes `closure_aware_projection(history)`, which keeps the
+exact ZFA verdict, unnormalized action vector, ordered Pauli fold, and the existing
+normalized spinor/Bloch/phase projections in one audit record. This is closure-aware
+detection, not a faithful encoding of the full history: distinct histories can still
+share the same action and Pauli record. Perspective-specific Markov-blanket data and
+observable reconstruction are not implemented by this record.
+
+`perspective_holography.py` adds `factor_reconstruction(boundary_values,
+observable_values)`: on an explicit finite sample it constructs a reconstruction map
+iff every repeated boundary value has the same observable value. Otherwise it returns
+indices and values of the first collision counterexample. This is a computational
+check of the standard factorization criterion, not a Lean proof or a claim over an
+infinite history domain. It does not invent the boundary encoding or observable;
+those must be supplied and justified independently.
+
 ## 1. The QuCalc source of truth
 
 The refactored QLF core is `twist_core.py`. It supplies the canonical:

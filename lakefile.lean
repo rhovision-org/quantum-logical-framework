@@ -129,6 +129,7 @@ lean_lib QLF where
     `QLF_CKM,
     `QLF_QuarkMass,
     `QLF_QuarkStructure,
+    `QLF_DiversityEmergence,
     `QLF_NeutrinoMass,
     `QLF_PMNS,
     `QLF_Supersymmetry,
@@ -258,6 +259,7 @@ lean_lib QLF where
     `QLF_ProductWalk,
     `QLF_FirstReturn,
     `QLF_StationaryAction,
+    `QLF_CensusActionLimit,
     `QLF_StationaryPhase,
     `QLF_GoldenSilver,
     `QLF_InflationObserver,
@@ -344,5 +346,6 @@ lean_lib QLF where
     `QLF_ClockIntervention,
     `QLF_MrEUpdate,
     `QLF_GuptaPrefixClock,
-    `QLF_ReadoutCriterion
+    `QLF_ReadoutCriterion,
+    `QLF_ClosureUncertainty
   ]
