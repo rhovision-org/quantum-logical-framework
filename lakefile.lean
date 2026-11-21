@@ -331,6 +331,7 @@ lean_lib QLF where
     `QLF_HolographicBoundary,
     `QLF_HolographicArea,
     `QLF_PlaquetteArea,
+    `QLF_PhaseAction,
     `QLF_LocalAreaLaw,
     `QLF_TensorFromClosure,
     `QLF_MetricSinglet, `QLF_LatticeDivergence, `QLF_LatticeBianchi,

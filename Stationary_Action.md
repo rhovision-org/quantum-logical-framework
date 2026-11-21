@@ -314,7 +314,7 @@ reached by a single path has coherence exactly `1`. It is recorded as a failure 
 
 ## §5b Is the phase an action? (#303 S4–S5, K5–K7) — pre-registration
 
-This section was committed before `signed_phase_track.py` existed.
+This section was committed before [`signed_phase_track.py`](signed_phase_track.py) existed. Results are in §5c.
 
 **What is already proved.** For a balanced history the fold is
 `(−1)^{#neg} · (−1)^{Φ}`, where `Φ = A_XY + A_XZ + A_YZ` is the sum of the three projected areas
@@ -343,6 +343,36 @@ identification must use. P4 failing means the S4 candidate does not render as a 
 action. The standing continuum reading of a uniform π-flux lattice is a Dirac operator (staggered
 fermions, Kogut & Susskind 1975; the symbol is `QLF_LorentzSymbol`'s `2i·Form(sin k)`), so S5 must
 be posed for that kinetic phase, not for an area action.
+
+## §5c The phase/action test — results
+
+Run: [`signed_phase_track.py`](signed_phase_track.py), exact amplitudes in `ℤ[ζ₁₂]` on all of `ℤ⁴`,
+output [`data/signed_phase_track.json`](data/signed_phase_track.json). The candidate form is now a
+theorem: [`QLF_PhaseAction`](lean/QLF_PhaseAction.lean) `phase_action_form` proves that a closure of
+length `L` has phase `(−1)^{L/2}·(−1)^{Φ}`, from `two_negCount_of_balanced` (`2·#neg = L`).
+
+| | Outcome | What was found |
+|---|---|---|
+| P1 (K5) | **fails, as predicted** | the stationary-phase bound `\|A(2m;0,x)\| ≤ \|A(2m;0,0)\|` holds for **all eight** members `(φ, σ)` at every `2m ≤ 10` (and at `12`). The bound does not identify the phase. The QLF row reproduces the registry: `\|A₀\| = 8, 120, 2144, 41896, 868608` |
+| P2 (K6) | passes | of the ten members tested (`±π` included) on the 5,296 balanced histories of length `≤ 6`, only `(π, −1)` and `(−π, −1)` match the Pauli fold. `(π, +1)` fails exactly when `L/2` is odd, from `+−` on. So the fold fixes the flux to the ℤ₂ class `±π` and the step sign to `−1` |
+| P3 (S4 laws) | passes, structurally | composition and reversal hold for every member on all 177 closed histories of length `≤ 4` |
+| P4 (K7) | **fails** (recorded before the run) | flux `π` per plaquette of side `a` is the field `π/a²`, which has no limit as `a → 0` |
+
+`σ` never changes a modulus. The number of negative steps to a fixed endpoint is fixed by the
+length, so `σ` is a sign per endpoint, and P1 is in effect a test of `φ` alone.
+
+**Verdict.** No phase/action identification can rest on `signed_mode_at_balance`: the bound holds for
+every U(1) flux, so it is supporting evidence only, as #303 says. What the phase data do fix is the
+ℤ₂ class. Each spatial plaquette carries action `πħ` mod `2πħ`, up to sign, and each step pair
+carries phase `π`. That is the S4 candidate, derived and not assigned, and it composes and reverses
+correctly. It does not render as a smooth area action at fixed `ħ` (P4). The open S5 problem is
+therefore the kinetic reading: the uniform π-flux lattice is the staggered-fermion lattice (Kogut &
+Susskind 1975), whose continuum symbol is `QLF_LorentzSymbol`'s `2i·Form(sin k)`. Stationary phase
+has to be posed for that Dirac phase. An area action is not available.
+
+Post hoc, not pre-registered: within the family, the return amplitude `\|A₀\|` falls monotonically
+from `φ = 0` to `φ = π` at every `2m ≥ 4`. QLF's flux gives the most cancellation of the family.
+This was not a test, so it is not evidence.
 
 ## §6 Honest scope
 

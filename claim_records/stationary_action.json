@@ -2,7 +2,7 @@
   "record_type": "claim",
   "record_id": "QLF-STATIONARY-ACTION-001",
   "version": "0.3.0-draft",
-  "source_revision": "5d84f60f45b241b287649a67a36503544cf45768",
+  "source_revision": "48bb96989579357d865bb6a6c79636a17f228a7e",
   "informal_statement": "The one-axis closure census, rendered at the census scale x = d/sqrt(n) with hbar held fixed, converges to the stationary Euclidean functional x^2 in value, first variation and curvature; this is one continuum rendering of the proved discrete stationarity at ZFA balance, not the physical (Lorentzian) action principle.",
   "approximation_or_regime": {
     "name": "Central census scaling",
@@ -21,22 +21,26 @@
       "QLF.LinkClosure.link_stationarity_forces_closure",
       "QLF.LinkClosure.stationary_forces_count_balance",
       "QLF.LinkClosure.stationary_forces_return",
-      "QLF.LinkClosure.closed_history_gauge_invariant"
+      "QLF.LinkClosure.closed_history_gauge_invariant",
+      "QLF.PhaseAction.phase_action_form",
+      "QLF.PhaseAction.fold_action_form",
+      "QLF.PhaseAction.two_negCount_of_balanced"
     ],
-    "statement_scope": "Exact finite sandwich d^2/(n+d) <= I_n(d) <= d^2/(n-d+1) for d <= n; I_n(floor(x sqrt n)) -> x^2; sqrt(n)(I_n(d+1) - I_n(d)) -> 2x proved separately from the value limit; n(I_n(1) + I_n(-1) - 2 I_n(0)) -> 2; I_n(d) = 0 iff d = 0. These establish #303 level S-MATH for this functional. They do not identify the functional with a physical action (S3-S5), do not construct a reconstruction map on fields (S6-S7), and say nothing about Benincasa-Dowker/Einstein-Hilbert (S8-S10). Link sector (QLF_LinkClosure): stationarity of the finite link action, sourced by a history's signed link current, under every single-link variation forces the history to be count-balanced and to return; the converse (finite Hodge) is checked exactly by link_closure.py, not proved."
+    "statement_scope": "Exact finite sandwich d^2/(n+d) <= I_n(d) <= d^2/(n-d+1) for d <= n; I_n(floor(x sqrt n)) -> x^2; sqrt(n)(I_n(d+1) - I_n(d)) -> 2x proved separately from the value limit; n(I_n(1) + I_n(-1) - 2 I_n(0)) -> 2; I_n(d) = 0 iff d = 0. These establish #303 level S-MATH for this functional. They do not identify the functional with a physical action (S3-S5), do not construct a reconstruction map on fields (S6-S7), and say nothing about Benincasa-Dowker/Einstein-Hilbert (S8-S10). Link sector (QLF_LinkClosure): stationarity of the finite link action, sourced by a history's signed link current, under every single-link variation forces the history to be count-balanced and to return; the converse (finite Hodge) is checked exactly by link_closure.py, not proved. Signed phase (QLF_PhaseAction): a closure of length L has phase (-1)^(L/2) (-1)^(sum of projected areas), the S4 candidate theta = pi L/2 + pi Phi mod 2 pi; signed_phase_track.py shows the stationary-phase bound holds for every U(1) flux, so only the fold fixes the Z2 class +-pi; no smooth area-action limit at fixed hbar."
   },
   "formal_object": {
     "primary_files": [
       "lean/QLF_CensusActionLimit.lean",
       "lean/QLF_StationaryAction.lean",
-      "lean/QLF_LinkClosure.lean"
+      "lean/QLF_LinkClosure.lean",
+      "lean/QLF_PhaseAction.lean"
     ],
     "type": "normalized log-binomial census cost and its scaling limit"
   },
   "dependencies": {
     "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
     "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
-    "audit_baseline": "Five new anchors added to QLF_AxiomAudit and the exact-footprint baseline (499 entries).",
+    "audit_baseline": "Anchors in QLF_AxiomAudit and the exact-footprint baseline (516 entries).",
     "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound only."
   },
   "inputs": [
@@ -110,13 +114,13 @@
   },
   "evidence": {
     "F": "Exact sandwich, value limit, variation limit, curvature return and unique minimizer, no QLF axiom. Link sector: stationary link action forces count balance and return of its source history; unbalanced histories admit no stationary configuration.",
-    "N": "census_action_limit.py: sandwich checked against exact binomials for n in {5, 12, 40}; limits shown to n = 10^6. link_closure.py: exact rational check that a stationary configuration exists iff the history is count-balanced, on (Z3)^2, (Z4)^2, (Z3)^3, (Z3)^4.",
+    "N": "census_action_limit.py: sandwich checked against exact binomials for n in {5, 12, 40}; limits shown to n = 10^6. link_closure.py: exact rational check that a stationary configuration exists iff the history is count-balanced, on (Z3)^2, (Z4)^2, (Z3)^3, (Z3)^4. signed_phase_track.py: exact Z[zeta_12] amplitudes on Z^4 to 2m = 10; the bound |A(x)| <= |A(0)| holds for all eight (phi, sigma) members (K5 countermodels); only (+-pi, -1) matches the Pauli fold on the 5,296 balanced histories of length <= 6.",
     "E": "None.",
     "reviewer": "pending review"
   },
   "defeaters": {
     "formal": "A counterexample to censusCost_sandwich.",
-    "interpretation": "-log W is not a physical action; the Lorentzian phase needs a separate signed construction (S3-S5).",
+    "interpretation": "-log W is not a physical action; the Lorentzian phase needs a separate signed construction (S3-S5). The finite stationary-phase bound holds for every U(1) flux (signed_phase_track.py), so it cannot carry the identification; the pi-flux phase has no smooth area-action limit at fixed hbar.",
     "numerical": "A companion run outside the sandwich.",
     "empirical": "Not applicable at this level.",
     "conceptual": "The census mode is a frequency statistic, not the priority rule (depth_one_not_modal)."
@@ -167,7 +171,7 @@
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
-    "source_revision": "5d84f60f45b241b287649a67a36503544cf45768",
+    "source_revision": "48bb96989579357d865bb6a6c79636a17f228a7e",
     "reference_documents": [
       "Stationary_Action.md",
       "Open_Problems.md",
@@ -176,7 +180,10 @@
       "lean/QLF_StationaryAction.lean",
       "census_action_limit.py",
       "lean/QLF_LinkClosure.lean",
-      "link_closure.py"
+      "link_closure.py",
+      "lean/QLF_PhaseAction.lean",
+      "signed_phase_track.py",
+      "data/signed_phase_track.json"
     ],
     "status": "pre-merge draft record for the census action limit; no bridge promotion"
   }

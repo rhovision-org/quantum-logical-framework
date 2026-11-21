@@ -1696,6 +1696,20 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.PhaseAction.fold_action_form": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PhaseAction.phase_action_form": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PhaseAction.two_negCount_of_balanced": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.PhaseRule.phase_rule": [
     "Classical.choice",
     "Quot.sound",
