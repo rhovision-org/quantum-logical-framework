@@ -35,4 +35,30 @@ clock and scale/face mapping. No new axiom or physical claim is proposed.
 
 ## Evidence
 
-Pending.
+Run `python3 perspective_continuation_access.py`. The frozen screen covers 456
+prefixes and 1,824 independently enumerated mask comparisons; replayed JSON
+is [data/perspective_continuation_access.json](data/perspective_continuation_access.json).
+
+- F1: rejected. Prefixes `^+` and `+^` have identical closure verdict, action,
+  fold and length but the suffix `-v` with terminal phase +1 is legal only after
+  `+^`: after `^+`, the immediate minus is forbidden. Counts alone also cannot
+  distinguish the languages (one terminal each).
+- F2: every comparison matches. A transition appends the signed unit vector,
+  right-multiplies the fold by the generator, replaces the last token and
+  increments length. Induction on remaining suffix length proves sufficiency
+  within this explicitly defined transition system: first-closure acceptance is
+  a function of action/fold/length, successor membership of last token and mask,
+  and the induction hypothesis determines each residual language. This is a
+  mathematical argument, not a newly compiled Lean theorem.
+- F3: both independently generated views intersect exactly in the direct
+  shared-mask language, including its terminal scalar phase. Across all prefixes,
+  terminal counts are full=1344, A=492, B=492, shared=112 (prefix/suffix pairs,
+  not unique physical events). Equality follows by checking each step under both masks.
+- F4: restricted A loses the terminal suffix slash-v-backslash from prefix up,
+  even though full access accepts it; phase is -1.
+
+This is a counterexample to claiming arbitrary continuation accessibility from
+(C,F,P) alone under the Python successor filter. Last token and length repair
+this particular policy; a different physical access relation can require other
+state. It does not refute the unrestricted two-body fold-closure theorem of #305.
+Physical accessibility and boundary-face identity remain B-OPEN.

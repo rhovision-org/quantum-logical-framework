@@ -90,7 +90,7 @@ The two-body closure test above is scalar **fold closure**, not territorial coun
 gauge twist share the fold while differing in ZFA; the integer ledger restores the ZFA verdict.
 See [Nested-frontier reconstruction audit](Perspective_Holography_Frontier.md) for the bounded
 overlap and counting targets. The physical Markov-blanket map, operational clock, metric and
-horizon face identification remain B-OPEN.
+horizon face identification remain B-OPEN. [Bounded continuation-language audit](Perspective_Continuation_Accessibility.md) shows that the current successor rule requires the last twist in addition to the action/fold record; this is a finite policy witness, not a physical blanket.
 
 ## A Regge interior from fluxoid labels: rejected
 
