@@ -259,6 +259,7 @@ lean_lib QLF where
     `QLF_ProductWalk,
     `QLF_FirstReturn,
     `QLF_StationaryAction,
+    `QLF_CensusActionLimit,
     `QLF_StationaryPhase,
     `QLF_GoldenSilver,
     `QLF_InflationObserver,
