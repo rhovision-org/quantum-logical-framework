@@ -44,4 +44,6 @@ No new axiom, Lean proof, observational claim or S-PHYS promotion.
 
 ## Evidence
 
-Pending.
+All 54 preregistered comparisons were executed (three directions, three radii, six scales). At a=1/256 the largest absolute discrepancy across all tested scaled coefficients and derivatives was 6.217e-5, below the frozen 5e-4 tolerance. At r=1 the scaled frequency difference t(omega_C-omega_W) was 0 on axis, 0.1250005961 on the face diagonal and 0.1666674437 on the body diagonal; its radial derivative was respectively 0, 0.3750029803 and 0.5000038854. The corresponding kinetic phase difference has the opposite sign under p.x-t omega. See `data/kinetic_phase_scale.json` for all cases and `tests/test_kinetic_phase_scale.py` for reproduction.
+
+The discriminator passes for these two conditional candidates. Their common leading continuum symbol does not identify a unique long-time kinetic phase in the specified joint scaling. This does not select a physical propagator, establish a physical large-time scaling window, or prove S5. S-PHYS remains open.
