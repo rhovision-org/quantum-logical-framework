@@ -421,7 +421,8 @@ reusable structure that QLF does not certify as isolated.
   the census is a first test of whether it is worth pursuing.
 - No dynamics. `a_ZFA` is a static minimum construction cost, not a state variable that carries
   memory across scales. The cooperative assembly transport proposal is a separate program
-  ([#267](https://github.com/rhovision-org/quantum-logical-framework/issues/267)).
+  ([#267](https://github.com/rhovision-org/quantum-logical-framework/issues/267)); the finite
+  uncertainty kernel is [`Closure_Uncertainty_QLF.md`](Closure_Uncertainty_QLF.md) (#269).
 - No turbulence. The closure-census transfer has no inertial range, vacuum or seeded
   ([`intermittency_bridge.py`](intermittency_bridge.py),
   [`intermittency_seeded.py`](intermittency_seeded.py)). Persistent assembly is a proposed new

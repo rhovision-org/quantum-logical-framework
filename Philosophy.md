@@ -309,7 +309,7 @@ cooling ([`Mpemba.md`](Mpemba.md)), where a field reorganises the census so that
 `W(energy-lowering) ≫ W(energy-raising)` and the ordering then does the rest, unchanged. **Doing is not
 selecting among ways; it is making ways.** This also gives *degree* of agency a substrate meaning: ways
 made per unit synthesized time. Because binding raises frequency and conscious content is the
-highest-frequency available closure (`freq_bind_ge_left`/`freq_bind_ge_right`, `consciousPeriod = min`,
+highest-frequency available closure (`freq_bind_ge_left`/`freq_bind_ge_right`, which hold by definition of `bind := min`, `consciousPeriod = min`,
 [`QLF_Consciousness`](lean/QLF_Consciousness.lean), [`Consciousness.md`](Consciousness.md) §3), the most
 tightly bound closure does the most per unit of its own time. That is the sense in which intelligence
 determines the future: not by escaping the census, but by being the fastest and densest generator of

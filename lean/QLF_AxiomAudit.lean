@@ -66,6 +66,8 @@ import QLF_CensusCurvature
 import QLF_LorentzCover
 import QLF_RiemannMRE
 import QLF_StationaryAction
+import QLF_CensusActionLimit
+import QLF_LinkClosure
 import QLF_StationaryPhase
 import QLF_ClosureKernel
 import QLF_ClosureLeakage
@@ -126,6 +128,13 @@ import QLF_StrangeLoopBorn
 import QLF_ConservativeReturn
 import QLF_TensorConservativeReturn
 import QLF_ObservationalEquivalence
+import QLF_PerspectiveHolography
+import QLF_FluxoidRegge
+import QLF_PhaseAction
+import QLF_TerritoryReturn
+import QLF_SpatialResponseDerived
+import QLF_ConformalComparison
+import QLF_DiversityNovelOutcome
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -144,6 +153,10 @@ import QLF_MercuryPerihelion
 import QLF_Discoveries2026
 import QLF_StrongCP
 import QLF_Majorana
+import QLF_GluonAbelianControl
+import QLF_LeptonStageB
+import QLF_ClockCalibration
+import QLF_ConsciousUpdateRule
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -155,6 +168,67 @@ import QLF_Majorana
 #print axioms QLF.Realizability.no_continuum_in_finite_region
 #print axioms QLF.LawOfExceptions.law_of_exceptions
 #print axioms QLF.StationaryAction.balance_is_stationary_mode
+#print axioms QLF.CensusActionLimit.census_action_limit
+#print axioms QLF.LinkClosure.link_stationarity_forces_closure
+#print axioms QLF.PerspectiveHolography.reconstructs_iff
+#print axioms QLF.PerspectiveHolography.shared_respects_chain
+#print axioms QLF.PerspectiveHolography.two_body_dictionary
+#print axioms QLF.PerspectiveHolography.closure_verdict_reconstructible
+#print axioms QLF.PerspectiveHolography.single_body_perspectives_share_only_constants
+#print axioms QLF.LinkClosure.stationary_forces_count_balance
+#print axioms QLF.LinkClosure.stationary_forces_return
+#print axioms QLF.FluxoidRegge.div_smooth
+#print axioms QLF.FluxoidRegge.smooth_preserves_closure
+#print axioms QLF.FluxoidRegge.plaquette_circulates
+#print axioms QLF.FluxoidRegge.current_not_class_function
+#print axioms QLF.FluxoidRegge.axisLabel_closed
+#print axioms QLF.PhaseAction.two_negCount_of_balanced
+#print axioms QLF.PhaseAction.phase_action_form
+#print axioms QLF.PhaseAction.fold_action_form
+#print axioms QLF.TerritoryReturn.zfa_not_class_function
+#print axioms QLF.TerritoryReturn.zfa_not_reconstructible
+#print axioms QLF.TerritoryReturn.zfa_not_from_fold
+#print axioms QLF.TerritoryReturn.ledger_returns_zfa
+#print axioms QLF.TerritoryReturn.joint_record_with_ledger_returns_zfa
+#print axioms QLF.SpatialResponseDerived.joint_step_identity
+#print axioms QLF.SpatialResponseDerived.symmetric_mean
+#print axioms QLF.SpatialResponseDerived.unit_symmetric_mean
+#print axioms QLF.SpatialResponseDerived.orthogonal_brings_closer
+#print axioms QLF.SpatialResponseDerived.opposite_pushes_apart
+#print axioms QLF.ConformalComparison.count_dilate
+#print axioms QLF.ConformalComparison.dilate_balanced
+#print axioms QLF.ConformalComparison.fold_dilate_odd
+#print axioms QLF.ConformalComparison.fold_dilate_even
+#print axioms QLF.ConformalComparison.local_dilation_breaks_balance
+#print axioms QLF.DiversityNovelOutcome.self_compose_balanced_iff
+#print axioms QLF.DiversityNovelOutcome.self_composition_type_one
+#print axioms QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure
+#print axioms QLF.DiversityNovelOutcome.minimal_complementary_pair
+#print axioms QLF.GluonAbelianControl.first_singlet_move_reduces
+#print axioms QLF.GluonAbelianControl.create_total
+#print axioms QLF.GluonAbelianControl.glue_total
+#print axioms QLF.GluonAbelianControl.create_closes_iff
+#print axioms QLF.GluonAbelianControl.glue_closes_iff
+#print axioms QLF.GluonAbelianControl.same_label_blocked_gated
+#print axioms QLF.GluonAbelianControl.same_label_closes_ungated
+#print axioms QLF.GluonAbelianControl.gate_lengthens_witness
+#print axioms QLF.LeptonStageB.rung_length
+#print axioms QLF.LeptonStageB.rung_balanced
+#print axioms QLF.LeptonStageB.rung_first_return
+#print axioms QLF.LeptonStageB.rung_phase
+#print axioms QLF.LeptonStageB.rung_fold
+#print axioms QLF.ClockCalibration.age_ratio_calibration_free
+#print axioms QLF.ClockCalibration.age_rate_product_calibration_free
+#print axioms QLF.ClockCalibration.one_scale_fits_two_ages_iff
+#print axioms QLF.ConsciousUpdateRule.independent_count
+#print axioms QLF.ConsciousUpdateRule.independent_mode
+#print axioms QLF.ConsciousUpdateRule.reset_threshold
+#print axioms QLF.ConsciousUpdateRule.reset_percept_below
+#print axioms QLF.LinkClosure.closed_history_gauge_invariant
+#print axioms QLF.CensusActionLimit.censusCost_sandwich
+#print axioms QLF.CensusActionLimit.censusCost_gaussian_limit
+#print axioms QLF.CensusActionLimit.censusCost_variation_limit
+#print axioms QLF.CensusActionLimit.censusCost_curvature_limit
 #print axioms QLF.StationaryPhase.signed_stationary_phase
 #print axioms QLF.StationaryPhase.ways_mode_at_balance
 
