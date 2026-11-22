@@ -50,6 +50,81 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.BoostStates.beta_chiral_beta": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_chirality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_of_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiral_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiral_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.dirac_boostZ_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_dispersion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_eq_conj": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.handed_eq_chiral": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.inv_neg_two": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.massStep_add": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BornFromWays.assignment_unique": [
     "Classical.choice",
     "Quot.sound",

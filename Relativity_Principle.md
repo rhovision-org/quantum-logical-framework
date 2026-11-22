@@ -396,7 +396,7 @@ For a two-body contact-interaction walk on `ℤ³` the conservation law is now d
 | 1. Free propagation covariant in the large | proved (§5b, `diracWalk_boost_covariant`) | — |
 | 2. Interacting kinematics covariant in the large, given lattice conservation and the summed long-wavelength bound; elementary umklapp vectors along a boost axis are not boost-stable | proved (this section, `process_boost_covariant`, `umklapp_x_not_covariant`) | — |
 | 3. Lattice conservation derived for a concrete interacting walk | **proved for two bodies on `ℤ³`** with any contact interaction (`twoBody_lattice_conservation`, `scattering_latticeConserving`) | `N` bodies: the same argument with an `N`-fold joint shift; labour |
-| 4. Amplitudes covariant at tree level | open, **blocked on a definition** | an interacting walk (stage 3) and a frame-comparison map for amplitudes, not just shells; the walk has no boost acting on its Hilbert space, so the comparison has to be stated on long-wavelength wave packets |
+| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b open** | 4b: compare tree-level amplitudes of the two-body contact walk at fixed quasi-energy; prove the `O(κ²)` band bound |
 | 5. Loops: lattice-scale contribution small at low energy (Collins) | open, **blocked on a definition and on analysis** | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
 | 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
 | 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
@@ -453,6 +453,50 @@ Lean `diracWalk`) and `half` (`massStep(m/2) · handed(k) · massStep(m/2)`). Th
 
 A slope between `1.5` and `1.8` is inconclusive and leads to a finer grid, not a verdict.
 
+### Result
+
+| Check | Measured | Verdict |
+|---|---|---|
+| Calibration: continuum Dirac defect | `3.0 × 10⁻¹⁶` | the script is sound |
+| **`half` slope** | **`2.000`** (worst defect `4.9 × 10⁻⁴` at `κ = 0.08`, `1.9 × 10⁻⁶` at `κ = 0.005`) | **PASS** |
+| `raw` slope | `1.000` (worst defect `2.4 × 10⁻²` at `κ = 0.08`) | as expected: first order. The script prints `FAIL` for it, but it was not graded |
+
+Data: [`data/boost_states_check.json`](data/boost_states_check.json). **The walk's band is Dirac covariant to
+second order on the half-step slice, so stage 4 proceeds there.** The raw slice is first order
+only because its time slice sits inside the mass step. The two slices differ by the fixed unitary
+`massStep(m/2) = 1 + O(κ)`, so the raw slice's spinors are rotated by a first-order amount, and the
+borrowed `S(A)` does not see that rotation. The definition above is therefore read on the
+half-step slice. This is a refinement of step 4 recorded after the run, not a change to the
+criteria.
+
+How strong is the pass? It is structural, not a surprise. A symmetric product `e^{X/2} e^{Y} e^{X/2}`
+has no second-order term in its logarithm, so the half-step generator is the Dirac operator plus
+`O(κ³)`, and the band follows to `O(κ²)`. The raw slice shows the check could have failed.
+
+### Stage 4a: the algebra, proved
+
+[`lean/QLF_BoostStates.lean`](lean/QLF_BoostStates.lean) proves the map's algebra, with no axioms:
+
+| Theorem | Statement |
+|---|---|
+| `chiral_mul`, `chiral_one`, `handed_eq_chiral` | `chiral R L` acts by `R` on the right-handed part and `L` on the left-handed; it is multiplicative, and the walk's own handed step is `chiral (W k) (W (−k))` |
+| `beta_chiral_beta` | the mass generator `β` swaps the two parts |
+| `chiralAct_mul`, `chiralAct_one` | `chiralAct A = chiral A (Aᴴ)⁻¹` is a homomorphism |
+| `chiralAct_neg` | `−A` acts as minus `A`: the double cover on spinors |
+| `chiralAct_chirality` | the action preserves handedness |
+| `chiralAct_of_unitary` | a unitary `A` (a rotation) acts as `1 ⊗ A`, alike on both parts; a boost does not |
+| `halfWalk_eq_conj`, `halfWalk_unitary`, `halfWalk_dispersion` | the half-step slice is the Lean walk conjugated by `massStep(m/2)`, so it is unitary with the same shell `cos E = cos m Π cos kᵢ` |
+| `dirac_boostZ_covariant` | for a boost along `z`, `S (E + H(k, m)) β S⁻¹` is exactly the boosted `(E′ + H(k′, m)) β`: the continuum anchor the walk is compared against |
+
+**What this settles.** The approved map is well defined, is a representation of `SL(2,ℂ)` up to
+the double-cover sign, and is exact on the continuum Dirac form. On the walk it is covariant to
+`O(κ²)` at the half-step slice, numerically on the pre-registered grid.
+
+**What it does not settle.** The `O(κ²)` bound is numerical, not proved. Stage 4b, the comparison
+of interacting amplitudes, is not done: the third row of the stage-4 plan, the frame dependence
+of a finite-range contact coupling `ĝ(q)`, is still a prediction. The spin part is borrowed from
+the continuum, not derived from a moving closure loop.
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
@@ -462,6 +506,7 @@ This result is **formal `F` for free propagation** and **`B-OPEN` for the physic
 | Free Dirac-walk shell covariance in the long-wavelength regime | `F`; anchors in the 375-entry baseline (`shell_taylor`, `shell_lorentz_invariant`, `shell_boost_invariant`, `diracWalk_boost_covariant`) |
 | Census limits / Lorentz-symbol determinant | `F`; anchors in the same baseline |
 | Interacting kinematics (allowed processes) covariant in the large, conditional on lattice conservation; elementary umklapp vectors not boost-stable | `F`; `QLF_InteractingKinematics` (§6a), audit anchors added |
+| Frame-comparison map for the walk's states (stage 4a) | `F` for its algebra (`QLF_BoostStates`); `N` for `O(κ²)` covariance of the band on the half-step slice (pre-registered PASS, [`boost_states_check.py`](boost_states_check.py)) |
 | Interacting boost covariance (amplitudes, loops) | `B-OPEN`; conservative return `NOT_STARTED`; dependency chain in §6a |
 | Kinetic reading of the census symbol | assumption, not a theorem |
 | Census-vs-walk off-axis sign | open; the palindromic walk has the opposite sign |

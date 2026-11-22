@@ -1,7 +1,7 @@
 {
   "record_type": "claim",
   "record_id": "QLF-RELATIVITY-001",
-  "version": "0.3.3-draft",
+  "version": "0.3.4-draft",
   "source_revision": "00af579e8553d6da78fffed59c2f3bf3082797f0",
   "informal_statement": "The free Dirac walk approaches Lorentz-covariant propagation in the long-wavelength regime, with a calculable lattice error, while exact invariance and interacting boost covariance remain open.",
   "approximation_or_regime": {
@@ -30,23 +30,30 @@
       "QLF.InteractingKinematics.umklapp_leg_bound",
       "QLF.InteractingKinematics.soft_umklapp",
       "QLF.InteractingKinematics.twoBody_lattice_conservation",
-      "QLF.InteractingKinematics.scattering_latticeConserving"
+      "QLF.InteractingKinematics.scattering_latticeConserving",
+      "QLF.BoostStates.chiralAct_mul",
+      "QLF.BoostStates.chiralAct_neg",
+      "QLF.BoostStates.chiralAct_of_unitary",
+      "QLF.BoostStates.halfWalk_eq_conj",
+      "QLF.BoostStates.halfWalk_dispersion",
+      "QLF.BoostStates.dirac_boostZ_covariant"
     ],
-    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and a conditional kinematic layer of interactions: given reciprocal-lattice conservation and a summed long-wavelength bound, processes conserve exactly and remain allowed in every Lorentz frame to the free-shell order; the two elementary umklapp vectors along a boost axis are not boost-stable; an umklapp process forces a leg of size only 2*pi/(N+M); a two-body contact-interaction walk on Z^3 conserves total momentum mod the reciprocal lattice, derived from its translation symmetry (for more than two bodies reciprocal-lattice conservation remains the definition of a process). They do not establish boost covariance of interacting amplitudes or loops, any decomposition of loops into frame-dependent and frame-independent parts, a physical propagation law, or a conservative return from interacting records."
+    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and a conditional kinematic layer of interactions: given reciprocal-lattice conservation and a summed long-wavelength bound, processes conserve exactly and remain allowed in every Lorentz frame to the free-shell order; the two elementary umklapp vectors along a boost axis are not boost-stable; an umklapp process forces a leg of size only 2*pi/(N+M); a two-body contact-interaction walk on Z^3 conserves total momentum mod the reciprocal lattice, derived from its translation symmetry (for more than two bodies reciprocal-lattice conservation remains the definition of a process). Stage 4a: the approved frame-comparison map on the walk's states has its algebra proved (the chiral SL(2,C) action is a homomorphism with the double-cover sign, the half-step slice is the walk conjugated by a fixed unitary with the same dispersion, and a z-boost is exact on the continuum Dirac form (E + H) beta); the walk band's O(kappa^2) covariance on the half-step slice is a pre-registered numerical result, not a theorem. They do not establish boost covariance of interacting amplitudes or loops, any decomposition of loops into frame-dependent and frame-independent parts, a physical propagation law, or a conservative return from interacting records."
   },
   "formal_object": {
     "primary_files": [
       "lean/QLF_RelativityScale.lean",
       "lean/QLF_LorentzSymbol.lean",
       "lean/QLF_BoostCovariance.lean",
-      "lean/QLF_InteractingKinematics.lean"
+      "lean/QLF_InteractingKinematics.lean",
+      "lean/QLF_BoostStates.lean"
     ],
     "type": "finite census moments, signed Pauli-symbol algebra, and the unitary Dirac-walk dispersion; lattice energy-momentum conservation for interacting processes"
   },
   "dependencies": {
     "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
     "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
-    "audit_baseline": "Reviewed 375-entry baseline after #222; the relativity/boost anchors are enforced there.",
+    "audit_baseline": "Reviewed 375-entry baseline after #222; the relativity/boost anchors are enforced there. QLF_BoostStates anchors added to lean/axiom_footprints.expected.json (541 entries).",
     "qlf_bridge_axioms": "No project bridge axiom in the selected footprints. The kinetic reading of the census symbol is a physical assumption, not a Lean axiom."
   },
   "inputs": [
