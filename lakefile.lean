@@ -353,5 +353,6 @@ lean_lib QLF where
     `QLF_MrEUpdate,
     `QLF_GuptaPrefixClock,
     `QLF_ReadoutCriterion,
-    `QLF_ClosureUncertainty
+    `QLF_ClosureUncertainty,
+    `QLF_Morphogenesis
   ]
