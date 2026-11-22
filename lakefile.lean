@@ -348,6 +348,7 @@ lean_lib QLF where
     `QLF_DiversityNovelOutcome,
     `QLF_GluonAbelianControl,
     `QLF_LeptonStageB,
+    `QLF_ClockCalibration,
     `QLF_MeadTransaction,
     `QLF_MagneticOrientation,
     `QLF_ClockRedshift,

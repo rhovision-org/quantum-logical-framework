@@ -155,6 +155,7 @@ import QLF_StrongCP
 import QLF_Majorana
 import QLF_GluonAbelianControl
 import QLF_LeptonStageB
+import QLF_ClockCalibration
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -215,6 +216,9 @@ import QLF_LeptonStageB
 #print axioms QLF.LeptonStageB.rung_first_return
 #print axioms QLF.LeptonStageB.rung_phase
 #print axioms QLF.LeptonStageB.rung_fold
+#print axioms QLF.ClockCalibration.age_ratio_calibration_free
+#print axioms QLF.ClockCalibration.age_rate_product_calibration_free
+#print axioms QLF.ClockCalibration.one_scale_fits_two_ages_iff
 #print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit

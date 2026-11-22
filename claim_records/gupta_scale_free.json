@@ -1,0 +1,165 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-GUPTA-SCALEFREE-001",
+  "version": "0.3.0-draft",
+  "source_revision": "fded9189a215a6d9a6bd6727fe8a32468bf8b153",
+  "informal_statement": "Issue #234: under any clock calibration (elapsed readings times s > 0, rates times 1/s), age ratios and age-rate products are unchanged, and one scale fits two target ages iff the ratios agree. So the frozen Gupta CCC+TL benchmark's testable content is t(10)/t(0) = 0.2187, t(20)/t(0) = 0.1299 and H0 t0 = 1.98 (total H0). A QLF clock map must reproduce these; matching 26.7 Gyr alone shows nothing. No QLF map is constructed.",
+  "approximation_or_regime": {
+    "name": "Clock calibration on the frozen stage-1 result",
+    "description": "One positive scale on elapsed readings; the frozen ages at z = 0, 10, 20 and H0 from verification/gupta-ccc-tl/result.json.",
+    "validity_limits": "The z mapping to expansion and tired-light parts is held fixed as part of the model. No QLF clock map, no new data."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.ClockCalibration.age_ratio_calibration_free",
+      "QLF.ClockCalibration.age_rate_product_calibration_free",
+      "QLF.ClockCalibration.one_scale_fits_two_ages_iff"
+    ],
+    "statement_scope": "Real algebra over positive reals; the K4 numbers are computed from the frozen benchmark."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_ClockCalibration.lean",
+      "lean/QLF_ClockRedshift.lean"
+    ],
+    "type": "invariants of a calibration group"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "New anchors added to QLF_AxiomAudit and the exact-footprint baseline (551 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound, or none."
+  },
+  "inputs": [
+    {
+      "name": "frozen benchmark",
+      "value": "verification/gupta-ccc-tl/result.json",
+      "provenance": "external",
+      "source": "Gupta 2023 (arXiv:2309.13100v1) stage-1 reproduction"
+    },
+    {
+      "name": "calibration",
+      "value": "one positive scale",
+      "provenance": "declared",
+      "source": "Gupta_ScaleFree.md section 1"
+    }
+  ],
+  "interpretation": {
+    "map": "benchmark -> calibration-free numbers",
+    "formal_status": "K1-K3 formal; K4 computed.",
+    "noncircularity_test": "K1-K4 and the verdict rule were committed before gupta_scale_free.py existed; the benchmark was not re-executed."
+  },
+  "strange_loop": {
+    "name": "clock record -> calibrated age -> clock record",
+    "levels": [
+      "model ages",
+      "calibrated readings",
+      "calibration-free invariants"
+    ],
+    "return_level": "calibration-free invariants",
+    "conservative_return": "Every calibration returns the same ratios and H0 t0; the absolute age is not returned without the scale.",
+    "noncircularity_witness": "The invariants are fixed before any QLF map exists, so a later map cannot be tuned to them by calibration.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: QLF_ClockCalibration anchors. N: gupta_scale_free.py on the frozen result.",
+    "defeater": "A clock calibration law that is not a single multiplicative scale (e.g. epoch-dependent), which would make the ratios calibration-dependent.",
+    "proof_obligation": {
+      "domain": "model age records",
+      "codomain": "calibrated readings",
+      "forward_map": "t -> s t",
+      "return_map": "readings -> ratios and H t",
+      "composite_identity_on": "age ratios and age-rate products",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_ClockCalibration.lean (one_scale_fits_two_ages_iff)",
+      "imported_axioms": "none",
+      "falsifier": "two calibrations giving different age ratios (excluded by age_ratio_calibration_free)"
+    }
+  },
+  "observable": {
+    "symbol": "t(10)/t(0), t(20)/t(0), H0 t0",
+    "baseline": "0.218713, 0.129870, 1.980656",
+    "uncertainties": "frozen benchmark; source-digit residual of Table 1 open"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "No new measurement. Pre-registered K1-K4 in Gupta_ScaleFree.md section 1.",
+    "failure_condition": "Verdict rule: K3 failing would let a free scale fit two ages.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "calibration-free target fixed; #234 outcome INCOMPLETE",
+    "comparator": "pre-registered verdict rule",
+    "uncertainty": "none",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Calibration invariance of ratios and products; one scale fits two ages iff ratios agree.",
+    "N": "K4 numbers from the frozen result.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the QLF_ClockCalibration anchors.",
+    "interpretation": "No QLF clock map exists yet; the target is conditional on the model's z mapping.",
+    "numerical": "Not applicable (exact arithmetic on frozen numbers).",
+    "empirical": "Not applicable.",
+    "conceptual": "The Table 1 source-digit residual of #234 stage 1 is unaffected."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, tests and verdict rule stated before the run."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No physical apparatus map for the ledger."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return PARTIAL: via the ledger only; the observational return fails."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "fded9189a215a6d9a6bd6727fe8a32468bf8b153",
+    "reference_documents": [
+      "Gupta_ScaleFree.md",
+      "Gupta_ClockConventions.md",
+      "lean/QLF_ClockCalibration.lean",
+      "gupta_scale_free.py",
+      "data/gupta_scale_free.json"
+    ],
+    "status": "pre-merge draft record for #234; calibration-free target fixed; outcome INCOMPLETE"
+  }
+}

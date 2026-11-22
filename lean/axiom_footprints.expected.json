@@ -109,6 +109,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClockCalibration.age_rate_product_calibration_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.age_ratio_calibration_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.one_scale_fits_two_ages_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClockDomains.accessible_nonconstant": [],
   "QLF.ClockDomains.alternative_completions": [],
   "QLF.ClockDomains.canonical_admissible": [],

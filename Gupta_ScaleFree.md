@@ -37,4 +37,26 @@ becomes `H₀·t₀ / H₀`, so the age then tests the model's `H₀·t₀` and 
 
 ## §2 Results
 
-To be filled from `gupta_scale_free.py` after this section is committed.
+Run by [`gupta_scale_free.py`](gupta_scale_free.py) on the frozen result, which is not re-executed;
+output in [`data/gupta_scale_free.json`](data/gupta_scale_free.json). K1 to K3 are proved in
+[`lean/QLF_ClockCalibration.lean`](lean/QLF_ClockCalibration.lean), no QLF axioms.
+
+| | Result | Verdict |
+|---|---|---|
+| K1 | `age_ratio_calibration_free` | **pass** |
+| K2 | `age_rate_product_calibration_free` | **pass** |
+| K3 | `one_scale_fits_two_ages_iff` | **pass** |
+| K4 | `t(10)/t(0) = 0.218713`, `t(20)/t(0) = 0.129870`; `H₀·t₀ = 1.980656` with the total `H₀`, `1.623009` with the expansion part | report |
+
+For scale only, and not as a test: the Planck 2018 ΛCDM values `H₀ = 67.4` km/s/Mpc and
+`t₀ = 13.797` Gyr give `H₀·t₀ = 0.951`. The benchmark's dimensionless age is about twice that, which
+is the content of CCC+TL's long age once the clock unit is set aside.
+
+**Verdict.** The frozen benchmark's testable content under any clock calibration is the three
+numbers of K4. A QLF clock map is compatible with the benchmark only if it reproduces them, and
+reproducing `26.7` Gyr by itself shows nothing (`free_clock_scale_hits_any_age`, and K3: a free
+scale fits one age and no second one). Calibrating a QLF clock count by `H₀` fixes the age at
+`1.98 / H₀` in the total-`H₀` reading, so the age then tests `H₀·t₀` and nothing else. The redshift
+mapping from `z_observed` to the model's expansion and tired-light parts is part of the model and is
+held fixed here. #234 stays INCOMPLETE: no QLF map has been constructed, so nothing is derived,
+permitted or excluded yet. What this fixes is the target such a map has to meet.

@@ -1,0 +1,15 @@
+{
+  "H0_total_t0": 1.9806555881396084,
+  "Hc_t0": 1.6230092063851604,
+  "K1_check": true,
+  "K2_check": true,
+  "ages_Gyr": {
+    "0": 26.667211858842556,
+    "10": 5.83245337858745,
+    "20": 3.46328017253618
+  },
+  "executed_source_revision": "843c529f3c3b3247aa3ad4ab86d31aea4a3cc298",
+  "ratio_t10_t0": 0.21871253018352094,
+  "ratio_t20_t0": 0.12987035130887875,
+  "source": "verification/gupta-ccc-tl/result.json"
+}
