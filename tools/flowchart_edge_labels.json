@@ -121,7 +121,8 @@
    "V>CH": "valence 2 is neutral",
    "CH>FOLD": "backbone carries none",
    "HP>FOLD": "only H-H pays",
-   "V>W2": "two liquids (2026)"
+   "V>W2": "two liquids (2026)",
+   "V>MG": "open strands bind by opposite charge"
   },
   {
    "PT>ORD": "grade by closure",

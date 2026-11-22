@@ -239,9 +239,9 @@ no forces and no orbitals put in by hand ([`Chemistry.md`](Chemistry.md)). Nothi
 everything is domains 3–4 assembled.
 
 
-**Connectors:** *saturate* &rarr; shared closure = bond &middot; *H2O, CO2, graphite, rust* &rarr; molecules and carbon allotropes &middot; *Pauli holds them apart* &rarr; crystals and condensates &middot; *(v-2)/2 each* &rarr; closure count &middot; *b1 counts them* &rarr; double bond = ring = one closure &middot; *only k is free* &rarr; reaction class &middot; *free valence for water?* &rarr; hydrophobic / polar &middot; *valence 2 is neutral* &rarr; divalent chains &middot; *backbone carries none* &rarr; folding &middot; *only H-H pays* &rarr; folding &middot; *two liquids (2026)* &rarr; water = two closure inventories &middot; *impurity + bath* &rarr; polaron = composite closure
+**Connectors:** *saturate* &rarr; shared closure = bond &middot; *H2O, CO2, graphite, rust* &rarr; molecules and carbon allotropes &middot; *Pauli holds them apart* &rarr; crystals and condensates &middot; *(v-2)/2 each* &rarr; closure count &middot; *b1 counts them* &rarr; double bond = ring = one closure &middot; *only k is free* &rarr; reaction class &middot; *free valence for water?* &rarr; hydrophobic / polar &middot; *valence 2 is neutral* &rarr; divalent chains &middot; *backbone carries none* &rarr; folding &middot; *only H-H pays* &rarr; folding &middot; *two liquids (2026)* &rarr; water = two closure inventories &middot; *impurity + bath* &rarr; polaron = composite closure &middot; *open strands bind by opposite charge* &rarr; morphogenesis
 
-**Open:** [`Chemistry.md`](Chemistry.md) · [`Protein_Folding.md`](Protein_Folding.md) · [`Polarons_QLF.md`](Polarons_QLF.md) · [`lean/QLF_Unsaturation.lean`](lean/QLF_Unsaturation.lean) · [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`hydrocarbon_census.py`](hydrocarbon_census.py) · [`protein_census.py`](protein_census.py)
+**Open:** [`Chemistry.md`](Chemistry.md) · [`Protein_Folding.md`](Protein_Folding.md) · [`Polarons_QLF.md`](Polarons_QLF.md) · [`lean/QLF_Unsaturation.lean`](lean/QLF_Unsaturation.lean) · [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`hydrocarbon_census.py`](hydrocarbon_census.py) · [`protein_census.py`](protein_census.py) · [`Morphogenesis.md`](Morphogenesis.md) · [`lean/QLF_Morphogenesis.lean`](lean/QLF_Morphogenesis.lean)
 
 **The counting layer.** An atom's valence is what it contributes to a molecule's **closure count**,
 `(valence − 2)/2`, and the cycle rank `b₁ = E − V + 1` counts the closures the molecule carries. That
@@ -258,6 +258,14 @@ contact is a ZFA closure in the literal sense: zero net displacement, count-bala
 keystone ([`QLF_Folding`](lean/QLF_Folding.lean)). The lattice-protein parity rule and the `log 2` contact
 quantum follow; the **mirror no-go** — counting cannot select a handedness — bounds what the census can
 ever answer ([`Protein_Folding.md`](Protein_Folding.md)).
+
+**Morphogenesis: what closure alone can differentiate.** On closures the compatibility graph is
+complete, so it sorts nothing; on open strands binding is an opposite-charge rule, and every local
+event conserves a region's ledger, so closure erases exactly the balanced part
+([`QLF_Morphogenesis`](lean/QLF_Morphogenesis.lean), no axioms). A pre-registered lattice test finds
+that this conserved residue segregates a patternless eight-species population into domains in 1D and
+2D, the classical `A + B → 0` result; a pattern with a preferred scale is open
+([`Morphogenesis.md`](Morphogenesis.md)).
 
 **Polarons as composite closures.** [`Polarons_QLF.md`](Polarons_QLF.md) now has a machine-verified
 substrate core in [`QLF_Polarons`](lean/QLF_Polarons.lean): an open impurity plus bath can form one
