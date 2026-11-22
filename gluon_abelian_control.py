@@ -72,17 +72,23 @@ def moves(s, gated: bool) -> dict:
     return {"create": create, "glue": glue}
 
 
-def distance(s, gated: bool):
+def distance(s, gated: bool, legacy: bool = False):
+    """Shortest path to a singlet through states of size <= MAX_SEARCH_SIZE.
+
+    legacy=True reproduces PR #289's search, which expands no state of size MAX_SEARCH_SIZE (so a
+    size-5 state cannot glue back to size 4). The default allows every move whose result has size
+    <= MAX_SEARCH_SIZE, which is the pre-registered bound.
+    """
     if singlet(s):
         return 0
     seen, queue = {s: 0}, deque([s])
     while queue:
         cur = queue.popleft()
-        if len(cur) >= MAX_SEARCH_SIZE:
+        if legacy and len(cur) >= MAX_SEARCH_SIZE:
             continue
         for nxts in moves(cur, gated).values():
             for n in nxts:
-                if n in seen:
+                if n in seen or len(n) > MAX_SEARCH_SIZE:
                     continue
                 seen[n] = seen[cur] + 1
                 if singlet(n):
@@ -95,9 +101,9 @@ def states():
     return [s for n in range(1, MAX_STATE_SIZE + 1) for s in combinations_with_replacement(LABELS, n)]
 
 
-def census(gated: bool) -> dict:
+def census(gated: bool, legacy: bool = False) -> dict:
     ss = states()
-    d = {s: distance(s, gated) for s in ss}
+    d = {s: distance(s, gated, legacy) for s in ss}
     cls = {"create": Counter(), "glue": Counter()}
     first = Counter()
     for s in ss:
@@ -105,7 +111,7 @@ def census(gated: bool) -> dict:
             continue
         for kind, nxts in moves(s, gated).items():
             for n in nxts:
-                dn = 0 if singlet(n) else (d[n] if n in d else distance(n, gated))
+                dn = 0 if singlet(n) else (d[n] if n in d else distance(n, gated, legacy))
                 c = ("blocked" if dn is None else "reducing" if dn < d[s]
                      else "neutral" if dn == d[s] else "increasing")
                 cls[kind][c] += 1
@@ -114,8 +120,8 @@ def census(gated: bool) -> dict:
     return {"d": d, "classes": {k: dict(v) for k, v in cls.items()}, "first_singlet": dict(first)}
 
 
-def run() -> dict:
-    g, a = census(True), census(False)
+def run(legacy: bool = False) -> dict:
+    g, a = census(True, legacy), census(False, legacy)
     ss = states()
     # A2: is gated d a function of (total, size)?
     by_key = defaultdict(set)
@@ -127,6 +133,7 @@ def run() -> dict:
     diff_reach = [s for s in diff_d if (g["d"][s] is None) != (a["d"][s] is None)]
     reach_all_collinear = all(not pairs(s, True) for s in diff_reach)
     return {
+        "search": "legacy #289 (no expansion of size-5 states)" if legacy else "pre-registered (results of size <= 5)",
         "states": len(ss),
         "gated": {"with_path": sum(v is not None for v in g["d"].values()),
                   "distance_counts": dict(Counter(str(v) for v in g["d"].values())),
@@ -160,8 +167,10 @@ def main():
     print(f"A4 states whose reachability changes: {r['A4_states_with_different_reachability']}"
           f" (all without a non-collinear pair: {r['A4_all_have_no_noncollinear_pair']})  e.g. {r['A4_examples'][:2]}")
     print(f"A5 move classes differ: {r['A5_classes_differ']}")
+    leg = run(legacy=True)
+    print(f"legacy #289 search: gated classes {leg['gated']['classes']}; A3 {leg['A3_states_with_different_distance']}, A4 {leg['A4_states_with_different_reachability']}")
     if args.json:
-        out = {k: v for k, v in r.items()}
+        out = {"preregistered": r, "legacy_289_search": leg}
         with open(args.json, "w") as f:
             json.dump(out, f, indent=2, sort_keys=True, default=list)
             f.write("\n")

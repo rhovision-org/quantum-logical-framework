@@ -58,20 +58,27 @@ Run by [`conformal_comparison.py`](conformal_comparison.py) (`--max-len 6`); out
 | W1 | `k = 1, 3, 5`: 0 ZFA failures, 0 fold failures; folds on balanced histories are `±I` | **pass** (`fold_dilate_odd`, `dilate_balanced`) |
 | W2 | `k = 2, 4`: 0 ZFA failures; every balanced history folds to `+I`, so 3,664 of 5,296 folds change | **pass** (`fold_dilate_even`) |
 | W3 | fields `k_p ∈ {1,2,3}`: 3 of 9, 3 of 81 and 3 of 729 preserve ZFA at `L = 2, 4, 6`, all constant | **pass** (`local_dilation_breaks_balance` is the smallest witness) |
-| W4 | at every position pair of a length-4 history, 1 of 147,456 frame pairs preserves ZFA: `σ_i = σ_j = id` | see below |
+| W4 | at every position pair of a length-4 history, 1 of 147,456 frame pairs preserves ZFA: `σ_i = σ_j = id` | **pre-registered condition not met** (it was mis-specified); exploratory result below |
 | W5 | 96 of the 384 global frames preserve the fold; all 96 fix the gauge axis | **pass**, the 96 of `QLF_MultiObserver` |
 
-**W4.** The pre-registered pass condition, "exactly the pairs with `σ_i = σ_j`", was mis-posed. The
-other two positions were held at the identity, so a pair `σ_i = σ_j = τ` with `τ ≠ id` is itself a
-non-constant field on the whole history, and it fails. The measured survivors are a single pair, the
-identity, which is the only constant field in the family tested. The literal condition is not met.
-The measured result is stronger than the one it stood for: no frame field that differs anywhere from
-its background preserves ZFA, so there is no local frame change in this class.
+**W4.** The pre-registered pass condition, "exactly the pairs with `σ_i = σ_j`", was mis-specified,
+and it is not met. The other two positions were held at the identity, so a pair `σ_i = σ_j = τ` with
+`τ ≠ id` is itself a non-constant field on the whole history, and it fails. The measured survivors
+are a single pair, the identity.
 
-**Verdict.** W1, W2, W3 and W5 pass as stated, and W4 gives the stronger result above. ZFA admits no
-local scale or frame symmetry among position-dependent letter substitutions. Its symmetry is global:
-the 96 frames times the odd dilations, with even dilations preserving ZFA but erasing the phase. This
-is outcome 2 of #302 C1, and it meets the issue's failure criterion. The intrinsic Weyl² → Bach →
-Mannheim–Kazanas route has no first step in this class. Conformal gravity can still be compared with
-QLF's Einstein limit as an external continuum candidate, which the issue's later tests allow. A local symmetry built from closure-respecting rewrites that are not
-letter substitutions is not excluded.
+*Exploratory, read after the result and not a pre-registered verdict:* in this family no frame field
+that differs anywhere from its identity background preserves ZFA. A properly posed W4 (frame fields
+over all positions, survivors compared with the constant fields) has not been pre-registered or run.
+
+**Verdict, scoped.** W1, W2, W3 and W5 pass as stated; W4's pre-registered condition is not met.
+Among position-dependent multiplicity fields, ZFA admits no local rescaling, and the global symmetry
+found is the 96 frames times the odd dilations, with even dilations preserving ZFA but erasing the
+phase. The absence of local frame changes is exploratory (W4 above).
+
+This is a **scoped candidate obstruction** to #302 C1, not a C1 failure in general. C1 asks about
+every transformation built from QLF primitives, and it also asks for preservation of admissibility,
+causal ordering and relational observables and for a reading of local Weyl symmetry. This note
+tests one finite class (letter substitutions) against two invariants (the ZFA verdict and the fold).
+Within that class the intrinsic Weyl² → Bach → Mannheim–Kazanas route has no first step. A local
+symmetry built from closure-respecting rewrites that are not letter substitutions, or one that acts
+on causal or relational data rather than on letters, is not excluded.

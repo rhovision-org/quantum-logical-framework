@@ -1,251 +1,504 @@
 {
-  "A1_first_singlet_nonreducing": {
-    "abelian": 0,
-    "gated": 0
-  },
-  "A2_keys": 35,
-  "A2_keys_with_several_distances": 24,
-  "A3_examples": [
-    {
-      "abelian": 1,
-      "gated": 2,
-      "state": [
-        [
-          0,
-          1
-        ],
-        [
-          0,
-          1
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          2,
-          0
-        ]
-      ]
+  "legacy_289_search": {
+    "A1_first_singlet_nonreducing": {
+      "abelian": 0,
+      "gated": 0
     },
-    {
-      "abelian": 1,
-      "gated": 2,
-      "state": [
-        [
-          0,
-          1
-        ],
-        [
-          0,
-          1
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          2,
-          2
+    "A2_keys": 35,
+    "A2_keys_with_several_distances": 24,
+    "A3_examples": [
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ]
         ]
-      ]
-    },
-    {
-      "abelian": 1,
-      "gated": 2,
-      "state": [
-        [
-          0,
-          1
-        ],
-        [
-          0,
-          1
-        ],
-        [
-          1,
-          2
-        ],
-        [
-          2,
-          1
-        ]
-      ]
-    },
-    {
-      "abelian": 1,
-      "gated": 2,
-      "state": [
-        [
-          0,
-          1
-        ],
-        [
-          0,
-          2
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          1,
-          0
-        ]
-      ]
-    },
-    {
-      "abelian": 1,
-      "gated": 2,
-      "state": [
-        [
-          0,
-          1
-        ],
-        [
-          0,
-          2
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          1
-        ]
-      ]
-    }
-  ],
-  "A3_states_with_different_distance": 24,
-  "A4_all_have_no_noncollinear_pair": true,
-  "A4_examples": [
-    {
-      "abelian": 1,
-      "gated": null,
-      "state": [
-        [
-          0,
-          1
-        ],
-        [
-          0,
-          1
-        ]
-      ]
-    },
-    {
-      "abelian": 1,
-      "gated": null,
-      "state": [
-        [
-          0,
-          2
-        ],
-        [
-          0,
-          2
-        ]
-      ]
-    },
-    {
-      "abelian": 1,
-      "gated": null,
-      "state": [
-        [
-          1,
-          0
-        ],
-        [
-          1,
-          0
-        ]
-      ]
-    },
-    {
-      "abelian": 1,
-      "gated": null,
-      "state": [
-        [
-          1,
-          1
-        ],
-        [
-          1,
-          1
-        ]
-      ]
-    },
-    {
-      "abelian": 1,
-      "gated": null,
-      "state": [
-        [
-          1,
-          2
-        ],
-        [
-          1,
-          2
-        ]
-      ]
-    }
-  ],
-  "A4_states_with_different_reachability": 32,
-  "A5_classes_differ": true,
-  "abelian": {
-    "classes": {
-      "create": {
-        "blocked": 976,
-        "increasing": 128,
-        "neutral": 32,
-        "reducing": 256
       },
-      "glue": {
-        "blocked": 32,
-        "increasing": 544,
-        "neutral": 272,
-        "reducing": 592
-      }
-    },
-    "distance_counts": {
-      "0": 54,
-      "1": 248,
-      "2": 120,
-      "3": 64,
-      "None": 8
-    },
-    "first_singlet": {
-      "reducing": 320
-    },
-    "with_path": 486
-  },
-  "gated": {
-    "classes": {
-      "create": {
-        "blocked": 744,
-        "increasing": 72,
-        "neutral": 24,
-        "reducing": 216
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
       },
-      "glue": {
-        "blocked": 96,
-        "increasing": 336,
-        "neutral": 192,
-        "reducing": 456
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
       }
+    ],
+    "A3_states_with_different_distance": 24,
+    "A4_all_have_no_noncollinear_pair": true,
+    "A4_examples": [
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      }
+    ],
+    "A4_states_with_different_reachability": 32,
+    "A5_classes_differ": true,
+    "abelian": {
+      "classes": {
+        "create": {
+          "blocked": 976,
+          "increasing": 128,
+          "neutral": 32,
+          "reducing": 256
+        },
+        "glue": {
+          "blocked": 32,
+          "increasing": 544,
+          "neutral": 272,
+          "reducing": 592
+        }
+      },
+      "distance_counts": {
+        "0": 54,
+        "1": 248,
+        "2": 120,
+        "3": 64,
+        "None": 8
+      },
+      "first_singlet": {
+        "reducing": 320
+      },
+      "with_path": 486
     },
-    "distance_counts": {
-      "0": 54,
-      "1": 192,
-      "2": 144,
-      "3": 64,
-      "None": 40
+    "gated": {
+      "classes": {
+        "create": {
+          "blocked": 744,
+          "increasing": 72,
+          "neutral": 24,
+          "reducing": 216
+        },
+        "glue": {
+          "blocked": 96,
+          "increasing": 336,
+          "neutral": 192,
+          "reducing": 456
+        }
+      },
+      "distance_counts": {
+        "0": 54,
+        "1": 192,
+        "2": 144,
+        "3": 64,
+        "None": 40
+      },
+      "first_singlet": {
+        "reducing": 240
+      },
+      "with_path": 454
     },
-    "first_singlet": {
-      "reducing": 240
-    },
-    "with_path": 454
+    "search": "legacy #289 (no expansion of size-5 states)",
+    "states": 494
   },
-  "states": 494
+  "preregistered": {
+    "A1_first_singlet_nonreducing": {
+      "abelian": 0,
+      "gated": 0
+    },
+    "A2_keys": 35,
+    "A2_keys_with_several_distances": 24,
+    "A3_examples": [
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": 2,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      }
+    ],
+    "A3_states_with_different_distance": 24,
+    "A4_all_have_no_noncollinear_pair": true,
+    "A4_examples": [
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            2
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "abelian": 1,
+        "gated": null,
+        "state": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      }
+    ],
+    "A4_states_with_different_reachability": 32,
+    "A5_classes_differ": true,
+    "abelian": {
+      "classes": {
+        "create": {
+          "increasing": 504,
+          "neutral": 344,
+          "reducing": 544
+        },
+        "glue": {
+          "blocked": 32,
+          "increasing": 544,
+          "neutral": 368,
+          "reducing": 496
+        }
+      },
+      "distance_counts": {
+        "0": 54,
+        "1": 248,
+        "2": 136,
+        "3": 48,
+        "None": 8
+      },
+      "first_singlet": {
+        "reducing": 320
+      },
+      "with_path": 486
+    },
+    "gated": {
+      "classes": {
+        "create": {
+          "increasing": 264,
+          "neutral": 288,
+          "reducing": 504
+        },
+        "glue": {
+          "blocked": 96,
+          "increasing": 336,
+          "neutral": 288,
+          "reducing": 360
+        }
+      },
+      "distance_counts": {
+        "0": 54,
+        "1": 192,
+        "2": 160,
+        "3": 48,
+        "None": 40
+      },
+      "first_singlet": {
+        "reducing": 240
+      },
+      "with_path": 454
+    },
+    "search": "pre-registered (results of size <= 5)",
+    "states": 494
+  }
 }

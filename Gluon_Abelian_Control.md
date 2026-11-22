@@ -42,9 +42,17 @@ tension).
 ## §2 Results
 
 Run by [`gluon_abelian_control.py`](gluon_abelian_control.py); output in
-[`data/gluon_abelian_control.json`](data/gluon_abelian_control.json). The gated relation reproduces
-#289's census exactly (494 states, 454 with a singlet path, the same move classes). The algebra is
-proved in [`lean/QLF_GluonAbelianControl.lean`](lean/QLF_GluonAbelianControl.lean), no QLF axioms.
+[`data/gluon_abelian_control.json`](data/gluon_abelian_control.json). The algebra is proved in
+[`lean/QLF_GluonAbelianControl.lean`](lean/QLF_GluonAbelianControl.lean), no QLF axioms.
+
+**Search bound.** The pre-registered bound allows intermediate states of size `≤ 5`. #289's search
+expands no state of size 5, so a size-5 state cannot glue back to size 4 there. The first run of
+this note inherited that restriction (review of PR #308). The results below use the pre-registered
+bound: every move is allowed whose result has size `≤ 5`. The `legacy_289_search` block of the JSON
+keeps the restricted search, and it reproduces #289's census exactly (494 states, 454 with a singlet
+path, the same move classes). The correction shortens 16 states from `d_G = 3` to `2` in both
+relations, for example `{(0,1), (1,0), (1,1), (1,2)}`, which closes by a create to size 5 and a
+glue back to size 4. It does not change A1, A3 or A4.
 
 | | Result | Verdict |
 |---|---|---|
@@ -52,7 +60,10 @@ proved in [`lean/QLF_GluonAbelianControl.lean`](lean/QLF_GluonAbelianControl.lea
 | A2 | gated `d_G` takes several values on 24 of the 35 (total colour, size) classes | fails: `d_G` is not fixed by Abelian data |
 | A3 | 24 states have `d_G = 2` gated and `d_G = 1` ungated; no state is shorter gated | **pass** (`gate_lengthens_witness`) |
 | A4 | 32 states reach a singlet only ungated (`d_G = 1`), every one without a non-collinear pair | pass (`same_label_blocked_gated`, `same_label_closes_ungated`) |
-| A5 | the move classes differ: ungated create 256 / 32 / 128 reducing / neutral / increasing, glue 592 / 272 / 544 | pass |
+| A5 | the move classes differ. Gated create 504 / 288 / 264 reducing / neutral / increasing, glue 360 / 288 / 336 (96 blocked); ungated create 544 / 344 / 504, glue 496 / 368 / 544 (32 blocked) | pass |
+
+Under the corrected bound #289's own gated census changes too (its create channel had 744 moves
+counted as blocked, which now have a path). That is recorded here for #289; this PR does not change it.
 
 The 8 states the ungated relation cannot close are the single labels, which have no pair at all.
 

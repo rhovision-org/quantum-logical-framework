@@ -21,7 +21,8 @@ run reports.
 * **`local_dilation_breaks_balance`.** A position-dependent dilation does not preserve balance:
   `[^, v]` with scales `(3, 1)` gives `[^, ^, ^, v]`, which is not count-balanced.
 
-So the scale symmetry is global, not local (W1–W3 of the pre-registration).
+So within letter substitutions the scale symmetry is global, not local (W1–W3 of the
+pre-registration). This is a scoped obstruction, not a statement about every QLF transformation.
 
 No axioms.
 -/
