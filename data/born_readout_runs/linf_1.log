@@ -1,0 +1,15 @@
+checkpoint /tmp/claude-0/-home-user/d4303421-6c39-541c-a1a9-91d5765bfae4/scratchpad/bundle_ck/linf_1.jsonl: 0 target pairs done, 820 to run
+
+===== CERTIFIED capacity R = linf:1: 180288 geometries, 820 absorbing operators, 648 states
+  certified annihilator degree: 15..36;  primes per certificate: 12..28
+  nothing-closes  65156
+  finite          11384
+  summable        496
+  marginal        4492
+  divergent       98760
+  with a repeated root in the support: none
+  supports at or below the threshold (|lambda|^2 exact for x^2+n factors; ~ = other):
+    marginal  ['6', '8']                         72
+    marginal  ['8']                              4420
+    summable  ['~0.837722/7.16228/7.16228']      496
+started 2026-11-17T09:21:10Z finished 2026-11-17T09:43:28Z

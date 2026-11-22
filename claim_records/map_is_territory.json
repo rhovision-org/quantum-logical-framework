@@ -1,0 +1,175 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-MAP-TERRITORY-001",
+  "version": "0.3.0-draft",
+  "source_revision": "ad9ee3b3ccc25b43647941ca66deb90cdec1bc23",
+  "informal_statement": "Issue #213: the observational record of two-body histories (joint closure tests with phase, equivalently the joint fold) does not return the territory's own event predicate, ZFA. The gauge twist + folds to I and is observationally equivalent to the empty history, which alone is ZFA. The integer ledger returns ZFA. 'Map = territory' is therefore not closed by any fold-based map; it needs a ledger-reading apparatus.",
+  "approximation_or_regime": {
+    "name": "Two-body observational quotient",
+    "description": "Words over the 16 tokens (body, twist), all of length <= 4; record = foldA (x) foldB; ZFA = each projection count-balanced; ledger = per-body twist counts.",
+    "validity_limits": "Two bodies, finite words; the fold record is the whole tensor/Hilbert map of QLF_TensorFromClosure. No physical apparatus for the ledger is identified."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.TerritoryReturn.zfa_not_class_function",
+      "QLF.TerritoryReturn.zfa_not_reconstructible",
+      "QLF.TerritoryReturn.zfa_not_from_fold",
+      "QLF.TerritoryReturn.ledger_returns_zfa",
+      "QLF.TerritoryReturn.joint_record_with_ledger_returns_zfa"
+    ],
+    "statement_scope": "ZFA is not a function of observational equivalence; neither closureTests nor foldPair reconstructs it; the ledger, alone or with closureTests, does. The Klein-class description of the 64 classes is numerical."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_TerritoryReturn.lean",
+      "lean/QLF_PerspectiveHolography.lean",
+      "lean/QLF_ObservationalEquivalence.lean"
+    ],
+    "type": "reconstruction of a predicate from a record map"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "Five new anchors added to QLF_AxiomAudit and the exact-footprint baseline (521 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound, or none."
+  },
+  "inputs": [
+    {
+      "name": "record",
+      "value": "joint closure tests with phase = joint fold",
+      "provenance": "derived",
+      "source": "QLF.ObservationalEquivalence.obsEquiv_iff_pairEquiv"
+    },
+    {
+      "name": "territory event",
+      "value": "ZFA: per-body count balance",
+      "provenance": "derived",
+      "source": "QLF.TwistAlphabet.countBalanced"
+    },
+    {
+      "name": "ledger",
+      "value": "per-body twist counts",
+      "provenance": "declared",
+      "source": "candidate apparatus; the walk displacement read as integers"
+    }
+  ],
+  "interpretation": {
+    "map": "two-body history -> joint fold record -> attempted return to the ZFA verdict",
+    "formal_status": "The failure and the ledger return are formal; the class census is numerical.",
+    "noncircularity_test": "M1-M4 and the verdict rule were committed (ad9ee3b) before territory_return.py existed; M1 could have passed."
+  },
+  "strange_loop": {
+    "name": "closure events -> observational record -> closure events returned",
+    "levels": [
+      "finite two-body histories with the ZFA predicate",
+      "joint closure tests with phase (the tensor/Hilbert map)",
+      "physical records",
+      "ZFA verdict"
+    ],
+    "return_level": "the ZFA verdict",
+    "conservative_return": "Fails through the observational record: + and [] share a record and differ in ZFA (zfa_not_reconstructible). Succeeds through the integer ledger (ledger_returns_zfa), which is a record the fold does not contain.",
+    "noncircularity_witness": "The verdict rule was pre-registered and the failing witness is a single token; the ledger return is structural and claimed only as such.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: QLF_TerritoryReturn anchors. N: territory_return.py, exhaustive to length 4.",
+    "defeater": "A physical apparatus model whose records are exactly joint closure phases and which nevertheless separates + from the empty history; or a ledger apparatus whose records are not ZFA-faithful.",
+    "proof_obligation": {
+      "domain": "two-body histories",
+      "codomain": "physical records",
+      "forward_map": "history -> (closureTests, ledger)",
+      "return_map": "record -> ZFA verdict",
+      "composite_identity_on": "the ZFA verdict, via the ledger component only",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_TerritoryReturn.lean (zfa_not_reconstructible, joint_record_with_ledger_returns_zfa)",
+      "imported_axioms": "none",
+      "falsifier": "an observational-only return of ZFA (refuted by zfa_not_reconstructible)"
+    }
+  },
+  "observable": {
+    "symbol": "ZFA verdict per observational class",
+    "baseline": "one verdict per class (M1)",
+    "uncertainties": "exact enumeration"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "No empirical measurement. Pre-registered M1-M4 in Map_Is_Territory.md section 3a, run by exhaustive enumeration.",
+    "failure_condition": "Verdict rule: M1 failing refutes the observational reading of the territory.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "observational reading refuted; ledger return structural",
+    "comparator": "pre-registered verdict rule",
+    "uncertainty": "none",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "ZFA is not a function of the observational class; the ledger returns it.",
+    "N": "territory_return.py: 69,905 histories, 64 classes = (K_A, K_B, phase); both ZFA-holding classes mix ZFA and non-ZFA.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the QLF_TerritoryReturn anchors.",
+    "interpretation": "The ledger apparatus is named, not modelled; the identity map = territory stays B-OPEN.",
+    "numerical": "Not applicable (exact).",
+    "empirical": "Not applicable.",
+    "conceptual": "Fold closure and ZFA are different predicates; the runtime is_zfa already requires both."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, tests and verdict rule stated before the run."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No physical apparatus map for the ledger."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return PARTIAL: via the ledger only; the observational return fails."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "ad9ee3b3ccc25b43647941ca66deb90cdec1bc23",
+    "reference_documents": [
+      "Map_Is_Territory.md",
+      "Open_Problems.md",
+      "lean/QLF_TerritoryReturn.lean",
+      "territory_return.py",
+      "data/territory_return.json"
+    ],
+    "status": "pre-merge draft record for #213; observational reading refuted; no bridge promotion"
+  }
+}

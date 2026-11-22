@@ -1,0 +1,73 @@
+{
+  "H": 840,
+  "ind": {
+    "1": {
+      "external": 105,
+      "feeling": 120,
+      "percept": 420,
+      "thought": 168
+    },
+    "2": {
+      "external": 105,
+      "feeling": 60,
+      "percept": 210,
+      "thought": 84
+    },
+    "3": {
+      "external": 105,
+      "feeling": 40,
+      "percept": 140,
+      "thought": 56
+    },
+    "4": {
+      "external": 105,
+      "feeling": 30,
+      "percept": 105,
+      "thought": 42
+    },
+    "5": {
+      "external": 105,
+      "feeling": 24,
+      "percept": 84,
+      "thought": 33
+    },
+    "6": {
+      "external": 105,
+      "feeling": 20,
+      "percept": 70,
+      "thought": 28
+    }
+  },
+  "pass": {
+    "C1": true,
+    "C2": true,
+    "C3": true,
+    "C4": true
+  },
+  "periods": {
+    "external": 8,
+    "feeling": 7,
+    "percept": 2,
+    "thought": 5
+  },
+  "res": {
+    "1": {
+      "percept": 420
+    },
+    "2": {
+      "percept": 210
+    },
+    "3": {
+      "percept": 140
+    },
+    "4": {
+      "percept": 105
+    },
+    "5": {
+      "external": 105
+    },
+    "6": {
+      "external": 105
+    }
+  }
+}

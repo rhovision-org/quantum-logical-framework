@@ -1,0 +1,97 @@
+{
+  "W1_W2": {
+    "k=1": {
+      "fold_failures": 0,
+      "folds_on_balanced": [
+        "(-1+0j)",
+        "(1+0j)"
+      ],
+      "zfa_failures": 0
+    },
+    "k=2": {
+      "fold_failures": 3664,
+      "folds_on_balanced": [
+        "(1+0j)"
+      ],
+      "zfa_failures": 0
+    },
+    "k=3": {
+      "fold_failures": 0,
+      "folds_on_balanced": [
+        "(-1+0j)",
+        "(1+0j)"
+      ],
+      "zfa_failures": 0
+    },
+    "k=4": {
+      "fold_failures": 3664,
+      "folds_on_balanced": [
+        "(1+0j)"
+      ],
+      "zfa_failures": 0
+    },
+    "k=5": {
+      "fold_failures": 0,
+      "folds_on_balanced": [
+        "(-1+0j)",
+        "(1+0j)"
+      ],
+      "zfa_failures": 0
+    }
+  },
+  "W3": {
+    "L=2": {
+      "all_constant": true,
+      "fields": 9,
+      "preserving": 3
+    },
+    "L=4": {
+      "all_constant": true,
+      "fields": 81,
+      "preserving": 3
+    },
+    "L=6": {
+      "all_constant": true,
+      "fields": 729,
+      "preserving": 3
+    }
+  },
+  "W4": {
+    "(0,1)": {
+      "all_equal": true,
+      "pairs": 147456,
+      "preserving": 1
+    },
+    "(0,2)": {
+      "all_equal": true,
+      "pairs": 147456,
+      "preserving": 1
+    },
+    "(0,3)": {
+      "all_equal": true,
+      "pairs": 147456,
+      "preserving": 1
+    },
+    "(1,2)": {
+      "all_equal": true,
+      "pairs": 147456,
+      "preserving": 1
+    },
+    "(1,3)": {
+      "all_equal": true,
+      "pairs": 147456,
+      "preserving": 1
+    },
+    "(2,3)": {
+      "all_equal": true,
+      "pairs": 147456,
+      "preserving": 1
+    }
+  },
+  "W5": {
+    "balanced_histories": 5296,
+    "fold_preserving": 96,
+    "frames": 384,
+    "of_which_keep_gauge_axis": 96
+  }
+}

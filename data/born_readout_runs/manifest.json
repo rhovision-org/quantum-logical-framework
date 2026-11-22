@@ -1,0 +1,114 @@
+{
+ "rules": [
+  "l1:1",
+  "l1:2",
+  "l1:3",
+  "split:1,1",
+  "split:2,1",
+  "split:3,1",
+  "split:2,2",
+  "split:2,3",
+  "linf:1"
+ ],
+ "provenance_header": {
+  "geometries": "c1a758e79b9318270840ae19d62f33d66f3c6147494d89170a39f699208d8d6e",
+  "seed": 1,
+  "sources": {
+   "born_readout_certified.py": "4e15465f2435ce22922fe1aa20abd312e67c6db7cba5a55ff722cc38cab396ab",
+   "born_readout_survey.py": "f217048280075a4712b3f16fee90f510679fa96ff238f7972f8d646de67b95a9",
+   "contextual_census.py": "f2025b70e6dd12531f5dc5b74f234cab744c732d4675c9f907c9b0cf048f0b49"
+  }
+ },
+ "environment": "Python 3.13.18, numpy 2.5.3, sympy 1.14.0, Linux x86_64",
+ "checkpoints_sha256_bytes": {
+  "l1_1": [
+   "e13d68971f1e7edf743ec7738da2ff98a43ba0454ef5485432ea831006d2a02b",
+   8864056
+  ],
+  "l1_2": [
+   "7c8624bcea777a1648a8ea5afe3d7da992ae63836265eadbb865204937fc1d16",
+   16435135
+  ],
+  "l1_3": [
+   "53c31235f22772dbb3266e8a562f72ddca69e30896b8607631d397ec3bb10c59",
+   31214644
+  ],
+  "split_1_1": [
+   "60a2a30bca5827af1277f85c33fc80685ad48691420f4f0508039fbf5e9a30a5",
+   10876554
+  ],
+  "split_2_1": [
+   "387e56c2ac0bde3ebe3bd13c8e6d6bec480dbb2e72967e1f805d12335badfbde",
+   18638569
+  ],
+  "split_3_1": [
+   "ac9a719b9575fbf161fa78760454bd31d2ddbe3fc45cfd51789cedb7e8eef470",
+   26147895
+  ],
+  "split_2_2": [
+   "c087d43f014660a15d95e728f34ead12af716ea76433a0b17edda36e19de5f9e",
+   25831181
+  ],
+  "split_2_3": [
+   "75715101c0db59b35cbb9dce0a64a15f504c955081d70fa9598ff14a32126fb2",
+   31408697
+  ],
+  "linf_1": [
+   "65714472ef36b91d6d572bc9b090342d03bd7761805c01603143b815af310e78",
+   14255990
+  ]
+ },
+ "totals": {
+  "l1:1": {
+   "nothing-closes": 164480,
+   "summable": 7112,
+   "finite": 8696
+  },
+  "l1:2": {
+   "divergent": 154648,
+   "finite": 12560,
+   "nothing-closes": 9888,
+   "marginal": 1656,
+   "summable": 1536
+  },
+  "l1:3": {
+   "divergent": 158448,
+   "finite": 11952,
+   "nothing-closes": 9888
+  },
+  "split:1,1": {
+   "nothing-closes": 99488,
+   "divergent": 56778,
+   "finite": 8048,
+   "marginal": 8230,
+   "summable": 7744
+  },
+  "split:2,1": {
+   "divergent": 134720,
+   "nothing-closes": 33758,
+   "finite": 11810
+  },
+  "split:3,1": {
+   "divergent": 135488,
+   "nothing-closes": 32990,
+   "finite": 11810
+  },
+  "split:2,2": {
+   "divergent": 141888,
+   "nothing-closes": 26448,
+   "finite": 11952
+  },
+  "split:2,3": {
+   "divergent": 141888,
+   "nothing-closes": 26448,
+   "finite": 11952
+  },
+  "linf:1": {
+   "divergent": 98760,
+   "nothing-closes": 65156,
+   "finite": 11384,
+   "marginal": 4492,
+   "summable": 496
+  }
+ }
+}

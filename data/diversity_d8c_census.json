@@ -1,0 +1,77 @@
+{
+  "census": {
+    "base_length": 6,
+    "closed_bases": 5120,
+    "closed_extensions": 8,
+    "extension_words": [
+      "^v",
+      "v^",
+      "<>",
+      "><",
+      "/\\",
+      "\\/",
+      "+-",
+      "-+"
+    ],
+    "groups": {
+      "0": {
+        "admitted_counts": {
+          "8": 20
+        },
+        "bases": 20,
+        "distinct_type_counts": {
+          "3": 20
+        },
+        "mean_distinct_types": 3.0
+      },
+      "1": {
+        "admitted_counts": {
+          "8": 1140
+        },
+        "bases": 1140,
+        "distinct_type_counts": {
+          "3": 60,
+          "5": 1080
+        },
+        "mean_distinct_types": 4.894736842105263
+      },
+      "2": {
+        "admitted_counts": {
+          "8": 3240
+        },
+        "bases": 3240,
+        "distinct_type_counts": {
+          "5": 1080,
+          "7": 2160
+        },
+        "mean_distinct_types": 6.333333333333333
+      },
+      "3": {
+        "admitted_counts": {
+          "8": 720
+        },
+        "bases": 720,
+        "distinct_type_counts": {
+          "7": 720
+        },
+        "mean_distinct_types": 7.0
+      }
+    },
+    "max_extension_length": 2,
+    "note": "w is closed, so w++e closes exactly when e closes. The admitted extension set is independent of w; raw continuation count cannot distinguish axis support. Distinct canonical composites are not a matched measure and do not pass D8c.",
+    "raw_continuation_counts_identical": true,
+    "verdict": "negative_on_raw_continuation; canonical-composite variation is exploratory only"
+  },
+  "gates": {
+    "D8c0_raw_continuation": "fail as a diversity metric: admitted count is invariant",
+    "D8c1_canonical_variety": "exploratory only; unmatched and not independent",
+    "D8c2_matched_measure": "open; requires a richer D3 composition relation"
+  },
+  "meta": {
+    "gate": "D8c pilot",
+    "generator": "diversity_continuation.py",
+    "issue": 290,
+    "pre_registration": "Diversity_Continuation_D8c.md",
+    "version": 1
+  }
+}

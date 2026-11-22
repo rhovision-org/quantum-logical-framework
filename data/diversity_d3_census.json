@@ -1,0 +1,104 @@
+{
+  "census": {
+    "bases": 584,
+    "by_length": {
+      "1": {
+        "K_counts": {
+          "4": 8
+        },
+        "bases": 8
+      },
+      "2": {
+        "K_counts": {
+          "1": 64
+        },
+        "bases": 64
+      },
+      "3": {
+        "K_counts": {
+          "1": 64,
+          "2": 384,
+          "4": 16,
+          "6": 48
+        },
+        "bases": 512
+      }
+    },
+    "closure_failures": 0,
+    "d8c2": "not run",
+    "extensions": 584,
+    "interface_dependence": {
+      "distinct_K_values": [
+        1,
+        2,
+        4,
+        6
+      ],
+      "distinct_extension_sets": 328,
+      "pass": true
+    },
+    "max_length": 3,
+    "total_admitted_joins": 1544,
+    "verdict": "D3.1 and D3.2 pass; D3.3 by construction; D8c2 not run",
+    "witnesses": {
+      "^<^": {
+        "K": 2,
+        "admitted": 2,
+        "canonical_composites": [
+          "^>^v<v",
+          "^>^vv<"
+        ],
+        "extensions": [
+          "vv>",
+          "v>v"
+        ]
+      },
+      "^^^": {
+        "K": 1,
+        "admitted": 1,
+        "canonical_composites": [
+          "^^^vvv"
+        ],
+        "extensions": [
+          "vvv"
+        ]
+      },
+      "^v<": {
+        "K": 6,
+        "admitted": 9,
+        "canonical_composites": [
+          "^v><",
+          "^v></\\",
+          "^v><<>",
+          "^v><><",
+          "^v><^v",
+          "^v><v^"
+        ],
+        "extensions": [
+          ">",
+          ">^v",
+          ">v^",
+          "><>",
+          ">><",
+          ">/\\",
+          ">\\/",
+          ">+-",
+          ">-+"
+        ]
+      }
+    }
+  },
+  "gates": {
+    "D3.1_interface_dependence": "pass: multiple K values and extension sets",
+    "D3.2_closure_preservation": "pass: every join is ZFA-closed",
+    "D3.3_no_target_geometry": "pass: conjugate boundary + closure only",
+    "D8c2_matched_comparison": "not run"
+  },
+  "meta": {
+    "gate": "D3 interface census",
+    "generator": "diversity_interface.py",
+    "issue": 290,
+    "pre_registration": "Diversity_Interface_D3.md",
+    "version": 1
+  }
+}

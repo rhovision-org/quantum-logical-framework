@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-DIVERSITY-D8C-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "dc1f8d45f3c83639ecece317865505c5df5658af",
+  "reviewer": "jimscarver",
+  "purpose": "Draft D8c pilot ledger (#290): raw closed-extension counting is invariant across axis-support classes and cannot support a diversity advantage. The canonical-composite variation is exploratory only; D8c is not passed.",
+  "entries": [
+    {
+      "id": "diversity_d8c_naive_continuation_invariance",
+      "claim": "For ZFA-closed base words of length 6, every base admits exactly the same eight nonempty closed extensions of length 1-2 (^v, v^, <>, ><, /\\\\, \\\\/, +-, -+), so raw continuation counts are invariant across axis-support classes. Distinct canonical composite counts vary by support (mean 3.0 / 4.895 / 6.333 / 7.0 for support 0-3), but are unmatched and quotient-dependent.",
+      "anchors": [],
+      "formal_scope": "Finite closed words of length 6 over the 8-twist alphabet; extensions of length 1-2; canonical word equivalence. The canonical-composite number is exploratory and not an independent measure of continuation opportunity. No three-axis advantage, Penrose, persistence, or physical claim.",
+      "comparator": "Exhaustive census in diversity_continuation.py and data/diversity_d8c_census.json.",
+      "kill_condition": "A closed base where the admitted extension set differs by axis support (refuting invariance), or any claim that the exploratory canonical-composite mean passes D8c without a matched measure and independent relation.",
+      "status": "DRAFT",
+      "source": "Diversity_Continuation_D8c.md; diversity_continuation.py; tests/test_diversity_continuation.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}

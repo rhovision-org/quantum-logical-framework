@@ -236,6 +236,8 @@ reproduction commands are `python3 born_readout_certified.py --R <rule>`, with `
 <file>` making long runs resumable: `l1:1` takes seconds, and `split:2,3` about 7 hours on two
 cores.
 
+Evidence bundle: [`data/born_readout_runs/`](data/born_readout_runs/README.md) holds every rule's complete output, rerun at one pinned commit, with per-target-pair summaries and SHA-256 hashes.
+
 Reproduce (certified): `python3 born_readout_certified.py --selftest`, then `--R 2` (~2 min on four
 cores) and `--R 3` (~66 min). The first, uncertified instrument remains as
 [`born_readout_survey.py`](born_readout_survey.py).
