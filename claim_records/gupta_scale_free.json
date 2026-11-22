@@ -2,7 +2,7 @@
   "record_type": "claim",
   "record_id": "QLF-GUPTA-SCALEFREE-001",
   "version": "0.3.0-draft",
-  "source_revision": "fded9189a215a6d9a6bd6727fe8a32468bf8b153",
+  "source_revision": "c635120458ebcddb9c3b443e2f2af903eca0f07a",
   "informal_statement": "Issue #234: under any clock calibration (elapsed readings times s > 0, rates times 1/s), age ratios and age-rate products are unchanged, and one scale fits two target ages iff the ratios agree. So the frozen Gupta CCC+TL benchmark's testable content is t(10)/t(0) = 0.2187, t(20)/t(0) = 0.1299 and H0 t0 = 1.98 (total H0). A QLF clock map must reproduce these; matching 26.7 Gyr alone shows nothing. No QLF map is constructed.",
   "approximation_or_regime": {
     "name": "Clock calibration on the frozen stage-1 result",
@@ -152,7 +152,7 @@
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
-    "source_revision": "fded9189a215a6d9a6bd6727fe8a32468bf8b153",
+    "source_revision": "c635120458ebcddb9c3b443e2f2af903eca0f07a",
     "reference_documents": [
       "Gupta_ScaleFree.md",
       "Gupta_ClockConventions.md",
@@ -160,6 +160,13 @@
       "gupta_scale_free.py",
       "data/gupta_scale_free.json"
     ],
-    "status": "pre-merge draft record for #234; calibration-free target fixed; outcome INCOMPLETE"
+    "status": "pre-merge draft record for #234; calibration-free target fixed; outcome INCOMPLETE",
+    "preregistration_revision": "fded9189a215a6d9a6bd6727fe8a32468bf8b153",
+    "executed_source_revision": "c635120458ebcddb9c3b443e2f2af903eca0f07a",
+    "invocation": "python3 gupta_scale_free.py --json data/gupta_scale_free.json",
+    "data_sha256": {
+      "data/gupta_scale_free.json": "17ca1cd81f616cb71029932a048138514585578bb67344bfa5bd24aa88b2449f"
+    },
+    "validation_scope": "Frozen stage-1 result, not re-executed; tests/test_gupta_scale_free.py"
   }
 }

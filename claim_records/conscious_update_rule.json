@@ -2,7 +2,7 @@
   "record_type": "claim",
   "record_id": "QLF-CONSCIOUS-UPDATE-001",
   "version": "0.3.0-draft",
-  "source_revision": "98e569cae63da9c8d99eab3c5463fac0d74815ba",
+  "source_revision": "d0d2fc7acab23bea68346a8179c6f3918673693a",
   "informal_statement": "Issue #278: for PR #279's eligible candidates (periods 2, 5, 7, 8) racing by least remaining distance, an independent-clock update promotes each closure H/T times, and a global-reset update gives every promotion to one closure. Quieting the internal periods by q switches the reset winner to the external joint closure exactly at 2q > 8; under independent clocks the modal expression switches at the same threshold. So the receiver regime holds under both rules as the mode, and needs the reset rule only as the sole expression.",
   "approximation_or_regime": {
     "name": "Four-candidate race",
@@ -106,7 +106,7 @@
     "interpretation": "Functional architecture only; no qualia claim (D7).",
     "numerical": "Not applicable (exact).",
     "empirical": "Not applicable.",
-    "conceptual": "Which statistic is conscious content (mode or sole expression) is a reading #278 must state."
+    "conceptual": "Which statistic is conscious content (mode or sole expression) is a reading #278 must state. The switch is strict (2q > 8); the static skeleton's e <= i breaks the tie the other way. No update law is derived from the listener quotient."
   },
   "gate_outcomes": {
     "G0": {
@@ -154,7 +154,7 @@
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
-    "source_revision": "98e569cae63da9c8d99eab3c5463fac0d74815ba",
+    "source_revision": "d0d2fc7acab23bea68346a8179c6f3918673693a",
     "reference_documents": [
       "Conscious_Update_Rule.md",
       "Consciousness.md",
@@ -162,6 +162,13 @@
       "conscious_update_rule.py",
       "data/conscious_update_rule.json"
     ],
-    "status": "pre-merge draft record for #278; update rule open; receiver regime rule-independent as mode"
+    "status": "pre-merge draft record for #278; update rule open; receiver regime rule-independent as mode",
+    "preregistration_revision": "98e569cae63da9c8d99eab3c5463fac0d74815ba",
+    "executed_source_revision": "d0d2fc7acab23bea68346a8179c6f3918673693a",
+    "invocation": "python3 conscious_update_rule.py --json data/conscious_update_rule.json",
+    "data_sha256": {
+      "data/conscious_update_rule.json": "72e07f72a276aee6b21df2634c3aa9e0ddd64486061e87e3fc5266d376cd31c6"
+    },
+    "validation_scope": "H = 840, q = 1..6; tests/test_conscious_update_rule.py"
   }
 }

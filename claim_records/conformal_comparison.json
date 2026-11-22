@@ -2,8 +2,8 @@
   "record_type": "claim",
   "record_id": "QLF-CONFORMAL-C1-001",
   "version": "0.3.0-draft",
-  "source_revision": "2d8436d2335a141fcb35324172819b9aeada62e9",
-  "informal_statement": "Issue #302 C1: among position-dependent letter substitutions (a frame among the 384 signed axis permutations and a multiplicity at each position), ZFA admits no local scale or frame symmetry. Its symmetry is global: 96 fold-preserving frames times the odd dilations; even dilations preserve ZFA and erase the phase. This is outcome 2 of C1 and meets the issue's failure criterion, so the intrinsic Weyl route has no first step in this class.",
+  "source_revision": "855120c3c71ca9cf4e36fce1ab14b20aa1237cfb",
+  "informal_statement": "Issue #302 C1, scoped: among position-dependent multiplicity fields (letter substitutions), only constant fields preserve ZFA, and the global symmetry found is 96 fold-preserving frames times the odd dilations; even dilations preserve ZFA and erase the phase. W4's pre-registered condition was mis-specified and is not met; the absence of local frame changes in the family tested is exploratory. This is a scoped candidate obstruction to C1, not a C1 failure in general: other primitives and the causal and relational invariants C1 asks about are untested.",
   "approximation_or_regime": {
     "name": "Letter-substitution class",
     "description": "Histories of length <= 6 over the 8-twist alphabet; position-dependent frames and multiplicities k_p in {1,2,3}; ZFA = count balance; fold = Pauli product.",
@@ -67,7 +67,7 @@
       "the subgroup preserving ZFA and the fold"
     ],
     "return_level": "the ZFA predicate",
-    "conservative_return": "Every surviving transformation returns ZFA and the fold unchanged (odd dilations, 96 frames); no local one survives.",
+    "conservative_return": "Every surviving transformation returns ZFA and the fold unchanged (odd dilations, 96 frames); no non-constant multiplicity field survives. Frame fields: exploratory.",
     "noncircularity_witness": "The class is defined without reference to conformal geometry and the survivors were counted, not assumed.",
     "status": "B-OPEN",
     "first_order_evidence": "F+N",
@@ -97,7 +97,7 @@
     "execution_status": "not_performed"
   },
   "reported_agreement": {
-    "value": "no local symmetry; global symmetry = 96 frames x odd dilations",
+    "value": "scoped candidate obstruction: no local rescaling among letter substitutions; W4 not met as pre-registered",
     "comparator": "pre-registered verdict rule",
     "uncertainty": "none",
     "comparison_type": "not_applicable"
@@ -113,7 +113,7 @@
     "interpretation": "The class is letter substitutions; the result does not exclude a local symmetry built from other primitives.",
     "numerical": "Not applicable (exact).",
     "empirical": "Not applicable.",
-    "conceptual": "W4's literal pass condition was mis-posed; the measured result is stronger and is reported as such."
+    "conceptual": "W4's pre-registered condition was mis-specified and is recorded as not met; the stronger reading is exploratory. C1 also asks for causal, admissibility and relational invariants, not tested here."
   },
   "gate_outcomes": {
     "G0": {
@@ -161,7 +161,7 @@
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
-    "source_revision": "2d8436d2335a141fcb35324172819b9aeada62e9",
+    "source_revision": "855120c3c71ca9cf4e36fce1ab14b20aa1237cfb",
     "reference_documents": [
       "Conformal_Comparison.md",
       "Bridge_Tools.md",
@@ -169,6 +169,13 @@
       "conformal_comparison.py",
       "data/conformal_comparison.json"
     ],
-    "status": "pre-merge draft record for #302 C1; outcome 2 (global only); no conformal-gravity promotion"
+    "status": "pre-merge draft record for #302 C1; scoped candidate obstruction for letter substitutions; C1 in general open",
+    "preregistration_revision": "2d8436d2335a141fcb35324172819b9aeada62e9",
+    "executed_source_revision": "855120c3c71ca9cf4e36fce1ab14b20aa1237cfb",
+    "invocation": "python3 conformal_comparison.py --max-len 6 --json data/conformal_comparison.json",
+    "data_sha256": {
+      "data/conformal_comparison.json": "dc9e5f44f4e96997228aaffa732d7ef0746faf60e67a69dcd5df812446fc224e"
+    },
+    "validation_scope": "Exhaustive W1-W5 to length 6; recomputed against the frozen JSON by tests/test_conformal_comparison.py"
   }
 }

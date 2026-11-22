@@ -2,7 +2,7 @@
   "record_type": "claim",
   "record_id": "QLF-DIVERSITY-E1-001",
   "version": "0.3.0-draft",
-  "source_revision": "18b563552c4d4e27aca5b3632cb49e3597e89fb5",
+  "source_revision": "855120c3c71ca9cf4e36fce1ab14b20aa1237cfb",
   "informal_statement": "Issue #290 E1 / gate D8b on the concatenation relation: an open history never closes with itself, and a closed one composed with itself always folds to +I. Complementary open pairs close to both +I and -I (minimal witness ^ and v). So the -I closure type has no homogeneous generator: N_hom = {+I}, N_mixed = {+I, -I}.",
   "approximation_or_regime": {
     "name": "Concatenation relation, fold types",
@@ -160,7 +160,7 @@
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
-    "source_revision": "18b563552c4d4e27aca5b3632cb49e3597e89fb5",
+    "source_revision": "855120c3c71ca9cf4e36fce1ab14b20aa1237cfb",
     "reference_documents": [
       "Diversity_Novel_Outcome_E1.md",
       "Bridge_Tools.md",
@@ -168,6 +168,13 @@
       "diversity_novel_outcome.py",
       "data/diversity_novel_outcome.json"
     ],
-    "status": "pre-merge draft record for #290 E1; D8b passes on concatenation; D8c, D9, D10 open"
+    "status": "pre-merge draft record for #290 E1; D8b passes on concatenation; D8c, D9, D10 open",
+    "preregistration_revision": "18b563552c4d4e27aca5b3632cb49e3597e89fb5",
+    "executed_source_revision": "855120c3c71ca9cf4e36fce1ab14b20aa1237cfb",
+    "invocation": "python3 diversity_novel_outcome.py --json data/diversity_novel_outcome.json",
+    "data_sha256": {
+      "data/diversity_novel_outcome.json": "bafe8e3b0d3de5acef0ec37f5c4b55ce269818aa59b5c7821a6fb0ea7df288ae"
+    },
+    "validation_scope": "N1 to length 4, N2 to length 6, N5 for |a|,|b| <= 3; tests/test_diversity_novel_outcome.py"
   }
 }

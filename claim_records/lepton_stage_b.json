@@ -2,7 +2,7 @@
   "record_type": "claim",
   "record_id": "QLF-LEPTON-STAGEB-001",
   "version": "0.3.0-draft",
-  "source_revision": "d415096b5d7e3f44116f8586ac3953839ad9e5bf",
+  "source_revision": "107a4902b48da88f7b58eb26ed8672669a7b20c2",
   "informal_statement": "Issue #140 Stage B: on the frozen ladder e = ^<v>, mu = ^^<vv>, tau = ^^</>vv\\, the protocol's admissible observables separate the rungs only through depth L = 4 + 2k and orbit 24 * 2^k, one progression with no number beyond 24, 2 and 4 (fold -I and B = 0 are constant; axes 2, 2, 3 were a declared input). So a mass map from them has the Koide shape with one global phase delta, and under the protocol the attempt has no ratio prediction until an observable that breaks the progression is added.",
   "approximation_or_regime": {
     "name": "Frozen three-rung ladder",
@@ -154,7 +154,7 @@
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
-    "source_revision": "d415096b5d7e3f44116f8586ac3953839ad9e5bf",
+    "source_revision": "107a4902b48da88f7b58eb26ed8672669a7b20c2",
     "reference_documents": [
       "Lepton_Stage_B.md",
       "Lepton_Mass_Ratio_Protocol.md",
@@ -162,6 +162,13 @@
       "lepton_stage_b.py",
       "data/lepton_stage_b.json"
     ],
-    "status": "pre-merge draft record for #140 Stage B; no ratio prediction under the frozen protocol"
+    "status": "pre-merge draft record for #140 Stage B; no ratio prediction under the frozen protocol",
+    "preregistration_revision": "d415096b5d7e3f44116f8586ac3953839ad9e5bf",
+    "executed_source_revision": "107a4902b48da88f7b58eb26ed8672669a7b20c2",
+    "invocation": "python3 lepton_stage_b.py --json data/lepton_stage_b.json",
+    "data_sha256": {
+      "data/lepton_stage_b.json": "fa8f9652a0f9243133180ffaff0d1233166b6e7ba7dff95632f07c2dce550dcf"
+    },
+    "validation_scope": "Three frozen rungs; tests/test_lepton_stage_b.py"
   }
 }
