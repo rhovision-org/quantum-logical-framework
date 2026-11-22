@@ -52,4 +52,39 @@ other way; that difference is a tie-break convention, not a result.
 
 ## §2 Results
 
-To be filled from `conscious_update_rule.py` after this section is committed.
+Run by [`conscious_update_rule.py`](conscious_update_rule.py); output in
+[`data/conscious_update_rule.json`](data/conscious_update_rule.json). Proved in
+[`lean/QLF_ConsciousUpdateRule.lean`](lean/QLF_ConsciousUpdateRule.lean), no QLF axioms.
+
+Promotions over `H = 840`:
+
+| `q` | `U_ind` (percept, thought, feeling, external) | `U_res` |
+|---|---|---|
+| 1 | 420, 168, 120, 105 | percept 420 |
+| 2 | 210, 84, 60, 105 | percept 210 |
+| 3 | 140, 56, 40, 105 | percept 140 |
+| 4 | 105, 42, 30, 105 | percept 105 |
+| 5 | 84, 33, 24, 105 | external 105 |
+| 6 | 70, 28, 20, 105 | external 105 |
+
+| | Result | Verdict |
+|---|---|---|
+| C1 | `U_ind` promotes each candidate `H / T` times | **pass** (`independent_count`) |
+| C2 | `U_res` promotes only the percept | **pass** (`reset_percept_below`) |
+| C3 | `U_res` switches wholly to the external closure at `q = 5`, the first `q` with `2q > 8` | **pass** (`reset_threshold`) |
+| C4 | `U_ind` promotes the external closure 105 times at every `q` | **pass** |
+
+**Verdict, with one correction to the pre-registered reading.** C1 to C4 pass as stated, and only the
+reset rule makes the external closure the *only* expression past the threshold. But the table shows
+something the verdict rule did not anticipate: under the independent rule the *modal* expression
+also switches to the external closure at the same `q` (tied at `q = 4`, external from `q = 5`),
+because promotion counts fall as `1/T` (`independent_mode`). So the regime change of
+[Consciousness.md](Consciousness.md) §4 is rule-independent when conscious content is read as the
+modal expression, which is the statistic the method asks for when the question is frequency. It
+needs the reset rule only if conscious content is read as the sole expression.
+
+So #278 has a choice to make, and it is a choice about the reading, not about `U`: the mode reading
+gives the receiver regime under both rules, and the two rules then differ in whether the other
+closures are expressed at all. Under `U_ind` the external joint closure is expressed at its own rate
+at every `q`, so quieting is not needed to receive it, only to make it dominant. Neither rule is
+derived here.

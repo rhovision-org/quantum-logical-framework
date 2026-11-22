@@ -1,0 +1,167 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-CONSCIOUS-UPDATE-001",
+  "version": "0.3.0-draft",
+  "source_revision": "98e569cae63da9c8d99eab3c5463fac0d74815ba",
+  "informal_statement": "Issue #278: for PR #279's eligible candidates (periods 2, 5, 7, 8) racing by least remaining distance, an independent-clock update promotes each closure H/T times, and a global-reset update gives every promotion to one closure. Quieting the internal periods by q switches the reset winner to the external joint closure exactly at 2q > 8; under independent clocks the modal expression switches at the same threshold. So the receiver regime holds under both rules as the mode, and needs the reset rule only as the sole expression.",
+  "approximation_or_regime": {
+    "name": "Four-candidate race",
+    "description": "Integer time, horizon 840, periods 2q, 5q, 7q, 8, ties by declared order.",
+    "validity_limits": "Two candidate update rules, neither derived; no listener-quotient dynamics, no qualia."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.ConsciousUpdateRule.independent_count",
+      "QLF.ConsciousUpdateRule.independent_mode",
+      "QLF.ConsciousUpdateRule.reset_threshold",
+      "QLF.ConsciousUpdateRule.reset_percept_below"
+    ],
+    "statement_scope": "Count and mode lemmas general; thresholds decided for q = 1..6. That the independent race fires at multiples of T is checked numerically (C1)."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_ConsciousUpdateRule.lean",
+      "lean/QLF_Consciousness.lean",
+      "lean/QLF_HarmonicClosure.lean"
+    ],
+    "type": "comparison of two dynamical update rules"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "New anchors added to QLF_AxiomAudit and the exact-footprint baseline (555 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound, or none."
+  },
+  "inputs": [
+    {
+      "name": "candidates",
+      "value": "percept 2, thought 5, feeling 7, external 8",
+      "provenance": "declared",
+      "source": "PR #279 table"
+    },
+    {
+      "name": "update rules",
+      "value": "independent, reset",
+      "provenance": "declared",
+      "source": "Conscious_Update_Rule.md section 1"
+    }
+  ],
+  "interpretation": {
+    "map": "update rule and quieting -> promotion counts",
+    "formal_status": "Count, mode and threshold lemmas formal; race counts numerical.",
+    "noncircularity_test": "C1-C4 and the verdict rule were committed before conscious_update_rule.py existed. The mode switch under U_ind was not anticipated and is reported as a correction to the reading."
+  },
+  "strange_loop": {
+    "name": "listener context -> promotion -> listener context",
+    "levels": [
+      "candidate closures and periods",
+      "promotion sequence",
+      "updated context"
+    ],
+    "return_level": "listener context",
+    "conservative_return": "Both rules return the same modal expression at every q; they differ in whether non-modal closures are expressed.",
+    "noncircularity_witness": "The rules are fixed before the run and neither consults which closure is conscious.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: QLF_ConsciousUpdateRule anchors. N: conscious_update_rule.py.",
+    "defeater": "A derived update rule from the listener quotient that is neither independent nor reset and moves the threshold.",
+    "proof_obligation": {
+      "domain": "listener contexts",
+      "codomain": "promotion sequences",
+      "forward_map": "context -> race",
+      "return_map": "promotion -> updated context",
+      "composite_identity_on": "the modal expression",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_ConsciousUpdateRule.lean (independent_mode, reset_threshold)",
+      "imported_axioms": "none",
+      "falsifier": "a q at which the two rules disagree on the modal expression (none for q = 1..6)"
+    }
+  },
+  "observable": {
+    "symbol": "promotion counts per candidate",
+    "baseline": "U_ind: H/T; U_res: one winner",
+    "uncertainties": "exact"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "No empirical measurement. Pre-registered C1-C4 in Conscious_Update_Rule.md section 1.",
+    "failure_condition": "Verdict rule: C3 failing would remove the reset rule's regime change.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "receiver regime as mode under both rules; exclusive only under reset",
+    "comparator": "pre-registered verdict rule",
+    "uncertainty": "none",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Count, mode and threshold lemmas.",
+    "N": "Race counts over H = 840 for q = 1..6.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the QLF_ConsciousUpdateRule anchors.",
+    "interpretation": "Functional architecture only; no qualia claim (D7).",
+    "numerical": "Not applicable (exact).",
+    "empirical": "Not applicable.",
+    "conceptual": "Which statistic is conscious content (mode or sole expression) is a reading #278 must state."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, tests and verdict rule stated before the run."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No physical apparatus map for the ledger."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return PARTIAL: via the ledger only; the observational return fails."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "98e569cae63da9c8d99eab3c5463fac0d74815ba",
+    "reference_documents": [
+      "Conscious_Update_Rule.md",
+      "Consciousness.md",
+      "lean/QLF_ConsciousUpdateRule.lean",
+      "conscious_update_rule.py",
+      "data/conscious_update_rule.json"
+    ],
+    "status": "pre-merge draft record for #278; update rule open; receiver regime rule-independent as mode"
+  }
+}

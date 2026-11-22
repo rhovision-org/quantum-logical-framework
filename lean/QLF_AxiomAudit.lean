@@ -156,6 +156,7 @@ import QLF_Majorana
 import QLF_GluonAbelianControl
 import QLF_LeptonStageB
 import QLF_ClockCalibration
+import QLF_ConsciousUpdateRule
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -219,6 +220,10 @@ import QLF_ClockCalibration
 #print axioms QLF.ClockCalibration.age_ratio_calibration_free
 #print axioms QLF.ClockCalibration.age_rate_product_calibration_free
 #print axioms QLF.ClockCalibration.one_scale_fits_two_ages_iff
+#print axioms QLF.ConsciousUpdateRule.independent_count
+#print axioms QLF.ConsciousUpdateRule.independent_mode
+#print axioms QLF.ConsciousUpdateRule.reset_threshold
+#print axioms QLF.ConsciousUpdateRule.reset_percept_below
 #print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit

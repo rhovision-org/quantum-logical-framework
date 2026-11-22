@@ -611,6 +611,18 @@
     "propext"
   ],
   "QLF.ConformalComparison.local_dilation_breaks_balance": [],
+  "QLF.ConsciousUpdateRule.independent_count": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConsciousUpdateRule.independent_mode": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConsciousUpdateRule.reset_percept_below": [],
+  "QLF.ConsciousUpdateRule.reset_threshold": [],
   "QLF.ConservativeReturn.F_closed": [],
   "QLF.ConservativeReturn.F_invariants": [],
   "QLF.ConservativeReturn.conservative_return": [],
