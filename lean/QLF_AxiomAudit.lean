@@ -153,6 +153,7 @@ import QLF_MercuryPerihelion
 import QLF_Discoveries2026
 import QLF_StrongCP
 import QLF_Majorana
+import QLF_GluonAbelianControl
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -200,6 +201,14 @@ import QLF_Majorana
 #print axioms QLF.DiversityNovelOutcome.self_composition_type_one
 #print axioms QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure
 #print axioms QLF.DiversityNovelOutcome.minimal_complementary_pair
+#print axioms QLF.GluonAbelianControl.first_singlet_move_reduces
+#print axioms QLF.GluonAbelianControl.create_total
+#print axioms QLF.GluonAbelianControl.glue_total
+#print axioms QLF.GluonAbelianControl.create_closes_iff
+#print axioms QLF.GluonAbelianControl.glue_closes_iff
+#print axioms QLF.GluonAbelianControl.same_label_blocked_gated
+#print axioms QLF.GluonAbelianControl.same_label_closes_ungated
+#print axioms QLF.GluonAbelianControl.gate_lengthens_witness
 #print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit

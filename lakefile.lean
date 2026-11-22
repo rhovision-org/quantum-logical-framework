@@ -346,6 +346,7 @@ lean_lib QLF where
     `QLF_SpatialResponseDerived,
     `QLF_ConformalComparison,
     `QLF_DiversityNovelOutcome,
+    `QLF_GluonAbelianControl,
     `QLF_MeadTransaction,
     `QLF_MagneticOrientation,
     `QLF_ClockRedshift,

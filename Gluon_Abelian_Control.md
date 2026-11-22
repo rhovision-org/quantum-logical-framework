@@ -41,4 +41,31 @@ tension).
 
 ## §2 Results
 
-To be filled from `gluon_abelian_control.py` after this section is committed.
+Run by [`gluon_abelian_control.py`](gluon_abelian_control.py); output in
+[`data/gluon_abelian_control.json`](data/gluon_abelian_control.json). The gated relation reproduces
+#289's census exactly (494 states, 454 with a singlet path, the same move classes). The algebra is
+proved in [`lean/QLF_GluonAbelianControl.lean`](lean/QLF_GluonAbelianControl.lean), no QLF axioms.
+
+| | Result | Verdict |
+|---|---|---|
+| A1 | 0 non-reducing first-singlet moves in either relation | **fails, as predicted**: `first_singlet_move_reduces` holds for every move relation |
+| A2 | gated `d_G` takes several values on 24 of the 35 (total colour, size) classes | fails: `d_G` is not fixed by Abelian data |
+| A3 | 24 states have `d_G = 2` gated and `d_G = 1` ungated; no state is shorter gated | **pass** (`gate_lengthens_witness`) |
+| A4 | 32 states reach a singlet only ungated (`d_G = 1`), every one without a non-collinear pair | pass (`same_label_blocked_gated`, `same_label_closes_ungated`) |
+| A5 | the move classes differ: ungated create 256 / 32 / 128 reducing / neutral / increasing, glue 592 / 272 / 544 | pass |
+
+The 8 states the ungated relation cannot close are the single labels, which have no pair at all.
+
+**Verdict.** The non-Abelian vertex does work on `d_G`. It does so in one direction only: the gate
+removes moves, so it can only lengthen a path or block it, and the census finds 24 states lengthened
+from one move to two and 32 blocked. The mechanism is visible in the closing conditions: one create
+closes exactly when a pair sums to the total colour `T`, one glue exactly when it sums to `−T`
+(`create_closes_iff`, `glue_closes_iff`), and on these 56 states the only such pair is collinear.
+
+So in this relation the non-Abelian algebra makes singlet closure harder, not easier. Any
+distance-reducing role for the gluon has to come from something other than its non-Abelian
+structure, since removing that structure never lengthens a path. And #289's "every first-singlet
+move reduces `d_G`" is bookkeeping (A1), so it carries no evidence for a distance-reduction reading.
+The question #286 poses (whether first-singlet channels are preferentially distance-reducing) needs
+a comparison over channels that could have been neutral or increasing, such as multi-step binding
+paths. GL7 and GL8 are untouched.

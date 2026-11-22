@@ -1,0 +1,169 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-GLUON-ABELIAN-001",
+  "version": "0.3.0-draft",
+  "source_revision": "f5e4427f607d47c67f9f33929dce6b145d1a5c34",
+  "informal_statement": "Issue #286: in PR #289's two-channel gluon vertex relation, the non-Abelian gate (non-collinear pairs only) does work on singlet distance d_G, but only by lengthening it: against the same channels ungated, 24 states go from d_G = 1 to 2 and 32 are blocked, and no state is shorter gated. #289's 'every first-singlet move reduces d_G' holds for every move relation and is bookkeeping.",
+  "approximation_or_regime": {
+    "name": "Two-channel F3^2 vertex toy",
+    "description": "Multisets of 1-4 nonzero F3^2 labels; create adds -(q+r), glue replaces q, r by -(q+r); singlet = total colour 0; search size <= 5.",
+    "validity_limits": "PR #289's finite toy. No quarks, kinematics, coupling, physical distance (GL7) or string tension (GL8)."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.GluonAbelianControl.first_singlet_move_reduces",
+      "QLF.GluonAbelianControl.create_closes_iff",
+      "QLF.GluonAbelianControl.glue_closes_iff",
+      "QLF.GluonAbelianControl.same_label_blocked_gated",
+      "QLF.GluonAbelianControl.same_label_closes_ungated",
+      "QLF.GluonAbelianControl.gate_lengthens_witness"
+    ],
+    "statement_scope": "The bookkeeping lemma is general; the closing conditions hold on all of F3^2; the witnesses are explicit. The 24 / 32 state counts are numerical."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_GluonAbelianControl.lean",
+      "lean/QLF_ColourFlux.lean",
+      "lean/QLF_GluonVertex.lean"
+    ],
+    "type": "control comparison of two move relations"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "New anchors added to QLF_AxiomAudit and the exact-footprint baseline (543 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound, or none."
+  },
+  "inputs": [
+    {
+      "name": "gated relation",
+      "value": "PR #289 create + glue with symp(q, r) != 0",
+      "provenance": "derived",
+      "source": "QLF.GluonVertex.gluon_vertex_iff"
+    },
+    {
+      "name": "Abelian control",
+      "value": "same channels, any pair with q + r != 0",
+      "provenance": "declared",
+      "source": "Gluon_Abelian_Control.md section 1"
+    }
+  ],
+  "interpretation": {
+    "map": "colour state -> d_G under each relation",
+    "formal_status": "Closing conditions and witnesses formal; state counts numerical.",
+    "noncircularity_test": "A1-A5 and the verdict rule were committed before gluon_abelian_control.py existed; A3 and A5 could have failed."
+  },
+  "strange_loop": {
+    "name": "colour state -> vertex moves -> singlet closure",
+    "levels": [
+      "colour multisets",
+      "vertex moves (gated or ungated)",
+      "singlet closure and d_G"
+    ],
+    "return_level": "singlet closure",
+    "conservative_return": "Both relations return singlet closure on every state with a path; the gated one never shorter.",
+    "noncircularity_witness": "Neither relation consults d_G; the control differs only in the non-Abelian gate.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: QLF_GluonAbelianControl anchors. N: gluon_abelian_control.py, exhaustive.",
+    "defeater": "A distance-reducing role for the gluon that comes from its non-Abelian structure in another move relation.",
+    "proof_obligation": {
+      "domain": "colour multisets",
+      "codomain": "singlet closure",
+      "forward_map": "state -> move paths",
+      "return_map": "path -> first singlet",
+      "composite_identity_on": "states with a singlet path",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_GluonAbelianControl.lean (create_closes_iff, glue_closes_iff, gate_lengthens_witness)",
+      "imported_axioms": "none",
+      "falsifier": "a state with shorter gated than ungated d_G (impossible: the gated relation is a subrelation)"
+    }
+  },
+  "observable": {
+    "symbol": "d_G gated vs ungated",
+    "baseline": "24 lengthened, 32 blocked, 0 shortened",
+    "uncertainties": "exact enumeration"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "No empirical measurement. Pre-registered A1-A5 in Gluon_Abelian_Control.md section 1.",
+    "failure_condition": "Verdict rule: A3 and A5 failing would make d_G Abelian.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "non-Abelian gate lengthens d_G only; first-singlet reduction is bookkeeping",
+    "comparator": "pre-registered verdict rule",
+    "uncertainty": "none",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Bookkeeping lemma, closing conditions, witnesses.",
+    "N": "gluon_abelian_control.py: gated reproduces #289; 24 lengthened, 32 blocked; ungated classes create 256/32/128, glue 592/272/544.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the QLF_GluonAbelianControl anchors.",
+    "interpretation": "One toy relation; other channels (quark emission, multi-step binding) are untested.",
+    "numerical": "Not applicable (exact).",
+    "empirical": "Not applicable.",
+    "conceptual": "Logical distance is not physical distance (GL7 open)."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, tests and verdict rule stated before the run."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No physical apparatus map for the ledger."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return PARTIAL: via the ledger only; the observational return fails."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "f5e4427f607d47c67f9f33929dce6b145d1a5c34",
+    "reference_documents": [
+      "Gluon_Abelian_Control.md",
+      "Bridge_Tools.md",
+      "lean/QLF_GluonAbelianControl.lean",
+      "gluon_abelian_control.py",
+      "data/gluon_abelian_control.json"
+    ],
+    "status": "pre-merge draft record for #286; non-Abelian gate only lengthens d_G; GL7, GL8 open"
+  }
+}

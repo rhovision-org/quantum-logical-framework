@@ -845,6 +845,42 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.GluonAbelianControl.create_closes_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.create_total": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.first_singlet_move_reduces": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.gate_lengthens_witness": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.glue_closes_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.glue_total": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.same_label_blocked_gated": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.same_label_closes_ungated": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.GluonGluing.chan_ne_zero_iff": [
     "Classical.choice",
     "Quot.sound",
