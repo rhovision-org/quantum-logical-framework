@@ -65,9 +65,9 @@ A region is a list of histories and its ledger is the sum of their boundary stat
 
 Together these are the substrate form of the Ovchinnikov–Zeldovich–Toussaint–Wilczek mechanism: closure removes the balanced part, the ledger's initial fluctuation is conserved, and that residue is what is left to form domains.
 
-### Rung 4. Differentiation on a lattice (N, pre-registered, §4)
+### Rung 4. Differentiation on a lattice (N, pre-registered, §4, passed)
 
-Whether the residue actually forms domains, and whether it does so only because of the algebra, is a numerical question. §4 is the test and §5 the result.
+Whether the residue actually forms domains, and whether it does so only because of the algebra, is a numerical question. §4 is the test and §5 the result: it does, in `d = 1` and `d = 2`, and it disappears when the ledger is broken.
 
 ### Rung 5. Persistent pattern with a preferred scale (B-OPEN)
 
@@ -114,7 +114,26 @@ What the test can and cannot show. P1 passing would show that the algebra's cons
 
 ## 5. Result
 
-*Pending: the run follows this pre-registration.*
+Run of the pre-registered configuration (8 seeds each), [`data/morphogenesis_census.json`](data/morphogenesis_census.json). Final-time values, mean ± standard error over seeds:
+
+| Variant | `d` | `S` | `Q` | `ρ` | late `ρ` exponent |
+|---|---|---|---|---|---|
+| G | 1 | **+0.463 ± 0.009** | +0.172 ± 0.033 | 0.139 | −0.270 |
+| R_all | 1 | not measurable (A2) | not measurable | 0.0070 | −0.423 |
+| D | 1 | +0.001 ± 0.011 | −0.004 ± 0.003 | 1.005 | 0.000 |
+| G | 2 | **+0.399 ± 0.017** | +0.106 ± 0.015 | 0.040 | −0.640 |
+| R_all | 2 | not measurable (A2) | −0.138 | 0.0026 | −0.874 |
+| D | 2 | +0.001 ± 0.003 | +0.000 ± 0.001 | 0.998 | 0.000 |
+| G + pair source | 1 | +0.111 ± 0.041 (last three: +0.129 ± 0.040) | +0.044 | 0.246 | — |
+| G + pair source | 2 | −0.028 ± 0.011 (last three: +0.000 ± 0.009) | 0.000 | 0.208 | — |
+
+Verdicts, as registered:
+
+- **P1 passes in both dimensions.** `S_G = 0.46` (`d = 1`) and `0.40` (`d = 2`), against `0.001` for D, far beyond 3 standard errors. R_all leaves at most one strand per site, so no bond carries the same axis at both ends and its `S` is undefined (amendment A2). Its density falls about 20 times faster than G's, so it closes away almost everything and leaves nothing to organise. The kill condition is not met. **The algebra's conserved ledger differentiates a diverse, patternless population into segregated domains, and with the ledger broken (R_all) or closure disabled (D) there is no organisation.** Grade N.
+- **P2 passes in `d = 1` and fails in `d = 2`.** G in `d = 1` gives `−0.270` (theory `−1/4`) and R_all gives `−0.423` (theory `−1/2`). G in `d = 2` gives `−0.640`, outside the window `[−0.60, −0.40]` around the classical `−1/2`. So the simulator check fails in `d = 2` as registered. An exploratory run that is not graded (128×128, 16384 steps, 3 seeds) shows why the window was not reached: the local exponent rises from `−0.15` through a plateau near `−0.61` between `t ≈ 50` and `t ≈ 1200`, then turns toward zero as the domains fill the lattice and `S` falls to `0` (one domain per axis left). A second exploratory run on 512×512 (8192 steps, 2 seeds), where the domains stay far smaller than the lattice, shows the plateau without the turn: the local exponent is `−0.64` around `t ≈ 1000` and relaxes slowly to `−0.60` by `t = 8192`, while `S` keeps growing to `0.46`. Reaching the asymptotic `d = 2` regime needs a larger lattice. Until it is reached, the `d = 2` density law is unchecked. P1 does not depend on it.
+- **P4 passes narrowly in `d = 1` and fails in `d = 2`.** The registered expectation was failure in both. With a ledger-conserving pair source, `S` over the last three samples is `0.129 ± 0.040` in `d = 1` (threshold `0.1` and 3 standard errors, met by a small margin) and `0.000 ± 0.009` in `d = 2`. So in `d = 2` the source keeps the population mixed and no persistent differentiation forms. In `d = 1` some survives. One dimension and one source rate do not establish persistent pattern, so rung 5 stays B-OPEN.
+
+What was shown. Rungs 1 to 3 (F) derive an opposite-charge compatibility rule and its conservation from closure alone. Rung 4 (N) shows that this conservation, and nothing else in the rule, is what turns a uniform, eight-species population into domains. This is the classical `A + B → 0` segregation result, reached here with no species, rates or forces put in. It is not a Turing pattern. Domains coarsen, they have no preferred size, and in `d = 2` a source erases them. The persistent, scale-selected pattern is the next rung, and §6 lists the routes.
 
 ## 6. Suggestions for the next rungs
 

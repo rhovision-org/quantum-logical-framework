@@ -83,6 +83,7 @@ interaction; the logical complexity inside them is far larger.
 | Atoms | [Atomic_Structure_QLF.md](Atomic_Structure_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
 | Molecules: a bond is a shared closure | [Chemistry.md](Chemistry.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
 | Folding | [Protein_Folding.md](Protein_Folding.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
+| Morphogenesis: closure erases the balanced part and the conserved residue differentiates | [Morphogenesis.md](Morphogenesis.md), [`QLF_Morphogenesis`](lean/QLF_Morphogenesis.lean) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
 | Life: generate and select | [Evolution.md](Evolution.md), [Quantum_Biology.md](Quantum_Biology.md), [ZFA_DNA.md](ZFA_DNA.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
 | Minds and collectives | [Consciousness.md](Consciousness.md), [QLF_as_Intelligence.md](QLF_as_Intelligence.md), [Game_Theory_QLF.md](Game_Theory_QLF.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
 
