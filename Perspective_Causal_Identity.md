@@ -35,3 +35,36 @@ If G2 fails, the result rules out identifying the reduced transition state
 with the full prefix-reachability record. If G2 passes, report that bounded
 negative result without extrapolation. Physical causal accessibility and
 the correspondence between terminal words and physical faces remain B-OPEN.
+
+## Results
+
+Protocol commit: `10e46b8180d13c90090fda68006611233309dd58`.
+
+Run `python3 perspective_causal_identity.py`; the deterministic record is
+[data/perspective_causal_identity.json](data/perspective_causal_identity.json).
+
+- G1: 1,248 first-closure leaves through depth 6; all 456 prefix comparisons
+  matched the separately enumerated absolute-word/phase index.
+- G2: the 456 prefixes collapse into 384 reduced-state classes. The record
+  does not reconstruct absolute terminal identity.
+- G3: all 72 same-state distinct-prefix pairs have nonempty, equal relative
+  languages and disjoint absolute terminal sets. For example, prefixes
+  `^+^` and `+^^` share the same reduced state. Both accept suffix `-vv`
+  with scalar phase -1, but the terminal words are `^+^-vv` and `+^^-vv`.
+- G4: prefix identity plus the suffix language reconstructs the absolute
+  event IDs throughout the screen.
+
+The underlying reason is structural. For distinct equal-length words p and q,
+no word can have both as prefixes. For a nonempty relative continuation set L,
+the sets pL and qL are therefore disjoint even when L is identical. Thus a
+record that identifies p and q cannot determine their absolute future cones
+on that domain. The argument is about prefix order and word identity, not a
+new machine-checked Lean theorem. An explicit event quotient may identify
+some words, but its compatibility with reachability and its physical meaning
+must be justified independently.
+
+This result complements the existing relative continuation repair, rather
+than invalidating it. Physical Markov-blanket access and the correspondence
+between terminal word IDs and physical faces remain B-OPEN. The next gate
+is a specified event quotient (or retained identity) and a causal access
+map whose compatibility with prefix order can be falsified.
