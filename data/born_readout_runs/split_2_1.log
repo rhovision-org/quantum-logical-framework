@@ -1,0 +1,12 @@
+checkpoint /tmp/claude-0/-home-user/d4303421-6c39-541c-a1a9-91d5765bfae4/scratchpad/bundle_ck/split_2_1.jsonl: 0 target pairs done, 820 to run
+
+===== CERTIFIED capacity R = split:2,1: 180288 geometries, 820 absorbing operators, 600 states
+  certified annihilator degree: 15..34;  primes per certificate: 12..27
+  nothing-closes  33758
+  finite          11810
+  summable        0
+  marginal        0
+  divergent       134720
+  with a repeated root in the support: none
+  supports at or below the threshold (|lambda|^2 exact for x^2+n factors; ~ = other):
+started 2026-11-17T09:02:34Z finished 2026-11-17T09:21:10Z

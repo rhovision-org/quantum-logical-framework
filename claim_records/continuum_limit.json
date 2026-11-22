@@ -1,0 +1,176 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-CONTINUUM-LIMIT-001",
+  "version": "0.3.0-draft",
+  "source_revision": "3d147d4d3feb1bb67821ab0b37e6d270cd049a37",
+  "informal_statement": "Issue #301 milestone 1: labeling the edges of a triangulated 2D torus by a history's fluxoid data and reading the labels as Regge edge lengths does not give a geometry determined by ZFA closure. The current labeling is finer than the closure class; the axis labeling is constant on closure. The construction is rejected by its pre-registered kill conditions.",
+  "approximation_or_regime": {
+    "name": "Fluxoid-labeled Regge toy model",
+    "description": "Periodic 10x10 lattice, each square split by its diagonal; two-axis twist histories of length <= 8 as walks from the origin; labels from the walk current (A) or the action vector (B); lengths l = l_ref g(|n|) for four monotone g; Euclidean vertex deficits.",
+    "validity_limits": "2D Euclidean only, where the Regge action is topological (Gauss-Bonnet). No Lorentzian signature, no refinement limit, no d >= 3."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.FluxoidRegge.div_smooth",
+      "QLF.FluxoidRegge.smooth_preserves_closure",
+      "QLF.FluxoidRegge.plaquette_circulates",
+      "QLF.FluxoidRegge.current_not_class_function",
+      "QLF.FluxoidRegge.axisLabel_closed"
+    ],
+    "statement_scope": "Smoothing by any kernel commutes with the lattice divergence and preserves div = 0 for returning histories; a closed, count-balanced plaquette history has nonzero circulation, so ZFA is not the face identity; two histories in one closure class carry different currents; the axis labeling vanishes on count-balanced histories. Deficit angles are not formalized."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_FluxoidRegge.lean",
+      "lean/QLF_LinkClosure.lean"
+    ],
+    "type": "link current of a history on a periodic lattice, its smoothing, and a two-plaquette witness"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "Five new anchors added to QLF_AxiomAudit and the exact-footprint baseline (513 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound, or none."
+  },
+  "inputs": [
+    {
+      "name": "edge label",
+      "value": "walk current (A) or action-vector component (B)",
+      "provenance": "derived",
+      "source": "QLF.LinkClosure.walkCurrent, QLF.LinkClosure.netCount"
+    },
+    {
+      "name": "length map",
+      "value": "g in {1+m/4, 1+m/2, 1+m, sqrt(1+m)}",
+      "provenance": "declared",
+      "source": "Continuum_Limit.md section 1; tested for parameter dependence (K4)"
+    },
+    {
+      "name": "closure class",
+      "value": "signed action vector (single-body closure-test class)",
+      "provenance": "derived",
+      "source": "QLF.PerspectiveHolography.closureTests; closure is count balance"
+    }
+  ],
+  "interpretation": {
+    "map": "history -> edge labels -> Regge edge lengths -> vertex deficits",
+    "formal_status": "The labeling and smoothing facts are formal; deficits are floating-point numerics.",
+    "noncircularity_test": "Kill conditions K1-K7 and the verdict rule were committed (3d147d4) before fluxoid_regge.py existed. The construction could have passed K3; it did not."
+  },
+  "strange_loop": {
+    "name": "fluxoid labels -> Regge geometry -> closure invariant returned",
+    "levels": [
+      "finite twist history",
+      "edge labeling on the triangulated torus",
+      "Regge edge lengths and vertex deficits",
+      "finite closure invariant"
+    ],
+    "return_level": "the closure verdict, through the divergence of the (smoothed) current",
+    "conservative_return": "The closure verdict returns: div of the current, smoothed or not, is zero exactly for returning histories (div_walkCurrent, smooth_preserves_closure). The geometry does not return the closure class: it is not a class function (current_not_class_function; 143 geometries in the closed class), and the axis labeling that is a class function is constant on closure.",
+    "noncircularity_witness": "The verdict rule was pre-registered; K3 and K7 failed against a prior that allowed them to pass.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: QLF_FluxoidRegge anchors. N: fluxoid_regge.py, floating-point deficits at tolerance 1e-9; exact rational smoothing.",
+    "defeater": "A labeling that is a function of the closure class and varies across closed histories, with a Regge geometry that returns the class.",
+    "proof_obligation": {
+      "domain": "two-axis twist histories on the 10x10 torus",
+      "codomain": "vertex deficit vectors",
+      "forward_map": "walk current -> lengths l_ref g(|n|) -> deficits",
+      "return_map": "div of the (smoothed) current -> closure verdict; no map from deficit vector to closure class exists for labelings A or B",
+      "composite_identity_on": "the closure verdict only; it fails on closure classes for the geometry",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_FluxoidRegge.lean (smooth_preserves_closure, current_not_class_function)",
+      "imported_axioms": "none",
+      "falsifier": "already falsified for labelings A and B; a new labeling must pass K3 and K7"
+    }
+  },
+  "observable": {
+    "symbol": "face obligations, vertex deficits, geometries per closure class",
+    "baseline": "ZFA => all zero (K1, K2); one geometry per class (K3)",
+    "uncertainties": "deficits compared at 1e-9; all counts exact"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "No empirical measurement. Pre-registered kill conditions K1-K7 in Continuum_Limit.md, run by exhaustive enumeration to length 8.",
+    "failure_condition": "Verdict rule: reject if labeling A fails K3 or K4, unless labeling B passes K3 and K7.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "construction rejected",
+    "comparator": "pre-registered verdict rule",
+    "uncertainty": "none for the counts",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Smoothing commutes with div and preserves closure; ZFA is not the face identity; current is not a class function; axis labels vanish on closure.",
+    "N": "fluxoid_regge.py at L=10, lengths <= 8: K1, K2, K3, K7 fail; K4, K5, K6 pass. Flat closed histories are exactly the zero-current ones under all four length maps.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the QLF_FluxoidRegge anchors.",
+    "interpretation": "A different complex or labeling might pass; the rejection covers labelings A and B on this complex only.",
+    "numerical": "Deficit zero-tests at 1e-9 could misclassify a near-flat geometry.",
+    "empirical": "Not applicable.",
+    "conceptual": "In 2D the Regge action is topological, so no action convergence can be tested here."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, kill conditions and verdict rule stated before the run."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No geometry map that is a class function was found."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return PARTIAL: the closure verdict returns through div; the Regge geometry does not return the closure class."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "3d147d4d3feb1bb67821ab0b37e6d270cd049a37",
+    "reference_documents": [
+      "Continuum_Limit.md",
+      "Holographic.md",
+      "Open_Problems.md",
+      "lean/QLF_FluxoidRegge.lean",
+      "lean/QLF_LinkClosure.lean",
+      "fluxoid_regge.py",
+      "data/fluxoid_regge.json"
+    ],
+    "status": "pre-merge draft record for #301 milestone 1; construction rejected; no bridge promotion"
+  }
+}

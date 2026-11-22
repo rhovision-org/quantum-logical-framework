@@ -1,0 +1,29 @@
+{
+  "N1_open_self_closures": 0,
+  "N2_closed_self_types": {
+    "+I": 5297
+  },
+  "N3_witness": {
+    "a": "^<",
+    "a_open": true,
+    "b": "v>",
+    "b_open": true,
+    "type": "-I"
+  },
+  "N5_open_pair_types": {
+    "+I": 1856,
+    "-I": 3712
+  },
+  "N_hom": [
+    "+I"
+  ],
+  "N_mixed": [
+    "+I",
+    "-I"
+  ],
+  "pass": {
+    "N1": true,
+    "N2": true,
+    "N3": true
+  }
+}

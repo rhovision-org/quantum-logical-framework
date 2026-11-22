@@ -134,6 +134,8 @@ One gauge-twist mechanism, seen from three projections of the 3-axis structure.
 
 **Open:** [`Forces_From_Three_Axes.md`](Forces_From_Three_Axes.md) · [`Electricity.md`](Electricity.md) · [`Weak_Force.md`](Weak_Force.md) · [`Alpha.md`](Alpha.md) · [`Forces_From_Alpha.md`](Forces_From_Alpha.md)
 
+**Draft finite slice:** [`Gluon_Closure_Dynamics.md`](Gluon_Closure_Dynamics.md) — two-channel `F₃²` vertex-gluing model with a finite `d_G` census. GL7 (logical → physical distance) and GL8 (string tension) are out of scope; no QCD/potential claim.
+
 ---
 
 ## 4. Atoms and QED
@@ -157,6 +159,8 @@ Everything here is **downstream of the derived α** ([`Alpha.md`](Alpha.md) §10
 ---
 
 ## 6. Cosmology and the dark sector
+
+**Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and the next formal targets; no physical holography claim is closed.
 
 
 **Connectors:** *gauge 2/8* &rarr; Horizon count closes the 10^122 catastrophe; Omega_Lambda ~ log 2 matched &middot; *high-V epoch* &rarr; Inflation (same field) &middot; *denser logic* &rarr; Dark matter (no particle) &middot; *residual w = -1* &rarr; Dark energy &middot; *event rate* &rarr; H0-calibrated cosmic age; N open &middot; *freeze-out n/p* &rarr; ^4He fraction Y_p ~ 1/4 &middot; *measured values* &rarr; Concordant with LCDM data &middot; *interpretive pillars* &rarr; Divergent on LCDM interpretation &middot; *equation of state* &rarr; Thermodynamic gravity
@@ -191,6 +195,8 @@ same length and opposite charge and baryon number, for every word
 ---
 
 ## 8. Quantum-gravity / TOE pillars
+
+**Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and the next formal targets; no physical holography claim is closed.
 
 QLF meets the three TOE-candidate programs — and reproduces their wins from the substrate. The merged metric-singlet/lattice-Einstein and Manifestation results are **`F`** as exact named statements, but they strengthen the **ToE claim map**, not the physical bridge: their physical readings remain **`B-OPEN`**, and neither closes G3/G5. The ToE index is a map, not evidence ([`Theory_Of_Everything.md`](Theory_Of_Everything.md), [`Manifestation.md`](Manifestation.md), [`Claim_Status.md`](Claim_Status.md)).
 
@@ -239,9 +245,9 @@ no forces and no orbitals put in by hand ([`Chemistry.md`](Chemistry.md)). Nothi
 everything is domains 3–4 assembled.
 
 
-**Connectors:** *saturate* &rarr; shared closure = bond &middot; *H2O, CO2, graphite, rust* &rarr; molecules and carbon allotropes &middot; *Pauli holds them apart* &rarr; crystals and condensates &middot; *(v-2)/2 each* &rarr; closure count &middot; *b1 counts them* &rarr; double bond = ring = one closure &middot; *only k is free* &rarr; reaction class &middot; *free valence for water?* &rarr; hydrophobic / polar &middot; *valence 2 is neutral* &rarr; divalent chains &middot; *backbone carries none* &rarr; folding &middot; *only H-H pays* &rarr; folding &middot; *two liquids (2026)* &rarr; water = two closure inventories &middot; *impurity + bath* &rarr; polaron = composite closure
+**Connectors:** *saturate* &rarr; shared closure = bond &middot; *H2O, CO2, graphite, rust* &rarr; molecules and carbon allotropes &middot; *Pauli holds them apart* &rarr; crystals and condensates &middot; *(v-2)/2 each* &rarr; closure count &middot; *b1 counts them* &rarr; double bond = ring = one closure &middot; *only k is free* &rarr; reaction class &middot; *free valence for water?* &rarr; hydrophobic / polar &middot; *valence 2 is neutral* &rarr; divalent chains &middot; *backbone carries none* &rarr; folding &middot; *only H-H pays* &rarr; folding &middot; *two liquids (2026)* &rarr; water = two closure inventories &middot; *impurity + bath* &rarr; polaron = composite closure &middot; *open strands bind by opposite charge* &rarr; morphogenesis
 
-**Open:** [`Chemistry.md`](Chemistry.md) · [`Protein_Folding.md`](Protein_Folding.md) · [`Polarons_QLF.md`](Polarons_QLF.md) · [`lean/QLF_Unsaturation.lean`](lean/QLF_Unsaturation.lean) · [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`hydrocarbon_census.py`](hydrocarbon_census.py) · [`protein_census.py`](protein_census.py)
+**Open:** [`Chemistry.md`](Chemistry.md) · [`Protein_Folding.md`](Protein_Folding.md) · [`Polarons_QLF.md`](Polarons_QLF.md) · [`lean/QLF_Unsaturation.lean`](lean/QLF_Unsaturation.lean) · [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`hydrocarbon_census.py`](hydrocarbon_census.py) · [`protein_census.py`](protein_census.py) · [`Morphogenesis.md`](Morphogenesis.md) · [`lean/QLF_Morphogenesis.lean`](lean/QLF_Morphogenesis.lean)
 
 **The counting layer.** An atom's valence is what it contributes to a molecule's **closure count**,
 `(valence − 2)/2`, and the cycle rank `b₁ = E − V + 1` counts the closures the molecule carries. That
@@ -258,6 +264,14 @@ contact is a ZFA closure in the literal sense: zero net displacement, count-bala
 keystone ([`QLF_Folding`](lean/QLF_Folding.lean)). The lattice-protein parity rule and the `log 2` contact
 quantum follow; the **mirror no-go** — counting cannot select a handedness — bounds what the census can
 ever answer ([`Protein_Folding.md`](Protein_Folding.md)).
+
+**Morphogenesis: what closure alone can differentiate.** On closures the compatibility graph is
+complete, so it sorts nothing; on open strands binding is an opposite-charge rule, and every local
+event conserves a region's ledger, so closure erases exactly the balanced part
+([`QLF_Morphogenesis`](lean/QLF_Morphogenesis.lean), no axioms). A pre-registered lattice test finds
+that this conserved residue segregates a patternless eight-species population into domains in 1D and
+2D, the classical `A + B → 0` result; a pattern with a preferred scale is open
+([`Morphogenesis.md`](Morphogenesis.md)).
 
 **Polarons as composite closures.** [`Polarons_QLF.md`](Polarons_QLF.md) now has a machine-verified
 substrate core in [`QLF_Polarons`](lean/QLF_Polarons.lean): an open impurity plus bath can form one
@@ -326,6 +340,10 @@ This is the cross-cutting evidence layer. It does not add a thirteenth domain; i
 **Recent additions:** primitive event as reciprocal closure (§2A); ρ-calculus/Rholang capabilities and QKB (§2B); immanent observer/self-model (§3A); active-inference update and self-knowledge-as-bisimulation (§3B). The formal targets [`rho_correspondence_target.md`](verification/strange-loop/rho_correspondence_target.md) and [`self_knowledge_target.md`](verification/strange-loop/self_knowledge_target.md) are `NOT_STARTED`.
 
 **The discipline in one line:** formal closure (`F`) is not physical interpretation (`B-OPEN`) and is not empirical support (`E`). The 375-anchor baseline audits the named formal statements; it does not promote the three-polarizer `1/8`, the α count-to-coupling map, or the SPARC retrospective benchmark to closed physical theorems. A bridge with a first-order `F`/`N` result but no conservative return is `B-OPEN` / `INCOMPLETE`; reserve `INCONCLUSIVE` for a comparator that is ambiguous or fails to discriminate. The defeaters are explicit: a circular bridge, a calibrated mismatch, a failed scale map, or a failed independent replication.
+
+**Draft finite slice:** [`Coincidence_QLF.md`](Coincidence_QLF.md) — CO0 triviality plus the
+CO1/CO2 typed-provenance first-joint-closure schedule. CO3/CO4 remain out-of-scope follow-ups under
+#283; no all-events or causation claim.
 
 ---
 

@@ -87,7 +87,7 @@ Integrated Information Theory measures as integration.
 
 The skeleton verifies the graduation for a bound pair: `bind a b = min a b` (phase-lock to the faster),
 and the bound closure's frequency is **at least each constituent's** (`freq_bind_ge_left`,
-`freq_bind_ge_right`). Iterating up the hierarchy, the most coherent binding sits at the top — the
+`freq_bind_ge_right`). Both are true by definition, since `bind := min`, so it fixes a convention for the bound period rather than deriving promotion ([Morphogenesis.md](Morphogenesis.md) §2). Iterating up the hierarchy, the most coherent binding sits at the top — the
 conscious closure.
 
 **Conscious content = the highest-frequency available closure** (`consciousPeriod = min`,
@@ -251,7 +251,7 @@ hypothesis** (§6) is QLF's proposed — and testable — stance on the felt qua
 | Claim | Status |
 |---|---|
 | Closure frequency `f = 1/R`; shorter period = higher frequency | ✅ Lean (`freq`, `freq_lt_of_lt`) + `QLF_LocalClock` |
-| Binding raises frequency (the graduation) | ✅ Lean (`freq_bind_ge_left`/`_right`) for a bound pair; the gamma/global-workspace identification is a structural reading |
+| Binding raises frequency (the graduation) | ✅ Lean (`freq_bind_ge_left`/`_right`) for a bound pair, definitional (`bind := min`); the gamma/global-workspace identification is a structural reading |
 | Conscious content = highest-frequency available closure | ✅ Lean (`consciousPeriod`, `conscious_internal`) as the structural definition |
 | Cosmic = quiet internal → receive low-frequency external joint closure | ✅ Lean (`conscious_external`, `quieting_shifts_to_external`); the collective/cosmic identification is a reading |
 | Self-awareness = terminating self-modeling closure | Structural (reuses RCA₀ / `full_zeno_prune` termination) |

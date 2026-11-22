@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-DIVERSITY-D3-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "ae29107398f0e5f7afdd96d87f6c8df5dc6ae5c2",
+  "reviewer": "jimscarver",
+  "purpose": "Draft D3 interface-census ledger (#290): the frozen conjugate-boundary join passes interface dependence and closure preservation. D8c2 was not run and no diversity advantage is claimed.",
+  "entries": [
+    {
+      "id": "diversity_d3_interface_dependence",
+      "claim": "With interface_ok(a,b) := last(a) = CONJUGATE[first(b)] and join(a,b) := interface_ok(a,b) and is_zfa(a++b), nonempty bases of length 3 have K_k values 1, 2, 4, and 6 at extension bound 3. The census has 584 bases, 1,544 admitted joins, and 0 closure failures. The relation is therefore interface-dependent and closure-preserving.",
+      "anchors": [],
+      "formal_scope": "Finite twist words of length 1-3 over the 8-twist alphabet; conjugate-boundary join; extension bound 3; canonical word equivalence. K_k is a provisional count, not a probability or independent measure. No homogeneous/heterogeneous comparison (D8c2), no three-axis advantage, no Penrose/persistence/physical claim.",
+      "comparator": "Exhaustive finite census in diversity_interface.py and data/diversity_d3_census.json.",
+      "kill_condition": "Any admitted join not ZFA-closed, or K_k constant across bases at fixed length and extension bound (refuting interface dependence).",
+      "status": "DRAFT",
+      "source": "Diversity_Interface_Census_D3.md; diversity_interface.py; tests/test_diversity_interface.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}
