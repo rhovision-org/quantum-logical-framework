@@ -41,6 +41,8 @@ interaction; the logical complexity inside them is far larger.
 | Closure is a walk back to the origin of `ℤ⁴`; most of possibility never closes | [Closure_Walk.md](Closure_Walk.md) |
 | Every terminating computation is a ZFA string | [Universality.md](Universality.md) |
 | No finite closure is final | [Law_Of_Exceptions.md](Law_Of_Exceptions.md) |
+| Timing: listening takes time, closure does not; first shared closure; first-completion counts | [Event_Timing_QLF.md](Event_Timing_QLF.md), [Coincidence_QLF.md](Coincidence_QLF.md), [Closure_Uncertainty_QLF.md](Closure_Uncertainty_QLF.md) (draft programs with finite reference implementations) |
+| How much construction a history needs: its assembly index | [Assembly_Index_QLF.md](Assembly_Index_QLF.md) (computed through length 10; Lean open) |
 | Learning from one observation: the MrE update, specified and proved | [MrE_Update.md](MrE_Update.md), [MRE.md](MRE.md) |
 | Mathematics from the substrate | [Mathematics_From_QLF.md](Mathematics_From_QLF.md), [Category_Theory_QLF.md](Category_Theory_QLF.md) |
 | Two-phase / strange-loop bootstrapping; conservative return; primitive event, ρ/QKB and observer layers | [Mathematics_From_QLF.md](Mathematics_From_QLF.md) §2, [Philosophy.md](Philosophy.md) §3d, [Strange_Loops.md](Strange_Loops.md) §2A–§3B, [Quantum_Knowledge_Base.md](Quantum_Knowledge_Base.md) |
@@ -80,11 +82,14 @@ interaction; the logical complexity inside them is far larger.
 | The electron: the simplest closure, a plane loop | [Spin_QLF.md](Spin_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
 | **The proton: the simplest isolated imbalance.** No closure shorter than six carries baryon number (the junction winding); the proton word closes at six with baryon number +1, and at least `2ⁿ` histories of length `6 + 2n` carry it | [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md), [SEX.md](SEX.md), `QLF_BaryonWinding`, [Manifestation.md](Manifestation.md) (`proton_simplest_isolated_imbalance`, `proton_ways_unbounded`), [`QLF_Manifestation`](lean/QLF_Manifestation.lean) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Particles and the Standard Model | [Standard_Model.md](Standard_Model.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
+| Three colours from three axes: necessity and existence | [Diversity_Quark_Emergence.md](Diversity_Quark_Emergence.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Atoms | [Atomic_Structure_QLF.md](Atomic_Structure_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
 | Molecules: a bond is a shared closure | [Chemistry.md](Chemistry.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
 | Folding | [Protein_Folding.md](Protein_Folding.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
+| Morphogenesis: closure erases the balanced part and the conserved residue differentiates | [Morphogenesis.md](Morphogenesis.md), [`QLF_Morphogenesis`](lean/QLF_Morphogenesis.lean) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
 | Life: generate and select | [Evolution.md](Evolution.md), [Quantum_Biology.md](Quantum_Biology.md), [ZFA_DNA.md](ZFA_DNA.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
-| Minds and collectives | [Consciousness.md](Consciousness.md), [Conscious_Update_Rule.md](Conscious_Update_Rule.md), [Diversity_Novel_Outcome_E1.md](Diversity_Novel_Outcome_E1.md), [QLF_as_Intelligence.md](QLF_as_Intelligence.md), [Game_Theory_QLF.md](Game_Theory_QLF.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
+| Does diversity compose into advantage? (program #290: a cross-type witness passes; the advantage screens tested so far fail) | [Diversity_Composition_QLF.md](Diversity_Composition_QLF.md), [Diversity_Novel_Outcome_E1.md](Diversity_Novel_Outcome_E1.md), [Diversity_Interface_D3.md](Diversity_Interface_D3.md), [Diversity_Interface_Census_D3.md](Diversity_Interface_Census_D3.md), [Diversity_Continuation_D8c.md](Diversity_Continuation_D8c.md), [Diversity_Advantage_D8c2a.md](Diversity_Advantage_D8c2a.md), [Diversity_Revision_D8c2b.md](Diversity_Revision_D8c2b.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
+| Minds and collectives | [Consciousness.md](Consciousness.md), [Conscious_Update_Rule.md](Conscious_Update_Rule.md), [QLF_as_Intelligence.md](QLF_as_Intelligence.md), [Game_Theory_QLF.md](Game_Theory_QLF.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
 
 ## 5. Forces and the cosmos
 
@@ -94,10 +99,12 @@ interaction; the logical complexity inside them is far larger.
 | The relativity principle: what the census proves and what it does not yet | [Relativity_Principle.md](Relativity_Principle.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
 | Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs: [`QLF_MeadTransaction`](lean/QLF_MeadTransaction.lean), [`QLF_MagneticOrientation`](lean/QLF_MagneticOrientation.lean)) | [3 Forces](FlowChart.md#3-forces) |
 | Gravity from balance; distance equals delay | [Gravity_From_Delay.md](Gravity_From_Delay.md), [Gravity.md](Gravity.md), [Quantum_Gravity.md](Quantum_Gravity.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
+| Does binding contract space? Tested with both ledgers derived: the orientation ledger does not predict contraction | [Spatial_Response_Derived.md](Spatial_Response_Derived.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
+| A toy continuum limit, fluxoids to Regge geometry: rejected as an identification | [Continuum_Limit.md](Continuum_Limit.md), [Stationary_Action.md](Stationary_Action.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
 | **Metric = singlet; lattice divergence/Einstein equations** | [Einstein_Equations.md](Einstein_Equations.md) §6d–§6e, [Conformal_Comparison.md](Conformal_Comparison.md) (no local rescaling among letter substitutions; C1 in general open), `QLF_MetricSinglet`, `QLF_LatticeDivergence` — formal representational result under explicit premises; physical gravity bridge **open** | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
 | Cosmic age/redshift: external CCC+TL benchmark and open QLF clock bridge | [Gupta_CCC_TL.md](Gupta_CCC_TL.md), [Gupta_ClockConventions.md](Gupta_ClockConventions.md), [Gupta_ScaleFree.md](Gupta_ScaleFree.md), [AgeOfUniverse.md](AgeOfUniverse.md) — B-OPEN; substrate tick count N remains open | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
 | Cosmic expansion by delay; dark energy and dark matter | [Cosmological_Constant.md](Cosmological_Constant.md), [DarkMatter.md](DarkMatter.md) | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
-| Holography, stated precisely | [Holography_Audit.md](Holography_Audit.md) | [8 Quantum gravity](FlowChart.md#8-quantum-gravity--toe-pillars) |
+| Holography, stated precisely | [Holography_Audit.md](Holography_Audit.md), [Perspective_Holography_StageC.md](Perspective_Holography_StageC.md) | [8 Quantum gravity](FlowChart.md#8-quantum-gravity--toe-pillars) |
 
 ## 6. Boundaries: what is open
 
@@ -105,6 +112,7 @@ interaction; the logical complexity inside them is far larger.
 |---|---|---|
 | Time-reversed clock domains and observational boundary | [Time_Reversed_Clock_Domains.md](Time_Reversed_Clock_Domains.md) — proposed paired-history/antimatter correspondence; B-OPEN | [6 Cosmology](FlowChart.md#6-cosmology-and-the-dark-sector) |
 | The gap registry | [Open_Problems.md](Open_Problems.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
+| Closing bridges: which can close now, and with which tools | [Bridge_Tools.md](Bridge_Tools.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
 | Strange-loop / conservative-return bridge discipline; ρ/QKB and active-inference/bisimulation targets; map ≡ territory | [Strange_Loops.md](Strange_Loops.md), [Map_Is_Territory.md](Map_Is_Territory.md), [rho_correspondence_target.md](verification/strange-loop/rho_correspondence_target.md), [self_knowledge_target.md](verification/strange-loop/self_knowledge_target.md), [Claim_Status.md](Claim_Status.md) | [Methods and evidence](FlowChart.md#methods-and-evidence-paper-i-v03) |
 | The six Millennium reformulations, each one bridge axiom | [Millennium.md](Millennium.md) | [9 Millennium](FlowChart.md#9-the-millennium-prize-program) |
 | Beyond the Standard Model | [Beyond_Standard_Model.md](Beyond_Standard_Model.md) | [10 Beyond the SM](FlowChart.md#10-beyond-the-sm) |
