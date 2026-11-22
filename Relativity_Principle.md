@@ -401,6 +401,58 @@ For a two-body contact-interaction walk on `ℤ³` the conservation law is now d
 | 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
 | 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
 
+## 6b. Stage 4: how a boost acts on the walk's states
+
+Stage 4 compares amplitudes between frames, and an amplitude is an inner product of states. The
+lattice fixes one frame, so no operator on the walk's states is a boost. The comparison map has to
+be defined. Jim approved this definition on 2026-11-22:
+
+1. **States.** A finite sum of plane waves `Σ |k⟩ ⊗ v_k`, each spinor `v_k` in the walk's
+   positive-energy band at `k`, with `k` and the mass of size at most `κ`.
+2. **Energy.** Each mode carries the walk's own energy `E(k)` (`diracWalk_dispersion`).
+3. **Momentum.** A Lorentz map `Λ` (`QLF_InteractingKinematics.Lorentz`) sends `(E(k), k)` to
+   `(E′, k′)`, and the mode lands at `k′`.
+4. **Spin.** With `A ∈ SL(2,ℂ)` covering `Λ` ([`lean/QLF_LorentzCover.lean`](lean/QLF_LorentzCover.lean)),
+   the spinor turns by `S(A) = fix slash ⊗ A + fix slash̄ ⊗ (Aᴴ)⁻¹`, using the walk's own
+   handedness split.
+5. **Landing.** `S(A) v_k` is projected onto the walk's positive band at `k′` and rescaled by
+   `√(E(k)/E(k′))`.
+6. **Domain.** Defined only while the boosted packet stays long-wavelength (`S′ ≤ 1`, §5b).
+
+The spin part is borrowed from the continuum for now. Deriving it from a moving closure loop
+([`lean/QLF_Inertia.lean`](lean/QLF_Inertia.lean)) is the native alternative, not yet attempted.
+
+### Pre-registration: does the walk's band carry Dirac covariance to second order?
+
+The map is a covariant comparison only if the walk's band transforms like a Dirac band up to
+`O(κ²)`. A first-order defect would be a frame dependence at `O(L_P/λ)`, which breaks the
+principle at low energy. [`boost_states_check.py`](boost_states_check.py) measures it. This
+section was committed before the script was run on the walk. Only the continuum calibration was
+run beforehand, to fix the sign conventions.
+
+**Quantity.** For a walk step with positive-band projector `P(k)` and energy `E(k)`, the covariant
+projector is `Π(k) = E(k) P(k) β`, the walk analogue of `(p̸ + m)/2`. For a boost of rapidity `η`
+along axis `i`, `S = exp(η α_i / 2)`, the defect is `‖S Π(k) S⁻¹ − Π(k′)‖_max / E′`. It vanishes
+for the continuum Dirac operator.
+
+**Grid.** Twelve directions (seed `20261122`), mass ratios `m/|k| ∈ {0.5, 1}`, the three boost
+axes, `η = 0.5`, and `κ ∈ {0.08, 0.04, 0.02, 0.01, 0.005}`. The graded number is the log–log slope
+of the worst defect against `κ`.
+
+**Slices.** The same walk is graded at two time slices: `raw` (`massStep(m) · handed(k)`, the
+Lean `diracWalk`) and `half` (`massStep(m/2) · handed(k) · massStep(m/2)`). They differ by a
+`k`-independent unitary and have the same spectrum.
+
+**Criteria.**
+
+| Check | Pass | Fail |
+|---|---|---|
+| Calibration: continuum Dirac defect | below `10⁻¹²` | otherwise the script is wrong and nothing is graded |
+| **Graded: `half` slope** | `≥ 1.8`: covariance holds to second order, and stage 4 proceeds on the half-step slice | `< 1.5`: a first-order frame dependence. Stage 4b fails as defined and is reported as failed, not redefined |
+| `raw` slope (expectation, not graded) | about `1`, because the product `massStep · handed` has a second-order term `[mβ, α·k]` that the symmetric slice removes | — |
+
+A slope between `1.5` and `1.8` is inconclusive and leads to a finer grid, not a verdict.
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
