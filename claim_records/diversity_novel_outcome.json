@@ -1,0 +1,173 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-DIVERSITY-E1-001",
+  "version": "0.3.0-draft",
+  "source_revision": "18b563552c4d4e27aca5b3632cb49e3597e89fb5",
+  "informal_statement": "Issue #290 E1 / gate D8b on the concatenation relation: an open history never closes with itself, and a closed one composed with itself always folds to +I. Complementary open pairs close to both +I and -I (minimal witness ^ and v). So the -I closure type has no homogeneous generator: N_hom = {+I}, N_mixed = {+I, -I}.",
+  "approximation_or_regime": {
+    "name": "Concatenation relation, fold types",
+    "description": "Composition = concatenation; type of a closed history = its fold (+I or -I), the single-body observational class.",
+    "validity_limits": "One relation and one type map. No advantage measure (D8c), persistence (D9) or physical relevance (D10)."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.DiversityNovelOutcome.self_compose_balanced_iff",
+      "QLF.DiversityNovelOutcome.self_composition_type_one",
+      "QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure",
+      "QLF.DiversityNovelOutcome.minimal_complementary_pair"
+    ],
+    "statement_scope": "All lengths for N1 and N2; explicit witnesses for N3. The N5 type census (|a|,|b| <= 3) is numerical."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_DiversityNovelOutcome.lean",
+      "lean/QLF_EdgeSign.lean",
+      "lean/QLF_ClosureUnitarity.lean"
+    ],
+    "type": "composition outcome classification"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "New anchors added to QLF_AxiomAudit and the exact-footprint baseline (535 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound, or none."
+  },
+  "inputs": [
+    {
+      "name": "type",
+      "value": "fold of a closed history",
+      "provenance": "derived",
+      "source": "QLF.EdgeSign.fold_eq_connectionPhase"
+    },
+    {
+      "name": "composition",
+      "value": "concatenation",
+      "provenance": "derived",
+      "source": "QLF.ClosureUnitarity.fold_append"
+    }
+  ],
+  "interpretation": {
+    "map": "pair of histories -> closure type of the composite",
+    "formal_status": "N1-N3 formal at all lengths; N5 numerical.",
+    "noncircularity_test": "N1-N5 and the verdict rule were committed (pre-registration) before diversity_novel_outcome.py existed; N2 could have failed."
+  },
+  "strange_loop": {
+    "name": "open parts -> joint closure -> closure type",
+    "levels": [
+      "open histories",
+      "complementary joins",
+      "closure types (+I, -I)"
+    ],
+    "return_level": "closure types",
+    "conservative_return": "Self-composition returns only +I; complementary composition returns +I and -I.",
+    "noncircularity_witness": "The type map is the observational class, fixed before the run; no diversity measure enters it.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: QLF_DiversityNovelOutcome anchors. N: diversity_novel_outcome.py.",
+    "defeater": "A homogeneous generator of -I (refuted by self_composition_type_one); or a showing that the fold is not a legitimate type under #290's D2.",
+    "proof_obligation": {
+      "domain": "pairs of histories",
+      "codomain": "closure types",
+      "forward_map": "(a, b) -> a ++ b",
+      "return_map": "closed history -> fold",
+      "composite_identity_on": "closure types reachable by each generator class",
+      "conservative_return_status": "PROVED",
+      "proof_artifact": {
+        "path": "lean/QLF_DiversityNovelOutcome.lean",
+        "anchors": [
+          "QLF.DiversityNovelOutcome.self_composition_type_one",
+          "QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure"
+        ]
+      },
+      "imported_axioms": "none",
+      "falsifier": "a closed a with fold(a ++ a) = -1"
+    }
+  },
+  "observable": {
+    "symbol": "N_hom, N_mixed",
+    "baseline": "N_hom = 1, N_mixed = 2",
+    "uncertainties": "exact"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "No empirical measurement. Pre-registered N1-N5 in Diversity_Novel_Outcome_E1.md section 1.",
+    "failure_condition": "Verdict rule: N2 failing refutes E1 on this relation.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "E1 holds on concatenation; D8b passes in this class",
+    "comparator": "pre-registered verdict rule",
+    "uncertainty": "none",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Self-composition reaches only +I; complementary composition reaches -I.",
+    "N": "N5: 5,568 closing open pairs with |a|,|b| <= 3, 3,712 of type -I and 1,856 of type +I.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the QLF_DiversityNovelOutcome anchors.",
+    "interpretation": "D8b only; no advantage or persistence.",
+    "numerical": "Not applicable (exact).",
+    "empirical": "Not applicable.",
+    "conceptual": "The novel type is a phase; D3T.6 (PR #299) found the phase is not fixed by boundary records, consistent with it being created by the join."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, tests and verdict rule stated before the run."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No physical apparatus map for the ledger."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return PARTIAL: via the ledger only; the observational return fails."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "18b563552c4d4e27aca5b3632cb49e3597e89fb5",
+    "reference_documents": [
+      "Diversity_Novel_Outcome_E1.md",
+      "Bridge_Tools.md",
+      "lean/QLF_DiversityNovelOutcome.lean",
+      "diversity_novel_outcome.py",
+      "data/diversity_novel_outcome.json"
+    ],
+    "status": "pre-merge draft record for #290 E1; D8b passes on concatenation; D8c, D9, D10 open"
+  }
+}

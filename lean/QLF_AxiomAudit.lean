@@ -133,6 +133,8 @@ import QLF_FluxoidRegge
 import QLF_PhaseAction
 import QLF_TerritoryReturn
 import QLF_SpatialResponseDerived
+import QLF_ConformalComparison
+import QLF_DiversityNovelOutcome
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -189,6 +191,15 @@ import QLF_Majorana
 #print axioms QLF.SpatialResponseDerived.unit_symmetric_mean
 #print axioms QLF.SpatialResponseDerived.orthogonal_brings_closer
 #print axioms QLF.SpatialResponseDerived.opposite_pushes_apart
+#print axioms QLF.ConformalComparison.count_dilate
+#print axioms QLF.ConformalComparison.dilate_balanced
+#print axioms QLF.ConformalComparison.fold_dilate_odd
+#print axioms QLF.ConformalComparison.fold_dilate_even
+#print axioms QLF.ConformalComparison.local_dilation_breaks_balance
+#print axioms QLF.DiversityNovelOutcome.self_compose_balanced_iff
+#print axioms QLF.DiversityNovelOutcome.self_composition_type_one
+#print axioms QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure
+#print axioms QLF.DiversityNovelOutcome.minimal_complementary_pair
 #print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit

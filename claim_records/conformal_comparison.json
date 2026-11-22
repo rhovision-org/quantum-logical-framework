@@ -1,0 +1,174 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-CONFORMAL-C1-001",
+  "version": "0.3.0-draft",
+  "source_revision": "2d8436d2335a141fcb35324172819b9aeada62e9",
+  "informal_statement": "Issue #302 C1: among position-dependent letter substitutions (a frame among the 384 signed axis permutations and a multiplicity at each position), ZFA admits no local scale or frame symmetry. Its symmetry is global: 96 fold-preserving frames times the odd dilations; even dilations preserve ZFA and erase the phase. This is outcome 2 of C1 and meets the issue's failure criterion, so the intrinsic Weyl route has no first step in this class.",
+  "approximation_or_regime": {
+    "name": "Letter-substitution class",
+    "description": "Histories of length <= 6 over the 8-twist alphabet; position-dependent frames and multiplicities k_p in {1,2,3}; ZFA = count balance; fold = Pauli product.",
+    "validity_limits": "Letter substitutions only. Closure-respecting rewrites that are not letter substitutions are not tested."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.ConformalComparison.count_dilate",
+      "QLF.ConformalComparison.dilate_balanced",
+      "QLF.ConformalComparison.fold_dilate_odd",
+      "QLF.ConformalComparison.fold_dilate_even",
+      "QLF.ConformalComparison.local_dilation_breaks_balance"
+    ],
+    "statement_scope": "Global dilations preserve balance at every length; odd ones preserve the fold and even ones send it to 1; one local dilation witness breaks balance. The exhaustive W3/W4 field censuses and the 96-frame count are numerical."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_ConformalComparison.lean",
+      "lean/QLF_ClosureUnitarity.lean",
+      "lean/QLF_MultiObserver.lean"
+    ],
+    "type": "symmetry classification of a closure predicate"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "New anchors added to QLF_AxiomAudit and the exact-footprint baseline (535 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound, or none."
+  },
+  "inputs": [
+    {
+      "name": "ZFA",
+      "value": "count balance",
+      "provenance": "derived",
+      "source": "QLF.countBalanced"
+    },
+    {
+      "name": "fold",
+      "value": "Pauli product of a history",
+      "provenance": "derived",
+      "source": "QLF.twistMatrixFold"
+    },
+    {
+      "name": "transformation class",
+      "value": "position-dependent letter substitutions",
+      "provenance": "declared",
+      "source": "Conformal_Comparison.md section 1"
+    }
+  ],
+  "interpretation": {
+    "map": "letter substitution -> preserved or broken ZFA verdict and fold",
+    "formal_status": "Dilation facts formal; field and frame censuses numerical.",
+    "noncircularity_test": "W1-W5 and the verdict rule were committed before conformal_comparison.py was run; W3 and W4 could have found non-constant survivors."
+  },
+  "strange_loop": {
+    "name": "closure rule -> its symmetry group -> closure rule",
+    "levels": [
+      "twist histories with the ZFA predicate",
+      "letter-substitution fields",
+      "the subgroup preserving ZFA and the fold"
+    ],
+    "return_level": "the ZFA predicate",
+    "conservative_return": "Every surviving transformation returns ZFA and the fold unchanged (odd dilations, 96 frames); no local one survives.",
+    "noncircularity_witness": "The class is defined without reference to conformal geometry and the survivors were counted, not assumed.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: QLF_ConformalComparison anchors. N: conformal_comparison.py, exhaustive to length 6.",
+    "defeater": "A non-constant letter-substitution field that preserves ZFA on every balanced history of some length; or a local symmetry from another primitive class, which would reopen C1 outside this class.",
+    "proof_obligation": {
+      "domain": "letter-substitution fields",
+      "codomain": "ZFA verdicts and folds",
+      "forward_map": "field -> transformed history",
+      "return_map": "transformed history -> ZFA verdict and fold",
+      "composite_identity_on": "global odd dilations and the 96 frames",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_ConformalComparison.lean (fold_dilate_odd, dilate_balanced, local_dilation_breaks_balance)",
+      "imported_axioms": "none",
+      "falsifier": "a non-constant field preserving ZFA (none found to length 6)"
+    }
+  },
+  "observable": {
+    "symbol": "ZFA-preserving fields",
+    "baseline": "constant fields only (W3, W4)",
+    "uncertainties": "exact enumeration"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "No empirical measurement. Pre-registered W1-W5 in Conformal_Comparison.md section 1, run by exhaustive enumeration.",
+    "failure_condition": "Verdict rule: if W3 and W4 pass there is no local symmetry in the class (outcome 2).",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "no local symmetry; global symmetry = 96 frames x odd dilations",
+    "comparator": "pre-registered verdict rule",
+    "uncertainty": "none",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Dilation laws and a local-dilation counterexample.",
+    "N": "conformal_comparison.py: W3 3 of 9/81/729 fields survive, all constant; W4 1 of 147,456 frame pairs survives at every position pair; W5 96 of 384 frames.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the QLF_ConformalComparison anchors.",
+    "interpretation": "The class is letter substitutions; the result does not exclude a local symmetry built from other primitives.",
+    "numerical": "Not applicable (exact).",
+    "empirical": "Not applicable.",
+    "conceptual": "W4's literal pass condition was mis-posed; the measured result is stronger and is reported as such."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, tests and verdict rule stated before the run."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No physical apparatus map for the ledger."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return PARTIAL: via the ledger only; the observational return fails."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "2d8436d2335a141fcb35324172819b9aeada62e9",
+    "reference_documents": [
+      "Conformal_Comparison.md",
+      "Bridge_Tools.md",
+      "lean/QLF_ConformalComparison.lean",
+      "conformal_comparison.py",
+      "data/conformal_comparison.json"
+    ],
+    "status": "pre-merge draft record for #302 C1; outcome 2 (global only); no conformal-gravity promotion"
+  }
+}

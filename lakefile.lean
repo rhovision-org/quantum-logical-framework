@@ -344,6 +344,8 @@ lean_lib QLF where
     `QLF_PerspectiveHolography,
     `QLF_TerritoryReturn,
     `QLF_SpatialResponseDerived,
+    `QLF_ConformalComparison,
+    `QLF_DiversityNovelOutcome,
     `QLF_MeadTransaction,
     `QLF_MagneticOrientation,
     `QLF_ClockRedshift,
