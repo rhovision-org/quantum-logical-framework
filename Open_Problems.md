@@ -636,6 +636,11 @@ a product state, and the null-cone step is singlet uniqueness (`product_annihila
 
 ## Open — structural / Lean-anchoring
 
+**Draft finite slice (PR #288):** [`Spatial_Response_QLF.md`](Spatial_Response_QLF.md) tests `ΔS` and
+`Δd` as independent finite ledgers. Binding (`Δd < 0`) splits evenly between contraction and expansion,
+so the physical bridge is not proved; SR4–SR7 (gravity, propagation/interaction, timing, 3D) are
+out-of-scope follow-ups under #287. Ledger: [`claim_records/spatial_response_slice.json`](claim_records/spatial_response_slice.json).
+
 | Item | Status | Where |
 |---|---|---|
 | **Gluon closure dynamics finite slice** (PR #289) | 🟣 **Finite two-channel vertex model; GL7/GL8 out of scope.** `F₃²` colour multisets, create/glue moves with `p+q+r=0` and `symp(q,r)≠0`, witness audit, and shortest `d_G` to a colour singlet. First-singlet moves reduce in both channels; not every move does. No physical spatial distance, string tension, coupling, or full QCD claim | [`Gluon_Closure_Dynamics.md`](Gluon_Closure_Dynamics.md), `gluon_closure_dynamics.py`, `claim_records/gluon_closure_slice.json` |
