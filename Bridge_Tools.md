@@ -129,7 +129,7 @@ each one locates its gap precisely:
 Under possibilism none of these failures counts against its bridge. Each records one route that does
 not close, together with the first step a route that does would have to take.
 
-The deferred items are being run the same way: #302 C1 ([Conformal_Comparison.md](Conformal_Comparison.md)), #290 E1 ([Diversity_Novel_Outcome_E1.md](Diversity_Novel_Outcome_E1.md)), #286 ([Gluon_Abelian_Control.md](Gluon_Abelian_Control.md)), #140 ([Lepton_Stage_B.md](Lepton_Stage_B.md)), and #234 ([Gupta_ScaleFree.md](Gupta_ScaleFree.md)).
+The deferred items are being run the same way: #302 C1 ([Conformal_Comparison.md](Conformal_Comparison.md)), #290 E1 ([Diversity_Novel_Outcome_E1.md](Diversity_Novel_Outcome_E1.md)), #286 ([Gluon_Abelian_Control.md](Gluon_Abelian_Control.md)), #140 ([Lepton_Stage_B.md](Lepton_Stage_B.md)), #234 ([Gupta_ScaleFree.md](Gupta_ScaleFree.md)), and #278 ([Conscious_Update_Rule.md](Conscious_Update_Rule.md)).
 
 **Claim records** (all `B-OPEN`):
 [`stationary_action.json`](claim_records/stationary_action.json),
