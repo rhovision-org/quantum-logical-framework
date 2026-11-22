@@ -60,12 +60,18 @@ def neighbours_shift(d):
 
 
 def hop(n, rng, d):
-    """Every strand hops to a uniformly random nearest neighbour."""
+    """Lazy walk: each strand stays with probability 1/2, else hops to a random neighbour.
+
+    Amendment A1 (Morphogenesis.md §4): with every strand hopping every step, strands on the two
+    sublattices of a bipartite lattice never share a site, so the lattice splits into two
+    independent populations and every nearest-neighbour bond compares them. Staying with
+    probability 1/2 removes the parity.
+    """
     dirs = neighbours_shift(d)
     k = len(dirs)
-    moves = rng.multinomial(n, [1.0 / k] * k)  # shape n.shape + (k,)
-    out = np.zeros_like(n)
-    for i, (ax, s) in enumerate(dirs):
+    moves = rng.multinomial(n, [0.5] + [0.5 / k] * k)  # shape n.shape + (k+1,)
+    out = moves[..., 0].copy()
+    for i, (ax, s) in enumerate(dirs, start=1):
         out += np.roll(moves[..., i], s, axis=ax)
     return out
 
@@ -256,11 +262,15 @@ def main():
     for d in configs:
         g = R[f"d{d}_G"]
         sg, seg = g["S_mean"][-1], g["S_se"][-1]
-        ctrl = max(R[f"d{d}_R_all"]["S_mean"][-1], R[f"d{d}_D"]["S_mean"][-1])
-        cse = max(R[f"d{d}_R_all"]["S_se"][-1], R[f"d{d}_D"]["S_se"][-1])
+        # Amendment A2: a control with no measurable bond (S = nan at every seed) is reported as
+        # not measurable and left out of the comparison; the remaining control decides.
+        cs = [(R[f"d{d}_{c}"]["S_mean"][-1], R[f"d{d}_{c}"]["S_se"][-1]) for c in ("R_all", "D")]
+        cs = [(m, e if not math.isnan(e) else 0.0) for m, e in cs if not math.isnan(m)]
+        ctrl = max(m for m, _ in cs)
+        cse = max(e for _, e in cs)
         p1 = sg >= 0.2 and (sg - ctrl) > 3 * math.hypot(seg, cse)
         kill = sg < 0.1 or (sg - ctrl) <= 3 * math.hypot(seg, cse)
-        V[f"P1_d{d}"] = {"S_G": sg, "S_ctrl_max": ctrl, "pass": bool(p1), "kill": bool(kill)}
+        V[f"P1_d{d}"] = {"S_G": sg, "S_ctrl_max": ctrl, "controls_measured": len(cs), "pass": bool(p1), "kill": bool(kill)}
         lo, hi = {1: (-0.32, -0.18), 2: (-0.60, -0.40)}[d]
         sG = g["rho_slope_late"]
         V[f"P2_G_d{d}"] = {"slope": sG, "window": [lo, hi], "pass": bool(lo <= sG <= hi)}
