@@ -112,6 +112,16 @@ A randomized matching of the eight types is **not** used as a control. A random 
 
 What the test can and cannot show. P1 passing would show that the algebra's conserved ledger alone differentiates a diverse population, and that this vanishes when the ledger is broken. This is the method's rule 4 test: the claim would be false for a closure rule without a conserved charge (R_all), and the run measures that. It would not show anything beyond the classical `A + B → 0` result. QLF's contribution is the derivation of the charge rule and its conservation from closure (rungs 1 to 3), with no species, rates or forces put in.
 
+## 4b. Pre-registration: the graded large-lattice run and the lower bound
+
+Fixed 2026-11-22, after §5 and the two exploratory `d = 2` runs reported there, and before this run. Because those runs informed it, this is a second registered test, not a blind one.
+
+**Model.** Variant G only, `d = 2`, 1024×1024 sites, 16384 steps, 4 seeds (`--p2prime 0..3`). Everything else is as §4. The hop is computed on occupied cells only (`hop_sparse`). That gives the same distribution as `hop` and reproduces it exactly on test seeds.
+
+**Predictions.**
+- **P2′.** The late density exponent of the seed-mean `ρ`, fitted over `t ∈ [T/16, T]`, lies in `[−0.60, −0.40]`. This is the same window as P2, around the classical `−1/2`, which Bramson and Lebowitz (1988) proved rigorously for `d < 4`. Expected from the 512×512 run: a narrow pass near `−0.58`. A fail leaves the `d = 2` law unreached by this simulator at this size and duration. It does not touch P1.
+- **P5 (structural).** At every sample the lattice's `ℓ¹` ledger equals its initial value, and the strand mass is at least that value (`surviving_mass_ge_ledger`). Any violation is a code bug.
+
 ## 5. Result
 
 Run of the pre-registered configuration (8 seeds each), [`data/morphogenesis_census.json`](data/morphogenesis_census.json). Final-time values, mean ± standard error over seeds:

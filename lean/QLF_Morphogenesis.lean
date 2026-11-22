@@ -54,6 +54,12 @@ conserved residue is the initial fluctuation of the ledger, and that residue is 
 domains. Whether it does on a lattice is a numerical question, tested in
 [`morphogenesis_census.py`](../morphogenesis_census.py) (`Morphogenesis.md` §4).
 
+## §4  A lower bound on what survives
+
+* **`surviving_mass_ge_ledger`** — under every sequence of local events, the twist mass left in a
+  region is at least `ℓ¹(ledger)`, the region's total unmatched charge. **`lower_bound_attained`**
+  shows the bound is sharp.
+
 ## Scope
 
 Bookkeeping in the method's sense: conservation and its consequences, proved exactly. These theorems
@@ -235,5 +241,84 @@ theorem hop_flux (A : List Twist) (Sx Sy : List (List Twist)) :
     ledger (A :: Sy) = ledger Sy + disp A ∧
     ledger (A :: Sx) + ledger Sy = ledger Sx + ledger (A :: Sy) := by
   refine ⟨?_, ?_, ?_⟩ <;> simp only [ledger_cons] <;> abel
+
+-- ==========================================
+-- §4  A lower bound on what survives
+-- ==========================================
+
+/-- The `ℓ¹` size of a ledger value: the total unmatched twist count over the four axes. -/
+def l1 (v : Ledger) : ℤ := |v.1| + |v.2.1| + |v.2.2.1| + |v.2.2.2|
+
+theorem l1_add_le (a b : Ledger) : l1 (a + b) ≤ l1 a + l1 b := by
+  obtain ⟨a1, a2, a3, a4⟩ := a
+  obtain ⟨b1, b2, b3, b4⟩ := b
+  simp only [l1, Prod.mk_add_mk]
+  have h1 := abs_add_le a1 b1
+  have h2 := abs_add_le a2 b2
+  have h3 := abs_add_le a3 b3
+  have h4 := abs_add_le a4 b4
+  linarith
+
+/-- The eight twist counts add up to the length. -/
+theorem counts_sum_length (h : List Twist) :
+    h.count Twist.up + h.count Twist.down + h.count Twist.left + h.count Twist.right +
+      h.count Twist.slash + h.count Twist.backslash + h.count Twist.plus +
+      h.count Twist.minus = h.length := by
+  induction h with
+  | nil => rfl
+  | cons t h ih =>
+    cases t <;> simp <;> omega
+
+/-- **A history's boundary state is no larger than its length.** -/
+theorem l1_disp_le_length (h : List Twist) : l1 (disp h) ≤ h.length := by
+  have hc : ((h.count Twist.up : ℤ) + h.count Twist.down + h.count Twist.left +
+      h.count Twist.right + h.count Twist.slash + h.count Twist.backslash +
+      h.count Twist.plus + h.count Twist.minus) = (h.length : ℤ) := by
+    exact_mod_cast counts_sum_length h
+  have k : ∀ a b : ℤ, 0 ≤ a → 0 ≤ b → |a - b| ≤ a + b := fun a b ha hb =>
+    abs_sub_le_iff.2 ⟨by linarith, by linarith⟩
+  simp only [l1, disp]
+  have e1 := k (h.count Twist.up) (h.count Twist.down) (by positivity) (by positivity)
+  have e2 := k (h.count Twist.left) (h.count Twist.right) (by positivity) (by positivity)
+  have e3 := k (h.count Twist.slash) (h.count Twist.backslash) (by positivity) (by positivity)
+  have e4 := k (h.count Twist.plus) (h.count Twist.minus) (by positivity) (by positivity)
+  linarith
+
+/-- The total twist mass of a region. -/
+def mass (T : List (List Twist)) : ℕ := (T.map List.length).sum
+
+theorem l1_ledger_le_mass : ∀ T : List (List Twist), l1 (ledger T) ≤ mass T
+  | [] => by simp [l1, ledger, mass]
+  | A :: T => by
+    rw [ledger_cons]
+    have h1 := l1_add_le (disp A) (ledger T)
+    have h2 := l1_disp_le_length A
+    have h3 := l1_ledger_le_mass T
+    have hm : (mass (A :: T) : ℤ) = A.length + mass T := by
+      simp [mass]
+    rw [hm]
+    linarith
+
+/-- **The lower bound.** Whatever local events occur, the twist mass left in a region is at least
+    the `ℓ¹` size of its initial ledger: closure removes matched pairs and nothing more. On a finite
+    lattice with periodic boundary the whole lattice is one region, so the density can never fall
+    below `ℓ¹(global ledger) / V` — the floor the finite-size runs reach. -/
+theorem surviving_mass_ge_ledger {S T : List (List Twist)}
+    (h : Relation.ReflTransGen Event S T) : l1 (ledger S) ≤ mass T := by
+  rw [events_conserve_ledger h]
+  exact l1_ledger_le_mass T
+
+/-- **The bound is attained**: `[^, v, ^]` closes down to `[^]`, one twist, which is `ℓ¹` of its
+    ledger. -/
+theorem lower_bound_attained :
+    Relation.ReflTransGen Event [[Twist.up], [Twist.down], [Twist.up]] [[Twist.up]] := by
+  have e1 := Event.promote [Twist.up] [Twist.down] [[Twist.up]]
+  have e2 : Event [[Twist.up] ++ [Twist.down], [Twist.up]] [[Twist.up]] :=
+    Event.emit _ _ (by unfold countBalanced; decide)
+  exact (Relation.ReflTransGen.single e1).tail e2
+
+theorem lower_bound_attained_mass :
+    l1 (ledger [[Twist.up], [Twist.down], [Twist.up]]) = mass [[Twist.up]] := by
+  decide
 
 end QLF.Morphogenesis

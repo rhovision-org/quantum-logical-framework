@@ -76,6 +76,55 @@ def hop(n, rng, d):
     return out
 
 
+def hop_sparse(n, rng, d):
+    """The same lazy walk as `hop`, computed only on occupied cells (fast at low density).
+
+    Same distribution as `hop` (zero-count cells draw nothing, so on test seeds it reproduces
+    `hop` exactly). Used for the P2' run (Morphogenesis.md §4b).
+    """
+    dirs = neighbours_shift(d)
+    k = len(dirs)
+    idx = np.nonzero(n)
+    counts = n[idx]
+    moves = rng.multinomial(counts, [0.5] + [0.5 / k] * k)
+    out = np.zeros_like(n)
+    np.add.at(out, idx, moves[:, 0])
+    shape = n.shape
+    for i, (ax, s) in enumerate(dirs, start=1):
+        coords = list(idx)
+        coords[ax] = (coords[ax] + s) % shape[ax]
+        np.add.at(out, tuple(coords), moves[:, i])
+    return out
+
+
+def l1_ledger(n):
+    """ell^1 size of the whole lattice's ledger: sum over axes of |N_+ - N_-|."""
+    tot = n.reshape(-1, 8).sum(axis=0)
+    return int(sum(abs(int(tot[2 * a]) - int(tot[2 * a + 1])) for a in range(4)))
+
+
+def run_p2prime(size, T, seed, times):
+    """P2': d = 2, variant G, sparse hop; also checks the Lean lower bound at every sample."""
+    rng = np.random.default_rng(seed)
+    n = rng.poisson(1.0 / 8.0, size=(size, size, 8)).astype(np.int64)
+    n = close_G(n, rng)
+    floor = l1_ledger(n)
+    V = size * size
+    rec = {"t": [], "rho": [], "S": [], "floor_rho": floor / V, "bound_ok": True}
+    tset = set(times)
+    for t in range(1, T + 1):
+        n = hop_sparse(n, rng, 2)
+        n = close_G(n, rng)
+        if t in tset:
+            mass = int(n.sum())
+            if mass < floor or l1_ledger(n) != floor:
+                rec["bound_ok"] = False
+            rec["t"].append(t)
+            rec["rho"].append(mass / V)
+            rec["S"].append(stat_S(n, 2))
+    return rec
+
+
 def close_G(n, rng):
     """The algebra: conjugate strands close pairwise; each site keeps its ledger."""
     for i, j in CONJ:
@@ -223,7 +272,19 @@ def slope(ts, ys, lo):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[1])
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--p2prime", type=int, metavar="SEED",
+                    help="run one seed of the P2' configuration (Morphogenesis.md §4b)")
     args = ap.parse_args()
+
+    if args.p2prime is not None:
+        size, T = (1024, 16384)
+        rec = run_p2prime(size, T, 20000 + args.p2prime, logtimes(T, 15))
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data",
+                            f"morphogenesis_p2prime_seed{args.p2prime}.json")
+        with open(path, "w") as fh:
+            json.dump(rec, fh, indent=1)
+        print("wrote", path, "bound_ok", rec["bound_ok"])
+        return 0
 
     if args.quick:
         configs = {1: (256, 256), 2: (32, 64)}
