@@ -109,6 +109,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClockCalibration.age_rate_product_calibration_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.age_ratio_calibration_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.one_scale_fits_two_ages_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClockDomains.accessible_nonconstant": [],
   "QLF.ClockDomains.alternative_completions": [],
   "QLF.ClockDomains.canonical_admissible": [],
@@ -579,6 +594,35 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ConformalComparison.count_dilate": [
+    "propext"
+  ],
+  "QLF.ConformalComparison.dilate_balanced": [
+    "propext"
+  ],
+  "QLF.ConformalComparison.fold_dilate_even": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConformalComparison.fold_dilate_odd": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConformalComparison.local_dilation_breaks_balance": [],
+  "QLF.ConsciousUpdateRule.independent_count": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConsciousUpdateRule.independent_mode": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConsciousUpdateRule.reset_percept_below": [],
+  "QLF.ConsciousUpdateRule.reset_threshold": [],
   "QLF.ConservativeReturn.F_closed": [],
   "QLF.ConservativeReturn.F_invariants": [],
   "QLF.ConservativeReturn.conservative_return": [],
@@ -696,6 +740,26 @@
   "QLF.Discoveries2026.charge3W_antiparticle": [
     "propext"
   ],
+  "QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.minimal_complementary_pair": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.self_compose_balanced_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.self_composition_type_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.FieldEnergy.J_sq_le": [
     "Classical.choice",
     "Quot.sound",
@@ -804,6 +868,42 @@
     "propext"
   ],
   "QLF.GaussLaw.stationary_iff_gauss": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.create_closes_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.create_total": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.first_singlet_move_reduces": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.gate_lengthens_witness": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.glue_closes_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.glue_total": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.same_label_blocked_gated": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.same_label_closes_ungated": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1088,6 +1188,31 @@
     "propext"
   ],
   "QLF.LawOfExceptions.law_of_exceptions": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_balanced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_first_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_length": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_phase": [
+    "Classical.choice",
     "Quot.sound",
     "propext"
   ],
