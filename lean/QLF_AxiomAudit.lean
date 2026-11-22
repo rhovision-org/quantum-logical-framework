@@ -154,6 +154,7 @@ import QLF_Discoveries2026
 import QLF_StrongCP
 import QLF_Majorana
 import QLF_GluonAbelianControl
+import QLF_LeptonStageB
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -209,6 +210,11 @@ import QLF_GluonAbelianControl
 #print axioms QLF.GluonAbelianControl.same_label_blocked_gated
 #print axioms QLF.GluonAbelianControl.same_label_closes_ungated
 #print axioms QLF.GluonAbelianControl.gate_lengthens_witness
+#print axioms QLF.LeptonStageB.rung_length
+#print axioms QLF.LeptonStageB.rung_balanced
+#print axioms QLF.LeptonStageB.rung_first_return
+#print axioms QLF.LeptonStageB.rung_phase
+#print axioms QLF.LeptonStageB.rung_fold
 #print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit

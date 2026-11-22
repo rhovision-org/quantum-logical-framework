@@ -1164,6 +1164,31 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LeptonStageB.rung_balanced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_first_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_length": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LinkAction.first_variation": [
     "Classical.choice",
     "Quot.sound",
