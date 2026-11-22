@@ -129,6 +129,8 @@ each one locates its gap precisely:
 Under possibilism none of these failures counts against its bridge. Each records one route that does
 not close, together with the first step a route that does would have to take.
 
+The deferred items are being run the same way. The first is #302 C1 ([Conformal_Comparison.md](Conformal_Comparison.md)).
+
 **Claim records** (all `B-OPEN`):
 [`stationary_action.json`](claim_records/stationary_action.json),
 [`continuum_limit.json`](claim_records/continuum_limit.json),
