@@ -1,7 +1,7 @@
 {
   "record_id": "QLF-DIVERSITY-D3T-001",
   "record_type": "test_ledger",
-  "version": "0.3.1-draft",
+  "version": "0.3.2-draft",
   "source_revision": "1c817e71b765b0f34db121f9559e9f148247fddc",
   "reviewer": "jimscarver",
   "purpose": "Draft D3T gate-census ledger (#290): the typed-provenance residual-obligation relation passes interface dependence, closure preservation, provenance separation, first-closure integrity, and continuation-profile boundary sufficiency, but fails phase-boundary sufficiency. D8c2 was not run and remains unpassed.",
@@ -16,15 +16,15 @@
       "status": "DRAFT",
       "source": "Diversity_Obligation_Census_D3T.md; diversity_obligation.py; tests/test_diversity_obligation.py",
       "registration": {
-        "specification_revision": null,
-        "registered_at": null,
+        "specification_revision": "a114c03f187b6e0de444f3bfdf992128858f15e8",
+        "registered_at": "2026-11-20T11:12:19-05:00",
         "data_access": "not_established",
-        "observable": null,
-        "analysis_rule": null,
-        "uncertainty": null,
-        "rejection_rule": null,
-        "dataset_or_experiment": null,
-        "chronology_evidence": null
+        "observable": "Gate verdicts D3T.1-D3T.6 of Diversity_Obligation_D3T.md section 5: the set of distinct continuation profiles C_T(a) (D3T.1); is_zfa of every obligation-matching candidate join (D3T.2); profile differences within equal aggregate-data groups and equal raw-word groups (D3T.3); earlier all-origin ZFA prefixes (D3T.4); boundary-record groups with more than one continuation profile (D3T.5); boundary-record groups containing both closure phases (D3T.6).",
+        "analysis_rule": "Exhaustive enumeration of every two-origin provenance-typed history in the frozen panels; each gate is a Boolean verdict on exact integer counts, computed by the frozen relation R_T (section 3) with no weight, score or fitted parameter.",
+        "uncertainty": "none: exact integer enumeration of a finite space, no sampling and no floating point; reproducibility is checked by diversity_obligation.py --self-test and --run against data/diversity_obligation_census.json.",
+        "rejection_rule": "As frozen in section 5: D3T.1 fails if every base has the same profile; D3T.2 fails on any admitted join that is not ZFA-closed; D3T.3 fails if no aggregate or no word separation exists; D3T.4 fails on any earlier all-origin closure; D3T.5 fails on any boundary group with multiple profiles; D3T.6 fails if any boundary group contains both phases. A failed gate is recorded, not repaired by a post-hoc field, weight or tie-breaker.",
+        "dataset_or_experiment": "Computed census, no external data. Panel A: open base length 3, extension bound 3. Panel B: open base length 4, extension bound 2. Whole-history phase: closed two-origin histories of lengths 4 and 6. Output: data/diversity_obligation_census.json.",
+        "chronology_evidence": "Git order on research/diversity-obligation-d3t: pre-registration a114c03 (2026-11-20T11:12:19-05:00, Diversity_Obligation_D3T.md only, no census code or data) precedes implementation and census cdca65e (11:16:43-05:00), results note 7e29db9 (11:16:54-05:00) and kill-condition wording 2b8a047 (11:17:31-05:00, claim record only). Diversity_Obligation_D3T.md is byte-identical between a114c03 and the PR head. Git timestamps cannot exclude an unrecorded exploratory run before a114c03, so data_access stays not_established and the entry stays DRAFT."
       }
     }
   ]
