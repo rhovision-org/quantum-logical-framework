@@ -2063,6 +2063,109 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SharedReality.chain_without_relay_fails": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.endpoints_share_only_constants": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.global_zfa_from_all": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.global_zfa_not_from_pair": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.ledger_transfer_fails_without_pairs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.link_domain_not_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.no_signal_to_C": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.pairBuilt_ledger_transfer": [
+    "propext"
+  ],
+  "QLF.SharedReality.pairBuilt_zfa_iff": [
+    "propext"
+  ],
+  "QLF.SharedReality.pair_domain_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_closes_at_B": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_domain_reconstructs_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_domain_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_ledger_transfer": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_phase_transfer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_zfa_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.shared_iff_overlap": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.single_body_territorial_share_only_constants": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.territorial_record_reconstructs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.view_changes_only_through_own_events": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.zfa_A_not_from_BC": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.zfa_not_from_one_body": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SpatialResponseDerived.joint_step_identity": [
     "Classical.choice",
     "Quot.sound",
