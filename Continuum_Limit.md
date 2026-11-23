@@ -361,3 +361,56 @@ The strength does not grow linearly with the source either. At `r = 10`, `δℓ/
 Open, and the next registered step if #301 continues: a nonlocal source. In this map, a `1/r` length
 perturbation needs a change to the census that reaches every scale, such as a persistent closure that
 is itself a walk, rather than a set of forbidden or slowed sites. The claim record stays `B-OPEN`.
+
+## §8 Stage 2c: sources that add ways, balancing, and the far field (pre-registration)
+
+Jim, 2026-11-23, after §7: *"close interaction can expand space balancing. closer or further
+contracts space depending on non-magnetic mass."* In the census-length map the sign of the response
+should be the sign of the change in the number of ways: §7's sources remove ways and stretch lengths.
+This stage tests the other sign, a source that mixes both, and whether the far field depends only on
+one number. Frozen before any 2c number is computed.
+
+### 8.1 Sources
+
+All use the general finite-rank form. A step onto a source site `a` is weighted by `w_a`, so with
+`Λ = diag(1 − w_a)` on the source set `S`,
+
+`G'(x, y) = G(x, y) − g_xᵀ Λ (I + (G_SS − I) Λ)⁻¹ g_y` for `x, y ∉ S`,
+
+which is §7's exclusion for `w = 0` and delay for `w = 1/8`. A **shared** site has `w = 9/8`: a
+shared closure supplies one more way at that site, one extra option among the eight twists.
+
+| source | sites | weights |
+|---|---|---|
+| `share1` | the origin | shared |
+| `line4` | `0, e_y, 2e_y, 3e_y` (the sites `^^^vvv` visits, no circulation) | shared |
+| `plaq4` | `0, e_y, e_x + e_y, e_x` (the sites `^>v<` visits, one circulation) | shared |
+| `mixed` | the origin excluded, its six neighbours shared | `0` and `9/8` |
+
+Same lattice, triangulation, box and lengths as §7. Measured: the shell mean of `δℓ/ℓ` on axis
+edges at midpoint distance `r = 2 … 10` from the source centroid.
+
+**Ways charge.** `Q = 1ᵀ Λ (I + (G_SS − I) Λ)⁻¹ 1`. Far from the source `g_x ≈ G(x)·1`, so the
+far-field prediction for an edge `(u, v)` is `δℓ/ℓ ≈ Q ḡ(u) ḡ(v) / G(v − u)`, with `ḡ(u)` the mean
+of `G(u − a)` over the source sites. `Q > 0` (ways removed) predicts expansion and `Q < 0` (ways
+added) predicts contraction.
+
+### 8.2 Tests
+
+| | Claim | Passes if | Prior |
+|---|---|---|---|
+| C1 | adding ways contracts space | for `share1`, `line4`, `plaq4`, the shell mean `δℓ/ℓ < 0` at every `r = 2 … 10` | pass |
+| C2 | the far field is the monopole | for all four sources, measured / predicted shell mean lies in `[0.85, 1.15]` at `r = 8, 9, 10` | pass |
+| C3 | far away, only `Q` matters, not the shape | at `r = 10`, `(δℓ/ℓ)/Q` for `line4` and `plaq4` agree within 5% | pass |
+| C4 | balancing: near and far responses differ in sign | for `mixed`, the shell mean changes sign between `r = 2` and `r = 10`, and its sign at `r = 10` is the sign of `Q` | unknown |
+
+Also reported, not decision inputs: the falloff exponent of each source (expected near 2, as in §7)
+and `Q` itself. If a source makes `I + (G_SS − I)Λ` singular or any `G'` non-positive in the box, it is
+reported as invalid and its rows are dropped.
+
+**Reading rule.** C1–C3 together support: *the sign of the spatial response is the sign of the change
+in ways, and the far field depends only on the net ways charge*. C4 tests the balancing reading:
+a source can expand space close in and contract it further out, or the reverse. None of this can
+give a `1/r` law, since every finite source falls like `r^{−2}` here (§7). In the unsigned census a
+circulation is invisible (§4.1), so C3 tests shape, not magnetism; a magnetic test needs the signed
+census and its own registration.
