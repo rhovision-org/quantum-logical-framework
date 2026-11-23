@@ -464,3 +464,59 @@ blindness found here says nothing about magnetism.
 **Open after 2c.** (1) A `1/r` law: no finite source in this map gives one, so it must come from an
 extended or nonlocal source, or from a different length map. (2) Magnetism: needs the signed census.
 Each needs a pre-registration before any number is computed.
+
+## §10 Stage 2d: geometry from joint closures with the source (pre-registration)
+
+Jim, 2026-11-23, after §9: *"is the joint closure 1/r?"* and *"joint closure is not arbitrary it is
+necessary."* The count of joint closures between two places is the census Green's function, and it
+falls as `1/r`: `r·G(r)` is 0.686, 0.649, 0.639, 0.638, 0.637 at `r = 2, 4, 8, 10, 15`, tending to
+`2/π` (the table of §7). §7–§9 read an edge length from the ways *between the edge's ends*, so a source
+enters only through ways source → `u` and source → `v`, two legs, and the response is `r^{−2}`. A
+source can reach a place only through joint closures with it ([`QLF_SharedEvent`](lean/QLF_SharedEvent.lean),
+[`QLF_ElectronClosure`](lean/QLF_ElectronClosure.lean)), so the response at a place is fixed by the
+one leg, the source's joint closures with that place. That map is taken as forced, not chosen for its
+falloff. Frozen before any 2d number is computed.
+
+### 10.1 Map
+
+For a source with weights as in §8.1, `K = Λ (I + (G_SS − I) Λ)⁻¹`, and the **joint-closure field**
+of the source at `x ∉ S` is
+
+`φ(x) = 1ᵀ K g_x`, so `φ(x) ≈ Q G(x)` far away.
+
+`φ` is the change in the number of ways the source shares with `x`, weighted as `Q` is: positive when
+the source removes ways. An edge `(u, v)` has
+
+`ℓ(u, v) = ℓ₀(u, v) (1 + λ (φ(u) + φ(v)) / 2)`, `ℓ₀ = 1/G(v − u)`,
+
+with `λ = 10⁻³`, so the response is first order. The coupling `λ` is not derived, and only results
+independent of it at first order are decision inputs.
+
+### 10.2 Sources and measure
+
+The four sources of §8.1 (`share1`, `line4`, `plaq4`, `mixed`) and the three exclusion sources of §6.2
+(`n = 1, 8, 27`, `w = 0`). Same lattice, triangulation, box and interior-edge rule as §7.
+
+Primary measure, chosen in the light of §7's background contamination: the **curvature change**
+`ΔK(R) = (1/λ) Σ ℓ₀ (ε − ε₀)` over interior edges with midpoint within `R` of the source centroid.
+Reported, not a decision input: the full `(1/λ) Σ (ℓ ε − ℓ₀ ε₀)`. Validity check: rerun at `λ = 2·10⁻³`;
+if any `ΔK(10)` changes by more than 2%, the run is not first order and is reported as invalid. Any
+degenerate tetrahedron is counted and excluded as in §7.
+
+### 10.3 Tests
+
+| | Claim | Passes if | Prior |
+|---|---|---|---|
+| D1 | vacuum outside the source: curvature sits at the source | for every source, `ΔK(6)` and `ΔK(8)` lie within 10% of `ΔK(10)` | unknown |
+| D2 | Gauss law: the enclosed curvature is the ways charge | `ΔK(10)/Q` lies within 10% of its median over the seven sources | pass if D1 passes |
+| D3 | removing ways is positive curvature | `sign ΔK(10) = sign Q` for every source | pass |
+
+Calibration, not a test: the shell mean `δℓ/ℓ` falls with exponent `k ≈ 1`, which the map builds in.
+
+**Reading rule.** D1–D3 together: the one-leg joint-closure geometry is flat outside a source and
+carries the source's ways charge as its enclosed curvature, the structure of the spatial part of a
+Newtonian mass (linearized Schwarzschild in isotropic coordinates, where an expanding `1/r` conformal
+factor encloses positive curvature). D3 then reads sign: removing ways is positive mass, adding ways
+(joint closure, unlike poles) is negative. **Kill:** if D1 fails, the curvature is spread through the
+vacuum and the one-leg map does not give a mass. Not claimed by any outcome: the time part of the
+metric, light bending, or the value of the coupling.
