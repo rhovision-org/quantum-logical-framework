@@ -201,11 +201,26 @@ def build() -> dict[str, object]:
     }
 
 
+def run_2a_prime() -> dict[str, object]:
+    """Stage 2a' (Continuum_Limit.md 6.1, frozen in 9c00b36): fresh scales 64 and 128."""
+    rows = {}
+    for s in (64, 128):
+        a, b, c = length((s, 0, 0)), length((s, s, 0)), length((s, s, s))
+        m = max(abs(x) for x in deficits(type_lengths(a, b, c)).values())
+        rows[str(s)] = {"b/a": b / a, "c/a": c / a, "max_abs_deficit": m, "s2_max": s * s * m}
+    v1 = all(2.4 <= r["s2_max"] <= 3.0 for r in rows.values())
+    r128 = rows["128"]
+    v2 = abs(r128["b/a"] - math.sqrt(2)) < 2e-4 and abs(r128["c/a"] - math.sqrt(3)) < 2e-4
+    return {"prereg": "Continuum_Limit.md section 6.1 @ 9c00b36", "rows": rows,
+            "V1": v1, "V2": v2, "verdict_2a_prime": "PASS" if v1 and v2 else "FAIL"}
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--json", type=Path, default=OUTPUT)
     args = p.parse_args()
     data = build()
+    data["stage_2a_prime"] = run_2a_prime()
     args.json.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n")
     for key in ("primary_l_eq_inverse_G", "sensitivity_four_axis"):
         print(key, "p =", round(data[key]["decay_exponent_p"], 3))
@@ -213,6 +228,7 @@ def main() -> int:
             print("  s", r["s"], r["ratios"], r["max_abs_deficit"], r["deficits"])
     print("M1", data["M1_positive_volume"], "M2", data["M2_vacuum_flat_in_large"],
           "M3", data["M3_decay_p_ge_1_5"], "verdict", data["verdict_2a"])
+    print("2a'", data["stage_2a_prime"])
     return 0
 
 

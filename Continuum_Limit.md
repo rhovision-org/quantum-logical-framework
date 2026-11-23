@@ -291,3 +291,73 @@ all pass. If B2 fails for both the exclusion and the delay model, the reading is
 modification of the walk produces a mass-like `1/r` perturbation in this length map**, and a 2b
 that wants gravity needs a nonlocal source (a persistent closure whose ways reach to infinity), which
 would be a separate pre-registration.
+
+## §7 Results: stage 2a′ and stage 2b
+
+Run: [`census_geometry.py`](census_geometry.py) (2a′, stored under `stage_2a_prime` in
+[`data/census_geometry.json`](data/census_geometry.json)) and [`census_source.py`](census_source.py)
+(2b, output [`data/census_source.json`](data/census_source.json); the Green's-function table is
+cached in [`data/census_source_green.json`](data/census_source_green.json)). Regression tests:
+[`tests/test_census_geometry.py`](tests/test_census_geometry.py),
+[`tests/test_census_source.py`](tests/test_census_source.py).
+
+### 7.1 Stage 2a′: PASS
+
+| scale | `s² × max deficit` | `b/a − √2` | `c/a − √3` |
+|---|---|---|---|
+| 64 | 2.672 | `9.7·10⁻⁵` | `1.3·10⁻⁴` |
+| 128 | 2.671 | `2.4·10⁻⁵` | `3.2·10⁻⁵` |
+
+V1 and V2 pass. The vacuum curvature of the census length is the lattice's own `s^{−2}`
+anisotropy with coefficient `2.67`, and the geometry is Euclidean in the large. The registered
+failure of §5 stands as the record of the absolute threshold.
+
+### 7.2 Stage 2b: a local source does not act as a mass
+
+**Registered verdict: neither model acts as a mass.** B1, B2 and B3 fail for the exclusion source
+and for the delay source.
+
+| | exclusion `n = 1, 8, 27` | delay `n = 1, 8, 27` | Verdict |
+|---|---|---|---|
+| B2 falloff `k` of `δℓ/ℓ` | 1.99, 2.11, 2.21 | 1.99, 2.10, 2.20 | **fail, as predicted**: `r^{−2}`, not `r^{−1}` |
+| B1 `ΔK(R) > 0` | negative at `R = 8, 10` for every `n` | the same | **fail** |
+| B3 `q` | undefined (`ΔK(10) < 0`) | undefined | **fail** |
+
+The source does stretch nearby lengths: `δℓ/ℓ` on axis edges is positive, `1.8·10⁻²` at `r = 4` and
+`2.9·10⁻³` at `r = 10` for a single excluded site. But it falls like `r^{−2}`, which is the finite-rank
+structure predicted in §6.2: a local change of the walk alters `G(x, y)` by a term `∝ G(x)G(y)`, and a
+nearest-neighbour length sees it at second order in `1/r`. A static mass perturbs lengths like
+`M/r`. So by the verdict rule, **no local modification of the walk produces a mass-like perturbation
+in this length map.** A 2b that wants gravity needs a nonlocal source, a persistent closure whose
+ways reach to infinity, and that is a separate pre-registration.
+
+The strength does not grow linearly with the source either. At `r = 10`, `δℓ/ℓ` is `2.9, 8.3, 14.4`
+(×`10⁻³`) for `n = 1, 8, 27`, roughly `n^{0.5}`.
+
+**Disclosed deviations and design gaps.**
+
+1. *Degenerate tetrahedra.* Near the source some tetrahedra have no Euclidean realisation: 24, 78 and
+   312 for exclusion (276 for delay at `n = 27`), all within distance `3.3` of the centre. The
+   pre-registration did not say how to treat them. As in milestone 1 they are counted, not repaired,
+   and their edges are excluded like edges touching `S`. This only affects edges inside every `R`
+   used.
+2. *The `ΔK` measure is contaminated by the background.* At `s = 1` the vacuum deficits are large
+   (`≈ 0.8`, §5), so `ΔK` contains a term `(ℓ − ℓ₀) ε₀` that is the source's stretch times the
+   lattice anisotropy, not curvature made by the source. Summed over shells, that term grows with
+   `R`. A post-hoc diagnostic (not a decision input) keeps only `ℓ₀ (ε − ε₀)`. It is negative at every
+   `R ≥ 8` for every source and model, and for `n = 1` it has settled (`−8.07`, `−8.08` at `R = 8, 10`).
+   So B1's failure is not an artefact of the contamination: the curvature the source makes outside
+   its core is negative in total, the opposite sign to a mass.
+
+### 7.3 What milestone 2 establishes
+
+* **A geometry read from one closed history can carry one bit** (`QLF_ClassFactoring`). Geometry has
+  to come from the census.
+* **The census length `1/G` is a good vacuum geometry**: positive at every scale, Euclidean in the
+  large, with curvature equal to the lattice's own anisotropy falling as `2.67/s²` (2a′).
+* **Local sources in it are not masses**: exclusion and delay both stretch nearby lengths, but like
+  `r^{−2}`, with negative integrated curvature outside the core.
+
+Open, and the next registered step if #301 continues: a nonlocal source. In this map, a `1/r` length
+perturbation needs a change to the census that reaches every scale, such as a persistent closure that
+is itself a walk, rather than a set of forbidden or slowed sites. The claim record stays `B-OPEN`.
