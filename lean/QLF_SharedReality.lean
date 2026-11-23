@@ -40,13 +40,28 @@ records of bodies `{A, B}` and `{B, C}`.
   of `B`'s, so `A`'s ZFA verdict is a fact for `B` (`pairBuilt_zfa_iff`).
 * `ledger_transfer_fails_without_pairs`: on general histories it is not.
 
+**§4 Relaying.** A relay is an `AB` shared pair followed by a `BC` pair that re-emits on `B` what
+`B` received (`relay`).
+
+* `relay_ledger_transfer`, `relay_zfa_iff`: on relay-built histories `A`'s ZFA verdict is a fact
+  for `C`.
+* `relay_closes_at_B`: the relay body is itself count-balanced; it passes the record on and keeps
+  no net record of its own.
+* `chain_without_relay_fails`: a pair on each link is not enough. Without the correlation that
+  makes a relay, `C`'s record says nothing about `A`.
+
+**§5 No-signalling.** `no_signal_to_C`, `view_changes_only_through_own_events`: inserting events on
+other bodies anywhere in a history leaves a body's territorial record unchanged. Unlike
+`QLF_ClockIntervention`'s record, which carries the counterpart's length and so signals
+(`record_signals`), this record changes only through events on its own body.
+
 **Scope.** The bodies are the commuting, independent bodies of
 [`QLF_TensorFromClosure`](QLF_TensorFromClosure.lean), and a perspective is a chosen record map.
-That makes §2 close to automatic: nothing can reach `C` except through `B`'s record because no
-event touches two bodies. §3 shows communication *given* the posit that a shared pair puts one
-half on each body; it does not derive that posit, and it does not model relaying (a `BC` pair
-correlated with an `AB` pair). No-signalling for a physically derived record, and accessibility
-from closure dynamics, stay open (see `Holography_Audit.md`, issue #296). No axioms.
+That makes §2 and §5 close to automatic: no single token touches two bodies, so nothing reaches a
+body except through events on it. §3 and §4 show communication *given* the posit that a shared
+pair puts one half on each body; they do not derive that posit, and the relay is a defined
+pattern, not a dynamics that selects it. Deriving accessibility and the shared-pair posit from
+closure dynamics stays open (see `Holography_Audit.md`, issue #296). No axioms.
 
 Part of the [Quantum Logical Framework (QLF)](../README.md).
 -/
@@ -328,5 +343,116 @@ theorem ledger_transfer_fails_without_pairs :
     rw [h]; unfold countBalanced; simp
   unfold countBalanced at h'
   exact absurd h'.2.2.2 (by decide)
+
+/-! ## §4 Relaying through a third body -/
+
+/-- A relay of `t` from `A` to `C` through `B`: an `AB` shared pair, then a `BC` shared pair that
+    re-emits on `B` what `B` received. -/
+def relay (t : Twist) : List Tok3 := [(0, t), (1, t.conj), (1, t), (2, t.conj)]
+
+/-- A three-body history built from relays only. -/
+def RelayBuilt (w : List Tok3) : Prop := ∃ ts : List Twist, w = ts.flatMap relay
+
+lemma proj0_relay (ts : List Twist) : proj 0 (ts.flatMap relay) = ts := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih =>
+    rw [List.flatMap_cons, proj_append, ih]
+    simp [proj, relay]
+
+lemma proj2_relay (ts : List Twist) : proj 2 (ts.flatMap relay) = ts.map Twist.conj := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih =>
+    rw [List.flatMap_cons, proj_append, ih]
+    simp [proj, relay]
+
+lemma proj1_relay (ts : List Twist) :
+    proj 1 (ts.flatMap relay) = ts.flatMap (fun t => [t.conj, t]) := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih =>
+    rw [List.flatMap_cons, List.flatMap_cons, proj_append, ih]
+    simp [proj, relay]
+
+/-- **A relay carries `A`'s ledger to `C`.** -/
+theorem relay_ledger_transfer {w : List Tok3} (hw : RelayBuilt w) (t : Twist) :
+    (proj 0 w).count t = (proj 2 w).count t.conj := by
+  obtain ⟨ts, rfl⟩ := hw
+  rw [proj0_relay, proj2_relay, count_map_conj, conj_conj']
+
+/-- On relay-built histories, `A`'s ZFA verdict is a fact for `C`. -/
+theorem relay_zfa_iff {w : List Tok3} (hw : RelayBuilt w) : BodyZFA 0 w ↔ BodyZFA 2 w := by
+  unfold BodyZFA countBalanced
+  simp only [relay_ledger_transfer hw]
+  simp only [Twist.conj]
+  constructor
+  · rintro ⟨h1, h2, h3, h4⟩; exact ⟨h1.symm, h2.symm, h3.symm, h4.symm⟩
+  · rintro ⟨h1, h2, h3, h4⟩; exact ⟨h1.symm, h2.symm, h3.symm, h4.symm⟩
+
+lemma count_conj_pairs (ts : List Twist) (t : Twist) :
+    (ts.flatMap (fun a => [a.conj, a])).count t = (ts.flatMap (fun a => [a.conj, a])).count t.conj := by
+  induction ts with
+  | nil => rfl
+  | cons a ts ih =>
+    have k1 : (a.conj == t.conj) = (a == t) := by cases a <;> cases t <;> rfl
+    have k2 : (a == t.conj) = (a.conj == t) := by cases a <;> cases t <;> rfl
+    simp only [List.flatMap_cons, List.count_append, ih, List.count_cons, List.count_nil, k1, k2]
+    omega
+
+/-- **The relay itself closes:** `B` passes on everything it receives, so `B` is count-balanced
+    and keeps no net record. -/
+theorem relay_closes_at_B {w : List Tok3} (hw : RelayBuilt w) : BodyZFA 1 w := by
+  obtain ⟨ts, rfl⟩ := hw
+  unfold BodyZFA countBalanced
+  rw [proj1_relay]
+  exact ⟨count_conj_pairs ts Twist.up, count_conj_pairs ts Twist.left,
+    count_conj_pairs ts Twist.slash, count_conj_pairs ts Twist.plus⟩
+
+/-- An `AB` shared pair with no relay. -/
+def pairAB (t : Twist) : List Tok3 := [(0, t), (1, t.conj)]
+
+/-- **Pairs on both links without a relay carry nothing from `A` to `C`.** An `AB` pair and a
+    `BC` pair are each communication, but `C` learns `A`'s balance only when the `BC` pair is
+    correlated with the `AB` pair. -/
+theorem chain_without_relay_fails :
+    ∃ w w' : List Tok3, viewC w = viewC w' ∧ (BodyZFA 0 w ↔ ¬ BodyZFA 0 w') := by
+  refine ⟨pairAB Twist.plus, [], ?_, ?_⟩
+  · apply bodyView_congr
+    simp [proj, pairAB]
+  · constructor
+    · intro h _
+      unfold BodyZFA countBalanced at h
+      simp [proj, pairAB] at h
+      exact absurd h.2.2.2 (by decide)
+    · intro _
+      exact absurd (body_zfa_nil 0) ‹¬ BodyZFA 0 []›
+
+/-! ## §5 No-signalling for the territorial record -/
+
+/-- **No signal without a shared event.** Inserting any word of events on bodies `A` and `B`
+    anywhere in a history leaves `C`'s territorial record unchanged. -/
+theorem no_signal_to_C (p q u : List Tok3) (hu : ∀ x ∈ u, x.1 ≠ 2) :
+    viewC (p ++ u ++ q) = viewC (p ++ q) := by
+  apply bodyView_congr
+  have hu' : proj 2 u = [] := by
+    unfold proj
+    rw [List.filterMap_eq_nil_iff]
+    intro x hx
+    simp [hu x hx]
+  rw [proj_append, proj_append, proj_append, hu', List.append_nil]
+
+/-- **Contrast.** `QLF_ClockIntervention`'s record `(p, q.length)` carries the counterpart's
+    length, so it signals. The territorial record carries only a body's own events, so a body's
+    record changes only through events on that body: in a shared pair, a relay, or its own. -/
+theorem view_changes_only_through_own_events (i : Fin 3) (p q u : List Tok3)
+    (hu : ∀ x ∈ u, x.1 ≠ i) : bodyView i (p ++ u ++ q) = bodyView i (p ++ q) := by
+  apply bodyView_congr
+  have hu' : proj i u = [] := by
+    unfold proj
+    rw [List.filterMap_eq_nil_iff]
+    intro x hx
+    simp [hu x hx]
+  rw [proj_append, proj_append, proj_append, hu', List.append_nil]
 
 end QLF.SharedReality

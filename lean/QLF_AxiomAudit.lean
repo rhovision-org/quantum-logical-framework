@@ -202,6 +202,12 @@ import QLF_ConsciousUpdateRule
 #print axioms QLF.SharedReality.pairBuilt_ledger_transfer
 #print axioms QLF.SharedReality.pairBuilt_zfa_iff
 #print axioms QLF.SharedReality.ledger_transfer_fails_without_pairs
+#print axioms QLF.SharedReality.relay_ledger_transfer
+#print axioms QLF.SharedReality.relay_zfa_iff
+#print axioms QLF.SharedReality.relay_closes_at_B
+#print axioms QLF.SharedReality.chain_without_relay_fails
+#print axioms QLF.SharedReality.no_signal_to_C
+#print axioms QLF.SharedReality.view_changes_only_through_own_events
 #print axioms QLF.SpatialResponseDerived.joint_step_identity
 #print axioms QLF.SpatialResponseDerived.symmetric_mean
 #print axioms QLF.SpatialResponseDerived.unit_symmetric_mean

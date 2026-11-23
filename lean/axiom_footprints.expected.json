@@ -2063,6 +2063,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SharedReality.chain_without_relay_fails": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SharedReality.endpoints_share_only_constants": [
     "Classical.choice",
     "Quot.sound",
@@ -2083,10 +2088,27 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SharedReality.no_signal_to_C": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SharedReality.pairBuilt_ledger_transfer": [
     "propext"
   ],
   "QLF.SharedReality.pairBuilt_zfa_iff": [
+    "propext"
+  ],
+  "QLF.SharedReality.relay_closes_at_B": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_ledger_transfer": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_zfa_iff": [
+    "Quot.sound",
     "propext"
   ],
   "QLF.SharedReality.shared_iff_overlap": [
@@ -2100,6 +2122,11 @@
     "propext"
   ],
   "QLF.SharedReality.territorial_record_reconstructs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.view_changes_only_through_own_events": [
     "Classical.choice",
     "Quot.sound",
     "propext"
