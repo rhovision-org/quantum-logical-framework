@@ -207,4 +207,68 @@ theorem assemblyIndex_le_closed (w : Word) (hw : w ≠ []) :
     ⟨_, closed_assembles_length_sub_one w hw⟩
   exact Nat.sInf_le (assemblesClosed_to_assembles (Nat.sInf_mem hne))
 
+
+/-! ## A library of parts
+
+Assembly can start from a **library** `L` of words already available (for example, closures made
+elsewhere).  `LibPathway L pool n` is a closed-reuse pathway whose pool starts at `L` instead of
+`[]`.  Library words obey the same rule: a closed one is reusable, an open one is used up once.
+
+`libIndex_mono`: if library `L'` is contained in `L` as a multiset (`L' <+~ L`), every word costs at
+most as many joins from `L` as from `L'`.  This is monotonicity, so it holds by construction and is
+not evidence that diversity helps: it cannot fail for any distribution of parts.  A diversity
+*advantage* would need libraries of **equal size**, one diverse and one homogeneous, and that is a
+census question, not this lemma. -/
+
+/-- Closed-reuse pathway starting from library `L`. -/
+inductive LibPathway (L : List Word) : List Word → Nat → Prop
+  | nil : LibPathway L L 0
+  | prim {pool : List Word} {n : Nat} (t : Twist) :
+      LibPathway L pool n → LibPathway L (pool ++ [[t]]) n
+  | join {pool : List Word} {n : Nat} {a b : Word} :
+      LibPathway L pool n → a ∈ pool → b ∈ consume a pool →
+      LibPathway L (consume b (consume a pool) ++ [a ++ b]) (n + 1)
+
+theorem consume_subperm {p q : List Word} (x : Word) (h : p.Subperm q) :
+    (consume x p).Subperm (consume x q) := by
+  unfold consume
+  split
+  · exact h
+  · exact h.erase x
+
+/-- **Simulation.**  A pathway from the smaller library is matched, join for join, by one from
+the larger library whose pool contains it as a multiset. -/
+theorem libPathway_mono {L' L : List Word} (hL : L'.Subperm L) {pool' : List Word} {n : Nat}
+    (h : LibPathway L' pool' n) : ∃ pool, LibPathway L pool n ∧ pool'.Subperm pool := by
+  induction h with
+  | nil => exact ⟨L, LibPathway.nil, hL⟩
+  | prim t _ ih =>
+    obtain ⟨pool, hp, hs⟩ := ih
+    exact ⟨pool ++ [[t]], LibPathway.prim t hp, hs.append (List.Subperm.refl _)⟩
+  | @join pool' n a b _ ha hb ih =>
+    obtain ⟨pool, hp, hs⟩ := ih
+    have ha' : a ∈ pool := hs.subset ha
+    have hb' : b ∈ consume a pool := (consume_subperm a hs).subset hb
+    exact ⟨_, LibPathway.join hp ha' hb',
+      (consume_subperm b (consume_subperm a hs)).append (List.Subperm.refl _)⟩
+
+/-- `w` is available after `n` joins starting from library `L`. -/
+def AssemblesFrom (L : List Word) (w : Word) (n : Nat) : Prop :=
+  ∃ pool, LibPathway L pool n ∧ w ∈ pool
+
+/-- The closure-constrained index relative to a library. -/
+noncomputable def libIndex (L : List Word) (w : Word) : Nat := sInf {n | AssemblesFrom L w n}
+
+/-- **A larger library never costs more.** -/
+theorem libIndex_mono {L' L : List Word} (hL : L'.Subperm L) (w : Word)
+    (hne : {n | AssemblesFrom L' w n}.Nonempty) :
+    libIndex L w ≤ libIndex L' w := by
+  obtain ⟨pool', hp', hw⟩ := Nat.sInf_mem hne
+  obtain ⟨pool, hp, hs⟩ := libPathway_mono hL hp'
+  exact Nat.sInf_le ⟨pool, hp, hs.subset hw⟩
+
+/-- A library that already holds `w` assembles it with no joins. -/
+theorem libIndex_of_mem {L : List Word} {w : Word} (hw : w ∈ L) : libIndex L w = 0 :=
+  Nat.eq_zero_of_le_zero (Nat.sInf_le ⟨L, LibPathway.nil, hw⟩)
+
 end QLF.AssemblyIndex

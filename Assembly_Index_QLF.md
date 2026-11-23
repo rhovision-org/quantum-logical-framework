@@ -448,7 +448,10 @@ that `^v^v` needs only 2 joins. The pathway list plays the role of the DAG in ta
 done too:** `ClosedPathway` keeps a pool in which a closed word survives being joined and an open
 word is consumed, `assemblyIndexClosed` is its least join count, and `assemblyIndex_le_closed` proves
 `a ≤ a_ZFA` by simulating every closed-reuse pathway with an ordinary one. The comb gives
-`a_ZFA ≤ |w| − 1`. Exact lower bounds on `a_ZFA`, which would exhibit the census's gap in Lean, are
+`a_ZFA ≤ |w| − 1`. Starting from a library `L` of available parts, `libIndex_mono` proves that a
+larger library (as a multiset) never costs more joins. That holds by construction for any
+distribution of parts, so it is not evidence that diversity helps; that would need diverse and
+homogeneous libraries of equal size. Exact lower bounds on `a_ZFA`, which would exhibit the census's gap in Lean, are
 open. Target 4 is
 already proved: [`QLF_PhaseRule`](lean/QLF_PhaseRule.lean) `phase_rule_real` shows that every
 count-balanced fold is `+I` or `−I`. The original target list:

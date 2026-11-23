@@ -40,6 +40,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.AssemblyIndex.libIndex_mono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.libIndex_of_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.AssemblyIndex.reuse_saves_a_join": [
     "Classical.choice",
     "Quot.sound",
