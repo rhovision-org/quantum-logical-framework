@@ -936,6 +936,7 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.LocalityDefinitions.pair_shared_closure
 #print axioms QLF.LocalityDefinitions.pair_endpoints_spacelike
 #print axioms QLF.LocalityDefinitions.no_history_connects
+#print axioms QLF.LocalityDefinitions.null_legs_from_one_event
 #print axioms QLF.LocalityDefinitions.reachable_causal
 #print axioms QLF.LocalityDefinitions.causal_not_reachable
 #print axioms QLF.LocalityDefinitions.prefixSpacelike_not_spacelike

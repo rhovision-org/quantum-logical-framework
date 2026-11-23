@@ -47,6 +47,9 @@ on one model and records, for each implication between them, a proof or a counte
   `b` walking `ts.map conj`, always close
   together. Their endpoints are separated by `(0, 2x)`, which is spacelike whenever `x ≠ 0`, and
   no history has that displacement. So a shared closure can join events that no history joins.
+* **`null_legs_from_one_event`**: each half of a straight pair is a null leg from the shared
+  event, and the endpoints are spacelike. This is special relativity's own answer to "spooky
+  action": the halves are linked through a common event in both past light cones.
 * **`reachable_causal`** (P5): prefix reachability implies the tick separation is causal.
   **`causal_not_reachable`**: the converse fails. **`prefixSpacelike_not_spacelike`**: the
   primordial pair `[plus]`, `[minus]` is prefix-incomparable, yet its tick endpoints coincide.
@@ -296,6 +299,23 @@ theorem no_history_connects (ts : List Twist) (hx : (tick ts).2 ≠ (0, 0, 0)) (
   have hs := pair_endpoints_spacelike ts hx
   rw [← he, add_sub_cancel_left] at hs
   exact tick_not_spacelike h hs
+
+/-- **Special relativity's answer to "spooky action".** Two halves leave one event as straight
+    runs in opposite directions. Each leg is null, the two close together, and the endpoints are
+    spacelike to each other. The halves are linked through the event where both null legs begin,
+    which lies in the past light cone of both endpoints. Nothing joins the endpoints directly
+    (`no_history_connects`). This does not make the endpoints null-separated. -/
+theorem null_legs_from_one_event (n : ℕ) (hn : 0 < n) :
+    IsNull (tick (List.replicate n Twist.right)) ∧
+      IsNull (tick ((List.replicate n Twist.right).map Twist.conj)) ∧
+      SharedClosure (List.replicate n Twist.right) ((List.replicate n Twist.right).map Twist.conj) ∧
+      IsSpacelike (tick ((List.replicate n Twist.right).map Twist.conj) -
+        tick (List.replicate n Twist.right)) := by
+  have hx : (tick (List.replicate n Twist.right)).2 ≠ (0, 0, 0) := by
+    rw [tick_replicate_right]; simp; omega
+  refine ⟨(straight_run_null n hn).1, ?_, pair_shared_closure _, pair_endpoints_spacelike _ hx⟩
+  rw [tick_map_conj, tick_replicate_right]
+  simp [IsNull, interval]
 
 /-- The canonical witness: one step each way. -/
 theorem up_down_pair :

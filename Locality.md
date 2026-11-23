@@ -47,6 +47,16 @@ Einstein hoped for is excluded.
 | **Local action.** Einstein, *Quanten-Mechanik und Wirklichkeit*, Dialectica 2, 320 (1948): what is done to S₁ has no immediate effect on S₂ | The same theorems. Every history also stays in its own future cone, one axis step per tick (`tick_causal`), so the light-speed bound is a property of each history and not an extra postulate. Nullity is Lorentz invariant (`null_lorentz_invariant`) | **Vindicated** for causal influence. |
 | **Quantum mechanics is incomplete.** EPR, Phys. Rev. 47, 777 (1935) | QLF treats the Hilbert-space description as a rendering of an underlying history substrate, which agrees with Einstein in stance. What Einstein hoped the completion would be, local pre-existing values with factorized responses, is excluded: with measurement independence, no such model reproduces the correlations (`no_factorizable_model`, Bell's result) | **Agrees in stance.** The completion Einstein expected is ruled out by Bell, which QLF respects. |
 
+**His own relativity answered his objection.** Special relativity already holds the answer. The
+two halves of a pair leave one event, and each travels a null leg from it: each leg has zero
+interval even though time and distance both grow (`null_legs_from_one_event`,
+`straight_run_null`). The endpoints are spacelike to each other, and no history joins them. The
+halves are related only through the event where both null legs begin, and that event lies in the
+past light cone of both endpoints. The correlation was set by a shared closure at that event, so
+nothing has to cross the gap when the halves are measured. This does not make the endpoints
+null-separated: their interval is `−4|x|²`. What the null legs do is carry the shared event
+forward to each endpoint without any proper time elapsing.
+
 What Einstein lost was the assumption that a pair has two separate real states, one per body. In
 QLF the pair's closure is one joint fact (`shared_closure_not_factorizable`), and neither body's
 record decides it (`zfa_not_from_one_body`). The correlations need that joint fact, and causation
