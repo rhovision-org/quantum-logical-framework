@@ -520,3 +520,48 @@ factor encloses positive curvature). D3 then reads sign: removing ways is positi
 (joint closure, unlike poles) is negative. **Kill:** if D1 fails, the curvature is spread through the
 vacuum and the one-leg map does not give a mass. Not claimed by any outcome: the time part of the
 metric, light bending, or the value of the coupling.
+
+## §11 Stage 2d result
+
+Run by [`census_source_2d.py`](census_source_2d.py) against §10 as frozen in `abba91c`; data in
+[`data/census_source_2d.json`](data/census_source_2d.json), regression test in
+[`tests/test_census_source_2d.py`](tests/test_census_source_2d.py). The run is first order: at
+`λ = 2·10⁻³` every `ΔK(10)` agrees with `λ = 10⁻³` to better than 0.1%. No tetrahedron is degenerate.
+The calibration holds: every shell falloff is `k = 0.99 … 1.01`.
+
+| source | `Q` | `ΔK(6)` | `ΔK(8)` | `ΔK(10)` | `ΔK(10)/Q` |
+|---|---|---|---|---|---|
+| `share1` | −0.1433 | −1.361 | −1.335 | −1.340 | 9.35 |
+| `excl1` | +0.4946 | +4.696 | +4.607 | +4.625 | 9.35 |
+| `line4` | −0.7293 | −4.954 | −4.959 | −4.928 | 6.76 |
+| `plaq4` | −0.7753 | −5.386 | −5.437 | −5.430 | 7.00 |
+| `excl8` | +1.3887 | +8.319 | +8.420 | +8.588 | 6.18 |
+| `excl27` | +2.3672 | +11.606 | +11.185 | +11.274 | 4.76 |
+| `mixed` | +0.0788 | +0.288 | +0.274 | +0.277 | 3.51 |
+
+| | Verdict | Numbers |
+|---|---|---|
+| D1 vacuum outside the source | **PASS** | every `ΔK(6)`, `ΔK(8)` within 4% of `ΔK(10)` |
+| D2 Gauss law across sources | **FAIL** | `ΔK(10)/Q` runs from 3.51 to 9.35 (median 6.76) |
+| D3 removing ways is positive curvature | **PASS** | the sign of `ΔK(10)` is the sign of `Q` for all seven |
+
+**What this establishes** (numerical evidence on one lattice and box). With the length read from the
+source's joint closures, the response falls as `1/r` and the curvature it makes sits at the source:
+the enclosed curvature is the same at `R = 6, 8, 10`, so the space around the source is flat to first
+order. That is the vacuum-outside-a-mass structure §7–§9 could not give. Its sign is the sign of `Q`:
+a source that removes ways encloses positive curvature, the sign of a positive mass in isotropic
+coordinates, and one that adds ways (joint closure) encloses negative curvature.
+
+**What failed, and a post-hoc reading.** The enclosed curvature is not one constant times `Q` across
+sources, so the Gauss law as registered fails. A diagnostic run after the verdict (not a decision
+input) shows the constant depends on the source's **site set**, not its weights: `share1` and `excl1`
+(one site, opposite weights) give 9.352 and 9.351; the shared cube `share8` gives 6.183 against
+`excl8`'s 6.184; the excluded line gives 6.84 against `line4`'s 6.76. Within a site set the curvature
+is linear in `Q` to 1% or better, whatever its sign. The likely cause is the measure, not the
+geometry: edges touching the source are dropped (§7), so part of the curvature at the source is not
+counted, and a larger site set hides more of it. Whether the full enclosed curvature is `Q` times one
+constant needs a measure that keeps the source's own edges, and its own registration.
+
+**Open after 2d.** (1) The Gauss constant: a measure that counts the source's edges. (2) The time part
+of the metric and light bending, which no stage so far measures. (3) The coupling `λ`, which is not
+derived. (4) Magnetism, which needs the signed census.
