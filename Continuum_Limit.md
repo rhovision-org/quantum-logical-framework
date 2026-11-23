@@ -202,3 +202,37 @@ pre-registration after 2a. Candidates already in the repository:
 Kill conditions for 2b will include: the sign of the curvature around a source, its falloff with
 distance, and linearity in the source size. A 2b result that depends on which of the three models is
 chosen will be reported as such.
+
+## §5 Stage 2a result
+
+Run: [`census_geometry.py`](census_geometry.py) (about 100 s; needs `mpmath`). Output:
+[`data/census_geometry.json`](data/census_geometry.json). Regression test:
+[`tests/test_census_geometry.py`](tests/test_census_geometry.py). The census weight is evaluated
+from its Bessel-integral form to 40 digits. A check at 60 digits agreed to `2·10⁻²¹`, and `G(0)`
+reproduces Watson's integral.
+
+**Registered verdict: FAIL (stage 2a).** M1 passes and M2 fails, so by the verdict rule the length
+`ℓ = 1/G` is rejected as a vacuum geometry under the registered test, and stage 2b is not run on it.
+
+| | Outcome | What was found |
+|---|---|---|
+| M1 | pass | every tetrahedron has positive volume at every scale |
+| M2 | **fail** | the largest deficit is `0.80, 0.82, 0.21, 0.044, 0.011, 0.0026` at `s = 1, 2, 4, 8, 16, 32`. It rises from `s = 1` to `2`, and at `s = 32` it is `2.6·10⁻³`, above the registered `10⁻³` |
+| M3 | pass | the deficits fall like `s^{−2.10}` over `s = 4 … 32` (sensitivity reading: `s^{−2.16}`) |
+| M4 | pass (structural) | `G` counts every history with a given displacement |
+
+The edge-length ratios approach the Euclidean ones: `b/a = 1.41460` and `c/a = 1.73257` at `s = 32`,
+against `√2 = 1.41421` and `√3 = 1.73205`. The deficits keep the cubic pattern at every scale:
+positive on the axis and body-diagonal edges, negative on the face diagonals.
+
+**Reading.** The census length is flat in the large, but more slowly than registered.
+`s² × deficit` settles near `2.7` (`2.79, 2.70, 2.68` at `s = 8, 16, 32`), so the registered
+`10⁻³` would be reached near `s ≈ 52`. The `10⁻³` threshold was an absolute number chosen without a
+computed coefficient, and the coefficient turned out larger than the threshold allowed. This is
+recorded as the registered failure. A scale-free criterion (deficit times `s²` bounded) would have
+passed, but it was not the registered test, and adopting it now would be post hoc.
+
+What does stand: the census length is a positive geometry at every scale (M1), and its curvature is
+the census's own cubic anisotropy, falling as `s^{−2}` (M3). That is the expected behaviour of a
+lattice Green's function and is not evidence of gravity. Whether to re-register the calibration with
+a scale-free criterion and go on to 2b is a decision for the issue, not part of this result.
