@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-SPATIAL-RESPONSE-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "8cb9fb97f641776b79b5ced4201980f5523b7767",
+  "reviewer": "jimscarver",
+  "purpose": "Draft finite-slice ledger for the independent spatial-response and closure-distance ledger (#287 / PR #288). This is not a gravity, 3D-metric, or physical-spatial claim.",
+  "entries": [
+    {
+      "id": "spatial_response_delta_s_delta_d_independence",
+      "claim": "In a finite ledger with S taken only from orientation pairs and d taken only from a separate closure-bit automaton, binding events (delta d < 0) split between contraction (delta S < 0) and expansion (delta S > 0). Therefore delta d < 0 does not imply delta S < 0 without a separately derived bridge.",
+      "anchors": [],
+      "formal_scope": "Finite 72-event ledger with two orientation histories and two closure bits. The orientation ledger is the exact QLF netSpace toy; the closure distance is a separate Hamming distance. This is an independence test, not a physical spatial model or a gravity derivation.",
+      "comparator": "Exhaustive finite ledger in spatial_response.py and data/spatial_response_census.json.",
+      "kill_condition": "A finite event where delta d < 0 guarantees delta S < 0 by construction, or any claim of physical contraction/gravity without a separate bridge and coarse-graining rule.",
+      "status": "DRAFT",
+      "source": "Spatial_Response_QLF.md; spatial_response.py; tests/test_spatial_response.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}

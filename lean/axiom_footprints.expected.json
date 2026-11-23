@@ -529,6 +529,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureUncertainty.WIn_mono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUncertainty.completions_sublist_of_context": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureUnitarity.antiHermitian_seed_forbidden": [
     "Classical.choice",
     "Quot.sound",
@@ -551,6 +561,10 @@
   ],
   "QLF.ClosureUnitarity.zero_taxonomy": [
     "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CoincidenceTrivial.co0_trivial_split": [
     "Quot.sound",
     "propext"
   ],
@@ -756,6 +770,26 @@
     "propext"
   ],
   "QLF.DiversityNovelOutcome.self_composition_type_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.axis_match_of_countBalanced_append": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.prefix_fold_determines_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.stream_folds_miss_interleaving": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.twistMatrixFold_append": [
     "Classical.choice",
     "Quot.sound",
     "propext"

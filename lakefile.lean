@@ -360,5 +360,7 @@ lean_lib QLF where
     `QLF_GuptaPrefixClock,
     `QLF_ReadoutCriterion,
     `QLF_ClosureUncertainty,
-    `QLF_Morphogenesis
+    `QLF_Morphogenesis,
+    `QLF_DiversityPhase,
+    `QLF_CoincidenceTrivial
   ]

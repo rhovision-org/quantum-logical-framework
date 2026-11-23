@@ -157,6 +157,9 @@ import QLF_GluonAbelianControl
 import QLF_LeptonStageB
 import QLF_ClockCalibration
 import QLF_ConsciousUpdateRule
+import QLF_ClosureUncertainty
+import QLF_DiversityPhase
+import QLF_CoincidenceTrivial
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -899,3 +902,12 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ReadoutCriterion.readout_tendsto_iff
 #print axioms QLF.ReadoutCriterion.readout_summable_iff
 #print axioms QLF.ReadoutCriterion.amplitude_exists_iff
+
+-- Closure uncertainty U1, D3T phase/axis clauses, co-incidence CO0: no QLF axiom.
+#print axioms QLF.ClosureUncertainty.completions_sublist_of_context
+#print axioms QLF.ClosureUncertainty.WIn_mono
+#print axioms QLF.DiversityPhase.twistMatrixFold_append
+#print axioms QLF.DiversityPhase.prefix_fold_determines_phase
+#print axioms QLF.DiversityPhase.stream_folds_miss_interleaving
+#print axioms QLF.DiversityPhase.axis_match_of_countBalanced_append
+#print axioms QLF.CoincidenceTrivial.co0_trivial_split
