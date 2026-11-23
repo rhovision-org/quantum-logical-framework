@@ -414,3 +414,53 @@ a source can expand space close in and contract it further out, or the reverse. 
 give a `1/r` law, since every finite source falls like `r^{−2}` here (§7). In the unsigned census a
 circulation is invisible (§4.1), so C3 tests shape, not magnetism; a magnetic test needs the signed
 census and its own registration.
+
+## §9 Stage 2c result
+
+Run by [`census_source_2c.py`](census_source_2c.py) against §8 as frozen in `414d010`; data in
+[`data/census_source_2c.json`](data/census_source_2c.json), regression test in
+[`tests/test_census_source_2c.py`](tests/test_census_source_2c.py). All four sources are valid: every
+`I + (G_SS − I)Λ` is invertible and every `G'` in the box is positive.
+
+| source | `Q` | `δℓ/ℓ` at `r = 2` | `δℓ/ℓ` at `r = 10` | measured / monopole at `r = 2` | at `r = 10` | falloff `k` |
+|---|---|---|---|---|---|---|
+| `share1` | −0.1433 | −2.05e-2 | −8.40e-4 | 0.977 | 0.999 | 1.97 |
+| `line4` | −0.7293 | −8.85e-2 | −4.28e-3 | 0.952 | 0.999 | 2.00 |
+| `plaq4` | −0.7753 | −1.07e-1 | −4.55e-3 | 0.909 | 0.997 | 1.98 |
+| `mixed` | +0.0788 | +1.90e-3 | +4.47e-4 | 0.172 | 0.966 | 1.76 |
+
+| | Verdict | Numbers |
+|---|---|---|
+| C1 adding ways contracts space | **PASS** | every shell mean of `share1`, `line4`, `plaq4` is negative |
+| C2 far field is the monopole | **PASS** | all twelve ratios at `r = 8 … 10` lie in `[0.946, 0.999]` |
+| C3 shape-blind far away | **PASS** | `(δℓ/ℓ)/Q` at `r = 10`: `line4` 0.005863, `plaq4` 0.005870 (0.1% apart) |
+| C4 balancing sign change | **FAIL** | `mixed` is positive (expanding) at every `r = 2 … 10`, the sign of its `Q` |
+
+**What this establishes** (numerical evidence, exact up to float, on one lattice and box). In the
+census-length map the spatial response has the sign of the change in ways: removing ways (§7)
+stretches lengths, adding ways contracts them, and far from the source the response is fixed by one
+number, the ways charge `Q`, to within 1% at `r = 10` whatever the shape. That is the structure of a
+mass charge, with the wrong law: every source falls as `r^{−2}` (here `k = 1.76 … 2.00`), not `1/r`.
+The steeper `k` of `mixed` is its near field approaching the monopole from below.
+
+**Relation to the proved orientation ledger.** [`QLF_MagneticOrientation`](lean/QLF_MagneticOrientation.lean)
+already proves that like poles make space and unlike poles destroy it (`like_poles_expand`,
+`opposite_poles_destroy`, `bodies_expand_iff`), and [`QLF_ElectronClosure`](lean/QLF_ElectronClosure.lean)
+that like charges admit no joint closure while opposite charges can (`like_charges_do_not_close`).
+That is a boolean ledger, not a metric ([`Spatial_Response_QLF.md`](Spatial_Response_QLF.md) §2). 2c is
+its counterpart in the census-length geometry: a pairing that admits no joint closure removes ways and
+stretches lengths, one that closes adds ways and contracts them, and the measured effect falls as
+`r^{−2}` with a strength set by `Q`. So the ledger's sign now has a geometric reading with a
+distance law. What 2c adds is the law and the shape blindness; the sign was already proved.
+
+**What it does not.** The registered balancing source shows no sign change. Close in, its shared
+shell pulls the response down to 17% of the monopole at `r = 2`, but not through zero, and the far
+sign is the sign of `Q` as predicted. So the reading *close interaction expands and further
+contracts, or the reverse* is not supported for this source. A source whose near field overturns its
+`Q` would need a different geometry and its own registration; it is not ruled out. And C3's line
+and plaquette differ in circulation, which the unsigned census cannot see (§4.1): the shape
+blindness found here says nothing about magnetism.
+
+**Open after 2c.** (1) A `1/r` law: no finite source in this map gives one, so it must come from an
+extended or nonlocal source, or from a different length map. (2) Magnetism: needs the signed census.
+Each needs a pre-registration before any number is computed.
