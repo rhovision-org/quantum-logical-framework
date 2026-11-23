@@ -236,3 +236,58 @@ What does stand: the census length is a positive geometry at every scale (M1), a
 the census's own cubic anisotropy, falling as `s^{−2}` (M3). That is the expected behaviour of a
 lattice Green's function and is not evidence of gravity. Whether to re-register the calibration with
 a scale-free criterion and go on to 2b is a decision for the issue, not part of this result.
+
+## §6 Re-registered calibration (2a′) and sourced stage 2b (pre-registration)
+
+Jim chose on 2026-11-23 to re-register the vacuum calibration with a scale-free criterion and then
+pre-register 2b. Both are frozen here, before any new number is computed.
+
+### 6.1 Stage 2a′: a scale-free vacuum test on fresh scales (post hoc, disclosed)
+
+The criterion is chosen **after** seeing §5, so it is tested only on scales §5 did not compute.
+From §5, `s² × max deficit = 2.68` at `s = 32`.
+
+| | Claim | Passes if |
+|---|---|---|
+| V1 | the vacuum curvature is the census's `s^{−2}` anisotropy | at `s = 64` and `s = 128`, `s² × max deficit` lies in `[2.4, 3.0]` |
+| V2 | the length ratios converge to the Euclidean ones | at `s = 128`, `b/a` is within `2·10⁻⁴` of `√2` and `c/a` within `2·10⁻⁴` of `√3` |
+
+If V1 or V2 fails, 2b is not run. Same code as §5, scales `64` and `128` added.
+
+### 6.2 Stage 2b: does a local source act like a mass?
+
+**Source model (primary): exclusion.** A source is a set `S` of lattice sites held by a persistent
+closure, which no other way may visit (Pauli exclusion, as in the crystal and chemistry models). The
+census weight becomes the taboo count `G_S(x, y)` of ways from `x` to `y` that avoid `S`. For a
+finite `S` it is exact: `G_S(x, y) = G(y − x) − Σ_{a,b∈S} G(x − a) [G_SS⁻¹]_{ab} G(b − y)`.
+Lengths `ℓ(x, y) = 1/G_S(x, y)` on the edges of the Freudenthal triangulation of `ℤ³` (`s = 1`).
+
+**Sensitivity model: delay.** Instead of being forbidden, a step onto a source site costs one extra
+twist (weight `1/8` more). This is a finite-rank change of the same kind. Reported, not a decision
+input.
+
+**Sources:** a single site (`n = 1`), a `2×2×2` cube (`n = 8`) and a `3×3×3` cube (`n = 27`),
+centred at the origin.
+
+**Measured.**
+
+* `δℓ/ℓ` on edges at distance `r` from the source centre (midpoint distance), and its falloff
+  exponent `k`, fitted to the mean over axis edges in shells `r ∈ [4, 10]`.
+* The Regge integrated curvature `K(R) = Σ ℓ_e ε_e` over interior edges whose midpoint lies within
+  `R` of the centre, minus the same sum in the vacuum: `ΔK(R)`, for `R = 4, 6, 8, 10`. Edges with a
+  tetrahedron touching `S` are excluded. The computational box has half-width `12`.
+
+**What a mass would do.** In general relativity the spatial metric of a static mass perturbs lengths
+like `M/r`, so its integrated scalar curvature tends to a positive limit proportional to `M`.
+
+| | Claim | Passes if | Prior |
+|---|---|---|---|
+| B1 | the source curves space with one sign | `ΔK(R) > 0` at every `R` and every `n` | unknown |
+| B2 | the perturbation falls like a mass's | `k ∈ [0.8, 1.2]` for every `n` | **fail**: a local change of the walk alters the Green's function by a finite-rank term `∝ G(x)G(y)`, so a nearest-neighbour length changes like `r^{−2}` |
+| B3 | the curvature is linear in the source | fitting `ΔK(10) ∝ n^q` over `n = 1, 8, 27` gives `q ∈ [0.8, 1.2]` | **fail**: the taboo correction scales with the source's capacity, roughly its linear size, so `q ≈ 1/3` |
+
+**Verdict rule.** The census length with an exclusion source acts as a mass only if B1, B2 and B3
+all pass. If B2 fails for both the exclusion and the delay model, the reading is that **no local
+modification of the walk produces a mass-like `1/r` perturbation in this length map**, and a 2b
+that wants gravity needs a nonlocal source (a persistent closure whose ways reach to infinity), which
+would be a separate pre-registration.
