@@ -446,8 +446,8 @@ assembly pathway (free primitives, joins of earlier entries, unlimited reuse) an
 its least join count. It proves `assemblyIndex_le_length_sub_one`, and `reuse_saves_a_join` shows
 that `^v^v` needs only 2 joins. The pathway list plays the role of the DAG in target 1. Targets 2
 (the closed-reuse `assemblyIndexClosed`) and 3's `assemblyIndex_le_closed` remain open. Target 4 is
-already covered by `count_balanced_pauli_closed` together with the fold-sign results
-in [`census_inventory.py`](census_inventory.py). The original target list:
+already proved: [`QLF_PhaseRule`](lean/QLF_PhaseRule.lean) `phase_rule_real` shows that every
+count-balanced fold is `+I` or `−I`. The original target list:
 
 1. Define an `AssemblyDAG` for `List Twist`: leaves are primitives, internal nodes are joins, and
    the root is the target.
