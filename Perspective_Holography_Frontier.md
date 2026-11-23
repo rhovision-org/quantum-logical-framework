@@ -7,7 +7,8 @@ Base: `4311aad5fc5d93fdefaf038201126bedfa4bb730` (merged #305 following #300 and
 This screen extends the two-body record-map result to three independently tagged histories
 (`A,B,C`). It is not a model of physical accessibility, interaction or a Planck-scale blanket.
 Enumerate every word over the 24 tagged canonical twists with total length 0–3.
-Retain the four signed net-action coordinates for each body and its ordered Pauli fold. Build each view from its own projection: AB and BC, with B shared.
+Retain the eight signed-twist counts through each body's integer action ledger and the
+ordered Pauli fold. Build each view from its own projection: AB and BC, with B shared.
 Use per-body folds, not only their tensor product; this is a deliberately stronger,
 tagged surrogate record, not a derivation of its physical availability.
 
@@ -34,6 +35,42 @@ map. The continuum-area expression and entropy normalization remain conditional;
 see [Cosmological Constant](Cosmological_Constant.md) and [Holographic](Holographic.md).
 Do not promote Omega_Lambda = log 2 from numerical coincidence to a dynamical result.
 
+## Deviation from pre-registration — documented 2026-11-24
+
+This is an **after-the-result disclosure**, not an amendment to the frozen protocol.
+The original pre-registration at `dee8efc15b5c89395a7bbb988913ae80e20daa0f`
+(2026-11-21 17:50:03 UTC) requires retaining all **eight per-body twist counts**
+as well as the ordered Pauli fold. During implementation at
+`872cdf65fc0a266f119dd3b2481cb4bd68981b46`
+(2026-11-21 17:50:48 UTC), the actual record instead used
+`territory_return.ledger`: **four signed net-action coordinates**, one per
+axis, together with each body's fold. The change to the wording of the frozen
+protocol in that implementation commit was improper; the original wording is
+restored above without retroactively changing what was run.
+
+The four-coordinate ledger maps each conjugate twist pair to its net
+difference, `n(+axis) - n(-axis)`; it does **not** reconstruct the individual
+eight twist counts. Therefore the observed **F1 B-ledger reconstruction**
+establishes the *four-coordinate net ledger* only, **not** the frozen
+eight-count record. The same restriction applies to the recorded F3
+nested-view check: it is over net-ledger-plus-fold records, not the original
+eight-count views. The original eight-count F1/F3 observations remain **not
+executed** and are not claimed to pass.
+
+This narrower record does **not** change the reported **territorial ZFA**
+verdicts: for each body, count balance is exactly the requirement that all four
+net coordinates vanish. F1's B-ZFA positive, F2's negative controls (including
+the missing-body and fold-only collisions), and F3's *record-restriction*
+result within the executed four-coordinate scope remain as observed.
+F4's disjoint-face accounting is independent of the ledger. The F3 phrase
+"sampled history" in the *frozen* rule is left unedited; execution in fact
+enumerated all `1 + 24 + 24² + 24³ = 14,425` histories, as stated below.
+
+This disclosure is a provenance correction, **not a new run**, a changed
+pre-registered acceptance criterion, or a physical-claim promotion.
+An eight-count replication is required before asserting the full frozen
+count-level reconstruction claim.
+
 ## Result
 
 The frozen F1–F4 checks ran over 14,425 tagged histories. Reproduce with
@@ -42,9 +79,9 @@ is retained in [data/perspective_frontier.json](data/perspective_frontier.json).
 
 | Gate | Observed result |
 | --- | --- |
-| F1 | Both views reconstruct B's ledger and B's territorial ZFA. |
-| F2 | A-only and C-only fail B-ledger reconstruction. AB/BC each fail global ZFA. B-fold fails B-ZFA with empty vs B:+. |
-| F3 | Both independently constructed views agree with the restriction of ABC on every sampled history. |
+| F1 | Both views reconstruct B's **four-coordinate net ledger** and B's territorial ZFA; the originally frozen **eight-count** ledger was not tested. |
+| F2 | A-only and C-only fail B's **four-coordinate net-ledger** reconstruction. AB/BC each fail global ZFA. B-fold fails B-ZFA with empty vs B:+. |
+| F3 | Both independently constructed **four-coordinate net-ledger-plus-fold** views agree with the restriction of ABC on every **enumerated** history. Eight-count views were not tested. |
 | F4 | Cumulative counts 1+2+3=6; disjoint increments 1+1+1=3 equals the terminal count. |
 
 F1 and F3 are structural consequences of explicitly accessible tagged data, not
