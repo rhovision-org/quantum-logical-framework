@@ -37,7 +37,8 @@ records of bodies `{A, B}` and `{B, C}`.
 `B` (`sharedPair`).
 
 * `pairBuilt_ledger_transfer`: on histories built from shared pairs, `A`'s ledger is a function
-  of `B`'s, so `A`'s ZFA verdict is a fact for `B` (`pairBuilt_zfa_iff`).
+  of `B`'s, so `A`'s ZFA verdict is a fact for `B` (`pairBuilt_zfa_iff`). Restricted to that
+  domain, `B`'s record reconstructs it (`pair_domain_reconstructs_zfa`).
 * `ledger_transfer_fails_without_pairs`: on general histories it is not.
 
 **§4 Relaying.** A relay is an `AB` shared pair followed by a `BC` pair that re-emits on `B` what
@@ -45,23 +46,33 @@ records of bodies `{A, B}` and `{B, C}`.
 
 * `relay_ledger_transfer`, `relay_zfa_iff`: on relay-built histories `A`'s ZFA verdict is a fact
   for `C`.
-* `relay_closes_at_B`: the relay body is itself count-balanced; it passes the record on and keeps
-  no net record of its own.
-* `chain_without_relay_fails`: a pair on each link is not enough. Without the correlation that
-  makes a relay, `C`'s record says nothing about `A`.
+* `relay_domain_reconstructs_zfa`: restricted to relay-built histories, `C`'s record reconstructs
+  `A`'s verdict.
+* `relay_phase_transfer`, `relay_domain_reconstructs_fold`: the relay carries the ordered Pauli
+  fold too. Each conjugate twist's matrix is the negative of the original, so `C`'s fold equals
+  `A`'s up to `(-1)^n`, and `C`'s record reconstructs `A`'s phase.
+* `relay_closes_at_B`: the relay body has zero net territorial action (its word is
+  count-balanced). This does not say `B` holds no information; its fold need not be trivial.
+* `chain_without_relay_fails`, `link_domain_not_reconstructs_zfa`: a shared pair on each link is
+  not enough. Two histories that both carry `AB` and `BC` pairs, uncorrelated, agree on `C`'s
+  record while `A` closes in one and not the other.
 
-**§5 No-signalling.** `no_signal_to_C`, `view_changes_only_through_own_events`: inserting events on
-other bodies anywhere in a history leaves a body's territorial record unchanged. Unlike
-`QLF_ClockIntervention`'s record, which carries the counterpart's length and so signals
-(`record_signals`), this record changes only through events on its own body.
+**§5 Projection invariance.** `no_signal_to_C`, `view_changes_only_through_own_events`: inserting
+events on other bodies anywhere in a history leaves a body's territorial record unchanged. This
+follows from the definition of `proj`. It shows that the territorial record, unlike
+`QLF_ClockIntervention`'s (`record_signals`), does not carry a counterpart's events. It is **not**
+physical no-signalling under interventions on correlated histories, which stays open.
 
 **Scope.** The bodies are the commuting, independent bodies of
 [`QLF_TensorFromClosure`](QLF_TensorFromClosure.lean), and a perspective is a chosen record map.
 That makes §2 and §5 close to automatic: no single token touches two bodies, so nothing reaches a
 body except through events on it. §3 and §4 show communication *given* the posit that a shared
 pair puts one half on each body; they do not derive that posit, and the relay is a defined
-pattern, not a dynamics that selects it. Deriving accessibility and the shared-pair posit from
-closure dynamics stays open (see `Holography_Audit.md`, issue #296). No axioms.
+pattern, not a dynamics that selects it. `GlobalZFA` is a closure predicate on every body's word,
+not an identification of one event shared by the bodies. Open: physical accessibility,
+shared-pair birth, dynamical relay selection, physical no-signalling for correlated histories, and
+interacting Lorentz covariance (see `Holography_Audit.md` §5, issue #296; the finite three-body
+frontier audit of PR #306 is the independent cross-check of §2). No axioms.
 
 Part of the [Quantum Logical Framework (QLF)](../README.md).
 -/
@@ -334,6 +345,19 @@ theorem pairBuilt_zfa_iff {w : PairHistory} (hw : PairBuilt w) :
   · rintro ⟨h1, h2, h3, h4⟩; exact ⟨h1.symm, h2.symm, h3.symm, h4.symm⟩
   · rintro ⟨h1, h2, h3, h4⟩; exact ⟨h1.symm, h2.symm, h3.symm, h4.symm⟩
 
+/-- On the pair-built domain, `B`'s record reconstructs `A`'s ZFA verdict. The domain restriction
+    is explicit: the record map is defined on pair-built histories only. -/
+theorem pair_domain_reconstructs_zfa :
+    Reconstructs (fun w : {w : PairHistory // PairBuilt w} => recordTB w.1)
+      (fun w => countBalanced (projA w.1)) := by
+  rw [reconstructs_iff]
+  rintro ⟨w, hw⟩ ⟨w', hw'⟩ he
+  have key : ∀ t, (projB w).count t = (projB w').count t := fun t =>
+    congrFun (congrArg Prod.snd he) t
+  apply propext
+  rw [pairBuilt_zfa_iff hw, pairBuilt_zfa_iff hw']
+  simp only [countBalanced, key]
+
 /-- **Without shared pairs, `B`'s record carries nothing of `A`'s ledger.** -/
 theorem ledger_transfer_fails_without_pairs :
     ¬ Reconstructs recordTB (fun w => countBalanced (projA w)) := by
@@ -400,8 +424,9 @@ lemma count_conj_pairs (ts : List Twist) (t : Twist) :
     simp only [List.flatMap_cons, List.count_append, ih, List.count_cons, List.count_nil, k1, k2]
     omega
 
-/-- **The relay itself closes:** `B` passes on everything it receives, so `B` is count-balanced
-    and keeps no net record. -/
+/-- **The relay body has zero net territorial action.** `B` re-emits everything it receives, so
+    its word is count-balanced. This is a statement about `B`'s ledger only: `B`'s word is
+    nonempty and its fold need not be trivial, so it does not say that `B` holds no information. -/
 theorem relay_closes_at_B {w : List Tok3} (hw : RelayBuilt w) : BodyZFA 1 w := by
   obtain ⟨ts, rfl⟩ := hw
   unfold BodyZFA countBalanced
@@ -409,26 +434,100 @@ theorem relay_closes_at_B {w : List Tok3} (hw : RelayBuilt w) : BodyZFA 1 w := b
   exact ⟨count_conj_pairs ts Twist.up, count_conj_pairs ts Twist.left,
     count_conj_pairs ts Twist.slash, count_conj_pairs ts Twist.plus⟩
 
-/-- An `AB` shared pair with no relay. -/
+/-- On the relay domain, `C`'s record reconstructs `A`'s ZFA verdict. The domain restriction is
+    explicit: the record map is defined on relay-built histories only. -/
+theorem relay_domain_reconstructs_zfa :
+    Reconstructs (fun w : {w : List Tok3 // RelayBuilt w} => viewC w.1)
+      (fun w => BodyZFA 0 w.1) := by
+  rw [reconstructs_iff]
+  rintro ⟨w, hw⟩ ⟨w', hw'⟩ he
+  have key : ∀ t, (proj 2 w).count t = (proj 2 w').count t := fun t =>
+    congrFun (congrArg Prod.snd he) t
+  apply propext
+  rw [relay_zfa_iff hw, relay_zfa_iff hw']
+  simp only [BodyZFA, countBalanced, key]
+
+/-! ### Phase through a relay -/
+
+private instance lawfulBEqTwist : LawfulBEq Twist where
+  eq_of_beq {a b} h := by cases a <;> cases b <;> first | rfl | exact absurd h (by decide)
+  rfl {a} := by cases a <;> decide
+
+lemma conj_toMatrix (t : Twist) : t.conj.toMatrix = -t.toMatrix := by
+  cases t <;> simp [Twist.conj, Twist.toMatrix]
+
+lemma fold_map_conj (ts : List Twist) :
+    twistMatrixFold (ts.map Twist.conj) = (-1 : ℂ) ^ ts.length • twistMatrixFold ts := by
+  induction ts with
+  | nil => simp [twistMatrixFold]
+  | cons t ts ih =>
+    show t.conj.toMatrix * twistMatrixFold (ts.map Twist.conj) =
+      (-1 : ℂ) ^ (ts.length + 1) • (t.toMatrix * twistMatrixFold ts)
+    rw [ih, conj_toMatrix, Matrix.mul_smul, neg_mul, pow_succ, mul_neg_one, neg_smul, smul_neg]
+
+/-- **A relay carries the ordered phase, not only the ledger.** Every conjugate twist's matrix is
+    the negative of the original, so `C`'s fold is `A`'s up to the sign `(-1)^n`, where `n` is the
+    number of relays. -/
+theorem relay_phase_transfer {w : List Tok3} (hw : RelayBuilt w) :
+    twistMatrixFold (proj 0 w) = (-1 : ℂ) ^ (proj 2 w).length • twistMatrixFold (proj 2 w) := by
+  obtain ⟨ts, rfl⟩ := hw
+  rw [proj0_relay, proj2_relay, fold_map_conj, smul_smul, List.length_map, ← mul_pow]
+  norm_num
+
+/-- On the relay domain, `C`'s record reconstructs `A`'s full Pauli fold, phase included. -/
+theorem relay_domain_reconstructs_fold :
+    Reconstructs (fun w : {w : List Tok3 // RelayBuilt w} => viewC w.1)
+      (fun w => twistMatrixFold (proj 0 w.1)) := by
+  rw [reconstructs_iff]
+  rintro ⟨w, hw⟩ ⟨w', hw'⟩ he
+  have hf : twistMatrixFold (proj 2 w) = twistMatrixFold (proj 2 w') := congrArg Prod.fst he
+  have hl : (proj 2 w).length = (proj 2 w').length := by
+    apply List.Perm.length_eq
+    rw [List.perm_iff_count]
+    intro t
+    exact congrFun (congrArg Prod.snd he) t
+  simp only
+  rw [relay_phase_transfer hw, relay_phase_transfer hw', hf, hl]
+
+/-! ### Links without a relay -/
+
+/-- An `AB` shared pair. -/
 def pairAB (t : Twist) : List Tok3 := [(0, t), (1, t.conj)]
 
-/-- **Pairs on both links without a relay carry nothing from `A` to `C`.** An `AB` pair and a
-    `BC` pair are each communication, but `C` learns `A`'s balance only when the `BC` pair is
-    correlated with the `AB` pair. -/
-theorem chain_without_relay_fails :
-    ∃ w w' : List Tok3, viewC w = viewC w' ∧ (BodyZFA 0 w ↔ ¬ BodyZFA 0 w') := by
-  refine ⟨pairAB Twist.plus, [], ?_, ?_⟩
-  · apply bodyView_congr
-    simp [proj, pairAB]
-  · constructor
-    · intro h _
-      unfold BodyZFA countBalanced at h
-      simp [proj, pairAB] at h
-      exact absurd h.2.2.2 (by decide)
-    · intro _
-      exact absurd (body_zfa_nil 0) ‹¬ BodyZFA 0 []›
+/-- A `BC` shared pair. -/
+def pairBC (t : Twist) : List Tok3 := [(1, t), (2, t.conj)]
 
-/-! ## §5 No-signalling for the territorial record -/
+/-- Histories with shared pairs on both links, the two links uncorrelated. -/
+def LinkBuilt (w : List Tok3) : Prop :=
+  ∃ as bs : List Twist, w = as.flatMap pairAB ++ bs.flatMap pairBC
+
+/-- Two link-built histories, each with `AB` and `BC` pairs. -/
+def linkW₁ : List Tok3 := [Twist.up, Twist.down].flatMap pairAB ++ [Twist.up].flatMap pairBC
+def linkW₂ : List Tok3 := [Twist.up, Twist.up].flatMap pairAB ++ [Twist.up].flatMap pairBC
+
+/-- **A pair on each link is not enough.** `linkW₁` and `linkW₂` both carry `AB` and `BC` shared
+    pairs and agree on `C`'s record, but `A` closes in one and not the other. -/
+theorem chain_without_relay_fails :
+    viewC linkW₁ = viewC linkW₂ ∧ BodyZFA 0 linkW₁ ∧ ¬ BodyZFA 0 linkW₂ := by
+  refine ⟨?_, ?_, ?_⟩
+  · apply bodyView_congr
+    simp [linkW₁, linkW₂, proj, pairAB, pairBC]
+  · simp [BodyZFA, countBalanced, linkW₁, proj, pairAB, pairBC, Twist.conj]
+  · simp [BodyZFA, countBalanced, linkW₂, proj, pairAB, pairBC, Twist.conj]
+
+/-- **So on the link domain, `C`'s record does not reconstruct `A`'s verdict**, in contrast with
+    the relay domain (`relay_domain_reconstructs_zfa`). -/
+theorem link_domain_not_reconstructs_zfa :
+    ¬ Reconstructs (fun w : {w : List Tok3 // LinkBuilt w} => viewC w.1)
+      (fun w => BodyZFA 0 w.1) := by
+  rw [not_reconstructs_iff]
+  obtain ⟨hv, h₁, h₂⟩ := chain_without_relay_fails
+  refine ⟨⟨linkW₁, _, _, rfl⟩, ⟨linkW₂, _, _, rfl⟩, hv, fun h => h₂ ?_⟩
+  have h' : BodyZFA 0 linkW₁ = BodyZFA 0 linkW₂ := h
+  rw [← h']
+  exact h₁
+
+/-! ## §5 Projection invariance (no-signalling for the territorial record) -/
 
 /-- **No signal without a shared event.** Inserting any word of events on bodies `A` and `B`
     anywhere in a history leaves `C`'s territorial record unchanged. -/

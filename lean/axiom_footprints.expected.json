@@ -2088,6 +2088,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SharedReality.link_domain_not_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SharedReality.no_signal_to_C": [
     "Classical.choice",
     "Quot.sound",
@@ -2099,11 +2104,31 @@
   "QLF.SharedReality.pairBuilt_zfa_iff": [
     "propext"
   ],
+  "QLF.SharedReality.pair_domain_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SharedReality.relay_closes_at_B": [
     "Quot.sound",
     "propext"
   ],
+  "QLF.SharedReality.relay_domain_reconstructs_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_domain_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SharedReality.relay_ledger_transfer": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_phase_transfer": [
+    "Classical.choice",
     "Quot.sound",
     "propext"
   ],

@@ -208,6 +208,11 @@ import QLF_ConsciousUpdateRule
 #print axioms QLF.SharedReality.chain_without_relay_fails
 #print axioms QLF.SharedReality.no_signal_to_C
 #print axioms QLF.SharedReality.view_changes_only_through_own_events
+#print axioms QLF.SharedReality.relay_domain_reconstructs_zfa
+#print axioms QLF.SharedReality.relay_phase_transfer
+#print axioms QLF.SharedReality.relay_domain_reconstructs_fold
+#print axioms QLF.SharedReality.link_domain_not_reconstructs_zfa
+#print axioms QLF.SharedReality.pair_domain_reconstructs_zfa
 #print axioms QLF.SpatialResponseDerived.joint_step_identity
 #print axioms QLF.SpatialResponseDerived.symmetric_mean
 #print axioms QLF.SpatialResponseDerived.unit_symmetric_mean
