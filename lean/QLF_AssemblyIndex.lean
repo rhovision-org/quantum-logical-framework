@@ -1,7 +1,7 @@
 /-
 # QLF_AssemblyIndex
 
-Stage 1 of the Lean layer for issue #264 ([`Assembly_Index_QLF.md`](../Assembly_Index_QLF.md)):
+Stages 1 and 2 of the Lean layer for issue #264 ([`Assembly_Index_QLF.md`](../Assembly_Index_QLF.md)):
 the **flat-sector assembly index** with unlimited reuse.
 
 An *assembly pathway* is a list of twist words built one entry at a time.  Each entry is either a
