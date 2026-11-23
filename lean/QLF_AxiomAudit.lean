@@ -136,6 +136,8 @@ import QLF_SharedReality
 import QLF_SpatialResponseDerived
 import QLF_ConformalComparison
 import QLF_DiversityNovelOutcome
+import QLF_LocalityDefinitions
+import QLF_PerspectiveLocality
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -922,3 +924,29 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ReadoutCriterion.readout_tendsto_iff
 #print axioms QLF.ReadoutCriterion.readout_summable_iff
 #print axioms QLF.ReadoutCriterion.amplitude_exists_iff
+
+-- Locality (issue #315): tick reading, shared closure across spacelike endpoints,
+-- perspective locality, no-signalling and the Bell audit. No QLF axiom.
+#print axioms QLF.LocalityDefinitions.tick_causal
+#print axioms QLF.LocalityDefinitions.closure_timelike
+#print axioms QLF.LocalityDefinitions.straight_run_null
+#print axioms QLF.LocalityDefinitions.null_not_closed
+#print axioms QLF.LocalityDefinitions.tick_reading_nondegenerate
+#print axioms QLF.LocalityDefinitions.zero_displacement_degenerate
+#print axioms QLF.LocalityDefinitions.pair_shared_closure
+#print axioms QLF.LocalityDefinitions.pair_endpoints_spacelike
+#print axioms QLF.LocalityDefinitions.no_history_connects
+#print axioms QLF.LocalityDefinitions.reachable_causal
+#print axioms QLF.LocalityDefinitions.causal_not_reachable
+#print axioms QLF.LocalityDefinitions.prefixSpacelike_not_spacelike
+#print axioms QLF.LocalityDefinitions.shared_closure_vs_reachable
+#print axioms QLF.LocalityDefinitions.null_lorentz_invariant
+#print axioms QLF.LocalityDefinitions.census_postselection_signals
+#print axioms QLF.PerspectiveLocality.jointFold_factorizes
+#print axioms QLF.PerspectiveLocality.fold_unitary
+#print axioms QLF.PerspectiveLocality.local_expectation_local
+#print axioms QLF.PerspectiveLocality.perspective_locality
+#print axioms QLF.PerspectiveLocality.perspective_locality_nontrivial
+#print axioms QLF.PerspectiveLocality.no_signalling
+#print axioms QLF.PerspectiveLocality.singlet_outcome_dependent
+#print axioms QLF.PerspectiveLocality.locality_profile

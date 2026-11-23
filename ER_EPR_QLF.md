@@ -64,6 +64,8 @@ See the Lean file: [`lean/ER_EPR_QLF.lean`](lean/ER_EPR_QLF.lean). The module do
 - **`no_ftl_in_epr`** — a bridge is spacelike, so neither end reaches the other; nothing is transmitted *through* the geometry.
 - **`primordial_wormhole`** — a **verified witness**: the conjugate pair `[+, −]` closes (`conjugate_pair_closes`, `native_decide`) and is spacelike (`conjugate_pair_spacelike`) — the simplest ER=EPR instance, entirely from the core.
 
+**Audit (issue #315, [Locality.md](Locality.md)).** `Spacelike` here is incomparability in the prefix order, not Minkowski spacelikeness: in the tick reading the primordial pair's two halves land on the same event ([`QLF_LocalityDefinitions`](lean/QLF_LocalityDefinitions.lean) `prefixSpacelike_not_spacelike`). `no_ftl_in_epr` is the second conjunct of `ERBridge` and does not by itself establish no-signalling; that is [`QLF_PerspectiveLocality`](lean/QLF_PerspectiveLocality.lean) `no_signalling` and `perspective_locality`. A moved pair's endpoints are spacelike (interval `−4|x|²`), not null, and no history joins them (`no_history_connects`): the shared closure is a relation no causal history carries.
+
 ## Implications
 This unification suggests that spacetime connectivity itself emerges from entanglement. The logical lattice, not spacetime, is fundamental.
 
