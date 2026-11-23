@@ -42,7 +42,9 @@ on one model and records, for each implication between them, a proof or a counte
   "radiative ∧ ZFA ⇒ null" (the draft Gate 2 target) has **no nonempty instance**. Light is
   the open part of a history, and closure is what makes a history massive.
 * **`pair_shared_closure`, `pair_endpoints_spacelike`, `no_history_connects`** (P4, Test C):
-  halves born at one event, `a` walking `ts` and `b` walking `ts.map conj`, always close
+  a **formal conjugate construction**; that physical pairs are born this way is the separate
+  shared-pair birth posit (PR #219), not imported here. Halves started at one point, `a` walking `ts` and
+  `b` walking `ts.map conj`, always close
   together. Their endpoints are separated by `(0, 2x)`, which is spacelike whenever `x ≠ 0`, and
   no history has that displacement. So a shared closure can join events that no history joins.
 * **`reachable_causal`** (P5): prefix reachability implies the tick separation is causal.

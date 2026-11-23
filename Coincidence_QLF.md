@@ -258,7 +258,7 @@ Methods hygiene: DRAFT test ledger `claim_records/coincidence_slice.json`; regis
 
 ## 10. Anchors
 
-- [`lean/ER_EPR_QLF.lean`](lean/ER_EPR_QLF.lean) — `SharedClosure`, `Spacelike`, `ERBridge`,
+- [`lean/ER_EPR_QLF.lean`](lean/ER_EPR_QLF.lean) — `SharedClosure`, `Spacelike` (prefix-order incomparability, not Minkowski spacelikeness: [Locality.md](Locality.md) §4), `ERBridge`,
   `no_ftl_in_epr`.
 - [`lean/QLF_IndexedFactors.lean`](lean/QLF_IndexedFactors.lean) — `shared_closure_not_factorizable`,
   `gauge_pair_is_product_sector`.

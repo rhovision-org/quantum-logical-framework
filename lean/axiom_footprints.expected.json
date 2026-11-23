@@ -1887,6 +1887,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.PerspectiveLocality.chsh_factorizable_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.PerspectiveLocality.fold_unitary": [
     "Classical.choice",
     "Quot.sound",
@@ -1907,7 +1912,17 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.PerspectiveLocality.no_factorizable_model": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.PerspectiveLocality.no_signalling": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_signalling_typed": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1918,6 +1933,16 @@
     "propext"
   ],
   "QLF.PerspectiveLocality.perspective_locality_nontrivial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.probT_nonneg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.probT_sum": [
     "Classical.choice",
     "Quot.sound",
     "propext"

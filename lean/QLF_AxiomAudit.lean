@@ -950,3 +950,8 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.PerspectiveLocality.no_signalling
 #print axioms QLF.PerspectiveLocality.singlet_outcome_dependent
 #print axioms QLF.PerspectiveLocality.locality_profile
+#print axioms QLF.PerspectiveLocality.probT_nonneg
+#print axioms QLF.PerspectiveLocality.probT_sum
+#print axioms QLF.PerspectiveLocality.no_signalling_typed
+#print axioms QLF.PerspectiveLocality.chsh_factorizable_le
+#print axioms QLF.PerspectiveLocality.no_factorizable_model

@@ -4,6 +4,12 @@ import QLF_TensorFromClosure
 /-!
 # QLF_PerspectiveLocality — only local information changes local statistics
 
+**Scope: QLF's two-body operator representation.** Every result here is about the complex
+Hilbert-space representation of the twists with Born weights, and about dynamics that are
+products of local twists on independent tensor factors. Interacting ZFA evolution, a dynamically
+reconstructed perspective boundary, and a closure-census measure with these statistics are not
+covered (issue #315).
+
 Gates L3 and L5 of issue #315. Part of the [Quantum Logical Framework (QLF)](../README.md);
 the write-up is [`Locality.md`](../Locality.md).
 
@@ -34,22 +40,33 @@ keeps the locality theorem from being circular, which was the concern raised for
   change nothing `A` can measure.
 * **`perspective_locality_nontrivial`**: the restriction is not vacuous. One `B` token changes
   `B`'s own expectation (from `1` to `−1` on `|00⟩`).
-* **`no_signalling`** (P8, Gate 5): with projective two-outcome measurements `(1 ± X)/2`,
-  `A`'s outcome marginal after any history is independent of `B`'s setting `Y`, for every
-  `Y`, every joint state, and every `B` word.
+* **`no_signalling`** (P8, Gate 5): the **weight identity** behind no-signalling. For any
+  matrices `X`, `Y` and any `α`, `A`'s summed weight is independent of `Y`. These weights need
+  not be probabilities.
+* **§5, typed measurements.** For `Dichotomic` observables (Hermitian, `X² = 1`) and outcomes
+  `±1`, the joint weights are genuine probabilities: real and nonnegative (`probT_nonneg`) and
+  summing to the state's norm, which every history preserves (`probT_sum`). Then
+  `no_signalling_typed` is no-signalling as a probability statement.
 * **`singlet_outcome_dependent`** (Bell audit): on the singlet with both settings `σz`,
   `P(+,+) = 0` while `P(+) = P(+) = 1/2`. **Outcome independence fails.**
-* **`locality_profile`**: parameter independence holds (`no_signalling`), outcome independence
-  fails, and the singlet reaches CHSH `2√2` (`singlet_saturates`), above the bound `2` that
-  jointly valued (commuting) observables obey (`QLF_Tsirelson.chsh_classical`). Bell locality is
-  the conjunction of parameter and outcome independence (Jarrett 1984), so the condition that
-  fails here is outcome independence. A preassigned joint value for incompatible Pauli contexts
-  is not available either, because `σz` and `σx` anticommute.
+  This is the *unconditional* statistics; taking the operator state itself as the complete state
+  `λ` (the orthodox completeness reading), it is outcome dependence at `λ`.
+* **§6, Bell relative to a complete state `λ`.** `chsh_factorizable_le`: every model with a finite
+  space of complete states, `λ` distributed independently of the settings, and factorized
+  responses `E(x,y|λ) = a_x(λ) b_y(λ)` with `|a|, |b| ≤ 1`, has `|CHSH| ≤ 2`.
+  `no_factorizable_model`: no such model reproduces the singlet's operator correlations
+  (`2√2`). So, given measurement independence, factorization at `λ` (parameter independence and
+  outcome independence at `λ`, Jarrett 1984) fails for **every** finite `λ`, while operational
+  parameter independence holds (`no_signalling_typed`). Which conjunct fails at a hidden `λ`
+  depends on the model; with `λ` = the operator state it is outcome independence.
+* **`locality_profile`**: the weight identity, the unconditional outcome dependence, and CHSH
+  `2√2` (`singlet_saturates`) together.
 
 ## Scope
 
 * The probabilities are **Born weights on the twist operator algebra**. This is a
-  representation result. The census-level measure is tested separately in
+  representation result. Finite `Λ` in §6 is a restriction of this formalization; the
+  measure-theoretic Bell theorem is not formalized here. The census-level measure is tested separately in
   `QLF_LocalityDefinitions.census_postselection_signals` (P6), and there uniform counting over
   joint closures **does** signal.
 * Measurement independence is a modelling input: settings `X`, `Y` and the state `ψ` are
@@ -113,6 +130,12 @@ lemma onA_conjTranspose (X : M) : (onA X)ᴴ = onA Xᴴ := by
 
 lemma onB_conjTranspose (X : M) : (onB X)ᴴ = onB Xᴴ := by
   rw [onB, conjTranspose_kronecker, conjTranspose_one]; rfl
+
+lemma onA_add_aux (X Y : M) : onA X + onA Y = onA (X + Y) := by
+  simp [onA, add_kronecker]
+
+lemma onB_add_aux (X Y : M) : onB X + onB Y = onB (X + Y) := by
+  simp [onB, kronecker_add]
 
 /-! ## §2 Expectations in the globally evolved state -/
 
@@ -240,5 +263,184 @@ theorem locality_profile :
       (star s ⬝ᵥ (chsh (onA σz) (onA σx) (onB b0) (onB b1) *ᵥ s)).re =
         2 * Real.sqrt 2 * (star s ⬝ᵥ s).re :=
   ⟨marginal_setting_independent, singlet_outcome_dependent.2.2.2.2, singlet_saturates⟩
+
+/-! ## §5 Typed measurements: genuine probabilities
+
+`proj` and `prob` above accept any matrix and any `α`, so in general `prob` is a **weight**, not a
+probability; `no_signalling` is a weight identity. This section restricts to dichotomic
+observables (Hermitian, squaring to `1`) and outcomes `±1`, and proves the weights are then real,
+nonnegative and sum to the state's norm, which the dynamics preserves. -/
+
+/-- A **dichotomic observable**: Hermitian with `X² = 1`, so its outcomes are `±1`. -/
+structure Dichotomic where
+  X : M
+  herm : Xᴴ = X
+  sq : X * X = 1
+
+/-- The outcome sign of a Boolean outcome. -/
+def sgn (b : Bool) : ℂ := if b then 1 else -1
+
+/-- The projector for outcome `b` of a dichotomic observable. -/
+def P (D : Dichotomic) (b : Bool) : M := proj D.X (sgn b)
+
+lemma P_herm (D : Dichotomic) (b : Bool) : (P D b)ᴴ = P D b := by
+  unfold P proj sgn
+  cases b <;> simp [conjTranspose_add, conjTranspose_smul, D.herm]
+
+lemma P_idem (D : Dichotomic) (b : Bool) : P D b * P D b = P D b := by
+  unfold P proj sgn
+  cases b <;>
+  · simp only [smul_mul_smul_comm, add_mul, mul_add, one_mul, mul_one, smul_mul_assoc,
+      mul_smul_comm, D.sq]
+    ext i j
+    simp [Matrix.add_apply, Matrix.smul_apply]
+    ring
+
+lemma P_sum (D : Dichotomic) : P D true + P D false = 1 := by
+  have := proj_sum D.X
+  simpa [P, sgn] using this
+
+/-- The joint outcome event `(a, b)` as an operator. -/
+def event (DA DB : Dichotomic) (a b : Bool) : Q := onA (P DA a) * onB (P DB b)
+
+lemma event_herm (DA DB : Dichotomic) (a b : Bool) : (event DA DB a b)ᴴ = event DA DB a b := by
+  unfold event
+  rw [conjTranspose_mul, onA_conjTranspose, onB_conjTranspose, P_herm, P_herm, onA_onB]
+
+lemma event_idem (DA DB : Dichotomic) (a b : Bool) :
+    event DA DB a b * event DA DB a b = event DA DB a b := by
+  unfold event
+  calc onA (P DA a) * onB (P DB b) * (onA (P DA a) * onB (P DB b))
+      = onA (P DA a) * (onB (P DB b) * onA (P DA a)) * onB (P DB b) := by simp only [mul_assoc]
+    _ = onA (P DA a) * (onA (P DA a) * onB (P DB b)) * onB (P DB b) := by rw [onA_onB]
+    _ = onA (P DA a * P DA a) * onB (P DB b * P DB b) := by
+        rw [← onA_mul, ← onB_mul]; simp only [mul_assoc]
+    _ = _ := by rw [P_idem, P_idem]
+
+/-- The (Born) probability of the joint outcome `(a, b)` after history `w` from state `ψ`. -/
+def probT (w : List Tok) (ψ : Fin 2 × Fin 2 → ℂ) (DA DB : Dichotomic) (a b : Bool) : ℂ :=
+  expect (event DA DB a b) (jointFold w *ᵥ ψ)
+
+open ComplexOrder in
+/-- **Probabilities are real and nonnegative** (as an element of `ℂ` with its star order: zero
+    imaginary part, nonnegative real part). -/
+theorem probT_nonneg (w : List Tok) (ψ : Fin 2 × Fin 2 → ℂ) (DA DB : Dichotomic) (a b : Bool) :
+    0 ≤ probT w ψ DA DB a b := by
+  unfold probT
+  have h : ∀ φ, expect (event DA DB a b) φ = expect 1 (event DA DB a b *ᵥ φ) := fun φ => by
+    rw [expect_evolve, Matrix.mul_one, event_herm, event_idem]
+  rw [h]
+  unfold expect
+  rw [Matrix.one_mulVec]
+  exact dotProduct_star_self_nonneg _
+
+/-- The global fold is unitary. -/
+lemma jointFold_unitary (w : List Tok) : (jointFold w)ᴴ * jointFold w = 1 := by
+  rw [jointFold_factorizes, conjTranspose_mul, onA_conjTranspose, onB_conjTranspose]
+  set FA := twistMatrixFold (projA w)
+  set FB := twistMatrixFold (projB w)
+  calc onB FBᴴ * onA FAᴴ * (onA FA * onB FB)
+      = onB FBᴴ * (onA (FAᴴ * FA)) * onB FB := by rw [← onA_mul]; simp only [mul_assoc]
+    _ = 1 := by rw [fold_unitary, onA_one, mul_one, onB_mul, fold_unitary, onB_one]
+
+/-- **Normalization.** The four joint probabilities sum to the state's norm, which every history
+    preserves; for a normalized state they sum to `1`. -/
+theorem probT_sum (w : List Tok) (ψ : Fin 2 × Fin 2 → ℂ) (DA DB : Dichotomic) :
+    probT w ψ DA DB true true + probT w ψ DA DB true false +
+      (probT w ψ DA DB false true + probT w ψ DA DB false false) = star ψ ⬝ᵥ ψ := by
+  unfold probT expect event
+  simp only [← dotProduct_add, ← add_mulVec, ← mul_add]
+  rw [onB_add_aux, P_sum, onB_one, mul_one, mul_one, onA_add_aux, P_sum, onA_one,
+    Matrix.one_mulVec, star_mulVec, ← dotProduct_mulVec, mulVec_mulVec, jointFold_unitary,
+    Matrix.one_mulVec]
+
+/-- **No signalling, as a probability statement.** For typed measurements, `A`'s marginal is
+    independent of `B`'s observable. -/
+theorem no_signalling_typed (w : List Tok) (ψ : Fin 2 × Fin 2 → ℂ) (DA DB DB' : Dichotomic)
+    (a : Bool) :
+    probT w ψ DA DB a true + probT w ψ DA DB a false =
+      probT w ψ DA DB' a true + probT w ψ DA DB' a false := by
+  unfold probT expect event
+  simp only [← dotProduct_add, ← add_mulVec, ← mul_add]
+  rw [onB_add_aux, onB_add_aux, P_sum, P_sum]
+
+/-! ## §6 Bell factorization relative to a complete state `λ`
+
+Bell's factorization is conditional on a complete state `λ`: `E(x, y | λ) = a_x(λ) · b_y(λ)`,
+with `λ` distributed independently of the settings (measurement independence). This section
+proves the CHSH bound for every such model with a **finite** space of complete states, and
+that no such model reproduces the singlet's operator correlations. So, given measurement
+independence, factorization relative to `λ` fails for every choice of `λ`; operationally,
+parameter independence holds (`no_signalling_typed`). -/
+
+/-- **Bell–CHSH for factorizable models.** Response functions bounded by `1`, weights a
+    probability distribution: the CHSH combination is at most `2` in absolute value. -/
+theorem chsh_factorizable_le {Λ : Type} [Fintype Λ] (p : Λ → ℝ) (hp : ∀ l, 0 ≤ p l)
+    (hs : ∑ l, p l = 1) (a0 a1 b0 b1 : Λ → ℝ)
+    (ha0 : ∀ l, |a0 l| ≤ 1) (ha1 : ∀ l, |a1 l| ≤ 1) (hb0 : ∀ l, |b0 l| ≤ 1)
+    (hb1 : ∀ l, |b1 l| ≤ 1) :
+    |∑ l, p l * (a0 l * b0 l + a0 l * b1 l + a1 l * b0 l - a1 l * b1 l)| ≤ 2 := by
+  have key : ∀ l, |a0 l * b0 l + a0 l * b1 l + a1 l * b0 l - a1 l * b1 l| ≤ 2 := by
+    intro l
+    have e : a0 l * b0 l + a0 l * b1 l + a1 l * b0 l - a1 l * b1 l =
+        a0 l * (b0 l + b1 l) + a1 l * (b0 l - b1 l) := by ring
+    rw [e]
+    have h1 : |a0 l * (b0 l + b1 l)| ≤ |b0 l + b1 l| := by
+      rw [abs_mul]; exact mul_le_of_le_one_left (abs_nonneg _) (ha0 l)
+    have h2 : |a1 l * (b0 l - b1 l)| ≤ |b0 l - b1 l| := by
+      rw [abs_mul]; exact mul_le_of_le_one_left (abs_nonneg _) (ha1 l)
+    have h3 : |b0 l + b1 l| + |b0 l - b1 l| ≤ 2 := by
+      have := hb0 l; have := hb1 l
+      rw [abs_le] at *
+      rcases abs_cases (b0 l + b1 l) with ⟨h, _⟩ | ⟨h, _⟩ <;>
+      rcases abs_cases (b0 l - b1 l) with ⟨h', _⟩ | ⟨h', _⟩ <;> rw [h, h'] <;> linarith
+    calc _ ≤ |a0 l * (b0 l + b1 l)| + |a1 l * (b0 l - b1 l)| := abs_add_le _ _
+      _ ≤ 2 := by linarith
+  calc |∑ l, p l * _| ≤ ∑ l, |p l * (a0 l * b0 l + a0 l * b1 l + a1 l * b0 l - a1 l * b1 l)| :=
+        Finset.abs_sum_le_sum_abs _ _
+    _ ≤ ∑ l, p l * 2 := by
+        apply Finset.sum_le_sum; intro l _
+        rw [abs_mul, abs_of_nonneg (hp l)]
+        exact mul_le_mul_of_nonneg_left (key l) (hp l)
+    _ = 2 := by rw [← Finset.sum_mul, hs, one_mul]
+
+open QLF.JointClosure in
+/-- The singlet's normalized correlation for observables `X` on `A` and `Y` on `B`. -/
+def singletCorr (X Y : M) : ℝ := (expect (onA X * onB Y) s).re / 2
+
+open QLF.JointClosure in
+/-- **No factorizable model reproduces the singlet.** There is no finite space of complete
+    states `λ`, distributed independently of the settings, with local responses bounded by `1`,
+    whose factorized correlations equal the singlet's for `σz`, `σx` on `A` and `b0`, `b1` on
+    `B`. -/
+theorem no_factorizable_model :
+    ¬ ∃ (Λ : Type) (_ : Fintype Λ) (p : Λ → ℝ) (a0 a1 b0' b1' : Λ → ℝ),
+      (∀ l, 0 ≤ p l) ∧ ∑ l, p l = 1 ∧
+      (∀ l, |a0 l| ≤ 1) ∧ (∀ l, |a1 l| ≤ 1) ∧ (∀ l, |b0' l| ≤ 1) ∧ (∀ l, |b1' l| ≤ 1) ∧
+      ∑ l, p l * (a0 l * b0' l) = singletCorr σz b0 ∧
+      ∑ l, p l * (a0 l * b1' l) = singletCorr σz b1 ∧
+      ∑ l, p l * (a1 l * b0' l) = singletCorr σx b0 ∧
+      ∑ l, p l * (a1 l * b1' l) = singletCorr σx b1 := by
+  rintro ⟨Λ, _, p, a0, a1, b0', b1', hp, hs, ha0, ha1, hb0, hb1, e00, e01, e10, e11⟩
+  have hb := chsh_factorizable_le p hp hs a0 a1 b0' b1' ha0 ha1 hb0 hb1
+  have hsum : ∑ l, p l * (a0 l * b0' l + a0 l * b1' l + a1 l * b0' l - a1 l * b1' l) =
+      singletCorr σz b0 + singletCorr σz b1 + singletCorr σx b0 - singletCorr σx b1 := by
+    rw [← e00, ← e01, ← e10, ← e11, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib,
+      ← Finset.sum_sub_distrib]
+    apply Finset.sum_congr rfl; intro l _; ring
+  have hq : singletCorr σz b0 + singletCorr σz b1 + singletCorr σx b0 - singletCorr σx b1 =
+      2 * Real.sqrt 2 := by
+    have h := singlet_saturates
+    rw [singlet_norm] at h
+    simp only [chsh, add_mulVec, sub_mulVec, dotProduct_add, dotProduct_sub, Complex.add_re,
+      Complex.sub_re] at h
+    unfold singletCorr expect
+    norm_num at h
+    linarith
+  rw [hsum, hq, abs_of_pos (by positivity)] at hb
+  have : (1 : ℝ) < Real.sqrt 2 := by
+    rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  linarith
 
 end QLF.PerspectiveLocality

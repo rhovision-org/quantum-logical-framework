@@ -16,19 +16,24 @@ locality** (no influence outside the future cone, and operational no-signalling)
 
 ## 1. Result in one paragraph
 
-QLF's locality holds at the level of **local statistics**, and it holds there for every joint
+In **QLF's two-body operator representation** (twists as Pauli matrices on independent tensor
+factors, Born weights), locality holds at the level of **local statistics**, for every joint
 state, entangled ones included. Whatever one body does, in whatever number of steps and however
 those steps interleave with the other body's, the other body's expectations do not change
-(`perspective_locality`), and its outcome marginals do not depend on the remote setting
-(`no_signalling`). Correlations come from **outcome dependence** (`singlet_outcome_dependent`) and
-reach Tsirelson's `2√2` (`singlet_saturates`). Bell locality is the conjunction of parameter and
-outcome independence (Jarrett 1984), and the conjunct that fails here is outcome independence. In
+(`perspective_locality`), and its outcome probabilities, which are real, nonnegative and normalized for dichotomic
+observables, do not depend on the remote setting (`no_signalling_typed`). Relative to any finite
+complete state `λ` distributed independently of the settings, no factorizable model reproduces
+the correlations (`no_factorizable_model`). Correlations come from **outcome dependence** (`singlet_outcome_dependent`) and
+reach Tsirelson's `2√2` (`singlet_saturates`). Operationally, parameter independence holds. With the operator state taken as the complete
+state, the conjunct of Bell factorization that fails is outcome independence (Jarrett 1984). In
 the tick reading of spacetime, a **closure is timelike** (a rest mass) and **null histories never
 close**. A shared closure can join two endpoints that are spacelike and that no history joins
 (`no_history_connects`). The closure census, used as a global post-selection filter, **signals**
 (`census_postselection_signals`). So locality depends on the joint verdict being unavailable to
 either body alone, and the joint verdict is unavailable to either body
-([`QLF_SharedReality`](lean/QLF_SharedReality.lean) `zfa_not_from_one_body`).
+([`QLF_SharedReality`](lean/QLF_SharedReality.lean) `zfa_not_from_one_body`). **The closure
+counting theory has not yet been shown to produce these local quantum statistics.** That is the
+next proof that matters (§5, issue [#318](https://github.com/rhovision-org/quantum-logical-framework/issues/318)).
 
 ## 2. Vocabulary
 
@@ -64,6 +69,10 @@ came out as predicted.
 | P7 | Local expectations depend only on the local projection, for every joint state (Tests D, F) | **holds** | `perspective_locality`, `local_expectation_local` |
 | P8 | No-signalling holds, and outcome independence fails on the singlet | **holds** | `no_signalling`, `singlet_outcome_dependent`, `locality_profile` |
 
+Added after review (not pre-registered; proofs, not tests): typed probabilities
+(`probT_nonneg`, `probT_sum`, `no_signalling_typed`) and the `λ`-relative Bell bound
+(`chsh_factorizable_le`, `no_factorizable_model`).
+
 ## 4. What each result means, and what it does not
 
 **Closures are massive, light is open.** Under the tick reading, count balance sets the spatial
@@ -85,7 +94,9 @@ prefix-incomparable, and both halves land on the same tick event
 `ERBridge` definition, which is bookkeeping and says nothing about signalling. The signalling
 content is in §4 of this doc ("Locality of statistics").
 
-**A shared closure across a spacelike gap.** Halves `ts` and `ts.map conj` always close together
+**A shared closure across a spacelike gap.** This is a formal conjugate construction. That physical
+pairs are born this way is the separate shared-pair birth posit (PR #219), which no theorem here
+assumes or proves. Halves `ts` and `ts.map conj` always close together
 (`pair_shared_closure`). When they have moved, their endpoints are separated by `(0, 2x)`, which
 is spacelike, and no history has that displacement (`no_history_connects`). So a shared closure
 is a relation that no causal history carries. That is the substrate form of "correlation without
@@ -100,17 +111,29 @@ statistics for **every** joint state. The theorem has content because the restri
 vacuous: one `B` token flips `B`'s own `σz` expectation from `1` to `−1`
 (`perspective_locality_nontrivial`). This strengthens [`QLF_SharedReality`](lean/QLF_SharedReality.lean)
 §5, which proved projection invariance for chosen record maps on independent bodies. Here the
-statistic comes from an entangled global state.
+statistic comes from an entangled global state. The dynamics is still a product of local
+twists on independent tensor factors, so the theorem says nothing yet about interacting ZFA
+evolution or a dynamically reconstructed boundary.
 
-**Bell audit.** On the singlet with both settings `σz`, `P(+,+) = 0`, while `P(+) = P(+) = 1/2`
-(`singlet_outcome_dependent`). Outcome independence fails. Parameter independence holds for every
-state (`no_signalling`). The singlet saturates CHSH at `2√2`
-([`QLF_JointClosure`](lean/QLF_JointClosure.lean) `singlet_saturates`), above the `2` that
-jointly valued, commuting observables obey ([`QLF_Tsirelson`](lean/QLF_Tsirelson.lean)
-`chsh_classical`). No joint value assignment exists for `σz` and `σx` because they anticommute.
-So QLF keeps local causal influence and operational no-signalling, and it does not keep Bell-local
-factorization. **Bell's theorem is not evaded.** Its premise of outcome independence is the one
-that fails.
+**Typed probabilities.** `prob` accepts any matrix and any `α`, so `no_signalling` is a weight
+identity. For `Dichotomic` observables (Hermitian, `X² = 1`) and outcomes `±1`, the weights are
+real and nonnegative (`probT_nonneg`) and sum to the state's norm, which every history preserves
+(`probT_sum`). `no_signalling_typed` is no-signalling as a probability statement.
+
+**Bell audit.** Bell's factorization is conditional on a complete state `λ`.
+`chsh_factorizable_le` proves that every model with a finite space of complete states, `λ`
+distributed independently of the settings (measurement independence), and factorized responses
+`E(x,y|λ) = a_x(λ) b_y(λ)` with `|a|, |b| ≤ 1`, has `|CHSH| ≤ 2`. The singlet's operator
+correlations reach `2√2` ([`QLF_JointClosure`](lean/QLF_JointClosure.lean) `singlet_saturates`),
+so `no_factorizable_model`: no such model reproduces them. Given measurement independence,
+factorization fails at **every** finite `λ`. Operationally, parameter independence holds
+(`no_signalling_typed`). Which conjunct fails at a hidden `λ` depends on the model. Taking the
+operator state itself as `λ` (the orthodox completeness reading), it is outcome independence:
+`P(+,+) = 0` while `P(+) = P(+) = 1/2` (`singlet_outcome_dependent`). No joint value assignment
+exists for `σz` and `σx`, because they anticommute
+([`QLF_Tsirelson`](lean/QLF_Tsirelson.lean) `chsh_classical` is the commuting case). **Bell's
+theorem is not evaded.** What QLF owes is a statement of its complete state, and that is open.
+Finite `Λ` is a restriction of this formalization.
 
 **The census signals.** Count joint closures uniformly, conditioned on the words Bob may use. With
 one twist each, both of Bob's settings admit 2 joint closures, but Alice's count for `slash` is `1`
@@ -129,8 +152,18 @@ Alice's statistics are the operator-layer ones, and those do not signal.
   is not that measure.
 * **Measurement independence** is a modelling input. Settings and state are independent variables
   in every theorem.
+* **The substrate measure.** The missing construction is a measure `μ_QLF` over admissible
+  histories, built only from what each perspective holds, whose marginals satisfy
+  `Σ_B P_μ(A,B|a,b) = P_μ(A|a)` for every remote context while reproducing the quantum
+  correlations. P6 shows uniform counting over joint closures is not it.
 * **L2: why the tick reading is spacetime.** This is open. The shared-pair birth posit (PR #219) is
   the physical input to "light is the open half of a shared closure".
+* **L2b: from open null strands to completed light interactions.** Only ZFA events occur, so a null
+  strand is physical only as part of a completed closure (emission and absorption). Which
+  closures realize a light exchange, and that their open legs are the null strands of §4, is an
+  open bridge.
+* **Complete state.** QLF has not specified its complete state `λ`; the Bell audit above is
+  relative to that choice.
 * **Accessibility.** The two-body split is given. Where a perspective boundary comes from is open
   ([`Holography_Audit.md`](Holography_Audit.md) §5).
 * **L4, L6, L7** are not attempted here. L6 has its ingredients:
@@ -144,5 +177,6 @@ Alice's statistics are the operator-layer ones, and those do not signal.
 * "Null means zero distance" (`null_not_zero_time`, `null_not_zero_space`).
 * "Shared closure means zero Minkowski separation" (`pair_endpoints_spacelike`).
 * "No-signalling is Bell locality" (§4, Bell audit).
+* "QLF locality is derived from the closure census" (it is proved in the operator representation).
 * "QLF evades Bell's theorem".
 * "`no_ftl_in_epr` proves no-signalling".
