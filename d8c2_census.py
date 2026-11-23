@@ -17,6 +17,11 @@ pre-registration; nothing here is tuned to the outcome.
 * Nulls: N1 = D3T's aggregate control (no provenance); N2 = obligation match
   plus ZFA without the typed first-closure condition.
 
+Post-hoc diagnostics (disclosed, not decision inputs): ``diag_R_T_no_phase_label``
+counts admitted boundary records with the per-stream phase label dropped, and
+``diag_R_T_raw_admitted`` counts admitted extensions.  They were added after
+the primary result was seen, to locate what carries it.
+
 Sensitivity (disclosed, not a decision input): the D3T census code enumerates
 extensions of length exactly k; the same statistics are reported for that
 reading too.
@@ -96,11 +101,17 @@ def profile_sizes(length: int, bound: int, exact: bool) -> dict[str, dict[ProvHi
                                 lambda a: by_key.get(complement_key(boundary_key(a)), ())),
     }
     out: dict[str, dict[ProvHistory, int]] = {name: {} for name in relations}
+    out["diag_R_T_no_phase_label"] = {}
+    out["diag_R_T_raw_admitted"] = {}
     for base in histories(length):
         if not is_open(base) or population(base) == "ineligible":
             continue
         for name, (rel, cands) in relations.items():
-            out[name][base] = len({boundary(e) for e in cands(base) if rel(base, e)})
+            admitted = [e for e in cands(base) if rel(base, e)]
+            out[name][base] = len({boundary(e) for e in admitted})
+            if name == "R_T":
+                out["diag_R_T_no_phase_label"][base] = len({boundary_key(e) for e in admitted})
+                out["diag_R_T_raw_admitted"][base] = len(admitted)
     return out
 
 
@@ -120,7 +131,8 @@ def analyse(exact: bool) -> dict[str, object]:
                 strata[key][name][pop].append(sizes[name][base])
 
     report: dict[str, object] = {"strata": [], "relations": {}}
-    for name in ("R_T", "N1_no_provenance", "N2_no_first_closure"):
+    for name in ("R_T", "N1_no_provenance", "N2_no_first_closure",
+                 "diag_R_T_no_phase_label", "diag_R_T_raw_admitted"):
         num, den = Fraction(0), 0
         signs = {}
         for key in sorted(strata):
@@ -140,7 +152,8 @@ def analyse(exact: bool) -> dict[str, object]:
         }
     for key in sorted(strata):
         row: dict[str, object] = {"panel": key[0], "l1_pair": list(key[1])}
-        for name in ("R_T", "N1_no_provenance", "N2_no_first_closure"):
+        for name in ("R_T", "N1_no_provenance", "N2_no_first_closure",
+                     "diag_R_T_no_phase_label", "diag_R_T_raw_admitted"):
             row[name] = {pop: {"n": len(v), "mean_K": fr(Fraction(sum(v), len(v)))}
                          for pop, v in sorted(strata[key][name].items()) if v}
         report["strata"].append(row)
