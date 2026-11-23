@@ -441,7 +441,13 @@ ensemble; a formal possibility count and an observed copy count must not be iden
 
 ### 8.1 Lean targets
 
-The next PR should be a `QLF_AssemblyIndex` module, not more prose. Minimum targets:
+**Stage 1 is done.** [`QLF_AssemblyIndex`](lean/QLF_AssemblyIndex.lean) (no axioms) defines an
+assembly pathway (free primitives, joins of earlier entries, unlimited reuse) and `assemblyIndex` as
+its least join count. It proves `assemblyIndex_le_length_sub_one`, and `reuse_saves_a_join` shows
+that `^v^v` needs only 2 joins. The pathway list plays the role of the DAG in target 1. Targets 2
+(the closed-reuse `assemblyIndexClosed`) and 3's `assemblyIndex_le_closed` remain open. Target 4 is
+already covered by `count_balanced_pauli_closed` together with the fold-sign results
+in [`census_inventory.py`](census_inventory.py). The original target list:
 
 1. Define an `AssemblyDAG` for `List Twist`: leaves are primitives, internal nodes are joins, and
    the root is the target.

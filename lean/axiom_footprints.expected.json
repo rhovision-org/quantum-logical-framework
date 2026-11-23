@@ -25,6 +25,16 @@
     "propext"
   ],
   "QLF.AlphaRigidity.inverseAlpha_at_three": [],
+  "QLF.AssemblyIndex.assemblyIndex_le_length_sub_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.reuse_saves_a_join": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BoostCovariance.diracWalk_boost_covariant": [
     "Classical.choice",
     "Quot.sound",

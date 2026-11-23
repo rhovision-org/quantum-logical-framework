@@ -362,5 +362,6 @@ lean_lib QLF where
     `QLF_ClosureUncertainty,
     `QLF_Morphogenesis,
     `QLF_DiversityPhase,
-    `QLF_CoincidenceTrivial
+    `QLF_CoincidenceTrivial,
+    `QLF_AssemblyIndex
   ]

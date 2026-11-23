@@ -160,6 +160,7 @@ import QLF_ConsciousUpdateRule
 import QLF_ClosureUncertainty
 import QLF_DiversityPhase
 import QLF_CoincidenceTrivial
+import QLF_AssemblyIndex
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -911,3 +912,7 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.DiversityPhase.stream_folds_miss_interleaving
 #print axioms QLF.DiversityPhase.axis_match_of_countBalanced_append
 #print axioms QLF.CoincidenceTrivial.co0_trivial_split
+
+-- Assembly index, flat sector, stage 1 (#264): no QLF axiom.
+#print axioms QLF.AssemblyIndex.assemblyIndex_le_length_sub_one
+#print axioms QLF.AssemblyIndex.reuse_saves_a_join
