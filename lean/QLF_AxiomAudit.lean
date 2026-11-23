@@ -134,6 +134,7 @@ import QLF_PhaseAction
 import QLF_TerritoryReturn
 import QLF_SharedReality
 import QLF_SharedEvent
+import QLF_ClassFactoring
 import QLF_SpatialResponseDerived
 import QLF_ConformalComparison
 import QLF_DiversityNovelOutcome
@@ -229,6 +230,10 @@ import QLF_AssemblyIndex
 #print axioms QLF.SharedEvent.pairing_not_reconstructible
 #print axioms QLF.SharedEvent.pairing_not_from_records
 #print axioms QLF.SharedEvent.relay_agree_on_events
+#print axioms QLF.ClassFactoring.fold_eq_classBit
+#print axioms QLF.ClassFactoring.class_function_factors
+#print axioms QLF.ClassFactoring.classBit_separates
+#print axioms QLF.ClassFactoring.circulation_invisible
 #print axioms QLF.SpatialResponseDerived.joint_step_identity
 #print axioms QLF.SpatialResponseDerived.symmetric_mean
 #print axioms QLF.SpatialResponseDerived.unit_symmetric_mean

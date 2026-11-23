@@ -129,3 +129,76 @@ not derive Regge geometry from ZFA.
 | `axisLabel_closed` | the axis labeling is zero on every count-balanced history (K7) |
 
 The angle computations (K2, K3 on deficits, K4) are numerical: floats compared at `10⁻⁹`.
+
+## §4 Milestone 2: a map that factors through the class (pre-registration)
+
+Committed before any milestone-2 code exists and before any milestone-2 number has been computed.
+Stage 2a is frozen here. Stage 2b is described but **not** frozen: it needs its own
+pre-registration once 2a has run.
+
+### 4.1 What a single closed history can carry (proved first)
+
+[`lean/QLF_ClassFactoring.lean`](lean/QLF_ClassFactoring.lean), no axioms. The phased closure class
+of a single history is `(net, fold)`, so on closed histories a class-factoring map is a function of
+the fold. `fold_eq_classBit` shows the fold of a closed history is one bit: negative-twist parity
+plus the parity of the three projected areas. `class_function_factors`: any map of closed histories
+that respects the fold is a function of that bit. `circulation_invisible`: `[]` and `^>v<^>v<` share
+the bit but enclose areas `0` and `−2`.
+
+So K3 and K7 can hold together for single closed histories only with a two-valued geometry. The
+milestone-1 failure was not a bad choice of labels: **no** labeling of one closed history can be
+both a class function and carry curvature. Geometry has to be read from the **census**, the count of
+all the ways, which is a class function by construction because it counts every representative.
+This is the reading of "a closure's frequency is its multiplicity" applied to distance.
+
+### 4.2 Stage 2a: the vacuum census geometry (calibration, frozen)
+
+* **Ways between two places.** A way from site `x` to site `y` of `ℤ³` is any twist history whose
+  spatial displacement is `y − x`. The three spatial axes move the walk one step; the gauge pair
+  `+ −` does not move it.
+* **Census weight.** `G(x) = Σ_L 8^{−L} · #{histories of length L with displacement x}`, the
+  Kraft-weighted count ([`lean/QLF_KraftMeasure.lean`](lean/QLF_KraftMeasure.lean)). It is finite
+  because the spatial walk is transient. It counts every representative, so it is a class function.
+* **Length.** `ℓ(x, y) = 1 / G(y − x)`, the length at which the inverse census weight grows like
+  distance in three dimensions. Only ratios of lengths enter the curvature, so no scale is fitted.
+* **Sensitivity reading (not a decision input).** `G₄(x) = Σ_L 8^{−L} · #{histories with
+  displacement x and zero gauge net}` with `ℓ = G₄^{−1/2}`, the four-axis walk read at gauge balance.
+* **Complex.** The Freudenthal (Kuhn) triangulation of `sℤ³`: each cube of side `s` split into six
+  tetrahedra along its main diagonal. Edges are the three axis directions, three face diagonals and
+  one body diagonal. Hinges are edges, so the Regge action is not topological.
+* **Curvature.** The deficit at each edge type is `2π` minus the sum of the dihedral angles of the
+  tetrahedra around it. The lattice is infinite and the lengths are translation-invariant, so every
+  edge of a type has the same deficit and there is no boundary. Dihedral angles come from the Cayley–Menger formulas, in
+  floating point, compared at `10⁻⁹`.
+* **Scales.** `s = 1, 2, 4, 8, 16, 32`.
+
+| | Claim under test | Passes if | Prior |
+|---|---|---|---|
+| M1 | the census length is a geometry | every tetrahedron of the complex has positive Cayley–Menger volume at every `s` | pass |
+| M2 | the vacuum is flat in the large | the largest absolute edge deficit decreases with `s` and is below `10⁻³` at `s = 32` | pass |
+| M3 | the approach is the census's own anisotropy | the deficits fall like `s^{−p}` with a fitted `p ≥ 1.5` over `s = 4 … 32` | pass, with `p ≈ 2` from the cubic harmonic in the lattice Green's function |
+| M4 | class factoring | `G` is unchanged by permuting the letters of any history it counts | pass by construction (structural) |
+
+**Verdict rule.** If M1 or M2 fails, the census length is rejected as a vacuum geometry and stage 2b
+is not run on it. M3 and M4 are recorded, not decisive.
+
+**What 2a can and cannot show.** It is a calibration. `G` is, up to a constant, the classical
+simple-cubic lattice Green's function, and its approach to `1/|x|` is known mathematics. A pass shows
+the map is well defined and flat in the vacuum. It is not evidence that the census produces gravity.
+
+### 4.3 Stage 2b: sourced geometry (not frozen)
+
+The physical test is whether a source changes the census so that the curvature has the right sign
+and falloff. That needs a source model, which is a choice with physical content, so it gets its own
+pre-registration after 2a. Candidates already in the repository:
+
+1. **Exclusion.** Sites held by a persistent closure are unavailable to other ways (Pauli exclusion,
+   as in the crystal and chemistry models). `G` becomes a taboo Green's function.
+2. **Delay.** Ways through a source's sites take longer, weighting them by an extra `8^{−k}`
+   ([`Gravity_From_Delay.md`](Gravity_From_Delay.md)).
+3. **Shared closures.** Ways that close jointly with the source count once per closure, so the count
+   near the source changes through `QLF_EntanglementPrimacy`'s joint closures.
+
+Kill conditions for 2b will include: the sign of the curvature around a source, its falloff with
+distance, and linearity in the source size. A 2b result that depends on which of the three models is
+chosen will be reported as such.

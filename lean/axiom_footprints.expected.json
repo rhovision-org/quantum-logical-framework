@@ -154,6 +154,24 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClassFactoring.circulation_invisible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.classBit_separates": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.class_function_factors": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.fold_eq_classBit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClockCalibration.age_rate_product_calibration_free": [
     "Classical.choice",
     "Quot.sound",
