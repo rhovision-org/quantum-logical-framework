@@ -444,8 +444,12 @@ ensemble; a formal possibility count and an observed copy count must not be iden
 **Stage 1 is done.** [`QLF_AssemblyIndex`](lean/QLF_AssemblyIndex.lean) (no axioms) defines an
 assembly pathway (free primitives, joins of earlier entries, unlimited reuse) and `assemblyIndex` as
 its least join count. It proves `assemblyIndex_le_length_sub_one`, and `reuse_saves_a_join` shows
-that `^v^v` needs only 2 joins. The pathway list plays the role of the DAG in target 1. Targets 2
-(the closed-reuse `assemblyIndexClosed`) and 3's `assemblyIndex_le_closed` remain open. Target 4 is
+that `^v^v` needs only 2 joins. The pathway list plays the role of the DAG in target 1. **Stage 2 is
+done too:** `ClosedPathway` keeps a pool in which a closed word survives being joined and an open
+word is consumed, `assemblyIndexClosed` is its least join count, and `assemblyIndex_le_closed` proves
+`a ≤ a_ZFA` by simulating every closed-reuse pathway with an ordinary one. The comb gives
+`a_ZFA ≤ |w| − 1`. Exact lower bounds on `a_ZFA`, which would exhibit the census's gap in Lean, are
+open. Target 4 is
 already proved: [`QLF_PhaseRule`](lean/QLF_PhaseRule.lean) `phase_rule_real` shows that every
 count-balanced fold is `+I` or `−I`. The original target list:
 

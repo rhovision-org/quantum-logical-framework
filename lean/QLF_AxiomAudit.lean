@@ -916,3 +916,5 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 -- Assembly index, flat sector, stage 1 (#264): no QLF axiom.
 #print axioms QLF.AssemblyIndex.assemblyIndex_le_length_sub_one
 #print axioms QLF.AssemblyIndex.reuse_saves_a_join
+#print axioms QLF.AssemblyIndex.assemblyIndex_le_closed
+#print axioms QLF.AssemblyIndex.assemblyIndexClosed_le_length_sub_one
