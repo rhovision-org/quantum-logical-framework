@@ -2142,6 +2142,46 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SharedEvent.both_close_on_each_body": [],
+  "QLF.SharedEvent.history_from_A": [
+    "propext"
+  ],
+  "QLF.SharedEvent.history_from_B": [
+    "propext"
+  ],
+  "QLF.SharedEvent.pairBuilt_events_unique": [
+    "propext"
+  ],
+  "QLF.SharedEvent.pair_domain_reconstructs_record": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pair_phase_transfer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pairing_not_from_records": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pairing_not_reconstructible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.perspectives_agree_on_events": [
+    "propext"
+  ],
+  "QLF.SharedEvent.relay_agree_on_events": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.shared_event_not_from_bodies": [
+    "propext"
+  ],
   "QLF.SharedReality.chain_without_relay_fails": [
     "Classical.choice",
     "Quot.sound",

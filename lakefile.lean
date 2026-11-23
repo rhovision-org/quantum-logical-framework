@@ -344,6 +344,7 @@ lean_lib QLF where
     `QLF_PerspectiveHolography,
     `QLF_TerritoryReturn,
     `QLF_SharedReality,
+    `QLF_SharedEvent,
     `QLF_SpatialResponseDerived,
     `QLF_ConformalComparison,
     `QLF_DiversityNovelOutcome,

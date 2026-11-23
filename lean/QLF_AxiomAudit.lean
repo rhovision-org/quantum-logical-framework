@@ -133,6 +133,7 @@ import QLF_FluxoidRegge
 import QLF_PhaseAction
 import QLF_TerritoryReturn
 import QLF_SharedReality
+import QLF_SharedEvent
 import QLF_SpatialResponseDerived
 import QLF_ConformalComparison
 import QLF_DiversityNovelOutcome
@@ -217,6 +218,17 @@ import QLF_AssemblyIndex
 #print axioms QLF.SharedReality.relay_domain_reconstructs_fold
 #print axioms QLF.SharedReality.link_domain_not_reconstructs_zfa
 #print axioms QLF.SharedReality.pair_domain_reconstructs_zfa
+#print axioms QLF.SharedEvent.pairBuilt_events_unique
+#print axioms QLF.SharedEvent.perspectives_agree_on_events
+#print axioms QLF.SharedEvent.history_from_A
+#print axioms QLF.SharedEvent.history_from_B
+#print axioms QLF.SharedEvent.pair_phase_transfer
+#print axioms QLF.SharedEvent.pair_domain_reconstructs_record
+#print axioms QLF.SharedEvent.shared_event_not_from_bodies
+#print axioms QLF.SharedEvent.both_close_on_each_body
+#print axioms QLF.SharedEvent.pairing_not_reconstructible
+#print axioms QLF.SharedEvent.pairing_not_from_records
+#print axioms QLF.SharedEvent.relay_agree_on_events
 #print axioms QLF.SpatialResponseDerived.joint_step_identity
 #print axioms QLF.SpatialResponseDerived.symmetric_mean
 #print axioms QLF.SpatialResponseDerived.unit_symmetric_mean
