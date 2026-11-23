@@ -29,7 +29,9 @@ ER=EPR is not just a conceptual identification — it is the structural predicti
 ## The EPR Paradox
 The EPR paradox, proposed by Einstein, Podolsky, and Rosen in 1935, argued that quantum entanglement implied "spooky action at a distance." It suggested that measuring one particle instantly affects its entangled partner, seemingly violating locality and requiring faster-than-light influences.
 
-**See also:** (./Entanglement.md) which shows that entanglement in QLF is simply **shared logical constraints from the past**, resolved locally with no signaling required.
+**Einstein was right that there is no spooky action.** In QLF's two-body operator representation, nothing done to one particle changes the other's statistics, for any entangled state ([`QLF_PerspectiveLocality`](lean/QLF_PerspectiveLocality.lean) `perspective_locality`, `no_signalling_typed`). The endpoints of a shared pair are spacelike, and no history joins them ([`QLF_LocalityDefinitions`](lean/QLF_LocalityDefinitions.lean) `no_history_connects`). So the measurement does not "instantly affect" the partner. Einstein's principle of local action is vindicated. What EPR also assumed, separate pre-existing values for each particle, is the part Bell excluded, and QLF agrees (`no_factorizable_model`). See [Locality.md](Locality.md) §2.
+
+**See also:** [Entanglement.md](Entanglement.md), which shows that entanglement in QLF is simply **shared logical constraints from the past**, resolved locally with no signaling required.
 
 ## Leonard Susskind’s ER = EPR Conjecture
 Physicist Leonard Susskind (with Juan Maldacena) proposed that **EPR = ER** — that quantum entanglement (EPR) and Einstein-Rosen bridges (wormholes) are two descriptions of the same underlying phenomenon.

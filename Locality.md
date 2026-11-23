@@ -33,9 +33,29 @@ close**. A shared closure can join two endpoints that are spacelike and that no 
 either body alone, and the joint verdict is unavailable to either body
 ([`QLF_SharedReality`](lean/QLF_SharedReality.lean) `zfa_not_from_one_body`). **The closure
 counting theory has not yet been shown to produce these local quantum statistics.** That is the
-next proof that matters (§5, issue [#318](https://github.com/rhovision-org/quantum-logical-framework/issues/318)).
+next proof that matters (§6, issue [#318](https://github.com/rhovision-org/quantum-logical-framework/issues/318)).
 
-## 2. Vocabulary
+## 2. Einstein vindicated, and where
+
+Einstein held to three things about entanglement. QLF proves the first two in its two-body
+operator representation and tick reading. It agrees with the third in stance, and the form
+Einstein hoped for is excluded.
+
+| Einstein | What QLF proves | Verdict |
+|---|---|---|
+| **No spooky action at a distance.** Born–Einstein letters, 3 March 1947: *spukhafte Fernwirkung* | Nothing done to one body changes the other body's statistics, whatever the entangled state, however many steps, in any interleaving (`perspective_locality`). Remote settings do not shift local probabilities (`no_signalling_typed`). No history joins the spacelike endpoints of a shared pair (`no_history_connects`). The correlations are a shared closure, not a transmission | **Vindicated.** There is no action at a distance. |
+| **Local action.** Einstein, *Quanten-Mechanik und Wirklichkeit*, Dialectica 2, 320 (1948): what is done to S₁ has no immediate effect on S₂ | The same theorems. Every history also stays in its own future cone, one axis step per tick (`tick_causal`), so the light-speed bound is a property of each history and not an extra postulate. Nullity is Lorentz invariant (`null_lorentz_invariant`) | **Vindicated** for causal influence. |
+| **Quantum mechanics is incomplete.** EPR, Phys. Rev. 47, 777 (1935) | QLF treats the Hilbert-space description as a rendering of an underlying history substrate, which agrees with Einstein in stance. What Einstein hoped the completion would be, local pre-existing values with factorized responses, is excluded: with measurement independence, no such model reproduces the correlations (`no_factorizable_model`, Bell's result) | **Agrees in stance.** The completion Einstein expected is ruled out by Bell, which QLF respects. |
+
+What Einstein lost was the assumption that a pair has two separate real states, one per body. In
+QLF the pair's closure is one joint fact (`shared_closure_not_factorizable`), and neither body's
+record decides it (`zfa_not_from_one_body`). The correlations need that joint fact, and causation
+does not cross it. Einstein's locality survives, and his separability of states does not.
+
+These are results in the operator representation (§6). Deriving the same local statistics from
+the closure census is issue [#318](https://github.com/rhovision-org/quantum-logical-framework/issues/318).
+
+## 3. Vocabulary
 
 | Term | Definition | Where |
 |---|---|---|
@@ -51,9 +71,9 @@ The **tick reading** is the repository's own reading of time as an event count
 ([`QLF_CausalInterval`](lean/QLF_CausalInterval.lean) `intervalVolume`, the Kitada clock,
 and the time axis of [`QLF_LightCone`](lean/QLF_LightCone.lean)). Gauge twists take a tick and
 move nowhere. Why this reading is the operational spacetime separation is the **L2 bridge**, and
-it is open. The geometric statements in §3 are about the reading.
+it is open. The geometric statements in §4 and §5 are about the reading.
 
-## 3. Pre-registered predictions and results
+## 4. Pre-registered predictions and results
 
 The predictions were frozen in the issue body before the Lean for them was written. All eight
 came out as predicted.
@@ -73,7 +93,7 @@ Added after review (not pre-registered; proofs, not tests): typed probabilities
 (`probT_nonneg`, `probT_sum`, `no_signalling_typed`) and the `λ`-relative Bell bound
 (`chsh_factorizable_le`, `no_factorizable_model`).
 
-## 4. What each result means, and what it does not
+## 5. What each result means, and what it does not
 
 **Closures are massive, light is open.** Under the tick reading, count balance sets the spatial
 displacement to zero while the clock advances, so a nonempty closure has interval `|h|² > 0`
@@ -92,7 +112,7 @@ closure**: two null halves born at one event that close jointly.
 prefix-incomparable, and both halves land on the same tick event
 (`prefixSpacelike_not_spacelike`). Its `no_ftl_in_epr` is the second conjunct of the
 `ERBridge` definition, which is bookkeeping and says nothing about signalling. The signalling
-content is in §4 of this doc ("Locality of statistics").
+content is in §5 of this doc ("Locality of statistics").
 
 **A shared closure across a spacelike gap.** This is a formal conjugate construction. That physical
 pairs are born this way is the separate shared-pair birth posit (PR #219), which no theorem here
@@ -144,7 +164,7 @@ joint verdict is not a function of either body's record (`zfa_not_from_one_body`
 conditioning can only be done where both records meet, inside the common future. Before then,
 Alice's statistics are the operator-layer ones, and those do not signal.
 
-## 5. Scope and what is open
+## 6. Scope and what is open
 
 * **Representation result.** The probabilities in `QLF_PerspectiveLocality` are Born weights on the
   twist operator algebra. A census-level measure that is no-signalling and reproduces these
@@ -160,7 +180,7 @@ Alice's statistics are the operator-layer ones, and those do not signal.
   the physical input to "light is the open half of a shared closure".
 * **L2b: from open null strands to completed light interactions.** Only ZFA events occur, so a null
   strand is physical only as part of a completed closure (emission and absorption). Which
-  closures realize a light exchange, and that their open legs are the null strands of §4, is an
+  closures realize a light exchange, and that their open legs are the null strands of §5, is an
   open bridge.
 * **Complete state.** QLF has not specified its complete state `λ`; the Bell audit above is
   relative to that choice.
@@ -172,11 +192,11 @@ Alice's statistics are the operator-layer ones, and those do not signal.
   [`QLF_LocalAreaLaw`](lean/QLF_LocalAreaLaw.lean) is a pair age bounded independently of the
   region.
 
-## 6. Overclaims to avoid
+## 7. Overclaims to avoid
 
 * "Null means zero distance" (`null_not_zero_time`, `null_not_zero_space`).
 * "Shared closure means zero Minkowski separation" (`pair_endpoints_spacelike`).
-* "No-signalling is Bell locality" (§4, Bell audit).
+* "No-signalling is Bell locality" (§5, Bell audit).
 * "QLF locality is derived from the closure census" (it is proved in the operator representation).
 * "QLF evades Bell's theorem".
 * "`no_ftl_in_epr` proves no-signalling".

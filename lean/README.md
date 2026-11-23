@@ -203,7 +203,7 @@ established; return incomplete"; `bridge: CLOSED` still requires `TESTED` and a
 | Module | Description | Key theorems |
 |---|---|---|
 | [AgeOfUniverse.lean](AgeOfUniverse.lean) | A frequency-spectrum model of the effective cosmic age: for any band the age is finite and positive. Unitless, no dimensional scale, so it computes no age in years ([AgeOfUniverse.md](../AgeOfUniverse.md) §2–§3) | `age_is_finite_and_positive` |
-| [ER_EPR_QLF.lean](ER_EPR_QLF.lean) | ER=EPR from the core, no axioms: `SharedClosure` (joint ZFA) and `ERBridge := SharedClosure ∧ Spacelike`. `Spacelike` is prefix-order incomparability, not Minkowski spacelikeness, and `no_ftl_in_epr` restates the definition ([Locality.md](../Locality.md) §4; operational no-signalling is [QLF_PerspectiveLocality](QLF_PerspectiveLocality.lean)) | `er_equals_epr`, `no_ftl_in_epr`, `primordial_wormhole` |
+| [ER_EPR_QLF.lean](ER_EPR_QLF.lean) | ER=EPR from the core, no axioms: `SharedClosure` (joint ZFA) and `ERBridge := SharedClosure ∧ Spacelike`. `Spacelike` is prefix-order incomparability, not Minkowski spacelikeness, and `no_ftl_in_epr` restates the definition ([Locality.md](../Locality.md) §5; operational no-signalling is [QLF_PerspectiveLocality](QLF_PerspectiveLocality.lean)) | `er_equals_epr`, `no_ftl_in_epr`, `primordial_wormhole` |
 
 
 ### Additional Modules (build order)

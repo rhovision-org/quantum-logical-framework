@@ -1,6 +1,6 @@
 # Entanglement in the Quantum Logical Framework
 
-**Entanglement in QLF is shared logical structure — two histories that arose from a common Hermitian-pair creation event and are resolved in different places.** There is no faster-than-light signaling. The correlations Einstein called "spooky" are the **local resolution of a shared past constraint**, not a present interaction.
+**Entanglement in QLF is shared logical structure — two histories that arose from a common Hermitian-pair creation event and are resolved in different places.** There is no faster-than-light signaling. The correlations Einstein called "spooky" are the **local resolution of a shared past constraint**, not a present interaction. **On action at a distance, Einstein was right**: in QLF's two-body operator representation, nothing done to one half changes the other's statistics ([Locality.md](Locality.md) §2).
 
 This document synthesizes a thread that already runs through the repository — bit-by-bit possibility halving ([Entanglement.md](Entanglement.md) original content, preserved in §1 below), Einstein-Rosen / EPR identity ([ER_EPR_QLF.md](ER_EPR_QLF.md)), primordial pair-creation ([Primordial_Entanglement.md](Primordial_Entanglement.md)), Hermitian-pair structure ([MRE.md](MRE.md), [Annihilation.md](Annihilation.md)), and Borromean topology at the hadron scale ([Hadrons_Markov_Blankets.md](Hadrons_Markov_Blankets.md)) — into a single statement.
 
@@ -73,7 +73,9 @@ This holds at every scale: 1/2-spin atoms are monogamous (each pair binds one co
 
 This is the constructive content of [Measurement_Problem.md](Measurement_Problem.md)'s "we do not collapse the wavefunction; we close the history string." Each closure is a local ZFA event with no causal influence on remote closures. Correlations exist only because the two histories share an origin, not because they exchange messages.
 
-Einstein's "spooky action at a distance" is replaced by **mundane action in a shared past**.
+Einstein's "spooky action at a distance" is replaced by **mundane action in a shared past**. Einstein's objection is vindicated: there is no action at a distance. This is now proved in the operator representation: local statistics depend only on local operations for every joint state (`perspective_locality`), and remote settings do not move local probabilities (`no_signalling_typed`, [`QLF_PerspectiveLocality`](lean/QLF_PerspectiveLocality.lean)).
+
+One caution about "pre-constrained by the shared origin". The shared origin fixes the **correlation**, not a list of answers for every axis. A model in which the origin pre-assigns local answers, distributed independently of the settings, cannot reproduce the correlations (`no_factorizable_model`, Bell's theorem). What Einstein got right is locality. What Bell excluded is separate pre-existing values. [Locality.md](Locality.md) §2 has the table.
 
 ## 6. Bell violations from the non-commutative Pauli algebra
 
