@@ -29,7 +29,7 @@ fan-out one.  Primitives can always be re-introduced for free.
   `a_ZFA(w) ≤ |w| − 1` too.
 
 The census finds `a_ZFA > a` on 7.06 % of balanced words through length 10, with a maximum gap of 2.
-Exact lower bounds on `a_ZFA` (which would show a gap in Lean) are not proved here.
+`strict_gap_up4` (below) gives a strict gap on the unbalanced word `^^^^`; a balanced witness is open.
 
 No axioms.  Part of [Quantum Logical Framework (QLF)](../README.md).
 -/
@@ -270,5 +270,160 @@ theorem libIndex_mono {L' L : List Word} (hL : L'.Subperm L) (w : Word)
 /-- A library that already holds `w` assembles it with no joins. -/
 theorem libIndex_of_mem {L : List Word} {w : Word} (hw : w ∈ L) : libIndex L w = 0 :=
   Nat.eq_zero_of_le_zero (Nat.sInf_le ⟨L, LibPathway.nil, hw⟩)
+
+
+/-! ## A strict gap: `a(^^^^) = 2 < 3 = a_ZFA(^^^^)`
+
+`^^^^` is built with two joins when reuse is free: make `^^`, then join it to itself.  Under the
+closure rule `^^` is open, so it is consumed by its first use and cannot be joined to itself.  The
+proof is a potential argument.  `Φ(pool)` sums `|x| − 1` over the pool's words that are nonempty
+powers of `^`.  A prim adds nothing.  A join that makes a `^`-power consumes two open `^`-powers
+(every nonempty `^`-power is open) and raises `Φ` by exactly one.  Any other join only removes
+words.  So `Φ ≤` the number of joins, and `^^^^` in the pool forces `Φ ≥ 3`.
+
+`^^^^` is not count-balanced.  The census's gaps are on balanced words (7.06 % through length 10);
+a balanced witness is still open in Lean. -/
+
+/-- A nonempty power of `^`. -/
+def isUpPow (x : Word) : Bool := !x.isEmpty && x.all (· == Twist.up)
+
+/-- Weight of one pool word in the potential. -/
+def upWeight (x : Word) : Nat := if isUpPow x then x.length - 1 else 0
+
+/-- The potential: the summed `upWeight` of the pool. -/
+def upPotential (pool : List Word) : Nat := (pool.map upWeight).sum
+
+theorem upPow_open {x : Word} (h : isUpPow x = true) : ¬ countBalanced x := by
+  intro hc
+  obtain ⟨hud, -, -, -⟩ := hc
+  simp only [isUpPow, Bool.and_eq_true, Bool.not_eq_true', List.isEmpty_eq_false_iff,
+    List.all_eq_true, beq_iff_eq] at h
+  obtain ⟨hne, hall⟩ := h
+  have hdown : x.count Twist.down = 0 :=
+    List.count_eq_zero.2 (fun hm => by have := hall _ hm; cases this)
+  have hup : 0 < x.count Twist.up := by
+    obtain ⟨c, hc⟩ := List.exists_mem_of_ne_nil x hne
+    have := hall c hc
+    subst this
+    exact List.count_pos_iff.2 hc
+  omega
+
+theorem upPotential_append (l : List Word) (y : Word) :
+    upPotential (l ++ [y]) = upPotential l + upWeight y := by
+  simp [upPotential]
+
+theorem upPotential_erase {l : List Word} {x : Word} (hx : x ∈ l) :
+    upPotential (l.erase x) + upWeight x = upPotential l := by
+  have hp := List.perm_cons_erase hx
+  unfold upPotential
+  rw [(hp.map upWeight).sum_eq]
+  simp [Nat.add_comm]
+
+theorem upPotential_consume_le (x : Word) (l : List Word) :
+    upPotential (consume x l) ≤ upPotential l := by
+  unfold consume
+  split
+  · exact le_rfl
+  · by_cases hx : x ∈ l
+    · have := upPotential_erase hx; omega
+    · rw [List.erase_of_not_mem hx]
+
+private theorem upPow_append_left {a b : Word} (ha : a ≠ []) (h : isUpPow (a ++ b) = true) :
+    isUpPow a = true := by
+  simp only [isUpPow, Bool.and_eq_true, Bool.not_eq_true', List.isEmpty_eq_false_iff,
+    List.all_eq_true, beq_iff_eq, List.mem_append] at h ⊢
+  exact ⟨ha, fun c hc => h.2 c (Or.inl hc)⟩
+
+private theorem upPow_append_right {a b : Word} (hb : b ≠ []) (h : isUpPow (a ++ b) = true) :
+    isUpPow b = true := by
+  simp only [isUpPow, Bool.and_eq_true, Bool.not_eq_true', List.isEmpty_eq_false_iff,
+    List.all_eq_true, beq_iff_eq, List.mem_append] at h ⊢
+  exact ⟨hb, fun c hc => h.2 c (Or.inr hc)⟩
+
+theorem consume_of_open {x : Word} (h : ¬ countBalanced x) (l : List Word) :
+    consume x l = l.erase x := by
+  simp [consume, h]
+
+/-- **The potential never exceeds the number of joins.** -/
+theorem upPotential_le {pool : List Word} {n : Nat} (h : ClosedPathway pool n) :
+    upPotential pool ≤ n := by
+  induction h with
+  | nil => simp [upPotential]
+  | prim t _ ih =>
+    rw [upPotential_append]
+    have : upWeight [t] = 0 := by simp [upWeight]
+    omega
+  | @join pool n a b _ ha hb ih =>
+    rw [upPotential_append]
+    by_cases hab : isUpPow (a ++ b) = true
+    · by_cases ha0 : a = []
+      · subst ha0
+        -- `[]` is count-balanced, so it is not consumed; `b` is an open `^`-power.
+        have hbp : isUpPow b = true := by simpa using hab
+        have hc0 : consume [] pool = pool := by
+          simp [consume, countBalanced]
+        rw [hc0] at hb ⊢
+        rw [consume_of_open (upPow_open hbp)]
+        have := upPotential_erase hb
+        simp only [List.nil_append] at *
+        omega
+      · by_cases hb0 : b = []
+        · subst hb0
+          have hc0 : consume [] (consume a pool) = consume a pool := by
+            simp [consume, countBalanced]
+          rw [hc0]
+          have hap : isUpPow a = true := by simpa using hab
+          rw [consume_of_open (upPow_open hap)]
+          have := upPotential_erase ha
+          simp only [List.append_nil] at *
+          omega
+        · have hap := upPow_append_left ha0 hab
+          have hbp := upPow_append_right hb0 hab
+          rw [consume_of_open (upPow_open hap)] at hb ⊢
+          rw [consume_of_open (upPow_open hbp)]
+          have e1 := upPotential_erase ha
+          have e2 := upPotential_erase hb
+          have wab : upWeight (a ++ b) = a.length + b.length - 1 := by
+            simp [upWeight, hab]
+          have wa : upWeight a = a.length - 1 := by simp [upWeight, hap]
+          have wb : upWeight b = b.length - 1 := by simp [upWeight, hbp]
+          have la : 0 < a.length := List.length_pos_iff.2 ha0
+          have lb : 0 < b.length := List.length_pos_iff.2 hb0
+          omega
+    · have : upWeight (a ++ b) = 0 := by simp [upWeight, hab]
+      have h1 := upPotential_consume_le b (consume a pool)
+      have h2 := upPotential_consume_le a pool
+      omega
+
+/-- The word `^^^^`. -/
+def up4 : Word := [Twist.up, Twist.up, Twist.up, Twist.up]
+
+theorem up4_needs_three {n : Nat} (h : AssemblesClosed up4 n) : 3 ≤ n := by
+  obtain ⟨pool, hp, hw⟩ := h
+  have e := upPotential_erase hw
+  have w4 : upWeight up4 = 3 := by decide
+  have := upPotential_le hp
+  omega
+
+/-- **A strict gap.**  `a(^^^^) ≤ 2` with free reuse, while `a_ZFA(^^^^) = 3`. -/
+theorem strict_gap_up4 :
+    assemblyIndex up4 ≤ 2 ∧ assemblyIndexClosed up4 = 3 := by
+  constructor
+  · apply Nat.sInf_le
+    have p0 := Pathway.prim Twist.up Pathway.nil
+    have p1 := Pathway.join (a := [Twist.up]) (b := [Twist.up]) p0 (by simp) (by simp)
+    have p2 := Pathway.join (a := [Twist.up, Twist.up]) (b := [Twist.up, Twist.up]) p1
+      (by simp) (by simp)
+    exact ⟨_, p2, by simp [up4]⟩
+  · have hne : {n | AssemblesClosed up4 n}.Nonempty :=
+      ⟨_, closed_assembles_length_sub_one up4 (by simp [up4])⟩
+    apply le_antisymm
+    · have := assemblyIndexClosed_le_length_sub_one up4 (by simp [up4])
+      simpa [up4] using this
+    · exact up4_needs_three (Nat.sInf_mem hne)
+
+theorem assemblyIndex_lt_closed_up4 : assemblyIndex up4 < assemblyIndexClosed up4 := by
+  obtain ⟨h1, h2⟩ := strict_gap_up4
+  omega
 
 end QLF.AssemblyIndex

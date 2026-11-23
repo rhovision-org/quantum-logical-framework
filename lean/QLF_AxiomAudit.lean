@@ -920,3 +920,6 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.AssemblyIndex.assemblyIndexClosed_le_length_sub_one
 #print axioms QLF.AssemblyIndex.libIndex_mono
 #print axioms QLF.AssemblyIndex.libIndex_of_mem
+#print axioms QLF.AssemblyIndex.strict_gap_up4
+#print axioms QLF.AssemblyIndex.assemblyIndex_lt_closed_up4
+#print axioms QLF.AssemblyIndex.upPotential_le

@@ -40,6 +40,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.AssemblyIndex.assemblyIndex_lt_closed_up4": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.AssemblyIndex.libIndex_mono": [
     "Classical.choice",
     "Quot.sound",
@@ -51,6 +56,16 @@
     "propext"
   ],
   "QLF.AssemblyIndex.reuse_saves_a_join": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.strict_gap_up4": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.upPotential_le": [
     "Classical.choice",
     "Quot.sound",
     "propext"

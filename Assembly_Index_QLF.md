@@ -451,8 +451,9 @@ word is consumed, `assemblyIndexClosed` is its least join count, and `assemblyIn
 `a_ZFA ≤ |w| − 1`. Starting from a library `L` of available parts, `libIndex_mono` proves that a
 larger library (as a multiset) never costs more joins. That holds by construction for any
 distribution of parts, so it is not evidence that diversity helps; that would need diverse and
-homogeneous libraries of equal size. Exact lower bounds on `a_ZFA`, which would exhibit the census's gap in Lean, are
-open. Target 4 is
+homogeneous libraries of equal size. The gap is exhibited in Lean: `strict_gap_up4` proves `a(^^^^) ≤ 2` and `a_ZFA(^^^^) = 3`. The
+lower bound is a potential argument, since `^^` is open and cannot be joined to itself. `^^^^` is not
+count-balanced, so a witness among the balanced words the census counts is still open. Target 4 is
 already proved: [`QLF_PhaseRule`](lean/QLF_PhaseRule.lean) `phase_rule_real` shows that every
 count-balanced fold is `+I` or `−I`. The original target list:
 
