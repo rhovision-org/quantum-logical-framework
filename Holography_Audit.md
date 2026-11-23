@@ -131,4 +131,14 @@ mismatches.
 * Say: `4πR²` is, by a geometric bridge, the continuum rendering of the substrate's `4R²+2`, and the `4 log 2` gap to Bekenstein–Hawking is measured exactly, not derived.
 * Do not say: AdS/CFT is "a provable identity", "machine-verified", or "the area law follows automatically". The first two are false as citations, and the third needs the locality premise.
 
+## 5. Shared reality between perspectives
+
+The principle (Jim, 2026-11-23): an event is a fact for two perspectives only through a joint ZFA closure, or through communication between them. Whether a closure occurs, and its phase, is the same for every observer ([`QLF_MultiObserver`](lean/QLF_MultiObserver.lean) `observers_agree`). What depends on the perspective is which closures its record carries. [`QLF_SharedReality`](lean/QLF_SharedReality.lean) proves three pieces on finite models, with no axioms:
+
+* **The lift to ZFA.** [`QLF_PerspectiveHolography`](lean/QLF_PerspectiveHolography.lean)'s two-body results concern *fold* closure, which is weaker than ZFA ([`QLF_TerritoryReturn`](lean/QLF_TerritoryReturn.lean) `zfa_not_from_fold`). With each body's ledger added, single-body perspectives still share only constants (`single_body_territorial_share_only_constants`), and neither decides two-body ZFA (`zfa_not_from_one_body`).
+* **What a chain carries.** With three bodies, an observable is reconstructible from both the `AB` and the `BC` perspective exactly when it is reconstructible from `B` alone (`shared_iff_overlap`). Three-body ZFA is a fact for neither pair (`global_zfa_not_from_pair`), which is the finite form of the #306 audit's finding that neither view determines global ZFA.
+* **Communication by shared pairs.** On histories built from shared pairs `(A, t), (B, t†)`, `A`'s ledger is a function of `B`'s, so `A`'s ZFA verdict is a fact for `B` (`pairBuilt_zfa_iff`). Without shared pairs it is not (`ledger_transfer_fails_without_pairs`).
+
+**Not shown.** The bodies are independent and commuting, and a perspective is a chosen record map, so the chain result is close to automatic. The pair result assumes that a shared pair puts one half on each body. Relaying (a `BC` pair correlated with an `AB` pair) is not modelled. No-signalling for a physically derived record is open: [`QLF_ClockIntervention`](lean/QLF_ClockIntervention.lean) `record_signals` shows that a natural record can carry any number without a shared closure, so the principle constrains which records count as physical rather than following from the definitions.
+
 See also: [`Holographic.md`](Holographic.md), [`Entropy.md`](Entropy.md), [`Quantum_Gravity.md`](Quantum_Gravity.md), [`Open_Problems.md`](Open_Problems.md), [`Closure_Walk.md`](Closure_Walk.md).

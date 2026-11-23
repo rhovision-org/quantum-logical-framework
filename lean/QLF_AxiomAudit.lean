@@ -132,6 +132,7 @@ import QLF_PerspectiveHolography
 import QLF_FluxoidRegge
 import QLF_PhaseAction
 import QLF_TerritoryReturn
+import QLF_SharedReality
 import QLF_SpatialResponseDerived
 import QLF_ConformalComparison
 import QLF_DiversityNovelOutcome
@@ -190,6 +191,17 @@ import QLF_ConsciousUpdateRule
 #print axioms QLF.TerritoryReturn.zfa_not_from_fold
 #print axioms QLF.TerritoryReturn.ledger_returns_zfa
 #print axioms QLF.TerritoryReturn.joint_record_with_ledger_returns_zfa
+#print axioms QLF.SharedReality.single_body_territorial_share_only_constants
+#print axioms QLF.SharedReality.territorial_record_reconstructs
+#print axioms QLF.SharedReality.zfa_not_from_one_body
+#print axioms QLF.SharedReality.shared_iff_overlap
+#print axioms QLF.SharedReality.endpoints_share_only_constants
+#print axioms QLF.SharedReality.zfa_A_not_from_BC
+#print axioms QLF.SharedReality.global_zfa_not_from_pair
+#print axioms QLF.SharedReality.global_zfa_from_all
+#print axioms QLF.SharedReality.pairBuilt_ledger_transfer
+#print axioms QLF.SharedReality.pairBuilt_zfa_iff
+#print axioms QLF.SharedReality.ledger_transfer_fails_without_pairs
 #print axioms QLF.SpatialResponseDerived.joint_step_identity
 #print axioms QLF.SpatialResponseDerived.symmetric_mean
 #print axioms QLF.SpatialResponseDerived.unit_symmetric_mean

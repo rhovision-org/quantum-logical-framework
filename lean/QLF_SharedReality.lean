@@ -1,0 +1,332 @@
+import QLF_TerritoryReturn
+
+/-!
+# QLF_SharedReality — what overlapping perspectives share, at the level of ZFA
+
+The shared-reality principle (Jim, 2026-11-23): *an event is a fact for two perspectives only
+through a joint ZFA closure, or through communication between them.* Occurrence is objective
+(`QLF_MultiObserver.observers_agree`). What is perspective-relative is which closures a record
+carries. This module proves three pieces of that principle on finite models. It is the
+ZFA-level follow-up to [`QLF_PerspectiveHolography`](QLF_PerspectiveHolography.lean), whose
+two-body results are about *fold* closure. [`QLF_TerritoryReturn`](QLF_TerritoryReturn.lean)
+shows that fold closure is weaker than ZFA (`zfa_not_from_fold`) and that the integer ledger
+restores it (`ledger_returns_zfa`).
+
+**§1 The ledger lift (two bodies).** A body's *territorial record* is its fold together with its
+ledger (twist counts).
+
+* `single_body_territorial_share_only_constants`: perspectives that each hold one body's
+  territorial record share only constant observables. So the PerspectiveHolography result
+  survives the lift from fold closure to ZFA.
+* `territorial_record_reconstructs`: the joint fold plus the ledger reconstructs the phased
+  closure test and ZFA together.
+* `zfa_not_from_one_body`: neither body's record decides the two-body ZFA verdict.
+
+**§2 Three bodies: what survives a chain.** Perspectives `AB` and `BC` hold the territorial
+records of bodies `{A, B}` and `{B, C}`.
+
+* `shared_iff_overlap`: an observable is reconstructible from both `AB` and `BC` **iff** it is
+  reconstructible from body `B`'s record alone. What the chain `AB`, `BC` shares is exactly what
+  the overlap carries, no more.
+* `endpoints_share_only_constants`: `A` and `C` alone share only constants.
+* `zfa_A_not_from_BC`: whether `A` closes is not a fact for `BC`.
+* `global_zfa_not_from_pair`: three-body ZFA is a fact for neither pair perspective, while all
+  three bodies' records decide it (`global_zfa_from_all`).
+
+**§3 Communication by shared pairs (two bodies).** A shared pair puts `t` on `A` and `t.conj` on
+`B` (`sharedPair`).
+
+* `pairBuilt_ledger_transfer`: on histories built from shared pairs, `A`'s ledger is a function
+  of `B`'s, so `A`'s ZFA verdict is a fact for `B` (`pairBuilt_zfa_iff`).
+* `ledger_transfer_fails_without_pairs`: on general histories it is not.
+
+**Scope.** The bodies are the commuting, independent bodies of
+[`QLF_TensorFromClosure`](QLF_TensorFromClosure.lean), and a perspective is a chosen record map.
+That makes §2 close to automatic: nothing can reach `C` except through `B`'s record because no
+event touches two bodies. §3 shows communication *given* the posit that a shared pair puts one
+half on each body; it does not derive that posit, and it does not model relaying (a `BC` pair
+correlated with an `AB` pair). No-signalling for a physically derived record, and accessibility
+from closure dynamics, stay open (see `Holography_Audit.md`, issue #296). No axioms.
+
+Part of the [Quantum Logical Framework (QLF)](../README.md).
+-/
+
+noncomputable section
+
+namespace QLF.SharedReality
+
+open QLF QLF.TensorFromClosure QLF.TensorConservativeReturn QLF.ObservationalEquivalence
+open QLF.PerspectiveHolography QLF.TerritoryReturn
+open scoped TensorProduct
+
+/-! ## §1 The ledger lift -/
+
+/-- Body `A`'s territorial record: its fold and its ledger. -/
+def recordTA (w : PairHistory) : M × (Twist → ℕ) :=
+  (twistMatrixFold (projA w), fun t => (projA w).count t)
+
+/-- Body `B`'s territorial record. -/
+def recordTB (w : PairHistory) : M × (Twist → ℕ) :=
+  (twistMatrixFold (projB w), fun t => (projB w).count t)
+
+/-- **The ledger lift.** Single-body territorial perspectives share only constants. -/
+theorem single_body_territorial_share_only_constants {X : Type*} (O : PairHistory → X)
+    (hA : Reconstructs recordTA O) (hB : Reconstructs recordTB O) (w : PairHistory) :
+    O w = O [] := by
+  apply shared_respects_chain recordTA recordTB O hA hB
+  refine Relation.EqvGen.trans _ (onlyB w) _ (Relation.EqvGen.rel _ _ (Or.inr ?_))
+    (Relation.EqvGen.rel _ _ (Or.inl ?_))
+  · simp [recordTB, onlyB, projB_map_true]
+  · simp [recordTA, onlyB, projA_map_true]
+
+/-- The joint fold plus the ledger reconstructs the phased closure test and ZFA together. -/
+theorem territorial_record_reconstructs :
+    Reconstructs (fun w => (foldPair w, ledger w)) (fun w => (closureTests w, TerritoryZFA w)) := by
+  obtain ⟨R₁, h₁⟩ := joint_record_reconstructs
+  obtain ⟨R₂, h₂⟩ := ledger_returns_zfa
+  refine ⟨fun p => (R₁ p.1, R₂ p.2), fun w => ?_⟩
+  show (R₁ (foldPair w), R₂ (ledger w)) = (closureTests w, TerritoryZFA w)
+  rw [h₁, h₂]
+
+/-- The gauge twist `+` on body `B`. -/
+def gaugeStepB : PairHistory := [(true, Twist.plus)]
+
+theorem gaugeStepB_not_zfa : ¬ TerritoryZFA gaugeStepB := by
+  rintro ⟨-, h⟩
+  unfold countBalanced at h
+  exact absurd h.2.2.2 (by decide)
+
+/-- **Neither body decides two-body ZFA.** -/
+theorem zfa_not_from_one_body :
+    ¬ Reconstructs recordTA TerritoryZFA ∧ ¬ Reconstructs recordTB TerritoryZFA := by
+  constructor
+  · rw [not_reconstructs_iff]
+    refine ⟨gaugeStepB, [], by simp [recordTA, gaugeStepB], fun h => ?_⟩
+    exact gaugeStepB_not_zfa (by rw [h]; exact nil_zfa)
+  · rw [not_reconstructs_iff]
+    refine ⟨gaugeStep, [], by simp [recordTB, gaugeStep], fun h => ?_⟩
+    exact gaugeStep_not_zfa (by rw [h]; exact nil_zfa)
+
+/-! ## §2 Three bodies -/
+
+/-- A three-body token: a twist labelled by its body `0 = A`, `1 = B`, `2 = C`. -/
+abbrev Tok3 := Fin 3 × Twist
+
+/-- Body `i`'s history inside a three-body word. -/
+def proj (i : Fin 3) (w : List Tok3) : List Twist :=
+  w.filterMap (fun p => if p.1 = i then some p.2 else none)
+
+/-- A body's history, tagged as body `j`. -/
+def tag (j : Fin 3) (l : List Twist) : List Tok3 := l.map (fun t => (j, t))
+
+lemma proj_append (i : Fin 3) (a b : List Tok3) : proj i (a ++ b) = proj i a ++ proj i b := by
+  simp [proj, List.filterMap_append]
+
+lemma proj_tag (i j : Fin 3) (l : List Twist) : proj i (tag j l) = if j = i then l else [] := by
+  induction l with
+  | nil => simp [proj, tag]
+  | cons t l ih =>
+    by_cases h : j = i
+    · simp only [h, ite_true] at ih ⊢
+      simp only [proj, tag, List.map_cons, List.filterMap_cons, ite_true] at ih ⊢
+      rw [ih]
+    · simp only [h, ite_false] at ih ⊢
+      simp only [proj, tag, List.map_cons, List.filterMap_cons, h, ite_false] at ih ⊢
+      exact ih
+
+/-- Body `i`'s territorial record. -/
+def bodyView (i : Fin 3) (w : List Tok3) : M × (Twist → ℕ) :=
+  (twistMatrixFold (proj i w), fun t => (proj i w).count t)
+
+lemma bodyView_congr {i : Fin 3} {w w' : List Tok3} (h : proj i w = proj i w') :
+    bodyView i w = bodyView i w' := by
+  simp [bodyView, h]
+
+/-- Perspective `AB`. -/
+def viewAB (w : List Tok3) := (bodyView 0 w, bodyView 1 w)
+
+/-- Perspective `BC`. -/
+def viewBC (w : List Tok3) := (bodyView 1 w, bodyView 2 w)
+
+/-- The overlap: body `B` alone. -/
+def viewB (w : List Tok3) := bodyView 1 w
+
+/-- `A` and `C` alone. -/
+def viewA (w : List Tok3) := bodyView 0 w
+def viewC (w : List Tok3) := bodyView 2 w
+
+/-- `w`'s `A` and `B`, followed by `w'`'s `C`. -/
+def splice (w w' : List Tok3) : List Tok3 :=
+  tag 0 (proj 0 w) ++ tag 1 (proj 1 w) ++ tag 2 (proj 2 w')
+
+lemma proj_splice_0 (w w' : List Tok3) : proj 0 (splice w w') = proj 0 w := by
+  simp [splice, proj_append, proj_tag]
+
+lemma proj_splice_1 (w w' : List Tok3) : proj 1 (splice w w') = proj 1 w := by
+  simp [splice, proj_append, proj_tag]
+
+lemma proj_splice_2 (w w' : List Tok3) : proj 2 (splice w w') = proj 2 w' := by
+  simp [splice, proj_append, proj_tag]
+
+/-- **What a chain shares is what its overlap carries.** -/
+theorem shared_iff_overlap {X : Type*} [Nonempty X] (O : List Tok3 → X) :
+    (Reconstructs viewAB O ∧ Reconstructs viewBC O) ↔ Reconstructs viewB O := by
+  constructor
+  · rintro ⟨hAB, hBC⟩
+    rw [reconstructs_iff] at hAB hBC ⊢
+    intro w w' hB
+    have h₁ : O w = O (splice w w') := by
+      apply hAB
+      simp only [viewAB, bodyView_congr (proj_splice_0 w w'), bodyView_congr (proj_splice_1 w w')]
+    have h₂ : O (splice w w') = O w' := by
+      apply hBC
+      have hB' : bodyView 1 (splice w w') = bodyView 1 w' := by
+        rw [bodyView_congr (proj_splice_1 w w')]
+        exact hB
+      simp only [viewBC, hB', bodyView_congr (proj_splice_2 w w')]
+    exact h₁.trans h₂
+  · intro hB
+    exact ⟨reconstructs_of_refines viewB viewAB Prod.snd (fun _ => rfl) O hB,
+      reconstructs_of_refines viewB viewBC Prod.fst (fun _ => rfl) O hB⟩
+
+/-- **`A` and `C` alone share only constants.** -/
+theorem endpoints_share_only_constants {X : Type*} (O : List Tok3 → X)
+    (hA : Reconstructs viewA O) (hC : Reconstructs viewC O) (w : List Tok3) : O w = O [] := by
+  obtain ⟨RA, hRA⟩ := hA
+  obtain ⟨RC, hRC⟩ := hC
+  have h₁ : O w = O (tag 0 (proj 0 w)) := by
+    rw [← hRA w, ← hRA (tag 0 (proj 0 w))]
+    congr 1
+    apply bodyView_congr
+    simp [proj_tag]
+  have h₂ : O (tag 0 (proj 0 w)) = O [] := by
+    rw [← hRC, ← hRC []]
+    congr 1
+    apply bodyView_congr
+    rw [proj_tag]
+    simp [proj]
+  exact h₁.trans h₂
+
+/-- Body `i` is count-balanced. -/
+def BodyZFA (i : Fin 3) (w : List Tok3) : Prop := countBalanced (proj i w)
+
+/-- Three-body ZFA: every body is count-balanced. -/
+def GlobalZFA (w : List Tok3) : Prop := ∀ i, BodyZFA i w
+
+/-- The gauge twist `+` on body `i`. -/
+def gauge3 (i : Fin 3) : List Tok3 := [(i, Twist.plus)]
+
+lemma proj_gauge3 (i j : Fin 3) : proj j (gauge3 i) = if i = j then [Twist.plus] else [] := by
+  simpa [gauge3, tag] using proj_tag j i [Twist.plus]
+
+lemma not_body_zfa_gauge3 (i : Fin 3) : ¬ BodyZFA i (gauge3 i) := by
+  unfold BodyZFA countBalanced
+  rw [proj_gauge3, if_pos rfl]
+  intro h
+  exact absurd h.2.2.2 (by decide)
+
+lemma body_zfa_nil (i : Fin 3) : BodyZFA i [] := by
+  unfold BodyZFA countBalanced proj
+  simp
+
+/-- **Whether `A` closes is not a fact for `BC`.** -/
+theorem zfa_A_not_from_BC : ¬ Reconstructs viewBC (BodyZFA 0) := by
+  rw [not_reconstructs_iff]
+  refine ⟨gauge3 0, [], ?_, fun h => not_body_zfa_gauge3 0 (by rw [h]; exact body_zfa_nil 0)⟩
+  simp only [viewBC]
+  rw [bodyView_congr (w' := []) (by rw [proj_gauge3]; simp [proj]),
+    bodyView_congr (i := 2) (w' := []) (by rw [proj_gauge3]; simp [proj])]
+
+/-- **Three-body ZFA is a fact for neither pair perspective.** -/
+theorem global_zfa_not_from_pair :
+    ¬ Reconstructs viewAB GlobalZFA ∧ ¬ Reconstructs viewBC GlobalZFA := by
+  have hnil : GlobalZFA [] := fun i => body_zfa_nil i
+  constructor
+  · rw [not_reconstructs_iff]
+    refine ⟨gauge3 2, [], ?_, fun h => ?_⟩
+    · simp only [viewAB]
+      rw [bodyView_congr (i := 0) (w' := []) (by rw [proj_gauge3]; simp [proj]),
+        bodyView_congr (i := 1) (w' := []) (by rw [proj_gauge3]; simp [proj])]
+    · have hg : GlobalZFA (gauge3 2) := by rw [h]; exact hnil
+      exact not_body_zfa_gauge3 2 (hg 2)
+  · rw [not_reconstructs_iff]
+    refine ⟨gauge3 0, [], ?_, fun h => ?_⟩
+    · simp only [viewBC]
+      rw [bodyView_congr (i := 1) (w' := []) (by rw [proj_gauge3]; simp [proj]),
+        bodyView_congr (i := 2) (w' := []) (by rw [proj_gauge3]; simp [proj])]
+    · have hg : GlobalZFA (gauge3 0) := by rw [h]; exact hnil
+      exact not_body_zfa_gauge3 0 (hg 0)
+
+/-- All three bodies' records decide three-body ZFA. -/
+theorem global_zfa_from_all :
+    Reconstructs (fun w => (bodyView 0 w, bodyView 1 w, bodyView 2 w)) GlobalZFA := by
+  let bal : M × (Twist → ℕ) → Prop := fun v =>
+    v.2 Twist.up = v.2 Twist.down ∧ v.2 Twist.left = v.2 Twist.right ∧
+      v.2 Twist.slash = v.2 Twist.backslash ∧ v.2 Twist.plus = v.2 Twist.minus
+  refine ⟨fun v => bal v.1 ∧ bal v.2.1 ∧ bal v.2.2, fun w => ?_⟩
+  apply propext
+  constructor
+  · rintro ⟨h0, h1, h2⟩ i
+    fin_cases i
+    · exact h0
+    · exact h1
+    · exact h2
+  · intro h
+    exact ⟨h 0, h 1, h 2⟩
+
+/-! ## §3 Communication by shared pairs -/
+
+/-- A shared pair: `t` on body `A`, its conjugate on body `B`. -/
+def sharedPair (t : Twist) : PairHistory := [(false, t), (true, t.conj)]
+
+/-- A history built from shared pairs only. -/
+def PairBuilt (w : PairHistory) : Prop := ∃ ts : List Twist, w = ts.flatMap sharedPair
+
+lemma conj_conj' (t : Twist) : t.conj.conj = t := by cases t <;> rfl
+
+lemma count_map_conj (ts : List Twist) (t : Twist) :
+    (ts.map Twist.conj).count t = ts.count t.conj := by
+  induction ts with
+  | nil => rfl
+  | cons a ts ih =>
+    have key : (a.conj == t) = (a == t.conj) := by cases a <;> cases t <;> rfl
+    simp only [List.map_cons, List.count_cons, ih, key]
+
+lemma projA_pairBuilt (ts : List Twist) : projA (ts.flatMap sharedPair) = ts := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih => simp [List.flatMap_cons, sharedPair, ih]
+
+lemma projB_pairBuilt (ts : List Twist) :
+    projB (ts.flatMap sharedPair) = ts.map Twist.conj := by
+  induction ts with
+  | nil => rfl
+  | cons t ts ih => simp [List.flatMap_cons, sharedPair, ih]
+
+/-- **Shared pairs carry `A`'s ledger to `B`.** -/
+theorem pairBuilt_ledger_transfer {w : PairHistory} (hw : PairBuilt w) (t : Twist) :
+    (projA w).count t = (projB w).count t.conj := by
+  obtain ⟨ts, rfl⟩ := hw
+  rw [projA_pairBuilt, projB_pairBuilt, count_map_conj, conj_conj']
+
+/-- On pair-built histories `A`'s ZFA verdict is a fact for `B`: the two coincide. -/
+theorem pairBuilt_zfa_iff {w : PairHistory} (hw : PairBuilt w) :
+    countBalanced (projA w) ↔ countBalanced (projB w) := by
+  unfold countBalanced
+  simp only [pairBuilt_ledger_transfer hw]
+  simp only [Twist.conj]
+  constructor
+  · rintro ⟨h1, h2, h3, h4⟩; exact ⟨h1.symm, h2.symm, h3.symm, h4.symm⟩
+  · rintro ⟨h1, h2, h3, h4⟩; exact ⟨h1.symm, h2.symm, h3.symm, h4.symm⟩
+
+/-- **Without shared pairs, `B`'s record carries nothing of `A`'s ledger.** -/
+theorem ledger_transfer_fails_without_pairs :
+    ¬ Reconstructs recordTB (fun w => countBalanced (projA w)) := by
+  rw [not_reconstructs_iff]
+  refine ⟨gaugeStep, [], by simp [recordTB, gaugeStep], fun h => ?_⟩
+  have h' : countBalanced (projA gaugeStep) := by
+    rw [h]; unfold countBalanced; simp
+  unfold countBalanced at h'
+  exact absurd h'.2.2.2 (by decide)
+
+end QLF.SharedReality
