@@ -1022,6 +1022,54 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.HolographicCompletion.conjugate_pair_undetected": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.cutEntropy_eq_vonNeumann": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.deletion_detected": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_half_half": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_product": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_uniform_pow": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.half_id_kronecker": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.insertion_detected": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.single_error_not_correctable": [],
+  "QLF.HolographicCompletion.singlet_reduced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.substitution_detected": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.HorizonBasis.horizon_rebasis_is_closure_order_iso": [
     "Classical.choice",
     "Quot.sound",
@@ -2323,6 +2371,26 @@
     "propext"
   ],
   "QLF.SpatialResponseDerived.unit_symmetric_mean": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.circle_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card_stack": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card_zero": [
     "Classical.choice",
     "Quot.sound",
     "propext"
