@@ -477,7 +477,9 @@ or readings; they make the quantity and the gates explicit.
   differ by the stage-1 shell error.
 - The script now fails closed. It reports `INVALID, NOT_GRADED` and exits non-zero unless the
   calibration is finite and below `10⁻¹²`, every walk step has a positive band of rank exactly 2,
-  and every graded defect is finite and non-zero.
+  every graded defect sample is finite and non-zero, every calibration and control sample is
+  finite, and the fitted slope is finite. Each sample is checked before the max or min is taken, so
+  one bad sample cannot be hidden by the reduction.
 - A negative control was added: the continuum Dirac band boosted with the wrong spinor sign
   `exp(−η αᵢ/2)` must give a defect of at least `10⁻²` at every `κ`. It gives `0.342` at every `κ`,
   so the defect detects a wrong boost. [`tests/test_boost_states_check.py`](tests/test_boost_states_check.py)

@@ -51,6 +51,49 @@ class BoostStatesCheckTests(unittest.TestCase):
             with self.assertRaisesRegex(bsc.Invalid, "non-finite or zero"):
                 bsc.run()
 
+    @staticmethod
+    def _one_bad_sample(bad, arm):
+        """Patch defect so that exactly one later sample of one arm is `bad`."""
+        original = bsc.defect
+        seen = {"n": 0}
+
+        def patched(bandfn, *a, **k):
+            v = original(bandfn, *a, **k)
+            is_walk = bandfn is not bsc.dirac_band
+            if (arm == "walk") == is_walk:
+                seen["n"] += 1
+                if seen["n"] == 7:      # a later sample, neither first nor the extremum
+                    return bad
+            return v
+
+        return mock.patch.object(bsc, "defect", patched)
+
+    def test_single_nan_among_finite_dirac_samples(self) -> None:
+        with self._one_bad_sample(float("nan"), "dirac"):
+            with self.assertRaisesRegex(bsc.Invalid, "non-finite"):
+                bsc.run()
+
+    def test_single_nan_among_finite_walk_samples(self) -> None:
+        with self._one_bad_sample(float("nan"), "walk"):
+            with self.assertRaisesRegex(bsc.Invalid, "non-finite"):
+                bsc.run()
+
+    def test_single_zero_walk_sample_among_positive(self) -> None:
+        with self._one_bad_sample(0.0, "walk"):
+            with self.assertRaisesRegex(bsc.Invalid, "non-finite or zero"):
+                bsc.run()
+
+    def test_zero_calibration_sample_is_allowed(self) -> None:
+        with mock.patch.object(bsc, "defect", lambda *a, **k: 0.0):
+            self.assertEqual(bsc.worst(bsc.dirac_band, 0.04), 0.0)
+            with self.assertRaisesRegex(bsc.Invalid, "non-finite or zero"):
+                bsc.worst(bsc.dirac_band, 0.04, require_positive=True)
+
+    def test_non_finite_slope_rejected(self) -> None:
+        with mock.patch.object(bsc.np, "polyfit", lambda *a, **k: np.array([np.nan, 0.0])):
+            with self.assertRaisesRegex(bsc.Invalid, "slope"):
+                bsc.slope(bsc.KAPPAS, [1.0] * len(bsc.KAPPAS))
+
 
 if __name__ == "__main__":
     unittest.main()

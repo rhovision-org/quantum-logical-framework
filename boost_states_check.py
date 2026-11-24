@@ -31,8 +31,10 @@ They differ by a k-independent unitary, so they have the same spectrum.
 
 Gates (fail closed). Nothing is graded, and the script exits non-zero with INVALID, unless:
   - the continuum Dirac calibration defect is finite and below 1e-12 (registered in §6b);
-  - every walk step has a positive band of rank exactly 2, and every graded defect is finite and
-    non-zero (a zero defect would make the log-log slope undefined);
+  - every walk step has a positive band of rank exactly 2, and every graded defect sample is finite
+    and non-zero, checked sample by sample before the max is taken (a zero defect would make the
+    log-log slope undefined); every calibration and control sample is finite (zeros are allowed in
+    the calibration); the fitted slope is finite;
   - the negative control fails as it should: the continuum Dirac band boosted with the wrong
     spinor sign, S = exp(-eta alpha_i / 2), must give a defect of at least 1e-2 at every kappa.
     The control checks that the defect can detect a wrong boost; it was added after review and
@@ -148,7 +150,13 @@ def directions():
     return v / np.linalg.norm(v, axis=1, keepdims=True)
 
 
-def worst(bandfn, kappa, spin_sign=1, reduce=max):
+def worst(bandfn, kappa, spin_sign=1, reduce=max, require_positive=False):
+    """Reduce the defect over the grid at one kappa, after checking every sample.
+
+    Every sample must be finite; with require_positive (the graded walk arms) every sample must
+    also be strictly positive. The check runs before the reduction, so a NaN or a zero anywhere in
+    the grid trips the gate even when max or min would hide it.
+    """
     vals = []
     for d in directions():
         for r in MASS_RATIOS:
@@ -156,12 +164,20 @@ def worst(bandfn, kappa, spin_sign=1, reduce=max):
             k = tuple(kappa * d / n)
             m = kappa * r / n
             for i in range(3):
-                vals.append(defect(bandfn, k, m, i, ETA, spin_sign))
+                v = defect(bandfn, k, m, i, ETA, spin_sign)
+                if not np.isfinite(v):
+                    raise Invalid(f"non-finite defect {v!r} at kappa={kappa}, axis={i}")
+                if require_positive and not v > 0:
+                    raise Invalid(f"non-finite or zero defect {v!r} at kappa={kappa}, axis={i}")
+                vals.append(v)
     return float(reduce(vals))
 
 
 def slope(xs, ys):
-    return float(np.polyfit(np.log(xs), np.log(ys), 1)[0])
+    s = float(np.polyfit(np.log(xs), np.log(ys), 1)[0])
+    if not np.isfinite(s):
+        raise Invalid(f"fitted slope {s!r} is not finite")
+    return s
 
 
 CAL_MAX = 1e-12
@@ -184,7 +200,7 @@ def run():
         raise Invalid("negative control did not fail: the defect cannot detect a wrong boost")
     for name in ("raw", "half"):
         fn = lambda k, m, s=name: band(walk(k, m, s))
-        ys = [worst(fn, kp) for kp in KAPPAS]
+        ys = [worst(fn, kp, require_positive=True) for kp in KAPPAS]
         if not all(np.isfinite(y) and y > 0 for y in ys):
             raise Invalid(f"{name}: non-finite or zero defect {ys!r}")
         s = slope(KAPPAS, ys)
