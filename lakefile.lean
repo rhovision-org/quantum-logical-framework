@@ -346,6 +346,8 @@ lean_lib QLF where
     `QLF_SharedReality,
     `QLF_SharedEvent,
     `QLF_ClassFactoring,
+    `QLF_SphereCount,
+    `QLF_HolographicCompletion,
     `QLF_SpatialResponseDerived,
     `QLF_ConformalComparison,
     `QLF_DiversityNovelOutcome,

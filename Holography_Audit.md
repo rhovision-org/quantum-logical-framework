@@ -3,7 +3,7 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and opposite quantum logical action with zero free energy, the principle of QLF.
 
 **Status labels** follow [`ScientificApproach.md`](ScientificApproach.md): *proved*, *exact computational*, *definition*, *cited*, *prose only*, *incorrect*.
-**Lean anchors:** [`lean/QLF_HolographicBoundary.lean`](lean/QLF_HolographicBoundary.lean) and [`lean/QLF_HolographicArea.lean`](lean/QLF_HolographicArea.lean) (no axioms). §4 records the follow-up pass that resolved two of the gaps.
+**Lean anchors:** [`lean/QLF_HolographicBoundary.lean`](lean/QLF_HolographicBoundary.lean), [`lean/QLF_HolographicArea.lean`](lean/QLF_HolographicArea.lean), [`lean/QLF_LocalAreaLaw.lean`](lean/QLF_LocalAreaLaw.lean), [`lean/QLF_SphereCount.lean`](lean/QLF_SphereCount.lean), [`lean/QLF_HolographicCompletion.lean`](lean/QLF_HolographicCompletion.lean) and [`lean/QLF_SharedReality.lean`](lean/QLF_SharedReality.lean) (no axioms). §4 records the follow-up pass that resolved two of the gaps; §6 is the closing pass that settles the status of every gap.
 
 ## 0. Verdict
 
@@ -50,7 +50,7 @@ This audit adds three proved statements. Together they are the precise content t
 | "A Pauli-closed history of length `2k` carries `log C(2k,k)` nats … recovering the area law in the large-`k` asymptotic" | [`Entropy.md`](Entropy.md) §1 | **incorrect.** `log C(2k,k) = 2k log 2 − ½ log(πk) + o(1)` is linear in length. That is extensive (volume-like) in the history, not an area law |
 | Ryu–Takayanagi "is the area law applied to the same per-atom quantum" | [`Quantum_Gravity.md`](Quantum_Gravity.md) §4 | **prose only.** Row 3 is the honest discrete form: RT-type counting holds *when* shared pairs are local |
 | de Sitter = replication, AdS = interlocking closures | [`Holographic.md`](Holographic.md), [`Curvature.md`](Curvature.md) | **prose only** (no Lean) |
-| Holographic QEC: `full_zeno_prune` "is the machine-verified boundary decoder" | [`CLAUDE.md`](CLAUDE.md) | **prose only.** `full_zeno_prune` is verified as a filter, and no code property (distance, recovery) is proved |
+| Holographic QEC: `full_zeno_prune` "is the machine-verified boundary decoder" | [`CLAUDE.md`](CLAUDE.md) | **answered (§6).** As a code, ZFA closure detects every single insertion, deletion or substitution and has distance exactly 2, but it cannot correct a single error. So it is an error-*detecting* code, not a HaPPY-type error-correcting one |
 | [`QLF_Holographic_Computational_Universe.md`](QLF_Holographic_Computational_Universe.md) cites `ER_EPR_QLF.lean` as "formal Lean proof that ER = EPR" | that file | **overstated.** `er_equals_epr` unpacks a conjunction (naming) |
 
 ## 2. The `holographic.py` bridge, checked
@@ -74,6 +74,8 @@ What survives is the standard spinor fact that a 2-component state carries a 3-v
 
 ## 3. Open gaps, named
 
+These are the gaps as the audit first named them. §6 gives the final status of each.
+
 1. **Locality of shared closures.** This is the premise of the derived area law (row 3). A route: shared pairs come from interleaving histories whose causal diamonds intersect ([`MultiParticle.md`](MultiParticle.md)). If a pair can only form between histories within one step of each other on the walk lattice, `area_law_of_local_pairs` applies with the lattice adjacency. That needs a theorem tying the joint-closure condition to walk distance. Until it exists, holography is **a conditional result**: area law ⇐ locality.
 2. **From cut pairs to von Neumann entropy.** `cutEntropy` counts `log 2` per cut pair. Identifying this with the entanglement entropy of the reduced state is standard for a product of singlets and is cited here. The tensor-product module (`QLF_TensorFromClosure`, merged) supplies the derived algebra, and `QLF_TensorConservativeReturn` supplies the quotient coherence; the locality/shared-pair-birth and entropy identification remain open.
 3. **`R²` from the substrate, not by definition.** The capacity-`R` horizon of the twist walk is an `ℓ¹` ball. Its boundary in the three spatial axes has `4R²+2` sites (checked by enumeration for `R ≤ 6`, not proved in Lean). Proving that count would replace `holographic_event_count := 4πR²` with a derived quadratic. The `4` vs `4π` (ℓ¹ vs Euclidean sphere) would then be an honest substrate→continuum factor next to the `4 log 2` residual. *Caveat:* in Lean, `maxExcursion` / `closedAtHorizon_iff_maxExcursion_le` are stated for the 1-D phase string (`TopoString`), not for the `ℓ¹` ball on `ℤ⁴` that [`Closure_Walk.md`](Closure_Walk.md) §1 attributes to them. The `ℤ⁴` version is a further target.
@@ -91,7 +93,7 @@ What survives is the standard spinor fact that a 2-component state carries a 3-v
 | Bekenstein–Hawking ¼ "derived" | **No** | Still the measured `4 log 2` residual. The new geometric factor (`4` vs `4π`) does not remove it: `4R²·log 2` vs `πR²` per Planck patch is a ratio `(4/π)·log 2·…` that depends on how a lattice site maps to a Planck area, which nothing fixes yet |
 | "`log C(2k,k)` gives the area law" | **No; it is false** | `log C(2k,k) ≈ 2k log 2` is extensive in a history's length. It cannot be repaired, only withdrawn |
 | "AdS/CFT is a provable identity / machine-verified" | **No** | The provable content is §0 rows 1–2. de Sitter / AdS readings stay prose |
-| Holographic QEC: "`full_zeno_prune` is the machine-verified boundary decoder" | **Not attempted** | Would need a code property (distance, recovery map). Open |
+| Holographic QEC: "`full_zeno_prune` is the machine-verified boundary decoder" | **Answered, negatively for correction** | §6: ZFA closure is an error-detecting code of distance 2; no single error can be corrected |
 
 ### 4a. What a closure carries across a boundary: one π-flux quantum per plaquette
 
@@ -125,12 +127,6 @@ lies in no plane, but its shadows are `−1`, `1`, `1`, so it carries one π qua
 proof this was checked on all 299,593 histories of length ≤ 6 (gauge twists included) with 0
 mismatches.
 
-## 5. How to talk about holography in QLF now
-
-* Say: **closure is a boundary property** (`closure_iff_boundary_silent`); **the horizon has `Θ(R²)` sites** (`horizon_area_law`); **shared pairs born at one event stay within the light cone** (`pair_range_le`), so, **given that only local information has effect** (shared pairs within a fixed step distance `d`), **the area law follows with a coefficient fixed by `d`** (`local_area_law`). The premise is a stated logical principle, not a hidden assumption. The `ℓ¹` sphere's `Θ(R²)` count is proved; that it is the physical horizon is a bridge.
-* Say: `4πR²` is, by a geometric bridge, the continuum rendering of the substrate's `4R²+2`, and the `4 log 2` gap to Bekenstein–Hawking is measured exactly, not derived.
-* Do not say: AdS/CFT is "a provable identity", "machine-verified", or "the area law follows automatically". The first two are false as citations, and the third needs the locality premise.
-
 ## 5. Shared reality between perspectives
 
 The principle (Jim, 2026-11-23): an event is a fact for two perspectives only through a joint ZFA closure, or through communication between them. Whether a closure occurs, and its phase, is the same for every observer ([`QLF_MultiObserver`](lean/QLF_MultiObserver.lean) `observers_agree`). What depends on the perspective is which closures its record carries. [`QLF_SharedReality`](lean/QLF_SharedReality.lean) proves three pieces on finite models, with no axioms:
@@ -151,5 +147,26 @@ Do two perspectives that agree on a verdict also identify the **same events**? [
 * **Whether an event was shared is a fact for neither body.** `jointW` is two shared pairs. `splitW` has the same tokens on each body, but `A` closes on its own before `B` acts. The two histories have the same word on each body and both close on each body (`shared_event_not_from_bodies`, `both_close_on_each_body`), so no function of the body words, or of the territorial records, decides whether the history is made of shared events (`pairing_not_reconstructible`, `pairing_not_from_records`).
 
 So agreement on events is real but conditional on the shared-pair posit, and the posit itself cannot be checked from either side. This is the formal content of "a shared ledger does not establish a shared physical event". Separating `jointW` from `splitW` needs a record of the joint history, such as an operational test of correlation, which is open.
+
+## 6. Closing pass: the final status of every gap (2026-11-23)
+
+| # | Gap (§3) | Final status | Anchor |
+|---|---|---|---|
+| 3 | `R²` from the substrate | **Closed.** The spatial `ℓ¹` sphere has exactly `4R² + 2` sites for every `R ≥ 1`, and one at `R = 0`. The count is a stack of `ℓ¹` circles, each with `4m` sites. This replaces the enumeration with a proof, and replaces the definitional `4πR²` with a derived quadratic whose leading coefficient is `4` | [`QLF_SphereCount`](lean/QLF_SphereCount.lean) `sphere3_card`, `circle_card`, `sphere3_card_zero` |
+| 2 | Cut pairs to von Neumann entropy | **Closed for singlets.** Tracing out half a singlet leaves `I/2`, whose spectrum carries `log 2`. Entropy adds over product spectra, a Kronecker product of `I/2` factors is a scalar identity, and the uniform spectrum on `2^M` points has entropy `M log 2`, which is `cutEntropy`. The one step cited rather than reproved is that partial trace is multiplicative over tensor products | [`QLF_HolographicCompletion`](lean/QLF_HolographicCompletion.lean) `singlet_reduced`, `entropy_half_half`, `entropy_product`, `half_id_kronecker`, `entropy_uniform_pow`, `cutEntropy_eq_vonNeumann` |
+| 5 | Bulk reconstruction / QEC | **Answered.** As a code over twist words, ZFA closure detects every single insertion, deletion or substitution, and a conjugate pair passes unseen, so its distance is exactly 2. Two distinct closures reach the same word by one deletion each, so no single error can be corrected. ZFA closure on its own is therefore an error-*detecting* code, not a HaPPY-type error-correcting code, and the QEC reading stays a reading. The reconstruction QLF does prove is perspective reconstruction: the joint fold is the coarsest record for joint closure, and a relay lets one body's record reconstruct another's fold. No entanglement-wedge or Ryu–Takayanagi theorem is proved | [`QLF_HolographicCompletion`](lean/QLF_HolographicCompletion.lean) `insertion_detected`, `deletion_detected`, `substitution_detected`, `conjugate_pair_undetected`, `single_error_not_correctable`; `joint_record_minimal`; `relay_domain_reconstructs_fold` |
+| 1 | Locality of shared closures | **A stated premise, not derived.** Given Jim's locality principle (shared pairs within a fixed step distance `d`), the area law holds with a coefficient fixed by `d` (`local_area_law`), and halves of a pair born at one event stay inside the light cone (`pair_range_le`). Correlation between two bodies' records needs shared pairs at all (`ledger_transfer_fails_without_pairs`). What stays a premise is that a shared pair is born at one event. Counting cannot supply it: whether a history closes depends only on its twist counts, which ignore where in the history the two halves of a pair sit, so closure alone places no limit on how far apart they are | [`QLF_LocalAreaLaw`](lean/QLF_LocalAreaLaw.lean), [`QLF_HolographicArea`](lean/QLF_HolographicArea.lean), [`QLF_SharedReality`](lean/QLF_SharedReality.lean) |
+| 4 | The Bekenstein–Hawking ¼ | **A normalization boundary.** QLF's horizon count is now exact on its own lattice, `(4R² + 2) · log 2`. Matching `A/4` needs a map from a lattice site to a Planck area, and nothing fixes that map. The `4 log 2` ratio to Bekenstein–Hawking stays measured (`QLF_HolographicDensity`), not derived. The ¼ cannot be closed by counting alone | [`QLF_HolographicDensity`](lean/QLF_HolographicDensity.lean), `sphere3_card` |
+
+One bridge stays from §4: that the `ℓ¹` sphere is the horizon QLF's capacity semantics selects. In Lean the capacity horizon (`closedAtHorizon`) is stated for the 1-D phase string, not for the `ℓ¹` ball on `ℤ⁴`.
+
+**Where the audit ends.** Every holographic claim in the repository now has a status. What is proved: closure is a boundary property; the horizon has exactly `4R² + 2` sites; given locality, the cut entropy obeys an area law and equals the von Neumann entropy of the cut singlets; a closure's phase is a boundary flux; and ZFA is a distance-2 detecting code. What stays open is two premises (shared pairs are born at one event, and the `ℓ¹` sphere is the physical horizon) and one normalization (the ¼). Holography in QLF is a conditional theorem with named premises. It is not an identity, and it is not AdS/CFT.
+
+## 7. How to talk about holography in QLF now
+
+* Say: **closure is a boundary property** (`closure_iff_boundary_silent`); **the `ℓ¹` horizon sphere has exactly `4R² + 2` sites** (`sphere3_card`); **shared pairs born at one event stay within the light cone** (`pair_range_le`), so, **given that only local information has effect** (shared pairs within a fixed step distance `d`), **the area law follows with a coefficient fixed by `d`** (`local_area_law`). The premise is a stated logical principle, not a hidden assumption. The `ℓ¹` sphere's count is proved; that it is the physical horizon is a bridge. **The cut entropy is the von Neumann entropy** of the cut singlets (`cutEntropy_eq_vonNeumann`).
+* Say: `4πR²` is, by a geometric bridge, the continuum rendering of the substrate's `4R²+2`, and the `4 log 2` gap to Bekenstein–Hawking is measured exactly, not derived.
+* Do not say: AdS/CFT is "a provable identity", "machine-verified", or "the area law follows automatically". The first two are false as citations, and the third needs the locality premise.
+* Say: ZFA closure **detects** every single twist error (distance 2) but **cannot correct** one. Do not call `full_zeno_prune` a holographic error-correcting decoder.
 
 See also: [`Holographic.md`](Holographic.md), [`Entropy.md`](Entropy.md), [`Quantum_Gravity.md`](Quantum_Gravity.md), [`Open_Problems.md`](Open_Problems.md), [`Closure_Walk.md`](Closure_Walk.md).

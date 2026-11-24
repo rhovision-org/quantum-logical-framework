@@ -135,6 +135,8 @@ import QLF_TerritoryReturn
 import QLF_SharedReality
 import QLF_SharedEvent
 import QLF_ClassFactoring
+import QLF_SphereCount
+import QLF_HolographicCompletion
 import QLF_SpatialResponseDerived
 import QLF_ConformalComparison
 import QLF_DiversityNovelOutcome
@@ -234,6 +236,21 @@ import QLF_AssemblyIndex
 #print axioms QLF.ClassFactoring.class_function_factors
 #print axioms QLF.ClassFactoring.classBit_separates
 #print axioms QLF.ClassFactoring.circulation_invisible
+#print axioms QLF.SphereCount.sphere3_card
+#print axioms QLF.SphereCount.sphere3_card_zero
+#print axioms QLF.SphereCount.circle_card
+#print axioms QLF.SphereCount.sphere3_card_stack
+#print axioms QLF.HolographicCompletion.singlet_reduced
+#print axioms QLF.HolographicCompletion.entropy_half_half
+#print axioms QLF.HolographicCompletion.entropy_product
+#print axioms QLF.HolographicCompletion.half_id_kronecker
+#print axioms QLF.HolographicCompletion.entropy_uniform_pow
+#print axioms QLF.HolographicCompletion.cutEntropy_eq_vonNeumann
+#print axioms QLF.HolographicCompletion.insertion_detected
+#print axioms QLF.HolographicCompletion.deletion_detected
+#print axioms QLF.HolographicCompletion.substitution_detected
+#print axioms QLF.HolographicCompletion.conjugate_pair_undetected
+#print axioms QLF.HolographicCompletion.single_error_not_correctable
 #print axioms QLF.SpatialResponseDerived.joint_step_identity
 #print axioms QLF.SpatialResponseDerived.symmetric_mean
 #print axioms QLF.SpatialResponseDerived.unit_symmetric_mean

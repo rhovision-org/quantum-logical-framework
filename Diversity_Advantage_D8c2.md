@@ -11,6 +11,24 @@ output is [`data/d8c2_census.json`](data/d8c2_census.json), and
 the per-stream phase label (§3). So it does not establish a diversity advantage in continuation
 richness. Grade **N** (finite census), for these two panels only.
 
+**Chronology and a dependency deviation.** The order of commits on this branch is:
+
+1. `c683f60`: the pre-registration is frozen, with no D8c2 code and no counts.
+2. `9e7eeff`: [PR #299](https://github.com/rhovision-org/quantum-logical-framework/pull/299)'s head
+   (`f83b465`) is merged into this branch, so the D3T relation code is present.
+3. `75638ee`: [`d8c2_census.py`](d8c2_census.py) is committed, with no results.
+4. `6807ef8`: the census is run and the result recorded.
+
+The pre-registration said the census would run *after #299 merges*. It ran while #299 was still
+open, on #299's head merged into this branch. That is a deviation from the registered condition. It
+does not change the relation: [`diversity_obligation.py`](diversity_obligation.py) is byte-identical
+to the frozen reference at `2b8a047` (an empty diff). The registered verdict below stands as recorded.
+If #299 changes its relation code before merging, D8c2 must be rerun against the merged code.
+
+**Scope of the pass.** It is a registered finite PASS that is phase-label-only (§3). Two of the four
+strata sit at the extension-bound floor (§4), and the N2 control is identical to the treatment in
+every stratum. D9 stays closed.
+
 ---
 
 ## 1. Primary result (as registered)

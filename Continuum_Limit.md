@@ -439,8 +439,8 @@ Run by [`census_source_2c.py`](census_source_2c.py) against §8 as frozen in `41
 **What this establishes** (numerical evidence, exact up to float, on one lattice and box). In the
 census-length map the spatial response has the sign of the change in ways: removing ways (§7)
 stretches lengths, adding ways contracts them, and far from the source the response is fixed by one
-number, the ways charge `Q`, to within 1% at `r = 10` whatever the shape. That is the structure of a
-mass charge, with the wrong law: every source falls as `r^{−2}` (here `k = 1.76 … 2.00`), not `1/r`.
+number, the ways charge `Q`, to within 1% at `r = 10` whatever the shape. So the far field carries
+one scalar charge; every source falls as `r^{−2}` (here `k = 1.76 … 2.00`), not `1/r`.
 The steeper `k` of `mixed` is its near field approaching the monopole from below.
 
 **Relation to the proved orientation ledger.** [`QLF_MagneticOrientation`](lean/QLF_MagneticOrientation.lean)
@@ -541,16 +541,28 @@ The calibration holds: every shell falloff is `k = 0.99 … 1.01`.
 
 | | Verdict | Numbers |
 |---|---|---|
-| D1 vacuum outside the source | **PASS** | every `ΔK(6)`, `ΔK(8)` within 4% of `ΔK(10)` |
+| D1 plateau of the enclosed scalar proxy (registered as "vacuum outside the source") | **PASS** | every `ΔK(6)`, `ΔK(8)` within 4% of `ΔK(10)` |
 | D2 Gauss law across sources | **FAIL** | `ΔK(10)/Q` runs from 3.51 to 9.35 (median 6.76) |
 | D3 removing ways is positive curvature | **PASS** | the sign of `ΔK(10)` is the sign of `Q` for all seven |
 
-**What this establishes** (numerical evidence on one lattice and box). With the length read from the
-source's joint closures, the response falls as `1/r` and the curvature it makes sits at the source:
-the enclosed curvature is the same at `R = 6, 8, 10`, so the space around the source is flat to first
-order. That is the vacuum-outside-a-mass structure §7–§9 could not give. Its sign is the sign of `Q`:
-a source that removes ways encloses positive curvature, the sign of a positive mass in isotropic
-coordinates, and one that adds ways (joint closure) encloses negative curvature.
+**What this establishes** (numerical evidence on one lattice and box). The `1/r` falloff of `δℓ/ℓ` is
+built into the map: `φ` is a sum of Green's functions, and `G(r) ∝ 1/r` (§10), so `k ≈ 1` is the
+calibration, not a derived law. What is measured is D1: the **signed cumulative** curvature change
+`ΔK(R)`, a scalar proxy summed over all interior edges within `R`, has a plateau from `R = 6` to `10`.
+That says the net scalar contribution of the shells between `6` and `10` is small. It does not say
+the space there is flat: `ΔK` is a sum of signed deficits, so a plateau is compatible with
+cancellation between edges, and it carries no information about the Ricci or Riemann tensor. In
+three dimensions a first-order conformal perturbation `h_ij = 2u δ_ij` has
+`R_ij = −∂_i∂_j u − δ_ij ∇²u` and `R = −4∇²u`; for `u ∝ 1/r` outside the source the scalar vanishes
+but the Ricci tensor does not. So D1 is consistent with a vanishing scalar curvature outside the
+source and does not test vacuum geometry. D3: the sign of the plateau is the sign of `Q` for all seven
+sources, so removing ways gives a positive enclosed scalar proxy and adding ways (joint closure) a
+negative one.
+
+*Correction to the §10 reading rule, which is left as frozen.* §10 read D1–D3 together as "flat outside
+a source … the structure of the spatial part of a Newtonian mass". That reading is withdrawn: with D2
+failing and D1 a cumulative scalar proxy, nothing here supports a physical mass or a spacetime
+reading.
 
 **What failed, and a post-hoc reading.** The enclosed curvature is not one constant times `Q` across
 sources, so the Gauss law as registered fails. A diagnostic run after the verdict (not a decision
@@ -562,6 +574,6 @@ geometry: edges touching the source are dropped (§7), so part of the curvature 
 counted, and a larger site set hides more of it. Whether the full enclosed curvature is `Q` times one
 constant needs a measure that keeps the source's own edges, and its own registration.
 
-**Open after 2d.** (1) The Gauss constant: a measure that counts the source's edges. (2) The time part
+**Open after 2d.** (0) A discriminating test of vacuum geometry: a pre-registered local test (per-edge deficits or a tensor reconstruction, or absolute shell residuals) with scale and boundary controls, to separate cancellation from genuine flatness. (1) The Gauss constant: a measure that counts the source's edges. (2) The time part
 of the metric and light bending, which no stage so far measures. (3) The coupling `λ`, which is not
 derived. (4) Magnetism, which needs the signed census.
