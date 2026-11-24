@@ -33,8 +33,11 @@ Anthropic posted a Claude-authored paper and Lean formalization claiming **VP �
 reported: a lower bound of `m^{c·(log m)^{1/3}}` gates for arithmetic circuits computing the
 `m × m` permanent in characteristic ≠ 2 (characteristic 2 is excluded because there the permanent
 *is* the determinant), the Hamiltonian-cycle polynomial for every field, about 73,000 lines of
-Lean 4 with Mathlib on the standard axioms only. As of 2026-11-24 **no human mathematician has
-checked it**, and the reports agree that it does not settle P vs NP.
+Lean 4 with Mathlib on the standard axioms only. Hours later OpenAI posted its own claimed proof
+of VP ≠ VNP ([FourWeekMBA](https://fourweekmba.com/ai-openai-posts-its-own-vp-vnp-proof-5-hours-after-anthropic/),
+[OfficeChai](https://officechai.com/ai/openai-vp-vnp-proof-hours-after-anthropic-claude/)). As of
+2026-11-24 **no human mathematician has checked either claim**, and the reports agree that neither
+settles P vs NP.
 
 Valiant's question (1979) is the algebraic analogue: the determinant (signed sum over
 permutations) has polynomial-size circuits; is the permanent (the same sum without the signs)
@@ -65,7 +68,7 @@ All in [`lean/QLF_PossibilityGrowth.lean`](lean/QLF_PossibilityGrowth.lean), no 
 |---|---|
 | `possibilities_card` | `8^L` twist histories of length `L` |
 | `closures_card` | the closures (count-balanced, hence Pauli-closed) number `walkCount L` |
-| `closures_exponential` | `16^n ≤ (2n+1)² · #closures(2n)` |
+| `closures_exponential` | `16^n ≤ (2n+1)² · #closures(2n)` (a deliberately weak bound, see below) |
 | `realized_exponential` | one axis: `4^n ≤ (2n+1) · C(2n,n)` |
 | `DTree.agree` | a query run sees only the candidates it queries |
 | `DTree.search_must_query_all` | a decision tree that answers "does some candidate have property `X`?" correctly for **every** `X` queries every candidate on the empty instance |
@@ -73,6 +76,13 @@ All in [`lean/QLF_PossibilityGrowth.lean`](lean/QLF_PossibilityGrowth.lean), no 
 | `DTree.bounded_search_misses` | with budget `k` it is wrong on at least `N − k` of the `N` single-witness instances |
 | `closure_search_lower_bound` | exact blind search over the length-`2n` closures needs `≥ 16^n/(2n+1)²` queries |
 | `closure_search_detects_few` | a budget of `k` queries detects at most `k` of the `walkCount(2n)` single-witness instances |
+
+`closures_exponential` keeps only the one term of `walkCount(2n)` in which every step lies on one
+plane, which contributes `C(2n,n)²`. Both the base `16` and the factor `(2n+1)²` come from that
+choice, not from the count. The full count is much larger: [Closure_Walk.md](Closure_Walk.md)
+gives `W_L = (8/π²)·8^L/L²·(1 + O(1/L))`, about `(2/π²)·64^n/n²` at `L = 2n`, computed exactly to
+`L = 1000` but not proved in Lean. The weak bound is enough here, because any exponential lower
+bound on the candidates gives an exponential query bound.
 
 The decision tree is the general deterministic procedure that sees the property only through
 queries "does candidate `a` have it?". The proof is the adversary argument: an unqueried
@@ -150,7 +160,7 @@ distinguish possibilism from its rivals.
   well.
 - **Randomized and quantum query bounds** in Lean: the randomized `Ω(N)` is a short averaging
   argument over the adversary; BBBV needs a Hilbert-space model the repo does not yet carry.
-- **VP ≠ VNP.** Await independent checking before citing it as established.
+- **VP ≠ VNP.** Await independent checking of either claimed proof before citing it as established.
 
 ## References
 

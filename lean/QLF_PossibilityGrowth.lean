@@ -76,7 +76,10 @@ theorem centralBinom_sq_le_walkCount (n : ℕ) :
 
 /-- **The closures grow exponentially: `16^n ≤ (2n+1)² · #closures(2n)`.** Closure is a
     vanishing fraction of the `64^n` possibilities, but in absolute terms it is still an
-    exponential set. -/
+    exponential set. The bound is deliberately weak: it keeps only the one-plane term
+    `C(2n,n)²` of `walkCount (2n)`, so the base `16` and the factor `(2n+1)²` are artifacts of
+    that choice. Numerically `walkCount (2n) ≈ (2/π²)·64^n/n²` (`Closure_Walk.md`, not proved
+    here); any exponential lower bound suffices for the query bound below. -/
 theorem closures_exponential (n : ℕ) :
     16 ^ n ≤ (2 * n + 1) ^ 2 * (closureSet (2 * n)).card := by
   rw [closures_card]
