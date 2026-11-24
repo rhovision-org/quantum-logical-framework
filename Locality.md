@@ -20,8 +20,8 @@ In **QLF's two-body operator representation** (twists as Pauli matrices on indep
 factors, Born weights), locality holds at the level of **local statistics**, for every joint
 state, entangled ones included. Whatever one body does, in whatever number of steps and however
 those steps interleave with the other body's, the other body's expectations do not change
-(`perspective_locality`), and its outcome probabilities, which are real, nonnegative and normalized for dichotomic
-observables, do not depend on the remote setting (`no_signalling_typed`). Relative to any finite
+(`perspective_locality`), and its outcome probabilities, which are real and nonnegative for dichotomic observables and
+normalized for unit-norm states (`probT_sum` gives the squared norm in general), do not depend on the remote setting (`no_signalling_typed`). Relative to any finite
 complete state `λ` distributed independently of the settings, no factorizable model reproduces
 the correlations (`no_factorizable_model`). Correlations come from **outcome dependence** (`singlet_outcome_dependent`) and
 reach Tsirelson's `2√2` (`singlet_saturates`). Operationally, parameter independence holds. With the operator state taken as the complete
@@ -29,41 +29,54 @@ state, the conjunct of Bell factorization that fails is outcome independence (Ja
 the tick reading of spacetime, a **closure is timelike** (a rest mass) and **null histories never
 close**. A shared closure can join two endpoints that are spacelike and that no history joins
 (`no_history_connects`). The closure census, used as a global post-selection filter, **signals**
-(`census_postselection_signals`). So locality depends on the joint verdict being unavailable to
-either body alone, and the joint verdict is unavailable to either body
-([`QLF_SharedReality`](lean/QLF_SharedReality.lean) `zfa_not_from_one_body`). **The closure
+(`census_postselection_signals`), so it is a counterexample to that measure. The joint verdict is
+not reconstructible from either body's record
+([`QLF_SharedReality`](lean/QLF_SharedReality.lean) `zfa_not_from_one_body`), but that theorem
+does not give the distribution of locally accessible records; a census measure whose marginals do
+not signal is still owed. **The closure
 counting theory has not yet been shown to produce these local quantum statistics.** That is the
 next proof that matters (§6, issue [#318](https://github.com/rhovision-org/quantum-logical-framework/issues/318)).
 
 ## 2. Einstein vindicated, and where
 
-Einstein held to three things about entanglement. QLF proves the first two in its two-body
-operator representation and tick reading. It agrees with the third in stance, and the form
-Einstein hoped for is excluded.
+Three notions of locality have to be kept apart, because the proofs reach them differently.
+
+1. **Operational marginal invariance (no-signalling).** Local statistics do not change with
+   remote operations or settings. **Proved**, in QLF's two-body operator representation
+   (`perspective_locality`, `no_signalling_typed`).
+2. **Parameter independence conditional on a complete state `λ`.** This depends on what `λ` is.
+   QLF has not specified its complete state. With the operator state as `λ` it holds. For a
+   hidden `λ` it is model-dependent: `no_factorizable_model` excludes every finite-`λ` model in
+   which parameter and outcome independence both hold, under measurement independence.
+   **Not settled.**
+3. **Causal or ontic locality.** No physical influence crosses a spacelike gap. **Not
+   established.** Operational no-signalling is compatible with ontic nonlocal influence (Bohmian
+   mechanics is the standard example), so (1) does not prove (3). In QLF, (3) is a reading.
+
+With that separation, here is what QLF says about Einstein's three positions.
 
 | Einstein | What QLF proves | Verdict |
 |---|---|---|
-| **No spooky action at a distance.** Born–Einstein letters, 3 March 1947: *spukhafte Fernwirkung* | Nothing done to one body changes the other body's statistics, whatever the entangled state, however many steps, in any interleaving (`perspective_locality`). Remote settings do not shift local probabilities (`no_signalling_typed`). No history joins the spacelike endpoints of a shared pair (`no_history_connects`). The correlations are a shared closure, not a transmission | **Vindicated.** There is no action at a distance. |
-| **Local action.** Einstein, *Quanten-Mechanik und Wirklichkeit*, Dialectica 2, 320 (1948): what is done to S₁ has no immediate effect on S₂ | The same theorems. Every history also stays in its own future cone, one axis step per tick (`tick_causal`), so the light-speed bound is a property of each history and not an extra postulate. Nullity is Lorentz invariant (`null_lorentz_invariant`) | **Vindicated** for causal influence. |
-| **Quantum mechanics is incomplete.** EPR, Phys. Rev. 47, 777 (1935) | QLF treats the Hilbert-space description as a rendering of an underlying history substrate, which agrees with Einstein in stance. What Einstein hoped the completion would be, local pre-existing values with factorized responses, is excluded: with measurement independence, no such model reproduces the correlations (`no_factorizable_model`, Bell's result) | **Agrees in stance.** The completion Einstein expected is ruled out by Bell, which QLF respects. |
+| **No spooky action at a distance.** Born–Einstein letters, 3 March 1947: *spukhafte Fernwirkung* | In the operator representation, nothing done to one body changes the other body's statistics, whatever the entangled state, however many steps, in any interleaving (`perspective_locality`). Remote settings do not shift local probabilities (`no_signalling_typed`). In the tick reading, no history joins the spacelike endpoints of a shared pair (`no_history_connects`) | **Vindicated operationally.** No action at a distance is usable or observable as a signal (notion 1). Whether any ontic influence exists (notion 3) is not settled by these theorems. |
+| **Local action.** Einstein, *Quanten-Mechanik und Wirklichkeit*, Dialectica 2, 320 (1948): what is done to S₁ has no immediate effect on S₂ | The same theorems for S₂'s statistics. In the tick reading, every history also stays in its own future cone, one axis step per tick (`tick_causal`), and nullity is Lorentz invariant (`null_lorentz_invariant`) | **Vindicated for local statistics** (notion 1), in the representation and the tick reading. The L2 bridge (why the tick reading is spacetime) is open. |
+| **Quantum mechanics is incomplete.** EPR, Phys. Rev. 47, 777 (1935) | QLF treats the Hilbert-space description as a rendering of an underlying history substrate, which agrees with Einstein in stance. The completion Einstein hoped for, local pre-existing values with factorized responses, is excluded: under measurement independence, no such finite-`λ` model reproduces the correlations (`no_factorizable_model`, Bell's result) | **Agrees in stance.** The completion Einstein expected is ruled out by Bell, which QLF respects. |
 
-**His own relativity answered his objection.** Special relativity already holds the answer. The
-two halves of a pair leave one event, and each travels a null leg from it: each leg has zero
-interval even though time and distance both grow (`null_legs_from_one_event`,
-`straight_run_null`). The endpoints are spacelike to each other, and no history joins them. The
-halves are related only through the event where both null legs begin, and that event lies in the
-past light cone of both endpoints. The correlation was set by a shared closure at that event, so
-nothing has to cross the gap when the halves are measured. This does not make the endpoints
-null-separated: their interval is `−4|x|²`. What the null legs do is carry the shared event
-forward to each endpoint without any proper time elapsing.
+**What his relativity contributes.** The two halves of a pair leave one event, and each travels a
+null leg from it: each leg has zero interval even though time and distance both grow
+(`null_legs_from_one_event`, `straight_run_null`). The endpoints are spacelike to each other, and
+no history joins them. The common event lies in the past light cone of both endpoints. That
+geometry is the setting for no-signalling. It does not explain the correlations. A shared past
+event that carries locally factorized values cannot produce Bell-violating correlations under
+measurement independence (`no_factorizable_model`). What QLF adds is that the shared closure is
+one joint, non-factorizable fact (`shared_closure_not_factorizable`). Whether that joint fact,
+read only through each body's own record, yields the quantum statistics without signalling is
+issue [#318](https://github.com/rhovision-org/quantum-logical-framework/issues/318). The legs do
+not make the endpoints null-separated: their interval is `−4|x|²`.
 
 What Einstein lost was the assumption that a pair has two separate real states, one per body. In
-QLF the pair's closure is one joint fact (`shared_closure_not_factorizable`), and neither body's
-record decides it (`zfa_not_from_one_body`). The correlations need that joint fact, and causation
-does not cross it. Einstein's locality survives, and his separability of states does not.
-
-These are results in the operator representation (§6). Deriving the same local statistics from
-the closure census is issue [#318](https://github.com/rhovision-org/quantum-logical-framework/issues/318).
+QLF the pair's closure is one joint fact, and neither body's record decides it
+(`zfa_not_from_one_body`). Einstein's locality survives as operational no-signalling (notion 1),
+and his separability of states does not.
 
 ## 3. Vocabulary
 
@@ -147,7 +160,7 @@ evolution or a dynamically reconstructed boundary.
 
 **Typed probabilities.** `prob` accepts any matrix and any `α`, so `no_signalling` is a weight
 identity. For `Dichotomic` observables (Hermitian, `X² = 1`) and outcomes `±1`, the weights are
-real and nonnegative (`probT_nonneg`) and sum to the state's norm, which every history preserves
+real and nonnegative (`probT_nonneg`) and sum to the squared norm `⟨ψ,ψ⟩`, which every history preserves, so they are probabilities for unit-norm `ψ`
 (`probT_sum`). `no_signalling_typed` is no-signalling as a probability statement.
 
 **Bell audit.** Bell's factorization is conditional on a complete state `λ`.
@@ -171,8 +184,11 @@ under `z` and `0` under `x` (`census_postselection_signals`). Conditioning on a 
 post-selection on a joint fact. [`QLF_ClockIntervention`](lean/QLF_ClockIntervention.lean)
 `record_signals` is the same failure for a naive record. The resolution is not a new rule. The
 joint verdict is not a function of either body's record (`zfa_not_from_one_body`), so the
-conditioning can only be done where both records meet, inside the common future. Before then,
-Alice's statistics are the operator-layer ones, and those do not signal.
+conditioning can only be done where both records meet, inside the common future. That is a
+non-reconstructibility result. It does not supply the distribution of Alice's locally accessible
+records, so P6 stands as a counterexample to the proposed census measure. That Alice's statistics
+before the records meet are the operator-layer ones, which do not signal, is the bridge owed in
+issue [#318](https://github.com/rhovision-org/quantum-logical-framework/issues/318).
 
 ## 6. Scope and what is open
 
@@ -208,5 +224,7 @@ Alice's statistics are the operator-layer ones, and those do not signal.
 * "Shared closure means zero Minkowski separation" (`pair_endpoints_spacelike`).
 * "No-signalling is Bell locality" (§5, Bell audit).
 * "QLF locality is derived from the closure census" (it is proved in the operator representation).
+* "No-signalling proves there is no ontic action at a distance" (§2, notion 3).
+* "The shared event explains the correlations" (§2).
 * "QLF evades Bell's theorem".
 * "`no_ftl_in_epr` proves no-signalling".

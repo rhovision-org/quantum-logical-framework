@@ -45,7 +45,7 @@ keeps the locality theorem from being circular, which was the concern raised for
   not be probabilities.
 * **§5, typed measurements.** For `Dichotomic` observables (Hermitian, `X² = 1`) and outcomes
   `±1`, the joint weights are genuine probabilities: real and nonnegative (`probT_nonneg`) and
-  summing to the state's norm, which every history preserves (`probT_sum`). Then
+  summing to the state's squared norm `⟨ψ,ψ⟩`, which every history preserves; they are normalized only for unit-norm `ψ` (`probT_sum`). Then
   `no_signalling_typed` is no-signalling as a probability statement.
 * **`singlet_outcome_dependent`** (Bell audit): on the singlet with both settings `σz`,
   `P(+,+) = 0` while `P(+) = P(+) = 1/2`. **Outcome independence fails.**
@@ -269,7 +269,7 @@ theorem locality_profile :
 `proj` and `prob` above accept any matrix and any `α`, so in general `prob` is a **weight**, not a
 probability; `no_signalling` is a weight identity. This section restricts to dichotomic
 observables (Hermitian, squaring to `1`) and outcomes `±1`, and proves the weights are then real,
-nonnegative and sum to the state's norm, which the dynamics preserves. -/
+nonnegative and sum to the squared norm `⟨ψ,ψ⟩`, which the dynamics preserves (so they are probabilities for unit-norm `ψ`). -/
 
 /-- A **dichotomic observable**: Hermitian with `X² = 1`, so its outcomes are `±1`. -/
 structure Dichotomic where
@@ -343,7 +343,7 @@ lemma jointFold_unitary (w : List Tok) : (jointFold w)ᴴ * jointFold w = 1 := b
       = onB FBᴴ * (onA (FAᴴ * FA)) * onB FB := by rw [← onA_mul]; simp only [mul_assoc]
     _ = 1 := by rw [fold_unitary, onA_one, mul_one, onB_mul, fold_unitary, onB_one]
 
-/-- **Normalization.** The four joint probabilities sum to the state's norm, which every history
+/-- **Normalization.** The four joint weights sum to the squared norm `⟨ψ,ψ⟩`, which every history
     preserves; for a normalized state they sum to `1`. -/
 theorem probT_sum (w : List Tok) (ψ : Fin 2 × Fin 2 → ℂ) (DA DB : Dichotomic) :
     probT w ψ DA DB true true + probT w ψ DA DB true false +
