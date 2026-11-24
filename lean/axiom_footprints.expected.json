@@ -184,6 +184,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClockCalibration.age_rate_product_calibration_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.age_ratio_calibration_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.one_scale_fits_two_ages_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClockDomains.accessible_nonconstant": [],
   "QLF.ClockDomains.alternative_completions": [],
   "QLF.ClockDomains.canonical_admissible": [],
@@ -654,6 +669,35 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ConformalComparison.count_dilate": [
+    "propext"
+  ],
+  "QLF.ConformalComparison.dilate_balanced": [
+    "propext"
+  ],
+  "QLF.ConformalComparison.fold_dilate_even": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConformalComparison.fold_dilate_odd": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConformalComparison.local_dilation_breaks_balance": [],
+  "QLF.ConsciousUpdateRule.independent_count": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConsciousUpdateRule.independent_mode": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConsciousUpdateRule.reset_percept_below": [],
+  "QLF.ConsciousUpdateRule.reset_threshold": [],
   "QLF.ConservativeReturn.F_closed": [],
   "QLF.ConservativeReturn.F_invariants": [],
   "QLF.ConservativeReturn.conservative_return": [],
@@ -771,6 +815,26 @@
   "QLF.Discoveries2026.charge3W_antiparticle": [
     "propext"
   ],
+  "QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.minimal_complementary_pair": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.self_compose_balanced_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.self_composition_type_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.FieldEnergy.J_sq_le": [
     "Classical.choice",
     "Quot.sound",
@@ -879,6 +943,42 @@
     "propext"
   ],
   "QLF.GaussLaw.stationary_iff_gauss": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.create_closes_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.create_total": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.first_singlet_move_reduces": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.gate_lengthens_witness": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.glue_closes_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.glue_total": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.same_label_blocked_gated": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.same_label_closes_ungated": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -994,6 +1094,54 @@
   ],
   "QLF.HolographicBoundary.nonlocal_pairs_break_area_law": [
     "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.conjugate_pair_undetected": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.cutEntropy_eq_vonNeumann": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.deletion_detected": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_half_half": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_product": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_uniform_pow": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.half_id_kronecker": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.insertion_detected": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.single_error_not_correctable": [],
+  "QLF.HolographicCompletion.singlet_reduced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.substitution_detected": [
     "Quot.sound",
     "propext"
   ],
@@ -1163,6 +1311,31 @@
     "propext"
   ],
   "QLF.LawOfExceptions.law_of_exceptions": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_balanced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_first_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_length": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_phase": [
+    "Classical.choice",
     "Quot.sound",
     "propext"
   ],
@@ -2013,6 +2186,109 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SharedReality.chain_without_relay_fails": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.endpoints_share_only_constants": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.global_zfa_from_all": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.global_zfa_not_from_pair": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.ledger_transfer_fails_without_pairs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.link_domain_not_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.no_signal_to_C": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.pairBuilt_ledger_transfer": [
+    "propext"
+  ],
+  "QLF.SharedReality.pairBuilt_zfa_iff": [
+    "propext"
+  ],
+  "QLF.SharedReality.pair_domain_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_closes_at_B": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_domain_reconstructs_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_domain_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_ledger_transfer": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_phase_transfer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_zfa_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.shared_iff_overlap": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.single_body_territorial_share_only_constants": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.territorial_record_reconstructs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.view_changes_only_through_own_events": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.zfa_A_not_from_BC": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.zfa_not_from_one_body": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SpatialResponseDerived.joint_step_identity": [
     "Classical.choice",
     "Quot.sound",
@@ -2034,6 +2310,26 @@
     "propext"
   ],
   "QLF.SpatialResponseDerived.unit_symmetric_mean": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.circle_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card_stack": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card_zero": [
     "Classical.choice",
     "Quot.sound",
     "propext"

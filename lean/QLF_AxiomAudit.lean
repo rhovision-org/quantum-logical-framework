@@ -133,7 +133,12 @@ import QLF_PerspectiveHolography
 import QLF_FluxoidRegge
 import QLF_PhaseAction
 import QLF_TerritoryReturn
+import QLF_SharedReality
+import QLF_SphereCount
+import QLF_HolographicCompletion
 import QLF_SpatialResponseDerived
+import QLF_ConformalComparison
+import QLF_DiversityNovelOutcome
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -152,6 +157,10 @@ import QLF_MercuryPerihelion
 import QLF_Discoveries2026
 import QLF_StrongCP
 import QLF_Majorana
+import QLF_GluonAbelianControl
+import QLF_LeptonStageB
+import QLF_ClockCalibration
+import QLF_ConsciousUpdateRule
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -185,11 +194,77 @@ import QLF_Majorana
 #print axioms QLF.TerritoryReturn.zfa_not_from_fold
 #print axioms QLF.TerritoryReturn.ledger_returns_zfa
 #print axioms QLF.TerritoryReturn.joint_record_with_ledger_returns_zfa
+#print axioms QLF.SharedReality.single_body_territorial_share_only_constants
+#print axioms QLF.SharedReality.territorial_record_reconstructs
+#print axioms QLF.SharedReality.zfa_not_from_one_body
+#print axioms QLF.SharedReality.shared_iff_overlap
+#print axioms QLF.SharedReality.endpoints_share_only_constants
+#print axioms QLF.SharedReality.zfa_A_not_from_BC
+#print axioms QLF.SharedReality.global_zfa_not_from_pair
+#print axioms QLF.SharedReality.global_zfa_from_all
+#print axioms QLF.SharedReality.pairBuilt_ledger_transfer
+#print axioms QLF.SharedReality.pairBuilt_zfa_iff
+#print axioms QLF.SharedReality.ledger_transfer_fails_without_pairs
+#print axioms QLF.SharedReality.relay_ledger_transfer
+#print axioms QLF.SharedReality.relay_zfa_iff
+#print axioms QLF.SharedReality.relay_closes_at_B
+#print axioms QLF.SharedReality.chain_without_relay_fails
+#print axioms QLF.SharedReality.no_signal_to_C
+#print axioms QLF.SharedReality.view_changes_only_through_own_events
+#print axioms QLF.SharedReality.relay_domain_reconstructs_zfa
+#print axioms QLF.SharedReality.relay_phase_transfer
+#print axioms QLF.SharedReality.relay_domain_reconstructs_fold
+#print axioms QLF.SharedReality.link_domain_not_reconstructs_zfa
+#print axioms QLF.SharedReality.pair_domain_reconstructs_zfa
+#print axioms QLF.SphereCount.sphere3_card
+#print axioms QLF.SphereCount.sphere3_card_zero
+#print axioms QLF.SphereCount.circle_card
+#print axioms QLF.SphereCount.sphere3_card_stack
+#print axioms QLF.HolographicCompletion.singlet_reduced
+#print axioms QLF.HolographicCompletion.entropy_half_half
+#print axioms QLF.HolographicCompletion.entropy_product
+#print axioms QLF.HolographicCompletion.half_id_kronecker
+#print axioms QLF.HolographicCompletion.entropy_uniform_pow
+#print axioms QLF.HolographicCompletion.cutEntropy_eq_vonNeumann
+#print axioms QLF.HolographicCompletion.insertion_detected
+#print axioms QLF.HolographicCompletion.deletion_detected
+#print axioms QLF.HolographicCompletion.substitution_detected
+#print axioms QLF.HolographicCompletion.conjugate_pair_undetected
+#print axioms QLF.HolographicCompletion.single_error_not_correctable
 #print axioms QLF.SpatialResponseDerived.joint_step_identity
 #print axioms QLF.SpatialResponseDerived.symmetric_mean
 #print axioms QLF.SpatialResponseDerived.unit_symmetric_mean
 #print axioms QLF.SpatialResponseDerived.orthogonal_brings_closer
 #print axioms QLF.SpatialResponseDerived.opposite_pushes_apart
+#print axioms QLF.ConformalComparison.count_dilate
+#print axioms QLF.ConformalComparison.dilate_balanced
+#print axioms QLF.ConformalComparison.fold_dilate_odd
+#print axioms QLF.ConformalComparison.fold_dilate_even
+#print axioms QLF.ConformalComparison.local_dilation_breaks_balance
+#print axioms QLF.DiversityNovelOutcome.self_compose_balanced_iff
+#print axioms QLF.DiversityNovelOutcome.self_composition_type_one
+#print axioms QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure
+#print axioms QLF.DiversityNovelOutcome.minimal_complementary_pair
+#print axioms QLF.GluonAbelianControl.first_singlet_move_reduces
+#print axioms QLF.GluonAbelianControl.create_total
+#print axioms QLF.GluonAbelianControl.glue_total
+#print axioms QLF.GluonAbelianControl.create_closes_iff
+#print axioms QLF.GluonAbelianControl.glue_closes_iff
+#print axioms QLF.GluonAbelianControl.same_label_blocked_gated
+#print axioms QLF.GluonAbelianControl.same_label_closes_ungated
+#print axioms QLF.GluonAbelianControl.gate_lengthens_witness
+#print axioms QLF.LeptonStageB.rung_length
+#print axioms QLF.LeptonStageB.rung_balanced
+#print axioms QLF.LeptonStageB.rung_first_return
+#print axioms QLF.LeptonStageB.rung_phase
+#print axioms QLF.LeptonStageB.rung_fold
+#print axioms QLF.ClockCalibration.age_ratio_calibration_free
+#print axioms QLF.ClockCalibration.age_rate_product_calibration_free
+#print axioms QLF.ClockCalibration.one_scale_fits_two_ages_iff
+#print axioms QLF.ConsciousUpdateRule.independent_count
+#print axioms QLF.ConsciousUpdateRule.independent_mode
+#print axioms QLF.ConsciousUpdateRule.reset_threshold
+#print axioms QLF.ConsciousUpdateRule.reset_percept_below
 #print axioms QLF.LinkClosure.closed_history_gauge_invariant
 #print axioms QLF.CensusActionLimit.censusCost_sandwich
 #print axioms QLF.CensusActionLimit.censusCost_gaussian_limit

@@ -344,7 +344,16 @@ lean_lib QLF where
     `QLF_ObservationalEquivalence,
     `QLF_PerspectiveHolography,
     `QLF_TerritoryReturn,
+    `QLF_SharedReality,
+    `QLF_SphereCount,
+    `QLF_HolographicCompletion,
     `QLF_SpatialResponseDerived,
+    `QLF_ConformalComparison,
+    `QLF_DiversityNovelOutcome,
+    `QLF_GluonAbelianControl,
+    `QLF_LeptonStageB,
+    `QLF_ClockCalibration,
+    `QLF_ConsciousUpdateRule,
     `QLF_MeadTransaction,
     `QLF_MagneticOrientation,
     `QLF_ClockRedshift,
@@ -354,5 +363,7 @@ lean_lib QLF where
     `QLF_MrEUpdate,
     `QLF_GuptaPrefixClock,
     `QLF_ReadoutCriterion,
-    `QLF_ClosureUncertainty
+    `QLF_ClosureUncertainty,
+    `QLF_Morphogenesis,
+    `QLF_PossibilityGrowth
   ]

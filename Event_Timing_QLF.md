@@ -40,7 +40,7 @@ A faster recurrent mode need not be the next one to fire if a slower mode is alr
   `consciousPeriod`. Those are **recurring-dominance** statements; they do not by themselves pick the
   next event.
 - [`QLF_HarmonicClosure`](lean/QLF_HarmonicClosure.lean) proves `higher_freq_dominates` and
-  `freq_bind_ge_left/right` — again a recurrence/binding result.
+  `freq_bind_ge_left/right` — again a recurrence/binding result, and the binding half holds by definition (`bind := min`, [Morphogenesis.md](Morphogenesis.md) §2).
 - `QLF_LocalClock` supplies the local-clock period `R`.
 - [`Manifestation.md`](Manifestation.md) supplies `distance_eq_delay`; this document treats the
   remaining distance as trigger proximity, not event duration.
