@@ -89,3 +89,18 @@ evidence that a physical boundary contains those data. F2 supplies the non-promo
 controls. F4 is an accounting identity, not a cosmological prediction. Stage D
 remains B-OPEN pending a derived accessibility rule and a nonduplicating
 physical face-ID map. No Lean proof is added by this experiment.
+
+## Frozen eight-count replication — separate witness
+
+The original four-coordinate run and disclosure above remain unchanged.
+A separate CI test, `tests/test_perspective_frontier_eight.py`, implements the
+original eight-count record over the same 14,425 tagged histories. It builds
+each view independently, checks both nested restrictions for every word,
+and checks positive and negative factorization cases against the full
+eight-count observable. The additional negative control checks that even
+net action plus exact fold does not reconstruct all eight counts.
+F4 remains a separate face-set accounting check.
+
+This is a replication protocol and executable test, not a reported result
+until the pinned CI execution succeeds. No change to the frozen protocol,
+historical JSON, or physical bridge status is implied.
