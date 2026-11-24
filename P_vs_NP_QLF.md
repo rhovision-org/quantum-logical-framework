@@ -101,6 +101,17 @@ and its cardinality is the genuine `C(2n,n)` (`realized_count_eq_central_binomia
 boundary axiom `qlf_cost_model` over an abstract `PTime`/`search` cost
 model, with the `p_vs_np_proof_in_progress` status marker.
 
+## 4a. Blind search, proved
+
+[`lean/QLF_PossibilityGrowth.lean`](lean/QLF_PossibilityGrowth.lean) proves the part of the lean
+that can be proved without a machine model, with no axiom: the closures grow exponentially
+(`16^n ≤ (2n+1)²·#closures(2n)`), and any deterministic procedure that sees a property `X` only by
+querying candidates must query all of them to decide exactly whether some closure has `X`
+(`closure_search_lower_bound`); a budget of `k` queries detects at most `k` single-witness
+instances. This is a relativized bound, so by Baker–Gill–Solovay it cannot settle P vs NP, and
+`qlf_cost_model` is unchanged. See [Possibility_Growth.md](Possibility_Growth.md), which also covers
+the VP ≠ VNP announcement and the scope of "possibilities are real".
+
 ## 5. Epistemic stance
 
 Within QLF's frame, P ≠ NP is the computational face of the same principle as the
