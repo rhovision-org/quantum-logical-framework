@@ -10,7 +10,17 @@
   ],
   "pass_slope": 1.8,
   "kill_slope": 1.5,
+  "calibration_max": 1e-12,
+  "control_min": 0.01,
+  "defect_scalar": "boosted continuum E', not the walk's E(k')",
   "calibration_dirac_defect": 2.9858847860947677e-16,
+  "negative_control_min_defect": [
+    0.34236547826800984,
+    0.34236547826800984,
+    0.34236547826800984,
+    0.34236547826800984,
+    0.34236547826800984
+  ],
   "raw": {
     "worst_defect": [
       0.023712973246568857,
@@ -20,7 +30,7 @@
       0.0014823125122662485
     ],
     "slope": 0.9999452506061086,
-    "verdict": "FAIL"
+    "verdict": "NOT_GRADED (expected about 1)"
   },
   "half": {
     "worst_defect": [

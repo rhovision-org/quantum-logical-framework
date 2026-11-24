@@ -15,7 +15,11 @@ Graded quantity. For a walk step U(k, m), let P(k) be its positive-energy band p
 Pi(k) = E(k) P(k) beta, the walk analogue of (pslash + m)/2. For a boost of rapidity eta along
 axis i, with S = exp(eta alpha_i / 2), boost (E(k), k) to (E', k') and measure
 
-    defect = || S Pi(k) S^{-1} - Pi(k') ||_max / E'.
+    defect = || S Pi(k) S^{-1} - E' P(k') beta ||_max / E'.
+
+Here E' is the boosted continuum energy E(k) cosh eta + k_i sinh eta, not the walk's own
+energy E(k') at the boosted momentum: the right-hand side uses P(k') from the walk but the scalar
+E' from the boost. The two differ by the stage-1 shell error.
 
 For the continuum Dirac operator this is zero to rounding (calibration below). The fitted
 log-log slope of the worst defect against kappa is the order at which covariance fails.
@@ -24,6 +28,19 @@ Two time slices of the same walk are graded:
   raw   U = massStep(m) * handed(k)                       (QLF_DiracWalk.diracWalk)
   half  U = massStep(m/2) * handed(k) * massStep(m/2)     (raw conjugated by massStep(m/2))
 They differ by a k-independent unitary, so they have the same spectrum.
+
+Gates (fail closed). Nothing is graded, and the script exits non-zero with INVALID, unless:
+  - the continuum Dirac calibration defect is finite and below 1e-12 (registered in §6b);
+  - every walk step has a positive band of rank exactly 2, and every graded defect is finite and
+    non-zero (a zero defect would make the log-log slope undefined);
+  - the negative control fails as it should: the continuum Dirac band boosted with the wrong
+    spinor sign, S = exp(-eta alpha_i / 2), must give a defect of at least 1e-2 at every kappa.
+    The control checks that the defect can detect a wrong boost; it was added after review and
+    does not change the registered grid or the graded readings.
+
+What this is evidence for. The fitted slope is evidence on this finite grid. It is not a uniform
+asymptotic theorem, and it does not test the projected and rescaled packet map's composition law
+or any interacting amplitude.
 
 Usage: python3 boost_states_check.py [--json data/boost_states_check.json]
 """
@@ -76,11 +93,17 @@ def herm_exp(A, c):
     return v @ np.diag(np.exp(c * w)) @ v.conj().T
 
 
+class Invalid(Exception):
+    """A fail-closed gate tripped: nothing is graded."""
+
+
 def band(U):
     """Positive-energy band projector and energy of a unitary step (doubly degenerate band)."""
     w, v = np.linalg.eig(U)
     E = np.angle(w)
     idx = E > 0
+    if int(np.count_nonzero(idx)) != 2:
+        raise Invalid(f"positive band has rank {int(np.count_nonzero(idx))}, expected 2")
     q, _ = np.linalg.qr(v[:, idx])
     return q @ q.conj().T, float(np.mean(E[idx]))
 
@@ -99,11 +122,11 @@ def boost(E, k, i, eta):
     return E2, tuple(k)
 
 
-def defect(bandfn, k, m, i, eta):
+def defect(bandfn, k, m, i, eta, spin_sign=1):
     P, E = bandfn(k, m)
     E2, k2 = boost(E, k, i, eta)
     P2, _ = bandfn(k2, m)
-    S = herm_exp(ALPHA[i], eta / 2)
+    S = herm_exp(ALPHA[i], spin_sign * eta / 2)
     lhs = S @ (E * P @ BETA) @ np.linalg.inv(S)
     rhs = E2 * P2 @ BETA
     return float(np.abs(lhs - rhs).max() / E2)
@@ -125,39 +148,65 @@ def directions():
     return v / np.linalg.norm(v, axis=1, keepdims=True)
 
 
-def worst(bandfn, kappa):
-    out = 0.0
+def worst(bandfn, kappa, spin_sign=1, reduce=max):
+    vals = []
     for d in directions():
         for r in MASS_RATIOS:
             n = np.sqrt(1 + r * r)        # |(k, m)| = kappa
             k = tuple(kappa * d / n)
             m = kappa * r / n
             for i in range(3):
-                out = max(out, defect(bandfn, k, m, i, ETA))
-    return out
+                vals.append(defect(bandfn, k, m, i, ETA, spin_sign))
+    return float(reduce(vals))
 
 
 def slope(xs, ys):
     return float(np.polyfit(np.log(xs), np.log(ys), 1)[0])
 
 
+CAL_MAX = 1e-12
+CONTROL_MIN = 1e-2
+
+
+def run():
+    res = {"seed": SEED, "eta": ETA, "kappas": list(KAPPAS), "pass_slope": PASS_SLOPE,
+           "kill_slope": KILL_SLOPE, "calibration_max": CAL_MAX, "control_min": CONTROL_MIN,
+           "defect_scalar": "boosted continuum E', not the walk's E(k')"}
+    cal = worst(dirac_band, 0.04)
+    res["calibration_dirac_defect"] = cal
+    print(f"calibration (continuum Dirac): worst defect {cal:.2e}")
+    if not (np.isfinite(cal) and cal < CAL_MAX):
+        raise Invalid(f"calibration defect {cal!r} is not finite and below {CAL_MAX}")
+    ctrl = [worst(dirac_band, kp, spin_sign=-1, reduce=min) for kp in KAPPAS]
+    res["negative_control_min_defect"] = ctrl
+    print("negative control (wrong spinor sign), least defect: " + "  ".join(f"{y:.3e}" for y in ctrl))
+    if not all(np.isfinite(y) and y >= CONTROL_MIN for y in ctrl):
+        raise Invalid("negative control did not fail: the defect cannot detect a wrong boost")
+    for name in ("raw", "half"):
+        fn = lambda k, m, s=name: band(walk(k, m, s))
+        ys = [worst(fn, kp) for kp in KAPPAS]
+        if not all(np.isfinite(y) and y > 0 for y in ys):
+            raise Invalid(f"{name}: non-finite or zero defect {ys!r}")
+        s = slope(KAPPAS, ys)
+        if name == "half":
+            verdict = "PASS" if s >= PASS_SLOPE else ("FAIL" if s < KILL_SLOPE else "INCONCLUSIVE")
+        else:
+            verdict = "NOT_GRADED (expected about 1)"
+        res[name] = {"worst_defect": ys, "slope": s, "verdict": verdict}
+        print(f"{name:5s} slope {s:.3f}  {verdict}  " + "  ".join(f"{y:.3e}" for y in ys))
+    res["graded"] = res["half"]["verdict"]
+    return res
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", default=None)
     a = ap.parse_args()
-    res = {"seed": SEED, "eta": ETA, "kappas": list(KAPPAS), "pass_slope": PASS_SLOPE,
-           "kill_slope": KILL_SLOPE}
-    cal = worst(dirac_band, 0.04)
-    res["calibration_dirac_defect"] = cal
-    print(f"calibration (continuum Dirac): worst defect {cal:.2e}")
-    for name in ("raw", "half"):
-        fn = lambda k, m, s=name: band(walk(k, m, s))
-        ys = [worst(fn, kp) for kp in KAPPAS]
-        s = slope(KAPPAS, ys)
-        verdict = "PASS" if s >= PASS_SLOPE else ("FAIL" if s < KILL_SLOPE else "INCONCLUSIVE")
-        res[name] = {"worst_defect": ys, "slope": s, "verdict": verdict}
-        print(f"{name:5s} slope {s:.3f}  {verdict}  " + "  ".join(f"{y:.3e}" for y in ys))
-    res["graded"] = res["half"]["verdict"]
+    try:
+        res = run()
+    except Invalid as e:
+        print(f"INVALID, NOT_GRADED: {e}")
+        raise SystemExit(2)
     if a.json:
         with open(a.json, "w") as f:
             json.dump(res, f, indent=2)

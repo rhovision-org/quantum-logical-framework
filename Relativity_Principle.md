@@ -459,7 +459,7 @@ A slope between `1.5` and `1.8` is inconclusive and leads to a finer grid, not a
 |---|---|---|
 | Calibration: continuum Dirac defect | `3.0 × 10⁻¹⁶` | the script is sound |
 | **`half` slope** | **`2.000`** (worst defect `4.9 × 10⁻⁴` at `κ = 0.08`, `1.9 × 10⁻⁶` at `κ = 0.005`) | **PASS** |
-| `raw` slope | `1.000` (worst defect `2.4 × 10⁻²` at `κ = 0.08`) | as expected: first order. The script prints `FAIL` for it, but it was not graded |
+| `raw` slope | `1.000` (worst defect `2.4 × 10⁻²` at `κ = 0.08`) | as expected: first order, not graded |
 
 Data: [`data/boost_states_check.json`](data/boost_states_check.json). **The walk's band is Dirac covariant to
 second order on the half-step slice, so stage 4 proceeds there.** The raw slice is first order
@@ -468,6 +468,23 @@ only because its time slice sits inside the mass step. The two slices differ by 
 borrowed `S(A)` does not see that rotation. The definition above is therefore read on the
 half-step slice. This is a refinement of step 4 recorded after the run, not a change to the
 criteria.
+
+**Clarifications after review (2026-11-24).** These do not change the registered grid, criteria
+or readings; they make the quantity and the gates explicit.
+
+- In the defect, `Π(k′)` is `E′ P(k′) β`, where `E′` is the **boosted continuum energy**
+  `E(k) cosh η + kᵢ sinh η`, not the walk's own energy `E(k′)` at the boosted momentum. The two
+  differ by the stage-1 shell error.
+- The script now fails closed. It reports `INVALID, NOT_GRADED` and exits non-zero unless the
+  calibration is finite and below `10⁻¹²`, every walk step has a positive band of rank exactly 2,
+  and every graded defect is finite and non-zero.
+- A negative control was added: the continuum Dirac band boosted with the wrong spinor sign
+  `exp(−η αᵢ/2)` must give a defect of at least `10⁻²` at every `κ`. It gives `0.342` at every `κ`,
+  so the defect detects a wrong boost. [`tests/test_boost_states_check.py`](tests/test_boost_states_check.py)
+  checks each gate trips.
+- The fitted slope is evidence on this finite grid. It is not a uniform asymptotic theorem, and it
+  does not test the projected and rescaled packet map's composition law or any interacting
+  amplitude.
 
 How strong is the pass? It is structural, not a surprise. A symmetric product `e^{X/2} e^{Y} e^{X/2}`
 has no second-order term in its logarithm, so the half-step generator is the Dirac operator plus
