@@ -237,7 +237,7 @@ Jim asked whether other mechanisms of choice can work in a quantum logical world
 | Fixed table or non-contextual hidden values | ruled out (`no_choice_fixed_in_advance`) |
 | Contextual hidden variables (Bohm 1952) | allowed, but non-local, and the outcome is fixed by the initial configuration: it explains outcomes and leaves no choice |
 | Added collapse dynamics (Ghirardi, Rimini and Weber 1986; Penrose 1996) | consistent, but a selection rule added to the logic; in QLF closure is already the event, so the rule has no work to do |
-| Superdeterminism | logically possible; it removes choice everywhere, the experimenter's included |
+| Superdeterminism | logically possible, but fundamentally undeterminable (Jim): every outcome, whatever it is, counts as predetermined, so no distribution of outcomes could make it false, and by the method's rule 4 it carries no physical content. Tests proposed for it check particular models, not superdeterminism as such. It also removes choice everywhere, the experimenter's included |
 | Selection by closure (QLF) | contextual by construction: diversity supplies the alternatives and the closure that happens is the selection |
 
 Conway and Kochen's free-will theorem (2006) sharpens the last row: if the experimenter's choice of basis is not a function of the past, neither is the particle's response ([Interpretations.md](Interpretations.md)). Reading: QLF's mechanism is the one that adds nothing to the logic. That choice is *free will* stays a reading ([Consciousness.md](Consciousness.md) §6a).
