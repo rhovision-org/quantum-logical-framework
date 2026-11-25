@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Four results, no axioms.
+  Five results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -33,6 +33,12 @@
   4. **A problem posed as a closure is solved without search** (`closing_cost_exact`,
      `completion_perm_closes`): the least closing continuation has length exactly the
      history's `ℓ¹` imbalance, and every order of the conjugate completion closes it.
+
+  5. **Silver inflation is a discrete boost** (`silver_expands`, `silver_contracts`,
+     `silver_unit`, `silver_boost_norm`, `projection_choice`): one projected dimension of the
+     octagonal quasicrystal expands by `1 + √2` exactly as the other contracts by `1 − √2`,
+     the indefinite norm `a² − 2b²` is preserved by two steps, and which projection is
+     called physical is a choice.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -381,5 +387,80 @@ theorem closing_cost_exact (ts : List Twist) :
     IsLeast {k | ∃ c : List Twist, c.length = k ∧ countBalanced (ts ++ c)} (imbalance ts) :=
   ⟨⟨completion ts, completion_length ts, completion_closes ts⟩,
     fun _ ⟨c, hk, hc⟩ => hk ▸ closing_cost_lower ts c hc⟩
+
+/-! ## 5. Expansion and contraction: silver inflation is a discrete boost
+
+    The octagonal quasicrystal is the projection of `ℤ[ζ₈]`; its inflation acts on `ℤ[√2]`
+    as multiplication by the silver ratio `λ = 1 + √2`. A lattice point `a + b√2` has two
+    projections, the physical `x = a + b√2` and the internal `x* = a − b√2`. Inflation
+    multiplies `x` by `λ > 1` and `x*` by `λ* = 1 − √2`, with `|λ*| < 1` and `λ·λ* = −1`
+    (`silver_expands`, `silver_contracts`, `silver_unit`): one projected dimension expands
+    exactly as the other contracts, and the product `x·x* = a² − 2b²` changes only by sign
+    (`silver_norm`). Its square preserves that indefinite form exactly (`silver_boost_norm`),
+    which is what a Lorentz boost does to `t² − z²` in light-cone coordinates
+    (`QLF_LorentzCover.boostZ_action`: `t+z ↦ a²(t+z)`, `t−z ↦ b²(t−z)`, `ab = 1`).
+    Which of the two directions is read as "the" dimension is the projection, chosen at
+    readout: statically the lattice holds both, and expansion of one is contraction of the
+    other. Compare the compact case of §3, `(3+4i)/5`, which preserves `a² + b²`: the
+    rotation is the elliptic member of the pair, the silver unit the hyperbolic one. -/
+
+/-- One silver inflation step on `ℤ[√2]`, `(a + b√2)(1 + √2) = (a + 2b) + (a + b)√2`. -/
+def silverStep (p : ℤ × ℤ) : ℤ × ℤ := (p.1 + 2 * p.2, p.1 + p.2)
+
+/-- The norm `x·x* = a² − 2b²`, an indefinite quadratic form. -/
+def silverNorm (p : ℤ × ℤ) : ℤ := p.1 ^ 2 - 2 * p.2 ^ 2
+
+/-- **Inflation reverses the norm's sign**: `λ·λ* = −1`. -/
+theorem silver_norm (p : ℤ × ℤ) : silverNorm (silverStep p) = - silverNorm p := by
+  simp only [silverNorm, silverStep]; ring
+
+/-- **Two inflations preserve the indefinite form exactly**: a discrete boost. -/
+theorem silver_boost_norm (p : ℤ × ℤ) :
+    silverNorm (silverStep (silverStep p)) = silverNorm p := by
+  rw [silver_norm, silver_norm, neg_neg]
+
+/-- The physical projection `x = a + b√2`. -/
+noncomputable def physical (p : ℤ × ℤ) : ℝ := p.1 + p.2 * Real.sqrt 2
+
+/-- The internal projection `x* = a − b√2`. -/
+noncomputable def internal (p : ℤ × ℤ) : ℝ := p.1 - p.2 * Real.sqrt 2
+
+theorem sqrt2_sq : Real.sqrt 2 * Real.sqrt 2 = 2 := Real.mul_self_sqrt (by norm_num)
+
+/-- **The physical dimension expands** by the silver ratio. -/
+theorem silver_expands (p : ℤ × ℤ) :
+    physical (silverStep p) = (1 + Real.sqrt 2) * physical p := by
+  simp only [physical, silverStep]; push_cast
+  linear_combination (-(p.2 : ℝ)) * sqrt2_sq
+
+/-- **The internal dimension contracts** by the conjugate `1 − √2`. -/
+theorem silver_contracts (p : ℤ × ℤ) :
+    internal (silverStep p) = (1 - Real.sqrt 2) * internal p := by
+  simp only [internal, silverStep]; push_cast
+  linear_combination (-(p.2 : ℝ)) * sqrt2_sq
+
+/-- **Expansion times contraction is a unit**: `(1 + √2)(1 − √2) = −1`, with the expanding
+    factor above `1` and the contracting one below `1` in size. -/
+theorem silver_unit :
+    (1 + Real.sqrt 2) * (1 - Real.sqrt 2) = -1 ∧ 1 < 1 + Real.sqrt 2 ∧
+      |1 - Real.sqrt 2| < 1 := by
+  have h2 : (1 : ℝ) < Real.sqrt 2 := by
+    rw [show (1 : ℝ) = Real.sqrt 1 by simp]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  have h3 : Real.sqrt 2 < 2 := by
+    rw [show (2 : ℝ) = Real.sqrt 4 by
+      rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.sqrt_sq (by norm_num)]]
+    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
+  refine ⟨by linear_combination (-1 : ℝ) * sqrt2_sq, by linarith, ?_⟩
+  rw [abs_lt]; constructor <;> linarith
+
+/-- Galois conjugation `a + b√2 ↦ a − b√2`: the choice of which projection to call physical. -/
+def galois (p : ℤ × ℤ) : ℤ × ℤ := (p.1, -p.2)
+
+/-- **The two projections are one projection read two ways**: the internal projection of a
+    point is the physical projection of its conjugate. Which dimension expands and which
+    contracts under the same inflation is fixed by that choice, not by the lattice. -/
+theorem projection_choice (p : ℤ × ℤ) : internal p = physical (galois p) := by
+  simp only [internal, physical, galois]; push_cast; ring
 
 end QLF.QuantumComputer

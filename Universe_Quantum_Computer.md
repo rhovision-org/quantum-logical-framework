@@ -113,11 +113,29 @@ So the arithmetic that makes the substrate's octagonal quasicrystal is the arith
 
 **Aperiodic order and gate universality are the same distinction.** A crystal repeats; a quasicrystal is ordered without repeating. The twist group is the crystal case: sixteen elements, every product periodic (§2.2). The rotation of §2.3 is the quasicrystal case: its powers never repeat (`rotation_powers_injective`), so its orbit is a one-dimensional quasiperiodic sequence, the shape of order a universal gate set needs. This is an analogy, not a theorem linking the two.
 
+
+## 6a. Expansion and contraction of a dimension
+
+The same projection that makes the quasicrystal makes a dimension expand or contract, and which one is a matter of how the projection is read.
+
+**Proved: silver inflation is a discrete boost.** A point `a + b√2` of `ℤ[√2]` has a physical projection `x = a + b√2` and an internal one `x* = a − b√2`. One inflation step multiplies `x` by `1 + √2` and `x*` by `1 − √2` (`silver_expands`, `silver_contracts`). The first factor exceeds `1`, the second is below `1` in size, and their product is `−1` (`silver_unit`): **one projected dimension expands exactly as the other contracts.** The product `x·x* = a² − 2b²` is an indefinite form; one step flips its sign (`silver_norm`) and two steps preserve it exactly (`silver_boost_norm`). That is what a Lorentz boost does to `t² − z²` in light-cone coordinates: [`QLF_LorentzCover`](lean/QLF_LorentzCover.lean)'s `boostZ_action` scales `t + z` by `a²` and `t − z` by `b²` with `ab = 1`.
+
+**Proved: which dimension expands is the choice of projection.** The internal projection of a point is the physical projection of its Galois conjugate (`projection_choice`). So the lattice and the inflation are fixed statically, while whether the dimension one reads expands or contracts depends on which projection is read. That is Jim's runtime point in its sharpest form.
+
+**The same split elsewhere in QLF.**
+
+- **Elliptic and hyperbolic.** The rotation of §2.3, `(3+4i)/5`, preserves `a² + b²`: it is the compact member. The silver unit preserves `a² − 2b²`: it is the hyperbolic member, the boost. The time-reversal module ([PR #322](https://github.com/rhovision-org/quantum-logical-framework/pull/322), [`Time_Reversed_Universe.md`](https://github.com/rhovision-org/quantum-logical-framework/pull/322) §2) uses the same Pythagorean triple for its boost: velocity `3/5`, `cosh = 5/4`, `sinh = 3/4`, so `t + z` expands by `2` while `t − z` contracts by `1/2`. One triple gives the rotation of a qubit and the boost of an interval.
+- **Order and dimension by perspective.** [PR #322](https://github.com/rhovision-org/quantum-logical-framework/pull/322) proves that the time order of spacelike-separated events is set by perspective (`spacelike_order_by_perspective`) while the interval is not. Here the interval-like norm is fixed, and which projected dimension grows is set by the reading.
+- **The census does not fix the sign.** In [`QLF_ExpansionCharge`](lean/QLF_ExpansionCharge.lean) the gauge axis carries expansion and contraction, and `expansion_sign_not_a_count` proves the `+`/`−` census is exactly symmetric: gauge conjugation maps closures to closures and negates the net expansion. So no static count decides whether space expands or contracts; [Lumina_QLF.md](Lumina_QLF.md) records that the identification of the sign with the arrow of time is a bridge. Both results say the same thing as `projection_choice`: the expanding and contracting readings exist together, and the one realized is settled at runtime.
+
+**Reading, not theorem.** That the physical expansion of space is a silver-type inflation, or any lattice inflation, is not shown. What is shown is that the arithmetic of the substrate's quasicrystal already carries a boost, that expansion of one dimension and contraction of another are a single operation, and that the choice between them is a choice of projection.
+
 ## 7. Open
 
 - **The entangling gate.** Show that a joint closure of two histories acts on two spinors as an entangling gate (CNOT, or any gate not a product of single-qubit gates). With §2 and the two cited facts, that would complete "the substrate is quantum-universal".
 - **Density in Lean.** Formalize fact 1 of §3 (infinite order on a circle gives density; two axes give SU(2)).
 - **The Clifford+T bridge in Lean.** Show that the Hadamard is a Form (`(σx + σz)/√2`, a superposition of two twists) and that a product of it with the `ζ₈` phase has infinite order, putting the ring identification of §6 on the substrate.
+- **A boost on the twist lattice itself.** The silver boost acts on `ℤ[√2]`, the octagonal projection's ring. Show that a closure-preserving map of twist histories induces it, so that the boost is a substrate operation and not only a property of the projection.
 - **Quasicrystal growth as a closure census.** Test whether forced-tile growth (Onoda et al. 1988) is the first-closure rule on the octagonal projection, with the defect rate as the prediction.
 - **Counts or Forms.** The theorem uses the Form coefficients `3/5, 4/5`; the reading that they are normalized counts of ways is the census reading, not yet a derivation. A theorem that a phase-weighted census sum over closures yields such a Form would make it one.
 
