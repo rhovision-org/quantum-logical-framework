@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Three results, no axioms.
+  Four results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -29,6 +29,10 @@
      non-parallel axis generates a dense subgroup of SU(2), and dense single-qubit gates
      with one entangling gate are universal (Barenco et al. 1995). Those two steps are
      cited, not proved here, and the entangling gate is the open bridge (see the doc §4).
+
+  4. **A problem posed as a closure is solved without search** (`closing_cost_exact`,
+     `completion_perm_closes`): the least closing continuation has length exactly the
+     history's `ℓ¹` imbalance, and every order of the conjugate completion closes it.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -290,5 +294,92 @@ theorem quantum_power_needs_weighted_ways :
     ∀ ts, twistMatrixFold ts ≠ rotation :=
   ⟨twist_folds_finite, Set.infinite_range_of_injective rotation_powers_injective,
     rotation_is_form_product, twist_cannot_reach_rotation⟩
+
+/-! ## 4. How the substrate solves a problem posed as a closure
+
+    A history with net imbalance is an open problem; its solutions are the continuations that
+    close it. The substrate does not search for one. The minimum cost of closing is exactly
+    the `ℓ¹` imbalance of the signed action (`closing_cost_lower`), the conjugate completion
+    attains it (`completion_closes`, `completion_length`), and every reordering of that
+    completion closes too (`completion_perm_closes`), so the problem is solved in every
+    order at once at the least possible cost. Contrast `QLF_PossibilityGrowth`: a property
+    `X` that is not a closure condition must be queried, candidate by candidate. -/
+
+/-- Twists needed to cancel one axis: the excess of one sign over the other. -/
+def gap (a b : ℕ) : ℕ := (a - b) + (b - a)
+
+/-- **The imbalance** of a history: the `ℓ¹` norm of its signed action vector. -/
+def imbalance (ts : List Twist) : ℕ :=
+  gap (ts.count Twist.up) (ts.count Twist.down) +
+  gap (ts.count Twist.left) (ts.count Twist.right) +
+  gap (ts.count Twist.slash) (ts.count Twist.backslash) +
+  gap (ts.count Twist.plus) (ts.count Twist.minus)
+
+/-- **The conjugate completion**: for each axis, the excess, written in the opposite sign. -/
+def completion (ts : List Twist) : List Twist :=
+  List.replicate (ts.count Twist.up - ts.count Twist.down) Twist.down ++
+  List.replicate (ts.count Twist.down - ts.count Twist.up) Twist.up ++
+  List.replicate (ts.count Twist.left - ts.count Twist.right) Twist.right ++
+  List.replicate (ts.count Twist.right - ts.count Twist.left) Twist.left ++
+  List.replicate (ts.count Twist.slash - ts.count Twist.backslash) Twist.backslash ++
+  List.replicate (ts.count Twist.backslash - ts.count Twist.slash) Twist.slash ++
+  List.replicate (ts.count Twist.plus - ts.count Twist.minus) Twist.minus ++
+  List.replicate (ts.count Twist.minus - ts.count Twist.plus) Twist.plus
+
+/-- Counting a twist in a repeated twist (stated with the derived `BEq`, which is not lawful). -/
+theorem count_replicate_twist (n : ℕ) (s t : Twist) :
+    (List.replicate n s).count t = if (s == t) = true then n else 0 := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [List.replicate_succ, List.count_cons, ih]
+    split <;> simp_all
+
+theorem completion_length (ts : List Twist) : (completion ts).length = imbalance ts := by
+  simp only [completion, imbalance, gap, List.length_append, List.length_replicate]
+  omega
+
+/-- **The completion closes the history.** -/
+theorem completion_closes (ts : List Twist) : countBalanced (ts ++ completion ts) := by
+  simp only [countBalanced, completion, List.count_append]
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> simp (config := {decide := true}) [count_replicate_twist] <;> omega
+
+/-- **Closed in full ZFA**: by the keystone, the completed history folds to a Pauli scalar. -/
+theorem completion_zfa (ts : List Twist) :
+    ∃ p : PauliScalar, twistMatrixFold (ts ++ completion ts) = pauliScalarToMatrix p :=
+  count_balanced_pauli_closed (completion_closes ts)
+
+/-- **Every order of the completion closes**: the solution is reached every way at once. -/
+theorem completion_perm_closes (ts c : List Twist) (hc : c.Perm (completion ts)) :
+    countBalanced (ts ++ c) := by
+  have h := completion_closes ts
+  simp only [countBalanced, List.count_append] at h ⊢
+  simp only [hc.count_eq]
+  exact h
+
+/-- The eight counts of a history add up to its length. -/
+theorem count_sum (c : List Twist) :
+    c.count Twist.up + c.count Twist.down + c.count Twist.left + c.count Twist.right +
+    c.count Twist.slash + c.count Twist.backslash + c.count Twist.plus +
+    c.count Twist.minus = c.length := by
+  induction c with
+  | nil => rfl
+  | cons t c ih =>
+      cases t <;> simp (config := {decide := true}) [List.count_cons] <;> omega
+
+/-- **No continuation closes a history in fewer steps than its imbalance.** -/
+theorem closing_cost_lower (ts c : List Twist) (h : countBalanced (ts ++ c)) :
+    imbalance ts ≤ c.length := by
+  simp only [countBalanced, List.count_append] at h
+  have hs := count_sum c
+  simp only [imbalance, gap]
+  omega
+
+/-- **The cost of closing is exactly the imbalance**: the least length of a closing
+    continuation. -/
+theorem closing_cost_exact (ts : List Twist) :
+    IsLeast {k | ∃ c : List Twist, c.length = k ∧ countBalanced (ts ++ c)} (imbalance ts) :=
+  ⟨⟨completion ts, completion_length ts, completion_closes ts⟩,
+    fun _ ⟨c, hk, hc⟩ => hk ▸ closing_cost_lower ts c hc⟩
 
 end QLF.QuantumComputer
