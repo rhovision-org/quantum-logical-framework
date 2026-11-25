@@ -382,4 +382,11 @@ theorem selection_identifiable :
       readingBy (sel b) fullClosure = readingBy (sel b') fullClosure → b = b' := by
   decide
 
+/-- **Every reversed reading has exactly one history behind it**, and the reading itself recovers
+    it: if `w` is the `s`-reading of `v`, then `v` is the `s`-reading of `w`. No reversed history
+    exists without the forward history it reads. -/
+theorem reading_has_unique_history (s : Axis → Bool) (v w : List Twist)
+    (h : readingBy s v = w) : v = readingBy s w := by
+  rw [← h, readingBy_involutive]
+
 end QLF.TimeReversalPerspective

@@ -2,7 +2,7 @@
 
 [Quantum Logical Framework (QLF)](README.md) · [Theory index](Theory_Of_Everything.md) · [Time-reversed clock domains](Time_Reversed_Clock_Domains.md) · [Reversibility](Reversibility.md) · [Time](Time.md)
 
-Jim, 2026-11-25: *"Time and space are identical at light speed."* *"The interval is by perspective. This leads into our next topic. The time reverse universe. No singular reverse time perspective universe, except by perspective."* *"The relevance is that even reverse time exists by perspective."* *"Handedness is the distinction."* *"All possible time reverse universes exist"*, *"allowing our selection among them."* Asked to relate this to free will and consciousness, he agreed to the write-up in §4c.
+Jim, 2026-11-25: *"Time and space are identical at light speed."* *"The interval is by perspective. This leads into our next topic. The time reverse universe. No singular reverse time perspective universe, except by perspective."* *"The relevance is that even reverse time exists by perspective."* *"Handedness is the distinction."* *"All possible time reverse universes exist"*, *"allowing our selection among them."* Asked to relate this to free will and consciousness, he agreed to the write-up in §4c. Then: *"It makes sense that nothing can exist. That does not have a history."* (§4d)
 
 Lean anchor: [`lean/QLF_TimeReversalPerspective.lean`](lean/QLF_TimeReversalPerspective.lean). No axiom is added. It builds on [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (the state is Minkowski space), [`QLF_ClockPairing`](lean/QLF_ClockPairing.lean) (the paired-domain map `J`) and [`QLF_Motives`](lean/QLF_Motives.lean).
 
@@ -108,6 +108,18 @@ This is the sense of "all possible time reverse universes exist, allowing our se
 - *What can be shared is the count; what is one's own is the phase.* This follows the shared/private split proved above and fits the qualia hypothesis of [`Consciousness.md`](Consciousness.md) §6. The perspective framing is relational quantum mechanics (Rovelli, "Relational quantum mechanics", *Int. J. Theor. Phys.* 35, 1637 (1996), [arXiv:quant-ph/9609002](https://arxiv.org/abs/quant-ph/9609002)).
 
 None of the three readings is a theorem. A count that each one would change is not yet identified, so by rule 4 of the working method they are framing, not evidence.
+
+## 4d. Nothing exists without a history
+
+Jim: *"It makes sense that nothing can exist. That does not have a history."* Read as: nothing exists that does not have a history.
+
+**Proved.** In QLF the things that exist are closures, and a closure *is* a history (a twist word), so on this model the statement holds by construction. The nontrivial part concerns the reversed readings. A reversed universe might look like something that exists without a past of its own. It does not:
+
+- `every_reading_is_the_census`: every closure that appears as a reversed reading is the reading of a closure, so it has a forward history in the census.
+- `reading_has_unique_history`: that history is unique and the reading recovers it. If `w` is the `s`-reading of `v`, then `v` is the `s`-reading of `w`.
+- `closedAtHorizon_mono`: once closed, a history stays closed at every wider horizon, so the record is never lost.
+
+**Reading.** Existence is having a closed record. A time-reversed universe exists in exactly that sense: as a reading of a history that exists, with that history recoverable from it. That is the sense in which "reverse time exists by perspective": the perspective supplies the direction of reading, never a history that was not there. That nature satisfies "no existence without a history" is the possibilist premise ([`Philosophy.md`](Philosophy.md) §3), not something these theorems derive.
 
 ## 5. What this is evidence for, and what it is not
 

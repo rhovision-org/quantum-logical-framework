@@ -1064,3 +1064,4 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TimeReversalPerspective.every_reading_is_the_census
 #print axioms QLF.TimeReversalPerspective.sixteen_reversed_readings
 #print axioms QLF.TimeReversalPerspective.selection_identifiable
+#print axioms QLF.TimeReversalPerspective.reading_has_unique_history

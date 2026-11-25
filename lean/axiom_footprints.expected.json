@@ -2824,6 +2824,10 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeReversalPerspective.reading_has_unique_history": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeReversalPerspective.reversal_vs_dagger_differ": [],
   "QLF.TimeReversalPerspective.reverse_closure_iff": [
     "Quot.sound",
