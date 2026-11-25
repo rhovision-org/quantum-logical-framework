@@ -149,6 +149,21 @@ gluonRotation = (1 − g3²) + (3/5)·g3² + (4/5)i·g3 = diag((3+4i)/5, (3−4i
 
 **Reading, not theorem.** A hadron is a colour-neutral closure, so the confined colour state is a singlet of this qutrit structure. That a hadron's internal dynamics *is* a qutrit computation running at the strong scale is the premise of this document applied to colour; nothing here shows it computes anything a laboratory could program, and asymptotic freedom's coefficient stays imported ([Carbon_Superconductivity.md](Carbon_Superconductivity.md) §31, §36–§37).
 
+
+## 6c. Two trits, not three bits
+
+Jim, 2026-11-25: *"3 bits of 2 is only an abstraction, so 2 bits of 3."*
+
+Eight twists are usually counted as three bits, `2³ = 8`. That count is true but carries no algebra: nothing in the twist calculus acts on three independent binary digits. The colour code counts them as **two trits**: the eight nonzero vectors of `F₃²`, so `8 = 3² − 1`, with the vacuum (the empty history) as `0`.
+
+| Theorem | Statement |
+|---|---|
+| `tritCode_injective`, `tritCode_surjective` | vacuum plus the eight twists is exactly `F₃²`: nine two-trit words |
+| `closure_trits_zero` | a closure sums to zero in `F₃²`, because conjugate twists are opposite vectors |
+| `trits_weaker` | the converse fails: `^^^` sums to zero mod 3 but does not close, so the trit sum is a necessary condition, coarser than count balance |
+
+Read in this code, the structure of the alphabet becomes arithmetic. The two signs of an axis are the two nonzero scalars `±1` of `F₃`, and the four axes are the four lines through the origin of `F₃²`, the projective line over `F₃`: `8 = 2 × 4`. The two trits `(a, b)` of a twist label the qutrit Weyl operator `XᵃZᵇ`, so each twist is one Pauli operator of the colour qutrit of §6b, and `3² − 1 = 8` is also the number of gluons, the dimension of `su(3)`. The bit count and the trit count agree on the number eight; only the trit count explains why the alphabet closes into the colour flux.
+
 ## 7. Open
 
 - **The entangling gate.** Show that a joint closure of two histories acts on two spinors as an entangling gate (CNOT, or any gate not a product of single-qubit gates). With §2 and the two cited facts, that would complete "the substrate is quantum-universal".

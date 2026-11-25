@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Six results, no axioms.
+  Seven results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -44,6 +44,10 @@
      `gluonRotation_det`, `gluonRotation_powers_injective`): colour transport over `F₃` is a
      finite (qutrit Clifford-type) group, and the count-weighted rotation along the Cartan
      gluon `g3` is an `SU(3)` element of infinite order.
+
+  7. **Two trits, not three bits** (`tritCode_injective`, `tritCode_surjective`,
+     `closure_trits_zero`, `trits_weaker`): vacuum plus the eight twists is exactly `F₃²`, a
+     closure sums to zero there, and the converse fails.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -531,5 +535,77 @@ theorem gluonRotation_powers_injective :
   · have : z ^ n * z ^ (m - n) = z ^ n * 1 := by
       rw [← pow_add, Nat.add_sub_cancel' hlt.le, mul_one, he]
     exact z_pow_ne_one (m - n) (by omega) (mul_left_cancel₀ (pow_ne_zero _ z_ne_zero) this)
+
+
+/-! ## 7. Two trits, not three bits
+
+    The eight twists are usually counted as three bits, `2³ = 8`. That count is an
+    abstraction: it carries no algebra. The colour code counts them as two trits, the eight
+    nonzero vectors of `F₃²` (`3² − 1 = 8`, also the number of gluons, `dim su(3)`), with the
+    vacuum as `0`. Conjugate twists are opposite vectors, the four axes are the four lines
+    through the origin (the projective line over `F₃`), and a closure sums to zero. -/
+
+section Trits
+
+open QLF.ColourFlux
+
+/-- **Two trits, not three bits.** The vacuum (no twist) is `0 ∈ F₃²` and each twist is its
+    colour vector; this is a bijection between `Option Twist` and `F₃²`, so the alphabet is
+    `3² − 1 = 8` nonzero two-trit words. The three-bit count `2³ = 8` is the same number but
+    carries no algebra; the two-trit code carries the colour flux (`QLF_ColourFlux`). -/
+def tritCode : Option Twist → V
+  | none => (0, 0)
+  | some t => colVec t
+
+theorem tritCode_injective : Function.Injective tritCode := by
+  intro a b h
+  cases a with
+  | none => cases b with
+    | none => rfl
+    | some u => exact absurd h.symm (colVec_ne_zero u)
+  | some t => cases b with
+    | none => exact absurd h (colVec_ne_zero t)
+    | some u => rw [colVec_injective t u h]
+
+theorem tritCode_surjective : Function.Surjective tritCode := by
+  intro v
+  by_cases hv : v = (0, 0)
+  · exact ⟨none, hv.symm⟩
+  · obtain ⟨t, -, ht⟩ := List.mem_map.mp (colVec_surjective v hv)
+    exact ⟨some t, ht⟩
+
+/-- The colour sum of a history, letter by letter. -/
+theorem colSum_eq (ts : List Twist) : (ts.map colVec).sum =
+    ts.count Twist.up • colVec Twist.up + ts.count Twist.down • colVec Twist.down +
+    ts.count Twist.left • colVec Twist.left + ts.count Twist.right • colVec Twist.right +
+    ts.count Twist.slash • colVec Twist.slash + ts.count Twist.backslash • colVec Twist.backslash +
+    ts.count Twist.plus • colVec Twist.plus + ts.count Twist.minus • colVec Twist.minus := by
+  induction ts with
+  | nil => simp
+  | cons t ts ih =>
+    rw [List.map_cons, List.sum_cons, ih]
+    cases t <;> simp (config := {decide := true}) [List.count_cons, add_smul] <;> abel
+
+/-- **A closure sums to zero in `F₃²`**: conjugate twists are opposite vectors. -/
+theorem closure_trits_zero (ts : List Twist) (h : countBalanced ts) :
+    (ts.map colVec).sum = 0 := by
+  obtain ⟨h1, h2, h3, h4⟩ := h
+  rw [colSum_eq, h1, h2, h3, h4]
+  have e1 : colVec Twist.up = - colVec Twist.down := by decide
+  have e2 : colVec Twist.left = - colVec Twist.right := by decide
+  have e3 : colVec Twist.slash = - colVec Twist.backslash := by decide
+  have e4 : colVec Twist.plus = - colVec Twist.minus := by decide
+  rw [e1, e2, e3, e4]
+  simp only [smul_neg]
+  abel
+
+/-- **The converse fails**: `^^^` sums to zero mod 3 but is not a closure. The two-trit sum is a
+    necessary condition, coarser than count balance. -/
+theorem trits_weaker : ([Twist.up, Twist.up, Twist.up].map colVec).sum = 0 ∧
+    ¬ countBalanced [Twist.up, Twist.up, Twist.up] := by
+  refine ⟨by decide, ?_⟩
+  intro h; exact absurd h.1 (by decide)
+
+end Trits
 
 end QLF.QuantumComputer
