@@ -97,6 +97,7 @@ interaction; the logical complexity inside them is far larger.
 |---|---|---|
 | Three gauge forces as one substrate interaction | [Forces_From_Three_Axes.md](Forces_From_Three_Axes.md), [Gluon_Abelian_Control.md](Gluon_Abelian_Control.md) (the non-Abelian vertex only lengthens singlet distance) | [3 Forces](FlowChart.md#3-forces) |
 | The relativity principle: what the census proves and what it does not yet | [Relativity_Principle.md](Relativity_Principle.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
+| Locality: local statistics depend only on local information; closures are timelike; Bell's outcome independence fails, no-signalling holds | [Locality.md](Locality.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
 | Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs: [`QLF_MeadTransaction`](lean/QLF_MeadTransaction.lean), [`QLF_MagneticOrientation`](lean/QLF_MagneticOrientation.lean)) | [3 Forces](FlowChart.md#3-forces) |
 | Gravity from balance; distance equals delay | [Gravity_From_Delay.md](Gravity_From_Delay.md), [Gravity.md](Gravity.md), [Quantum_Gravity.md](Quantum_Gravity.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
 | Does binding contract space? Tested with both ledgers derived: the orientation ledger does not predict contraction | [Spatial_Response_Derived.md](Spatial_Response_Derived.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |
