@@ -577,3 +577,80 @@ constant needs a measure that keeps the source's own edges, and its own registra
 **Open after 2d.** (0) A discriminating test of vacuum geometry: a pre-registered local test (per-edge deficits or a tensor reconstruction, or absolute shell residuals) with scale and boundary controls, to separate cancellation from genuine flatness. (1) The Gauss constant: a measure that counts the source's edges. (2) The time part
 of the metric and light bending, which no stage so far measures. (3) The coupling `λ`, which is not
 derived. (4) Magnetism, which needs the signed census.
+
+## §12 Stage 2e: local curvature outside a source (pre-registration)
+
+Committed before any 2e code exists and before any 2e number has been computed. It answers open item
+(0) of §11: §11's D1 plateau is a signed cumulative sum, so it cannot tell flat space from curvature
+that cancels in the sum. Stage 2e reads the curvature **locally**, at each vertex and on each edge,
+and asks which of three geometries sits outside a source:
+
+* **flat**: every deficit change outside the source vanishes;
+* **vacuum**: the scalar curvature vanishes at each place, while a tidal (traceless Ricci) part
+  remains, as on the spatial slice of a mass in general relativity;
+* **cancellation**: the scalar curvature is non-zero at each place, of both signs, and only its sum
+  is small.
+
+**Prior, stated plainly.** `φ` is exactly harmonic off the source on the lattice: `G` is the Green's
+function of the eight-twist walk, `6G(x) − Σ_nbrs G = 8δ_x0`, so `φ = Σ_a w_a G(· − a)` has zero
+lattice Laplacian outside `S`. In the continuum a conformal metric `(1 + 2u)δ` with harmonic `u` has
+`R = −4∇²u = 0` and Ricci `−∂_i∂_j u`, traceless and falling as `r^{−3}`. That is linearized
+Schwarzschild's spatial slice in isotropic coordinates. So continuum reasoning predicts **vacuum**,
+not flat. The test checks whether the lattice Regge reading realizes this locally. It tests the map
+and its discretization, not new physics.
+
+### 12.1 Map, sources, measures
+
+Map, coupling, lattice, box, triangulation and the seven sources are those of §10. `Δε_e = ε_e − ε⁰_e`
+for each counted edge (complete ring, no vertex in `S`, no degenerate tetrahedron, as in §10).
+
+* **Vertex measures.** A vertex `x` qualifies if all 14 of its incident edges (seven types, two
+  directions) are counted. Its **local scalar** is `s(x) = (1/λ) Σ_{e∋x} ½ ℓ⁰_e Δε_e`, so that summing
+  `s` over vertices gives §10's `ΔK`. Its **local unsigned curvature** is
+  `t(x) = (1/λ) Σ_{e∋x} ½ ℓ⁰_e |Δε_e|`.
+* **Shells.** `r = round(|x − c|)`, `c` the source centroid, `r = 4 … 10`.
+* **Cancellation index.** `χ(r) = mean |s| / mean t` over the shell. `χ = 1` when every edge at a
+  vertex has the same sign (a pure local scalar); `χ` near `0` when the edges at each vertex cancel
+  (a traceless, tidal field).
+* **Tidal orientation.** Axis edges with midpoint `m` (relative to `c`) are **radial** if the edge's
+  axis has `|m_i|/|m| ≥ 0.95` and **tangential** if `|m_i|/|m| ≤ 0.10`. Pooled over midpoints with
+  `6 ≤ |m| ≤ 10`, `ρ = mean(Δε·|m|³) radial / mean(Δε·|m|³) tangential`. For a harmonic `u ∝ 1/r` the
+  sectional curvature orthogonal to an edge with direction `t` is `t·∂∂u·t`, which is `2u/r²` radially
+  and `−u/r²` tangentially, so the continuum value is `ρ = −2`.
+
+### 12.2 Controls (same `ℓ⁰` background, same `λ`, same formula with `φ` replaced by `f`)
+
+* **V, vacuum control**, one per source on that source's qualifying vertex set:
+  `f(x) = Q · (2/π) / |x − c|`, the continuum monopole with the source's own `Q` (`G(r) → 2/(πr)`,
+  §10). Continuum-harmonic, so it shows what a genuine vacuum gives after this discretization.
+* **N, non-vacuum control** (zero-sum ripple): source-free, `c = 0`, vertices with `|x| ≥ 4`,
+  `f(x) = (2/π)/|x| + b cos(πx/8) cos(πy/8) cos(πz/8)`, `b = 0.005`. Its Laplacian is non-zero and
+  changes sign, so its local scalar cancels in shell sums. It shows the test can see cancellation.
+* **F, flat control**: `f ≡ 1`, a uniform rescaling, which must give `|Δε| < 10⁻⁹` everywhere.
+
+**Validity gates.** The test has power only if (i) every V has `χ_V(r) ≤ 0.10` at `r = 6, 8, 10`,
+(ii) N has `χ_N(r) ≥ 0.30` at `r = 6, 8, 10`, (iii) F passes, and (iv) rerunning the census at
+`λ = 2·10⁻³` changes no shell `mean t` at `r = 8` by more than 2%. If (i) or (ii) fails, L2 is reported
+as uninformative, not as a pass or fail. If a V has `ρ_V` outside `[−2.5, −1.5]`, L3 is reported as
+uninformative for that source.
+
+### 12.3 Tests (each must hold for all seven sources)
+
+| | Claim | Passes if | Prior |
+|---|---|---|---|
+| L1 | not flat: a tidal field remains outside the source | `mean t` falls with a fitted exponent `p ∈ [2.5, 3.5]` over `r = 4 … 10` | pass |
+| L2 | local vacuum, not cancellation | `χ(r) ≤ 0.10` at `r = 6, 8, 10` | pass |
+| L3 | the tidal pattern of a point mass | `ρ ∈ [−2.5, −1.5]` | pass |
+| L4 | the local tidal strength is the ways charge | `mean t / mean t_V` at `r = 8` lies in `[0.80, 1.25]` | pass |
+
+Reported, not decision inputs: `χ(r)` and `χ_V(r)` for `r = 4 … 10` and their falloff (a
+discretization residual should fall about like `r^{−2}`); the sign of the radial `Δε` against the sign
+of `Q`; the mean signed `s` per shell.
+
+**Reading rule.** L1–L4 together: outside a source the census-length geometry is, at first order and
+locally, the spatial slice of linearized Schwarzschild in isotropic coordinates, with strength set by
+`Q`: not flat, and not a cancellation. L1 failing reads flat. L2 failing with the gates passing reads
+cancellation, which withdraws any vacuum reading of §11 D1. L4 is local, so it is independent of
+§11's D2 failure, which concerned an enclosed sum with source edges excluded. Not claimed by any
+outcome: the time part of the metric, light bending, the value of `λ`, or that the conformal form of
+the map is forced.
