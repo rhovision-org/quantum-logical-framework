@@ -2,7 +2,7 @@
 
 [Quantum Logical Framework (QLF)](README.md) · [Theory index](Theory_Of_Everything.md) · [Time-reversed clock domains](Time_Reversed_Clock_Domains.md) · [Reversibility](Reversibility.md) · [Time](Time.md)
 
-Jim, 2026-11-25: *"Time and space are identical at light speed."* *"The interval is by perspective. This leads into our next topic. The time reverse universe. No singular reverse time perspective universe, except by perspective."* *"The relevance is that even reverse time exists by perspective."* *"Handedness is the distinction."* *"All possible time reverse universes exist"*, *"allowing our selection among them."*
+Jim, 2026-11-25: *"Time and space are identical at light speed."* *"The interval is by perspective. This leads into our next topic. The time reverse universe. No singular reverse time perspective universe, except by perspective."* *"The relevance is that even reverse time exists by perspective."* *"Handedness is the distinction."* *"All possible time reverse universes exist"*, *"allowing our selection among them."* Asked to relate this to free will and consciousness, he agreed to the write-up in §4c.
 
 Lean anchor: [`lean/QLF_TimeReversalPerspective.lean`](lean/QLF_TimeReversalPerspective.lean). No axiom is added. It builds on [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (the state is Minkowski space), [`QLF_ClockPairing`](lean/QLF_ClockPairing.lean) (the paired-domain map `J`) and [`QLF_Motives`](lean/QLF_Motives.lean).
 
@@ -88,6 +88,26 @@ Reversing the order of a word can come with a reversal of handedness on any subs
 | `selection_identifiable` | two different selections never give the same reversed history of that closure |
 
 This is the sense of "all possible time reverse universes exist, allowing our selection among them". All sixteen exist in the census, and closure admits every one, so ZFA does not choose. The choice is a perspective, four bits, one per handedness component. And it is visible: the reversed history records which selection made it. Which selection nature's counterpart domain (if there is one) corresponds to is not settled here.
+
+## 4c. Free will and consciousness: what is proved, what is a reading
+
+[`Philosophy.md`](Philosophy.md) §3c already fixes the stance: to do is to close, an agent's closing *is* determination happening rather than the output of a determination made elsewhere, and there is no potency, no uncaused causer entering physics from outside ([`ScientificApproach.md`](ScientificApproach.md) §1b). This section only places the results above inside that stance.
+
+**Proved (Lean names):**
+
+- The filter is symmetric in time. Every reversed reading of a closure is a closure, for all sixteen readings (`every_reading_is_the_census`, `reversed_census_is_census`). So no count, and not ZFA itself, picks a time direction.
+- The choice among the readings is real and visible: closure admits all sixteen, and different selections give different reversed histories (`selection_identifiable`).
+- Closure is irrevocable: closed at a horizon means closed at every wider one (`closedAtHorizon_mono` in [`QLF_HorizonClosure`](lean/QLF_HorizonClosure.lean)). A perspective's record only grows.
+- Some things are shared by every perspective and some are not. Records of one body share only constants with records of the other (`single_body_perspectives_share_only_constants` in [`QLF_PerspectiveHolography`](lean/QLF_PerspectiveHolography.lean)), and a record blind to phase cannot reconstruct the closure (`phase_blind_record_fails`). In the time double slit ([PR #321](https://github.com/rhovision-org/quantum-logical-framework/pull/321)) the fringe is the same in the reversed perspective (`time_reversed_perspective`) while the amplitude is not (`reversed_amp_differs`).
+- Handedness is the event-by-event difference between a reading and its reversal, invisible in a closure's totals (`reversed_tick_opposite_handedness`, `closure_totals_blind`).
+
+**Readings (not derived):**
+
+- *Free will is the selection among the readings, made by closing.* Since the filter does not choose a direction and the record is irrevocable, what fixes a perspective's forward direction is its own record. Each closure an agent makes is a selection among possibilities that all exist. It cannot be predicted from outside for the three non-ignorance reasons of [`Philosophy.md`](Philosophy.md) §3c (irreducibility, no outside vantage point, no final capacity). This is free will as authorship of one's own record, not as a force on physics. It is a compatibilist position; the classical statement is Dennett's (*Elbow Room: The Varieties of Free Will Worth Wanting*, MIT Press, 1984). QLF's addition is the substrate reason: the selection is among readings the census already contains, and the census is indifferent among them.
+- *Experience sits where the two halves meet.* [`Consciousness.md`](Consciousness.md) and [`Conscious_Update_Rule.md`](Conscious_Update_Rule.md) read conscious content as the bound closure winning the race to close. In this document's terms, that is an open strand of the past meeting its opposite-handed half and becoming record: the present is where the forward and conjugate readings meet.
+- *What can be shared is the count; what is one's own is the phase.* This follows the shared/private split proved above and fits the qualia hypothesis of [`Consciousness.md`](Consciousness.md) §6. The perspective framing is relational quantum mechanics (Rovelli, "Relational quantum mechanics", *Int. J. Theor. Phys.* 35, 1637 (1996), [arXiv:quant-ph/9609002](https://arxiv.org/abs/quant-ph/9609002)).
+
+None of the three readings is a theorem. A count that each one would change is not yet identified, so by rule 4 of the working method they are framing, not evidence.
 
 ## 5. What this is evidence for, and what it is not
 

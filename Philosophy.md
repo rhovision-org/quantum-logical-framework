@@ -295,6 +295,8 @@ So the census is **determinate** while the agent is **undeterminable**: *determi
 The gap is not plugged with randomness — QLF has no primitive random oracle
 ([`UniversalRelativity.md`](UniversalRelativity.md) §6a) — it is plugged with irreducibility.
 
+**Time direction is selected the same way.** Every reversed reading of a closure is itself a closure, all sixteen of them, so the census does not choose a time direction; a perspective's irrevocable record does ([`Time_Reversed_Universe.md`](Time_Reversed_Universe.md) §4c).
+
 **The structure that does the doing.** An observer is a **Markov blanket** whose interior comes to
 contain a model of its own boundary ([`Consciousness.md`](Consciousness.md) §1) — a self-referential
 closure that is **finite and terminating**, which is why a mind is a bounded thing and not an infinite
