@@ -242,35 +242,73 @@ Jim asked whether other mechanisms of choice can work in a quantum logical world
 
 Conway and Kochen's free-will theorem (2006) sharpens the last row: if the experimenter's choice of basis is not a function of the past, neither is the particle's response ([Interpretations.md](Interpretations.md)). Reading: QLF's mechanism is the one that adds nothing to the logic. That choice is *free will* stays a reading ([Consciousness.md](Consciousness.md) §6a).
 
-**Superdeterminism deserves no consideration as physics** (Jim). Two reasons, one from the method and one from logic. It is undeterminable, so by rule 4 it carries no physical content. And the failure of Hilbert's program means no consistent, computable theory decides every statement about itself (Gödel 1931) or the outcome of every computation (Turing 1936). Superdeterminism needs the settings an experimenter chooses to be fixed together with what is measured, including settings chosen by running an arbitrary program, so a theory stating its correlations in full would decide what Turing showed undecidable (compare Wolpert 2008 on the limits of inference by physical devices). What follows is precise: superdeterminism can never be a theory anyone states, checks or uses. It is not thereby shown false as a bare claim about one world; possibilism makes it true in some way, as it does any consistent hypothesis. It is simply idle.
+**Superdeterminism deserves no consideration as physics** (Jim). Two reasons, one from the method and one from logic. It is undeterminable, so by rule 4 it carries no physical content. And the failure of Hilbert's program means no consistent, computable theory decides every statement about itself (Gödel 1931) or the outcome of every computation (Turing 1936). Superdeterminism needs the settings an experimenter chooses to be fixed together with what is measured, including settings chosen by running an arbitrary program, so a theory stating its correlations in full would decide what Turing showed undecidable (compare Wolpert 2008 on the limits of inference by physical devices). This is now a theorem under one stated premise, the RCA₀ stance that a usable theory is computable: no computable predictor fixes every setting chosen by whether a program halts (`no_computable_superdeterministic_theory`, from Mathlib's halting theorem). What follows is precise: superdeterminism can never be a theory anyone states, checks or uses. It is not thereby shown false as a bare claim about one world; possibilism makes it true in some way, as it does any consistent hypothesis. It is simply idle.
 
 **What to hold instead.** For our own choices, act under the idea of freedom: from our own perspective the outcome is open before the event (`no_choice_fixed_in_advance`). For others' choices, judge with the compassion determinism suggests, as Spinoza did: every selection is shaped by a past its maker did not choose, and in QLF a past acts on the future only through its record (`future_depends_only_on_record`). That keeps responsibility for ourselves and understanding for others, and rests on nothing undeterminable.
 
-## 6g. The readings, resolved
+## 6g. The readings, under "no proof, no bs"
 
-Every claim above labelled a reading, with its status after this pass. A reading becomes a theorem when its content can be stated about histories; it stays a reading when it identifies a structure with something in nature or in experience, which no proof about the structure can settle.
+Jim's rule: *"It is okay to conjecture things that are well supported. But our guiding principle should be no proof, no bs."* So every claim above that was not a theorem gets one of four labels:
 
-| Reading | Resolved as | What is left |
-|---|---|---|
-| The presence bit of a closed pair encodes a qubit (§3) | **theorem**: presence is the fold sign (`presence_bit_is_fold_sign`, `presence_states_distinct`) | that nature uses this encoding |
-| Diversity enables choice (§3a) | **theorem** for its first half: no phase diversity, no rotation (`mirror_ratio_eq_one_iff`); no choice fixed in advance (`no_choice_fixed_in_advance`) | calling the runtime selection *choice* |
-| Counts are shared, phase is private ([Consciousness.md](Consciousness.md) §6b) | **theorem**: the same twists in another order fold to opposite phases (`record_blind_to_phase`) | that the private phase is experience (the qualia hypothesis) |
-| Weights are counts of ways (§3a) | **theorem**: `five_rotation_census`, `z_eq_ratio` | normalization in general (§7) |
-| Superdeterminism is undeterminable (§6f) | **settled by the method**: no outcome distribution falsifies it (rule 4) | nothing |
-| Superdeterminism abolishes free will (§6f) | **a fallacy** (Jim): it changes no record, so it cannot remove the selection a record shows. Jim adds that the fallacy is practical for good reason: an agent can only deliberate as if its selection is open (Kant's acting "under the idea of freedom", 1785), and in QLF that stance is exactly right from the agent's own perspective, because the outcome is undeterminable in advance (`no_choice_fixed_in_advance`). Wrong as an inference, sound as a working stance | nothing |
-| QLF's selection adds nothing to the logic (§6f) | **by construction**: the selection is the first closure, and closure is ZFA, the only filter | nothing |
-| Expansion of space is a silver-type inflation (§6a) | **open, empirical**: the arithmetic carries a boost (`silver_boost_norm`, `silverDNA_vec`) | a measurement that distinguishes it; none is identified yet |
-| A hadron's dynamics is a qutrit computation (§6b) | **premise applied**: colour-neutral closures sum to zero in `F₃²` (`closure_trits_zero`) | that the strong dynamics is this computation |
-| Spirit (§6e) | **stance**: rests on `future_depends_only_on_record` and the joint-closure theorems | the stance itself, which review note 8 keeps apart from what follows |
+- **Proved**: a Lean theorem, named.
+- **Conjecture**: well supported, with the support named and what would refute it.
+- **Stance**: a commitment no proof or count can settle (review note 8 of [CLAUDE.md](CLAUDE.md)), stated as one.
+- **Fallacy**: an inference that does not follow.
 
-So the readings split three ways. Four became theorems, and one popular inference is a fallacy. Two are settled by the method or by construction. Three remain readings because each identifies a proved structure with nature or with experience, and only observation, or the first-person stance, can settle that.
+Nothing else is asserted.
+
+| Claim | Label | Support | Refuted by, or what is left |
+|---|---|---|---|
+| The presence bit of a closed pair is a qubit (§3) | **Proved** | presence is the fold sign (`presence_bit_is_fold_sign`, `presence_states_distinct`) | that nature uses this encoding is a conjecture, supported by §3's CZ and Hadamard |
+| Diversity enables choice (§3a) | **Proved** | no phase diversity, no rotation (`mirror_ratio_eq_one_iff`); no choice fixed in advance (`no_choice_fixed_in_advance`) | calling the selection *choice* is a stance |
+| Weights are counts of ways (§3a) | **Proved** | `five_rotation_census`, `z_eq_ratio`; every rational phase is alternatives over their mirror (`rational_phase_is_mirror_ratio`) | irrational phases are limits of these (`rotation_angles_dense`), not ratios themselves |
+| Counts are shared, phase is private ([Consciousness.md](Consciousness.md) §6b) | **Proved** | `record_blind_to_phase` | that the private phase is experience is the qualia hypothesis, a conjecture with stated tests (§6 there) |
+| Memes transmit the choice, not the phase (§6h) | **Proved** | `meme_transmits_choice`, `meme_does_not_transmit_phase` | none |
+| Superdeterminism is not a usable theory (§6f) | **Proved, under a stated premise** | `no_computable_superdeterministic_theory`; premise: a usable theory is computable (the RCA₀ stance) | the premise. Without it, superdeterminism is undeterminable (rule 4), not shown false |
+| Superdeterminism abolishes free will (§6f) | **Fallacy** | it changes no record, so it cannot remove a selection a record shows; acting "under the idea of freedom" (Kant 1785) is sound because the outcome is undeterminable in advance (`no_choice_fixed_in_advance`) | none |
+| QLF's selection adds nothing to the logic (§6f) | **Proved by construction** | the selection is the first closure, and ZFA is the only filter | none |
+| Expansion of space is a silver-type inflation (§6a) | **Conjecture, weakly supported** | the substrate's arithmetic carries a boost (`silver_boost_norm`, `silverDNA_vec`) | no observation distinguishing it is identified; until one is, it stays a conjecture and makes no claim |
+| A hadron's dynamics is a qutrit computation (§6b) | **Conjecture** | colour-neutral closures sum to zero in `F₃²` (`closure_trits_zero`); colour is the Weyl qutrit (`QLF_ColourFlux`) | a hadron observable whose qutrit-circuit prediction fails |
+| Spirit (§6e) | **Stance** | rests on `future_depends_only_on_record` and the joint-closure theorems | the stance itself |
+
+## 6h. Memetics, choice and the quantum knowledge base
+
+Jim asked for the relationship between memetics and choice to be specified, and related to the quantum logical knowledge base ([Quantum_Knowledge_Base.md](Quantum_Knowledge_Base.md), QKB). Three statistics keep them apart. QKB already stores all three and reports which one an answer is (its §4):
+
+| Statistic | What it is | In QKB | Here |
+|---|---|---|---|
+| **Priority** | which closure happens first: the selection, the choice | `first`, `solve` | §6f: made at the event, not before (`no_choice_fixed_in_advance`) |
+| **Redundancy R** | how many independent parties hold a closure's record: how much of a meme it is | `redundancy` | [Memetics_QLF.md](Memetics_QLF.md) §5 |
+| **Multiplicity** | how many ways close: frequency | `ways` | [MostWays_First.md](MostWays_First.md) |
+
+**Proved: a meme carries the choice, not the phase.**
+
+- A copy of a record, in any order, keeps the record (`copy_keeps_record`).
+- So it admits exactly the futures the original selection admits (`meme_transmits_choice`, from `future_depends_only_on_record`).
+- A copy with the same twists can still fold to the opposite phase (`meme_does_not_transmit_phase`).
+
+So a meme is a choice made shareable: everything about a selection that can affect any future travels with its record, and the private phase stays behind.
+
+**Proved: why a quantum knowledge base stores closures, not truth values.** QKB's founding rule is that "a knowledge base for QLF has to store closures, not sentences", and that it refuses to conjoin incompatible propositions instead of answering ⊥. Kochen–Specker gives the reason (`no_choice_fixed_in_advance`). Once the propositions include eighteen four-dimensional directions in nine bases, no table of truth values fixed independently of context exists. A knowledge base that stored such a table would store a falsehood. Storing events in their context, which is what a closure with its attesters is, is the only consistent option. QKB's own logic layer is MO3, which on its own does admit context-free assignments. The theorem bears on the full quantum logic that QKB's records come from, not on MO3 alone.
+
+**Measured, not proved** ([Memetics_QLF.md](Memetics_QLF.md) §9–§13, pre-registered):
+
+- Records follow priority in the census (T4).
+- In the naming game the population always reaches consensus, and first-reached words win (T7).
+- QuCalc's physical tie-break selects phase `+1` every time (T8c).
+
+So in simulation, shared memes are the selections that closed first.
+
+**Conjecture, well supported.** Memes are selected by priority, not by frequency. Support: T4 and T7 above, and `closedAtHorizon_mono` (a closure that happened first stays). It would be refuted by a QKB deployment with real, independent attesters in which the most-held records are the most-ways ones rather than the first-reached ones. QKB §7 already names that as its first test.
+
+**Stance.** That a meme *is* a shared choice, in the sense of agency, is the free-will reading of §6f carried to a population. It stays labelled as one.
 
 ## 7. Open
 
 - **Superposed presence.** §3a shows that a superposition is a census sum of alternate histories. Still open is the specific superposition of a present and an absent pair as one, which needs the presence encoding of §3 stated on census sums rather than on matrices.
 - **Two-axis density and Barenco in Lean.** The one-axis density is proved (§3). Still cited: that two non-parallel infinite-order rotations generate a dense subgroup of SU(2), and Barenco et al.'s universality theorem.
 - **Quasicrystal growth as a closure census.** Test whether forced-tile growth (Onoda et al. 1988) is the first-closure rule on the octagonal projection, with the defect rate as the prediction.
-- **Normalization in general.** §3a shows the `5` is the ratio of three alternatives to their mirror (`z_eq_ratio`). That every unitary from census sums arises as such a ratio of alternatives to their mirror (a Cayley-transform statement) is not yet proved.
+- **Normalization beyond rational phases.** Every rational phase is a ratio of alternatives to their mirror (`rational_phase_is_mirror_ratio`, Hilbert 90). A general SU(2) element is a limit of such ratios, not one; a statement for matrices (a Cayley transform on census sums) is not proved.
 
 ## 8. What could falsify it
 

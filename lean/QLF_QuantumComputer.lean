@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Fifteen results, no axioms.
+  Eighteen results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -87,6 +87,16 @@
   15. **Readings made theorems** (`presence_bit_is_fold_sign`, `presence_states_distinct`,
      `record_blind_to_phase`): the presence bit of a closed pair is its fold sign, and two
      histories with the same twists in a different order fold to opposite phases.
+
+  16. **No computable superdeterministic theory** (`no_computable_superdeterministic_theory`):
+     under the stated premise that a usable theory is computable, a theory fixing every setting
+     an experimenter can choose by running a program would decide halting (Turing 1936).
+
+  17. **Every rational phase is alternatives over their mirror** (`rational_phase_is_mirror_ratio`):
+     `(p + qi)/r` with `p² + q² = r²` equals `(a + bi)/(a − bi)` (Hilbert's Theorem 90 for `ℚ(i)`).
+
+  18. **Memes transmit the choice, not the phase** (`copy_keeps_record`, `meme_transmits_choice`,
+     `meme_does_not_transmit_phase`).
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -1362,5 +1372,102 @@ theorem record_blind_to_phase :
       simp [twistMatrixFold, Twist.toMatrix, σx, σy, Matrix.mul_apply, Fin.sum_univ_two]
 
 end Readings
+
+-- ==========================================
+-- 16. No computable superdeterministic theory
+-- ==========================================
+
+/-! Premise, stated (the RCA₀ stance): a physical theory is usable only if its predictions
+are computable. Under it, Hilbert's dream fails for superdeterminism exactly as it fails for
+arithmetic: a theory that fixed every detector setting together with what is measured would
+decide the halting problem, because a setting can be chosen by whether a program halts. -/
+
+section Superdeterminism
+
+open Nat.Partrec (Code)
+
+/-- **No computable superdeterministic theory.** Premise (RCA₀, stated): a theory is usable
+only if its predictions are computable. If an experimenter sets a detector by whether
+program `c` halts on input `n`, a theory predicting every setting would decide halting. -/
+theorem no_computable_superdeterministic_theory (n : ℕ) :
+    ¬ ∃ predict : Code → Bool, Computable predict ∧
+      ∀ c, predict c = true ↔ (Code.eval c n).Dom := by
+  rintro ⟨f, hf, hiff⟩
+  apply ComputablePred.halting_problem n
+  rw [ComputablePred.computable_iff]
+  exact ⟨f, hf, funext fun c => propext (hiff c).symm⟩
+
+end Superdeterminism
+
+-- ==========================================
+-- 17. Normalization: every rational phase is alternatives over their mirror
+-- ==========================================
+
+section Normalization
+
+/-- **Every rational phase is a set of alternatives over its mirror** (Hilbert 90 for
+`ℚ(i)/ℚ`): a Pythagorean phase `(p + qi)/r` equals `(a + bi)/(a − bi)` for integers `a, b`. -/
+theorem rational_phase_is_mirror_ratio (p q r : ℤ) (hr : r ≠ 0) (h : p ^ 2 + q ^ 2 = r ^ 2) :
+    ∃ a b : ℤ, ((a : ℂ) - b * Complex.I) ≠ 0 ∧
+      ((p : ℂ) + q * Complex.I) / r = ((a : ℂ) + b * Complex.I) / ((a : ℂ) - b * Complex.I) := by
+  have hrC : (r : ℂ) ≠ 0 := by exact_mod_cast hr
+  have hC : (p : ℂ) ^ 2 + (q : ℂ) ^ 2 = (r : ℂ) ^ 2 := by exact_mod_cast h
+  by_cases hp : r + p = 0
+  · have hp' : p = -r := by omega
+    have hq : q = 0 := by
+      subst hp'; have : q ^ 2 = 0 := by nlinarith
+      exact pow_eq_zero_iff (n := 2) (by norm_num) |>.mp this
+    refine ⟨0, 1, ?_, ?_⟩
+    · simp
+    · subst hq; rw [hp']; push_cast
+      rw [div_eq_div_iff hrC (by simp)]
+      ring_nf
+  · refine ⟨r + p, q, ?_, ?_⟩
+    · intro h0
+      have := congrArg Complex.re h0
+      simp at this
+      exact hp (by exact_mod_cast this)
+    · have hd : ((↑(r + p) : ℂ) - (q : ℂ) * Complex.I) ≠ 0 := by
+        intro h0; have := congrArg Complex.re h0; simp at this
+        exact hp (by exact_mod_cast this)
+      rw [div_eq_div_iff hrC hd]
+      push_cast
+      linear_combination hC + (-(q:ℂ) ^ 2) * Complex.I_sq
+
+end Normalization
+
+-- ==========================================
+-- 18. Memes transmit the choice, not the phase
+-- ==========================================
+
+/-! A meme is a closure's record held by more than one party (`Memetics_QLF.md` §5;
+`Quantum_Knowledge_Base.md`'s redundancy `R`). A copy keeps the record, so it admits exactly
+the futures the original selection admits; a copy with the same twists can still carry the
+opposite phase. -/
+
+section Memes
+
+/-- A copy of a record, in any order, keeps the record. -/
+theorem copy_keeps_record (p q : List Twist) (h : p.Perm q) : sameRecord p q := by
+  simp [sameRecord, h.count_eq]
+
+/-- **A meme transmits the choice.** A copy of a closed selection's record admits exactly the
+same futures as the original. -/
+theorem meme_transmits_choice (p q : List Twist) (h : p.Perm q) (c : List Twist) :
+    countBalanced (p ++ c) ↔ countBalanced (q ++ c) :=
+  future_depends_only_on_record p q (copy_keeps_record p q h) c
+
+/-- **A meme does not transmit the phase.** A copy with the same twists can fold to the
+opposite phase. -/
+theorem meme_does_not_transmit_phase :
+    ∃ p q : List Twist, p.Perm q ∧ twistMatrixFold p ≠ twistMatrixFold q := by
+  obtain ⟨hperm, h1, h2⟩ := record_blind_to_phase
+  refine ⟨_, _, hperm, ?_⟩
+  rw [h1, h2]
+  intro h
+  have := congrArg (fun A : M => A 0 0) h
+  norm_num at this
+
+end Memes
 
 end QLF.QuantumComputer
