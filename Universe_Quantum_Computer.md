@@ -242,6 +242,10 @@ Jim asked whether other mechanisms of choice can work in a quantum logical world
 
 Conway and Kochen's free-will theorem (2006) sharpens the last row: if the experimenter's choice of basis is not a function of the past, neither is the particle's response ([Interpretations.md](Interpretations.md)). Reading: QLF's mechanism is the one that adds nothing to the logic. That choice is *free will* stays a reading ([Consciousness.md](Consciousness.md) §6a).
 
+**Superdeterminism deserves no consideration as physics** (Jim). Two reasons, one from the method and one from logic. It is undeterminable, so by rule 4 it carries no physical content. And the failure of Hilbert's program means no consistent, computable theory decides every statement about itself (Gödel 1931) or the outcome of every computation (Turing 1936). Superdeterminism needs the settings an experimenter chooses to be fixed together with what is measured, including settings chosen by running an arbitrary program, so a theory stating its correlations in full would decide what Turing showed undecidable (compare Wolpert 2008 on the limits of inference by physical devices). What follows is precise: superdeterminism can never be a theory anyone states, checks or uses. It is not thereby shown false as a bare claim about one world; possibilism makes it true in some way, as it does any consistent hypothesis. It is simply idle.
+
+**What to hold instead.** For our own choices, act under the idea of freedom: from our own perspective the outcome is open before the event (`no_choice_fixed_in_advance`). For others' choices, judge with the compassion determinism suggests, as Spinoza did: every selection is shaped by a past its maker did not choose, and in QLF a past acts on the future only through its record (`future_depends_only_on_record`). That keeps responsibility for ourselves and understanding for others, and rests on nothing undeterminable.
+
 ## 6g. The readings, resolved
 
 Every claim above labelled a reading, with its status after this pass. A reading becomes a theorem when its content can be stated about histories; it stays a reading when it identifies a structure with something in nature or in experience, which no proof about the structure can settle.
@@ -295,6 +299,10 @@ By the method's rule 4 a claim has physical content only if some distribution of
 - N. G. de Bruijn, *Algebraic theory of Penrose's non-periodic tilings of the plane, I and II*, Indagationes Mathematicae (Proceedings) **84** (1981) 39–52 and 53–66.
 - D. C. Dennett, *Elbow Room: The Varieties of Free Will Worth Wanting*, MIT Press (1984).
 - I. Kant, *Groundwork of the Metaphysics of Morals* (1785), section III.
+- K. Gödel, *Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I*, Monatsh. Math. Phys. **38** (1931) 173–198.
+- A. M. Turing, *On computable numbers, with an application to the Entscheidungsproblem*, Proc. London Math. Soc. (2) **42** (1936) 230–265.
+- D. H. Wolpert, *Physical limits of inference*, Physica D **237** (2008) 1257–1281.
+- B. Spinoza, *Ethics* (1677), part IV.
 - S. Kochen and E. P. Specker, *The problem of hidden variables in quantum mechanics*, J. Math. Mech. **17** (1967) 59–87.
 - A. Cabello, J. M. Estebaranz and G. García-Alcaine, *Bell–Kochen–Specker theorem: a proof with 18 vectors*, Phys. Lett. A **212** (1996) 183–187.
 - J. H. Conway and S. Kochen, *The free will theorem*, Found. Phys. **36** (2006) 1441–1473.
