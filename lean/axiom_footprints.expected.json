@@ -2773,8 +2773,19 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeReversalPerspective.closure_totals_blind": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeReversalPerspective.dagger_closure_iff": [
     "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_dagger": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_reverse": [
     "propext"
   ],
   "QLF.TimeReversalPerspective.no_congruence_reverses_time": [
@@ -2787,6 +2798,7 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeReversalPerspective.reversal_vs_dagger_differ": [],
   "QLF.TimeReversalPerspective.reverse_closure_iff": [
     "Quot.sound",
     "propext"
@@ -2797,6 +2809,10 @@
     "propext"
   ],
   "QLF.TimeReversalPerspective.reversed_reading_distinct": [],
+  "QLF.TimeReversalPerspective.reversed_tick_opposite_handedness": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeReversalPerspective.self_reversed_exists": [],
   "QLF.TimeReversalPerspective.spacelike_order_by_perspective": [
     "Classical.choice",

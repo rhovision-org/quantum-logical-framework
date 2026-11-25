@@ -2,7 +2,7 @@
 
 [Quantum Logical Framework (QLF)](README.md) · [Theory index](Theory_Of_Everything.md) · [Time-reversed clock domains](Time_Reversed_Clock_Domains.md) · [Reversibility](Reversibility.md) · [Time](Time.md)
 
-Jim, 2026-11-25: *"Time and space are identical at light speed."* *"The interval is by perspective. This leads into our next topic. The time reverse universe. No singular reverse time perspective universe, except by perspective."* *"The relevance is that even reverse time exists by perspective."*
+Jim, 2026-11-25: *"Time and space are identical at light speed."* *"The interval is by perspective. This leads into our next topic. The time reverse universe. No singular reverse time perspective universe, except by perspective."* *"The relevance is that even reverse time exists by perspective."* *"Handedness is the distinction."*
 
 Lean anchor: [`lean/QLF_TimeReversalPerspective.lean`](lean/QLF_TimeReversalPerspective.lean). No axiom is added. It builds on [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (the state is Minkowski space), [`QLF_ClockPairing`](lean/QLF_ClockPairing.lean) (the paired-domain map `J`) and [`QLF_Motives`](lean/QLF_Motives.lean).
 
@@ -13,6 +13,8 @@ The claim has three parts, and each has a different status.
 1. **The interval's value is the same in every perspective; its split into time and space is not.** Proved.
 2. **The order of two events is set by perspective when they are spacelike separated, and is not when they are causally connected.** Proved for an explicit boost family, plus a general statement for every Lorentz perspective.
 3. **The reversed reading of the world is not a second world. It is the same collection of closures, read from the other end or from the other domain.** Proved on finite twist histories and on paired clock-domain histories. That this reading *is* physical time reversal is an interpretation.
+
+4. **Handedness is what distinguishes the reversed reading from ours.** Proved event by event (§4a).
 
 So reverse time exists, in the precise sense that every closure has a reversed reading and that reading is itself a closure. It does not exist as a separate universe, because the reversed census is the census.
 
@@ -56,6 +58,20 @@ On records the reversal is a word operation, and the census is closed under it.
 | `each_reads_forward` | under `J` the counterpart's tick `i` is our tick `n − 1 − i`, conjugated: neither domain's own clock runs backward |
 
 Together with `J_not_fixed_point_free` and the `8ⁿ` fixed-point count of [`QLF_ClockPairing`](lean/QLF_ClockPairing.lean), this gives the precise sense of "no singular reverse universe". There is no second collection of histories carrying the reversed time: the reversed collection *is* the census. Whether the reversed reading of one history names a different history depends on that history. For self-dagger histories it names the same one; for others it names a different closure that is already in the census.
+
+## 4a. Handedness is the distinction
+
+A twist is a handedness on an axis and nothing else ([`QLF_Handedness`](lean/QLF_Handedness.lean)). Reading a word in reverse order and reading it as the counterpart domain does (`dagger`, conjugate and reverse) differ in exactly one thing: handedness.
+
+| Theorem | Statement |
+|---|---|
+| `handednessOn_reverse` | pure order reversal leaves the net handedness on every axis unchanged |
+| `handednessOn_dagger` | the conjugate-reverse reading negates it on every axis |
+| `reversed_tick_opposite_handedness` | tick `i` of the reversed reading is our tick `n − 1 − i` with opposite handedness, and handedness is never zero, so every event differs from its partner |
+| `closure_totals_blind` | on a closure the net handedness is zero on every axis in both readings, so totals cannot tell them apart |
+| `reversal_vs_dagger_differ` | for the plaquette `[up, left, down, right]` the pure reversal and the conjugate-reverse are different words |
+
+So the reversed reading is not told apart by any total: a closure is handedness-balanced in both. It is told apart event by event, and the distinguishing datum is handedness. Order reversal alone (without the handedness flip) is a third reading, not the counterpart one. Charge is the gauge component of handedness (`chiralCharge_eq_handednessOn_gauge`), which is why the counterpart reading carries the opposite charge label (`charge3W_dagger` in [`QLF_ClockPairing`](lean/QLF_ClockPairing.lean)); calling that reading antimatter remains the interpretation step of issue #236.
 
 ## 5. What this is evidence for, and what it is not
 

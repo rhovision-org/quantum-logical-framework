@@ -1,6 +1,7 @@
 import QLF_Minkowski
 import QLF_ClockPairing
 import QLF_Motives
+import QLF_Handedness
 
 /-!
 # The time-reversed universe exists only by perspective
@@ -234,5 +235,47 @@ theorem reversed_reading_distinct :
 theorem each_reads_forward (w : List Twist) (i : ℕ) (hi : i < w.length) :
     (dagger w)[i]? = (w[w.length - 1 - i]?).map Twist.conj :=
   dagger_tick w i hi
+
+-- ==========================================
+-- §4  Handedness is the distinction
+-- ==========================================
+
+/-- Pure order reversal leaves every component of handedness unchanged. -/
+theorem handednessOn_reverse (a : Axis) (w : List Twist) :
+    handednessOn a w.reverse = handednessOn a w := by
+  simp [handednessOn, List.count_reverse]
+
+/-- The conjugate-reverse reading negates every component of handedness. -/
+theorem handednessOn_dagger (a : Axis) (w : List Twist) :
+    handednessOn a (dagger w) = - handednessOn a w := by
+  unfold QLF.ClosureUnitarity.dagger
+  rw [handednessOn_reverse, handednessOn_map_conj]
+
+/-- **Handedness is the distinction, event by event.** The reversed reading's tick `i` is our
+    tick `n − 1 − i` with its handedness reversed, and handedness is never zero, so every event
+    of the reversed reading differs from its partner in handedness. -/
+theorem reversed_tick_opposite_handedness (w : List Twist) (i : ℕ) (hi : i < w.length) :
+    ∃ t : Twist, w[w.length - 1 - i]? = some t ∧ (dagger w)[i]? = some t.conj ∧
+      handedness t.conj = - handedness t ∧ handedness t ≠ 0 := by
+  have hj : w.length - 1 - i < w.length := by omega
+  refine ⟨w[w.length - 1 - i], List.getElem?_eq_getElem hj, ?_, handedness_conj _,
+    handedness_ne_zero _⟩
+  rw [dagger_tick w i hi, List.getElem?_eq_getElem hj]
+  rfl
+
+/-- **On a closure, the totals cannot tell the two readings apart**: net handedness is zero on
+    every axis in both. The distinction lives in the events, not in the totals. -/
+theorem closure_totals_blind (w : List Twist) (hw : countBalanced w) (a : Axis) :
+    handednessOn a (dagger w) = 0 ∧ handednessOn a w = 0 := by
+  have h := (zfa_iff_handedness_balanced w).1 hw a
+  exact ⟨by rw [handednessOn_dagger, h, neg_zero], h⟩
+
+/-- **Order reversal without handedness reversal is a different reading.** For the plaquette
+    `[up, left, down, right]` the pure reversal and the conjugate-reverse are different words:
+    what separates them is handedness alone. -/
+theorem reversal_vs_dagger_differ :
+    [Twist.up, Twist.left, Twist.down, Twist.right].reverse ≠
+      dagger [Twist.up, Twist.left, Twist.down, Twist.right] := by
+  decide
 
 end QLF.TimeReversalPerspective
