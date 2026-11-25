@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Thirteen results, no axioms.
+  Fourteen results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -79,6 +79,10 @@
   13. **The rotation's angles are dense** (`arg_z_irrational`, `rotation_angles_dense`): the
      powers of the §3 rotation approach every phase about its axis. The remaining step to
      SU(2) density (two non-parallel axes) and Barenco universality stay cited.
+
+  14. **No choice fixed in advance** (`ks_orthogonal`, `ks_each_twice`, `ks_double_count`,
+     `no_choice_fixed_in_advance`): the Kochen–Specker theorem in Cabello's eighteen-direction
+     form. No assignment of outcomes fixed beforehand, independent of context, exists.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -1240,5 +1244,74 @@ theorem rotation_angles_dense :
     DenseRange (fun k : ℤ => k • (Complex.arg z : AddCircle (2 * Real.pi))) :=
   AddCircle.denseRange_zsmul_coe_iff.mpr arg_z_irrational
 
+
+-- ==========================================
+-- 14. No choice fixed in advance (Kochen–Specker)
+-- ==========================================
+
+/-! Eighteen directions in four dimensions, in nine orthogonal bases, each direction in
+exactly two bases. A choice fixed in advance would give each direction a value regardless
+of which basis is measured and exactly one "yes" per basis. Counting the yeses basis by
+basis gives `9`; counting direction by direction gives an even number. So no such choice
+exists: in a quantum logic, choice is made in context, at the event. -/
+
+section KochenSpecker
+
+def ksVec : Fin 18 → Fin 4 → ℤ := ![![0, 0, 0, 1],
+    ![0, 0, 1, 0],
+    ![1, 1, 0, 0],
+    ![1, -1, 0, 0],
+    ![0, 1, 0, 0],
+    ![1, 0, 1, 0],
+    ![1, 0, -1, 0],
+    ![1, -1, 1, -1],
+    ![1, -1, -1, 1],
+    ![0, 0, 1, 1],
+    ![1, 1, 1, 1],
+    ![0, 1, 0, -1],
+    ![1, 0, 0, 1],
+    ![1, 0, 0, -1],
+    ![0, 1, -1, 0],
+    ![1, 1, -1, 1],
+    ![1, 1, 1, -1],
+    ![-1, 1, 1, 1]]
+def ksBasis : Fin 9 → Fin 4 → Fin 18 := ![![0, 1, 2, 3],
+    ![0, 4, 5, 6],
+    ![7, 8, 2, 9],
+    ![7, 10, 6, 11],
+    ![1, 4, 12, 13],
+    ![8, 10, 13, 14],
+    ![15, 16, 3, 9],
+    ![15, 17, 5, 11],
+    ![16, 17, 12, 14]]
+
+/-- The nine bases are orthogonal: distinct members have zero inner product. -/
+theorem ks_orthogonal : ∀ b : Fin 9, ∀ i j : Fin 4, i ≠ j →
+    ∑ k : Fin 4, ksVec (ksBasis b i) k * ksVec (ksBasis b j) k = 0 := by
+  decide
+
+/-- Each of the eighteen directions lies in exactly two of the nine bases. -/
+theorem ks_each_twice : ∀ v : Fin 18,
+    (Finset.univ.filter (fun p : Fin 9 × Fin 4 => ksBasis p.1 p.2 = v)).card = 2 := by
+  decide
+
+/-- Double counting over the nine bases. -/
+theorem ks_double_count (g : Fin 18 → ℕ) :
+    ∑ b : Fin 9, ∑ i : Fin 4, g (ksBasis b i) = 2 * ∑ v : Fin 18, g v := by
+  simp [Fin.sum_univ_succ, ksBasis]
+  ring
+
+/-- **Kochen–Specker** (Cabello, Estebaranz and García-Alcaine 1996): no assignment of
+values to the eighteen directions, fixed in advance and independent of which basis is
+measured, gives exactly one "yes" in every basis. -/
+theorem no_choice_fixed_in_advance :
+    ¬ ∃ g : Fin 18 → ℕ, ∀ b : Fin 9, ∑ i : Fin 4, g (ksBasis b i) = 1 := by
+  rintro ⟨g, hg⟩
+  have h := ks_double_count g
+  simp only [hg, Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul,
+    mul_one] at h
+  omega
+
+end KochenSpecker
 
 end QLF.QuantumComputer
