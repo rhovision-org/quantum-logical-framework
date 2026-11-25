@@ -55,10 +55,12 @@
      the same record triggers the same events, and the record fixes the content of the
      minimal future up to order.
 
-  9. **A joint closure is an entangling gate** (`joint_closure_is_cz`, `interleaved_closes`,
-     `cz_entangling`): interleaving two strands' closed pairs applies the controlled-Z phase
-     `(−1)^{ab}`, which is not a product of single-qubit gates; and the Hadamard is a Form
-     that exchanges twist axes (`hadamard_sq`, `hadamard_swaps`).
+  9. **A joint closure carries the controlled-Z sign table** (`joint_closure_is_cz`,
+     `interleaved_closes`, `cz_entangling`): interleaving two strands' closed pairs multiplies
+     the fold by `(−1)^{ab}`, the diagonal of controlled-Z, and controlled-Z as a matrix is not
+     a product of single-qubit gates. That interleaving acts as a gate on superposed presence
+     states is not shown. The Hadamard is a Form exchanging twist axes (`hadamard_sq`,
+     `hadamard_swaps`); it acts on the spinor, not on the presence bit.
 
   10. **The boost acts on histories** (`silverDNA_closes`, `silverDNA_vec`, `silverDNA_int`):
      the silver twist DNA preserves closure, expands the physical octagonal vector by `1 + √2`
@@ -68,7 +70,8 @@
      `integer_form_is_census_sum`, `five_rotation_census`, `alternate_histories_cancel`): an
      amplitude is the sum of the folds of alternate histories; every integer Form is such a
      sum, and `5 · rotation` is the census sum of seven alternate histories, so the weights of
-     §3 are counts of ways. The division by `5` is a ratio of alternatives to their mirror:
+     §3 are counts of alternate histories. These are open histories: a closure folds to `±I`,
+     so a census sum over closures alone is an integer times `I`. The division by `5` is a ratio of alternatives to their mirror:
      `z = (2+i)/(2−i)` (`z_eq_ratio`), where `2 ± i` are census sums of three alternate
      histories (`gauss_census`, `gauss_census_mirror`) and `5 = |2+i|²` (`gauss_normSq`). Without
      phase diversity the ratio is the identity (`mirror_ratio_eq_one_iff`).
@@ -88,9 +91,9 @@
      `record_blind_to_phase`): the presence bit of a closed pair is its fold sign, and two
      histories with the same twists in a different order fold to opposite phases.
 
-  16. **No computable superdeterministic theory** (`no_computable_superdeterministic_theory`):
-     under the stated premise that a usable theory is computable, a theory fixing every setting
-     an experimenter can choose by running a program would decide halting (Turing 1936).
+  16. **The halting theorem, restated** (`no_computable_superdeterministic_theory`): no
+     computable predictor decides halting. This is Mathlib's theorem under another name; it is
+     not a result about superdeterminism (see the write-up, §6f).
 
   17. **Every rational phase is alternatives over their mirror** (`rational_phase_is_mirror_ratio`):
      `(p + qi)/r` with `p² + q² = r²` equals `(a + bi)/(a − bi)` (Hilbert's Theorem 90 for `ℚ(i)`).
@@ -769,10 +772,11 @@ end Triggers
     Each strand is a qubit whose basis states are "carries a closed pair" (`1`) or "carries
     nothing" (`0`), as a Fredkin line carries a ball or not. Strand A's pair is `> <`, strand
     B's is `^ v`. Closing them jointly (interleaved) rather than separately multiplies the fold
-    by `(−1)^{ab}` (`joint_closure_is_cz`): the controlled-Z phase, which is entangling
-    (`cz_entangling`). With the Hadamard, itself a Form (`hadamardForm`, `hadamard_sq`,
-    `hadamard_swaps`), controlled-Z gives CNOT, and CNOT with dense single-qubit rotations is
-    universal (Barenco et al. 1995, cited). -/
+    by `(−1)^{ab}` (`joint_closure_is_cz`): the sign table of controlled-Z, which as a matrix
+    is entangling (`cz_entangling`). This compares the folds of two classical histories for
+    each fixed `(a, b)`; a linear action on superposed presence states is not defined here.
+    The Hadamard is a Form (`hadamardForm`, `hadamard_sq`, `hadamard_swaps`) acting on the
+    spinor, not on the presence bit. -/
 
 section JointGate
 
@@ -1377,18 +1381,17 @@ end Readings
 -- 16. No computable superdeterministic theory
 -- ==========================================
 
-/-! Premise, stated (the RCA₀ stance): a physical theory is usable only if its predictions
-are computable. Under it, Hilbert's dream fails for superdeterminism exactly as it fails for
-arithmetic: a theory that fixed every detector setting together with what is measured would
-decide the halting problem, because a setting can be chosen by whether a program halts. -/
+/-! Mathlib's halting theorem, restated as a predictor. It is kept because the write-up
+discusses it; it does not bear on superdeterminism. A detector cannot be set by whether a
+program halts (that setting is never fixed at a finite time), and the same argument would
+rule out every deterministic theory. -/
 
 section Superdeterminism
 
 open Nat.Partrec (Code)
 
-/-- **No computable superdeterministic theory.** Premise (RCA₀, stated): a theory is usable
-only if its predictions are computable. If an experimenter sets a detector by whether
-program `c` halts on input `n`, a theory predicting every setting would decide halting. -/
+/-- The halting theorem as a predictor: no computable `Code → Bool` decides halting on
+input `n`. The name is historical; this is not a theorem about superdeterminism. -/
 theorem no_computable_superdeterministic_theory (n : ℕ) :
     ¬ ∃ predict : Code → Bool, Computable predict ∧
       ∀ c, predict c = true ↔ (Code.eval c n).Dom := by

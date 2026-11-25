@@ -475,7 +475,7 @@ information.
 
 ## 14. Memetics and choice
 
-The relationship is specified, with proofs, in [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md) §6h. Choice is priority (the first closure), a meme is redundancy (a record held by several parties), and a copy of a record carries the choice but not the phase (`meme_transmits_choice`, `meme_does_not_transmit_phase` in [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)). That memes are selected by priority rather than by frequency is a conjecture, supported by T4 and T7 above, with a real-attester test in [`Quantum_Knowledge_Base.md`](Quantum_Knowledge_Base.md) §7.
+The relationship is specified, with proofs, in [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md) §6h. Choice is priority (the first closure), a meme is redundancy (a record held by several parties), and, if a meme is defined as a count record copied in any order, a copy carries the choice but need not carry the phase (`meme_transmits_choice`, `meme_does_not_transmit_phase` in [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)); an exact copy keeps the phase. That memes are selected by priority rather than by frequency is a conjecture, supported by T4 and T7 above, with a real-attester test in [`Quantum_Knowledge_Base.md`](Quantum_Knowledge_Base.md) §7.
 
 ## References
 
