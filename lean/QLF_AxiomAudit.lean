@@ -1063,3 +1063,11 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.Barenco.universality
 #print axioms QLF.Barenco.universality_list
 #print axioms QLF.Barenco.circuits_eq_unitary
+#print axioms QLF.Barenco.cnot_eq_h_cz_h
+#print axioms QLF.Barenco.cz_eq_diagonal
+#print axioms QLF.Barenco.cz_symm
+#print axioms QLF.Barenco.eq_diagonal_of_signs
+#print axioms QLF.Barenco.eq_cz_of_sign_table
+#print axioms QLF.Barenco.universality_cz
+#print axioms QLF.Barenco.onQubit_mul_apply
+#print axioms QLF.Barenco.onQubit_comm

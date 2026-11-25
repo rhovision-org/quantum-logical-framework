@@ -78,6 +78,43 @@ support finishes it (`supported_mem_closure`).
   QLF substrate performs these gates. For that, the entangling gate has to act on superposed
   presence, which is open (see `QLF_QuantumComputer`, PR #323).
 
+## Perspectives: the observer holds the gates
+
+Jim Whitescarver's reading of the open substrate gap (2026-11-25): *"The observer, the atom
+preserves those gates by perspective."* Superposed presence is then relative to a perspective,
+as in [`lean/QLF_PerspectiveLocality.lean`](lean/QLF_PerspectiveLocality.lean) and
+[`lean/QLF_SharedReality.lean`](lean/QLF_SharedReality.lean).
+
+**Proved** (in [`QLF_Barenco`](lean/QLF_Barenco.lean), no axioms beyond Lean's own):
+
+* **A qubit's gate is the same whatever is done on another qubit** (`onQubit_comm`, via
+  `onQubit_mul_apply`). This is the gate-level form of `perspective_locality`, which shows that
+  a body's local statistics depend only on its own projection.
+* **Controlled-Z has no control.** It is symmetric in its two qubits (`cz_symm`), and diagonal
+  with sign `−1` exactly when both are `1` (`cz_eq_diagonal`). Neither perspective acts on the other.
+* **A sign table fixes its linear gate.** A linear operator that multiplies each basis state by
+  controlled-Z's sign is controlled-Z (`eq_cz_of_sign_table`, from `eq_diagonal_of_signs`).
+* **Controlled-Z can stand in for CNOT.** `CNOT = (1⊗H)·CZ·(1⊗H)` (`cnot_eq_h_cz_h`), so
+  one-qubit unitaries and controlled-Z are universal (`universality_cz`).
+
+**Conjecture (perspective realization).** An observer, for example an atom, holds the gates of its own
+presence qubit from its perspective: the alternate histories it can tell apart combine
+linearly, it can apply any one-qubit unitary to them, and a joint closure of two strands acts
+on their superposed presence as controlled-Z. If this holds, the substrate performs every
+unitary, by `universality_cz`.
+
+*Support.* (1) `joint_closure_is_cz` in `QLF_QuantumComputer` (PR #323) shows that
+interleaving two strands' closures multiplies the fold by `(−1)^{ab}`, which is controlled-Z's
+sign table. By `eq_cz_of_sign_table`, the only linear gate with that table is controlled-Z.
+(2) In PR #323, superposition is a census sum of alternate histories (`censusSum`), and that
+sum is linear by construction. (3) `onQubit_comm` and `perspective_locality` show that what one
+perspective holds is not disturbed by what another does.
+
+*What is not proved.* Two premises remain open: that a perspective's action on its alternate
+histories is linear, and that it reaches every one-qubit unitary. The first is the premise
+of `eq_cz_of_sign_table`. The second needs the count-weighted rotations of PR #323 to act
+on the presence bit. Neither is a theorem yet.
+
 ## Related
 
 * [`QuantumOS.md`](QuantumOS.md): QLF as an operating system for quantum hardware.

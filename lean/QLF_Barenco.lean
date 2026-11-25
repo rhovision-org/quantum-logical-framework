@@ -23,7 +23,10 @@ The route:
 3. **Routing** (`twoLevel_mem`): a two-level unitary on basis states `s ≠ s'` is moved by CNOTs
    (`cnot_isPerm`) onto a pair that differs in one qubit `t`, then by `X` gates (`flip_isPerm`)
    onto the pair whose other qubits are all `1`. There it is a fully controlled gate on `t`.
-4. **Two-level decomposition** ([`QLF_TwoLevelUnitary`](QLF_TwoLevelUnitary.lean)) finishes it.
+4. **Perspectives** (`onQubit_comm`, `cz_symm`, `eq_cz_of_sign_table`, `universality_cz`):
+   gates on different qubits commute, controlled-Z has no control, its sign table fixes it
+   among linear gates, and controlled-Z can replace CNOT.
+5. **Two-level decomposition** ([`QLF_TwoLevelUnitary`](QLF_TwoLevelUnitary.lean)) finishes it.
 
 No axioms beyond Lean's own. Part of the [Quantum Logical Framework (QLF)](../README.md);
 write-up in [`Barenco_Universality.md`](../Barenco_Universality.md).
@@ -632,5 +635,166 @@ theorem universality_list {n : ℕ} (U : Mat (n + 1))
 theorem circuits_eq_unitary {n : ℕ} :
     (circuits (n + 1) : Set (Mat (n + 1))) = Matrix.unitaryGroup (St (n + 1)) ℂ := by
   ext U; exact ⟨fun h => circuits_le_unitary h, fun h => universality U h⟩
+
+/-! ## Perspectives: controlled-Z, and gates held by separate qubits
+
+Two facts for the substrate reading (`Barenco_Universality.md` §"Perspectives"):
+
+* **Controlled-Z is as good as CNOT** (`universality_cz`): one-qubit unitaries and
+  controlled-Z generate every unitary, since `CNOT = (1⊗H)·CZ·(1⊗H)` (`cnot_eq_h_cz_h`).
+  Controlled-Z is symmetric, so neither qubit is the control (`cz_symm`).
+* **A sign table fixes its linear gate** (`eq_cz_of_sign_table`): a linear operator that
+  multiplies each basis state by controlled-Z's sign is controlled-Z.
+* **Gates on different qubits commute** (`onQubit_comm`): the gate one qubit holds is the
+  same whatever is done on another. -/
+
+/-- The phase flip `Z`. -/
+def Z : M2 := !![1, 0; 0, -1]
+
+/-- The Hadamard gate. -/
+noncomputable def H : M2 := ((Real.sqrt 2 : ℂ)⁻¹) • !![1, 1; 1, -1]
+
+theorem sqrt2_sq : ((Real.sqrt 2 : ℂ)⁻¹) ^ 2 = 1 / 2 := by
+  rw [pow_two, ← mul_inv, ← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 2)]
+  push_cast; ring
+
+theorem H_mul_H : H * H = 1 := by
+  have h := sqrt2_sq
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [H, Matrix.mul_apply, Fin.sum_univ_two] <;> ring_nf <;> rw [h] <;> norm_num
+
+theorem H_Z_H : H * Z * H = X := by
+  have h := sqrt2_sq
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [H, Z, X, Matrix.mul_apply, Fin.sum_univ_two] <;> ring_nf <;> rw [h] <;> norm_num
+
+theorem H_mem : H ∈ Matrix.unitaryGroup (Fin 2) ℂ := by
+  have hs : star H = H := by
+    ext i j; fin_cases i <;> fin_cases j <;> simp [H, Matrix.star_apply]
+  rw [Matrix.mem_unitaryGroup_iff, hs, H_mul_H]
+
+/-- Controlled-`Z` between qubits `c` and `t`. -/
+def cz (c t : Fin n) : Mat n := ctrl {c} t Z
+
+/-- **CNOT from controlled-Z**: `CNOT = (1⊗H)·CZ·(1⊗H)`. -/
+theorem cnot_eq_h_cz_h (c t : Fin n) : cnot c t = onQubit t H * cz c t * onQubit t H := by
+  simp only [cnot, cz, onQubit, ctrl, lift_mul]
+  congr 1; funext x
+  by_cases hx : ∀ i ∈ ({c} : Finset (Fin n)), x i = 1
+  · simp only [if_pos hx, Finset.notMem_empty, IsEmpty.forall_iff, implies_true, if_true]
+    rw [H_Z_H]
+  · simp only [if_neg hx, Finset.notMem_empty, IsEmpty.forall_iff, implies_true, if_true,
+      mul_one, H_mul_H]
+
+/-- **Controlled-Z is diagonal**, with sign `−1` exactly when both qubits are `1`. -/
+theorem cz_eq_diagonal {c t : Fin n} (hct : c ≠ t) :
+    cz c t = Matrix.diagonal fun x => if x c = 1 ∧ x t = 1 then -1 else 1 := by
+  ext x y
+  rw [cz, ctrl_apply (by simp [Ne.symm hct]), Matrix.diagonal_apply]
+  simp only [Finset.mem_singleton, forall_eq]
+  by_cases hxy : x = y
+  · subst hxy
+    simp only [ne_eq, implies_true, if_true]
+    by_cases h1 : x c = 1 <;> by_cases h2 : x t = 1
+    · simp [h1, h2, Z]
+    · have : x t = 0 := by omega
+      simp [h1, h2, this, Z]
+    · simp [h1, h2]
+    · simp [h1, h2]
+  · rw [if_neg hxy]
+    by_cases ha : ∀ i, i ≠ t → x i = y i
+    · rw [if_pos ha]
+      have hne : x t ≠ y t := fun e => hxy (eq_of_agree ha e)
+      have off : ∀ (M : M2), M 0 1 = 0 → M 1 0 = 0 → M (x t) (y t) = 0 := by
+        intro M h01 h10
+        generalize x t = a at hne; generalize y t = b at hne
+        fin_cases a <;> fin_cases b <;> simp_all
+      exact off _ (by split_ifs <;> simp [Z]) (by split_ifs <;> simp [Z])
+    · rw [if_neg ha]
+
+/-- **Controlled-Z has no control**: it is the same gate read from either qubit. -/
+theorem cz_symm {c t : Fin n} (hct : c ≠ t) : cz c t = cz t c := by
+  rw [cz_eq_diagonal hct, cz_eq_diagonal (Ne.symm hct)]
+  congr 1; funext x; simp only [and_comm]
+
+/-- **A sign table fixes its linear gate.** A linear operator that multiplies each basis state
+by `σ x` is `diag σ`. -/
+theorem eq_diagonal_of_signs (M : Mat n) (σ : St n → ℂ)
+    (h : ∀ x, M *ᵥ Pi.single x 1 = σ x • Pi.single x 1) : M = Matrix.diagonal σ := by
+  ext y x
+  have e := congrFun (h x) y
+  simp [Matrix.mulVec, dotProduct, Pi.single_apply] at e
+  rw [e, Matrix.diagonal_apply]
+  split_ifs with hyx
+  · rw [hyx]
+  · rfl
+
+/-- **Controlled-Z is the only linear gate with its sign table.** -/
+theorem eq_cz_of_sign_table {c t : Fin n} (hct : c ≠ t) (M : Mat n)
+    (h : ∀ x, M *ᵥ Pi.single x 1 = (if x c = 1 ∧ x t = 1 then (-1 : ℂ) else 1) • Pi.single x 1) :
+    M = cz c t := by
+  rw [cz_eq_diagonal hct]; exact eq_diagonal_of_signs M _ h
+
+/-- One-qubit unitaries and controlled-Z. -/
+def gatesCZ (n : ℕ) : Set (Mat n) :=
+  {M | (∃ t A, A ∈ Matrix.unitaryGroup (Fin 2) ℂ ∧ M = onQubit t A) ∨
+       (∃ c t, c ≠ t ∧ M = cz c t)}
+
+/-- **One-qubit unitaries and controlled-Z are universal** on `n ≥ 1` qubits. -/
+theorem universality_cz {n : ℕ} (U : Mat (n + 1))
+    (hU : U ∈ Matrix.unitaryGroup (St (n + 1)) ℂ) : U ∈ Submonoid.closure (gatesCZ (n + 1)) := by
+  have hle : circuits (n + 1) ≤ Submonoid.closure (gatesCZ (n + 1)) := by
+    rw [circuits, Submonoid.closure_le]
+    rintro M (⟨t, A, hA, rfl⟩ | ⟨c, t, hct, rfl⟩)
+    · exact Submonoid.subset_closure (Or.inl ⟨t, A, hA, rfl⟩)
+    · rw [cnot_eq_h_cz_h]
+      have hH : onQubit t H ∈ Submonoid.closure (gatesCZ (n + 1)) :=
+        Submonoid.subset_closure (Or.inl ⟨t, H, H_mem, rfl⟩)
+      exact Submonoid.mul_mem _ (Submonoid.mul_mem _ hH
+        (Submonoid.subset_closure (Or.inr ⟨c, t, hct, rfl⟩))) hH
+  exact hle (universality U hU)
+
+/-- The product of one-qubit gates on different qubits, entry by entry. -/
+theorem onQubit_mul_apply {s t : Fin n} (hst : s ≠ t) (A B : M2) (x y : St n) :
+    (onQubit t A * onQubit s B) x y =
+      if (∀ i, i ≠ s → i ≠ t → x i = y i) then A (x t) (y t) * B (x s) (y s) else 0 := by
+  set z0 := Function.update x t (y t) with hz0
+  rw [mul_apply, Finset.sum_eq_single z0]
+  · rw [onQubit_apply, onQubit_apply, if_pos (fun i hi => by simp [z0, hi])]
+    have hz0t : z0 t = y t := by simp [z0]
+    have hz0s : z0 s = x s := by simp [z0, hst]
+    rw [hz0t, hz0s]
+    have hiff : (∀ i, i ≠ s → z0 i = y i) ↔ (∀ i, i ≠ s → i ≠ t → x i = y i) := by
+      constructor
+      · intro h i his hit; have := h i his; simpa [z0, hit] using this
+      · intro h i his
+        by_cases hit : i = t
+        · subst hit; exact hz0t
+        · simp [z0, hit, h i his hit]
+    by_cases hc : ∀ i, i ≠ s → i ≠ t → x i = y i
+    · rw [if_pos (hiff.mpr hc), if_pos hc]
+    · rw [if_neg (fun h => hc (hiff.mp h)), if_neg hc, mul_zero]
+  · intro z _ hz
+    rw [onQubit_apply, onQubit_apply]
+    by_cases h1 : ∀ i, i ≠ t → x i = z i
+    · by_cases h2 : ∀ i, i ≠ s → z i = y i
+      · exfalso; apply hz; funext i
+        by_cases hit : i = t
+        · subst hit; simp [z0, h2 i (Ne.symm hst)]
+        · simp [z0, hit, h1 i hit]
+      · rw [if_neg h2, mul_zero]
+    · rw [if_neg h1, zero_mul]
+  · simp
+
+/-- **Gates held by different qubits commute.** -/
+theorem onQubit_comm {s t : Fin n} (hst : s ≠ t) (A B : M2) :
+    onQubit t A * onQubit s B = onQubit s B * onQubit t A := by
+  ext x y
+  rw [onQubit_mul_apply hst, onQubit_mul_apply (Ne.symm hst)]
+  have hiff : (∀ i, i ≠ s → i ≠ t → x i = y i) ↔ (∀ i, i ≠ t → i ≠ s → x i = y i) :=
+    ⟨fun h i a b => h i b a, fun h i a b => h i b a⟩
+  by_cases hc : ∀ i, i ≠ s → i ≠ t → x i = y i
+  · rw [if_pos hc, if_pos (hiff.mp hc), mul_comm]
+  · rw [if_neg hc, if_neg (fun h => hc (hiff.mpr h))]
 
 end QLF.Barenco

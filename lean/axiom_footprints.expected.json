@@ -80,6 +80,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.Barenco.cnot_eq_h_cz_h": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Barenco.cnot_isPerm": [
     "Classical.choice",
     "Quot.sound",
@@ -105,6 +110,26 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.Barenco.cz_eq_diagonal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cz_symm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.eq_cz_of_sign_table": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.eq_diagonal_of_signs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Barenco.flip_isPerm": [
     "Classical.choice",
     "Quot.sound",
@@ -116,6 +141,16 @@
     "propext"
   ],
   "QLF.Barenco.onQubit_apply": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.onQubit_comm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.onQubit_mul_apply": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -141,6 +176,11 @@
     "propext"
   ],
   "QLF.Barenco.universality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.universality_cz": [
     "Classical.choice",
     "Quot.sound",
     "propext"
