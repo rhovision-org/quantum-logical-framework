@@ -654,3 +654,63 @@ cancellation, which withdraws any vacuum reading of §11 D1. L4 is local, so it 
 §11's D2 failure, which concerned an enclosed sum with source edges excluded. Not claimed by any
 outcome: the time part of the metric, light bending, the value of `λ`, or that the conformal form of
 the map is forced.
+
+## §13 Stage 2e result
+
+Run by [`census_source_2e.py`](census_source_2e.py) against §12 as frozen in `3600c5c`; data in
+[`data/census_source_2e.json`](data/census_source_2e.json), regression test in
+[`tests/test_census_source_2e.py`](tests/test_census_source_2e.py). One code fix was made after the
+first run started and before any verdict was read: the flat control F has no tangential deficit, so
+`ρ` divided by zero; it is now reported as undefined for F (F's gate uses only `max |Δε|`).
+
+**Gates.** F passes (`max |Δε| = 3.6·10⁻¹⁵`). The run is first order (every `mean t` at `r = 8` moves
+by under 1% at `2λ`). Every vacuum control V has `χ_V ≤ 0.10` (0.066 … 0.069) and `ρ_V ∈ [−1.91, −1.88]`,
+so L3 is informative for every source. **The non-vacuum control N fails its gate:** `χ_N` is 0.085,
+0.124, 0.231 at `r = 6, 8, 10`, below the registered 0.30. So **L2 is uninformative as registered.**
+The ripple amplitude was set for `r = 8`; at `r = 6` its Laplacian is about 0.4 of the monopole's
+tidal field, too weak to reach the threshold there.
+
+| source | `Q` | `p` (L1) | `χ` at `r = 6, 8, 10` | `ρ` (L3) | `ρ_V` | `mean t / mean t_V` at `r = 8` (L4) |
+|---|---|---|---|---|---|---|
+| `share1` | −0.1433 | 3.04 | 0.068, 0.066, 0.067 | −1.954 | −1.913 | 1.005 |
+| `line4` | −0.7293 | 3.07 | 0.066, 0.068, 0.067 | −1.917 | −1.907 | 1.006 |
+| `plaq4` | −0.7753 | 3.09 | 0.066, 0.067, 0.067 | −1.937 | −1.902 | 1.004 |
+| `mixed` | +0.0788 | 3.04 | 0.068, 0.066, 0.067 | −1.954 | −1.913 | 1.005 |
+| `excl1` | +0.4946 | 3.04 | 0.068, 0.066, 0.067 | −1.954 | −1.913 | 1.005 |
+| `excl8` | +1.3887 | 3.09 | 0.067, 0.066, 0.066 | −1.918 | −1.878 | 1.006 |
+| `excl27` | +2.3672 | 3.00 | 0.068, 0.066, 0.067 | −1.958 | −1.913 | 1.003 |
+
+| | Verdict | Numbers |
+|---|---|---|
+| L1 not flat | **PASS** | the local unsigned curvature falls as `r^{−p}`, `p = 3.00 … 3.09` |
+| L2 local vacuum | **uninformative** (gate N failed) | `χ = 0.066 … 0.068`, which would pass the `0.10` threshold |
+| L3 tidal pattern of a point mass | **PASS** | `ρ = −1.92 … −1.96`; continuum value `−2` |
+| L4 local strength is the ways charge | **PASS** | `mean t / mean t_V = 1.003 … 1.006` |
+
+Reported: the radial `Δε` has the sign of `Q` for all seven sources. The mean signed `s` per shell is
+below `10⁻⁴` of `mean t` at `r ≥ 8`.
+
+**What this establishes** (numerical evidence on one lattice and box). Outside every source the
+census-length geometry is **not flat**: a local curvature remains and falls as `r^{−3}`, the falloff
+of a tidal field. Its orientation is that of a point mass: edges pointing at the source and edges
+across it respond with opposite signs in the ratio `−1.9 : 1` (continuum `−2 : 1`), and the radial
+sign is the sign of `Q`. Its local strength is fixed by the ways charge alone: per unit `Q` it matches
+the continuum monopole `Q·(2/π)/r` to under 1% at `r = 8` for all seven sources, whatever their site
+set. That is a local Gauss law, and it supports §11's post-hoc reading that D2 failed through the
+measure (excluded source edges), not the geometry.
+
+**What it does not.** The registered test cannot separate local vacuum from local cancellation,
+because the cancellation control did not reach its threshold. The measure also has a floor that the
+prereg did not anticipate: `χ ≈ 0.067` in the continuum-vacuum control too, constant from `r = 4` to
+`10` instead of falling like `r^{−2}`. So the vertex-local scalar `s` carries about 7% of the tidal
+magnitude at every distance, of both signs. A likely cause, not checked, is that the 14-edge vertex
+star of the Freudenthal lattice is not isotropic, so a traceless Hessian leaks into `s`.
+*Post hoc, not a decision input:* every local measure of the census matches its own vacuum control V
+to 1% (`χ/χ_V` within 1% and `t/t_V` within 2% at `r = 6, 8, 10`), while the ripple N departs from
+the same monopole by a factor that grows to 3.5 at `r = 10` (`χ_N = 0.231`, `ρ_N = −0.72`). So the
+census field is locally indistinguishable from a discretized vacuum in this triangulation, but that
+comparison was chosen after the gate failed.
+
+**Open after 2e.** (0′) A re-registered L2 with a measure that has no anisotropy floor (for example a
+least-squares fit of a symmetric tensor to the seven edge types at each vertex, reading its trace) and
+a cancellation control sized at every registered radius. (1)–(4) of §11 are unchanged.
