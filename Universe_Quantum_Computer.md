@@ -8,12 +8,13 @@ Machine-verified core: [`lean/QLF_QuantumComputer.lean`](lean/QLF_QuantumCompute
 
 Jim Whitescarver (2026-11-25): *"the QLF universe is the quantum computer. We don't need to build one, we have one. QLF admits the universe as a quantum logical system."* And: *"There's no question. It is a very reasonable assumption of QLF. But we can connect it to how the universe solves problems."*
 
-**The premise.** QLF takes it as a working premise that the universe is a quantum logical system computing its own evolution. The thesis has a long pedigree (§1). The theorems below do not derive the premise; they say what it entails: **how the substrate computes, where its quantum power comes from, and how it solves problems** (§5). Four results answer those questions.
+**The premise.** QLF takes it as a working premise that the universe is a quantum logical system computing its own evolution. The thesis has a long pedigree (§1). The theorems below do not derive the premise; they say what it entails: **how the substrate computes, where its quantum power comes from, and how it solves problems** (§5). Five headline results answer those questions; later sections add more.
 
 1. **The substrate computes every Boolean function with closure-preserving gates.** Every `f : {0,1}ⁿ → {0,1}` is the output of a network of at most `2ⁿ − 1` Fredkin gates, and every gate takes an admissible register to an admissible one (`substrate_computes`).
 2. **A single twist history is not a quantum computer.** However long, it folds into a sixteen-element group, `{±1, ±i}·{I, σx, σy, σz}` (`twist_folds_finite`).
 3. **Weighting by counts of ways supplies what single histories lack.** Two Forms with integer weights `3, 4, 5` multiply to a rotation of infinite order, which no twist history reaches (`quantum_power_needs_weighted_ways`).
-4. **A problem posed as a closure is solved without search, at the least possible cost, every way at once.** The minimum length of a continuation that closes a history is exactly its imbalance (`closing_cost_exact`), and every ordering of the minimal completion closes it (`completion_perm_closes`).
+4. **A joint closure is an entangling gate.** Interleaving two strands' closed pairs applies the controlled-Z phase, which no product of single-qubit gates gives (`joint_closure_is_cz`, `cz_entangling`).
+5. **A problem posed as a closure is solved without search, at the least possible cost, every way at once.** The minimum length of a continuation that closes a history is exactly its imbalance (`closing_cost_exact`), and every ordering of the minimal completion closes it (`completion_perm_closes`).
 
 Read together: classical universality is already present in single closures, and the quantum part, the continuum of rotations a universal quantum computer needs, comes from **superposing ways with their multiplicities**. That is the possibilist reading of the census ("a closure's frequency is its multiplicity", [CLAUDE.md](CLAUDE.md) "ZFA first, then every way") showing up as computational power.
 
@@ -71,7 +72,11 @@ Two classical facts, cited and not proved in Lean, take the remaining steps:
 1. An infinite-order rotation about one axis and another about a non-parallel axis generate a dense subgroup of SU(2). (The same construction about `x` uses the Forms `ŷ` and `(3ŷ + 4ẑ)/5`.)
 2. Dense single-qubit gates plus one entangling two-qubit gate (CNOT) are universal for quantum computation (Barenco et al. 1995).
 
-So what QLF needs to be a universal quantum computer is a **ZFA-native entangling gate**. In QLF entanglement is a joint closure of two histories ([MultiParticle.md](MultiParticle.md)), but no theorem yet shows that a joint closure acts on two spinors as CNOT or as any other entangling gate. That is the bridge, named in §7.
+So what QLF needs to be a universal quantum computer is a **ZFA-native entangling gate**, and it has one.
+
+**Proved: a joint closure applies controlled-Z.** In QLF entanglement is a joint closure of two histories ([MultiParticle.md](MultiParticle.md)). Let each strand be a qubit whose basis states are "carries a closed pair" and "carries nothing", as a Fredkin line carries a ball or not. Strand A's pair is `> <`, strand B's is `^ v`. Closing them jointly, interleaved as `> ^ < v`, rather than one after the other multiplies the fold by `(−1)^{ab}` (`joint_closure_is_cz`), because `σx` and `σy` anticommute; every joint history is itself a closure (`interleaved_closes`). That phase is the controlled-Z gate, and controlled-Z is entangling: it is not a product of single-qubit operators (`cz_entangling`). The Hadamard is a Form too, `(σx + σz)/√2`, an equal-weight superposition of two twist axes, its own inverse, exchanging the `z` and `x` axes (`hadamardForm`, `hadamard_sq`, `hadamard_swaps`). Hadamard and controlled-Z give CNOT, and with the dense rotations of fact 1 that is Barenco's universal set.
+
+What remains cited is facts 1 and 2 themselves; what remains a reading is that the presence bit of a closed pair is how nature encodes a qubit.
 
 ## 4. What this does not show
 
@@ -119,6 +124,8 @@ So the arithmetic that makes the substrate's octagonal quasicrystal is the arith
 The same projection that makes the quasicrystal makes a dimension expand or contract, and which one is a matter of how the projection is read.
 
 **Proved: silver inflation is a discrete boost.** A point `a + b√2` of `ℤ[√2]` has a physical projection `x = a + b√2` and an internal one `x* = a − b√2`. One inflation step multiplies `x` by `1 + √2` and `x*` by `1 − √2` (`silver_expands`, `silver_contracts`). The first factor exceeds `1`, the second is below `1` in size, and their product is `−1` (`silver_unit`): **one projected dimension expands exactly as the other contracts.** The product `x·x* = a² − 2b²` is an indefinite form; one step flips its sign (`silver_norm`) and two steps preserve it exactly (`silver_boost_norm`). That is what a Lorentz boost does to `t² − z²` in light-cone coordinates: [`QLF_LorentzCover`](lean/QLF_LorentzCover.lean)'s `boostZ_action` scales `t + z` by `a²` and `t − z` by `b²` with `ab = 1`.
+
+**Proved: the boost acts on twist histories, not only on the ring.** The silver twist DNA of [ZFA_DNA.md](ZFA_DNA.md) §12 replaces each twist by itself flanked by its octagon neighbours (`silverSub`). It preserves closure (`silverDNA_closes`), multiplies a history's physical octagonal vector `Σ ζ₈^p` by `1 + √2` (`silverDNA_vec`), and multiplies its internal vector `Σ ζ₈^{3p}` by `1 − √2` (`silverDNA_int`). One closure-preserving operation on histories expands one projected dimension as it contracts the other.
 
 **Proved: which dimension expands is the choice of projection.** The internal projection of a point is the physical projection of its Galois conjugate (`projection_choice`). So the lattice and the inflation are fixed statically, while whether the dimension one reads expands or contracts depends on which projection is read. That is Jim's runtime point in its sharpest form.
 
@@ -197,10 +204,9 @@ What stays outside the proof is the same as there: possibilism is QLF's founding
 
 ## 7. Open
 
-- **The entangling gate.** Show that a joint closure of two histories acts on two spinors as an entangling gate (CNOT, or any gate not a product of single-qubit gates). With §2 and the two cited facts, that would complete "the substrate is quantum-universal".
+- **Superposed presence.** The controlled-Z of §3 acts on the presence basis. A circuit needs superpositions of present and absent pairs, which the Hadamard Form supplies algebraically; a census theorem that such a superposition is a weighted sum of closure ways would tie it to counts.
 - **Density in Lean.** Formalize fact 1 of §3 (infinite order on a circle gives density; two axes give SU(2)).
-- **The Clifford+T bridge in Lean.** Show that the Hadamard is a Form (`(σx + σz)/√2`, a superposition of two twists) and that a product of it with the `ζ₈` phase has infinite order, putting the ring identification of §6 on the substrate.
-- **A boost on the twist lattice itself.** The silver boost acts on `ℤ[√2]`, the octagonal projection's ring. Show that a closure-preserving map of twist histories induces it, so that the boost is a substrate operation and not only a property of the projection.
+- **The Clifford+T bridge in Lean.** The Hadamard is now a Form (§3). Still open: that its product with the `ζ₈` phase has infinite order, putting the ring identification of §6 fully on the substrate.
 - **Quasicrystal growth as a closure census.** Test whether forced-tile growth (Onoda et al. 1988) is the first-closure rule on the octagonal projection, with the defect rate as the prediction.
 - **Counts or Forms.** The theorem uses the Form coefficients `3/5, 4/5`; the reading that they are normalized counts of ways is the census reading, not yet a derivation. A theorem that a phase-weighted census sum over closures yields such a Form would make it one.
 

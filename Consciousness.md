@@ -228,6 +228,22 @@ binds (no combination problem); the joint closure grounds (no isolation problem)
 prehension (each occasion of experience is a concrescence/closure that prehends the universe),
 participatory/relational realism, and cosmopsychism — recast in verified closures.
 
+
+### 6a. What possibilism makes of the hypothesis
+
+Jim, 2026-11-25: *"What is the consequence of considering the qualia hypothesis, true or false? Possibilism suggests the hypothesis is true."*
+
+**What "true" means under possibilism.** Every logically admissible history exists ([`Philosophy.md`](Philosophy.md) §3), so every *consistent* hypothesis is true in some way. Falsity is reserved for contradiction, which never closes ([`contradiction_no_receipt`](lean/QLF_ContradictionReceipt.lean)). So possibilism does make the qualia hypothesis true, provided it is consistent, and the live questions move: does it hold in the ways that close for us, and how often (method rule 4, [`CLAUDE.md`](CLAUDE.md) "ZFA first, then every way")?
+
+**One step follows from QLF's premises.** Experience happens: there are records of it, in reports, behaviour and the measured rhythms of §5. In QLF every event is a closure, and ZFA is the only filter. So experience is a closure of some kind. This needs no extra assumption beyond the premises; what it does not fix is *which* closure.
+
+**What stays a hypothesis.** The specific two-factor form above, a self-model coupled to a shared closure, is one answer to "which closure". Two consequences follow if it holds in our ways:
+
+- **True:** experience is present wherever the coupling is, graded by its depth and frequency, and not confined to brains. The spirit reading of [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md) §6e and [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §8 is then felt from inside, not only enacted. The leanings of §7 become predictions.
+- **False in our ways:** experience would need an ingredient beyond closure, a second filter beside ZFA, which QLF's single-filter ontology does not supply. So a failure of the §7 predictions would bear on the hypothesis's form first, and on the single-filter ontology only if no closure-based form survived.
+
+The asymmetry is the point: possibilism makes the hypothesis cheap to hold as *true in some way* and expensive to hold as *the way that is ours*, and only the second is a scientific claim.
+
 ## 7. Honest scope
 
 The §6 qualia account is a **stated dissolution — a stance / hypothesis, not a machine-verified proof**.

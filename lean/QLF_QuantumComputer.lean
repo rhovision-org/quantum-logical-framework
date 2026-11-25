@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Eight results, no axioms.
+  Ten results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -28,7 +28,7 @@
      layer lacks. A rotation of infinite order about one axis together with one about a
      non-parallel axis generates a dense subgroup of SU(2), and dense single-qubit gates
      with one entangling gate are universal (Barenco et al. 1995). Those two steps are
-     cited, not proved here, and the entangling gate is the open bridge (see the doc §4).
+     cited, not proved here; the entangling gate is §9.
 
   4. **A problem posed as a closure is solved without search** (`closing_cost_exact`,
      `completion_perm_closes`): the least closing continuation has length exactly the
@@ -54,6 +54,15 @@
      the futures a past admits depend only on its net signed action, so a different past with
      the same record triggers the same events, and the record fixes the content of the
      minimal future up to order.
+
+  9. **A joint closure is an entangling gate** (`joint_closure_is_cz`, `interleaved_closes`,
+     `cz_entangling`): interleaving two strands' closed pairs applies the controlled-Z phase
+     `(−1)^{ab}`, which is not a product of single-qubit gates; and the Hadamard is a Form
+     that exchanges twist axes (`hadamard_sq`, `hadamard_swaps`).
+
+  10. **The boost acts on histories** (`silverDNA_closes`, `silverDNA_vec`, `silverDNA_int`):
+     the silver twist DNA preserves closure, expands the physical octagonal vector by `1 + √2`
+     and contracts the internal one by `1 − √2`.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -719,5 +728,224 @@ theorem fabricated_past :
   simp (config := {decide := true}) [sameRecord]
 
 end Triggers
+
+
+/-! ## 9. An entangling gate from a joint closure, and the Hadamard as a Form
+
+    Each strand is a qubit whose basis states are "carries a closed pair" (`1`) or "carries
+    nothing" (`0`), as a Fredkin line carries a ball or not. Strand A's pair is `> <`, strand
+    B's is `^ v`. Closing them jointly (interleaved) rather than separately multiplies the fold
+    by `(−1)^{ab}` (`joint_closure_is_cz`): the controlled-Z phase, which is entangling
+    (`cz_entangling`). With the Hadamard, itself a Form (`hadamardForm`, `hadamard_sq`,
+    `hadamard_swaps`), controlled-Z gives CNOT, and CNOT with dense single-qubit rotations is
+    universal (Barenco et al. 1995, cited). -/
+
+section JointGate
+
+/-- Strand A carries the x-pair `> <` when `a`; strand B carries the y-pair `^ v` when `b`. -/
+def separated (a b : Bool) : List Twist :=
+  (if a then [Twist.right, Twist.left] else []) ++ (if b then [Twist.up, Twist.down] else [])
+
+/-- The joint history: the two strands' pairs interleaved, `> ^ < v` when both are present. -/
+def interleaved (a b : Bool) : List Twist :=
+  (if a then [Twist.right] else []) ++ (if b then [Twist.up] else []) ++
+  (if a then [Twist.left] else []) ++ (if b then [Twist.down] else [])
+
+/-- **A joint closure applies the controlled-Z phase.** Interleaving the strands multiplies the fold
+    by `−1` exactly when both carry a pair, because `σx` and `σy` anticommute: the relative phase
+    between joint and separate closure is `(−1)^{ab}`. -/
+theorem joint_closure_is_cz (a b : Bool) :
+    twistMatrixFold (interleaved a b) =
+      (if a && b then (-1 : ℂ) else 1) • twistMatrixFold (separated a b) := by
+  cases a <;> cases b <;>
+    simp [interleaved, separated, twistMatrixFold, Twist.toMatrix] <;>
+    ext i j <;> fin_cases i <;> fin_cases j <;>
+    simp [σx, σy, Matrix.mul_apply, Fin.sum_univ_two]
+
+/-- Every joint history is a closure, whatever the strands carry. -/
+theorem interleaved_closes (a b : Bool) : countBalanced (interleaved a b) := by
+  cases a <;> cases b <;> refine ⟨?_, ?_, ?_, ?_⟩ <;> rfl
+
+/-- Two-qubit operators on the basis `|ab⟩`. -/
+abbrev M4 := Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ
+
+/-- The controlled-Z gate, `diag(1, 1, 1, −1)`. -/
+noncomputable def cz : M4 := Matrix.diagonal fun p => if p = (1, 1) then -1 else 1
+
+/-- **Controlled-Z is entangling**: it is not a tensor product of single-qubit operators, since
+    `(A₀₀B₀₀)(A₁₁B₁₁) = (A₀₀B₁₁)(A₁₁B₀₀)` would force `−1 = 1`. -/
+theorem cz_entangling (A B : M) : Matrix.kroneckerMap (· * ·) A B ≠ cz := by
+  intro h
+  have e1 := congrFun (congrFun h (0, 0)) (0, 0)
+  have e2 := congrFun (congrFun h (0, 1)) (0, 1)
+  have e3 := congrFun (congrFun h (1, 0)) (1, 0)
+  have e4 := congrFun (congrFun h (1, 1)) (1, 1)
+  simp [cz, Matrix.kroneckerMap_apply, Matrix.diagonal] at e1 e2 e3 e4
+  have : (A 0 0 * B 0 0) * (A 1 1 * B 1 1) = (A 0 0 * B 1 1) * (A 1 1 * B 0 0) := by ring
+  rw [e1, e2, e3, e4] at this
+  norm_num at this
+
+/-- **The Hadamard is a Form**: `(σx + σz)/√2`, an equal superposition of two twist axes. -/
+noncomputable def hadamardForm : Form := ⟨0, 1 / Real.sqrt 2, 0, 1 / Real.sqrt 2⟩
+
+/-- It is its own inverse (a unitary reflection). -/
+theorem hadamard_sq : hadamardForm.toMatrix * hadamardForm.toMatrix = 1 := by
+  have h2 : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hne : Real.sqrt 2 ≠ 0 := by positivity
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [hadamardForm, Form.toMatrix, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    apply Complex.ext <;> simp <;> field_simp <;> linarith
+
+/-- **It is a Clifford gate**: it exchanges the `z` and `x` twist axes, `H σz H = σx`. -/
+theorem hadamard_swaps : hadamardForm.toMatrix * σz * hadamardForm.toMatrix = σx := by
+  have h2 : (Real.sqrt 2) ^ 2 = 2 := Real.sq_sqrt (by norm_num)
+  have hne : Real.sqrt 2 ≠ 0 := by positivity
+  ext i j
+  fin_cases i <;> fin_cases j <;>
+    simp [hadamardForm, Form.toMatrix, σz, σx, Matrix.mul_apply, Fin.sum_univ_two] <;>
+    apply Complex.ext <;> simp <;> field_simp <;> linarith
+
+end JointGate
+
+
+/-! ## 10. The boost on twist histories: the silver DNA
+
+    §5 put the silver boost on the ring `ℤ[√2]`. Here it acts on twist histories themselves.
+    Lay the twists on the octagon `^ > / + v < \ −` and replace each by itself flanked by its
+    neighbours (`silverSub`, from `ZFA_DNA.md` §12). The substitution preserves closure
+    (`silverDNA_closes`), multiplies a history's physical octagonal vector `Σ ζ₈^p` by
+    `1 + √2` (`silverDNA_vec`) and its internal vector `Σ ζ₈^{3p}` by `1 − √2`
+    (`silverDNA_int`). So one closure-preserving operation on histories expands one projected
+    dimension and contracts the other: the boost is a substrate operation. -/
+
+section SilverDNA
+
+
+/-- Octagon position, order `^ > / + v < \ −`. -/
+def octPos : Twist → ℕ
+  | Twist.up => 0 | Twist.right => 1 | Twist.slash => 2 | Twist.plus => 3
+  | Twist.down => 4 | Twist.left => 5 | Twist.backslash => 6 | Twist.minus => 7
+
+/-- **The silver twist DNA**: each twist becomes itself flanked by its octagon neighbours. -/
+def silverSub : Twist → List Twist
+  | Twist.up => [Twist.minus, Twist.up, Twist.right]
+  | Twist.right => [Twist.up, Twist.right, Twist.slash]
+  | Twist.slash => [Twist.right, Twist.slash, Twist.plus]
+  | Twist.plus => [Twist.slash, Twist.plus, Twist.down]
+  | Twist.down => [Twist.plus, Twist.down, Twist.left]
+  | Twist.left => [Twist.down, Twist.left, Twist.backslash]
+  | Twist.backslash => [Twist.left, Twist.backslash, Twist.minus]
+  | Twist.minus => [Twist.backslash, Twist.minus, Twist.up]
+
+def silverDNA (h : List Twist) : List Twist := h.flatMap silverSub
+
+/-- How the substitution moves counts. -/
+theorem silverDNA_counts (h : List Twist) :
+    (silverDNA h).count Twist.up = h.count Twist.minus + h.count Twist.up + h.count Twist.right ∧
+    (silverDNA h).count Twist.down = h.count Twist.plus + h.count Twist.down + h.count Twist.left ∧
+    (silverDNA h).count Twist.right = h.count Twist.up + h.count Twist.right + h.count Twist.slash ∧
+    (silverDNA h).count Twist.left = h.count Twist.down + h.count Twist.left + h.count Twist.backslash ∧
+    (silverDNA h).count Twist.slash = h.count Twist.right + h.count Twist.slash + h.count Twist.plus ∧
+    (silverDNA h).count Twist.backslash = h.count Twist.left + h.count Twist.backslash + h.count Twist.minus ∧
+    (silverDNA h).count Twist.plus = h.count Twist.slash + h.count Twist.plus + h.count Twist.down ∧
+    (silverDNA h).count Twist.minus = h.count Twist.backslash + h.count Twist.minus + h.count Twist.up := by
+  induction h with
+  | nil => simp [silverDNA]
+  | cons t h ih =>
+    simp only [silverDNA, List.flatMap_cons, List.count_append] at ih ⊢
+    obtain ⟨i1, i2, i3, i4, i5, i6, i7, i8⟩ := ih
+    rw [i1, i2, i3, i4, i5, i6, i7, i8]
+    cases t <;> simp (config := {decide := true}) [silverSub, List.count_cons] <;> omega
+
+/-- **It preserves closure**: the neighbours of a conjugate are the conjugates of the neighbours. -/
+theorem silverDNA_closes (h : List Twist) (hb : countBalanced h) : countBalanced (silverDNA h) := by
+  obtain ⟨c1, c2, c3, c4, c5, c6, c7, c8⟩ := silverDNA_counts h
+  obtain ⟨b1, b2, b3, b4⟩ := hb
+  refine ⟨?_, ?_, ?_, ?_⟩ <;> omega
+
+/-- `ζ₈ = e^{iπ/4}`, the `T`-gate phase. -/
+noncomputable def zeta8 : ℂ := ⟨Real.sqrt 2 / 2, Real.sqrt 2 / 2⟩
+
+theorem zeta8_sq : zeta8 ^ 2 = Complex.I := by
+  have h2 : Real.sqrt 2 * Real.sqrt 2 = 2 := Real.mul_self_sqrt (by norm_num)
+  apply Complex.ext
+  · simp [zeta8, pow_two]
+  · simp [zeta8, pow_two]; nlinarith
+
+/-- The physical octagonal vector of a twist, `ζ₈^p`. -/
+noncomputable def octVec (t : Twist) : ℂ := zeta8 ^ octPos t
+
+noncomputable def vecSum (h : List Twist) : ℂ := (h.map octVec).sum
+
+theorem zeta8_add_inv : zeta8 + zeta8 ^ 7 = (Real.sqrt 2 : ℂ) := by
+  have h7 : zeta8 ^ 7 = - Complex.I * zeta8 := by
+    rw [show 7 = 2 * 3 + 1 by rfl, pow_succ, pow_mul, zeta8_sq]; simp [Complex.I_pow_three]
+  rw [h7]; apply Complex.ext <;> simp [zeta8]
+
+/-- One twist's image scales its physical vector by the silver ratio. -/
+theorem silverSub_vec (t : Twist) :
+    ((silverSub t).map octVec).sum = (1 + Real.sqrt 2) * octVec t := by
+  have h8 : zeta8 ^ 8 = 1 := by rw [show 8 = 2 * 4 by rfl, pow_mul, zeta8_sq, Complex.I_pow_four]
+  rw [← zeta8_add_inv]
+  cases t <;> simp only [silverSub, octVec, octPos, List.map, List.sum_cons, List.sum_nil, add_zero]
+  · linear_combination (0 : ℂ) * h8
+  · linear_combination (-zeta8 ^ 3) * h8
+  · linear_combination (-zeta8 ^ 4) * h8
+  · linear_combination (-zeta8 ^ 0) * h8
+  · linear_combination (-zeta8 ^ 1) * h8
+  · linear_combination (-zeta8 ^ 5) * h8
+  · linear_combination (-zeta8 ^ 2) * h8
+  · linear_combination (-(zeta8 ^ 6 + 1)) * h8
+
+/-- **The silver DNA scales the octagonal vector by the silver ratio.** -/
+theorem silverDNA_vec (h : List Twist) : vecSum (silverDNA h) = (1 + Real.sqrt 2) * vecSum h := by
+  induction h with
+  | nil => simp [silverDNA, vecSum]
+  | cons t h ih =>
+    simp only [silverDNA, vecSum, List.flatMap_cons, List.map_append, List.sum_append,
+      List.map_cons, List.sum_cons] at ih ⊢
+    rw [silverSub_vec, ih]; ring
+
+/-- Internal position `3p mod 8`: the octagon read through `zeta8 ↦ zeta8³`. -/
+def intExp : Twist → ℕ
+  | Twist.up => 0 | Twist.right => 3 | Twist.slash => 6 | Twist.plus => 1
+  | Twist.down => 4 | Twist.left => 7 | Twist.backslash => 2 | Twist.minus => 5
+
+noncomputable def intVec (t : Twist) : ℂ := zeta8 ^ intExp t
+
+noncomputable def intSum (h : List Twist) : ℂ := (h.map intVec).sum
+
+theorem zeta8_35 : zeta8 ^ 3 + zeta8 ^ 5 = -(Real.sqrt 2 : ℂ) := by
+  have h4 : zeta8 ^ 4 = -1 := by
+    rw [show 4 = 2 * 2 by rfl, pow_mul, zeta8_sq, Complex.I_sq]
+  linear_combination (zeta8 ^ 3 + zeta8) * h4 + (-1 : ℂ) * zeta8_add_inv
+
+/-- One twist's image scales its internal vector by `1 − √2`. -/
+theorem silverSub_int (t : Twist) :
+    ((silverSub t).map intVec).sum = (1 - Real.sqrt 2) * intVec t := by
+  have h8 : zeta8 ^ 8 = 1 := by rw [show 8 = 2 * 4 by rfl, pow_mul, zeta8_sq, Complex.I_pow_four]
+  have hc : (1 : ℂ) - (Real.sqrt 2 : ℂ) = 1 + zeta8 ^ 3 + zeta8 ^ 5 := by rw [add_assoc, zeta8_35]; ring
+  rw [hc]
+  cases t <;> simp only [silverSub, intVec, intExp, List.map, List.sum_cons, List.sum_nil, add_zero]
+  · linear_combination (0 : ℂ) * h8
+  · linear_combination (-zeta8) * h8
+  · linear_combination (-zeta8 ^ 4 - zeta8 ^ 2) * h8
+  · linear_combination (-1 : ℂ) * h8
+  · linear_combination (-zeta8 ^ 3 - zeta8) * h8
+  · linear_combination (0 : ℂ) * h8
+  · linear_combination (0 : ℂ) * h8
+  · linear_combination (-zeta8 ^ 2 - 1) * h8
+
+/-- **The same substitution contracts the internal vector** by `1 − √2`. -/
+theorem silverDNA_int (h : List Twist) : intSum (silverDNA h) = (1 - Real.sqrt 2) * intSum h := by
+  induction h with
+  | nil => simp [silverDNA, intSum]
+  | cons t h ih =>
+    simp only [silverDNA, intSum, List.flatMap_cons, List.map_append, List.sum_append,
+      List.map_cons, List.sum_cons] at ih ⊢
+    rw [silverSub_int, ih]; ring
+
+end SilverDNA
 
 end QLF.QuantumComputer
