@@ -68,7 +68,9 @@
      `integer_form_is_census_sum`, `five_rotation_census`, `alternate_histories_cancel`): an
      amplitude is the sum of the folds of alternate histories; every integer Form is such a
      sum, and `5 · rotation` is the census sum of seven alternate histories, so the weights of
-     §3 are counts of ways.
+     §3 are counts of ways. The division by `5` is a ratio of alternatives to their mirror:
+     `z = (2+i)/(2−i)` (`z_eq_ratio`), where `2 ± i` are census sums of three alternate
+     histories (`gauss_census`, `gauss_census_mirror`) and `5 = |2+i|²` (`gauss_normSq`).
 
   12. **H·T has infinite order** (`hT_pow_ne_scalar`, `hadamard_t_infinite_order`): no
      positive power of the Clifford+T product is a scalar.
@@ -1027,6 +1029,31 @@ theorem five_rotation_census :
 theorem alternate_histories_cancel :
     censusSum [[Twist.plus], [Twist.minus]] = 0 := by
   simp [censusSum, twistMatrixFold, Twist.toMatrix]
+
+/-- Three alternate histories, two empty and one folding to `iI`, sum to `(2 + i)·I`. -/
+theorem gauss_census :
+    censusSum [[], [], [Twist.right, Twist.up, Twist.slash]] = (2 + Complex.I) • (1 : M) := by
+  apply Matrix.ext; intro i j
+  fin_cases i <;> fin_cases j <;>
+    simp [censusSum, twistMatrixFold, Twist.toMatrix, σx, σy, σz] <;> ring
+
+/-- Its mirror: flip one twist, and the same three alternatives sum to `(2 − i)·I`. -/
+theorem gauss_census_mirror :
+    censusSum [[], [], [Twist.left, Twist.up, Twist.slash]] = (2 - Complex.I) • (1 : M) := by
+  apply Matrix.ext; intro i j
+  fin_cases i <;> fin_cases j <;>
+    simp [censusSum, twistMatrixFold, Twist.toMatrix, σx, σy, σz] <;> ring
+
+/-- **The 5 is a ratio of alternatives to their mirror**: `(3+4i)/5 = (2+i)/(2−i)`. -/
+theorem z_eq_ratio : z = (2 + Complex.I) / (2 - Complex.I) := by
+  have h : (2 - Complex.I) ≠ 0 := by
+    intro h; have := congrArg Complex.re h; simp at this
+  rw [eq_div_iff h]
+  apply Complex.ext <;> simp [z] <;> norm_num
+
+/-- The 5 is the Born weight of the three alternatives: `|2 + i|² = 5`. -/
+theorem gauss_normSq : Complex.normSq (2 + Complex.I) = 5 := by
+  rw [Complex.normSq_apply]; simp; norm_num
 
 end Superposition
 
