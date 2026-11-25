@@ -505,6 +505,10 @@ The non-constructive parts of the Ruliad — non-terminating computations, Busy 
 
 [`QLF_ClockIntervention.lean`](QLF_ClockIntervention.lean) is the third finite stage of [Time_Reversed_Clock_Domains.md](../Time_Reversed_Clock_Domains.md). Reordering the counterpart is always admissible and never changes the record (`perm_admissible`, `perm_record`); the 21 counterparts of `([up], 3)` form 4 reorder classes (`fiber_up_three_classes`). Inserting a conjugate pair is admissible and changes the record (`insert_pair_admissible`, `insert_pair_record`), and the channel is unbounded (`channel_unbounded`), so the record is not a no-signalling interface (`record_signals`). The length parity is fixed by the local word (`admissible_parity`, `parity_record_no_signal`). The bare age-map interface is satisfied by a constant and fixes no value (`ageMap_nonempty`, `ageMap_hits_any`); with word length as tick count, half-total is exactly equal durations (`half_total_iff`), which closure does not force (`half_total_not_forced`). No axiom.
 
+## The time-reversed universe by perspective
+
+[`QLF_TimeReversalPerspective.lean`](QLF_TimeReversalPerspective.lean), companion [Time_Reversed_Universe.md](../Time_Reversed_Universe.md). The interval is invariant under every boost and under `t ↦ −t` (`boost_interval`, `timeReverse_interval`); its time/space split is by perspective (`split_by_perspective`). Spacelike order is by perspective (`spacelike_order_by_perspective`); future timelike and null separations stay future under every boost (`timelike_order_invariant`, `null_order_invariant`), and no congruence sends `I` to `−I` (`no_congruence_reverses_time`). Reversal and `dagger` map closures onto closures and `J` maps the admissible paired histories onto themselves (`reversed_census_is_census`), so the reversed reading is the same census, not a second one. No axiom.
+
 ## How to Build
 
 ```bash

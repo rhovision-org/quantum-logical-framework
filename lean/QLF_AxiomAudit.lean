@@ -169,6 +169,7 @@ import QLF_ClosureUncertainty
 import QLF_DiversityPhase
 import QLF_CoincidenceTrivial
 import QLF_AssemblyIndex
+import QLF_TimeReversalPerspective
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1032,3 +1033,21 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.PerspectiveLocality.no_signalling_typed
 #print axioms QLF.PerspectiveLocality.chsh_factorizable_le
 #print axioms QLF.PerspectiveLocality.no_factorizable_model
+
+-- QLF_TimeReversalPerspective: the time-reversed universe exists by perspective
+#print axioms QLF.TimeReversalPerspective.timeReverse_interval
+#print axioms QLF.TimeReversalPerspective.boost_interval
+#print axioms QLF.TimeReversalPerspective.split_by_perspective
+#print axioms QLF.TimeReversalPerspective.spacelike_order_by_perspective
+#print axioms QLF.TimeReversalPerspective.timelike_order_invariant
+#print axioms QLF.TimeReversalPerspective.null_order_invariant
+#print axioms QLF.TimeReversalPerspective.boost_null_iff
+#print axioms QLF.TimeReversalPerspective.timeReverse_null_iff
+#print axioms QLF.TimeReversalPerspective.timeReverse_not_a_boost
+#print axioms QLF.TimeReversalPerspective.no_congruence_reverses_time
+#print axioms QLF.TimeReversalPerspective.reverse_closure_iff
+#print axioms QLF.TimeReversalPerspective.dagger_closure_iff
+#print axioms QLF.TimeReversalPerspective.J_admissible_iff
+#print axioms QLF.TimeReversalPerspective.reversed_census_is_census
+#print axioms QLF.TimeReversalPerspective.self_reversed_exists
+#print axioms QLF.TimeReversalPerspective.reversed_reading_distinct
