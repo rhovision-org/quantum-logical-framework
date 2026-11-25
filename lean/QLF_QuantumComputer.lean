@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Fourteen results, no axioms.
+  Fifteen results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -83,6 +83,10 @@
   14. **No choice fixed in advance** (`ks_orthogonal`, `ks_each_twice`, `ks_double_count`,
      `no_choice_fixed_in_advance`): the Kochen–Specker theorem in Cabello's eighteen-direction
      form. No assignment of outcomes fixed beforehand, independent of context, exists.
+
+  15. **Readings made theorems** (`presence_bit_is_fold_sign`, `presence_states_distinct`,
+     `record_blind_to_phase`): the presence bit of a closed pair is its fold sign, and two
+     histories with the same twists in a different order fold to opposite phases.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -1313,5 +1317,50 @@ theorem no_choice_fixed_in_advance :
   omega
 
 end KochenSpecker
+
+-- ==========================================
+-- 15. Readings made theorems
+-- ==========================================
+
+/-! Two readings of the write-up, stated and proved: the presence bit of §9 is the fold
+sign, and a record of counts is blind to phase. -/
+
+section Readings
+
+/-- **The presence bit is the fold sign.** A strand carrying the closed pair `> <` folds to
+`−1`, an empty strand to `1`: presence is read off the phase, `(−1)^a`. -/
+theorem presence_bit_is_fold_sign (a : Bool) :
+    twistMatrixFold (if a then [Twist.right, Twist.left] else []) =
+      (if a then (-1 : ℂ) else 1) • (1 : M) := by
+  cases a
+  · simp [twistMatrixFold]
+  · apply Matrix.ext; intro i j
+    fin_cases i <;> fin_cases j <;>
+      simp [twistMatrixFold, Twist.toMatrix, σx, Matrix.mul_apply, Fin.sum_univ_two]
+
+/-- The two presence states are distinguishable by phase alone. -/
+theorem presence_states_distinct :
+    twistMatrixFold [Twist.right, Twist.left] ≠ twistMatrixFold [] := by
+  have h1 := presence_bit_is_fold_sign true
+  simp only [if_true] at h1
+  rw [h1]
+  simp only [twistMatrixFold, List.foldr_nil]
+  intro h
+  have := congrArg (fun A : M => A 0 0) h
+  norm_num at this
+
+/-- **Counts are shared, phase is private.** Two histories with exactly the same twists, a
+permutation of one another, so the same record of every kind, fold to opposite phases. -/
+theorem record_blind_to_phase :
+    [Twist.up, Twist.left, Twist.down, Twist.right].Perm
+        [Twist.up, Twist.down, Twist.left, Twist.right] ∧
+      twistMatrixFold [Twist.up, Twist.left, Twist.down, Twist.right] = -1 ∧
+      twistMatrixFold [Twist.up, Twist.down, Twist.left, Twist.right] = 1 := by
+  refine ⟨by decide, ?_, ?_⟩ <;>
+  · apply Matrix.ext; intro i j
+    fin_cases i <;> fin_cases j <;>
+      simp [twistMatrixFold, Twist.toMatrix, σx, σy, Matrix.mul_apply, Fin.sum_univ_two]
+
+end Readings
 
 end QLF.QuantumComputer

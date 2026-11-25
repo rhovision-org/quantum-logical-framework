@@ -78,7 +78,7 @@ So what QLF needs to be a universal quantum computer is a **ZFA-native entanglin
 
 **Proved: the Clifford+T product has infinite order.** With `T = diag(1, ζ₈)`, no positive power of `H·T` is a scalar (`hadamard_t_infinite_order`). If one were, the ratio `ρ` of its eigenvalues would be a root of unity, so `ρ + ρ⁻¹` would be an algebraic integer. It equals `−1 − √2/2`, which would make `1/2 = (√2/2)²` an algebraic integer, and it is not (`half_not_integral`). This is the standard reason the Clifford+T set is universal, and it puts the octagonal ring of §6 on the gate level.
 
-What remains cited is the two-axis half of fact 1 and fact 2; what remains a reading is that the presence bit of a closed pair is how nature encodes a qubit.
+What remains cited is the two-axis half of fact 1 and fact 2; the presence bit itself is now a theorem: a strand carrying the pair `> <` folds to `−1` and an empty one to `1`, so presence is the fold sign (`presence_bit_is_fold_sign`, `presence_states_distinct`). What remains a reading is only that nature uses this encoding.
 
 ## 3a. Superposition is alternate histories
 
@@ -241,6 +241,24 @@ Jim asked whether other mechanisms of choice can work in a quantum logical world
 | Selection by closure (QLF) | contextual by construction: diversity supplies the alternatives and the closure that happens is the selection |
 
 Conway and Kochen's free-will theorem (2006) sharpens the last row: if the experimenter's choice of basis is not a function of the past, neither is the particle's response ([Interpretations.md](Interpretations.md)). Reading: QLF's mechanism is the one that adds nothing to the logic. That choice is *free will* stays a reading ([Consciousness.md](Consciousness.md) §6a).
+
+## 6g. The readings, resolved
+
+Every claim above labelled a reading, with its status after this pass. A reading becomes a theorem when its content can be stated about histories; it stays a reading when it identifies a structure with something in nature or in experience, which no proof about the structure can settle.
+
+| Reading | Resolved as | What is left |
+|---|---|---|
+| The presence bit of a closed pair encodes a qubit (§3) | **theorem**: presence is the fold sign (`presence_bit_is_fold_sign`, `presence_states_distinct`) | that nature uses this encoding |
+| Diversity enables choice (§3a) | **theorem** for its first half: no phase diversity, no rotation (`mirror_ratio_eq_one_iff`); no choice fixed in advance (`no_choice_fixed_in_advance`) | calling the runtime selection *choice* |
+| Counts are shared, phase is private ([Consciousness.md](Consciousness.md) §6b) | **theorem**: the same twists in another order fold to opposite phases (`record_blind_to_phase`) | that the private phase is experience (the qualia hypothesis) |
+| Weights are counts of ways (§3a) | **theorem**: `five_rotation_census`, `z_eq_ratio` | normalization in general (§7) |
+| Superdeterminism is undeterminable (§6f) | **settled by the method**: no outcome distribution falsifies it (rule 4) | nothing |
+| QLF's selection adds nothing to the logic (§6f) | **by construction**: the selection is the first closure, and closure is ZFA, the only filter | nothing |
+| Expansion of space is a silver-type inflation (§6a) | **open, empirical**: the arithmetic carries a boost (`silver_boost_norm`, `silverDNA_vec`) | a measurement that distinguishes it; none is identified yet |
+| A hadron's dynamics is a qutrit computation (§6b) | **premise applied**: colour-neutral closures sum to zero in `F₃²` (`closure_trits_zero`) | that the strong dynamics is this computation |
+| Spirit (§6e) | **stance**: rests on `future_depends_only_on_record` and the joint-closure theorems | the stance itself, which review note 8 keeps apart from what follows |
+
+So the readings split three ways. Four became theorems. Two are settled by the method or by construction. Three remain readings because each identifies a proved structure with nature or with experience, and only observation, or the first-person stance, can settle that.
 
 ## 7. Open
 
