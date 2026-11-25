@@ -88,6 +88,7 @@ import QLF_LorentzSymbol
 import QLF_BoostCovariance
 import QLF_InteractingKinematics
 import QLF_BoostStates
+import QLF_BoostAmplitudes
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -884,6 +885,14 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BoostStates.halfWalk_unitary
 #print axioms QLF.BoostStates.halfWalk_dispersion
 #print axioms QLF.BoostStates.dirac_boostZ_covariant
+#print axioms QLF.BoostAmplitudes.chiral_conjTranspose
+#print axioms QLF.BoostAmplitudes.beta_mul_chiral
+#print axioms QLF.BoostAmplitudes.scalar_bilinear_invariant
+#print axioms QLF.BoostAmplitudes.scalar_vertex_invariant
+#print axioms QLF.BoostAmplitudes.chiralAct_boostZ
+#print axioms QLF.BoostAmplitudes.blind_density_entry
+#print axioms QLF.BoostAmplitudes.blind_density_not_invariant
+#print axioms QLF.BoostAmplitudes.blind_vertex_not_invariant
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self
