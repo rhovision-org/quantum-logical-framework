@@ -516,6 +516,61 @@ of interacting amplitudes, is not done: the third row of the stage-4 plan, the f
 of a finite-range contact coupling `ĝ(q)`, is still a prediction. The spin part is borrowed from
 the continuum, not derived from a moving closure loop.
 
+### Stage 4b pre-registration: tree amplitudes of the two-body contact walk
+
+Stage 4b compares an interacting amplitude between frames. [`boost_amplitudes_check.py`](boost_amplitudes_check.py)
+measures it. This subsection was committed before the script was run on the walk. Only the
+continuum calibration and control were run beforehand, to fix sign conventions and the control's
+statistic.
+
+**Amplitude.** Two walk particles `A` and `B` (masses `m_A`, `m_B`) meet on one site and pick up a
+contact phase `exp(i g Γ)`, with `Γ` acting on the joint spinor space. To first order in `g`, the
+tree level, the amplitude from `(k₁, k₂)` to `(k₁′, k₂′)` is the matrix element of `Γ` between band
+states, times the coupling's Fourier transform `ĝ(q)` at the transfer `q = k₁′ − k₁`. Band
+eigenvectors carry arbitrary phases, so the graded quantity is the spin-summed square
+
+`W(p) = |ĝ(q)|² Tr[(Π₁′ ⊗ Π₂′) Γ (Π₁ ⊗ Π₂) Γ†]`, with `Π = E P(k)`.
+
+For the continuum Dirac operator and a Lorentz-scalar vertex, `W` is invariant. Each leg is
+carried by the stage-4a map: frame 1 uses the walk's own energy `E(k)`, frame 2 the boosted
+`(E′, k′) = Λ(E(k), k)` with the walk's projector at `k′`. The defect is
+`|W(Λp) − W(p)| / |W(p)|`.
+
+**Vertices.**
+
+| Arm | `Γ` | Continuum reading | Prediction |
+|---|---|---|---|
+| `scalar` | `β ⊗ β` | `ψ̄ψ ψ̄ψ`, a Lorentz scalar | covariant to `O(κ²)`, as the band |
+| `vector` | `1 ⊗ 1 − Σᵢ αᵢ ⊗ αᵢ` | `J^μ J_μ`, a Lorentz scalar | covariant to `O(κ²)` |
+| `range` | `β ⊗ β` with `ĝ(q) = 1 + ½ Σᵢ 2 cos qᵢ` (nearest-neighbour range) | instantaneous finite range: `ĝ` depends on the 3-vector `q` | covariant to `O(κ²)`: `q` is of size `κ`, so `ĝ(q′)/ĝ(q) − 1 = O(κ²)` |
+| `blind` | `1 ⊗ 1` | `J⁰ J⁰`, the time component of a vector current only | **frame dependent at `O(1)`**, not suppressed by `κ` |
+
+The `blind` arm is the contact of `QLF_InteractingKinematics.twoBodyStep` as written (stage 3): a
+scalar `g(x₁ − x₂)` that ignores spin. In the continuum, a spin-blind density contact is a `J⁰ J⁰`
+coupling, which is not a Lorentz scalar. So the prediction is that the stage-3 walk, as written, is
+**not** covariant at tree level, for a reason that has nothing to do with the lattice: its vertex
+picks a frame. The fix it points to is a contact that carries spinor structure (`β ⊗ β` or the
+vector form).
+
+**Grid.** Twelve sample pairs of unit directions `d, d′` (seed `20261125`), centre-of-momentum
+elastic kinematics `k₁ = p d`, `k₂ = −p d`, `k₁′ = p d′`, `k₂′ = −p d′`, with `|(p, m_A)| = κ`,
+`m_A/p ∈ {0.5, 1}`, `m_B = 0.6 m_A`; the three boost axes; `η = 0.5`;
+`κ ∈ {0.08, 0.04, 0.02, 0.01, 0.005}`. Half-step slice graded; raw slice reported, not graded.
+The graded number is the log–log slope of the worst defect against `κ`.
+
+**Criteria.**
+
+| Check | Pass | Fail |
+|---|---|---|
+| Calibration: continuum `scalar` and `vector` | below `10⁻¹²` (measured before registration: `9 × 10⁻¹⁶`, `5 × 10⁻¹⁶`) | otherwise nothing is graded |
+| Control: continuum `blind`, median defect | `≥ 10⁻²` at every `κ` (measured before registration: `0.78`; the least sample is `0.0047`, which is why the median is used) | otherwise nothing is graded |
+| **Graded: `scalar`, `vector`, `range` slopes** | `≥ 1.8`: tree amplitudes covariant to second order | `< 1.5`: a first-order frame dependence; stage 4b fails for that vertex and is reported as failed |
+| **Graded: `blind`** | prediction confirmed if the slope is below `0.5` and the worst defect stays `≥ 10⁻²` at every `κ` | otherwise the prediction failed, and is reported as failed |
+
+A slope between `1.5` and `1.8` is inconclusive and leads to a finer grid, not a verdict. Every
+sample is checked before reduction (finite non-zero `W`, finite positive defect), and a non-finite
+slope makes the run `INVALID`.
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
