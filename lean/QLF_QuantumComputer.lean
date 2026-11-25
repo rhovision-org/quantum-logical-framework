@@ -70,7 +70,8 @@
      sum, and `5 · rotation` is the census sum of seven alternate histories, so the weights of
      §3 are counts of ways. The division by `5` is a ratio of alternatives to their mirror:
      `z = (2+i)/(2−i)` (`z_eq_ratio`), where `2 ± i` are census sums of three alternate
-     histories (`gauss_census`, `gauss_census_mirror`) and `5 = |2+i|²` (`gauss_normSq`).
+     histories (`gauss_census`, `gauss_census_mirror`) and `5 = |2+i|²` (`gauss_normSq`). Without
+     phase diversity the ratio is the identity (`mirror_ratio_eq_one_iff`).
 
   12. **H·T has infinite order** (`hT_pow_ne_scalar`, `hadamard_t_infinite_order`): no
      positive power of the Clifford+T product is a scalar.
@@ -1054,6 +1055,22 @@ theorem z_eq_ratio : z = (2 + Complex.I) / (2 - Complex.I) := by
 /-- The 5 is the Born weight of the three alternatives: `|2 + i|² = 5`. -/
 theorem gauss_normSq : Complex.normSq (2 + Complex.I) = 5 := by
   rw [Complex.normSq_apply]; simp; norm_num
+
+/-- **Diversity enables choice.** A set of alternatives with in-phase weight `a` and
+quarter-turn weight `b`, divided by its mirror, is the identity exactly when `b = 0`. -/
+theorem mirror_ratio_eq_one_iff (a b : ℝ) (h : a ≠ 0 ∨ b ≠ 0) :
+    ((a : ℂ) + b * Complex.I) / ((a : ℂ) - b * Complex.I) = 1 ↔ b = 0 := by
+  have hne : ((a : ℂ) - b * Complex.I) ≠ 0 := by
+    intro h0
+    have h1 := congrArg Complex.re h0; have h2 := congrArg Complex.im h0
+    simp at h1 h2
+    rcases h with h | h
+    · exact h h1
+    · exact h (by linarith)
+  rw [div_eq_one_iff_eq hne]
+  constructor
+  · intro e; have := congrArg Complex.im e; simp at this; linarith
+  · intro hb; simp [hb]
 
 end Superposition
 
