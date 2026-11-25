@@ -344,6 +344,8 @@ lean_lib QLF where
     `QLF_PerspectiveHolography,
     `QLF_TerritoryReturn,
     `QLF_SharedReality,
+    `QLF_SharedEvent,
+    `QLF_ClassFactoring,
     `QLF_SphereCount,
     `QLF_HolographicCompletion,
     `QLF_SpatialResponseDerived,
@@ -364,6 +366,9 @@ lean_lib QLF where
     `QLF_ReadoutCriterion,
     `QLF_ClosureUncertainty,
     `QLF_Morphogenesis,
+    `QLF_DiversityPhase,
+    `QLF_CoincidenceTrivial,
+    `QLF_AssemblyIndex,
     `QLF_PossibilityGrowth,
     `QLF_LocalityDefinitions,
     `QLF_PerspectiveLocality

@@ -25,6 +25,51 @@
     "propext"
   ],
   "QLF.AlphaRigidity.inverseAlpha_at_three": [],
+  "QLF.AssemblyIndex.assemblyIndexClosed_le_length_sub_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.assemblyIndex_le_closed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.assemblyIndex_le_length_sub_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.assemblyIndex_lt_closed_up4": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.libIndex_mono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.libIndex_of_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.reuse_saves_a_join": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.strict_gap_up4": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.upPotential_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BoostCovariance.diracWalk_boost_covariant": [
     "Classical.choice",
     "Quot.sound",
@@ -105,6 +150,24 @@
     "propext"
   ],
   "QLF.ChannelGroupoid.kernel_dagger": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.circulation_invisible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.classBit_separates": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.class_function_factors": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.fold_eq_classBit": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -529,6 +592,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureUncertainty.WIn_mono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUncertainty.completions_sublist_of_context": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureUnitarity.antiHermitian_seed_forbidden": [
     "Classical.choice",
     "Quot.sound",
@@ -551,6 +624,10 @@
   ],
   "QLF.ClosureUnitarity.zero_taxonomy": [
     "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CoincidenceTrivial.co0_trivial_split": [
     "Quot.sound",
     "propext"
   ],
@@ -756,6 +833,26 @@
     "propext"
   ],
   "QLF.DiversityNovelOutcome.self_composition_type_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.axis_match_of_countBalanced_append": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.prefix_fold_determines_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.stream_folds_miss_interleaving": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.twistMatrixFold_append": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -2245,6 +2342,46 @@
   "QLF.SharedClosure.symmetric_split": [
     "Classical.choice",
     "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.both_close_on_each_body": [],
+  "QLF.SharedEvent.history_from_A": [
+    "propext"
+  ],
+  "QLF.SharedEvent.history_from_B": [
+    "propext"
+  ],
+  "QLF.SharedEvent.pairBuilt_events_unique": [
+    "propext"
+  ],
+  "QLF.SharedEvent.pair_domain_reconstructs_record": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pair_phase_transfer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pairing_not_from_records": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pairing_not_reconstructible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.perspectives_agree_on_events": [
+    "propext"
+  ],
+  "QLF.SharedEvent.relay_agree_on_events": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.shared_event_not_from_bodies": [
     "propext"
   ],
   "QLF.SharedReality.chain_without_relay_fails": [

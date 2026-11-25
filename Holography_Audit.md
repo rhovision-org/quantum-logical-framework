@@ -139,6 +139,15 @@ The principle (Jim, 2026-11-23): an event is a fact for two perspectives only th
 
 **Not shown.** The bodies are independent and commuting, and a perspective is a chosen record map, so the chain and no-signalling results are close to automatic. The pair and relay results assume that a shared pair puts one half on each body, and the relay is a defined pattern rather than one selected by closure dynamics. `GlobalZFA` is a closure predicate on every body's word, not an identification of one event the bodies share. Open: physical accessibility, shared-pair birth, dynamical relay selection, physical no-signalling for correlated histories, and interacting Lorentz covariance. PR #306's finite three-body frontier audit is the independent cross-check of the chain result.
 
+### 5a. Shared-event identity (Bridge A)
+
+Do two perspectives that agree on a verdict also identify the **same events**? [`QLF_SharedEvent`](lean/QLF_SharedEvent.lean) answers on the same finite models, with no axioms.
+
+* **On the pair-built domain, yes, in order.** The list of shared events is unique (`pairBuilt_events_unique`). `B`'s word, conjugated letter by letter, is `A`'s word (`perspectives_agree_on_events`), and either word alone rebuilds the whole two-body history (`history_from_A`, `history_from_B`). At the level of territorial records, `B`'s record reconstructs `A`'s whole record, not only its verdict: the ledger is conjugated and the fold carries the sign `(-1)^n`, with `n` read from `B`'s own ledger (`pair_domain_reconstructs_record`). Through a relay, `C` reads `A`'s events in order (`relay_agree_on_events`).
+* **Whether an event was shared is a fact for neither body.** `jointW` is two shared pairs. `splitW` has the same tokens on each body, but `A` closes on its own before `B` acts. The two histories have the same word on each body and both close on each body (`shared_event_not_from_bodies`, `both_close_on_each_body`), so no function of the body words, or of the territorial records, decides whether the history is made of shared events (`pairing_not_reconstructible`, `pairing_not_from_records`).
+
+So agreement on events is real but conditional on the shared-pair posit, and the posit itself cannot be checked from either side. This is the formal content of "a shared ledger does not establish a shared physical event". Separating `jointW` from `splitW` needs a record of the joint history, such as an operational test of correlation, which is open.
+
 ## 6. Closing pass: the final status of every gap (2026-11-23)
 
 | # | Gap (§3) | Final status | Anchor |

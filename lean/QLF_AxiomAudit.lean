@@ -133,6 +133,8 @@ import QLF_FluxoidRegge
 import QLF_PhaseAction
 import QLF_TerritoryReturn
 import QLF_SharedReality
+import QLF_SharedEvent
+import QLF_ClassFactoring
 import QLF_SphereCount
 import QLF_HolographicCompletion
 import QLF_SpatialResponseDerived
@@ -162,6 +164,10 @@ import QLF_GluonAbelianControl
 import QLF_LeptonStageB
 import QLF_ClockCalibration
 import QLF_ConsciousUpdateRule
+import QLF_ClosureUncertainty
+import QLF_DiversityPhase
+import QLF_CoincidenceTrivial
+import QLF_AssemblyIndex
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -217,6 +223,21 @@ import QLF_ConsciousUpdateRule
 #print axioms QLF.SharedReality.relay_domain_reconstructs_fold
 #print axioms QLF.SharedReality.link_domain_not_reconstructs_zfa
 #print axioms QLF.SharedReality.pair_domain_reconstructs_zfa
+#print axioms QLF.SharedEvent.pairBuilt_events_unique
+#print axioms QLF.SharedEvent.perspectives_agree_on_events
+#print axioms QLF.SharedEvent.history_from_A
+#print axioms QLF.SharedEvent.history_from_B
+#print axioms QLF.SharedEvent.pair_phase_transfer
+#print axioms QLF.SharedEvent.pair_domain_reconstructs_record
+#print axioms QLF.SharedEvent.shared_event_not_from_bodies
+#print axioms QLF.SharedEvent.both_close_on_each_body
+#print axioms QLF.SharedEvent.pairing_not_reconstructible
+#print axioms QLF.SharedEvent.pairing_not_from_records
+#print axioms QLF.SharedEvent.relay_agree_on_events
+#print axioms QLF.ClassFactoring.fold_eq_classBit
+#print axioms QLF.ClassFactoring.class_function_factors
+#print axioms QLF.ClassFactoring.classBit_separates
+#print axioms QLF.ClassFactoring.circulation_invisible
 #print axioms QLF.SphereCount.sphere3_card
 #print axioms QLF.SphereCount.sphere3_card_zero
 #print axioms QLF.SphereCount.circle_card
@@ -941,6 +962,26 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ReadoutCriterion.readout_tendsto_iff
 #print axioms QLF.ReadoutCriterion.readout_summable_iff
 #print axioms QLF.ReadoutCriterion.amplitude_exists_iff
+
+-- Closure uncertainty U1, D3T phase/axis clauses, co-incidence CO0: no QLF axiom.
+#print axioms QLF.ClosureUncertainty.completions_sublist_of_context
+#print axioms QLF.ClosureUncertainty.WIn_mono
+#print axioms QLF.DiversityPhase.twistMatrixFold_append
+#print axioms QLF.DiversityPhase.prefix_fold_determines_phase
+#print axioms QLF.DiversityPhase.stream_folds_miss_interleaving
+#print axioms QLF.DiversityPhase.axis_match_of_countBalanced_append
+#print axioms QLF.CoincidenceTrivial.co0_trivial_split
+
+-- Assembly index, flat sector, stage 1 (#264): no QLF axiom.
+#print axioms QLF.AssemblyIndex.assemblyIndex_le_length_sub_one
+#print axioms QLF.AssemblyIndex.reuse_saves_a_join
+#print axioms QLF.AssemblyIndex.assemblyIndex_le_closed
+#print axioms QLF.AssemblyIndex.assemblyIndexClosed_le_length_sub_one
+#print axioms QLF.AssemblyIndex.libIndex_mono
+#print axioms QLF.AssemblyIndex.libIndex_of_mem
+#print axioms QLF.AssemblyIndex.strict_gap_up4
+#print axioms QLF.AssemblyIndex.assemblyIndex_lt_closed_up4
+#print axioms QLF.AssemblyIndex.upPotential_le
 
 -- Locality (issue #315): tick reading, shared closure across spacelike endpoints,
 -- perspective locality, no-signalling and the Bell audit. No QLF axiom.
