@@ -69,14 +69,28 @@ rotation = diag((3+4i)/5, (3−4i)/5)
 
 Two classical facts, cited and not proved in Lean, take the remaining steps:
 
-1. An infinite-order rotation about one axis and another about a non-parallel axis generate a dense subgroup of SU(2). (The same construction about `x` uses the Forms `ŷ` and `(3ŷ + 4ẑ)/5`.)
+1. An infinite-order rotation about one axis and another about a non-parallel axis generate a dense subgroup of SU(2). (The same construction about `x` uses the Forms `ŷ` and `(3ŷ + 4ẑ)/5`.) The one-axis half is now proved: the angle `θ` of `(3+4i)/5` has `θ/2π` irrational (`arg_z_irrational`), so the powers of the rotation come arbitrarily close to every phase about its axis (`rotation_angles_dense`, through Mathlib's `AddCircle.denseRange_zsmul_coe_iff`). The two-axis step is the cited part.
 2. Dense single-qubit gates plus one entangling two-qubit gate (CNOT) are universal for quantum computation (Barenco et al. 1995).
 
 So what QLF needs to be a universal quantum computer is a **ZFA-native entangling gate**, and it has one.
 
 **Proved: a joint closure applies controlled-Z.** In QLF entanglement is a joint closure of two histories ([MultiParticle.md](MultiParticle.md)). Let each strand be a qubit whose basis states are "carries a closed pair" and "carries nothing", as a Fredkin line carries a ball or not. Strand A's pair is `> <`, strand B's is `^ v`. Closing them jointly, interleaved as `> ^ < v`, rather than one after the other multiplies the fold by `(−1)^{ab}` (`joint_closure_is_cz`), because `σx` and `σy` anticommute; every joint history is itself a closure (`interleaved_closes`). That phase is the controlled-Z gate, and controlled-Z is entangling: it is not a product of single-qubit operators (`cz_entangling`). The Hadamard is a Form too, `(σx + σz)/√2`, an equal-weight superposition of two twist axes, its own inverse, exchanging the `z` and `x` axes (`hadamardForm`, `hadamard_sq`, `hadamard_swaps`). Hadamard and controlled-Z give CNOT, and with the dense rotations of fact 1 that is Barenco's universal set.
 
-What remains cited is facts 1 and 2 themselves; what remains a reading is that the presence bit of a closed pair is how nature encodes a qubit.
+**Proved: the Clifford+T product has infinite order.** With `T = diag(1, ζ₈)`, no positive power of `H·T` is a scalar (`hadamard_t_infinite_order`). If one were, the ratio `ρ` of its eigenvalues would be a root of unity, so `ρ + ρ⁻¹` would be an algebraic integer. It equals `−1 − √2/2`, which would make `1/2 = (√2/2)²` an algebraic integer, and it is not (`half_not_integral`). This is the standard reason the Clifford+T set is universal, and it puts the octagonal ring of §6 on the gate level.
+
+What remains cited is the two-axis half of fact 1 and fact 2; what remains a reading is that the presence bit of a closed pair is how nature encodes a qubit.
+
+## 3a. Superposition is alternate histories
+
+Jim's statement: *"Superposition is just alternate histories."* The census sum makes it exact. A history's contribution is its fold, and the amplitude of a set of alternate histories is the sum of their folds (`censusSum`). Holding two sets of alternatives together adds their amplitudes (`censusSum_append`), which is the `parallel` composition of [RhoQuCalc](BraKetRhoQuCalc.md).
+
+| Theorem | Statement |
+|---|---|
+| `integer_form_is_census_sum` | every Form with integer coordinates `(t, x, y, z)` is the census sum of signed counts of one-twist histories: `t` copies of `+`, `x` of `>`, `y` of `^`, `z` of `/`, with the conjugate twist for a negative count |
+| `five_rotation_census` | `5 · rotation` is the census sum of seven alternate histories: three empty ones and four copies of `> ^` (each folding to `iσz`) |
+| `alternate_histories_cancel` | the alternatives `+` and `−` sum to zero: interference is cancellation between alternate histories |
+
+So the coefficients `3/5, 4/5` of §2.3 are counts of ways, divided by the census norm `5`. The continuum of quantum operations comes from counting alternate histories, not from any weight the substrate lacks. What stays a reading is the normalization: dividing by `5` is the step from a count to a unitary, the same step the Born rule takes from counts to probabilities ([Born_Rule.md](Born_Rule.md)).
 
 ## 4. What this does not show
 
@@ -204,11 +218,10 @@ What stays outside the proof is the same as there: possibilism is QLF's founding
 
 ## 7. Open
 
-- **Superposed presence.** The controlled-Z of §3 acts on the presence basis. A circuit needs superpositions of present and absent pairs, which the Hadamard Form supplies algebraically; a census theorem that such a superposition is a weighted sum of closure ways would tie it to counts.
-- **Density in Lean.** Formalize fact 1 of §3 (infinite order on a circle gives density; two axes give SU(2)).
-- **The Clifford+T bridge in Lean.** The Hadamard is now a Form (§3). Still open: that its product with the `ζ₈` phase has infinite order, putting the ring identification of §6 fully on the substrate.
+- **Superposed presence.** §3a shows that a superposition is a census sum of alternate histories. Still open is the specific superposition of a present and an absent pair as one, which needs the presence encoding of §3 stated on census sums rather than on matrices.
+- **Two-axis density and Barenco in Lean.** The one-axis density is proved (§3). Still cited: that two non-parallel infinite-order rotations generate a dense subgroup of SU(2), and Barenco et al.'s universality theorem.
 - **Quasicrystal growth as a closure census.** Test whether forced-tile growth (Onoda et al. 1988) is the first-closure rule on the octagonal projection, with the defect rate as the prediction.
-- **Counts or Forms.** The theorem uses the Form coefficients `3/5, 4/5`; the reading that they are normalized counts of ways is the census reading, not yet a derivation. A theorem that a phase-weighted census sum over closures yields such a Form would make it one.
+- **The normalization.** §3a derives the weights `3, 4` as counts. The division by the census norm `5` is the open step, the same one the Born rule leaves open.
 
 ## 8. What could falsify it
 

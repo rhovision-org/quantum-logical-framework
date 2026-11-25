@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Ten results, no axioms.
+  Thirteen results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -63,6 +63,19 @@
   10. **The boost acts on histories** (`silverDNA_closes`, `silverDNA_vec`, `silverDNA_int`):
      the silver twist DNA preserves closure, expands the physical octagonal vector by `1 + √2`
      and contracts the internal one by `1 − √2`.
+
+  11. **Superposition is alternate histories** (`censusSum`, `censusSum_append`,
+     `integer_form_is_census_sum`, `five_rotation_census`, `alternate_histories_cancel`): an
+     amplitude is the sum of the folds of alternate histories; every integer Form is such a
+     sum, and `5 · rotation` is the census sum of seven alternate histories, so the weights of
+     §3 are counts of ways.
+
+  12. **H·T has infinite order** (`hT_pow_ne_scalar`, `hadamard_t_infinite_order`): no
+     positive power of the Clifford+T product is a scalar.
+
+  13. **The rotation's angles are dense** (`arg_z_irrational`, `rotation_angles_dense`): the
+     powers of the §3 rotation approach every phase about its axis. The remaining step to
+     SU(2) density (two non-parallel axes) and Barenco universality stay cited.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -947,5 +960,241 @@ theorem silverDNA_int (h : List Twist) : intSum (silverDNA h) = (1 - Real.sqrt 2
     rw [silverSub_int, ih]; ring
 
 end SilverDNA
+
+-- ==========================================
+-- 11. Superposition is alternate histories
+-- ==========================================
+
+/-! A superposition is a sum over alternate histories: each history contributes its fold,
+and the amplitude is the census sum. Integer Form weights are signed counts of one-twist
+histories, and the infinite-order rotation of §3 is the census sum of seven alternate
+histories (three empty, four `>^`) divided by the census norm `5`. -/
+
+section Superposition
+
+noncomputable def censusSum (hs : List (List Twist)) : M := (hs.map twistMatrixFold).sum
+
+theorem censusSum_append (a b : List (List Twist)) :
+    censusSum (a ++ b) = censusSum a + censusSum b := by
+  simp [censusSum]
+
+theorem censusSum_replicate (k : ℕ) (h : List Twist) :
+    censusSum (List.replicate k h) = (k : ℂ) • twistMatrixFold h := by
+  simp [censusSum, List.map_replicate, List.sum_replicate, Nat.cast_smul_eq_nsmul]
+
+theorem fold_single (t : Twist) : twistMatrixFold [t] = t.toMatrix := by
+  simp [twistMatrixFold]
+
+theorem fold_nil : twistMatrixFold [] = 1 := by simp [twistMatrixFold]
+
+def signed (n : ℤ) (pos neg : Twist) : List (List Twist) :=
+  if 0 ≤ n then List.replicate n.toNat [pos] else List.replicate (-n).toNat [neg]
+
+theorem censusSum_signed (n : ℤ) (pos neg : Twist) (h : neg.toMatrix = -pos.toMatrix) :
+    censusSum (signed n pos neg) = (n : ℂ) • pos.toMatrix := by
+  unfold signed
+  split_ifs with hn
+  · rw [censusSum_replicate, fold_single]
+    congr 1
+    have h2 : ((n.toNat : ℤ)) = n := Int.toNat_of_nonneg hn
+    conv_rhs => rw [← h2]
+    norm_cast
+  · rw [censusSum_replicate, fold_single, h, smul_neg, ← neg_smul]
+    congr 1
+    have : (((-n).toNat : ℤ) : ℂ) = ((-n : ℤ) : ℂ) := by rw [Int.toNat_of_nonneg (by omega)]
+    push_cast at this ⊢
+    rw [this]; ring
+
+theorem integer_form_is_census_sum (t x y z : ℤ) :
+    censusSum (signed t Twist.plus Twist.minus ++ signed x Twist.right Twist.left ++
+      signed y Twist.up Twist.down ++ signed z Twist.slash Twist.backslash) =
+      (Form.toMatrix ⟨t, x, y, z⟩) := by
+  simp only [censusSum_append]
+  rw [censusSum_signed _ _ _ (by simp [Twist.toMatrix]), censusSum_signed _ _ _ (by simp [Twist.toMatrix]),
+    censusSum_signed _ _ _ (by simp [Twist.toMatrix]), censusSum_signed _ _ _ (by simp [Twist.toMatrix])]
+  apply Matrix.ext; intro i j
+  fin_cases i <;> fin_cases j <;>
+    simp [Twist.toMatrix, σx, σy, σz, Form.toMatrix] <;> ring
+
+theorem five_rotation_census :
+    censusSum (List.replicate 3 [] ++ List.replicate 4 [Twist.right, Twist.up]) =
+      (5 : ℂ) • rotation := by
+  rw [censusSum_append, censusSum_replicate, censusSum_replicate, fold_nil]
+  apply Matrix.ext; intro i j
+  fin_cases i <;> fin_cases j <;>
+    simp [twistMatrixFold, Twist.toMatrix, σx, σy, rotation, z, zbar] <;> apply Complex.ext <;> simp <;> norm_num
+
+theorem alternate_histories_cancel :
+    censusSum [[Twist.plus], [Twist.minus]] = 0 := by
+  simp [censusSum, twistMatrixFold, Twist.toMatrix]
+
+end Superposition
+
+
+-- ==========================================
+-- 12. Clifford+T: H·T has infinite order
+-- ==========================================
+
+/-! The Hadamard and the `T = diag(1, ζ₈)` gate both have entries in `ℤ[ζ₈, 1/√2]`, the
+octagonal ring of §6. Their product has infinite order. Proof: if `(HT)ⁿ` were scalar, the
+ratio `ρ` of its eigenvalues would be a root of unity, so `ρ + ρ⁻¹` would be an algebraic
+integer; but `ρ + ρ⁻¹ = −1 − √2/2`, and then `1/2 = (√2/2)²` would be an algebraic integer. -/
+
+section CliffordT
+
+/-- The Hadamard gate. -/
+noncomputable def hadamard : M := (1 / (Real.sqrt 2 : ℂ)) • !![1, 1; 1, -1]
+
+/-- The T gate, `diag(1, ζ₈)`. -/
+noncomputable def tGate : M := !![1, 0; 0, zeta8]
+
+/-- `√2 · H · T`, entries in `ℤ[ζ₈]`. -/
+noncomputable def hT : M := !![1, zeta8; 1, -zeta8]
+
+theorem hadamard_tGate : hadamard * tGate = (1 / (Real.sqrt 2 : ℂ)) • hT := by
+  apply Matrix.ext; intro i j
+  fin_cases i <;> fin_cases j <;>
+    simp [hadamard, tGate, hT, Matrix.mul_apply, Fin.sum_univ_two]
+
+/-- Cayley–Hamilton powers of a 2×2 matrix through its eigenvalues. -/
+theorem pow_two_by_two (A : M) (l1 l2 : ℂ) (htr : A 0 0 + A 1 1 = l1 + l2)
+    (hdet : A 0 0 * A 1 1 - A 0 1 * A 1 0 = l1 * l2) (n : ℕ) :
+    (l1 - l2) • A ^ n = (l1 ^ n - l2 ^ n) • A + (l1 * l2 ^ n - l2 * l1 ^ n) • (1 : M) := by
+  have ch : A * A = (l1 + l2) • A - (l1 * l2) • (1 : M) := by
+    rw [← htr, ← hdet]
+    apply Matrix.ext; intro i j
+    fin_cases i <;> fin_cases j <;>
+      simp [Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    rw [pow_succ, ← smul_mul_assoc, ih, add_mul, smul_mul_assoc, smul_mul_assoc, one_mul, ch]
+    module
+
+theorem half_not_integral : ¬ IsIntegral ℤ ((1 : ℂ) / 2) := by
+  intro h
+  have h1 : ((1 : ℂ) / 2) = algebraMap ℚ ℂ (1 / 2) := by simp
+  rw [h1, isIntegral_algebraMap_iff,
+    IsIntegrallyClosed.isIntegral_iff] at h
+  obtain ⟨y, hy⟩ := h
+  have : (2 * y : ℚ) = 1 := by
+    have : (algebraMap ℤ ℚ y) = (y : ℚ) := rfl
+    rw [this] at hy; rw [hy]; norm_num
+  have : 2 * y = 1 := by exact_mod_cast this
+  omega
+
+theorem rootOfUnity_integral (r : ℂ) (n : ℕ) (hn : 0 < n) (h : r ^ n = 1) : IsIntegral ℤ r :=
+  IsIntegral.of_pow hn (by rw [h]; exact isIntegral_one)
+
+theorem zeta8_ne_zero : zeta8 ≠ 0 := by
+  intro h; have := congrArg Complex.re h; simp [zeta8] at this
+
+theorem sqrt2_ne : (Real.sqrt 2 : ℂ) ≠ 0 := by
+  exact_mod_cast (Real.sqrt_pos.mpr (by norm_num : (0:ℝ) < 2)).ne'
+
+theorem sqrt2_mul_zeta8 : (Real.sqrt 2 : ℂ) * zeta8 = 1 + Complex.I := by
+  apply Complex.ext <;> simp [zeta8] <;> nlinarith [Real.mul_self_sqrt (show (0:ℝ) ≤ 2 by norm_num)]
+
+/-- **`H·T` has infinite order**: no positive power is a scalar. -/
+theorem hT_pow_ne_scalar (n : ℕ) (hn : 1 ≤ n) (c : ℂ) : hT ^ n ≠ c • (1 : M) := by
+  intro hc
+  obtain ⟨s, hs⟩ := IsAlgClosed.exists_pow_nat_eq ((1 - zeta8) ^ 2 - 4 * (-2 * zeta8))
+    (by norm_num : 0 < 2)
+  have hz2 := zeta8_sq
+  have hsq := sqrt2_mul_zeta8
+  have r2 : (Real.sqrt 2 : ℂ) * (Real.sqrt 2 : ℂ) = 2 := by
+    exact_mod_cast Real.mul_self_sqrt (show (0:ℝ) ≤ 2 by norm_num)
+  set l1 := (1 - zeta8 + s) / 2
+  set l2 := (1 - zeta8 - s) / 2
+  have htr : hT 0 0 + hT 1 1 = l1 + l2 := by simp [hT, l1, l2]; ring
+  have hdet : hT 0 0 * hT 1 1 - hT 0 1 * hT 1 0 = l1 * l2 := by
+    simp only [hT, l1, l2, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+      Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one]
+    linear_combination (1/4 : ℂ) * hs
+  have key := congrArg (fun A : M => A 0 1) (pow_two_by_two hT l1 l2 htr hdet n)
+  simp only [hc, Matrix.smul_apply, Matrix.add_apply, Matrix.one_apply] at key
+  simp [hT] at key
+  -- key : (l1 ^ n - l2 ^ n) * zeta8 = 0 (up to form)
+  have hpow : l1 ^ n = l2 ^ n := by
+    rcases key with h | h
+    · exact sub_eq_zero.mp h
+    · exact absurd h zeta8_ne_zero
+  have hprod : l1 * l2 = -2 * zeta8 := by
+    simp only [l1, l2]; linear_combination (-1/4 : ℂ) * hs
+  have hδ : -2 * zeta8 ≠ 0 := by simp [zeta8_ne_zero]
+  have hl2 : l2 ≠ 0 := by intro h; rw [h, mul_zero] at hprod; exact hδ hprod.symm
+  have hl1 : l1 ≠ 0 := by intro h; rw [h, zero_mul] at hprod; exact hδ hprod.symm
+  set ρ := l1 / l2
+  have hρ : ρ ^ n = 1 := by simp [ρ, div_pow, hpow, pow_ne_zero n hl2]
+  have hρi : ρ⁻¹ ^ n = 1 := by rw [inv_pow, hρ, inv_one]
+  have hint : IsIntegral ℤ (ρ + ρ⁻¹) :=
+    (rootOfUnity_integral ρ n (by omega) hρ).add (rootOfUnity_integral ρ⁻¹ n (by omega) hρi)
+  have hval : ρ + ρ⁻¹ = -1 - (Real.sqrt 2 : ℂ) / 2 := by
+    have e1 : ρ + ρ⁻¹ = (l1 + l2) ^ 2 / (l1 * l2) - 2 := by
+      simp only [ρ]; field_simp; ring
+    rw [e1, hprod]
+    have : l1 + l2 = 1 - zeta8 := by simp only [l1, l2]; ring
+    rw [this]
+    have hz := zeta8_ne_zero
+    field_simp
+    linear_combination (-1 : ℂ) * hz2 + hsq
+  rw [hval] at hint
+  have h2 : IsIntegral ℤ ((Real.sqrt 2 : ℂ) / 2) := by
+    have e : (Real.sqrt 2 : ℂ) / 2 = -1 - (-1 - (Real.sqrt 2 : ℂ) / 2) := by ring
+    rw [e]; exact (isIntegral_one (R := ℤ) (B := ℂ)).neg.sub hint
+  have h3 : IsIntegral ℤ ((1 : ℂ) / 2) := by
+    have := h2.mul h2
+    rwa [div_mul_div_comm, r2, show (2:ℂ) * 2 = 4 by norm_num,
+      show (2:ℂ) / 4 = 1 / 2 by norm_num] at this
+  exact half_not_integral h3
+
+/-- **`H·T` has infinite order** on the qubit itself: no positive power is a scalar. -/
+theorem hadamard_t_infinite_order (n : ℕ) (hn : 1 ≤ n) (c : ℂ) :
+    (hadamard * tGate) ^ n ≠ c • (1 : M) := by
+  intro h
+  rw [hadamard_tGate, smul_pow] at h
+  apply hT_pow_ne_scalar n hn ((Real.sqrt 2 : ℂ) ^ n * c)
+  calc hT ^ n = ((Real.sqrt 2 : ℂ) ^ n) • ((1 / (Real.sqrt 2 : ℂ)) ^ n • hT ^ n) := by
+        rw [smul_smul, ← mul_pow, mul_one_div_cancel sqrt2_ne, one_pow, one_smul]
+    _ = ((Real.sqrt 2 : ℂ) ^ n * c) • (1 : M) := by rw [h, smul_smul]
+
+end CliffordT
+
+-- ==========================================
+-- 13. Dense angles
+-- ==========================================
+
+/-! The rotation of §3 is `diag(z, z̄)` with `z = (3+4i)/5 = exp(iθ)`. Since no power of `z`
+is `1`, `θ/2π` is irrational, so the angles `kθ` are dense on the circle (Mathlib's
+`AddCircle.denseRange_zsmul_coe_iff`): count-weighted ways reach every phase about one axis
+to any precision. -/
+
+theorem norm_z : ‖z‖ = 1 := by
+  rw [Complex.norm_def, Complex.normSq_apply]; simp [z]; norm_num
+
+theorem z_exp : z = Complex.exp (Complex.arg z * Complex.I) := by
+  have := Complex.norm_mul_exp_arg_mul_I z
+  rw [norm_z] at this; simpa using this.symm
+
+theorem arg_z_irrational : Irrational (Complex.arg z / (2 * Real.pi)) := by
+  rintro ⟨q, hq⟩
+  have hpos : 0 < q.den := q.den_pos
+  have hθ : (q.den : ℝ) * Complex.arg z = 2 * Real.pi * q.num := by
+    have h2 : (2 * Real.pi) ≠ 0 := by positivity
+    have : Complex.arg z = 2 * Real.pi * (q : ℝ) := by rw [hq]; field_simp
+    rw [this, Rat.cast_def]
+    field_simp
+  apply z_pow_ne_one q.den hpos
+  rw [z_exp, ← Complex.exp_nat_mul]
+  have : (q.den : ℂ) * (Complex.arg z * Complex.I) = q.num * (2 * Real.pi * Complex.I) := by
+    have := congrArg (fun r : ℝ => (r : ℂ)) hθ; push_cast at this
+    linear_combination Complex.I * this
+  rw [this, Complex.exp_int_mul_two_pi_mul_I]
+
+/-- **The angles of the count-weighted rotation's powers are dense on the circle.** -/
+theorem rotation_angles_dense :
+    DenseRange (fun k : ℤ => k • (Complex.arg z : AddCircle (2 * Real.pi))) :=
+  AddCircle.denseRange_zsmul_coe_iff.mpr arg_z_irrational
+
 
 end QLF.QuantumComputer
