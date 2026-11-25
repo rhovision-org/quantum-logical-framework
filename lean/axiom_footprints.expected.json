@@ -2547,6 +2547,126 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeDoubleSlit.marked_coherent": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.marked_expand": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.marked_orthogonal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.marked_visibility_bound": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.mu4_pattern": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.normSq_expI": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.single_time_slit_flat": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.space_is_twoPath": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.space_reciprocity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.space_shift_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.space_time_duality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.tick_amp_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.tick_conservation": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_bright_fringe": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_dark_fringe": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_fringe_period": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_is_twoPath": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_reciprocity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_shift_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_eq_born": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_equal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_expand": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_fringe_term": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_periodic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Tsirelson.chsh_classical": [
     "propext"
   ],

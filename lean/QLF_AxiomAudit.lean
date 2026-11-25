@@ -166,6 +166,7 @@ import QLF_ClosureUncertainty
 import QLF_DiversityPhase
 import QLF_CoincidenceTrivial
 import QLF_AssemblyIndex
+import QLF_TimeDoubleSlit
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -980,3 +981,29 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.AssemblyIndex.strict_gap_up4
 #print axioms QLF.AssemblyIndex.assemblyIndex_lt_closed_up4
 #print axioms QLF.AssemblyIndex.upPotential_le
+
+-- Double slit in time (Double_Slit.md §6): no QLF axiom.
+#print axioms QLF.TimeDoubleSlit.normSq_expI
+#print axioms QLF.TimeDoubleSlit.time_is_twoPath
+#print axioms QLF.TimeDoubleSlit.space_is_twoPath
+#print axioms QLF.TimeDoubleSlit.space_time_duality
+#print axioms QLF.TimeDoubleSlit.twoPath_eq_born
+#print axioms QLF.TimeDoubleSlit.twoPath_fringe_term
+#print axioms QLF.TimeDoubleSlit.twoPath_expand
+#print axioms QLF.TimeDoubleSlit.twoPath_periodic
+#print axioms QLF.TimeDoubleSlit.time_fringe_period
+#print axioms QLF.TimeDoubleSlit.twoPath_equal
+#print axioms QLF.TimeDoubleSlit.time_dark_fringe
+#print axioms QLF.TimeDoubleSlit.time_bright_fringe
+#print axioms QLF.TimeDoubleSlit.single_time_slit_flat
+#print axioms QLF.TimeDoubleSlit.time_shift_iff
+#print axioms QLF.TimeDoubleSlit.space_shift_iff
+#print axioms QLF.TimeDoubleSlit.time_reciprocity
+#print axioms QLF.TimeDoubleSlit.space_reciprocity
+#print axioms QLF.TimeDoubleSlit.marked_coherent
+#print axioms QLF.TimeDoubleSlit.marked_expand
+#print axioms QLF.TimeDoubleSlit.marked_orthogonal
+#print axioms QLF.TimeDoubleSlit.marked_visibility_bound
+#print axioms QLF.TimeDoubleSlit.tick_amp_phase
+#print axioms QLF.TimeDoubleSlit.tick_conservation
+#print axioms QLF.TimeDoubleSlit.mu4_pattern
