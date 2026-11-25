@@ -253,7 +253,7 @@ Every claim above labelled a reading, with its status after this pass. A reading
 | Counts are shared, phase is private ([Consciousness.md](Consciousness.md) §6b) | **theorem**: the same twists in another order fold to opposite phases (`record_blind_to_phase`) | that the private phase is experience (the qualia hypothesis) |
 | Weights are counts of ways (§3a) | **theorem**: `five_rotation_census`, `z_eq_ratio` | normalization in general (§7) |
 | Superdeterminism is undeterminable (§6f) | **settled by the method**: no outcome distribution falsifies it (rule 4) | nothing |
-| Superdeterminism abolishes free will (§6f) | **a fallacy** (Jim): it changes no record, so it cannot remove the selection a record shows | nothing |
+| Superdeterminism abolishes free will (§6f) | **a fallacy** (Jim): it changes no record, so it cannot remove the selection a record shows. Jim adds that the fallacy is practical for good reason: an agent can only deliberate as if its selection is open (Kant's acting "under the idea of freedom", 1785), and in QLF that stance is exactly right from the agent's own perspective, because the outcome is undeterminable in advance (`no_choice_fixed_in_advance`). Wrong as an inference, sound as a working stance | nothing |
 | QLF's selection adds nothing to the logic (§6f) | **by construction**: the selection is the first closure, and closure is ZFA, the only filter | nothing |
 | Expansion of space is a silver-type inflation (§6a) | **open, empirical**: the arithmetic carries a boost (`silver_boost_norm`, `silverDNA_vec`) | a measurement that distinguishes it; none is identified yet |
 | A hadron's dynamics is a qutrit computation (§6b) | **premise applied**: colour-neutral closures sum to zero in `F₃²` (`closure_trits_zero`) | that the strong dynamics is this computation |
@@ -294,6 +294,7 @@ By the method's rule 4 a claim has physical content only if some distribution of
 - M. Zhong et al., *Optically addressable nuclear spins in a solid with a six-hour coherence time*, Nature **517** (2015) 177–180.
 - N. G. de Bruijn, *Algebraic theory of Penrose's non-periodic tilings of the plane, I and II*, Indagationes Mathematicae (Proceedings) **84** (1981) 39–52 and 53–66.
 - D. C. Dennett, *Elbow Room: The Varieties of Free Will Worth Wanting*, MIT Press (1984).
+- I. Kant, *Groundwork of the Metaphysics of Morals* (1785), section III.
 - S. Kochen and E. P. Specker, *The problem of hidden variables in quantum mechanics*, J. Math. Mech. **17** (1967) 59–87.
 - A. Cabello, J. M. Estebaranz and G. García-Alcaine, *Bell–Kochen–Specker theorem: a proof with 18 vectors*, Phys. Lett. A **212** (1996) 183–187.
 - J. H. Conway and S. Kochen, *The free will theorem*, Found. Phys. **36** (2006) 1441–1473.
