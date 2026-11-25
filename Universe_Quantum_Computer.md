@@ -69,7 +69,7 @@ rotation = diag((3+4i)/5, (3−4i)/5)
 
 Two classical facts, cited and not proved in Lean, take the remaining steps:
 
-1. An infinite-order rotation about one axis and another about a non-parallel axis generate a dense subgroup of SU(2). (The same construction about `x` uses the Forms `ŷ` and `(3ŷ + 4ẑ)/5`.) The one-axis half is now proved: the angle `θ` of `(3+4i)/5` has `θ/2π` irrational (`arg_z_irrational`), so the powers of the rotation come arbitrarily close to every phase about its axis (`rotation_angles_dense`, through Mathlib's `AddCircle.denseRange_zsmul_coe_iff`). The two-axis step is the cited part.
+1. An infinite-order rotation about one axis and another about a non-parallel axis generate a dense subgroup of SU(2). (The same construction about `x` uses the Forms `ŷ` and `(3ŷ + 4ẑ)/5`.) The one-axis half is now proved: the angle `θ` of `(3+4i)/5` has `θ/2π` irrational (`arg_z_irrational`), so the powers of the rotation come arbitrarily close to every phase about its axis (`rotation_angles_dense`, through Mathlib's `AddCircle.denseRange_zsmul_coe_iff`). The two-axis step is proved too: every element of SU(2) is a limit of products `D(zᵃ)·H·D(zᵇ)·H·D(zᶜ)` with `D(w) = diag(w, w̄)` and `z = (3+4i)/5`, that is, of rotations about `z` alternated with the same rotation conjugated to the `x` axis by the Hadamard (`su2_dense`). The proof is Euler's `ZXZ` decomposition (`su2_euler`, every SU(2) matrix is `D(e^{iα})·H·D(e^{iβ})·H·D(e^{iγ})`), density of the powers of `z` on the unit circle (`E_mem_closure`), and continuity of the product (`euler_continuous`). The rotation about `x` is conjugation by a Form, not a second count-weighted history.
 2. Dense single-qubit gates plus one entangling two-qubit gate (CNOT) are universal for quantum computation (Barenco et al. 1995).
 
 So what QLF needs to be a universal quantum computer is a **ZFA-native entangling gate**. It has the sign table of one; the gate itself is open.
@@ -307,7 +307,7 @@ So in simulation, shared memes are the selections that closed first.
 ## 7. Open
 
 - **Superposed presence.** §3a shows that a superposition is a census sum of alternate histories. Still open is the specific superposition of a present and an absent pair as one, which needs the presence encoding of §3 stated on census sums rather than on matrices.
-- **Two-axis density and Barenco in Lean.** The one-axis density is proved (§3). Still cited: that two non-parallel infinite-order rotations generate a dense subgroup of SU(2), and Barenco et al.'s universality theorem.
+- **Barenco in Lean.** Density in SU(2) from rotations about two axes is proved (§3, `su2_dense`). Still cited: Barenco et al.'s theorem that dense single-qubit gates plus CNOT are universal. A Lean proof has three stages (controlled-`U` from `A·X·B·X·C`, two-level decomposition of a unitary, routing on `n` qubits), and on the substrate it first needs the entangling gate acting on superposed presence.
 - **Quasicrystal growth as a closure census.** Test whether forced-tile growth (Onoda et al. 1988) is the first-closure rule on the octagonal projection, with the defect rate as the prediction.
 - **Normalization beyond rational phases.** Every rational phase is a ratio of alternatives to their mirror (`rational_phase_is_mirror_ratio`, Hilbert 90). A general SU(2) element is a limit of such ratios, not one; a statement for matrices (a Cayley transform on census sums) is not proved.
 

@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Eighteen results, no axioms.
+  Nineteen results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -80,8 +80,8 @@
      positive power of the Clifford+T product is a scalar.
 
   13. **The rotation's angles are dense** (`arg_z_irrational`, `rotation_angles_dense`): the
-     powers of the §3 rotation approach every phase about its axis. The remaining step to
-     SU(2) density (two non-parallel axes) and Barenco universality stay cited.
+     powers of the §3 rotation approach every phase about its axis. Two-axis SU(2) density is
+     §19; Barenco universality stays cited.
 
   14. **No choice fixed in advance** (`ks_orthogonal`, `ks_each_twice`, `ks_double_count`,
      `no_choice_fixed_in_advance`): the Kochen–Specker theorem in Cabello's eighteen-direction
@@ -100,6 +100,10 @@
 
   18. **Memes transmit the choice, not the phase** (`copy_keeps_record`, `meme_transmits_choice`,
      `meme_does_not_transmit_phase`).
+
+  19. **SU(2) density** (`su2_euler`, `E_mem_closure`, `euler_continuous`, `su2_dense`,
+     `D_z_pow`, `D_z_inv_pow`, `rotation_mul_D_inv`): every `SU(2)` matrix is a limit of
+     products of powers of the count-weighted rotation, its inverse, and the Hadamard.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -1472,5 +1476,240 @@ theorem meme_does_not_transmit_phase :
   norm_num at this
 
 end Memes
+
+-- ==========================================
+-- 19. SU(2) density from the count-weighted rotation and the Hadamard
+-- ==========================================
+
+/-! Every `SU(2)` matrix has Euler angles in the form `D(e^{iα}) · H · D(e^{iβ}) · H · D(e^{iγ})`
+(`su2_euler`), with `D(w) = diag(w, w̄)`. The powers of `z = (3+4i)/5` come arbitrarily close
+to every phase (`E_mem_closure`), and the Euler product is continuous, so every `SU(2)` matrix
+is a limit of products of powers of `rotation = D(z)`, its inverse, and the Hadamard
+(`su2_dense`). This is the two-axis density step that §3 previously cited. -/
+
+section Density
+
+/-- A phase `e^{ix}`. -/
+noncomputable def E (x : ℝ) : ℂ := Complex.exp (x * Complex.I)
+
+theorem E_add (x y : ℝ) : E (x + y) = E x * E y := by
+  simp only [E]; rw [← Complex.exp_add]; congr 1; push_cast; ring
+
+theorem E_star (x : ℝ) : star (E x) = E (-x) := by
+  simp only [E]
+  rw [show (star (Complex.exp (↑x * Complex.I))) = (starRingEnd ℂ) (Complex.exp (↑x * Complex.I))
+    from rfl, ← Complex.exp_conj]
+  congr 1; simp [Complex.conj_ofReal]
+
+theorem E_plus (x : ℝ) : E x + E (-x) = 2 * (Real.cos x : ℂ) := by
+  simp only [E]; rw [Complex.ofReal_cos, Complex.two_cos]; push_cast; ring_nf
+
+theorem E_minus (x : ℝ) : E x - E (-x) = 2 * (Real.sin x : ℂ) * Complex.I := by
+  simp only [E]
+  rw [← Complex.cos_add_sin_I, show ((-x : ℝ) : ℂ) * Complex.I = -(↑x * Complex.I) by push_cast; ring,
+    ← neg_mul, ← Complex.cos_sub_sin_I]
+  push_cast; ring
+
+theorem E_pi_div_two : E (Real.pi / 2) = Complex.I := by
+  simp only [E]
+  rw [← Complex.cos_add_sin_I]
+  push_cast
+  rw [Complex.cos_pi_div_two, Complex.sin_pi_div_two]; ring
+
+theorem polar (a : ℂ) : a = (‖a‖ : ℂ) * E (Complex.arg a) := by
+  simp only [E]; exact (Complex.norm_mul_exp_arg_mul_I a).symm
+
+/-- The diagonal phase gate `diag(w, w̄)`. -/
+noncomputable def D (w : ℂ) : M := Matrix.diagonal ![w, star w]
+
+/-- The Euler product `D u · H · D v · H · D t`. -/
+@[irreducible] noncomputable def euler (u v t : ℂ) : M := D u * hadamard * D v * hadamard * D t
+
+theorem euler_eq (u v t : ℂ) : euler u v t =
+    !![u * t * ((v + star v) / 2), u * star t * ((v - star v) / 2);
+       star u * t * ((v - star v) / 2), star u * star t * ((v + star v) / 2)] := by
+  have r2 : (Real.sqrt 2 : ℂ) * (Real.sqrt 2 : ℂ) = 2 := by
+    exact_mod_cast Real.mul_self_sqrt (show (0:ℝ) ≤ 2 by norm_num)
+  have hs : (Real.sqrt 2 : ℂ) ≠ 0 := sqrt2_ne
+  apply Matrix.ext; intro i j
+  fin_cases i <;> fin_cases j <;>
+    simp [euler, D, hadamard, Matrix.mul_apply, Fin.sum_univ_two, Matrix.diagonal] <;>
+    field_simp <;> rw [pow_two, r2] <;> ring
+
+
+/-- **Powers of the count-weighted phase reach every phase.** -/
+theorem E_mem_closure (x : ℝ) : E x ∈ closure (Set.range fun k : ℤ => z ^ k) := by
+  set θ : AddCircle (2 * Real.pi) := ((Complex.arg z : ℝ) : AddCircle (2 * Real.pi))
+  have hd : DenseRange (fun k : ℤ => k • θ) := rotation_angles_dense
+  let g : AddCircle (2 * Real.pi) → ℂ := fun y => ((AddCircle.toCircle y : Circle) : ℂ)
+  have hg : Continuous g := continuous_induced_dom.comp AddCircle.continuous_toCircle
+  have h2π : ∀ y : ℝ, 2 * Real.pi / (2 * Real.pi) * y = y := by
+    intro y; rw [div_self (by positivity), one_mul]
+  have hθ : g θ = z := by
+    simp only [g, θ, AddCircle.toCircle_apply_mk, Circle.coe_exp, h2π]
+    exact z_exp.symm
+  have hgk : ∀ k : ℤ, g (k • θ) = z ^ k := by
+    intro k; simp only [g, AddCircle.toCircle_zsmul, Circle.coe_zpow]
+    rw [← hθ]
+  have hgx : g (x : AddCircle (2 * Real.pi)) = E x := by
+    simp only [g, AddCircle.toCircle_apply_mk, Circle.coe_exp, E, h2π]
+  have hx : (x : AddCircle (2 * Real.pi)) ∈ closure (Set.range fun k : ℤ => k • θ) := by
+    rw [hd.closure_eq]; trivial
+  rw [← hgx]
+  exact map_mem_closure hg hx (by rintro _ ⟨k, rfl⟩; exact ⟨k, (hgk k).symm⟩)
+
+/-- The shape of an `SU(2)` matrix: `[[a, −b̄], [b, ā]]` with `|a|² + |b|² = 1`. -/
+theorem su2_shape (U : M) (hU : U ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ) :
+    U 1 1 = star (U 0 0) ∧ U 0 1 = -star (U 1 0) ∧
+      Complex.normSq (U 0 0) + Complex.normSq (U 1 0) = 1 := by
+  rw [Matrix.mem_specialUnitaryGroup_iff] at hU
+  obtain ⟨hu, hdet⟩ := hU
+  have hsU : star U * U = 1 := Matrix.mem_unitaryGroup_iff'.mp hu
+  have hinv : U⁻¹ = star U := Matrix.inv_eq_left_inv hsU
+  have hadj : star U = Matrix.adjugate U := by
+    rw [← hinv, Matrix.inv_def, hdet]; simp
+  rw [Matrix.adjugate_fin_two] at hadj
+  have e00 := congrArg (fun A : M => A 0 0) hadj
+  have e01 := congrArg (fun A : M => A 1 0) hadj
+  have n00 := congrArg (fun A : M => A 0 0) hsU
+  simp [Matrix.star_apply, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 n00
+  refine ⟨e00.symm, ?_, ?_⟩
+  · have := congrArg star e01; simp at this; rw [this]; simp
+  · apply Complex.ofReal_injective
+    push_cast
+    rw [Complex.normSq_eq_conj_mul_self, Complex.normSq_eq_conj_mul_self]
+    exact n00
+
+theorem E_neg_pi_div_two : E (-(Real.pi / 2)) = -Complex.I := by
+  rw [← E_star, E_pi_div_two]; simp
+
+/-- **Euler angles.** Every `SU(2)` matrix is `D(e^{iα}) · H · D(e^{iβ}) · H · D(e^{iγ})`. -/
+theorem su2_euler (U : M) (hU : U ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ) :
+    ∃ α β γ : ℝ, U = euler (E α) (E β) (E γ) := by
+  obtain ⟨h11, h01, hn⟩ := su2_shape U hU
+  set a := U 0 0 with ha_def
+  set b := U 1 0 with hb_def
+  have hnorm : ‖a‖ ^ 2 + ‖b‖ ^ 2 = 1 := by
+    rw [← Complex.normSq_eq_norm_sq, ← Complex.normSq_eq_norm_sq]; exact hn
+  set A := Complex.arg a
+  set B := Complex.arg b
+  set φ := Real.arccos ‖a‖
+  have ha1 : ‖a‖ ≤ 1 := by nlinarith [norm_nonneg a, norm_nonneg b]
+  have hc : Real.cos φ = ‖a‖ := Real.cos_arccos (by linarith [norm_nonneg a]) ha1
+  have hs : Real.sin φ = ‖b‖ := by
+    rw [Real.sin_arccos, show 1 - ‖a‖ ^ 2 = ‖b‖ ^ 2 by linarith]
+    exact Real.sqrt_sq (norm_nonneg b)
+  refine ⟨(A - B + Real.pi / 2) / 2, φ, (A + B - Real.pi / 2) / 2, ?_⟩
+  set u := E ((A - B + Real.pi / 2) / 2) with hu_def
+  set t := E ((A + B - Real.pi / 2) / 2) with ht_def
+  have h1 : u * t = E A := by rw [hu_def, ht_def, ← E_add]; congr 1; ring
+  have h2 : star u * t = E B * (-Complex.I) := by
+    rw [hu_def, ht_def, E_star, ← E_add,
+      show -((A - B + Real.pi / 2) / 2) + (A + B - Real.pi / 2) / 2 = B + -(Real.pi / 2) by ring,
+      E_add, E_neg_pi_div_two]
+  have h3 : u * star t = E (-B) * Complex.I := by
+    have := congrArg star h2
+    simp only [star_mul', star_star, star_neg, E_star] at this
+    have hI : star Complex.I = -Complex.I := Complex.conj_I
+    rw [hI] at this
+    linear_combination this
+  have h4 : star u * star t = E (-A) := by
+    have := congrArg star h1
+    simp only [star_mul', E_star] at this
+    exact this
+  have hpa : a = (‖a‖ : ℂ) * E A := polar a
+  have hpb : b = (‖b‖ : ℂ) * E B := polar b
+  have hplus : E φ + star (E φ) = 2 * (‖a‖ : ℂ) := by rw [E_star, E_plus, hc]
+  have hminus : E φ - star (E φ) = 2 * (‖b‖ : ℂ) * Complex.I := by rw [E_star, E_minus, hs]
+  have hsb : star b = (‖b‖ : ℂ) * E (-B) := by
+    conv_lhs => rw [hpb]
+    rw [star_mul', E_star]; simp
+  have hsa : star a = (‖a‖ : ℂ) * E (-A) := by
+    conv_lhs => rw [hpa]
+    rw [star_mul', E_star]; simp
+  rw [euler_eq]
+  apply Matrix.ext; intro i j
+  fin_cases i <;> fin_cases j
+  · change a = u * t * ((E φ + star (E φ)) / 2)
+    rw [hplus, h1]; conv_lhs => rw [hpa]
+    ring
+  · change U 0 1 = u * star t * ((E φ - star (E φ)) / 2)
+    rw [h01, hsb, hminus, h3]
+    linear_combination (-(‖b‖ : ℂ) * E (-B)) * Complex.I_sq
+  · change b = star u * t * ((E φ - star (E φ)) / 2)
+    rw [hminus, h2]; conv_lhs => rw [hpb]
+    linear_combination ((‖b‖ : ℂ) * E B) * Complex.I_sq
+  · change U 1 1 = star u * star t * ((E φ + star (E φ)) / 2)
+    rw [h11, hsa, hplus, h4]; ring
+
+theorem euler_continuous : Continuous fun q : ℂ × ℂ × ℂ => euler q.1 q.2.1 q.2.2 := by
+  unfold euler D
+  have hD : ∀ f : ℂ × ℂ × ℂ → ℂ, Continuous f →
+      Continuous fun q => (Matrix.diagonal ![f q, star (f q)] : M) := by
+    intro f hf
+    apply Continuous.matrix_diagonal
+    refine continuous_pi fun i => ?_
+    fin_cases i
+    · simpa using hf
+    · simpa using hf.star
+  refine ((((hD _ continuous_fst).matrix_mul continuous_const).matrix_mul
+    (hD _ (continuous_fst.comp continuous_snd))).matrix_mul continuous_const).matrix_mul
+    (hD _ (continuous_snd.comp continuous_snd))
+
+/-- **SU(2) density.** Every `SU(2)` matrix is a limit of products
+`D(z^j) · H · D(z^k) · H · D(z^l)` of powers of the count-weighted rotation and the Hadamard. -/
+theorem su2_dense (U : M) (hU : U ∈ Matrix.specialUnitaryGroup (Fin 2) ℂ) :
+    U ∈ closure (Set.range fun p : ℤ × ℤ × ℤ => euler (z ^ p.1) (z ^ p.2.1) (z ^ p.2.2)) := by
+  obtain ⟨α, β, γ, hE⟩ := su2_euler U hU
+  rw [hE]
+  have hp : ((E α, E β, E γ) : ℂ × ℂ × ℂ) ∈ closure
+      ((Set.range fun k : ℤ => z ^ k) ×ˢ ((Set.range fun k : ℤ => z ^ k) ×ˢ
+        (Set.range fun k : ℤ => z ^ k))) := by
+    rw [closure_prod_eq, closure_prod_eq]
+    exact ⟨E_mem_closure α, E_mem_closure β, E_mem_closure γ⟩
+  have hmaps : Set.MapsTo (fun q : ℂ × ℂ × ℂ => euler q.1 q.2.1 q.2.2)
+      ((Set.range fun k : ℤ => z ^ k) ×ˢ ((Set.range fun k : ℤ => z ^ k) ×ˢ
+        (Set.range fun k : ℤ => z ^ k)))
+      (Set.range fun p : ℤ × ℤ × ℤ => euler (z ^ p.1) (z ^ p.2.1) (z ^ p.2.2)) := by
+    intro q hq
+    obtain ⟨⟨j, hj⟩, ⟨k, hk⟩, ⟨l, hl⟩⟩ := hq
+    exact ⟨(j, k, l), by simp only [hj, hk, hl]⟩
+  exact map_mem_closure (f := fun q : ℂ × ℂ × ℂ => euler q.1 q.2.1 q.2.2)
+    (x := (E α, E β, E γ)) euler_continuous hp hmaps
+
+/-- The diagonal gates are the rotation's powers: `D(z) = rotation`. -/
+theorem D_z : D z = rotation := by
+  simp only [D, rotation]
+  congr 1
+  ext i; fin_cases i
+  · rfl
+  · show star z = zbar
+    apply Complex.ext <;> simp [z, zbar]; ring
+
+theorem D_mul (u w : ℂ) : D (u * w) = D u * D w := by
+  simp only [D, Matrix.diagonal_mul_diagonal]
+  congr 1; ext i; fin_cases i <;> simp
+
+theorem D_one : D 1 = 1 := by
+  simp only [D]; rw [← Matrix.diagonal_one]; congr 1; ext i; fin_cases i <;> simp
+
+/-- `D(z^k)` is `rotation^k` for `k ≥ 0` and the `k`-th power of `rotation`'s inverse
+`D(z⁻¹)` for `k < 0`. -/
+theorem D_z_pow (n : ℕ) : D (z ^ n) = rotation ^ n := by
+  induction n with
+  | zero => simp [D_one]
+  | succ n ih => rw [pow_succ, D_mul, ih, D_z, pow_succ]
+
+theorem D_z_inv_pow (n : ℕ) : D (z ^ (-(n : ℤ))) = (D z⁻¹) ^ n := by
+  induction n with
+  | zero => simp [D_one]
+  | succ n ih =>
+    rw [show -((n + 1 : ℕ) : ℤ) = -(n : ℤ) + -1 by push_cast; ring, zpow_add₀ z_ne_zero, D_mul, ih,
+      zpow_neg_one, pow_succ]
+
+theorem rotation_mul_D_inv : rotation * D z⁻¹ = 1 := by
+  rw [← D_z, ← D_mul, mul_inv_cancel₀ z_ne_zero, D_one]
+
+end Density
 
 end QLF.QuantumComputer
