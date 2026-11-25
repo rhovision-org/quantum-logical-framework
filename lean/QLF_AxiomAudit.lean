@@ -87,6 +87,7 @@ import QLF_RelativityScale
 import QLF_LorentzSymbol
 import QLF_BoostCovariance
 import QLF_InteractingKinematics
+import QLF_BoostStates
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -866,6 +867,23 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.InteractingKinematics.momChar_eq
 #print axioms QLF.InteractingKinematics.twoBody_lattice_conservation
 #print axioms QLF.InteractingKinematics.scattering_latticeConserving
+
+-- Stage 4a: the frame-comparison map's algebra; amplitude covariance is numerical only.
+#print axioms QLF.BoostStates.chiral_mul
+#print axioms QLF.BoostStates.chiral_one
+#print axioms QLF.BoostStates.handed_eq_chiral
+#print axioms QLF.BoostStates.beta_chiral_beta
+#print axioms QLF.BoostStates.chiralAct_one
+#print axioms QLF.BoostStates.chiralAct_mul
+#print axioms QLF.BoostStates.inv_neg_two
+#print axioms QLF.BoostStates.chiralAct_neg
+#print axioms QLF.BoostStates.chiralAct_chirality
+#print axioms QLF.BoostStates.chiralAct_of_unitary
+#print axioms QLF.BoostStates.massStep_add
+#print axioms QLF.BoostStates.halfWalk_eq_conj
+#print axioms QLF.BoostStates.halfWalk_unitary
+#print axioms QLF.BoostStates.halfWalk_dispersion
+#print axioms QLF.BoostStates.dirac_boostZ_covariant
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self
