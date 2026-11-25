@@ -265,6 +265,52 @@ theorem space_reciprocity (a : ℂ) (ha : a ≠ 0) (x₁ x₂ : ℝ) (hx : x₂ 
     2 * π ≤ q * |x₂ - x₁| :=
   reciprocity_of_shift _ q (sub_ne_zero.mpr hx) hq ((space_shift_iff a ha x₁ x₂ q).mp hper)
 
+/-! ## §3b On the light cone time and space are one slit
+
+`space_time_duality` says the pattern cannot tell a time slit from a space slit with the same
+accumulated phase. On the light cone that holds with no matching condition at all: for a separation
+with zero interval running with the light (`Δt = Δx`, `c = 1`), read at the light dispersion
+`ω = k`, the two patterns coincide at every frequency (`light_cone_duality`). Off the cone the
+interval's sign tells them apart: a purely timelike pair and a purely spacelike-degenerate pair at the
+same frequency give a dark and a bright fringe (`off_cone_distinguishable`). The dispersion `ω = k`
+is an input here (the kinetic reading of `QLF_LorentzSymbol`), not derived. -/
+
+/-- The `1+1` interval of a separation, `c = 1`. -/
+def interval (dt dx : ℝ) : ℝ := dt ^ 2 - dx ^ 2
+
+/-- A separation running with the light has zero interval. -/
+theorem interval_null (dt dx : ℝ) (h : dt = dx) : interval dt dx = 0 := by
+  unfold interval
+  rw [h]
+  ring
+
+/-- Zero interval means `Δt = ±Δx`. -/
+theorem interval_eq_zero_iff (dt dx : ℝ) : interval dt dx = 0 ↔ dt = dx ∨ dt = -dx := by
+  unfold interval
+  constructor
+  · intro h
+    have h' : (dt - dx) * (dt + dx) = 0 := by ring_nf; linarith
+    rcases mul_eq_zero.mp h' with h1 | h1
+    · left; linarith
+    · right; linarith
+  · rintro (h | h) <;> rw [h] <;> ring
+
+/-- **On the light cone a time slit is a space slit.** For a null separation running with the light
+(`t₂ − t₁ = x₂ − x₁`), read at the light dispersion `ω = k`, the time and space patterns are equal
+at every frequency. -/
+theorem light_cone_duality (a₁ a₂ : ℂ) (t₁ t₂ x₁ x₂ ω : ℝ) (hnull : t₂ - t₁ = x₂ - x₁) :
+    timeIntensity a₁ a₂ t₁ t₂ ω = spaceIntensity a₁ a₂ x₁ x₂ ω :=
+  space_time_duality a₁ a₂ t₁ t₂ ω x₁ x₂ ω (by rw [hnull])
+
+/-- **Off the cone the interval tells them apart.** A time separation of one with no space
+separation (interval `1`) read at `ω = k = π`: the time pattern is dark and the space pattern bright. -/
+theorem off_cone_distinguishable :
+    interval 1 0 = 1 ∧ timeIntensity 1 1 0 1 π = 0 ∧ spaceIntensity 1 1 0 0 π = 4 := by
+  refine ⟨by unfold interval; norm_num, time_dark_fringe 1 0 1 π (by ring), ?_⟩
+  rw [space_is_twoPath, sub_self, mul_zero, twoPath_equal, Real.cos_zero]
+  simp
+  norm_num
+
 /-! ## §4 Which-time records -/
 
 section Records

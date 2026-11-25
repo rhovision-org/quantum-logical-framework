@@ -2547,6 +2547,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeDoubleSlit.interval_eq_zero_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.interval_null": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.light_cone_duality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeDoubleSlit.marked_coherent": [
     "Classical.choice",
     "Quot.sound",
@@ -2573,6 +2588,11 @@
     "propext"
   ],
   "QLF.TimeDoubleSlit.normSq_expI": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.off_cone_distinguishable": [
     "Classical.choice",
     "Quot.sound",
     "propext"

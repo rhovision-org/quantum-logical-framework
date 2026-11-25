@@ -72,6 +72,7 @@ In QLF time is synthesized as a count of ticks and frequency is phase per tick (
 |---|---|
 | Both patterns are one function `twoPath a₁ a₂ φ = \|a₁ + a₂e^{iφ}\|²`, at `φ = ω·Δt` in time and `φ = k·Δx` in space. The common phase of the first slit drops out, so only the separation matters | `time_is_twoPath`, `space_is_twoPath` |
 | Equal accumulated phase gives equal intensity: the time and space double slits are the same pattern | `space_time_duality` |
+| On the light cone (`Δt = Δx`, `ω = k`) the time and space patterns are equal at every frequency; off the cone the interval tells them apart | `light_cone_duality`, `off_cone_distinguishable` |
 | The pattern is the Born weight of the event "either slit", and the fringe is its pairwise interference term `I₂` from [`Interference_NoGo.md`](Interference_NoGo.md) | `twoPath_eq_born`, `twoPath_fringe_term` |
 | The spectrum repeats every `2π/Δt` in frequency | `time_fringe_period` |
 | Equal slits give `2\|a\|²(1 + cos ωΔt)`: exactly dark at `ωΔt = π`, four times one slit at `ωΔt = 2πn` | `twoPath_equal`, `time_dark_fringe`, `time_bright_fringe` |
@@ -95,6 +96,8 @@ The double slit in space and the double slit in time are the two conjugate pairs
 | time–energy | time, `Δt` | frequency `ω` | a shift `p` is a symmetry iff `p·Δt ∈ 2πℤ` (`time_shift_iff`); `2π/\|Δt\|` is a spacing and every positive spacing obeys `p·\|Δt\| ≥ 2π` (`time_reciprocity`) | `ΔE·Δt = h` for the least spacing (`E = ℏω`) |
 
 The two rows are one theorem read twice, because both patterns are `twoPath` of the accumulated phase (`space_time_duality`). Two slits close together in time give coarse fringes in energy; slits far apart give fine ones. This is the Fourier reciprocity between a variable and its conjugate.
+
+**At light speed time and space are the same slit.** On the light cone the interval is zero, so the sign that separates time from space is gone. For a separation running with the light (`Δt = Δx`, `c = 1`), read at the light dispersion `ω = k`, the time and space patterns are equal at every frequency with no matching condition (`light_cone_duality`; `interval_eq_zero_iff` gives `Δt = ±Δx`). Every substrate step runs at `c` ([`lean/QLF_Inertia.lean`](lean/QLF_Inertia.lean)), so on the substrate a step of distance and a tick of time are the same thing. Off the cone they come apart: a time separation of one with no space separation (interval `1`) gives a dark fringe in time and a bright one in space at the same frequency (`off_cone_distinguishable`). The dispersion `ω = k` is an input here, the kinetic reading of [`lean/QLF_LorentzSymbol.lean`](lean/QLF_LorentzSymbol.lean), not a result.
 
 Two things this section does not claim. First, these are exact statements about the **fringe spacing**, not the variance inequalities `Δx·Δp ≥ ℏ/2` and `Δt·ΔE ≥ ℏ/2`; the `ℏ/2` quantum is [`lean/QLF_Uncertainty.lean`](lean/QLF_Uncertainty.lean)'s and the sharp Shannon form is the entropic relation in [`UncertaintyPrinciple.md`](UncertaintyPrinciple.md) §3a. Second, `ℏ` enters only as the conversion `E = ℏω`, `p = ℏk`; nothing here derives it. The second face of uncertainty, that learning which slit costs the fringe, is the record bound of §6 (`marked_visibility_bound`), and it holds in both rows for the same reason.
 

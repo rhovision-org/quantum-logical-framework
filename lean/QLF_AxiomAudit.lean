@@ -1000,6 +1000,10 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TimeDoubleSlit.space_shift_iff
 #print axioms QLF.TimeDoubleSlit.time_reciprocity
 #print axioms QLF.TimeDoubleSlit.space_reciprocity
+#print axioms QLF.TimeDoubleSlit.interval_null
+#print axioms QLF.TimeDoubleSlit.interval_eq_zero_iff
+#print axioms QLF.TimeDoubleSlit.light_cone_duality
+#print axioms QLF.TimeDoubleSlit.off_cone_distinguishable
 #print axioms QLF.TimeDoubleSlit.marked_coherent
 #print axioms QLF.TimeDoubleSlit.marked_expand
 #print axioms QLF.TimeDoubleSlit.marked_orthogonal
