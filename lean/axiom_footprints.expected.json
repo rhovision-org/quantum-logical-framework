@@ -1496,6 +1496,77 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LocalityDefinitions.causal_not_reachable": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.census_postselection_signals": [
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.closure_timelike": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.no_history_connects": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_legs_from_one_event": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_lorentz_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_not_closed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.pair_endpoints_spacelike": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.pair_shared_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.prefixSpacelike_not_spacelike": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.reachable_causal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.shared_closure_vs_reachable": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.straight_run_null": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.tick_causal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.tick_reading_nondegenerate": [
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.zero_displacement_degenerate": [
+    "propext"
+  ],
   "QLF.LorentzCover.properOrthochronous_id": [
     "Classical.choice",
     "Quot.sound",
@@ -2037,6 +2108,71 @@
     "propext"
   ],
   "QLF.PerspectiveHolography.two_body_dictionary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.chsh_factorizable_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.fold_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.jointFold_factorizes": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.local_expectation_local": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.locality_profile": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_factorizable_model": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_signalling": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_signalling_typed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.perspective_locality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.perspective_locality_nontrivial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.probT_nonneg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.probT_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.singlet_outcome_dependent": [
     "Classical.choice",
     "Quot.sound",
     "propext"

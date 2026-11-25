@@ -370,5 +370,7 @@ lean_lib QLF where
     `QLF_DiversityPhase,
     `QLF_CoincidenceTrivial,
     `QLF_AssemblyIndex,
-    `QLF_PossibilityGrowth
+    `QLF_PossibilityGrowth,
+    `QLF_LocalityDefinitions,
+    `QLF_PerspectiveLocality
   ]
