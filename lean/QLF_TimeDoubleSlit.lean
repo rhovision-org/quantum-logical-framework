@@ -311,6 +311,57 @@ theorem off_cone_distinguishable :
   simp
   norm_num
 
+/-! ## §3c The reverse-time perspective sees the same fringes
+
+Read the experiment backwards: the instants become `−t₁`, `−t₂` and every amplitude is replaced by
+its conjugate (time reversal is the Hermitian conjugate, `eval_dagger`, [`Reversibility.md`]).
+The reversed amplitude is the conjugate of the forward one (`reversed_amp`), so the reverse-time
+perspective records the identical spectrum (`time_reversed_perspective`). Reversing the instants
+alone, without conjugating, is the forward pattern read at the opposite frequency
+(`reverse_is_negative_frequency`). What the two perspectives share is the Born weight, which is
+blind to conjugation; what they do not share is the amplitude, each holding the other's conjugate
+phase (`reversed_amp_differs`). So the time direction is not in the fringes; it is in the phase, and
+the phase is held by a perspective. -/
+
+private theorem conj_phase (r : ℝ) : (starRingEnd ℂ) ((r : ℂ) * I) = ((-r : ℝ) : ℂ) * I := by
+  rw [map_mul, Complex.conj_ofReal, Complex.conj_I]
+  push_cast
+  ring
+
+/-- The reverse-time amplitude is the conjugate of the forward one. -/
+theorem reversed_amp (a₁ a₂ : ℂ) (t₁ t₂ ω : ℝ) :
+    timeAmp ((starRingEnd ℂ) a₁) ((starRingEnd ℂ) a₂) (-t₁) (-t₂) ω =
+      (starRingEnd ℂ) (timeAmp a₁ a₂ t₁ t₂ ω) := by
+  unfold timeAmp
+  rw [map_add, map_mul, map_mul, ← Complex.exp_conj, ← Complex.exp_conj, conj_phase, conj_phase]
+  congr 4 <;> ring_nf
+
+/-- **The reverse-time perspective sees the same fringes.** -/
+theorem time_reversed_perspective (a₁ a₂ : ℂ) (t₁ t₂ ω : ℝ) :
+    timeIntensity ((starRingEnd ℂ) a₁) ((starRingEnd ℂ) a₂) (-t₁) (-t₂) ω =
+      timeIntensity a₁ a₂ t₁ t₂ ω := by
+  unfold timeIntensity
+  rw [reversed_amp, Complex.normSq_conj]
+
+/-- **But the two perspectives do not share the amplitude.** A single slit at `t = 0` with amplitude
+`i` reads `i` forward and `−i` reversed: the reversed perspective holds the conjugate phase. Only the
+conjugation-blind weight is common to both. -/
+theorem reversed_amp_differs :
+    timeAmp ((starRingEnd ℂ) I) ((starRingEnd ℂ) 0) (-0) (-0) 0 ≠ timeAmp I 0 0 0 0 := by
+  unfold timeAmp
+  simp only [neg_zero, mul_zero, Complex.ofReal_zero, zero_mul, Complex.exp_zero, mul_one,
+    map_zero, add_zero, Complex.conj_I]
+  intro h
+  have h2 := congrArg Complex.im h
+  simp at h2
+  norm_num at h2
+
+/-- Reversing the instants alone is the forward pattern at the opposite frequency. -/
+theorem reverse_is_negative_frequency (a₁ a₂ : ℂ) (t₁ t₂ ω : ℝ) :
+    timeIntensity a₁ a₂ (-t₁) (-t₂) ω = timeIntensity a₁ a₂ t₁ t₂ (-ω) := by
+  unfold timeIntensity timeAmp
+  congr 4 <;> ring_nf
+
 /-! ## §4 Which-time records -/
 
 section Records

@@ -1004,6 +1004,10 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TimeDoubleSlit.interval_eq_zero_iff
 #print axioms QLF.TimeDoubleSlit.light_cone_duality
 #print axioms QLF.TimeDoubleSlit.off_cone_distinguishable
+#print axioms QLF.TimeDoubleSlit.reversed_amp
+#print axioms QLF.TimeDoubleSlit.time_reversed_perspective
+#print axioms QLF.TimeDoubleSlit.reversed_amp_differs
+#print axioms QLF.TimeDoubleSlit.reverse_is_negative_frequency
 #print axioms QLF.TimeDoubleSlit.marked_coherent
 #print axioms QLF.TimeDoubleSlit.marked_expand
 #print axioms QLF.TimeDoubleSlit.marked_orthogonal

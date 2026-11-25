@@ -2597,6 +2597,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeDoubleSlit.reverse_is_negative_frequency": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.reversed_amp": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.reversed_amp_differs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeDoubleSlit.single_time_slit_flat": [
     "Classical.choice",
     "Quot.sound",
@@ -2653,6 +2668,11 @@
     "propext"
   ],
   "QLF.TimeDoubleSlit.time_reciprocity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_reversed_perspective": [
     "Classical.choice",
     "Quot.sound",
     "propext"
