@@ -278,4 +278,108 @@ theorem reversal_vs_dagger_differ :
       dagger [Twist.up, Twist.left, Twist.down, Twist.right] := by
   decide
 
+-- ==========================================
+-- §5  Every possible reversed reading exists, and each is inside the census
+-- ==========================================
+
+/-- Reverse handedness on the axes `s` selects, keep it on the others. -/
+def flipBy (s : Axis → Bool) (t : Twist) : Twist := if s (twistAxis t) then t.conj else t
+
+/-- A reversed reading: reverse the order, and reverse handedness on the axes `s` selects.
+    `s` constant `false` is pure reversal; `s` constant `true` is `dagger`. -/
+def readingBy (s : Axis → Bool) (w : List Twist) : List Twist := (w.map (flipBy s)).reverse
+
+theorem twistAxis_flipBy (s : Axis → Bool) (t : Twist) : twistAxis (flipBy s t) = twistAxis t := by
+  unfold flipBy; split
+  · exact twistAxis_conj t
+  · rfl
+
+theorem flipBy_flipBy (s : Axis → Bool) (t : Twist) : flipBy s (flipBy s t) = t := by
+  unfold flipBy
+  by_cases h : s (twistAxis t) <;> simp [h, twistAxis_conj, QLF.Majorana.Twist.conj_conj]
+
+/-- Every reversed reading is an involution. -/
+theorem readingBy_involutive (s : Axis → Bool) (w : List Twist) :
+    readingBy s (readingBy s w) = w := by
+  simp [readingBy, List.map_reverse, List.map_map, Function.comp_def, flipBy_flipBy]
+
+theorem readingBy_false (w : List Twist) : readingBy (fun _ => false) w = w.reverse := by
+  have h : flipBy (fun _ => false) = id := by funext t; simp [flipBy]
+  simp [readingBy, h]
+
+theorem readingBy_true (w : List Twist) :
+    readingBy (fun _ => true) w = QLF.ClosureUnitarity.dagger w := by
+  have h : flipBy (fun _ => true) = Twist.conj := by funext t; simp [flipBy]
+  simp [readingBy, h, QLF.ClosureUnitarity.dagger]
+
+/-- A reading reverses handedness exactly on the axes it selects. -/
+theorem handednessOn_map_flipBy (s : Axis → Bool) (a : Axis) (w : List Twist) :
+    handednessOn a (w.map (flipBy s)) = if s a then - handednessOn a w else handednessOn a w := by
+  induction w with
+  | nil => simp [handednessOn]
+  | cons t rest ih =>
+    rw [List.map_cons, handednessOn_cons, handednessOn_cons, ih, twistAxis_flipBy]
+    by_cases hta : twistAxis t = a
+    · subst hta
+      by_cases hs : s (twistAxis t)
+      · simp [flipBy, hs, handedness_conj]; ring
+      · simp [flipBy, hs]
+    · by_cases hs : s a <;> simp [hta, hs]
+
+theorem handednessOn_readingBy (s : Axis → Bool) (a : Axis) (w : List Twist) :
+    handednessOn a (readingBy s w) = if s a then - handednessOn a w else handednessOn a w := by
+  unfold readingBy
+  rw [handednessOn_reverse, handednessOn_map_flipBy]
+
+/-- **Every reversed reading maps closures onto closures.** -/
+theorem readingBy_closure_iff (s : Axis → Bool) (w : List Twist) :
+    countBalanced (readingBy s w) ↔ countBalanced w := by
+  rw [zfa_iff_handedness_balanced, zfa_iff_handedness_balanced]
+  refine forall_congr' fun a => ?_
+  rw [handednessOn_readingBy]
+  split <;> constructor <;> intro h <;> linarith
+
+/-- **Every reversed reading of the census is the census.** Each closure is the reversed
+    reading of a closure (its own reading), for every choice of `s`. -/
+theorem every_reading_is_the_census (s : Axis → Bool) (w : List Twist) :
+    countBalanced w ↔ ∃ v : List Twist, countBalanced v ∧ readingBy s v = w :=
+  ⟨fun hw => ⟨readingBy s w, (readingBy_closure_iff s w).2 hw, readingBy_involutive s w⟩,
+   fun ⟨v, hv, hvw⟩ => hvw ▸ (readingBy_closure_iff s v).2 hv⟩
+
+/-- The selector named by four booleans, one per axis `I, X, Y, Z`. -/
+def sel (b : Bool × Bool × Bool × Bool) : Axis → Bool
+  | Axis.I => b.1
+  | Axis.X => b.2.1
+  | Axis.Y => b.2.2.1
+  | Axis.Z => b.2.2.2
+
+def allSelectors : List (Bool × Bool × Bool × Bool) :=
+  [false, true].flatMap fun a => [false, true].flatMap fun b =>
+    [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d)
+
+/-- A closure that touches every axis. -/
+def fullClosure : List Twist :=
+  [Twist.up, Twist.right, Twist.slash, Twist.plus,
+   Twist.down, Twist.left, Twist.backslash, Twist.minus]
+
+theorem fullClosure_closes : countBalanced fullClosure := by
+  unfold countBalanced fullClosure; decide
+
+/-- **All sixteen reversed readings of one closure exist and are different histories**, and each
+    is a closure. There is not one reversed universe but one per choice of which handedness
+    components to reverse, all inside the same census. -/
+theorem sixteen_reversed_readings :
+    allSelectors.length = 16 ∧
+      (allSelectors.map fun b => readingBy (sel b) fullClosure).Nodup ∧
+      ∀ b ∈ allSelectors, countBalanced (readingBy (sel b) fullClosure) :=
+  ⟨by decide, by decide, fun b _ => (readingBy_closure_iff (sel b) fullClosure).2 fullClosure_closes⟩
+
+/-- **The selection among them is ours, and it is visible.** Closure admits every one of the
+    sixteen readings, so ZFA does not choose among them; and the reading determines the choice,
+    so two different selections never give the same reversed history. -/
+theorem selection_identifiable :
+    ∀ b ∈ allSelectors, ∀ b' ∈ allSelectors,
+      readingBy (sel b) fullClosure = readingBy (sel b') fullClosure → b = b' := by
+  decide
+
 end QLF.TimeReversalPerspective

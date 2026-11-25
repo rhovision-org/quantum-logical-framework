@@ -2,21 +2,22 @@
 
 [Quantum Logical Framework (QLF)](README.md) · [Theory index](Theory_Of_Everything.md) · [Time-reversed clock domains](Time_Reversed_Clock_Domains.md) · [Reversibility](Reversibility.md) · [Time](Time.md)
 
-Jim, 2026-11-25: *"Time and space are identical at light speed."* *"The interval is by perspective. This leads into our next topic. The time reverse universe. No singular reverse time perspective universe, except by perspective."* *"The relevance is that even reverse time exists by perspective."* *"Handedness is the distinction."*
+Jim, 2026-11-25: *"Time and space are identical at light speed."* *"The interval is by perspective. This leads into our next topic. The time reverse universe. No singular reverse time perspective universe, except by perspective."* *"The relevance is that even reverse time exists by perspective."* *"Handedness is the distinction."* *"All possible time reverse universes exist"*, *"allowing our selection among them."*
 
 Lean anchor: [`lean/QLF_TimeReversalPerspective.lean`](lean/QLF_TimeReversalPerspective.lean). No axiom is added. It builds on [`QLF_Minkowski`](lean/QLF_Minkowski.lean) (the state is Minkowski space), [`QLF_ClockPairing`](lean/QLF_ClockPairing.lean) (the paired-domain map `J`) and [`QLF_Motives`](lean/QLF_Motives.lean).
 
-## 1. The statement, in three parts
+## 1. The statement, in five parts
 
-The claim has three parts, and each has a different status.
+The claim has five parts, and each has a different status.
 
 1. **The interval's value is the same in every perspective; its split into time and space is not.** Proved.
 2. **The order of two events is set by perspective when they are spacelike separated, and is not when they are causally connected.** Proved for an explicit boost family, plus a general statement for every Lorentz perspective.
-3. **The reversed reading of the world is not a second world. It is the same collection of closures, read from the other end or from the other domain.** Proved on finite twist histories and on paired clock-domain histories. That this reading *is* physical time reversal is an interpretation.
+3. **No reversed reading adds a separate collection of histories. Each is the same collection of closures, read from the other end or from the other domain.** Proved on finite twist histories and on paired clock-domain histories. That this reading *is* physical time reversal is an interpretation.
 
-4. **Handedness is what distinguishes the reversed reading from ours.** Proved event by event (§4a).
+4. **Handedness is what distinguishes a reversed reading from ours.** Proved event by event (§4a).
+5. **All possible reversed readings exist, sixteen of them, and the selection among them is ours.** Proved (§4b).
 
-So reverse time exists, in the precise sense that every closure has a reversed reading and that reading is itself a closure. It does not exist as a separate universe, because the reversed census is the census.
+So every possible time-reversed universe exists, in the precise sense that every closure has all sixteen reversed readings and each of them is itself a closure. None of them is a separate collection of histories, because each reversed census is the census. ZFA does not choose among them; the choice is a perspective, and it is visible in the record.
 
 ## 2. The interval is invariant; the split is by perspective
 
@@ -73,13 +74,28 @@ A twist is a handedness on an axis and nothing else ([`QLF_Handedness`](lean/QLF
 
 So the reversed reading is not told apart by any total: a closure is handedness-balanced in both. It is told apart event by event, and the distinguishing datum is handedness. Order reversal alone (without the handedness flip) is a third reading, not the counterpart one. Charge is the gauge component of handedness (`chiralCharge_eq_handednessOn_gauge`), which is why the counterpart reading carries the opposite charge label (`charge3W_dagger` in [`QLF_ClockPairing`](lean/QLF_ClockPairing.lean)); calling that reading antimatter remains the interpretation step of issue #236.
 
+## 4b. All possible reversed readings exist; the selection is ours
+
+Reversing the order of a word can come with a reversal of handedness on any subset of the four axes. That gives `2⁴ = 16` reversed readings, `readingBy s` for `s : Axis → Bool`. Pure reversal is `s` false everywhere (`readingBy_false`); the counterpart reading `dagger` is `s` true everywhere (`readingBy_true`).
+
+| Theorem | Statement |
+|---|---|
+| `readingBy_involutive` | every reading is an involution |
+| `handednessOn_readingBy` | a reading reverses handedness exactly on the axes it selects |
+| `readingBy_closure_iff` | every reading maps closures onto closures |
+| `every_reading_is_the_census` | for every `s`, each closure is the `s`-reading of a closure: every reversed census is the census |
+| `sixteen_reversed_readings` | for an eight-twist closure touching all four axes, the sixteen readings are sixteen different words, each a closure |
+| `selection_identifiable` | two different selections never give the same reversed history of that closure |
+
+This is the sense of "all possible time reverse universes exist, allowing our selection among them". All sixteen exist in the census, and closure admits every one, so ZFA does not choose. The choice is a perspective, four bits, one per handedness component. And it is visible: the reversed history records which selection made it. Which selection nature's counterpart domain (if there is one) corresponds to is not settled here.
+
 ## 5. What this is evidence for, and what it is not
 
 Rule 4 of the working method ([`CLAUDE.md`](CLAUDE.md), *ZFA first, then every way*) asks what count a claim changes.
 
 - §2 is bookkeeping on the interval, true of any Lorentzian quadratic form. It is the precise statement, not new evidence.
 - §3 is the relativity of simultaneity. Its QLF content is that QLF's state space is Minkowski space, which [`QLF_Minkowski`](lean/QLF_Minkowski.lean) already proved.
-- §4 holds for **any** alphabet closed under a count-preserving involution. It shows that the reversed reading adds no histories, which is the content of "no singular reverse universe". It does not show that nature contains a counterpart domain.
+- §4 and §4b hold for **any** alphabet closed under a count-preserving involution. It shows that the reversed reading adds no histories, which is the content of "no singular reverse universe". It does not show that nature contains a counterpart domain.
 
 Not derived here: that `J` or word reversal *is* physical time reversal, an antimatter identification, any horizon or no-signalling law between domains, or any age relation. Those stay with the obligations of [`Time_Reversed_Clock_Domains.md`](Time_Reversed_Clock_Domains.md) (issue #236), where `J` was already shown not to double the census and not to supply an age factor.
 

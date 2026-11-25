@@ -2781,7 +2781,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeReversalPerspective.every_reading_is_the_census": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeReversalPerspective.handednessOn_dagger": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_readingBy": [
     "Quot.sound",
     "propext"
   ],
@@ -2795,6 +2804,23 @@
   ],
   "QLF.TimeReversalPerspective.null_order_invariant": [
     "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_closure_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_false": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_involutive": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_true": [
     "Quot.sound",
     "propext"
   ],
@@ -2813,7 +2839,17 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeReversalPerspective.selection_identifiable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeReversalPerspective.self_reversed_exists": [],
+  "QLF.TimeReversalPerspective.sixteen_reversed_readings": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeReversalPerspective.spacelike_order_by_perspective": [
     "Classical.choice",
     "Quot.sound",
