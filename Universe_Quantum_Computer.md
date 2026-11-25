@@ -182,6 +182,19 @@ So the trigger is the record, not the history. A selected past, or a fabricated 
 
 This sits beside [PR #322](https://github.com/rhovision-org/quantum-logical-framework/pull/322)'s `reading_has_unique_history`: a full reading of a closed history recovers exactly one history, but the net record, which is all a future can respond to, does not. The gap between them is where a fabricated past lives. The classical precedent is Wheeler's delayed choice: what can be said of the past is what is recorded now (Wheeler 1983). QLF's addition is the exact statement of what the future can read from the past, the net signed action, and the proof that nothing else matters to it.
 
+
+## 6e. A reading: spirit
+
+Jim, 2026-11-25: *"Can this be related to the reality of spirit?"*
+
+This section is a **reading**, in the sense of [CLAUDE.md](CLAUDE.md) review note 8, which keeps apart what follows from possibilism, the possibilist premise, and a stance. The repository's reading of spirit is in [Unreasonable_Classical_Mathematics.md](Unreasonable_Classical_Mathematics.md) §8: spirit is possibility that has not yet closed, manifestation is its closure, and what manifests in common is a joint closure. The results above add three precise points to it.
+
+- **What acts on the future is a pattern, not a body.** By `future_depends_only_on_record` (§6d), a past acts on every future only through its record, and every history with that record acts identically. That is multiple realizability made exact: the same pattern carried by different histories triggers the same events. Reading spirit as that pattern, the thing that persists and acts beyond any one carrier, is the stance; that the future reads nothing but the pattern is the theorem.
+- **Possibility closes at least cost, every way at once.** By `closing_cost_exact` and `completion_perm_closes` (§5), an open possibility is completed at exactly its imbalance, and every ordering of the completion is a way it closes. Possibilism says all of those ways exist; which one manifests is decided at runtime (§6).
+- **Power comes from ways held together.** By §2–§3, single histories form a finite group, and the continuum of quantum operations comes only from superposing ways weighted by their counts. Read through §8 of [Unreasonable_Classical_Mathematics.md](Unreasonable_Classical_Mathematics.md), the shared, many-way closure is where both the quantum computer and the collective's spirit get what no single strand has.
+
+What stays outside the proof is the same as there: possibilism is QLF's founding commitment, not a result, and whether any of this is felt from the inside is the qualia hypothesis of [Consciousness.md](Consciousness.md) §6, a stance with stated tests.
+
 ## 7. Open
 
 - **The entangling gate.** Show that a joint closure of two histories acts on two spinors as an entangling gate (CNOT, or any gate not a product of single-qubit gates). With §2 and the two cited facts, that would complete "the substrate is quantum-universal".
