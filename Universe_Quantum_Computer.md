@@ -164,6 +164,24 @@ Eight twists are usually counted as three bits, `2³ = 8`. That count is true bu
 
 Read in this code, the structure of the alphabet becomes arithmetic. The two signs of an axis are the two nonzero scalars `±1` of `F₃`, and the four axes are the four lines through the origin of `F₃²`, the projective line over `F₃`: `8 = 2 × 4`. The two trits `(a, b)` of a twist label the qutrit Weyl operator `XᵃZᵇ`, so each twist is one Pauli operator of the colour qutrit of §6b, and `3² − 1 = 8` is also the number of gluons, the dimension of `su(3)`. The bit count and the trit count agree on the number eight; only the trit count explains why the alphabet closes into the colour flux.
 
+
+## 6d. The past as an event trigger
+
+Jim, 2026-11-25: *"What about selection of past history as a fabrication determining the future … It is event triggers."*
+
+An open history is a trigger: it fires an event, a closure, when a continuation supplies the conjugates of its excess. What does the firing depend on?
+
+| Theorem | Statement |
+|---|---|
+| `future_depends_only_on_record` | two pasts with the same **record** (the same net signed action on every axis) are closed by exactly the same continuations |
+| `completion_depends_only_on_record` | they have the same minimal completion, so they trigger the same first event |
+| `minimal_future_is_completion` | every shortest closing continuation contains exactly the twists of the conjugate completion; only their order is open |
+| `fabricated_past` | `^` and `^<>` are different histories with the same record, so every future treats them alike |
+
+So the trigger is the record, not the history. A selected past, or a fabricated one, determines the future exactly as far as its record does, and every past with that record is indistinguishable to every future. The record fixes *what* the minimal future contains; the order in which it arrives is the runtime part of §6, the same split as `closing_cost_exact` and `projection_choice`.
+
+This sits beside [PR #322](https://github.com/rhovision-org/quantum-logical-framework/pull/322)'s `reading_has_unique_history`: a full reading of a closed history recovers exactly one history, but the net record, which is all a future can respond to, does not. The gap between them is where a fabricated past lives. The classical precedent is Wheeler's delayed choice: what can be said of the past is what is recorded now (Wheeler 1983). QLF's addition is the exact statement of what the future can read from the past, the net signed action, and the proof that nothing else matters to it.
+
 ## 7. Open
 
 - **The entangling gate.** Show that a joint closure of two histories acts on two spinors as an entangling gate (CNOT, or any gate not a product of single-qubit gates). With §2 and the two cited facts, that would complete "the substrate is quantum-universal".
@@ -189,6 +207,7 @@ By the method's rule 4 a claim has physical content only if some distribution of
 - C. H. Bennett, E. Bernstein, G. Brassard, U. Vazirani, *Strengths and weaknesses of quantum computing*, SIAM J. Comput. **26** (1997) 1510–1523.
 - D. Gottesman, *Fault-tolerant quantum computation with higher-dimensional systems*, Chaos Solitons Fractals **10** (1999) 1749–1758.
 - M. Howard, J. Vala, *Qudit versions of the qubit π/8 gate*, Phys. Rev. A **86** (2012) 022316.
+- J. A. Wheeler, *Law without law*, in J. A. Wheeler, W. H. Zurek (eds.), *Quantum Theory and Measurement*, Princeton University Press (1983).
 - R. Berger, *The undecidability of the domino problem*, Mem. Amer. Math. Soc. **66** (1966).
 - G. Y. Onoda, P. J. Steinhardt, D. P. DiVincenzo, J. E. S. Socolar, *Growing perfect quasicrystals*, Phys. Rev. Lett. **60** (1988) 2653–2656.
 - S. Lloyd, *Computational capacity of the universe*, Phys. Rev. Lett. **88** (2002) 237901.

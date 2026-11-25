@@ -4,7 +4,7 @@
 
   Write-up: Universe_Quantum_Computer.md.
 
-  Seven results, no axioms.
+  Eight results, no axioms.
 
   1. **Closure-preserving dynamics compute every Boolean function** (`fredkin_complete`).
      Every `f : (Fin n → Bool) → Bool` is the output of a tree of Fredkin gates on the
@@ -48,6 +48,12 @@
   7. **Two trits, not three bits** (`tritCode_injective`, `tritCode_surjective`,
      `closure_trits_zero`, `trits_weaker`): vacuum plus the eight twists is exactly `F₃²`, a
      closure sums to zero there, and the converse fails.
+
+  8. **The past is an event trigger through its record** (`future_depends_only_on_record`,
+     `completion_depends_only_on_record`, `minimal_future_is_completion`, `fabricated_past`):
+     the futures a past admits depend only on its net signed action, so a different past with
+     the same record triggers the same events, and the record fixes the content of the
+     minimal future up to order.
 
   What this does NOT claim: that the universe *is* this construction (only that it is one
   model of a logical system that computes), and anything about complexity: an exact answer
@@ -607,5 +613,111 @@ theorem trits_weaker : ([Twist.up, Twist.up, Twist.up].map colVec).sum = 0 ∧
   intro h; exact absurd h.1 (by decide)
 
 end Trits
+
+
+/-! ## 8. The past as an event trigger
+
+    Jim (2026-11-25): selection of a past history as a fabrication determining the future;
+    "it is event triggers". An open history is a trigger: it fires an event (a closure) when
+    a continuation supplies the conjugates of its excess. The theorems below show the trigger
+    is the **record**, the net signed action, not the history. Any two pasts with the same
+    record close under exactly the same continuations, have the same minimal completion, and
+    so trigger the same events; a different past with the same record (a fabricated one) is
+    indistinguishable to every future. And the record fixes *what* the minimal future
+    contains, leaving only the order open, which is the runtime part. -/
+
+section Triggers
+
+
+/-- **Two pasts with the same record**: the same net signed action on every axis. -/
+def sameRecord (p q : List Twist) : Prop :=
+  ((p.count Twist.up : ℤ) - p.count Twist.down = (q.count Twist.up : ℤ) - q.count Twist.down) ∧
+  ((p.count Twist.left : ℤ) - p.count Twist.right = (q.count Twist.left : ℤ) - q.count Twist.right) ∧
+  ((p.count Twist.slash : ℤ) - p.count Twist.backslash =
+    (q.count Twist.slash : ℤ) - q.count Twist.backslash) ∧
+  ((p.count Twist.plus : ℤ) - p.count Twist.minus = (q.count Twist.plus : ℤ) - q.count Twist.minus)
+
+/-- **The future depends on the past only through its record.** Any continuation closes one
+    past iff it closes the other. -/
+theorem future_depends_only_on_record (p q : List Twist) (h : sameRecord p q) (c : List Twist) :
+    countBalanced (p ++ c) ↔ countBalanced (q ++ c) := by
+  obtain ⟨h1, h2, h3, h4⟩ := h
+  simp only [countBalanced, List.count_append]
+  constructor <;> rintro ⟨e1, e2, e3, e4⟩ <;> refine ⟨?_, ?_, ?_, ?_⟩ <;> omega
+
+/-- **The same record triggers the same minimal future.** -/
+theorem completion_depends_only_on_record (p q : List Twist) (h : sameRecord p q) :
+    completion p = completion q := by
+  obtain ⟨h1, h2, h3, h4⟩ := h
+  have a1 : p.count Twist.up - p.count Twist.down = q.count Twist.up - q.count Twist.down := by omega
+  have a2 : p.count Twist.down - p.count Twist.up = q.count Twist.down - q.count Twist.up := by omega
+  have a3 : p.count Twist.left - p.count Twist.right = q.count Twist.left - q.count Twist.right := by omega
+  have a4 : p.count Twist.right - p.count Twist.left = q.count Twist.right - q.count Twist.left := by omega
+  have a5 : p.count Twist.slash - p.count Twist.backslash =
+      q.count Twist.slash - q.count Twist.backslash := by omega
+  have a6 : p.count Twist.backslash - p.count Twist.slash =
+      q.count Twist.backslash - q.count Twist.slash := by omega
+  have a7 : p.count Twist.plus - p.count Twist.minus = q.count Twist.plus - q.count Twist.minus := by omega
+  have a8 : p.count Twist.minus - p.count Twist.plus = q.count Twist.minus - q.count Twist.plus := by omega
+  simp only [completion, a1, a2, a3, a4, a5, a6, a7, a8]
+
+/-- What the conjugate completion contains, twist by twist. -/
+theorem completion_counts (ts : List Twist) :
+    (completion ts).count Twist.up = ts.count Twist.down - ts.count Twist.up ∧
+    (completion ts).count Twist.down = ts.count Twist.up - ts.count Twist.down ∧
+    (completion ts).count Twist.left = ts.count Twist.right - ts.count Twist.left ∧
+    (completion ts).count Twist.right = ts.count Twist.left - ts.count Twist.right ∧
+    (completion ts).count Twist.slash = ts.count Twist.backslash - ts.count Twist.slash ∧
+    (completion ts).count Twist.backslash = ts.count Twist.slash - ts.count Twist.backslash ∧
+    (completion ts).count Twist.plus = ts.count Twist.minus - ts.count Twist.plus ∧
+    (completion ts).count Twist.minus = ts.count Twist.plus - ts.count Twist.minus := by
+  simp only [completion, List.count_append, count_replicate_twist]
+  refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> simp (config := {decide := true})
+
+/-- One axis cannot be closed in fewer twists than its gap. -/
+theorem gap_le (a b x y : ℕ) (h : a + x = b + y) : gap a b ≤ x + y := by
+  simp only [gap]; omega
+
+/-- At the minimum, the axis is closed by conjugates only. -/
+theorem gap_eq_split (a b x y : ℕ) (h : a + x = b + y) (he : gap a b = x + y) :
+    x = b - a ∧ y = a - b := by
+  simp only [gap] at he; omega
+
+/-- **The record fixes the content of the minimal future.** Every shortest closing continuation
+    contains exactly the twists of the conjugate completion; only their order is open. -/
+theorem minimal_future_is_completion (ts c : List Twist) (h : countBalanced (ts ++ c))
+    (hlen : c.length = imbalance ts) (t : Twist) : c.count t = (completion ts).count t := by
+  simp only [countBalanced, List.count_append] at h
+  obtain ⟨b1, b2, b3, b4⟩ := h
+  have hs := count_sum c
+  have l1 := gap_le _ _ _ _ b1
+  have l2 := gap_le _ _ _ _ b2
+  have l3 := gap_le _ _ _ _ b3
+  have l4 := gap_le _ _ _ _ b4
+  simp only [imbalance] at hlen
+  obtain ⟨u1, d1⟩ := gap_eq_split _ _ _ _ b1 (by omega)
+  obtain ⟨u2, d2⟩ := gap_eq_split _ _ _ _ b2 (by omega)
+  obtain ⟨u3, d3⟩ := gap_eq_split _ _ _ _ b3 (by omega)
+  obtain ⟨u4, d4⟩ := gap_eq_split _ _ _ _ b4 (by omega)
+  obtain ⟨c1, c2, c3, c4, c5, c6, c7, c8⟩ := completion_counts ts
+  cases t
+  · rw [c1, u1]
+  · rw [c2, d1]
+  · rw [c3, u2]
+  · rw [c4, d2]
+  · rw [c5, u3]
+  · rw [c6, d3]
+  · rw [c7, u4]
+  · rw [c8, d4]
+
+/-- **A fabricated past works as well as the real one**: `^` and `^<>` are different histories with
+    the same record, so they trigger the same futures. -/
+theorem fabricated_past :
+    sameRecord [Twist.up] [Twist.up, Twist.left, Twist.right] ∧
+    [Twist.up] ≠ [Twist.up, Twist.left, Twist.right] := by
+  refine ⟨?_, by decide⟩
+  simp (config := {decide := true}) [sameRecord]
+
+end Triggers
 
 end QLF.QuantumComputer
