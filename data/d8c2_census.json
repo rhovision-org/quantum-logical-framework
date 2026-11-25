@@ -1,0 +1,703 @@
+{
+  "prereg": "Diversity_Advantage_D8c2_Prereg.md @ c683f60",
+  "primary_extensions_le_k": {
+    "relations": {
+      "N1_no_provenance": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": -1,
+          "B[1, 1]": 0,
+          "B[1, 3]": -1,
+          "B[2, 2]": -1
+        },
+        "weighted_delta": "-23/55",
+        "weighted_delta_float": -0.41818181818181815
+      },
+      "N2_no_first_closure": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": 1,
+          "B[1, 1]": 0,
+          "B[1, 3]": 0,
+          "B[2, 2]": 0
+        },
+        "weighted_delta": "12/1045",
+        "weighted_delta_float": 0.011483253588516746
+      },
+      "R_T": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": 1,
+          "B[1, 1]": 0,
+          "B[1, 3]": 0,
+          "B[2, 2]": 0
+        },
+        "weighted_delta": "12/1045",
+        "weighted_delta_float": 0.011483253588516746
+      },
+      "diag_R_T_no_phase_label": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": 0,
+          "B[1, 1]": 0,
+          "B[1, 3]": 0,
+          "B[2, 2]": 0
+        },
+        "weighted_delta": "0",
+        "weighted_delta_float": 0.0
+      },
+      "diag_R_T_raw_admitted": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": 1,
+          "B[1, 1]": 1,
+          "B[1, 3]": 0,
+          "B[2, 2]": 0
+        },
+        "weighted_delta": "492/1045",
+        "weighted_delta_float": 0.47081339712918663
+      }
+    },
+    "strata": [
+      {
+        "N1_no_provenance": {
+          "heterogeneous": {
+            "mean_K": "41/10",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "6",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "27/4",
+            "n": 576
+          }
+        },
+        "N2_no_first_closure": {
+          "heterogeneous": {
+            "mean_K": "7/5",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "3/2",
+            "n": 576
+          }
+        },
+        "R_T": {
+          "heterogeneous": {
+            "mean_K": "7/5",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "3/2",
+            "n": 576
+          }
+        },
+        "diag_R_T_no_phase_label": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "1",
+            "n": 576
+          }
+        },
+        "diag_R_T_raw_admitted": {
+          "heterogeneous": {
+            "mean_K": "27/5",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "3",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "6",
+            "n": 576
+          }
+        },
+        "l1_pair": [
+          1,
+          2
+        ],
+        "panel": "A"
+      },
+      {
+        "N1_no_provenance": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "N2_no_first_closure": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "R_T": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "diag_R_T_no_phase_label": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "diag_R_T_raw_admitted": {
+          "heterogeneous": {
+            "mean_K": "2",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "l1_pair": [
+          1,
+          1
+        ],
+        "panel": "B"
+      },
+      {
+        "N1_no_provenance": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1/2",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "1/2",
+            "n": 6912
+          }
+        },
+        "N2_no_first_closure": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 6912
+          }
+        },
+        "R_T": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 6912
+          }
+        },
+        "diag_R_T_no_phase_label": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 6912
+          }
+        },
+        "diag_R_T_raw_admitted": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 6912
+          }
+        },
+        "l1_pair": [
+          1,
+          3
+        ],
+        "panel": "B"
+      },
+      {
+        "N1_no_provenance": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "24/37",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "1/2",
+            "n": 5760
+          }
+        },
+        "N2_no_first_closure": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 5760
+          }
+        },
+        "R_T": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 5760
+          }
+        },
+        "diag_R_T_no_phase_label": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 5760
+          }
+        },
+        "diag_R_T_raw_admitted": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 5760
+          }
+        },
+        "l1_pair": [
+          2,
+          2
+        ],
+        "panel": "B"
+      }
+    ],
+    "verdict": "PASS (D8c2)"
+  },
+  "sensitivity_extensions_eq_k": {
+    "relations": {
+      "N1_no_provenance": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": -1,
+          "B[1, 1]": 0,
+          "B[1, 3]": -1,
+          "B[2, 2]": -1
+        },
+        "weighted_delta": "-23/55",
+        "weighted_delta_float": -0.41818181818181815
+      },
+      "N2_no_first_closure": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": 1,
+          "B[1, 1]": 0,
+          "B[1, 3]": 0,
+          "B[2, 2]": 0
+        },
+        "weighted_delta": "12/1045",
+        "weighted_delta_float": 0.011483253588516746
+      },
+      "R_T": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": 1,
+          "B[1, 1]": 0,
+          "B[1, 3]": 0,
+          "B[2, 2]": 0
+        },
+        "weighted_delta": "12/1045",
+        "weighted_delta_float": 0.011483253588516746
+      },
+      "diag_R_T_no_phase_label": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": 0,
+          "B[1, 1]": 0,
+          "B[1, 3]": 0,
+          "B[2, 2]": 0
+        },
+        "weighted_delta": "0",
+        "weighted_delta_float": 0.0
+      },
+      "diag_R_T_raw_admitted": {
+        "eligible_strata": 4,
+        "stratum_signs": {
+          "A[1, 2]": 1,
+          "B[1, 1]": 1,
+          "B[1, 3]": 0,
+          "B[2, 2]": 0
+        },
+        "weighted_delta": "492/1045",
+        "weighted_delta_float": 0.47081339712918663
+      }
+    },
+    "strata": [
+      {
+        "N1_no_provenance": {
+          "heterogeneous": {
+            "mean_K": "41/10",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "6",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "27/4",
+            "n": 576
+          }
+        },
+        "N2_no_first_closure": {
+          "heterogeneous": {
+            "mean_K": "7/5",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "3/2",
+            "n": 576
+          }
+        },
+        "R_T": {
+          "heterogeneous": {
+            "mean_K": "7/5",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "3/2",
+            "n": 576
+          }
+        },
+        "diag_R_T_no_phase_label": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "1",
+            "n": 576
+          }
+        },
+        "diag_R_T_raw_admitted": {
+          "heterogeneous": {
+            "mean_K": "27/5",
+            "n": 720
+          },
+          "homogeneous": {
+            "mean_K": "3",
+            "n": 48
+          },
+          "partial": {
+            "mean_K": "6",
+            "n": 576
+          }
+        },
+        "l1_pair": [
+          1,
+          2
+        ],
+        "panel": "A"
+      },
+      {
+        "N1_no_provenance": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "N2_no_first_closure": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "R_T": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "diag_R_T_no_phase_label": {
+          "heterogeneous": {
+            "mean_K": "1",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "diag_R_T_raw_admitted": {
+          "heterogeneous": {
+            "mean_K": "2",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1",
+            "n": 672
+          }
+        },
+        "l1_pair": [
+          1,
+          1
+        ],
+        "panel": "B"
+      },
+      {
+        "N1_no_provenance": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "1/2",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "1/2",
+            "n": 6912
+          }
+        },
+        "N2_no_first_closure": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 6912
+          }
+        },
+        "R_T": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 6912
+          }
+        },
+        "diag_R_T_no_phase_label": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 6912
+          }
+        },
+        "diag_R_T_raw_admitted": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 4032
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 64
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 6912
+          }
+        },
+        "l1_pair": [
+          1,
+          3
+        ],
+        "panel": "B"
+      },
+      {
+        "N1_no_provenance": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "24/37",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "1/2",
+            "n": 5760
+          }
+        },
+        "N2_no_first_closure": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 5760
+          }
+        },
+        "R_T": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 5760
+          }
+        },
+        "diag_R_T_no_phase_label": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 5760
+          }
+        },
+        "diag_R_T_raw_admitted": {
+          "heterogeneous": {
+            "mean_K": "0",
+            "n": 2448
+          },
+          "homogeneous": {
+            "mean_K": "0",
+            "n": 888
+          },
+          "partial": {
+            "mean_K": "0",
+            "n": 5760
+          }
+        },
+        "l1_pair": [
+          2,
+          2
+        ],
+        "panel": "B"
+      }
+    ],
+    "verdict": "PASS (D8c2)"
+  }
+}

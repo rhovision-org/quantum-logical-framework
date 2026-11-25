@@ -1,0 +1,956 @@
+{
+  "delta": "344143/170347520",
+  "delta_N1_float": 0.0020221192536292866,
+  "delta_N1_ordinary": "49209/24335360",
+  "delta_coverage": "-608958186118060269538735348417627081653311037796620790826990312078203770149/24076018634719101222735682150095583391675495437578053742699025068706864297920",
+  "delta_coverage_float": -0.025293143162794577,
+  "delta_float": 0.0020202407408103154,
+  "prereg": "Library_Diversity_Assembly_Prereg.md @ 69a09ef",
+  "strata": [
+    {
+      "delta_S": "9/640",
+      "delta_S_cov": "-7353/259556",
+      "delta_S_ord": "9/640",
+      "diverse": {
+        "S": "771/2560",
+        "S_cov": "771/748",
+        "S_ord": "771/2560",
+        "coverage": "187/640",
+        "libraries": 24,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "147/512",
+        "S_cov": "735/694",
+        "S_ord": "147/512",
+        "coverage": "347/1280",
+        "libraries": 4,
+        "orbits": 1,
+        "synergy": "-9/640"
+      },
+      "k": 2,
+      "n": 6,
+      "panel": "A",
+      "shapes": [
+        "D",
+        "D"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/2560",
+      "delta_S_cov": "-21/506",
+      "delta_S_ord": "1/2560",
+      "diverse": {
+        "S": "11/640",
+        "S_cov": "44/23",
+        "S_ord": "11/640",
+        "coverage": "23/2560",
+        "libraries": 24,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "43/2560",
+        "S_cov": "43/22",
+        "S_ord": "43/2560",
+        "coverage": "11/1280",
+        "libraries": 4,
+        "orbits": 1,
+        "synergy": "-1/2560"
+      },
+      "k": 2,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "A"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "0",
+      "delta_S_cov": "0",
+      "delta_S_ord": "0",
+      "diverse": {
+        "S": "113/5120",
+        "S_cov": "113/47",
+        "S_ord": "113/5120",
+        "coverage": "47/5120",
+        "libraries": 48,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "113/5120",
+        "S_cov": "113/47",
+        "S_ord": "113/5120",
+        "coverage": "47/5120",
+        "libraries": 16,
+        "orbits": 2,
+        "synergy": "0"
+      },
+      "k": 2,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "B"
+      ],
+      "sign_S": 0,
+      "sign_S_cov": 0,
+      "sign_S_ord": 0
+    },
+    {
+      "delta_S": "1/2560",
+      "delta_S_cov": "-8/1081",
+      "delta_S_ord": "1/2560",
+      "diverse": {
+        "S": "11/512",
+        "S_cov": "110/47",
+        "S_ord": "11/512",
+        "coverage": "47/5120",
+        "libraries": 48,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "27/1280",
+        "S_cov": "54/23",
+        "S_ord": "27/1280",
+        "coverage": "23/2560",
+        "libraries": 16,
+        "orbits": 2,
+        "synergy": "-1/2560"
+      },
+      "k": 2,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "0",
+      "delta_S_cov": "0",
+      "delta_S_ord": "0",
+      "diverse": {
+        "S": "69/2560",
+        "S_cov": "23/8",
+        "S_ord": "69/2560",
+        "coverage": "3/320",
+        "libraries": 24,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "69/2560",
+        "S_cov": "23/8",
+        "S_ord": "69/2560",
+        "coverage": "3/320",
+        "libraries": 4,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "k": 2,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "B",
+        "B"
+      ],
+      "sign_S": 0,
+      "sign_S_cov": 0,
+      "sign_S_ord": 0
+    },
+    {
+      "delta_S": "1/1280",
+      "delta_S_cov": "-13/368",
+      "delta_S_ord": "1/1280",
+      "diverse": {
+        "S": "27/1024",
+        "S_cov": "45/16",
+        "S_ord": "27/1024",
+        "coverage": "3/320",
+        "libraries": 48,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "131/5120",
+        "S_cov": "131/46",
+        "S_ord": "131/5120",
+        "coverage": "23/2560",
+        "libraries": 16,
+        "orbits": 2,
+        "synergy": "-1/1280"
+      },
+      "k": 2,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "B",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/1280",
+      "delta_S_cov": "-3/92",
+      "delta_S_ord": "1/1280",
+      "diverse": {
+        "S": "33/1280",
+        "S_cov": "11/4",
+        "S_ord": "33/1280",
+        "coverage": "3/320",
+        "libraries": 24,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "1/40",
+        "S_cov": "64/23",
+        "S_ord": "1/40",
+        "coverage": "23/2560",
+        "libraries": 4,
+        "orbits": 1,
+        "synergy": "-1/1280"
+      },
+      "k": 2,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "N",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/2560",
+      "delta_S_cov": "-87/2380",
+      "delta_S_ord": "1/2560",
+      "diverse": {
+        "S": "157/5120",
+        "S_cov": "157/70",
+        "S_ord": "157/5120",
+        "coverage": "7/512",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "31/1024",
+        "S_cov": "155/68",
+        "S_ord": "31/1024",
+        "coverage": "17/1280",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-1/2560"
+      },
+      "k": 3,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "A",
+        "B"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "3/2560",
+      "delta_S_cov": "-7/165",
+      "delta_S_ord": "3/2560",
+      "diverse": {
+        "S": "77/2560",
+        "S_cov": "11/5",
+        "S_ord": "77/2560",
+        "coverage": "7/512",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "37/1280",
+        "S_cov": "74/33",
+        "S_ord": "37/1280",
+        "coverage": "33/2560",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-3/2560"
+      },
+      "k": 3,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "A",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "0",
+      "delta_S_cov": "0",
+      "delta_S_ord": "0",
+      "diverse": {
+        "S": "91/2560",
+        "S_cov": "182/71",
+        "S_ord": "91/2560",
+        "coverage": "71/5120",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "91/2560",
+        "S_cov": "182/71",
+        "S_ord": "91/2560",
+        "coverage": "71/5120",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "k": 3,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "B",
+        "B"
+      ],
+      "sign_S": 0,
+      "sign_S_cov": 0,
+      "sign_S_ord": 0
+    },
+    {
+      "delta_S": "3/2560",
+      "delta_S_cov": "-111/4828",
+      "delta_S_ord": "3/2560",
+      "diverse": {
+        "S": "179/5120",
+        "S_cov": "179/71",
+        "S_ord": "179/5120",
+        "coverage": "71/5120",
+        "libraries": 192,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "173/5120",
+        "S_cov": "173/68",
+        "S_ord": "173/5120",
+        "coverage": "17/1280",
+        "libraries": 32,
+        "orbits": 4,
+        "synergy": "-3/2560"
+      },
+      "k": 3,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "B",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/640",
+      "delta_S_cov": "-136/4757",
+      "delta_S_ord": "1/640",
+      "diverse": {
+        "S": "11/320",
+        "S_cov": "176/71",
+        "S_ord": "11/320",
+        "coverage": "71/5120",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "21/640",
+        "S_cov": "168/67",
+        "S_ord": "21/640",
+        "coverage": "67/5120",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-1/640"
+      },
+      "k": 3,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "N",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/640",
+      "delta_S_cov": "-5/102",
+      "delta_S_ord": "1/640",
+      "diverse": {
+        "S": "51/1280",
+        "S_cov": "17/6",
+        "S_ord": "51/1280",
+        "coverage": "9/640",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "49/1280",
+        "S_cov": "49/17",
+        "S_ord": "49/1280",
+        "coverage": "17/1280",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-1/640"
+      },
+      "k": 3,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "B",
+        "B",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/512",
+      "delta_S_cov": "-95/1608",
+      "delta_S_ord": "1/512",
+      "diverse": {
+        "S": "201/5120",
+        "S_cov": "67/24",
+        "S_ord": "201/5120",
+        "coverage": "9/640",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "191/5120",
+        "S_cov": "191/67",
+        "S_ord": "191/5120",
+        "coverage": "67/5120",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-1/512"
+      },
+      "k": 3,
+      "n": 6,
+      "panel": "B",
+      "shapes": [
+        "B",
+        "N",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "999/47530",
+      "delta_S_cov": "-9232881/445383836",
+      "delta_S_ord": "1013/47530",
+      "diverse": {
+        "S": "16249/47530",
+        "S_cov": "16249/15556",
+        "S_ord": "31989/95060",
+        "coverage": "7778/23765",
+        "libraries": 24,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "1525/4753",
+        "S_cov": "30500/28631",
+        "S_ord": "29963/95060",
+        "coverage": "28631/95060",
+        "libraries": 4,
+        "orbits": 1,
+        "synergy": "-999/47530"
+      },
+      "k": 2,
+      "n": 8,
+      "panel": "A",
+      "shapes": [
+        "D",
+        "D"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "19/19012",
+      "delta_S_cov": "-3043/123065",
+      "delta_S_ord": "19/19012",
+      "diverse": {
+        "S": "386/23765",
+        "S_cov": "1544/815",
+        "S_ord": "386/23765",
+        "coverage": "163/19012",
+        "libraries": 24,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "207/13580",
+        "S_cov": "1449/755",
+        "S_ord": "207/13580",
+        "coverage": "151/19012",
+        "libraries": 4,
+        "orbits": 1,
+        "synergy": "-19/19012"
+      },
+      "k": 2,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "A"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/190120",
+      "delta_S_cov": "-6229/2725797",
+      "delta_S_ord": "1/190120",
+      "diverse": {
+        "S": "3943/190120",
+        "S_cov": "3943/1653",
+        "S_ord": "561/27160",
+        "coverage": "1653/190120",
+        "libraries": 48,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "1971/95060",
+        "S_cov": "2169412/908599",
+        "S_ord": "1963/95060",
+        "coverage": "1651/190120",
+        "libraries": 16,
+        "orbits": 2,
+        "synergy": "-1/190120"
+      },
+      "k": 2,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "B"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "41/190120",
+      "delta_S_cov": "-26359/2684526",
+      "delta_S_ord": "41/190120",
+      "diverse": {
+        "S": "1881/95060",
+        "S_cov": "3762/1651",
+        "S_ord": "939/47530",
+        "coverage": "1651/190120",
+        "libraries": 48,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "3721/190120",
+        "S_cov": "3721/1626",
+        "S_ord": "743/38024",
+        "coverage": "813/95060",
+        "libraries": 16,
+        "orbits": 2,
+        "synergy": "-41/190120"
+      },
+      "k": 2,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/23765",
+      "delta_S_cov": "-1561/174723",
+      "delta_S_ord": "0",
+      "diverse": {
+        "S": "2399/95060",
+        "S_cov": "2399/838",
+        "S_ord": "2383/95060",
+        "coverage": "419/47530",
+        "libraries": 24,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "479/19012",
+        "S_cov": "2395/834",
+        "S_ord": "2383/95060",
+        "coverage": "417/47530",
+        "libraries": 4,
+        "orbits": 1,
+        "synergy": "-1/23765"
+      },
+      "k": 2,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "B",
+        "B"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 0
+    },
+    {
+      "delta_S": "47/47530",
+      "delta_S_cov": "-59/2294",
+      "delta_S_ord": "23/23765",
+      "diverse": {
+        "S": "4617/190120",
+        "S_cov": "171/62",
+        "S_ord": "919/38024",
+        "coverage": "837/95060",
+        "libraries": 48,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "4429/190120",
+        "S_cov": "103/37",
+        "S_ord": "4411/190120",
+        "coverage": "1591/190120",
+        "libraries": 16,
+        "orbits": 2,
+        "synergy": "-47/47530"
+      },
+      "k": 2,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "B",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "39/95060",
+      "delta_S_cov": "-9205/339834",
+      "delta_S_ord": "39/95060",
+      "diverse": {
+        "S": "1109/47530",
+        "S_cov": "1109/418",
+        "S_ord": "79/3395",
+        "coverage": "209/23765",
+        "libraries": 24,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "2179/95060",
+        "S_cov": "2179/813",
+        "S_ord": "2173/95060",
+        "coverage": "813/95060",
+        "libraries": 4,
+        "orbits": 1,
+        "synergy": "-39/95060"
+      },
+      "k": 2,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "N",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "19/19012",
+      "delta_S_cov": "-201064/5775495",
+      "delta_S_ord": "19/19012",
+      "diverse": {
+        "S": "5487/190120",
+        "S_cov": "5487/2465",
+        "S_ord": "5471/190120",
+        "coverage": "493/38024",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "5297/190120",
+        "S_cov": "5297/2343",
+        "S_ord": "5281/190120",
+        "coverage": "2343/190120",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-19/19012"
+      },
+      "k": 3,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "A",
+        "B"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "267/190120",
+      "delta_S_cov": "-72623/1886658",
+      "delta_S_ord": "267/190120",
+      "diverse": {
+        "S": "379/13580",
+        "S_cov": "5306/2463",
+        "S_ord": "265/9506",
+        "coverage": "2463/190120",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "5039/190120",
+        "S_cov": "5039/2298",
+        "S_ord": "719/27160",
+        "coverage": "1149/95060",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-267/190120"
+      },
+      "k": 3,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "A",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "1/19012",
+      "delta_S_cov": "-6403/770036",
+      "delta_S_ord": "1/95060",
+      "diverse": {
+        "S": "453/13580",
+        "S_cov": "3171/1244",
+        "S_ord": "631/19012",
+        "coverage": "311/23765",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "1583/47530",
+        "S_cov": "1583/619",
+        "S_ord": "1577/47530",
+        "coverage": "619/47530",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-1/19012"
+      },
+      "k": 3,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "B",
+        "B"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "57/47530",
+      "delta_S_cov": "-234424429/14058039138",
+      "delta_S_ord": "4/3395",
+      "diverse": {
+        "S": "6161/190120",
+        "S_cov": "6161/2486",
+        "S_ord": "877/27160",
+        "coverage": "1243/95060",
+        "libraries": 192,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "5933/190120",
+        "S_cov": "14108672/5654883",
+        "S_ord": "169/5432",
+        "coverage": "1189/95060",
+        "libraries": 32,
+        "orbits": 4,
+        "synergy": "-57/47530"
+      },
+      "k": 3,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "B",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "79/95060",
+      "delta_S_cov": "-593/21519",
+      "delta_S_ord": "79/95060",
+      "diverse": {
+        "S": "299/9506",
+        "S_cov": "65/27",
+        "S_ord": "746/23765",
+        "coverage": "621/47530",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "2911/95060",
+        "S_cov": "5822/2391",
+        "S_ord": "83/2716",
+        "coverage": "2391/190120",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-79/95060"
+      },
+      "k": 3,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "A",
+        "N",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "19/9506",
+      "delta_S_cov": "-225268/5873569",
+      "delta_S_ord": "183/95060",
+      "diverse": {
+        "S": "877/23765",
+        "S_cov": "7016/2509",
+        "S_ord": "3489/95060",
+        "coverage": "2509/190120",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "237/6790",
+        "S_cov": "6636/2341",
+        "S_ord": "1653/47530",
+        "coverage": "2341/190120",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-19/9506"
+      },
+      "k": 3,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "B",
+        "B",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    },
+    {
+      "delta_S": "83/38024",
+      "delta_S_cov": "-11887/290812",
+      "delta_S_ord": "407/190120",
+      "diverse": {
+        "S": "1367/38024",
+        "S_cov": "6835/2507",
+        "S_ord": "6807/190120",
+        "coverage": "2507/190120",
+        "libraries": 96,
+        "orbits": 1,
+        "synergy": "0"
+      },
+      "homogeneous": {
+        "S": "321/9506",
+        "S_cov": "321/116",
+        "S_ord": "160/4753",
+        "coverage": "58/4753",
+        "libraries": 8,
+        "orbits": 1,
+        "synergy": "-83/38024"
+      },
+      "k": 3,
+      "n": 8,
+      "panel": "B",
+      "shapes": [
+        "B",
+        "N",
+        "N"
+      ],
+      "sign_S": 1,
+      "sign_S_cov": -1,
+      "sign_S_ord": 1
+    }
+  ],
+  "strata_count": 28,
+  "stratum_signs": {
+    "+": 25,
+    "-": 0,
+    "0": 3
+  },
+  "verdict": "PASS (ZFA), coverage-only"
+}
