@@ -372,5 +372,6 @@ lean_lib QLF where
     `QLF_AssemblyIndex,
     `QLF_PossibilityGrowth,
     `QLF_LocalityDefinitions,
-    `QLF_PerspectiveLocality
+    `QLF_PerspectiveLocality,
+    `QLF_QuantumComputer
   ]
