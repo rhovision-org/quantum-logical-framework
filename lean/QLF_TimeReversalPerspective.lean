@@ -26,8 +26,9 @@ cannot tell a history from its reversed reading.
 (`spacelike_order_by_perspective`). For a timelike or null separation every boost in the
 family keeps the sign (`timelike_order_invariant`, `null_order_invariant`), and no congruence
 `X ↦ A X A†` at all sends the unit time direction to its reverse (`no_congruence_reverses_time`).
-So the time-reversed reading of a causal (timelike or null) separation is never reached by a
-change of inertial perspective. Light-cone membership is perspective-independent
+So the time-reversed reading of a causal (timelike or null) separation is not reached by any
+boost in this proper orthochronous family; the general orthochronous case rests on the spinor
+cover and is not re-proved here. Light-cone membership is perspective-independent
 (`timeReverse_null_iff`, `boost_null_iff`).
 
 **§3 The reversed census is the census.** On finite twist histories, reversal and the
@@ -39,6 +40,13 @@ collection of histories: it is the same collection, read from the other end or f
 domain. Some histories are their own reversed reading (`self_reversed_exists`,
 `J_not_fixed_point_free`) and some are not (`reversed_reading_distinct`), so whether the
 reversed reading names a different history depends on the history.
+
+**§4–§6 Handedness and the sixteen readings.** `readingBy s` reverses order and handedness on
+the axes `s` selects. Every reading maps closures onto closures; on a closure touching every axis
+the sixteen readings are distinct (`sixteen_reversed_readings`, `selection_identifiable`), but
+selectors agreeing on the touched axes coincide (`readingBy_eq_of_agree`), and selector and
+history are not recovered jointly (`joint_recovery_fails`). A selector's existence is a fact about
+word maps, not agency.
 
 What is **not** derived: that nature contains a counterpart domain, that `J` is physical time
 reversal, any horizon or no-signalling law, or any age relation. No axiom is added.
@@ -388,5 +396,33 @@ theorem selection_identifiable :
 theorem reading_has_unique_history (s : Axis → Bool) (v w : List Twist)
     (h : readingBy s v = w) : v = readingBy s w := by
   rw [← h, readingBy_involutive]
+
+-- ==========================================
+-- §6  Scope: what the selection results do not say
+-- ==========================================
+
+/-- **Selectors that agree on the axes a word touches give the same reading.** So distinctness of
+    the sixteen readings is a property of words touching every axis, not of every closure. -/
+theorem readingBy_eq_of_agree (s s' : Axis → Bool) (w : List Twist)
+    (h : ∀ t ∈ w, s (twistAxis t) = s' (twistAxis t)) : readingBy s w = readingBy s' w := by
+  unfold readingBy
+  congr 1
+  apply List.map_congr_left
+  intro t ht
+  simp [flipBy, h t ht]
+
+/-- On the empty closure all sixteen readings coincide. -/
+theorem selectors_coincide_on_empty :
+    readingBy (fun _ => true) [] = readingBy (fun _ => false) [] := rfl
+
+/-- **Joint recovery of selector and history fails.** `[up, down]` is the pure-reversal reading of
+    `[down, up]` and the `dagger` reading of itself: two different (selector, history) pairs give
+    the same reading. `reading_has_unique_history` recovers the history only once the selector is
+    fixed. -/
+theorem joint_recovery_fails :
+    readingBy (fun _ => false) [Twist.down, Twist.up] = [Twist.up, Twist.down] ∧
+      readingBy (fun _ => true) [Twist.up, Twist.down] = [Twist.up, Twist.down] ∧
+      [Twist.down, Twist.up] ≠ [Twist.up, Twist.down] := by
+  refine ⟨?_, ?_, by decide⟩ <;> decide
 
 end QLF.TimeReversalPerspective

@@ -11,13 +11,13 @@ Lean anchor: [`lean/QLF_TimeReversalPerspective.lean`](lean/QLF_TimeReversalPers
 The claim has five parts, and each has a different status.
 
 1. **The interval's value is the same in every perspective; its split into time and space is not.** Proved.
-2. **The order of two events is set by perspective when they are spacelike separated, and is not when they are causally connected.** Proved for an explicit boost family, plus a general statement for every Lorentz perspective.
+2. **The order of two events is set by perspective when they are spacelike separated, and is not when they are causally connected.** Proved for an explicit family of proper orthochronous boosts along one axis, plus the statement that no congruence sends the unit time direction to its reverse. The general orthochronous case rests on the spinor cover (`lorentz_generated_by_boosts_rotations`) and is not re-proved here.
 3. **No reversed reading adds a separate collection of histories. Each is the same collection of closures, read from the other end or from the other domain.** Proved on finite twist histories and on paired clock-domain histories. That this reading *is* physical time reversal is an interpretation.
 
 4. **Handedness is what distinguishes a reversed reading from ours.** Proved event by event (§4a).
-5. **All possible reversed readings exist, sixteen of them, and the selection among them is ours.** Proved (§4b).
+5. **There are sixteen reversed readings, one per selector, each mapping closures to closures; on a closure touching every axis they are sixteen different histories.** Proved (§4b). On other closures some readings coincide (§4b), and the existence of a selector is not by itself agency or a physically distinguishable choice (§4c).
 
-So every possible time-reversed universe exists, in the precise sense that every closure has all sixteen reversed readings and each of them is itself a closure. None of them is a separate collection of histories, because each reversed census is the census. ZFA does not choose among them; the choice is a perspective, and it is visible in the record.
+So every possible time-reversed universe exists, in the precise sense that every selector gives a reversed reading of every closure and each of those readings is itself a closure. None of them is a separate collection of histories, because each reversed census is the census. ZFA does not choose among them. On a closure touching every axis the sixteen readings are distinct and identify their selector; in general they need not (§4b).
 
 ## 2. The interval is invariant; the split is by perspective
 
@@ -30,7 +30,7 @@ A separation is a `Form` `(t, x, y, z)` with interval `t² − x² − y² − z
 | `timeReverse_interval` | `t ↦ −t` preserves the interval, so the interval cannot tell a separation from its reversed reading |
 | `boost_null_iff`, `timeReverse_null_iff` | being on the light cone is the same in every perspective and under reversal |
 
-The general Lorentz statement is `lorentz_preserves_interval` (every `A ∈ SL(2,ℂ)`). So "the interval is by perspective" is exact for the split and not for the value. That is what makes Jim's light-speed remark exact: on the light cone the time part and the space part are equal in every perspective, because the interval is `0` in every perspective (the time double slit's `light_cone_duality`, [PR #321](https://github.com/rhovision-org/quantum-logical-framework/pull/321)).
+The general Lorentz statement is `lorentz_preserves_interval` (every `A ∈ SL(2,ℂ)`). So "the interval is by perspective" is exact for the split and not for the value. For a null separation, `|Δt|` equals the spatial length `|Δx|` in every perspective, because the interval is `0` in every perspective (`boost_null_iff`). That is the exact content here of Jim's light-speed remark. The time double slit's `light_cone_duality` ([PR #321](https://github.com/rhovision-org/quantum-logical-framework/pull/321)) is narrower: it assumes equal signed separations and a common frequency `ω = k`, and its `off_cone_distinguishable` is a single counterexample off the cone, not a general converse.
 
 ## 3. Which order is by perspective
 
@@ -42,7 +42,7 @@ The general Lorentz statement is `lorentz_preserves_interval` (every `A ∈ SL(2
 | `timeReverse_not_a_boost` | so the reversed reading of the rest tick is not reached by any boost in the family |
 | `no_congruence_reverses_time` | for **every** `2×2` complex `A`, `A · I · A† ≠ −I`: no Lorentz perspective (indeed no congruence at all) sends the unit time direction to its reverse |
 
-This is the standard relativity of simultaneity, stated on QLF's Hermitian state. It splits Jim's claim cleanly. For spacelike pairs, the time order really is a matter of perspective, and both orders are equally valid readings. For causal pairs, the forward direction is shared by every inertial perspective, so the reversed reading of a causal history is not one more inertial frame. It is a different kind of perspective: the reading from the other end of the record, or from the counterpart domain.
+This is the standard relativity of simultaneity, stated on QLF's Hermitian state. It splits Jim's claim cleanly. For spacelike pairs, the time order really is a matter of perspective, and both orders are equally valid readings. For causal pairs, the forward direction is shared by every proper orthochronous perspective (shown here for the boost family; in general via the spinor cover), so the reversed reading of a causal history is not one more inertial frame. It is a different kind of perspective: the reading from the other end of the record, or from the counterpart domain.
 
 ## 4. The reversed census is the census
 
@@ -85,9 +85,12 @@ Reversing the order of a word can come with a reversal of handedness on any subs
 | `readingBy_closure_iff` | every reading maps closures onto closures |
 | `every_reading_is_the_census` | for every `s`, each closure is the `s`-reading of a closure: every reversed census is the census |
 | `sixteen_reversed_readings` | for an eight-twist closure touching all four axes, the sixteen readings are sixteen different words, each a closure |
-| `selection_identifiable` | two different selections never give the same reversed history of that closure |
+| `selection_identifiable` | for that closure, two different selections never give the same reversed history |
+| `readingBy_eq_of_agree` | selectors that agree on every axis a word touches give the same reading |
+| `selectors_coincide_on_empty` | on the empty closure all sixteen readings coincide |
+| `joint_recovery_fails` | `[up, down]` is both the pure-reversal reading of `[down, up]` and the `dagger` reading of itself, so a reading does not determine selector and history jointly |
 
-This is the sense of "all possible time reverse universes exist, allowing our selection among them". All sixteen exist in the census, and closure admits every one, so ZFA does not choose. The choice is a perspective, four bits, one per handedness component. And it is visible: the reversed history records which selection made it. Which selection nature's counterpart domain (if there is one) corresponds to is not settled here.
+This is the sense of "all possible time reverse universes exist, allowing our selection among them". Every selector's reading exists in the census, and closure admits every one, so ZFA does not choose. A selector is four bits, one per handedness component. Which of those bits make a difference depends on the closure: only the axes it touches, and on a closure touching all four the sixteen readings are distinct (`sixteen_reversed_readings`) and identify their selector (`selection_identifiable`). In general the reading does not record its selector (`readingBy_eq_of_agree`, `joint_recovery_fails`). Which selection nature's counterpart domain (if there is one) corresponds to is not settled here.
 
 ## 4c. Free will and consciousness: what is proved, what is a reading
 
@@ -96,16 +99,16 @@ This is the sense of "all possible time reverse universes exist, allowing our se
 **Proved (Lean names):**
 
 - The filter is symmetric in time. Every reversed reading of a closure is a closure, for all sixteen readings (`every_reading_is_the_census`, `reversed_census_is_census`). So no count, and not ZFA itself, picks a time direction.
-- The choice among the readings is real and visible: closure admits all sixteen, and different selections give different reversed histories (`selection_identifiable`).
+- Closure admits every selector, so the census does not choose among readings. On a closure touching every axis, different selectors give different reversed histories (`selection_identifiable`); on other closures some coincide (`readingBy_eq_of_agree`). This is a fact about word maps. That a selector exists does not show that any agent makes a selection, or that the selections are physically distinguishable.
 - Closure is irrevocable: closed at a horizon means closed at every wider one (`closedAtHorizon_mono` in [`QLF_HorizonClosure`](lean/QLF_HorizonClosure.lean)). A perspective's record only grows.
-- Some things are shared by every perspective and some are not. Records of one body share only constants with records of the other (`single_body_perspectives_share_only_constants` in [`QLF_PerspectiveHolography`](lean/QLF_PerspectiveHolography.lean)), and a record blind to phase cannot reconstruct the closure (`phase_blind_record_fails`). In the time double slit ([PR #321](https://github.com/rhovision-org/quantum-logical-framework/pull/321)) the fringe is the same in the reversed perspective (`time_reversed_perspective`) while the amplitude is not (`reversed_amp_differs`).
+- Some things are shared by every perspective and some are not. Records of one body share only constants with records of the other (`single_body_perspectives_share_only_constants` in [`QLF_PerspectiveHolography`](lean/QLF_PerspectiveHolography.lean)), and a record blind to phase cannot reconstruct the closure (`phase_blind_record_fails`). In the time double slit ([PR #321](https://github.com/rhovision-org/quantum-logical-framework/pull/321)) the fringe is the same in the reversed perspective (`time_reversed_perspective`). Its `reversed_amp_differs` compares one amplitude `i` with `−i`, which differ by a global phase only: a difference of representation, not an observable witness of handedness. A relative-phase or observable witness would be needed to call the private phase physically distinguishable.
 - Handedness is the event-by-event difference between a reading and its reversal, invisible in a closure's totals (`reversed_tick_opposite_handedness`, `closure_totals_blind`).
 
 **Readings (not derived):**
 
 - *Free will is the selection among the readings, made by closing.* Since the filter does not choose a direction and the record is irrevocable, what fixes a perspective's forward direction is its own record. Each closure an agent makes is a selection among possibilities that all exist. It cannot be predicted from outside for the three non-ignorance reasons of [`Philosophy.md`](Philosophy.md) §3c (irreducibility, no outside vantage point, no final capacity). This is free will as authorship of one's own record, not as a force on physics. It is a compatibilist position; the classical statement is Dennett's (*Elbow Room: The Varieties of Free Will Worth Wanting*, MIT Press, 1984). QLF's addition is the substrate reason: the selection is among readings the census already contains, and the census is indifferent among them.
 - *Experience sits where the two halves meet.* [`Consciousness.md`](Consciousness.md) and [`Conscious_Update_Rule.md`](Conscious_Update_Rule.md) read conscious content as the bound closure winning the race to close. In this document's terms, that is an open strand of the past meeting its opposite-handed half and becoming record: the present is where the forward and conjugate readings meet.
-- *What can be shared is the count; what is one's own is the phase.* This follows the shared/private split proved above and fits the qualia hypothesis of [`Consciousness.md`](Consciousness.md) §6. The perspective framing is relational quantum mechanics (Rovelli, "Relational quantum mechanics", *Int. J. Theor. Phys.* 35, 1637 (1996), [arXiv:quant-ph/9609002](https://arxiv.org/abs/quant-ph/9609002)).
+- *What can be shared is the count; what is one's own is the phase.* This is suggested by the shared/private split proved above and fits the qualia hypothesis of [`Consciousness.md`](Consciousness.md) §6, but the phase difference proved so far is a global phase, so it is not yet an observable private datum. The perspective framing is relational quantum mechanics (Rovelli, "Relational quantum mechanics", *Int. J. Theor. Phys.* 35, 1637 (1996), [arXiv:quant-ph/9609002](https://arxiv.org/abs/quant-ph/9609002)).
 
 None of the three readings is a theorem. A count that each one would change is not yet identified, so by rule 4 of the working method they are framing, not evidence.
 
@@ -116,10 +119,10 @@ Jim: *"It makes sense that nothing can exist. That does not have a history."* Re
 **Proved.** In QLF the things that exist are closures, and a closure *is* a history (a twist word), so on this model the statement holds by construction. The nontrivial part concerns the reversed readings. A reversed universe might look like something that exists without a past of its own. It does not:
 
 - `every_reading_is_the_census`: every closure that appears as a reversed reading is the reading of a closure, so it has a forward history in the census.
-- `reading_has_unique_history`: that history is unique and the reading recovers it. If `w` is the `s`-reading of `v`, then `v` is the `s`-reading of `w`.
+- `reading_has_unique_history`: for a **fixed** selector `s`, that history is unique and the reading recovers it. If `w` is the `s`-reading of `v`, then `v` is the `s`-reading of `w`. Selector and history are not recovered jointly: `joint_recovery_fails` gives one word that is the reading of two different histories under two different selectors.
 - `closedAtHorizon_mono`: once closed, a history stays closed at every wider horizon, so the record is never lost.
 
-**Reading.** Existence is having a closed record. A time-reversed universe exists in exactly that sense: as a reading of a history that exists, with that history recoverable from it. That is the sense in which "reverse time exists by perspective": the perspective supplies the direction of reading, never a history that was not there. That nature satisfies "no existence without a history" is the possibilist premise ([`Philosophy.md`](Philosophy.md) §3), not something these theorems derive.
+**Reading.** Existence is having a closed record. A time-reversed universe exists in exactly that sense: as a reading of a history that exists, with that history recoverable from it once the reading's selector is given. That is the sense in which "reverse time exists by perspective": the perspective supplies the direction of reading, never a history that was not there. That nature satisfies "no existence without a history" is the possibilist premise ([`Philosophy.md`](Philosophy.md) §3), not something these theorems derive.
 
 ## 5. What this is evidence for, and what it is not
 

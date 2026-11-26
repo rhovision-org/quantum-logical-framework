@@ -2797,6 +2797,7 @@
   "QLF.TimeReversalPerspective.handednessOn_reverse": [
     "propext"
   ],
+  "QLF.TimeReversalPerspective.joint_recovery_fails": [],
   "QLF.TimeReversalPerspective.no_congruence_reverses_time": [
     "Classical.choice",
     "Quot.sound",
@@ -2809,6 +2810,10 @@
   ],
   "QLF.TimeReversalPerspective.readingBy_closure_iff": [
     "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_eq_of_agree": [
     "Quot.sound",
     "propext"
   ],
@@ -2848,6 +2853,7 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeReversalPerspective.selectors_coincide_on_empty": [],
   "QLF.TimeReversalPerspective.self_reversed_exists": [],
   "QLF.TimeReversalPerspective.sixteen_reversed_readings": [
     "Classical.choice",
