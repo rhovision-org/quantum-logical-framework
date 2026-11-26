@@ -377,5 +377,6 @@ lean_lib QLF where
     `QLF_PerspectiveLocality,
     `QLF_ControlledUnitary,
     `QLF_TwoLevelUnitary,
-    `QLF_Barenco
+    `QLF_Barenco,
+    `QLF_QuantumComputer
   ]

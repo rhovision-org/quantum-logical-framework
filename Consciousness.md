@@ -228,6 +228,38 @@ binds (no combination problem); the joint closure grounds (no isolation problem)
 prehension (each occasion of experience is a concrescence/closure that prehends the universe),
 participatory/relational realism, and cosmopsychism — recast in verified closures.
 
+
+### 6a. What possibilism makes of the hypothesis
+
+Jim, 2026-11-25: *"What is the consequence of considering the qualia hypothesis, true or false? Possibilism suggests the hypothesis is true."*
+
+**What "true" means under possibilism.** Every logically admissible history exists ([`Philosophy.md`](Philosophy.md) §3), so every *consistent* hypothesis is true in some way. Falsity is reserved for contradiction, which never closes ([`contradiction_no_receipt`](lean/QLF_ContradictionReceipt.lean)). So possibilism does make the qualia hypothesis true, provided it is consistent, and the live questions move: does it hold in the ways that close for us, and how often (method rule 4, [`CLAUDE.md`](CLAUDE.md) "ZFA first, then every way")?
+
+**One step follows from QLF's premises.** Experience happens: there are records of it, in reports, behaviour and the measured rhythms of §5. In QLF every event is a closure, and ZFA is the only filter. So experience is a closure of some kind. This needs no extra assumption beyond the premises; what it does not fix is *which* closure.
+
+**What stays a hypothesis.** The specific two-factor form above, a self-model coupled to a shared closure, is one answer to "which closure". Two consequences follow if it holds in our ways:
+
+- **True:** experience is present wherever the coupling is, graded by its depth and frequency, and not confined to brains. The spirit reading of [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md) §6e and [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §8 is then felt from inside, not only enacted. The leanings of §7 become predictions.
+- **False in our ways:** experience would need an ingredient beyond closure, a second filter beside ZFA, which QLF's single-filter ontology does not supply. So a failure of the §7 predictions would bear on the hypothesis's form first, and on the single-filter ontology only if no closure-based form survived.
+
+The asymmetry is the point: possibilism makes the hypothesis cheap to hold as *true in some way* and expensive to hold as *the way that is ours*, and only the second is a scientific claim.
+
+### 6b. Undeterminable and actual
+
+Jim, 2026-11-25: *"With respect to consciousness, what is the relationship between undeterminable and actual?"*
+
+In QLF what is **actual** is what has closed: an event is a closure, and once closed it stays closed ([`closedAtHorizon_mono`](lean/QLF_HorizonClosure.lean)). Undeterminable never means *not actual*. It means a question some perspective cannot settle, and there are three kinds:
+
+| Undeterminable | What it means | Actual? | Anchor |
+|---|---|---|---|
+| **in advance** | the outcome is not written down before the context that selects it | becomes actual at the closure | `no_choice_fixed_in_advance` (Kochen–Specker, [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md) §6f) |
+| **from outside** | the event is actual, but another perspective's record holds only what a shared closure carries: counts are shared, phase stays private | actual to the one who closes | `record_blind_to_phase` ([`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)): the same twists in another order fold to the opposite phase; also the time-reversal work, [PR #322](https://github.com/rhovision-org/quantum-logical-framework/pull/322); Rovelli's relational QM (Rovelli, Int. J. Theor. Phys. **35** (1996) 1637) |
+| **at all** | no event, from any perspective, could tell | no physical content | superdeterminism ([`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md) §6f, method rule 4) |
+
+**Reading, for consciousness.** Choice is the first kind: undeterminable before the event, actual at it. Experience is the second kind: actual to the one closing and undeterminable to everyone else, because a record passes counts and not phase. That is the substrate form of the hard problem's privacy. Experience is not hidden because it is unreal; it is private because the part that carries it is not what a shared record transmits. Neither is the third kind, so neither is empty the way superdeterminism is: choice shows up in records as the selection made, and experience as the reports and rhythms of §5.
+
+The proved parts are the anchors in the table. That the private phase *is* experience belongs to the qualia hypothesis of §6, not to a theorem.
+
 ## 7. Honest scope
 
 The §6 qualia account is a **stated dissolution — a stance / hypothesis, not a machine-verified proof**.
