@@ -290,6 +290,7 @@ lean_lib QLF where
     `QLF_LorentzSymbol,
     `QLF_BoostCovariance,
     `QLF_InteractingKinematics,
+    `QLF_BoostStates,
     `QLF_RealizableWalk,
     `QLF_Tsirelson,
     `QLF_Mass,
@@ -370,5 +371,7 @@ lean_lib QLF where
     `QLF_CoincidenceTrivial,
     `QLF_AssemblyIndex,
     `QLF_PossibilityGrowth,
-    `QLF_TimeDoubleSlit
+    `QLF_TimeDoubleSlit,
+    `QLF_LocalityDefinitions,
+    `QLF_PerspectiveLocality
   ]

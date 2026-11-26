@@ -87,6 +87,7 @@ import QLF_RelativityScale
 import QLF_LorentzSymbol
 import QLF_BoostCovariance
 import QLF_InteractingKinematics
+import QLF_BoostStates
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -140,6 +141,8 @@ import QLF_HolographicCompletion
 import QLF_SpatialResponseDerived
 import QLF_ConformalComparison
 import QLF_DiversityNovelOutcome
+import QLF_LocalityDefinitions
+import QLF_PerspectiveLocality
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -866,6 +869,23 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.InteractingKinematics.twoBody_lattice_conservation
 #print axioms QLF.InteractingKinematics.scattering_latticeConserving
 
+-- Stage 4a: the frame-comparison map's algebra; amplitude covariance is numerical only.
+#print axioms QLF.BoostStates.chiral_mul
+#print axioms QLF.BoostStates.chiral_one
+#print axioms QLF.BoostStates.handed_eq_chiral
+#print axioms QLF.BoostStates.beta_chiral_beta
+#print axioms QLF.BoostStates.chiralAct_one
+#print axioms QLF.BoostStates.chiralAct_mul
+#print axioms QLF.BoostStates.inv_neg_two
+#print axioms QLF.BoostStates.chiralAct_neg
+#print axioms QLF.BoostStates.chiralAct_chirality
+#print axioms QLF.BoostStates.chiralAct_of_unitary
+#print axioms QLF.BoostStates.massStep_add
+#print axioms QLF.BoostStates.halfWalk_eq_conj
+#print axioms QLF.BoostStates.halfWalk_unitary
+#print axioms QLF.BoostStates.halfWalk_dispersion
+#print axioms QLF.BoostStates.dirac_boostZ_covariant
+
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self
 #print axioms QLF.ClockRedshift.ratio_pos
@@ -1006,7 +1026,9 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TimeDoubleSlit.off_cone_distinguishable
 #print axioms QLF.TimeDoubleSlit.reversed_amp
 #print axioms QLF.TimeDoubleSlit.time_reversed_perspective
-#print axioms QLF.TimeDoubleSlit.reversed_amp_differs
+#print axioms QLF.TimeDoubleSlit.relPhase_global
+#print axioms QLF.TimeDoubleSlit.relPhase_reversed
+#print axioms QLF.TimeDoubleSlit.reversed_relPhase_differs
 #print axioms QLF.TimeDoubleSlit.reverse_is_negative_frequency
 #print axioms QLF.TimeDoubleSlit.marked_coherent
 #print axioms QLF.TimeDoubleSlit.marked_expand
@@ -1015,3 +1037,35 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.TimeDoubleSlit.tick_amp_phase
 #print axioms QLF.TimeDoubleSlit.tick_conservation
 #print axioms QLF.TimeDoubleSlit.mu4_pattern
+
+-- Locality (issue #315): tick reading, shared closure across spacelike endpoints,
+-- perspective locality, no-signalling and the Bell audit. No QLF axiom.
+#print axioms QLF.LocalityDefinitions.tick_causal
+#print axioms QLF.LocalityDefinitions.closure_timelike
+#print axioms QLF.LocalityDefinitions.straight_run_null
+#print axioms QLF.LocalityDefinitions.null_not_closed
+#print axioms QLF.LocalityDefinitions.tick_reading_nondegenerate
+#print axioms QLF.LocalityDefinitions.zero_displacement_degenerate
+#print axioms QLF.LocalityDefinitions.pair_shared_closure
+#print axioms QLF.LocalityDefinitions.pair_endpoints_spacelike
+#print axioms QLF.LocalityDefinitions.no_history_connects
+#print axioms QLF.LocalityDefinitions.null_legs_from_one_event
+#print axioms QLF.LocalityDefinitions.reachable_causal
+#print axioms QLF.LocalityDefinitions.causal_not_reachable
+#print axioms QLF.LocalityDefinitions.prefixSpacelike_not_spacelike
+#print axioms QLF.LocalityDefinitions.shared_closure_vs_reachable
+#print axioms QLF.LocalityDefinitions.null_lorentz_invariant
+#print axioms QLF.LocalityDefinitions.census_postselection_signals
+#print axioms QLF.PerspectiveLocality.jointFold_factorizes
+#print axioms QLF.PerspectiveLocality.fold_unitary
+#print axioms QLF.PerspectiveLocality.local_expectation_local
+#print axioms QLF.PerspectiveLocality.perspective_locality
+#print axioms QLF.PerspectiveLocality.perspective_locality_nontrivial
+#print axioms QLF.PerspectiveLocality.no_signalling
+#print axioms QLF.PerspectiveLocality.singlet_outcome_dependent
+#print axioms QLF.PerspectiveLocality.locality_profile
+#print axioms QLF.PerspectiveLocality.probT_nonneg
+#print axioms QLF.PerspectiveLocality.probT_sum
+#print axioms QLF.PerspectiveLocality.no_signalling_typed
+#print axioms QLF.PerspectiveLocality.chsh_factorizable_le
+#print axioms QLF.PerspectiveLocality.no_factorizable_model

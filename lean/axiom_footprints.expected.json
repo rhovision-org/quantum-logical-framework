@@ -95,6 +95,81 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.BoostStates.beta_chiral_beta": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_chirality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_of_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiral_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiral_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.dirac_boostZ_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_dispersion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_eq_conj": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.handed_eq_chiral": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.inv_neg_two": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.massStep_add": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BornFromWays.assignment_unique": [
     "Classical.choice",
     "Quot.sound",
@@ -1421,6 +1496,77 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LocalityDefinitions.causal_not_reachable": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.census_postselection_signals": [
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.closure_timelike": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.no_history_connects": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_legs_from_one_event": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_lorentz_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_not_closed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.pair_endpoints_spacelike": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.pair_shared_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.prefixSpacelike_not_spacelike": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.reachable_causal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.shared_closure_vs_reachable": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.straight_run_null": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.tick_causal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.tick_reading_nondegenerate": [
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.zero_displacement_degenerate": [
+    "propext"
+  ],
   "QLF.LorentzCover.properOrthochronous_id": [
     "Classical.choice",
     "Quot.sound",
@@ -1962,6 +2108,71 @@
     "propext"
   ],
   "QLF.PerspectiveHolography.two_body_dictionary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.chsh_factorizable_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.fold_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.jointFold_factorizes": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.local_expectation_local": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.locality_profile": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_factorizable_model": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_signalling": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_signalling_typed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.perspective_locality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.perspective_locality_nontrivial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.probT_nonneg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.probT_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.singlet_outcome_dependent": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -2597,6 +2808,16 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeDoubleSlit.relPhase_global": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.relPhase_reversed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.TimeDoubleSlit.reverse_is_negative_frequency": [
     "Classical.choice",
     "Quot.sound",
@@ -2607,7 +2828,7 @@
     "Quot.sound",
     "propext"
   ],
-  "QLF.TimeDoubleSlit.reversed_amp_differs": [
+  "QLF.TimeDoubleSlit.reversed_relPhase_differs": [
     "Classical.choice",
     "Quot.sound",
     "propext"

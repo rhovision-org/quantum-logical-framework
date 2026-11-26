@@ -265,15 +265,16 @@ theorem space_reciprocity (a : ℂ) (ha : a ≠ 0) (x₁ x₂ : ℝ) (hx : x₂ 
     2 * π ≤ q * |x₂ - x₁| :=
   reciprocity_of_shift _ q (sub_ne_zero.mpr hx) hq ((space_shift_iff a ha x₁ x₂ q).mp hper)
 
-/-! ## §3b On the light cone time and space are one slit
+/-! ## §3b On the light cone the time and space patterns coincide
 
 `space_time_duality` says the pattern cannot tell a time slit from a space slit with the same
-accumulated phase. On the light cone that holds with no matching condition at all: for a separation
-with zero interval running with the light (`Δt = Δx`, `c = 1`), read at the light dispersion
-`ω = k`, the two patterns coincide at every frequency (`light_cone_duality`). Off the cone the
-interval's sign tells them apart: a purely timelike pair and a purely spacelike-degenerate pair at the
-same frequency give a dark and a bright fringe (`off_cone_distinguishable`). The dispersion `ω = k`
-is an input here (the kinetic reading of `QLF_LorentzSymbol`), not derived. -/
+accumulated phase. `light_cone_duality` is the special case where that condition is met by a null
+separation: if the signed separations are equal (`t₂ − t₁ = x₂ − x₁`, a null separation running with
+the light, `c = 1`) and the pattern is read at a common frequency `ω = k`, the two patterns coincide
+at every frequency. Both hypotheses are inputs: `ω = k` is the light dispersion (the kinetic reading
+of `QLF_LorentzSymbol`), not derived. `off_cone_distinguishable` is one counterexample off the cone,
+not a converse: it shows the conclusion can fail when the interval is nonzero, not that it fails for
+every non-null separation. -/
 
 /-- The `1+1` interval of a separation, `c = 1`. -/
 def interval (dt dx : ℝ) : ℝ := dt ^ 2 - dx ^ 2
@@ -319,9 +320,11 @@ The reversed amplitude is the conjugate of the forward one (`reversed_amp`), so 
 perspective records the identical spectrum (`time_reversed_perspective`). Reversing the instants
 alone, without conjugating, is the forward pattern read at the opposite frequency
 (`reverse_is_negative_frequency`). What the two perspectives share is the Born weight, which is
-blind to conjugation; what they do not share is the amplitude, each holding the other's conjugate
-phase (`reversed_amp_differs`). So the time direction is not in the fringes; it is in the phase, and
-the phase is held by a perspective. -/
+blind to conjugation. What they do not share is the gauge-invariant relative phase `a₁ · conj a₂`:
+each holds the other's conjugate (`relPhase_reversed`, `reversed_relPhase_differs`). That difference
+is a statement about the representation; this pair's intensity cannot reveal it, and revealing it
+needs a reference outside the pair. The event-level handedness statement is
+[`QLF_Handedness`](QLF_Handedness.lean)'s `handednessOn_map_conj`. -/
 
 private theorem conj_phase (r : ℝ) : (starRingEnd ℂ) ((r : ℂ) * I) = ((-r : ℝ) : ℂ) * I := by
   rw [map_mul, Complex.conj_ofReal, Complex.conj_I]
@@ -343,14 +346,33 @@ theorem time_reversed_perspective (a₁ a₂ : ℂ) (t₁ t₂ ω : ℝ) :
   unfold timeIntensity
   rw [reversed_amp, Complex.normSq_conj]
 
-/-- **But the two perspectives do not share the amplitude.** A single slit at `t = 0` with amplitude
-`i` reads `i` forward and `−i` reversed: the reversed perspective holds the conjugate phase. Only the
-conjugation-blind weight is common to both. -/
-theorem reversed_amp_differs :
-    timeAmp ((starRingEnd ℂ) I) ((starRingEnd ℂ) 0) (-0) (-0) 0 ≠ timeAmp I 0 0 0 0 := by
-  unfold timeAmp
-  simp only [neg_zero, mul_zero, Complex.ofReal_zero, zero_mul, Complex.exp_zero, mul_one,
-    map_zero, add_zero, Complex.conj_I]
+/-- The relative phase of the two slits, `a₁ · conj a₂`. A global phase cannot change it
+(`relPhase_global`), so it is the gauge-invariant phase datum of the pair. -/
+noncomputable def relPhase (a₁ a₂ : ℂ) : ℂ := a₁ * (starRingEnd ℂ) a₂
+
+/-- A global phase leaves the relative phase unchanged. -/
+theorem relPhase_global (u a₁ a₂ : ℂ) (hu : normSq u = 1) :
+    relPhase (u * a₁) (u * a₂) = relPhase a₁ a₂ := by
+  unfold relPhase
+  rw [map_mul]
+  calc u * a₁ * ((starRingEnd ℂ) u * (starRingEnd ℂ) a₂)
+      = (u * (starRingEnd ℂ) u) * (a₁ * (starRingEnd ℂ) a₂) := by ring
+    _ = a₁ * (starRingEnd ℂ) a₂ := by rw [Complex.mul_conj, hu]; simp
+
+/-- The reverse-time perspective holds the conjugate relative phase. -/
+theorem relPhase_reversed (a₁ a₂ : ℂ) :
+    relPhase ((starRingEnd ℂ) a₁) ((starRingEnd ℂ) a₂) = (starRingEnd ℂ) (relPhase a₁ a₂) := by
+  unfold relPhase
+  rw [map_mul]
+
+/-- **The two perspectives do not share the relative phase.** Slits with amplitudes `1` and `i`
+have relative phase `−i` forward and `i` reversed. Unlike a global phase this difference is
+gauge-invariant (`relPhase_global`); it is not visible in this pair's own intensity, which is equal
+in both perspectives (`time_reversed_perspective`). -/
+theorem reversed_relPhase_differs :
+    relPhase ((starRingEnd ℂ) 1) ((starRingEnd ℂ) I) ≠ relPhase 1 I := by
+  unfold relPhase
+  simp only [map_one, Complex.conj_I, one_mul]
   intro h
   have h2 := congrArg Complex.im h
   simp at h2
@@ -450,8 +472,8 @@ private theorem tick_factor (ζ a₁ a₂ : ℂ) (N t d k : ℕ) (hN : 0 < N) (h
   rw [he, Complex.normSq_mul, map_pow, map_pow, h1, one_pow, one_pow, one_mul]
 
 /-- **Fringes redistribute, they do not create.** Summed over the `N` frequencies of the clock,
-the intensity is `N(|a₁|² + |a₂|²)` whenever the slit separation is not a whole cycle
-(`ζ^d ≠ 1`): the fringe term sums to zero. -/
+the intensity is `N(|a₁|² + |a₂|²)` whenever `ζ^d ≠ 1`: the fringe term sums to zero. (When `ζ`
+has exact order `N` this is `N ∤ d`; for a `ζ` of smaller order it is stronger.) -/
 theorem tick_conservation (ζ a₁ a₂ : ℂ) (N t d : ℕ) (hN : 0 < N) (hζ : ζ ^ N = 1)
     (hd : ζ ^ d ≠ 1) :
     ∑ k ∈ Finset.range N, tickIntensity ζ a₁ a₂ t d k = N * (normSq a₁ + normSq a₂) := by
