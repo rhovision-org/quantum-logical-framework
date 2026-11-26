@@ -714,3 +714,58 @@ comparison was chosen after the gate failed.
 **Open after 2e.** (0′) A re-registered L2 with a measure that has no anisotropy floor (for example a
 least-squares fit of a symmetric tensor to the seven edge types at each vertex, reading its trace) and
 a cancellation control sized at every registered radius. (1)–(4) of §11 are unchanged.
+
+## §14 Stage 2e′: re-registered local vacuum test (pre-registration)
+
+Jim, 2026-11-26, on §13's next step: *"do it."* Committed before any 2e′ code exists and before any
+2e′ number has been computed. **Disclosed:** this re-registration follows §13, so its author has seen
+that the census's `χ` matches its vacuum control to 1% and that the vertex-sum `χ` has a ~7% floor.
+The new measure is designed to remove that floor. The census itself, sources, map, `λ`, lattice and
+box are unchanged from §12.
+
+### 14.1 Measure: a calibrated tensor fit at each vertex
+
+The Regge response is linear in the field `f` at first order. At a qualifying vertex `x` (§12.1),
+let `y_t(x)` be the mean of `Δε/λ` over the two edges of type `t` at `x` (forward and backward), for
+the seven edge types. Inverting the lattice through `x` maps the triangulation to itself and swaps
+those two edges, so a field that is linear about `x` contributes nothing to `y_t(x)`.
+
+* **Calibration.** For each of the six quadratic fields `f_ij(z) = ½ z_i z_j` (`i ≤ j`, both orders
+  summed for `i ≠ j`), compute `y_t` at the origin on the same `ℓ⁰` background. This gives a `7 × 6`
+  matrix `C` with `y = C h` for a constant Hessian `h = (H_xx, H_yy, H_zz, H_xy, H_xz, H_yz)`. It
+  carries the lattice's anisotropy exactly, which the vertex sum `s` did not.
+* **Fit.** At each vertex, `h(x)` is the least-squares solution of `C h = y(x)`.
+  `τ(x) = |H_xx + H_yy + H_zz|` is the local trace (the continuum `−R/4` up to `λ`), and
+  `η(x) = ‖H‖_F`, the Frobenius norm with off-diagonals counted twice.
+* **Index.** `χ′(r) = mean τ / mean η` over shell `r` (§12.1 shells). A harmonic field gives `χ′ → 0`;
+  a field whose Laplacian is of the size of its Hessian gives `χ′` of order 1.
+
+### 14.2 Controls
+
+* **V**: §12.2's vacuum control, one per source.
+* **N′**: §12.2's ripple with `b = 0.06` instead of `0.005`. At peak its Laplacian `3(π/8)²b ≈ 0.028`
+  exceeds the monopole's Hessian norm `√6·(2/π)/r³` at every registered radius (`0.024` at `r = 4`),
+  so it is sized for every shell, not one.
+* **F**: §12.2's flat control, unchanged.
+
+**Validity gates.** (i) `C` has rank 6 with condition number below `10³`; (ii) every V has
+`χ′_V ≤ 0.05` at `r = 6, 8, 10`; (iii) N′ has `χ′_N ≥ 0.30` at `r = 6, 8, 10`; (iv) F gives
+`|Δε| < 10⁻⁹`; (v) the fit reproduces the calibration: applied to `f_xx` on a vertex `|x| ≥ 4` from the
+origin it returns `H_xx` within `10⁻⁶`. If any gate fails, L2′ is uninformative.
+
+### 14.3 Test
+
+| | Claim | Passes if | Prior |
+|---|---|---|---|
+| L2′ | local vacuum, not cancellation | for all seven sources, `χ′(r) ≤ 0.05` at `r = 6, 8, 10` | pass |
+
+Reported, not decision inputs: `χ′(r)` for `r = 4 … 10` and its falloff (a discretization residual
+should fall about like `r^{−2}`); the least-squares residual `‖C h − y‖ / ‖y‖` per shell; the fitted
+eigenvalue ratio of `H` on the axis (continuum `2 : −1 : −1`).
+
+**Reading rule.** L2′ passing: outside every source the census-length geometry has zero local scalar
+curvature up to discretization while its tidal Hessian is non-zero (§13 L1, L3), the local vacuum of
+linearized Schwarzschild's spatial slice. L2′ failing with the gates passing: the local scalar is
+non-zero and cancels only in sums, so §11's D1 plateau and §13's L1–L4 describe a non-vacuum field.
+Not claimed either way: the time part, light bending, `λ`, or that the conformal form of the map is
+forced.
