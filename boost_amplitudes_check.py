@@ -11,7 +11,10 @@ the joint spinor space C^4 (x) C^4. To first order in g (tree level) the amplitu
 (k1, k2) to (k1', k2') is the spinor matrix element of Gamma between band states, times the
 coupling's Fourier transform ghat(q) at the momentum transfer q = k1' - k1.
 
-Graded quantity. Phases of band eigenvectors are arbitrary, so the spin-summed square is used:
+Graded quantity. W below is a vertex proxy, not an energy-conserving S-matrix element: the grid is
+elastic for the continuum shell, and the walk's quasi-energy mismatch between in and out legs is
+reported separately as a diagnostic. Phases of band eigenvectors are arbitrary, so the spin-summed
+square is used:
 
     W(p) = |ghat(q)|^2 Tr[(Pi1' (x) Pi2') Gamma (Pi1 (x) Pi2) Gamma^dagger],   Pi = E P(k),
 
@@ -38,7 +41,8 @@ Gates (fail closed, every sample checked before reduction). Nothing is graded, a
 exits non-zero with INVALID, unless: the continuum calibration (scalar and vector) is below 1e-12;
 the continuum blind vertex gives a median defect of at least 1e-2 at every kappa (the defect
 detects a frame-dependent vertex; the median, because a few configurations are close to invariant
-even for this vertex); every W is finite and non-zero; every graded defect is finite and
+even for this vertex); every W is finite, real and positive (relative imaginary residual at most 1e-12, a gate added
+after review); every graded defect is finite and
 positive; every fitted slope is finite.
 
 What this is evidence for. Finite-grid evidence on tree amplitudes of one contact vertex. It is not
@@ -81,6 +85,7 @@ KILL_SLOPE = 1.5
 CAL_MAX = 1e-12
 CONTROL_MIN = 1e-2
 BLIND_MAX_SLOPE = 0.5
+IMAG_TOL = 1e-12          # added after review: relative imaginary residual allowed in W
 
 
 def ghat(q, ranged):
@@ -107,6 +112,9 @@ def W(bandfn, gamma, frame, ranged):
     pout = np.kron(pis[2], pis[3])
     q = np.subtract(frame[2][1], frame[0][1])
     w = np.trace(pout @ gamma @ pin @ gamma.conj().T)
+    # W is a spin-summed square, so it must be real and positive up to rounding.
+    if not (np.isfinite(w) and w.real > 0 and abs(w.imag) <= IMAG_TOL * w.real):
+        raise Invalid(f"W is not positive real within {IMAG_TOL}: {w!r}")
     return float(abs(ghat(q, ranged)) ** 2 * w.real)
 
 
@@ -146,6 +154,20 @@ def slope(ys):
     return s
 
 
+def energy_mismatch(bandfn, kappa):
+    """Diagnostic, not graded: worst |E1 + E2 - E1' - E2'| / (E1 + E2) with the walk's own energies.
+
+    The grid is elastic for the continuum shell. The walk's shell cos E = cos m prod cos k_i is not
+    isotropic, so equal |k| in different directions need not give equal quasi-energy.
+    """
+    worst_ = 0.0
+    for d, d2 in samples():
+        for r in MASS_RATIOS:
+            E = [bandfn(k, m)[1] for k, m in legs(kappa, d, d2, r)]
+            worst_ = max(worst_, abs(E[0] + E[1] - E[2] - E[3]) / (E[0] + E[1]))
+    return worst_
+
+
 def walk_band(slice_):
     return lambda k, m: bsc.band(bsc.walk(k, m, slice_))
 
@@ -183,6 +205,10 @@ def run():
             print(f"{slice_:4s} {name:6s} slope {s:6.3f}  {verdict:20s} "
                   + "  ".join(f"{y:.3e}" for y in ys))
         res[slice_] = out
+    mis = [energy_mismatch(walk_band("half"), kp) for kp in KAPPAS]
+    res["half_quasienergy_mismatch"] = mis
+    print("diagnostic (not graded), half-slice relative quasi-energy mismatch in - out: "
+          + "  ".join(f"{y:.3e}" for y in mis))
     res["graded"] = {n: res["half"][n]["verdict"] for n, _, _ in arms}
     return res
 

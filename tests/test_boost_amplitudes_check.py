@@ -76,6 +76,31 @@ class BoostAmplitudesCheckTests(unittest.TestCase):
             with self.assertRaisesRegex(bac.Invalid, "non-finite or zero"):
                 bac.run()
 
+    def _patched_trace(self, value):
+        original = bac.np.trace
+        seen = {"n": 0}
+
+        def patched(a, *args, **kw):
+            seen["n"] += 1
+            return value if seen["n"] == 9 else original(a, *args, **kw)
+
+        return mock.patch.object(bac.np, "trace", patched)
+
+    def test_negative_W_is_caught(self) -> None:
+        with self._patched_trace(complex(-1e-6, 0.0)):
+            with self.assertRaisesRegex(bac.Invalid, "positive real"):
+                bac.run()
+
+    def test_complex_W_is_caught(self) -> None:
+        with self._patched_trace(complex(1e-6, 1e-9)):
+            with self.assertRaisesRegex(bac.Invalid, "positive real"):
+                bac.run()
+
+    def test_quasienergy_mismatch_reported(self) -> None:
+        mis = self.res["half_quasienergy_mismatch"]
+        self.assertEqual(len(mis), len(bac.KAPPAS))
+        self.assertTrue(all(np.isfinite(m) and m > 0 for m in mis))
+
     def test_non_finite_slope_rejected(self) -> None:
         with mock.patch.object(bac.np, "polyfit", lambda *a, **k: np.array([np.nan, 0.0])):
             with self.assertRaisesRegex(bac.Invalid, "slope"):

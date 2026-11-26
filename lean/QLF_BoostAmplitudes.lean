@@ -13,8 +13,8 @@ first a question about `Γ`: does the spin part of the approved map, `S = chiral
 * **`scalar_bilinear_invariant`**: for every `A` with invertible determinant,
   `Sᴴ β S = β`. The scalar density `ψ†βψ = ψ̄ψ` is the same in every frame.
 * **`scalar_vertex_invariant`**: so the two-body scalar vertex `β ⊗ β` is preserved by
-  `S ⊗ S`: the tree amplitude of a `ψ̄ψ ψ̄ψ` contact is frame independent, up to the band's own
-  `O(κ²)` defect (stage 4a).
+  `S ⊗ S`. This is the vertex part only; the walk's tree-level amplitudes are measured
+  numerically, on a finite grid.
 * **`blind_density_not_invariant`**: for a boost along `z` with `a·b = 1` and `a² ≠ 1`,
   `Sᴴ S ≠ 1`. The spin-blind density `ψ†ψ` changes with the frame.
 * **`blind_vertex_not_invariant`**: so the spin-blind two-body vertex `1 ⊗ 1`, the scalar phase
