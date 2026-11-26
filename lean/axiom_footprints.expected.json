@@ -70,6 +70,126 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.Barenco.circuits_eq_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cnot_apply": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cnot_eq_h_cz_h": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cnot_isPerm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.ctrl_comm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.ctrl_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.ctrl_phase_switch": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.ctrl_single_su2": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cz_eq_diagonal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cz_symm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.eq_cz_of_sign_table": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.eq_diagonal_of_signs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.flip_isPerm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.lift_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.onQubit_apply": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.onQubit_comm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.onQubit_mul_apply": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.pair_allOnes_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.pair_cnot_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.pair_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.twoLevel_mem_circuits": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.universality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.universality_cz": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.universality_list": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BoostCovariance.diracWalk_boost_covariant": [
     "Classical.choice",
     "Quot.sound",
@@ -786,6 +906,36 @@
   "QLF.ConservativeReturn.toyQuotientTrigger_exists": [],
   "QLF.ConservativeReturn.toyTrigger_composite": [],
   "QLF.ConservativeReturn.toyTrigger_exists": [],
+  "QLF.ControlledUnitary.abc_decomposition": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.controlled_eq_abc": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.controlled_unitary_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.su2_euler": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.su2_three_commutators": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.unitary_eq_phase_smul_su2": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.CoupledEvolution.evolve_covariant": [
     "Classical.choice",
     "Quot.sound",
@@ -2794,6 +2944,36 @@
     "propext"
   ],
   "QLF.TsirelsonBound.tsirelson_bound_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.clear_column": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.givens_exists": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.row_of_column": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.supported_mem_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.unitary_eq_prod_twoLevel": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.unitary_mem_closure_twoLevel": [
     "Classical.choice",
     "Quot.sound",
     "propext"
