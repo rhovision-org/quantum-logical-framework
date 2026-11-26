@@ -144,6 +144,9 @@ import QLF_ConformalComparison
 import QLF_DiversityNovelOutcome
 import QLF_LocalityDefinitions
 import QLF_PerspectiveLocality
+import QLF_ControlledUnitary
+import QLF_TwoLevelUnitary
+import QLF_Barenco
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -1041,3 +1044,39 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.PerspectiveLocality.no_signalling_typed
 #print axioms QLF.PerspectiveLocality.chsh_factorizable_le
 #print axioms QLF.PerspectiveLocality.no_factorizable_model
+#print axioms QLF.ControlledUnitary.su2_euler
+#print axioms QLF.ControlledUnitary.abc_decomposition
+#print axioms QLF.ControlledUnitary.unitary_eq_phase_smul_su2
+#print axioms QLF.ControlledUnitary.controlled_eq_abc
+#print axioms QLF.ControlledUnitary.controlled_unitary_eq
+#print axioms QLF.ControlledUnitary.su2_three_commutators
+#print axioms QLF.TwoLevelUnitary.givens_exists
+#print axioms QLF.TwoLevelUnitary.clear_column
+#print axioms QLF.TwoLevelUnitary.row_of_column
+#print axioms QLF.TwoLevelUnitary.supported_mem_closure
+#print axioms QLF.TwoLevelUnitary.unitary_mem_closure_twoLevel
+#print axioms QLF.TwoLevelUnitary.unitary_eq_prod_twoLevel
+#print axioms QLF.Barenco.lift_mul
+#print axioms QLF.Barenco.onQubit_apply
+#print axioms QLF.Barenco.cnot_apply
+#print axioms QLF.Barenco.ctrl_comm
+#print axioms QLF.Barenco.ctrl_single_su2
+#print axioms QLF.Barenco.ctrl_phase_switch
+#print axioms QLF.Barenco.ctrl_mem
+#print axioms QLF.Barenco.flip_isPerm
+#print axioms QLF.Barenco.cnot_isPerm
+#print axioms QLF.Barenco.pair_allOnes_mem
+#print axioms QLF.Barenco.pair_mem
+#print axioms QLF.Barenco.pair_cnot_mem
+#print axioms QLF.Barenco.twoLevel_mem_circuits
+#print axioms QLF.Barenco.universality
+#print axioms QLF.Barenco.universality_list
+#print axioms QLF.Barenco.circuits_eq_unitary
+#print axioms QLF.Barenco.cnot_eq_h_cz_h
+#print axioms QLF.Barenco.cz_eq_diagonal
+#print axioms QLF.Barenco.cz_symm
+#print axioms QLF.Barenco.eq_diagonal_of_signs
+#print axioms QLF.Barenco.eq_cz_of_sign_table
+#print axioms QLF.Barenco.universality_cz
+#print axioms QLF.Barenco.onQubit_mul_apply
+#print axioms QLF.Barenco.onQubit_comm

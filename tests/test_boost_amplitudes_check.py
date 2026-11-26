@@ -101,6 +101,14 @@ class BoostAmplitudesCheckTests(unittest.TestCase):
         self.assertEqual(len(mis), len(bac.KAPPAS))
         self.assertTrue(all(np.isfinite(m) and m > 0 for m in mis))
 
+    def test_non_finite_leg_energy_in_diagnostic_is_caught(self) -> None:
+        def bad_band(k, m):
+            P, E = bac.bsc.dirac_band(k, m)
+            return P, float("nan")
+
+        with self.assertRaisesRegex(bac.Invalid, "leg energy"):
+            bac.energy_mismatch(bad_band, 0.04)
+
     def test_non_finite_slope_rejected(self) -> None:
         with mock.patch.object(bac.np, "polyfit", lambda *a, **k: np.array([np.nan, 0.0])):
             with self.assertRaisesRegex(bac.Invalid, "slope"):

@@ -373,5 +373,8 @@ lean_lib QLF where
     `QLF_AssemblyIndex,
     `QLF_PossibilityGrowth,
     `QLF_LocalityDefinitions,
-    `QLF_PerspectiveLocality
+    `QLF_PerspectiveLocality,
+    `QLF_ControlledUnitary,
+    `QLF_TwoLevelUnitary,
+    `QLF_Barenco
   ]

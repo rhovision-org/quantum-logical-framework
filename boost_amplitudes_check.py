@@ -164,7 +164,12 @@ def energy_mismatch(bandfn, kappa):
     for d, d2 in samples():
         for r in MASS_RATIOS:
             E = [bandfn(k, m)[1] for k, m in legs(kappa, d, d2, r)]
-            worst_ = max(worst_, abs(E[0] + E[1] - E[2] - E[3]) / (E[0] + E[1]))
+            if not all(np.isfinite(e) and e > 0 for e in E):
+                raise Invalid(f"non-finite or non-positive leg energy {E!r} at kappa={kappa}")
+            v = abs(E[0] + E[1] - E[2] - E[3]) / (E[0] + E[1])
+            if not np.isfinite(v):
+                raise Invalid(f"non-finite quasi-energy mismatch {v!r} at kappa={kappa}")
+            worst_ = max(worst_, v)
     return worst_
 
 

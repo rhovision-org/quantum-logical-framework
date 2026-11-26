@@ -396,7 +396,7 @@ For a two-body contact-interaction walk on `ℤ³` the conservation law is now d
 | 1. Free propagation covariant in the large | proved (§5b, `diracWalk_boost_covariant`) | — |
 | 2. Interacting kinematics covariant in the large, given lattice conservation and the summed long-wavelength bound; elementary umklapp vectors along a boost axis are not boost-stable | proved (this section, `process_boost_covariant`, `umklapp_x_not_covariant`) | — |
 | 3. Lattice conservation derived for a concrete interacting walk | **proved for two bodies on `ℤ³`** with any contact interaction (`twoBody_lattice_conservation`, `scattering_latticeConserving`) | `N` bodies: the same argument with an `N`-fold joint shift; labour |
-| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the two-body tree-level vertex proxy scales as `O(κ²)` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | prove the `O(κ²)` bounds; extend the stage-3 conservation theorems to a matrix-valued contact; energy-conserving amplitudes; a substrate reason for a Lorentz-scalar contact |
+| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the relative boost defect of the two-body tree-level vertex proxy scales as `κ²` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | prove the `O(κ²)` bounds; extend the stage-3 conservation theorems to a matrix-valued contact; energy-conserving amplitudes; a substrate reason for a Lorentz-scalar contact |
 | 5. Loops: lattice-scale contribution small at low energy (Collins) | open, **blocked on a definition and on analysis** | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
 | 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
 | 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
@@ -584,8 +584,8 @@ slope makes the run `INVALID`.
 
 Data: [`data/boost_amplitudes_check.json`](data/boost_amplitudes_check.json).
 
-**On the tested grid, the tree-level vertex proxy `W` of the two-body contact walk changes under a
-boost at `O(κ²)` for the three Lorentz-scalar vertices tested**: the scalar `ψ̄ψ ψ̄ψ` form, the vector
+**On the tested grid, the relative boost defect of the two-body contact walk's tree-level vertex proxy
+`W` scales as `κ²` for the three Lorentz-scalar vertices tested**: the scalar `ψ̄ψ ψ̄ψ` form, the vector
 `J^μ J_μ` form, and the scalar form with a nearest-neighbour range. An instantaneous finite range is
 not Lorentz invariant at finite `κ`; it enters through `ĝ(q)` at `q ~ κ`, and its frame dependence
 scales as `κ²` on this grid. The finite range was the predicted failure point in the stage-4 plan,
@@ -613,7 +613,7 @@ axioms:
 | `blind_vertex_not_invariant` | so the spin-blind contact `1 ⊗ 1` is not preserved by any genuine boost |
 
 **What this settles.** At tree level, with the approved map and on the tested grid, the vertex
-proxy is covariant at `O(κ²)` for the scalar, vector and nearest-neighbour scalar contacts, and the
+proxy's relative boost defect scales as `κ²` for the scalar, vector and nearest-neighbour scalar contacts, and the
 spin-blind contact of stage 3 has an order-one defect at every tested `κ`. Proved, independent of
 `κ`: the spin action preserves the scalar vertex and no genuine boost preserves the spin-blind one.
 
