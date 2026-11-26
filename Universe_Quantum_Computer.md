@@ -67,10 +67,10 @@ rotation = diag((3+4i)/5, (3−4i)/5)
 
 ## 3. From these theorems to "a quantum computer"
 
-Two classical facts, cited and not proved in Lean, take the remaining steps:
+Two classical facts take the remaining steps. Both are now proved in Lean as matrix algebra:
 
 1. An infinite-order rotation about one axis and another about a non-parallel axis generate a dense subgroup of SU(2). (The same construction about `x` uses the Forms `ŷ` and `(3ŷ + 4ẑ)/5`.) The one-axis half is now proved: the angle `θ` of `(3+4i)/5` has `θ/2π` irrational (`arg_z_irrational`), so the powers of the rotation come arbitrarily close to every phase about its axis (`rotation_angles_dense`, through Mathlib's `AddCircle.denseRange_zsmul_coe_iff`). The two-axis step is proved too: every element of SU(2) is a limit of products `D(zᵃ)·H·D(zᵇ)·H·D(zᶜ)` with `D(w) = diag(w, w̄)` and `z = (3+4i)/5`, that is, of rotations about `z` alternated with the same rotation conjugated to the `x` axis by the Hadamard (`su2_dense`). The proof is Euler's `ZXZ` decomposition (`su2_euler`, every SU(2) matrix is `D(e^{iα})·H·D(e^{iβ})·H·D(e^{iγ})`), density of the powers of `z` on the unit circle (`E_mem_closure`), and continuity of the product (`euler_continuous`). The rotation about `x` is conjugation by a Form, not a second count-weighted history.
-2. Dense single-qubit gates plus one entangling two-qubit gate (CNOT) are universal for quantum computation (Barenco et al. 1995).
+2. Dense single-qubit gates plus one entangling two-qubit gate (CNOT) are universal for quantum computation (Barenco et al. 1995). Proved, exactly and without ancillas, in [`QLF_Barenco`](lean/QLF_Barenco.lean) with [`QLF_ControlledUnitary`](lean/QLF_ControlledUnitary.lean) and [`QLF_TwoLevelUnitary`](lean/QLF_TwoLevelUnitary.lean); see [Barenco_Universality.md](Barenco_Universality.md).
 
 So what QLF needs to be a universal quantum computer is a **ZFA-native entangling gate**. It has the sign table of one; the gate itself is open.
 
@@ -78,7 +78,7 @@ So what QLF needs to be a universal quantum computer is a **ZFA-native entanglin
 
 **Proved: the Clifford+T product has infinite order.** With `T = diag(1, ζ₈)`, no positive power of `H·T` is a scalar (`hadamard_t_infinite_order`). If one were, the ratio `ρ` of its eigenvalues would be a root of unity, so `ρ + ρ⁻¹` would be an algebraic integer. It equals `−1 − √2/2`, which would make `1/2 = (√2/2)²` an algebraic integer, and it is not (`half_not_integral`). Infinite order is a necessary ingredient of Clifford+T universality (non-commuting axes are the other), and it puts the octagonal ring of §6 on the gate level.
 
-What remains cited is the two-axis half of fact 1 and fact 2. The presence bit itself is a theorem: a strand carrying the pair `> <` folds to `−1` and an empty one to `1`, so presence is the fold sign (`presence_bit_is_fold_sign`, `presence_states_distinct`). What remains a reading is only that nature uses this encoding.
+Facts 1 and 2 are theorems about the matrix algebra of qubits; neither shows the substrate performs the gates. The presence bit itself is a theorem: a strand carrying the pair `> <` folds to `−1` and an empty one to `1`, so presence is the fold sign (`presence_bit_is_fold_sign`, `presence_states_distinct`). What remains a reading is only that nature uses this encoding.
 
 ## 3a. Superposition is alternate histories
 
@@ -307,7 +307,7 @@ So in simulation, shared memes are the selections that closed first.
 ## 7. Open
 
 - **Superposed presence.** §3a shows that a superposition is a census sum of alternate histories. Still open is the specific superposition of a present and an absent pair as one, which needs the presence encoding of §3 stated on census sums rather than on matrices.
-- **Barenco in Lean.** Density in SU(2) from rotations about two axes is proved (§3, `su2_dense`). Still cited: Barenco et al.'s theorem that dense single-qubit gates plus CNOT are universal. A Lean proof has three stages (controlled-`U` from `A·X·B·X·C`, two-level decomposition of a unitary, routing on `n` qubits), and on the substrate it first needs the entangling gate acting on superposed presence.
+- **Barenco on the substrate.** Density in SU(2) (§3, `su2_dense`) and Barenco universality ([`QLF_Barenco`](lean/QLF_Barenco.lean)) are proved for the matrix algebra. Open is the substrate performing those gates, which first needs the entangling gate acting on superposed presence.
 - **Quasicrystal growth as a closure census.** Test whether forced-tile growth (Onoda et al. 1988) is the first-closure rule on the octagonal projection, with the defect rate as the prediction.
 - **Normalization beyond rational phases.** Every rational phase is a ratio of alternatives to their mirror (`rational_phase_is_mirror_ratio`, Hilbert 90). A general SU(2) element is a limit of such ratios, not one; a statement for matrices (a Cayley transform on census sums) is not proved.
 

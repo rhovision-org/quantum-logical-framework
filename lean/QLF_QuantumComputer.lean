@@ -27,8 +27,8 @@
      `n ≥ 1`, since the real part of `(3+4i)ⁿ` is `3 mod 5`. That is exactly what the twist
      layer lacks. A rotation of infinite order about one axis together with one about a
      non-parallel axis generates a dense subgroup of SU(2), and dense single-qubit gates
-     with one entangling gate are universal (Barenco et al. 1995). Those two steps are
-     cited, not proved here; the entangling gate is §9.
+     with one entangling gate are universal (Barenco et al. 1995). Density is §19; universality is
+     proved in `QLF_Barenco`. The entangling gate on the substrate is §9.
 
   4. **A problem posed as a closure is solved without search** (`closing_cost_exact`,
      `completion_perm_closes`): the least closing continuation has length exactly the
@@ -81,7 +81,7 @@
 
   13. **The rotation's angles are dense** (`arg_z_irrational`, `rotation_angles_dense`): the
      powers of the §3 rotation approach every phase about its axis. Two-axis SU(2) density is
-     §19; Barenco universality stays cited.
+     §19; Barenco universality is `QLF_Barenco`.
 
   14. **No choice fixed in advance** (`ks_orthogonal`, `ks_each_twice`, `ks_double_count`,
      `no_choice_fixed_in_advance`): the Kochen–Specker theorem in Cabello's eighteen-direction
