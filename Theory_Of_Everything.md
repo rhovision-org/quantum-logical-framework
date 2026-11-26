@@ -120,6 +120,7 @@ interaction; the logical complexity inside them is far larger.
 | Possibility growth: exact blind search costs every candidate; P vs NP and VP vs VNP; in what sense possibilities are real | [Possibility_Growth.md](Possibility_Growth.md) | [9 Millennium](FlowChart.md#9-the-millennium-prize-program) |
 | Beyond the Standard Model | [Beyond_Standard_Model.md](Beyond_Standard_Model.md) | [10 Beyond the SM](FlowChart.md#10-beyond-the-sm) |
 | QFT and renormalization | [Perturbation_Theory_QLF.md](Perturbation_Theory_QLF.md) | [12 QFT](FlowChart.md#12-quantum-field-theory-and-renormalization) |
+| Quantum computation: one-qubit gates and CNOT generate every unitary (proved, Lean); the substrate performing them on superposed presence (open) | [Barenco_Universality.md](Barenco_Universality.md) | [Master map](FlowChart.md#master-map--the-substrate-and-its-twelve-domains) |
 
 ---
 
