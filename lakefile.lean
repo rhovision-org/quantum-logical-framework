@@ -362,6 +362,7 @@ lean_lib QLF where
     `QLF_ClockDomains,
     `QLF_ClockPairing,
     `QLF_ClockIntervention,
+    `QLF_TimeReversalPerspective,
     `QLF_MrEUpdate,
     `QLF_GuptaPrefixClock,
     `QLF_ReadoutCriterion,

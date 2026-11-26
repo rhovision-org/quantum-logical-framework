@@ -2908,6 +2908,138 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeReversalPerspective.J_admissible_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.boost_interval": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.boost_null_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.closure_totals_blind": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.dagger_closure_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.every_reading_is_the_census": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_dagger": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_readingBy": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_reverse": [
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.joint_recovery_fails": [],
+  "QLF.TimeReversalPerspective.no_congruence_reverses_time": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.null_order_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_closure_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_eq_of_agree": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_false": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_involutive": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_true": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.reading_has_unique_history": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.reversal_vs_dagger_differ": [],
+  "QLF.TimeReversalPerspective.reverse_closure_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.reversed_census_is_census": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.reversed_reading_distinct": [],
+  "QLF.TimeReversalPerspective.reversed_tick_opposite_handedness": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.selection_identifiable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.selectors_coincide_on_empty": [],
+  "QLF.TimeReversalPerspective.self_reversed_exists": [],
+  "QLF.TimeReversalPerspective.sixteen_reversed_readings": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.spacelike_order_by_perspective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.split_by_perspective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.timeReverse_interval": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.timeReverse_not_a_boost": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.timeReverse_null_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.timelike_order_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Tsirelson.chsh_classical": [
     "propext"
   ],

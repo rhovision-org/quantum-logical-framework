@@ -258,6 +258,8 @@ hypothesis** (§6) is QLF's proposed — and testable — stance on the felt qua
 | Quantum biology as the substrate; evolution exploits it | Convergent support + an evolutionary expectation, not QLF-derived; falsifiable (narrow-linewidth modes) |
 | Qualia = self-awareness coupled to cosmic consciousness (the hard problem) | 🟣 **Proposed dissolution** — a two-factor dual-aspect stance/hypothesis (§6), with falsifiable leanings; not a machine-verified proof |
 
+**Time reversal, free will and the present** ([`Time_Reversed_Universe.md`](Time_Reversed_Universe.md) §4c): every reversed reading of a closure is a closure, so the census does not choose a time direction; a perspective's irrevocable record does. The proved part (symmetric filter; selectors that closure does not choose among, distinct on closures touching every axis; shared counts) and the readings (free will as that selection, experience where the forward and conjugate halves meet) are kept apart there.
+
 See also: [`TheQuantumBrain.md`](TheQuantumBrain.md) (the mechanism + savant cognition + quantum
 biology), [`TheBigProblem.md`](TheBigProblem.md) (observer = three-model Markov blanket),
 [`Philosophy.md`](Philosophy.md) §2 (frequencies / many observers), [`Hierarchical_Control.md`](Hierarchical_Control.md)
