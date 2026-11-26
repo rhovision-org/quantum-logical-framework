@@ -190,6 +190,46 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.BoostAmplitudes.beta_mul_chiral": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.blind_density_entry": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.blind_density_not_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.blind_vertex_not_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.chiralAct_boostZ": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.chiral_conjTranspose": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.scalar_bilinear_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.scalar_vertex_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BoostCovariance.diracWalk_boost_covariant": [
     "Classical.choice",
     "Quot.sound",
