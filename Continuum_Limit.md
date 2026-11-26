@@ -769,3 +769,55 @@ linearized Schwarzschild's spatial slice. L2′ failing with the gates passing: 
 non-zero and cancels only in sums, so §11's D1 plateau and §13's L1–L4 describe a non-vacuum field.
 Not claimed either way: the time part, light bending, `λ`, or that the conformal form of the map is
 forced.
+
+## §15 Stage 2e′ result
+
+Run by [`census_source_2e_prime.py`](census_source_2e_prime.py) against §14 as frozen in `7247d90`;
+data in [`data/census_source_2e_prime.json`](data/census_source_2e_prime.json), regression test in
+[`tests/test_census_source_2e_prime.py`](tests/test_census_source_2e_prime.py).
+
+**Gates.** (i) `C` has rank 6, condition number 4.7: pass. (ii) every V has `χ′_V ≤ 0.024` at
+`r = 6, 8, 10`: pass. (iii) N′ has `χ′_N` = 0.371, 0.745, 0.861 at `r = 6, 8, 10`: pass. (iv) F gives
+`|Δε| = 3.6·10⁻¹⁵`: pass. **(v) fails:** applied to `f_xx` at vertex `(4, 1, 2)` the fit returns
+`H_xx = 0.970`, not within `10⁻⁶` of 1. **So L2′ is uninformative as registered.**
+
+The cause of (v) is the registered tolerance, not the calibration. At that vertex `f_xx = 8`, so the
+first-order map is off by about `λ f ≈ 1%` plus gradient terms. A diagnostic run after the verdict
+(not a decision input) repeats (v) at smaller `λ`: `H_xx = 0.970, 0.997, 0.9997` at
+`λ = 10⁻³, 10⁻⁴, 10⁻⁵`, and every off-diagonal shrinks by the same factor of ten. The error is linear in
+`λ`, so the calibration is exact in the first-order limit. The census field itself is far smaller
+there (`λφ ≲ 10⁻⁴` at `r ≥ 6`). The tolerance should have been scaled to `λ·f` at the probe.
+
+| source | `χ′` at `r = 4, 6, 8, 10` | `χ′_V` at `r = 6, 8, 10` | axis Hessian ratio |
+|---|---|---|---|
+| `share1` | 0.043, 0.016, 0.009, 0.006 | 0.022, 0.012, 0.008 | `1 : −0.501 : −0.501` |
+| `line4` | 0.047, 0.018, 0.009, 0.006 | 0.022, 0.013, 0.008 | `1 : −0.501 : −0.501` |
+| `plaq4` | 0.042, 0.017, 0.009, 0.006 | 0.023, 0.013, 0.008 | no on-axis vertex |
+| `mixed` | 0.043, 0.016, 0.009, 0.006 | 0.022, 0.012, 0.008 | `1 : −0.501 : −0.501` |
+| `excl1` | 0.043, 0.016, 0.009, 0.006 | 0.022, 0.012, 0.008 | `1 : −0.501 : −0.501` |
+| `excl8` | 0.037, 0.017, 0.009, 0.006 | 0.024, 0.013, 0.008 | no on-axis vertex |
+| `excl27` | 0.032, 0.016, 0.009, 0.006 | 0.022, 0.012, 0.008 | `1 : −0.500 : −0.500` |
+
+| | Verdict | Numbers |
+|---|---|---|
+| L2′ local vacuum | **uninformative** (gate v) | raw: every `χ′ ≤ 0.018` at `r = 6, 8, 10`, against the `0.05` threshold |
+
+**What the raw numbers show** (not a registered verdict). The calibrated fit removes §13's floor:
+`χ′` falls from about 0.016 at `r = 6` to 0.006 at `r = 10`, a factor of 2.9 against `(10/6)² = 2.8`,
+so the local trace is a discretization residual falling like `r^{−2}`. The census's residual is
+below that of the continuum-vacuum control at every radius, which fits `φ` being exactly harmonic on
+the lattice while V is harmonic only in the continuum. The cancellation control rises to 0.86, so the
+measure sees a non-zero local trace when one is there. On the axes the fitted Hessian is
+`1 : −0.50 : −0.50`, the continuum point-mass `2 : −1 : −1`. The least-squares residual is 1.1% of
+`‖y‖` at `r = 6` and 0.4% at `r = 10`, so a symmetric Hessian accounts for the seven edge responses.
+
+Read together with §13 L1, L3, L4: outside a source the census-length geometry has a non-zero tidal
+Hessian with a point mass's eigenvalue pattern and strength `Q`, and a local trace that vanishes like
+the lattice spacing squared. That is the local vacuum of linearized Schwarzschild's spatial slice,
+not flatness and not a cancellation. It is not a registered pass: two registrations have now been
+uninformative on a gate, and a third run that only fixes the tolerance would be registered after
+seeing these numbers.
+
+**Open after 2e′.** (1)–(4) of §11 are unchanged: the Gauss constant with source edges kept, the time
+part and light bending, `λ`, and magnetism. And the vacuum reading inherits the map's conformal
+form, which §10 took as forced and no test here checks.
