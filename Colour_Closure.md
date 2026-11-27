@@ -154,7 +154,31 @@ whose every intermediate cut is colour-charged, and ask whether that count falls
 `[pos, neg]` achieves ZFA under `full_zeno_prune`. So colour is pruned by the eight-twist count
 balance (the runtime `is_zfa`), not by `full_zeno_prune` on the binary projection.
 
-## 6. Open
+## 6. Perspectives: shared closures are not tree-shaped (proved)
+
+[`lean/QLF_PerspectiveNetwork.lean`](lean/QLF_PerspectiveNetwork.lean) tags each twist with the
+perspective that contributes it (the three bodies of [`QLF_SharedReality`](lean/QLF_SharedReality.lean)),
+before any closure is evaluated. This is gates RP0–RP2 of the recursive-perspective programme (C23 in
+[`Principles.md`](Principles.md)).
+
+- `shared_closure_cycle_exists` (RP0): the events `A> B<`, `B> C<`, `C> A<` each close jointly, no
+  contributor closes alone in any of them, and every perspective closes over all three.
+- `tree_edges_insufficient` (RP1): a graph on the three perspectives with those three relations as
+  edges has a cycle, so it is not a tree. This step is graph theory; the content is RP0's witness. A
+  tree with mediator nodes, or one that carries a relation as a path, is not excluded.
+- `irreducible_three_way_closure` (RP2): the proton closure split as `A = >v`, `B = ^\`, `C = /<`
+  closes jointly with baryon number 1, while no perspective and no pair of perspectives closes. Their
+  nets are `x−y`, `y−z`, `z−x`.
+- `gauge_keeps_winding_moves_colour` (RP4, partial): a gauge twist leaves the winding unchanged and adds
+  the nonzero label of `+` to the total colour.
+
+So the hierarchy of perspectives and their participation in shared closures are different structures,
+and the second needs at least a graph with cycles, and a hypergraph for irreducible three-way closures.
+Both witnesses use spatial twists only, so they say nothing yet about the fourth axis as a relation
+between perspectives (RP5); that and the recovery of three axes at an emergent level (RP6–RP7) are
+conjectures.
+
+## 7. Open
 
 - A colour-specific cost of separation (GL8), §4.
 - The `±3` gap at length 6 and `±9` at length 12, as a theorem.
