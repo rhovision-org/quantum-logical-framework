@@ -52,23 +52,44 @@ Relativity is a statement about views of something. These are the things every v
 
 In one line: **what a perspective sees is relative; what closes is not.**
 
-## 3. Where the substrate is not yet relative
+## 3. The step census: relative, or a preferred frame?
 
-The principle is QLF's, and the proofs above support it, but two results bound it and must be stated
-alongside it:
+One substrate step reaches the rest observer's tick, while its image under a boost needs at least
+seven steps, so two inertial observers disagree on how many ways an event is reached
+(`step_census_frame_dependent`, [`QLF_RelativityScale`](lean/QLF_RelativityScale.lean)). In the large
+the census becomes isotropic, but that isotropy is Euclidean, not boost invariance
+(`covariance_isotropic`, `boost_not_euclidean`). What that theorem means depends on whose lattice the
+steps are taken in, and that is not settled:
 
-* **The step-level census has a preferred frame.** One substrate step reaches the rest observer's tick,
-  while its image under a boost needs at least seven steps, so two inertial observers disagree on how
-  many ways an event is reached (`step_census_frame_dependent`,
-  [`QLF_RelativityScale`](lean/QLF_RelativityScale.lean)). In the large the census becomes isotropic,
-  but that isotropy is Euclidean, not boost invariance (`covariance_isotropic`, `boost_not_euclidean`).
-  Boost covariance is proved for free propagation in the large and is open with interactions
-  ([`Relativity_Principle.md`](Relativity_Principle.md)). So in QLF the relativity of motion is, so
-  far, a very close approximation with a falsifiable Planck-scale departure, not an exact theorem.
-* **A reversed time reading is not an inertial frame.** No congruence turns the identity into its
-  negative (`no_congruence_reverses_time`): the reversed readings are selections among histories, not
-  boosts ([`Time_Reversed_Universe.md`](Time_Reversed_Universe.md)).
+* **Hypothesis P (one lattice).** There is one substrate lattice. Its rest frame is preferred, the
+  disagreement is asymmetric, and the relativity of motion is a very close approximation with a
+  Planck-scale departure ([`Relativity_Principle.md`](Relativity_Principle.md)). This is the reading
+  the repository has used so far.
+* **Hypothesis R (every perspective counts in its own frame; Jim, 2026-11-27).** Each perspective
+  counts ways in its own frame, with the same counting law. Then each sees the *other's* tick as the
+  seven-step one, and the disagreement is symmetric and relative to perspective, like the disagreement
+  of two observers on simultaneity. Einstein's principle says the *laws* are the same in every inertial
+  frame, not that every frame assigns the same count to a given event, so on this reading the theorem
+  breaks only the stronger, usual expectation that counts of ways are frame-invariant. It does not
+  break the principle itself.
 
-These limits are part of the principle's precise statement, not exceptions to it: the views are
-relative, the closures are shared, and the frame that the substrate's own counting singles out is the
-open question of [`Relativity_Principle.md`](Relativity_Principle.md).
+**What decides it** is the open interacting case: when two bodies in relative motion close jointly,
+whose frame does the joint closure count in? Under P it is the lattice's, and an anisotropy tied to one
+cosmic frame should show up at Planck scale. Under R it must be fixed by the pair, and no single frame
+should ever be singled out by experiment. Boost covariance is proved for free propagation in the large
+and is open with interactions ([`Relativity_Principle.md`](Relativity_Principle.md) stages 4–5), which
+is exactly where the two come apart. Hypothesis R is a well-motivated conjecture, not yet a result.
+
+## 4. Time goes every way
+
+Time is relative in direction, not only in rate. Every one of the sixteen reversed readings of a closure
+is itself the census (`every_reading_is_the_census`, `sixteen_reversed_readings`,
+[`QLF_TimeReversalPerspective`](lean/QLF_TimeReversalPerspective.lean)), and possibilism admits every
+logic, including those whose histories loop (`loopWorld_has_time_loop`,
+[`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)). So in possibility time goes every way,
+backwards included, by perspective. What is not relative is each perspective's **record**: under the
+law of weakening a record only grows (`weakening_iff_persistence`, `closedAtHorizon_mono`), so every
+perspective reads its own history forward. A reversed reading is a selection among histories, not a
+boost of the same observer (`no_congruence_reverses_time`). See
+[`Time_Reversed_Universe.md`](Time_Reversed_Universe.md). In one line: **time goes every way; each record
+goes one way.**
