@@ -36,6 +36,7 @@ interaction; the logical complexity inside them is far larger.
 
 | Topic | Read |
 |---|---|
+| The one assumption (equal and opposite logical action); QLF as the quantum computer that tests models | [Framing.md](Framing.md), [Principles.md](Principles.md) §A |
 | Possibilist ontology; ZFA first, then every way | [Philosophy.md](Philosophy.md) §3a, [possibilist-ontology.md](possibilist-ontology.md) |
 | Only logic is assumed; QLF's construction is one model | [Philosophy.md](Philosophy.md) §3d, [UniversalRelativity.md](UniversalRelativity.md) §4b |
 | The method: status labels, kill conditions, counting ways | [ScientificApproach.md](ScientificApproach.md), [MostWays_First.md](MostWays_First.md) |

@@ -3,7 +3,7 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
 
-This page lists QLF's principles: the few things it assumes, the structural laws it proves from them,
+This page lists QLF's principles: the one thing it assumes (and the known facts it takes as input), the structural laws it proves from them,
 the candidate principles it is working toward, and the bridges that would connect them to physics.
 Each principle has a stable ID, a statement, its scope and assumptions, its Lean anchors, what it
 depends on, its known limits and counterexamples, the gate it still has to pass, and a status.
@@ -52,21 +52,32 @@ can see what failed.
 
 ## A. Foundations (what is assumed)
 
-These are the assumption budget, not nine physical axioms. Only **A01** is a selection premise; the
-rest are ontology, event semantics or interpretation, as the ledger in
-[`ScientificApproach.md`](ScientificApproach.md) §1c separates them.
+QLF assumes one thing: **A01**, equal and opposite logical action (ZFA). Everything else in this
+section is one of three kinds, never a second assumption: **derived** from A01 (a theorem), a **known
+fact** taken as input and named with its source (A10–A13), or a **reading** or **bridge** that no
+derivation may rest on. The framing, and what "QLF tests models" means formally, is
+[`Framing.md`](Framing.md). A02–A09 keep their IDs (IDs are never reused); the *Kind* column records
+what each now is.
 
 | ID | Principle | Kind | Status and anchors |
 |---|---|---|---|
-| **A01** | **ZFA selection.** A history becomes an event exactly when its signed action is zero on every axis: equal and opposite logical action, zero free energy. | The premise | Standing, under test; kill condition in [`ScientificApproach.md`](ScientificApproach.md) §1a. Defined by `achieves_ZFA`, `full_zeno_prune` ([`QLF_Axioms`](lean/QLF_Axioms.lean)) and `countBalanced`. |
-| **A02** | **Possibilism.** Every generable history exists a priori as a way. Possibilism needs only one way: a single closure suffices for a thing to happen, and the first closure is the strongest way. | Ontology | Interpretive commitment, not testable in isolation ([`ScientificApproach.md`](ScientificApproach.md) §1b, [`Philosophy.md`](Philosophy.md) §3). |
-| **A03** | **Only logic is assumed.** Nature is assumed logical, not assumed to be QLF's construction; the construction is one model of the logical laws. | Method | Worked case proved: `weakening_iff_persistence`, `no_time_loops_from_logic`, `histories_are_a_model`, and the counter-model `loopWorld_has_time_loop` ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean); [`Philosophy.md`](Philosophy.md) §3d). |
-| **A04** | **Finite realizability.** A finite-information region cannot hold an actual continuum of distinguishable states; possibility is unbounded, but each manifestation is finite. | Ontology + one theorem | `no_continuum_in_finite_region` proved ([`QLF_Realizability`](lean/QLF_Realizability.lean)) *given* a finite-information bound; the bound itself (Bekenstein) is physical input. |
-| **A05** | **Information primacy.** Information relations precede matter, space and time. | Ontology | Interpretive ([`ScientificApproach.md`](ScientificApproach.md) §1b). |
-| **A06** | **No observer potency.** An apparatus is a closure inventory and an observer is a perspective; measurement is joint closure and creates nothing. | Ontology | Interpretive floor ([`ScientificApproach.md`](ScientificApproach.md) §1b). Formal support: observers agree on closure and fold under frame relabelings (`observers_agree`, [`QLF_MultiObserver`](lean/QLF_MultiObserver.lean)). |
-| **A07** | **A closure is an event.** Along a history, the first closure is the event (the absorbing reading). | Event semantics | Physical hypothesis, adopted after the alternatives were rejected ([`ScientificApproach.md`](ScientificApproach.md) §1c, §11). Its mathematical side is proved: first closures are prefix-free and the cylinder mass is `≤ 1` (`twist_kraft`, [`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)). |
-| **A08** | **Finite perspective.** An observer receives only what closes within its capacity. | Ontology + bridge | The listening is proved (P17). "Capacity = apparatus resolution" is a partially developed bridge ([`ScientificApproach.md`](ScientificApproach.md) §1c). |
-| **A09** | **Synthesized spacetime.** Space and time are outputs of closure, not a background. | Ontology, then bridges | Interpretive; each physical reading is a bridge in section D. |
+| **A01** | **ZFA selection.** A history becomes an event exactly when its signed action is zero on every axis: equal and opposite logical action, zero free energy. "Equal and opposite" already contains the signed distinctions (P01), and "becomes an event" already contains the first-closure reading (A07). | **The one assumption** | A definition in Lean, not an `axiom` (`achieves_ZFA`, `full_zeno_prune`, [`QLF_Axioms`](lean/QLF_Axioms.lean); `countBalanced`), with models, so it adds nothing to the logic. Empirically uncontradicted so far; kill condition in [`ScientificApproach.md`](ScientificApproach.md) §1a. |
+| **A02** | **Possibilism.** Every generable history exists a priori as a way. Possibilism needs only one way: a single closure suffices for a thing to happen, and the first closure is the strongest way. | Absence of a second filter, plus a reading | Formal content: nothing but A01 restricts which histories count as ways. That unclosed ways are *real* is a reading ([`Philosophy.md`](Philosophy.md) §3). |
+| **A03** | **Only logic is assumed.** Nature is assumed logical, not assumed to be QLF's construction; the construction is one model of the logical laws. | Method | A01 is that logical assumption: every distinction has its opposite. Worked case proved: `weakening_iff_persistence`, `no_time_loops_from_logic`, `histories_are_a_model`, and the counter-model `loopWorld_has_time_loop` ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean); [`Philosophy.md`](Philosophy.md) §3d). |
+| **A04** | **Finite realizability.** A finite-information region cannot hold an actual continuum of distinguishable states; possibility is unbounded, but each manifestation is finite. | Derived from a known fact | `no_continuum_in_finite_region` ([`QLF_Realizability`](lean/QLF_Realizability.lean)) from the finite-information bound A12. |
+| **A05** | **Information primacy.** Information relations precede matter, space and time. | Reading | ([`ScientificApproach.md`](ScientificApproach.md) §1b). |
+| **A06** | **No observer potency.** An apparatus is a closure inventory and an observer is a perspective; measurement is joint closure and creates nothing. | Absence of an assumption | No observer appears in A01, so none may enter a derivation. Support: observers agree on closure and fold under frame relabelings (`observers_agree`, [`QLF_MultiObserver`](lean/QLF_MultiObserver.lean)). |
+| **A07** | **A closure is an event.** Along a history, the first closure is the event (the absorbing reading). | Part of A01's statement | The mathematical side is proved: first closures are prefix-free and the cylinder mass is `≤ 1` (`twist_kraft`, [`QLF_KraftMeasure`](lean/QLF_KraftMeasure.lean)). Identifying the cylinder measure with probability is the bridge B09. |
+| **A08** | **Finite perspective.** An observer receives only what closes within its capacity. | Derived, plus a bridge | The listening is proved (P17). "Capacity = apparatus resolution" is a bridge ([`ScientificApproach.md`](ScientificApproach.md) §1c). |
+| **A09** | **Synthesized spacetime.** Space and time are outputs of closure, not a background. | Reading | Each physical form is a bridge in section D. |
+| **A10** | **Measurements are counts.** Every measurement outcome is a finite count with a rational uncertainty; none has produced a real number. | Known fact | Metrology; the 2019 SI redefinition ([`Completeness_Evidence.md`](Completeness_Evidence.md) §2a). Used for: why the substrate is finite and the continuum a rendering. |
+| **A11** | **Incompatible observables exist.** Spin along two axes cannot be jointly sharp. | Known fact | Stern–Gerlach (1922) and sequential spin measurements. With `noncommuting_iff_eight` ([`QLF_AlphabetNecessity`](lean/QLF_AlphabetNecessity.lean)) it fixes the alphabet at eight twists, given P01's frame posit. |
+| **A12** | **Finite information in a bounded region.** | Known fact (established theory) | The Bekenstein bound (1981). A theoretical bound, not a direct measurement; results resting on it (A04) say so. |
+| **A13** | **The measured constants fix the units.** | Known fact | CODATA `ℏ`, `c`, `G`; one calibration per dimensionful observable ([`ScientificApproach.md`](ScientificApproach.md) §5). |
+
+The named `axiom` declarations (the Millennium boundaries and continuum limits in the axiom inventory
+of [`CLAUDE.md`](CLAUDE.md)) are not assumptions of QLF in this sense. Each is a bridge, and every
+result that uses one shows it in its `#print axioms` footprint.
 
 ---
 
@@ -81,9 +92,10 @@ physical law by association.
 - **Anchors.** `toSignedAxis_conj` ([`QLF_AlphabetNecessity`](lean/QLF_AlphabetNecessity.lean));
   `countBalanced`. The alphabet size is constrained: `|Σ| ∈ {2,4,8}`, six is impossible, and two
   spatial axes force eight.
-- **Limits.** That balance is *required* is the definition of A01, not a theorem. The residual posit
-  ("an elementary distinction is a signed element of the observable frame") is open
-  ([`ScientificApproach.md`](ScientificApproach.md) §1c).
+- **Limits.** That balance is *required* is the definition of A01, not a theorem. Signedness is part
+  of A01 ("equal and opposite"); that the signed distinctions are the signed axes of the Pauli frame is
+  the residual posit, still open ([`ScientificApproach.md`](ScientificApproach.md) §1c). Given it, the
+  known fact A11 fixes the size at eight.
 - **Status.** Definition plus proved alphabet constraint.
 
 ### P02 · Pauli closure
@@ -440,6 +452,9 @@ those drafts, so the next revision does not reintroduce them:
   programme).
 - **Universality.** The anchor is real, but the encoding is ZFA by construction (P10).
 - **Information preservation.** Restated (C06), since closure is many-to-one.
+- **Reframed (2026-11-27).** Section A now assumes A01 alone. A02–A09 are reclassified as derived
+  results, readings, or the absence of an assumption, and the known-fact inputs A10–A13 are added
+  ([`Framing.md`](Framing.md)).
 - **Added.** P22 (transience) and P23 (colour), which neither draft listed, and the foundation A03
   (only logic is assumed), which is binding in this repository.
 
