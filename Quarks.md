@@ -53,7 +53,7 @@ separation-dependent cost) is not ([`QLF_Confinement`](lean/QLF_Confinement.lean
   colour singlets close. The converse fails: `>^/` is a singlet and not a closure.
 - **`baryon_needs_all_three_axes`** — nonzero baryon number needs a twist on all three axes. Many
   distinct closures realise it: 576 of the 720 minimal orderings
-  (`minimal_diverse_closures_wound_majority`), and the winding is read from the first event
+  (exact computational, [`borromean_census.py`](borromean_census.py) `--minimal`), and the winding is read from the first event
   (`winding_not_rotation_invariant`). **`single_colour_not_baryon`** — a history on a single colour axis has `B = 0`: a lone quark's
   colour content is not a baryon. Together: physical hadrons are colour-neutral, and a baryon is exactly
   a three-axis winding — no lone or two-colour baryon.

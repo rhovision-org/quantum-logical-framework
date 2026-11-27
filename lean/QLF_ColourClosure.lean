@@ -65,12 +65,11 @@ not: it is not a colour-specific string tension, and the bounded colour distance
   both first closures.
 * `winding_not_additive` — two closures with `B = 0` concatenate to one with `B = 1`.
 
-## §6 Minimal three-axis closures
+The 720-ordering census of minimal three-axis closures (576 wound; 384 of the 480 first closures) is
+exact computational, in [`borromean_census.py`](../borromean_census.py) `--minimal`: a kernel `decide`
+over the 720 words needs over 6 GB, more than a CI runner can spare.
 
-* `minimal_diverse_closures_wound_majority` — of the 720 orderings of one conjugate pair per axis,
-  576 are wound; of the 480 first closures among them, 384 are.
-
-## §7 Shortest completions and their phases
+## §6 Shortest completions and their phases
 
 * `shortest_completion_perm` — every shortest completion is a rearrangement of the canonical one, so
   their number is the multinomial of the per-axis imbalances.
@@ -338,48 +337,7 @@ theorem winding_not_additive :
   decide
 
 -- ============================================================================
--- §6  Minimal three-axis closures: the 720 orderings of one pair per axis
--- ============================================================================
-
-/-- Count balance as a Boolean. -/
-def balB (w : List Twist) : Bool :=
-  w.count Twist.up == w.count Twist.down && w.count Twist.left == w.count Twist.right &&
-  w.count Twist.slash == w.count Twist.backslash && w.count Twist.plus == w.count Twist.minus
-
-/-- A first closure: balanced, and no proper nonempty prefix is balanced. -/
-def firstB (w : List Twist) : Bool :=
-  balB w && (List.range w.length).all (fun k => k == 0 || !balB (w.take k))
-
-/-- Insert `a` at every position of a list. -/
-def insAll (a : Twist) : List Twist → List (List Twist)
-  | [] => [[a]]
-  | b :: l => (a :: b :: l) :: (insAll a l).map (b :: ·)
-
-/-- All orderings of a list (structural, so the kernel can evaluate it). -/
-def orderings : List Twist → List (List Twist)
-  | [] => [[]]
-  | a :: l => (orderings l).flatMap (insAll a)
-
-/-- The 720 orderings of one conjugate pair per spatial axis. -/
-def minimalOrderings : List (List Twist) := orderings protonClosure
-
-theorem minimalOrderings_perm : ∀ w ∈ minimalOrderings, w.Perm protonClosure := by
-  decide +kernel
-
-theorem minimalOrderings_nodup : minimalOrderings.Nodup := by
-  decide +kernel
-
-/-- **Once all three pairs are present, winding is the majority.** Of the 720 orderings of
-    `> < ^ v / \`, 576 carry nonzero baryon number; of the 480 that are first closures, 384 do. -/
-theorem minimal_diverse_closures_wound_majority :
-    minimalOrderings.length = 720 ∧
-    (minimalOrderings.filter (fun w => junctionBaryon w != 0)).length = 576 ∧
-    (minimalOrderings.filter firstB).length = 480 ∧
-    (minimalOrderings.filter (fun w => firstB w && junctionBaryon w != 0)).length = 384 := by
-  refine ⟨by decide +kernel, by decide +kernel, by decide +kernel, by decide +kernel⟩
-
--- ============================================================================
--- §7  Shortest completions: unsigned ways and their phases
+-- §6  Shortest completions: unsigned ways and their phases
 -- ============================================================================
 
 /-- `Twist` derives `BEq` alongside `DecidableEq`; the derived `==` agrees with `=`. -/

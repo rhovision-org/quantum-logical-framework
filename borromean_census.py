@@ -100,6 +100,24 @@ def brute(max_len: int) -> dict[int, dict[str, Counter]]:
     return out
 
 
+def minimal_census() -> dict:
+    """The 720 orderings of one conjugate pair per spatial axis: wound counts, all and first."""
+    words = ["".join(p) for p in itertools.permutations(">^/<\\v")]
+    first = [w for w in words if first_closure(w)]
+    return {"orderings": len(words), "wound": sum(winding(w) != 0 for w in words),
+            "first_closures": len(first), "first_wound": sum(winding(w) != 0 for w in first)}
+
+
+def first_closure(word: str) -> bool:
+    pos = [0, 0, 0]
+    for i, c in enumerate(word):
+        a, s = TWISTS[c]
+        pos[a] += s
+        if pos == [0, 0, 0] and i < len(word) - 1:
+            return False
+    return pos == [0, 0, 0]
+
+
 def summarise(data: dict[int, dict[str, Counter]]) -> dict:
     rows = {}
     for L, d in sorted(data.items()):
@@ -131,6 +149,7 @@ def self_test() -> None:
     for L in (2, 4):
         assert set(fast[L]["all"]) == {0}
     assert winding(">^/<\\v") == 1
+    assert minimal_census() == {"orderings": 720, "wound": 576, "first_closures": 480, "first_wound": 384}
     for L, d in fast.items():
         for k, n in d["all"].items():
             assert d["all"][-k] == n
@@ -141,9 +160,13 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--max-len", type=int, default=12)
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--minimal", action="store_true", help="the 720 minimal three-axis orderings")
     args = ap.parse_args()
     if args.self_test:
         self_test()
+        return 0
+    if args.minimal:
+        print(json.dumps(minimal_census()))
         return 0
     rows = summarise(census(args.max_len))
     for L, row in rows.items():

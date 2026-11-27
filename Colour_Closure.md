@@ -75,8 +75,8 @@ What this shows:
 - **At length 6 every wound closure is one conjugate pair per axis**, and `B ∈ {±1, ±2, ±4}`: the
   value `±3` does not occur (192 : 72 : 24 per sign). `±9` is likewise absent at `L = 12`. These are
   observed values, not proved patterns.
-- **Once all three pairs are present, winding is the majority** (proved,
-  `minimal_diverse_closures_wound_majority`): of the 720 orderings of `> < ^ v / \`, 576 are wound,
+- **Once all three pairs are present, winding is the majority** (exact computational,
+  `python3 borromean_census.py --minimal`, checked in its self-test): of the 720 orderings of `> < ^ v / \`, 576 are wound,
   and of the 480 that are first closures, 384 are. This is counted over words, unsigned and at fixed
   length, so it shows structural prevalence, not persistence or selection.
 - **Wound closures become the majority by length 8 and keep growing**, and first closures are more
