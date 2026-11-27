@@ -1,5 +1,6 @@
 import QLF_GluonVertex
 import QLF_Manifestation
+import QLF_LightCone
 
 set_option linter.unusedVariables false
 
@@ -57,6 +58,25 @@ not: it is not a colour-specific string tension, and the bounded colour distance
 * `binary_projection_blind` — `>\` carries net colour and is not a closure, yet its pos/neg
   projection achieves ZFA under `full_zeno_prune`. Colour pruning is done by the eight-twist count
   balance, not by the binary projection.
+
+## §5 Baryon winding is read from a starting point
+
+* `winding_not_rotation_invariant` — `>^</v\` (`B = −2`) and its rotation `^</v\>` (`B = −1`) are
+  both first closures.
+* `winding_not_additive` — two closures with `B = 0` concatenate to one with `B = 1`.
+
+## §6 Minimal three-axis closures
+
+* `minimal_diverse_closures_wound_majority` — of the 720 orderings of one conjugate pair per axis,
+  576 are wound; of the 480 first closures among them, 384 are.
+
+## §7 Shortest completions and their phases
+
+* `shortest_completion_perm` — every shortest completion is a rearrangement of the canonical one, so
+  their number is the multinomial of the per-axis imbalances.
+* `diverse_completions_cancel` — the 6 orderings of `^ < /` (the most diverse delay-3 completion) sum
+  to `0` (`cone_amplitude`), while `^^^` (1 way) and `^^<` (3 ways) do not
+  (`diverse_completion_counts`). More unsigned ways do not survive the phases here.
 
 No axioms.
 -/
@@ -288,5 +308,141 @@ theorem binary_projection_blind :
   simp [zeno_prune]
   rw [full_zeno_prune]
   simp
+
+-- ============================================================================
+-- §5  Baryon winding is read from a starting point
+-- ============================================================================
+
+/-- **Winding depends on where the loop is read from.** `>^</v\` and its rotation `^</v\>` are both
+    closures (indeed first closures), yet their junction baryon numbers are `−2` and `−1`. So the
+    windowed winding is not an invariant of the cyclic loop; it is an invariant of the word read from
+    its first event. Which reading is physical is open. -/
+theorem winding_not_rotation_invariant :
+    countBalanced [Twist.right, Twist.up, Twist.left, Twist.slash, Twist.down, Twist.backslash] ∧
+    countBalanced [Twist.up, Twist.left, Twist.slash, Twist.down, Twist.backslash, Twist.right] ∧
+    junctionBaryon [Twist.right, Twist.up, Twist.left, Twist.slash, Twist.down, Twist.backslash] = -2 ∧
+    junctionBaryon [Twist.up, Twist.left, Twist.slash, Twist.down, Twist.backslash, Twist.right] = -1 := by
+  unfold countBalanced
+  decide
+
+/-- **Winding is not additive.** `>^<v` and `/\` are closures with baryon number `0`; their
+    concatenation is a closure with baryon number `1`, from the window across the boundary. -/
+theorem winding_not_additive :
+    countBalanced [Twist.right, Twist.up, Twist.left, Twist.down] ∧
+    countBalanced [Twist.slash, Twist.backslash] ∧
+    junctionBaryon [Twist.right, Twist.up, Twist.left, Twist.down] = 0 ∧
+    junctionBaryon [Twist.slash, Twist.backslash] = 0 ∧
+    junctionBaryon ([Twist.right, Twist.up, Twist.left, Twist.down] ++ [Twist.slash, Twist.backslash])
+      = 1 := by
+  unfold countBalanced
+  decide
+
+-- ============================================================================
+-- §6  Minimal three-axis closures: the 720 orderings of one pair per axis
+-- ============================================================================
+
+/-- Count balance as a Boolean. -/
+def balB (w : List Twist) : Bool :=
+  w.count Twist.up == w.count Twist.down && w.count Twist.left == w.count Twist.right &&
+  w.count Twist.slash == w.count Twist.backslash && w.count Twist.plus == w.count Twist.minus
+
+/-- A first closure: balanced, and no proper nonempty prefix is balanced. -/
+def firstB (w : List Twist) : Bool :=
+  balB w && (List.range w.length).all (fun k => k == 0 || !balB (w.take k))
+
+/-- Insert `a` at every position of a list. -/
+def insAll (a : Twist) : List Twist → List (List Twist)
+  | [] => [[a]]
+  | b :: l => (a :: b :: l) :: (insAll a l).map (b :: ·)
+
+/-- All orderings of a list (structural, so the kernel can evaluate it). -/
+def orderings : List Twist → List (List Twist)
+  | [] => [[]]
+  | a :: l => (orderings l).flatMap (insAll a)
+
+/-- The 720 orderings of one conjugate pair per spatial axis. -/
+def minimalOrderings : List (List Twist) := orderings protonClosure
+
+theorem minimalOrderings_perm : ∀ w ∈ minimalOrderings, w.Perm protonClosure := by
+  decide +kernel
+
+theorem minimalOrderings_nodup : minimalOrderings.Nodup := by
+  decide +kernel
+
+/-- **Once all three pairs are present, winding is the majority.** Of the 720 orderings of
+    `> < ^ v / \`, 576 carry nonzero baryon number; of the 480 that are first closures, 384 do. -/
+theorem minimal_diverse_closures_wound_majority :
+    minimalOrderings.length = 720 ∧
+    (minimalOrderings.filter (fun w => junctionBaryon w != 0)).length = 576 ∧
+    (minimalOrderings.filter firstB).length = 480 ∧
+    (minimalOrderings.filter (fun w => firstB w && junctionBaryon w != 0)).length = 384 := by
+  refine ⟨by decide +kernel, by decide +kernel, by decide +kernel, by decide +kernel⟩
+
+-- ============================================================================
+-- §7  Shortest completions: unsigned ways and their phases
+-- ============================================================================
+
+/-- `Twist` derives `BEq` alongside `DecidableEq`; the derived `==` agrees with `=`. -/
+instance : LawfulBEq Twist where
+  eq_of_beq {a b} h := by revert h; cases a <;> cases b <;> decide
+  rfl {a} := by cases a <;> decide
+
+/-- **Every shortest completion is a rearrangement of the canonical one.** A continuation that closes
+    `h` in exactly `distance h` events uses each needed conjugate twist exactly as often as the net
+    action demands and nothing else. So the shortest completions of `h` are the orderings of one fixed
+    multiset, and their number is the multinomial of the per-axis imbalances. -/
+theorem shortest_completion_perm {h c : List Twist} (hc : countBalanced (h ++ c))
+    (hl : c.length = distance h) : c.Perm (shortestCompletion h) := by
+  have e := (countBalanced_append_iff h c).1 hc
+  have L := length_eq_sum_counts c
+  simp only [distance, net] at hl e
+  rw [List.perm_iff_count]
+  intro t
+  cases t <;>
+    simp only [shortestCompletion, fill, net, List.count_append, count_rep] <;>
+    simp +decide <;> omega
+
+open QLF.ClosureChannels in
+theorem coneAmp_ne_zero {a b c : ℕ} (hp : a % 2 + b % 2 + c % 2 ≤ 1) : coneAmp a b c ≠ 0 := by
+  rw [cone_amplitude]
+  simp only [hp, ↓reduceIte]
+  have hN : (coneCount (a / 2) (b / 2) (c / 2) : ℂ) ≠ 0 := by
+    exact_mod_cast (coneCount_pos _ _ _).ne'
+  have hs : coneSpin a b c ≠ 0 := by
+    intro hz
+    have := coneSpin_sq a b c hp
+    rw [hz, zero_mul] at this
+    exact zero_ne_one this
+  exact smul_ne_zero hN hs
+
+open QLF.ClosureChannels in
+/-- **The phase gate on diversity.** Spread over three axes, a unit imbalance on each has the most
+    shortest completions (the `3! = 6` orderings of `^ < /`), and their signed sum is exactly `0`
+    (`cone_amplitude`: three odd axes). Concentrated on one axis (`^^^`, one way) or split `2 + 1`
+    (three ways), the signed sum is nonzero. More unsigned ways do not survive the phases here. -/
+theorem diverse_completions_cancel :
+    coneAmp 1 1 1 = 0 ∧ coneAmp 3 0 0 ≠ 0 ∧ coneAmp 2 1 0 ≠ 0 := by
+  refine ⟨?_, coneAmp_ne_zero (by decide), coneAmp_ne_zero (by decide)⟩
+  rw [cone_amplitude]
+  simp
+
+open QLF.ClosureChannels in
+/-- The unsigned counts behind `diverse_completions_cancel`: `6`, `1` and `3` orderings. -/
+theorem diverse_completion_counts :
+    (coneCount 1 1 1 : ℂ) = 6 ∧ (coneCount 3 0 0 : ℂ) = 1 ∧ (coneCount 2 1 0 : ℂ) = 3 := by
+  have c0 : (coneCount 0 0 0 : ℂ) = 1 := by exact_mod_cast coneCount_zero
+  have s := fun a b c (h : 0 < a + b + c) => coneCount_succ a b c h
+  have c100 : (coneCount 1 0 0 : ℂ) = 1 := by rw [s 1 0 0 (by norm_num)]; simp [c0]
+  have c010 : (coneCount 0 1 0 : ℂ) = 1 := by rw [s 0 1 0 (by norm_num)]; simp [c0]
+  have c001 : (coneCount 0 0 1 : ℂ) = 1 := by rw [s 0 0 1 (by norm_num)]; simp [c0]
+  have c110 : (coneCount 1 1 0 : ℂ) = 2 := by rw [s 1 1 0 (by norm_num)]; simp [c100, c010]; norm_num
+  have c101 : (coneCount 1 0 1 : ℂ) = 2 := by rw [s 1 0 1 (by norm_num)]; simp [c100, c001]; norm_num
+  have c011 : (coneCount 0 1 1 : ℂ) = 2 := by rw [s 0 1 1 (by norm_num)]; simp [c010, c001]; norm_num
+  have c200 : (coneCount 2 0 0 : ℂ) = 1 := by rw [s 2 0 0 (by norm_num)]; simp [c100]
+  have c300 : (coneCount 3 0 0 : ℂ) = 1 := by rw [s 3 0 0 (by norm_num)]; simp [c200]
+  have c210 : (coneCount 2 1 0 : ℂ) = 3 := by rw [s 2 1 0 (by norm_num)]; simp [c110, c200]; norm_num
+  have c111 : (coneCount 1 1 1 : ℂ) = 6 := by
+    rw [s 1 1 1 (by norm_num)]; simp [c011, c101, c110]; norm_num
+  exact ⟨c111, c300, c210⟩
 
 end QLF.ColourClosure

@@ -31,6 +31,10 @@ The converse fails (`colour_singlet_not_closure`). The Borromean word `>^/` is a
 strictly weaker than closure, because the colour map from the signed action vector `ℤ⁴` onto `F₃²`
 has a kernel of index 9.
 
+Zero total `F₃²` colour is what these theorems establish. It is not the same statement as a physical
+SU(3)-invariant singlet state: the identification of this finite colour algebra with physical SU(3)
+beyond the colour factor ([`QLF_GluonVertex`](lean/QLF_GluonVertex.lean)) is conditional.
+
 ## 2. The connectors are the Borromean triples (proved)
 
 Inside the three spatial axes, the three-gluon colour vertex of
@@ -71,8 +75,27 @@ What this shows:
 - **At length 6 every wound closure is one conjugate pair per axis**, and `B ∈ {±1, ±2, ±4}`: the
   value `±3` does not occur (192 : 72 : 24 per sign). `±9` is likewise absent at `L = 12`. These are
   observed values, not proved patterns.
+- **Once all three pairs are present, winding is the majority** (proved,
+  `minimal_diverse_closures_wound_majority`): of the 720 orderings of `> < ^ v / \`, 576 are wound,
+  and of the 480 that are first closures, 384 are. This is counted over words, unsigned and at fixed
+  length, so it shows structural prevalence, not persistence or selection.
 - **Wound closures become the majority by length 8 and keep growing**, and first closures are more
   often wound than closures in general.
+
+### Two limits of the winding as a particle property (proved)
+
+- `winding_not_rotation_invariant`: `>^</v\` and its rotation `^</v\>` are both first closures, with
+  junction baryon number `−2` and `−1`. The windowed winding is a property of the word read from its
+  first event, not of the cyclic loop. If the two words describe one physical loop, baryon number
+  depends on where it is read from; if the first event is physically distinguished, that has to be
+  shown.
+- `winding_not_additive`: `>^<v` and `/\` close with `B = 0`, and their concatenation closes with
+  `B = 1` from the window across the boundary. Independent composition and genuine junction formation
+  are not yet distinguished.
+
+These are reasons not to treat `B` as a settled baryon number. Replacing it with a cyclic sum is not
+the fix either until the physical equivalence relation on closures (rotation, dressing, composition)
+is fixed first.
 
 So the reading "every balanced three-axis history is either the Borromean class or has `B = 0`" holds
 only if the Borromean class is defined as `B ≠ 0`, which makes it empty of content. The substantive
@@ -95,9 +118,28 @@ The new theorems show what it does **not** carry:
 - `delay_colour_blind`: `>>>`, `>^/` and `>>^` all have delay 3; the first two are singlets with
   `B = 0` and `B = 1`, the third is colour-charged.
 
-**GL7 answer.** The map from logical to spatial distance is the one `distance_eq_delay` already gives:
-closing delay = `ℓ¹` separation on the three axes. The colour-label distance (and the toy's `d_G`) can
-**not** be that map, because it is bounded by a constant while separation is unbounded.
+**GL7: logical distance established, physical identification conditional.** The logical distance is
+the one `distance_eq_delay` already gives: closing delay = `ℓ¹` norm of the signed action. That norm
+has four components, the gauge one included; its restriction to the three spatial axes is immediate,
+but reading it as physical spatial separation is a reconstruction bridge (B01 in
+[`Principles.md`](Principles.md)). What is settled is negative: the colour-label distance (and the
+toy's `d_G`) can **not** be that map, because it is bounded by a constant while the delay is
+unbounded. (Recursive perspectival existence, C23 in [`Principles.md`](Principles.md), would read the
+gauge component as a relation between perspectives rather than a displacement; that is a conjecture.)
+
+### Shortest completions: more ways, and their phases (proved)
+
+`shortest_completion_perm`: every shortest completion of a history is a rearrangement of the canonical
+one, so the number of shortest completions is the multinomial `(n₁+⋯+n_k)!/(n₁!⋯n_k!)` of the per-axis
+imbalances. At fixed delay, spreading the imbalance over more axes raises it: delay 3 gives 1 way on one
+axis, 3 ways split `2 + 1`, and 6 ways with one unit on each of three axes (`diverse_completion_counts`).
+
+The phases do not follow. On the light cone the signed sum over those orderings is
+`cone_amplitude` ([`QLF_LightCone`](lean/QLF_LightCone.lean)), and `diverse_completions_cancel` reads it
+off: the 6 orderings of `^ < /` sum to exactly `0`, while `^^^` and `^^<` do not. The most diverse
+shortest completion cancels completely. So "diversity increases the ways to close" holds for unsigned
+counts and fails, in this case, for amplitudes. Any diversity advantage has to be stated after the
+phases, not before.
 
 **GL8 status: not derived.** The linear delay is the delay of every open history, coloured or not, so
 it is not a colour-specific string tension. A confining potential would need a cost that grows with
@@ -116,6 +158,9 @@ balance (the runtime `is_zfa`), not by `full_zeno_prune` on the binary projectio
 
 - A colour-specific cost of separation (GL8), §4.
 - The `±3` gap at length 6 and `±9` at length 12, as a theorem.
+- The physical equivalence relation on closures (rotation, dressing, composition), and a baryon number
+  invariant under it and under admissible gluon moves.
+- Whether any diversity advantage survives the phases beyond the light-cone cases above.
 - The kinematic factor of the vertex and four-gluon gluing (issue #207).
 - Per-flavour quark words.
 
