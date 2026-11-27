@@ -178,6 +178,8 @@ import QLF_TimeReversalPerspective
 import QLF_BlackHoleInfall
 import QLF_RelativisticRocket
 import QLF_ClosureDepthTime
+import QLF_WalkDispersionBound
+import QLF_RelationalClock
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1200,3 +1202,15 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClosureDepthTime.listening_countdown
 #print axioms QLF.ClosureDepthTime.closure_event_atomic
 #print axioms QLF.ClosureDepthTime.balanced_yet_deep
+
+-- Issue #11 Planck-dispersion prediction and RC0 (Planck_Dispersion_Prediction.md)
+#print axioms QLF.WalkDispersionBound.walk_axis_exact
+#print axioms QLF.WalkDispersionBound.walk_face_subluminal
+#print axioms QLF.WalkDispersionBound.walk_body_subluminal
+#print axioms QLF.WalkDispersionBound.walk_body_deficit_bounded
+#print axioms QLF.WalkDispersionBound.diracWalk_body_bracket
+#print axioms QLF.WalkDispersionBound.diracWalk_axis_exact
+#print axioms QLF.RelationalClock.same_records
+#print axioms QLF.RelationalClock.different_clocks
+#print axioms QLF.RelationalClock.rc0_record_does_not_determine_clock
+#print axioms QLF.RelationalClock.shuffle_reconstructs

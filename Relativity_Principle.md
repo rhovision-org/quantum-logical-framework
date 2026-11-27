@@ -229,6 +229,8 @@ removes the trans-Planckian problem: no mode exceeds `k = π`.
 
 ## 5b. Boost covariance of free propagation: the Dirac walk
 
+*The sign, axis pattern and coefficient of this walk's Planck-scale correction are turned into a registered prediction, with comparator and kill condition, in [`Planck_Dispersion_Prediction.md`](Planck_Dispersion_Prediction.md).*
+
 §5 needed an assumption because a census symbol is not a propagation law. The repo has a dynamics
 whose propagation law is a theorem: the unitary Dirac walk of
 [`lean/QLF_DiracWalk.lean`](lean/QLF_DiracWalk.lean) ([`Closure_Unitarity.md`](Closure_Unitarity.md)

@@ -52,6 +52,15 @@ makes the missing operational bridge explicit and keeps first-order `F`/`N` resu
 `E`. SPARC remains a retrospective benchmark; α remains `N`/`B-OPEN`; the kill-condition ledger records the
 nulls that could fail.
 
+**Issue #11, first five-part prediction (2026-11-27).** [`Planck_Dispersion_Prediction.md`](Planck_Dispersion_Prediction.md)
+registers the Dirac walk's Planck-scale dispersion: exact light speed on the axes, subluminal off them
+(`F`, [`lean/QLF_WalkDispersionBound.lean`](lean/QLF_WalkDispersionBound.lean)), coefficient
+`v_group = 1 − (1 − Σn⁴)(E/E_P)²/4` (`N`), so `E_QG,2 = 3 E_P` on the body diagonal and no linear term.
+The step-equals-Planck-time map is `B`. Comparator: special relativity and the LHAASO/Fermi-LAT
+limits (`E_QG,2 > 6×10⁻⁸ E_P`); the prediction lies about `5×10⁷` beyond present reach, so it can
+falsify QLF now but not discriminate it from special relativity. Kill conditions are ledger entry
+`planck_dispersion` (`DRAFT`: the comparison data are already public).
+
 
 ## Claim records
 

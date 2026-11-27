@@ -139,6 +139,32 @@
         "chronology_evidence": null,
         "data_access": "not_established"
       }
+    },
+    {
+      "id": "planck_dispersion",
+      "claim": "Free massless fermions on the Dirac walk, with one step equal to one Planck time, propagate at exactly c along the walk's three axes and subluminally off them: v_group = 1 - (1 - sum n_a^4)(E/E_P)^2/4 + O((E/E_P)^4), i.e. E_QG,2 = 3 E_P on a body diagonal and sqrt(15) E_P averaged over directions, with no term linear in E/E_P. The census-symbol reading for photons has the opposite sign with |dv| <= (1/3)(E/E_P)^2.",
+      "anchors": [
+        "QLF.WalkDispersionBound.diracWalk_axis_exact",
+        "QLF.WalkDispersionBound.diracWalk_body_bracket",
+        "QLF.WalkDispersionBound.walk_face_subluminal",
+        "QLF.BoostCovariance.onShell_minkowski"
+      ],
+      "formal_scope": "The theorems fix exactness on an axis, strict subluminality on face and body diagonals, and a quadratic bound on the body-diagonal deficit for the walk's exact dispersion. The coefficient (1 - P4)/4 is an exact series checked numerically in planck_dispersion_prediction.py. The step-equals-Planck-time map and the identification of the walk with physical fermion propagation are declared bridges, not theorems; the photon's propagation law is open.",
+      "comparator": "Special relativity (no dispersion); LHAASO GRB 221009A (E_QG,1 > 10 E_P, E_QG,2 > 6e-8 E_P, PRL 133, 071501); Fermi-LAT GRB 090510 (E_QG,1 > 7.6 E_P, E_QG,2 > 1.3e11 GeV, arXiv:1305.3463)",
+      "kill_condition": "K1: a confirmed energy-dependent propagation speed linear in E/E_P for photons or fermions. K2: a confirmed quadratic effect with |dv| > (1/3)(E/E_P)^2, i.e. E_QG,2 < 2.1 E_P. K3: a confirmed energy-dependent superluminal speed for free neutrinos or electrons. A null result does not distinguish QLF from special relativity.",
+      "status": "DRAFT",
+      "source": "Planck_Dispersion_Prediction.md; lean/QLF_WalkDispersionBound.lean; planck_dispersion_prediction.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "observable": "Energy-dependent arrival time of photons or neutrinos from distant transients, analysed as v = 1 - s (n+1)/2 (E/E_QG,n)^n",
+        "analysis_rule": "Compare the fitted or bounded E_QG,1 and E_QG,2 (and sign s) with K1-K3",
+        "uncertainty": null,
+        "rejection_rule": "Any of K1, K2, K3 at the experiment's own stated 95% confidence",
+        "dataset_or_experiment": "LHAASO, Fermi-LAT, CTAO, IceCube/KM3NeT transient timing",
+        "chronology_evidence": null,
+        "data_access": "prior_public_data"
+      }
     }
   ],
   "record_type": "test_ledger"

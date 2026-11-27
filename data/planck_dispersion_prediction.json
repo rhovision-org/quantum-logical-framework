@@ -1,0 +1,27 @@
+{
+  "census_reading_EQG2_over_EP": {
+    "body_diagonal": 2.1213203435596424,
+    "direction_average": 2.7386127875258306
+  },
+  "coefficient_check_max_relative_error": {
+    "census_group": 0.00039180356585909507,
+    "census_phase": 0.00018654291809868837,
+    "walk_group": 0.0005610492865629196,
+    "walk_phase": 3.477835544786881e-05
+  },
+  "fermi_bound_EQG2_over_EP": 1.064796992358034e-08,
+  "gap_in_EQG2_vs_lhaaso": 50000000.0,
+  "gap_in_dv_vs_lhaaso": 2500000000000000.0,
+  "grb221009a_10TeV_delay_s_body_diagonal": 8.613256696774863e-15,
+  "kill_threshold_EQG2_over_EP": 2.1213203435596424,
+  "kill_threshold_max_abs_dv_coeff": 0.3333333333333333,
+  "lhaaso_bound_EQG2_over_EP": 6e-08,
+  "mean_P4_exact": 0.6,
+  "mean_P4_sampled": 0.5993480402240472,
+  "walk_EQG2_over_EP": {
+    "body_diagonal": 2.9999999999999996,
+    "direction_average": 3.872983346207417,
+    "face_diagonal": 3.4641016151377544
+  },
+  "walk_max_phase_velocity_excess_sampled": -3.7140980291283654e-09
+}
