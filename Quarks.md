@@ -67,6 +67,14 @@ Borromean triple is the integrable island (the prime-3 lock, [`QLF_PrimeResonanc
 closure cost grows with separation); its *value* and the asymptotic-freedom→confinement RG flow stay open
 (`confinement_in_progress`).
 
+**Checked against the exact census ([`Colour_Closure.md`](Colour_Closure.md)).** What is proved: every
+closure is a colour singlet (`closure_is_colour_singlet`), so net colour never closes, and the spatial
+three-gluon vertex is exactly the Borromean triple (`spatial_vertex_iff_borromean`). What the census does
+**not** support is the reading that wound three-axis histories are a rare island: wound (`B ≠ 0`)
+closures are 31 % at length 6 and 77 % at length 14, more often among first closures. The closure cost
+does grow linearly with separation (`distance_eq_delay`), but for every open history, coloured or not
+(`delay_colour_blind`), so it is not yet a string tension.
+
 **Confinement as a phase of the weighted census** ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md)
 §19–§24). Weighting closed colour lines by `w` per step turns confinement into a computable phase.
 * Without phases, ℤ_N lines deconfine above `w* = 1/(1+√N)`: computed at 0.4147 for ℤ₂ and 0.3683 for ℤ₃.

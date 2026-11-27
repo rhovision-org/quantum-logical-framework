@@ -380,5 +380,6 @@ lean_lib QLF where
     `QLF_Barenco,
     `QLF_QuantumComputer,
     `QLF_BlackHoleInfall,
-    `QLF_RelativisticRocket
+    `QLF_RelativisticRocket,
+    `QLF_ColourClosure
   ]
