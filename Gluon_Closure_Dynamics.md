@@ -3,7 +3,9 @@
 **Status:** first slice for issue [#286](https://github.com/rhovision-org/quantum-logical-framework/issues/286).
 GL0–GL6 are implemented and tested as a finite two-channel vertex model. GL7 (logical → physical
 spatial distance) and GL8 (string tension) are **out of scope for this PR**, tracked in the parent
-issue #287; they are not claimed. This is not full QCD.
+issue #287; they are not claimed. This is not full QCD. **Follow-up:** [Colour_Closure.md](Colour_Closure.md)
+answers GL7 (the logical→spatial map is `distance_eq_delay`; colour distance and `d_G` are bounded, so
+they cannot be it) and records GL8 as not derived (the linear delay is colour-blind).
 
 ---
 
