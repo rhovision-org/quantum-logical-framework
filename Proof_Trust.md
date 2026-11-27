@@ -110,7 +110,7 @@ bookkeeping, because its encoding makes every input ZFA ([Principles.md](Princip
 one-conjecture framing ([Framing.md](Framing.md)) every anchor theorem used for a claim must also record,
 in its claim record or registry row:
 
-1. **The kinds it rests on:** the one conjecture (A01), which known facts (A10–A13), which structural
+1. **The kinds it rests on:** the one conjecture (A01), which known facts (A10–A14), which structural
    choices (Pauli frame, uniform measure), which bridges.
 2. **Definitions that carry the conclusion:** any `def` or hypothesis whose content is the result
    (review protocol step 2 of [Proof_to_Physics.md](Proof_to_Physics.md)).

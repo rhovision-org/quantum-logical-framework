@@ -84,6 +84,7 @@ fundamental one unexplained; that is the inversion QLF is built to undo.
 | A11 | Incompatible observables exist: spin along two axes cannot be jointly sharp | Stern–Gerlach (1922) and sequential spin measurements | With `noncommuting_iff_eight` ([`QLF_AlphabetNecessity`](lean/QLF_AlphabetNecessity.lean)), the alphabet has eight twists |
 | A12 | A bounded region holds finitely many distinguishable states | The Bekenstein bound (1981): established theory, not a direct measurement | `no_continuum_in_finite_region` ([`QLF_Realizability`](lean/QLF_Realizability.lean)) |
 | A13 | The measured constants fix the units | CODATA values of `ℏ`, `c`, `G` | One calibration per dimensionful observable ([ScientificApproach.md](ScientificApproach.md) §5) |
+| A14 | The minimal interface is two-dimensional, and only hydrogen has it whole: one electron, one spin-½. Every other atom is a closed core with shells around it | Phipps and Taylor (1927): ground-state hydrogen splits into two beams. Silver's two beams (Stern–Gerlach 1922) are a doublet on a closed core | The two-dimensional atom on which the Pauli frame is forced (`third_axis`, `no_fourth_axis`, [`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)) |
 
 A12 is labelled as what it is: the best-supported bound in physics, but a theoretical one. If it were
 withdrawn, results resting on it would become conditional, and they say so.
@@ -114,7 +115,7 @@ a necessity proof:
 
 | Choice | Where it enters | Status |
 |---|---|---|
-| The signed distinctions are the signed axes of the Pauli frame | The alphabet ([ScientificApproach.md](ScientificApproach.md) §1c) | **Derived on a two-dimensional atom**: mutually incompatible two-outcome axes number at most three and the third is `± i·AB` (`third_axis`, `no_fourth_axis`, [`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)); that the atom is two-dimensional (spin-½) stays a choice; given the frame, A11 fixes eight twists |
+| The signed distinctions are the signed axes of the Pauli frame | The alphabet ([ScientificApproach.md](ScientificApproach.md) §1c) | **Derived on a two-dimensional atom**: mutually incompatible two-outcome axes number at most three and the third is `± i·AB` (`third_axis`, `no_fourth_axis`, [`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)); the two-dimensional atom is the known fact A14 (only hydrogen has a whole two-dimensional interface: one electron, one spin-½); given the frame, A11 fixes eight twists |
 | Generation is uniform over the alphabet | The cylinder measure `8^{−\|h\|}` (`twist_kraft`) | **Derived** from relabelling invariance and normalization (`uniform_forced`, [`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean)); the product form (independent steps) stays a choice |
 | The first closure is the event | A01's event semantics (A07) | Part of the conjecture, but auditable: the alternatives were tested and rejected ([ScientificApproach.md](ScientificApproach.md) §11) |
 | Cylinder measure = physical probability | Every frequency claim | Bridge B09 |

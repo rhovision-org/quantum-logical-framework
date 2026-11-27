@@ -305,9 +305,9 @@ when writing anything:
 1. **One conjecture.** ZFA (A01) is the only conjecture QLF rests on. Never call anything else a
    premise or postulate of QLF. Possibilism, no observer potency, synthesized spacetime and the rest
    (A02–A09) are derived results, readings, or the absence of an assumption.
-2. **Four kinds.** Every other statement is *derived*, a *known fact* named with its source (A10–A13:
+2. **Four kinds.** Every other statement is *derived*, a *known fact* named with its source (A10–A14:
    measurements are counts; incompatible observables exist; Bekenstein, labelled established theory;
-   CODATA units), a *bridge*, or a *reading*. Structural choices (Pauli frame, uniform measure,
+   CODATA units; only hydrogen has a whole two-dimensional interface), a *bridge*, or a *reading*. Structural choices (Pauli frame, uniform measure,
    measure = probability, logical = physical free energy) stay listed and auditable.
 3. **Postulates rest on what is known fundamentally, never on conjectures of emergence.** A continuum
    spacetime, a metric, fields, the Born rule or a classical limit are what closures add up to: derive

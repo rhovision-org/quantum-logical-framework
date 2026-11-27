@@ -93,7 +93,7 @@ and the Pauli frame on a spin-½ atom ([`QLF_UniformMeasure`](lean/QLF_UniformMe
 [`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)); O6 semantic dependency checks against the axiom
 footprints ([`scripts/framing_consistency.py`](scripts/framing_consistency.py)). **What remains:** an
 approximation rate for native circuits (Solovay–Kitaev on the native set), `ObsEquiv` beyond two bodies,
-optimization beyond closure selection, why the atom is two-dimensional, and the worked verdicts (Bell,
+optimization beyond closure selection, and the worked verdicts (Bell,
 Kochen–Specker) restated as instances of the interface.
 
 Recorded here so it survives a session boundary. The governing question has shifted: not *how many ways*,

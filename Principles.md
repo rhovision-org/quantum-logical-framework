@@ -54,13 +54,13 @@ can see what failed.
 
 QLF rests on one well-supported conjecture: **A01**, equal and opposite logical action (ZFA).
 Everything else in this section is one of three kinds, never a second conjecture: **derived** from A01 (a theorem), a **known
-fact** taken as input and named with its source (A10–A13), or a **reading** or **bridge** that no
+fact** taken as input and named with its source (A10–A14), or a **reading** or **bridge** that no
 derivation may rest on. The framing, and what "QLF tests models" means formally, is
 [`Framing.md`](Framing.md). A02–A09 keep their IDs (IDs are never reused); the *Kind* column records
 what each now is.
 
 **Postulates rest on what we know fundamentally, not on conjectures of emergence.** A known-fact input
-(A10–A13) must be a fact at the substrate level: what a measurement returns, which observables are
+(A10–A14) must be a fact at the substrate level: what a measurement returns, which observables are
 incompatible, how much a region can hold. Anything that emerges from closures, such as a continuum
 spacetime, a metric, fields, the Born rule or a classical limit, must be derived; until it is, it is a
 bridge in section D, never an input ([`Framing.md`](Framing.md) §2).
@@ -80,6 +80,7 @@ bridge in section D, never an input ([`Framing.md`](Framing.md) §2).
 | **A11** | **Incompatible observables exist.** Spin along two axes cannot be jointly sharp. | Known fact | Stern–Gerlach (1922) and sequential spin measurements. With `noncommuting_iff_eight` ([`QLF_AlphabetNecessity`](lean/QLF_AlphabetNecessity.lean)) it fixes the alphabet at eight twists, given P01's frame posit. |
 | **A12** | **Finite information in a bounded region.** | Known fact (established theory) | The Bekenstein bound (1981). A theoretical bound, not a direct measurement; results resting on it (A04) say so. |
 | **A13** | **The measured constants fix the units.** | Known fact | CODATA `ℏ`, `c`, `G`; one calibration per dimensionful observable ([`ScientificApproach.md`](ScientificApproach.md) §5). |
+| **A14** | **The minimal interface is two-dimensional, and only hydrogen has it whole** (Jim, 2026-11-27: *"Only hydrogen has a 2 dimensional interface"*). Hydrogen is the only atom with a single electron, so its entire interface is one spin-½: two states. Every other atom is a composite, a closed core with shells around it, and its interface has more dimensions. | Known fact | Phipps and Taylor (1927) split ground-state hydrogen into two beams; one electron is the atomic structure of hydrogen. Silver's two Stern–Gerlach beams (1922) are a doublet on a closed core, not a whole two-dimensional interface. Used for: the two-dimensional atom of [`QLF_PauliFrame`](lean/QLF_PauliFrame.lean), on which the Pauli frame is forced; larger interfaces compose from it. |
 
 The named `axiom` declarations (the Millennium boundaries and continuum limits in the axiom inventory
 of [`CLAUDE.md`](CLAUDE.md)) are not assumptions of QLF in this sense. Each is a bridge, and every
@@ -102,9 +103,9 @@ physical law by association.
   of A01 ("equal and opposite"); that the signed distinctions are the signed axes of the Pauli frame is
   derived on a two-dimensional atom: mutually anticommuting two-outcome axes number at most three
   and the third is `± i·AB` (`third_axis`, `no_fourth_axis`, [`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)),
-  so the fourth pair must commute with everything, as the gauge pair does (`gauge_commutes`). What
-  stays a choice is that the atom is two-dimensional (spin-½;
-  [`ScientificApproach.md`](ScientificApproach.md) §1c). Given the frame, the known fact A11 fixes the
+  so the fourth pair must commute with everything, as the gauge pair does (`gauge_commutes`). That the
+  atom is two-dimensional is the known fact A14: hydrogen, the minimal interface, is one spin-½
+  ([`ScientificApproach.md`](ScientificApproach.md) §1c). Given the frame, the known fact A11 fixes the
   size at eight.
 - **Status.** Definition plus proved alphabet constraint.
 
