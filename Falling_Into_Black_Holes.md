@@ -288,8 +288,8 @@ of the closure census, not a cause.
 ## 4a. The rocket twin
 
 A ship accelerating away from Earth at constant `g` is the flat-space version of the same story: the
-accelerated perspective has a horizon, the free one does not, and with QLF's finite redshift limit the
-far side fades out in finite time. Worked out in
+accelerated and the free perspective each have a horizon relative to the other, and with QLF's
+finite redshift limit each fades out of the other's view in finite time. Worked out in
 [`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md) ([`QLF_RelativisticRocket`](lean/QLF_RelativisticRocket.lean)).
 
 ## 5. Status

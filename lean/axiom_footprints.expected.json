@@ -2659,6 +2659,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.RelativisticRocket.arrivalTime_hasDerivAt": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.RelativisticRocket.coordSpeed_at_light": [
     "Classical.choice",
     "Quot.sound",
@@ -2680,6 +2685,16 @@
     "propext"
   ],
   "QLF.RelativisticRocket.emitTime_hasDerivAt": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.inertial_redshift_horizon": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.mutual_redshift": [
     "Classical.choice",
     "Quot.sound",
     "propext"

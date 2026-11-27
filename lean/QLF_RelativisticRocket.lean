@@ -23,10 +23,13 @@ The hyperbolic worldline (`earthTime`, `earthDist`): `t = sinh(gτ)/g`, `x = (co
   `log(y + √(y² − 1))/g` with `y = 1 + gD` — logarithmic in `D` (`shipTime_to_reach_le`).
 * **The ship's horizon** (`earth_signal_reaches_iff`): a light signal sent from Earth at Earth time
   `tₑ ≥ 0` ever reaches the ship iff `tₑ < 1/g`. The accelerating ship has a horizon a distance
-  `1/g` (about `0.97` light-years at `1 g`) behind it, and Earth falls behind it; an inertial
-  observer has none. This is the flat-space twin of the static observer's horizon in
-  [`QLF_BlackHoleInfall`](QLF_BlackHoleInfall.lean): **the accelerated perspective has a horizon,
-  the free one does not.**
+  `1/g` (about `0.97` light-years at `1 g`) behind it, and Earth falls behind it. This is the
+  flat-space twin of the static observer's horizon in [`QLF_BlackHoleInfall`](QLF_BlackHoleInfall.lean).
+* **Every perspective has a horizon** (`arrivalTime_hasDerivAt`, `mutual_redshift`,
+  `inertial_redshift_horizon`): with a finite redshift limit `N`, Earth loses the ship at the same
+  ship time `log N / g` at which the ship loses Earth, and any two inertial observers at relative
+  rapidity `η ≥ log N` are beyond each other's horizons. Horizons are relations between
+  perspectives.
 
 No axioms.
 -/
@@ -190,5 +193,43 @@ theorem redshift_limit_iff {g N τ : ℝ} (hg : 0 < g) (hN : 0 < N) :
   rw [show (1 : ℝ) / N = Real.exp (-Real.log N) by rw [Real.exp_neg, Real.exp_log hN, one_div],
     Real.exp_le_exp, div_le_iff₀ hg]
   constructor <;> intro h <;> linarith [mul_comm g τ]
+
+/-! ## Every perspective has a horizon
+
+With a finite redshift limit, horizons are mutual. Earth, an inertial observer, sees the ship's
+signals arrive redshifted by the same factor `e^{−gτ}`, so it loses the ship at the same ship time
+`log N / g` at which the ship loses Earth. And any two inertial observers with relative rapidity `η`
+see each other redshifted by `e^{−η}`, so each is beyond the other's horizon once `η ≥ log N`. -/
+
+/-- The Earth time at which a signal the ship sends at proper time `τ` arrives at Earth:
+    `t + x = (e^{gτ} − 1)/g`. -/
+noncomputable def arrivalTime (g τ : ℝ) : ℝ := (Real.exp (g * τ) - 1) / g
+
+theorem arrivalTime_eq (g τ : ℝ) : arrivalTime g τ = earthTime g τ + earthDist g τ := by
+  unfold arrivalTime earthTime earthDist
+  rw [Real.sinh_eq, Real.cosh_eq]
+  ring
+
+/-- Earth time per ship second, as Earth receives it: `e^{gτ}`, so the ship's frequencies arrive at
+    Earth multiplied by `e^{−gτ}`, the same factor the ship sees on Earth's (`emitTime_hasDerivAt`). -/
+theorem arrivalTime_hasDerivAt {g : ℝ} (hg : 0 < g) (τ : ℝ) :
+    HasDerivAt (arrivalTime g) (Real.exp (g * τ)) τ := by
+  have h := (((hasDerivAt_id' τ).const_mul g).exp.sub_const 1).div_const g
+  have e : Real.exp (g * τ) * (g * 1) / g = Real.exp (g * τ) := by field_simp
+  rw [e] at h; exact h
+
+/-- **The redshifts are mutual**: the factor Earth sees on the ship is the factor the ship sees on
+    Earth, `(e^{gτ})⁻¹ = e^{−gτ}`. -/
+theorem mutual_redshift (g τ : ℝ) : (Real.exp (g * τ))⁻¹ = Real.exp (-(g * τ)) :=
+  (Real.exp_neg _).symm
+
+/-- **Inertial observers have horizons too**: two inertial observers at relative rapidity `η` see
+    each other's frequencies multiplied by `e^{−η}` (the relativistic Doppler factor
+    `√((1−β)/(1+β))`), so each is past the other's redshift limit iff `log N ≤ η`. -/
+theorem inertial_redshift_horizon {N η : ℝ} (hN : 0 < N) :
+    Real.exp (-η) ≤ 1 / N ↔ Real.log N ≤ η := by
+  rw [show (1 : ℝ) / N = Real.exp (-Real.log N) by rw [Real.exp_neg, Real.exp_log hN, one_div],
+    Real.exp_le_exp]
+  constructor <;> intro h <;> linarith
 
 end QLF.RelativisticRocket

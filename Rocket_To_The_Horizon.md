@@ -58,7 +58,7 @@ without slowing:
 A light signal sent from Earth at Earth time `tₑ ≥ 0` ever reaches the ship **iff `tₑ < c/g`**
 (`earth_signal_reaches_iff`). At `1 g` everything Earth does after its first 0.969 years never
 reaches the ship. The ship has a horizon a distance `c²/g ≈ 0.97` ly behind it, and Earth crosses it.
-An inertial observer has no such horizon. Earth's last signal that will ever arrive is the one it
+Earth's last signal that will ever arrive is the one it
 sends at the Earth time when the ship's proper velocity reaches `c` (`earthTime_at_light`; both are
 exactly `c/g`).
 
@@ -67,13 +67,24 @@ This is the flat-space version of the black-hole case in
 
 | | Black hole | Rocket |
 |---|---|---|
-| who has the horizon | the observer who **holds still** outside the hole (accelerating to stay put) | the observer who **accelerates** away from Earth |
-| who has none | the free faller | Earth (inertial) |
-| what the accelerated observer sees | the infaller slows, reddens and freezes at `rs` | Earth slows, reddens and freezes at the horizon |
+| the accelerated perspective | the observer who **holds still** outside the hole | the ship accelerating away from Earth |
+| the free perspective | the infaller | Earth |
+| what the accelerated one sees | the infaller slows, reddens and freezes at `rs` | Earth slows, reddens and freezes behind the ship |
 | what the free one experiences | nothing happens at `rs` | nothing happens on Earth |
 
-By the equivalence principle these are the same thing: the horizon belongs to the accelerated
-perspective.
+By the equivalence principle these are the same thing.
+
+### 4a. Every perspective has a horizon
+
+The free perspective has one too. The infaller's own horizon is always just below them
+(`own_horizon_below` in [`QLF_BlackHoleInfall`](lean/QLF_BlackHoleInfall.lean)). Earth sees the
+ship's signals arrive redshifted by the same factor `e^{−gτ/c}` that the ship sees on Earth's
+(`arrivalTime_hasDerivAt`, `mutual_redshift`). So, with the redshift limit of §5, Earth loses the
+ship at exactly the ship time at which the ship loses Earth. Even two inertial observers see each
+other redshifted by `e^{−η}` at relative rapidity `η`, and each is past the other's horizon once
+`η ≥ ln N` (`inertial_redshift_horizon`). **Horizons are relations between perspectives, not
+properties of one observer.** What acceleration adds in special relativity is a sharp causal cutoff
+(§4's `c/g`); the redshift horizon belongs to every pair.
 
 ## 5. The redshift limit: leaving the cosmic horizon
 
