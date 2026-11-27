@@ -91,6 +91,15 @@ QLF is not postulate-free. These are its primitives, stated as plainly as the st
 | C7 | **Finite information** in a bounded region. | Assumed (Bekenstein). | Premise of `no_continuum_in_finite_region` |
 | C8 | **Rendering bridges** to the continuum. | **Bridge**: each is an explicit axiom, listed with its strength in [`CLAUDE.md`](CLAUDE.md)'s axiom inventory and [`Open_Problems.md`](Open_Problems.md). | e.g. `lorentz_generated_by_boosts_rotations`, `benincasa_dowker_limit`, `order_metric_continuum_limit` |
 
+**Reclassified under the one-conjecture framing (2026-11-27, [`Framing.md`](Framing.md)).** Only C5 is a
+conjecture. C1 is the method (ZFA is the logical assumption). C2's formal content is the absence of a
+second filter; that unclosed ways are real is a reading. C3's size is derived from the known fact that
+incompatible observables exist (Principles A11, `noncommuting_iff_eight`); its Pauli representation stays
+a **structural choice**. C4 and the uniform measure in C6 are structural choices; C6's identification with
+probability is bridge B09. C7 is a known fact (A12, established theory). C8 are bridges. So the ledger is
+**one conjecture, two known-fact inputs, three structural choices, and the bridges**, with every
+structural choice listed for a necessity proof (Framing O5).
+
 **The count.** Standard quantum mechanics with QFT needs eight postulates in Layer A and eight more
 assumptions in Layer B. QLF needs seven primitives (C1–C7) plus the bridges (C8). That is not yet a
 smaller number of assumptions, so the simplification claim has to rest on their *kind*: C1–C7 are

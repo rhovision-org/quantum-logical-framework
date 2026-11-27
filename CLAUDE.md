@@ -6,7 +6,7 @@ Project context for Claude Code sessions. Read this before making any changes.
 
 ## Project overview
 
-**Quantum Logical Framework (QLF)** is a formal proof system machine-verified in Lean 4 across **hundreds of modules with zero `sorry` blocks** (the full count is in [`lean/README.md`](lean/README.md)). It encodes quantum mechanics and spacetime dynamics using phase-string combinatorics (ZFA — Zero-phase Flux Algebra).
+**Quantum Logical Framework (QLF)** is a formal proof system machine-verified in Lean 4 across **hundreds of modules with zero `sorry` blocks** (the full count is in [`lean/README.md`](lean/README.md)). It encodes quantum mechanics and spacetime dynamics using phase-string combinatorics (ZFA — Zero Free Action: equal and opposite quantum logical action with zero free energy, the principle of QLF).
 
 Core claim: *ZFA balance is the selection principle for physical reality.* It is QLF's **one well-supported conjecture**; every other statement is derived, a known fact named with its source, a bridge, or a reading, and postulates rest on what is known fundamentally, never on conjectures of emergence. QLF is the quantum computer that tests models: a model is encoded as closures, by an encoding that could fail, and judged necessary, possible, impossible, equivalent or undetermined. See [`Framing.md`](Framing.md) and [`Principles.md`](Principles.md) §A.
 
@@ -292,6 +292,36 @@ satisfy it trivially. The outcome decides whether it is a boundary, a citation, 
 ## Philosophical foundations
 
 These commitments are load-bearing for all prose, documentation, and new module framing. New sessions must be consistent with them.
+
+### One conjecture; QLF tests models (binding — Jim, 2026-11-27)
+
+> *"QLF IS the quantum computer that proves other models or not. ... Equal and opposite logical action is
+> the only well supported conjecture. ... Postulates should be based on what we know fundamentally, not
+> conjectures of emergence."*
+
+Canonical statement: [`Framing.md`](Framing.md); registry: [`Principles.md`](Principles.md) §A. Apply it
+when writing anything:
+
+1. **One conjecture.** ZFA (A01) is the only conjecture QLF rests on. Never call anything else a
+   premise or postulate of QLF. Possibilism, no observer potency, synthesized spacetime and the rest
+   (A02–A09) are derived results, readings, or the absence of an assumption.
+2. **Four kinds.** Every other statement is *derived*, a *known fact* named with its source (A10–A13:
+   measurements are counts; incompatible observables exist; Bekenstein, labelled established theory;
+   CODATA units), a *bridge*, or a *reading*. Structural choices (Pauli frame, uniform measure,
+   measure = probability, logical = physical free energy) stay listed and auditable.
+3. **Postulates rest on what is known fundamentally, never on conjectures of emergence.** A continuum
+   spacetime, a metric, fields, the Born rule or a classical limit are what closures add up to: derive
+   them or call them bridges.
+4. **Five verdicts.** A model encoded as closures, by an encoding that could fail, is *necessary*,
+   *possible*, *impossible*, *equivalent* or *undetermined* relative to stated conditions. Failing to find
+   a closure is undetermined, not impossible; finding one is possible, not necessary.
+5. **Four levels of computation.** Natural quantum computation (the thesis), classical programmable
+   (proved, `fredkin_complete`), universal programmable quantum (open: native gates on a common qubit,
+   O1), classical simulation (QuCalc/QuantumOS; no efficiency claim). Don't let the open gate weaken the
+   thesis, and don't let the simulator stand in for it.
+6. **Encoding is not execution.** `qlf_universality` gives every terminating circuit a ZFA *encoding*,
+   which is bookkeeping (Principles P10) and never uses termination. Say "has a ZFA encoding", never
+   "every terminating computation IS a ZFA string". Execution is `fredkin_complete`.
 
 ### Core ontology: possibilism + ZFA selection
 

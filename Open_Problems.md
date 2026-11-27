@@ -81,6 +81,14 @@ canonical status list; when an item moves, update it here and in its owning doc.
 
 ## Working priority — what to do next
 
+**The one-conjecture framing (2026-11-27, [`Framing.md`](Framing.md) §6) adds the obligations that
+enable general model testing, in this order:** O1 native gates on a common qubit, with the Bell state by
+native operations as the decisive test (Principles C26); O3 a typed, non-circular model-encoding
+interface returning the five verdicts (C28); O2 the anthropic equivalence theorem
+`Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`, extending `ObsEquiv` to `N` bodies and the entangled sector
+(C27); O4 computing by closure (C29); O5 necessity proofs for the structural choices; O6
+machine-checkable semantic consistency.
+
 Recorded here so it survives a session boundary. The governing question has shifted: not *how many ways*,
 but **given that everything happens every way, exactly how do those ways add?**
 

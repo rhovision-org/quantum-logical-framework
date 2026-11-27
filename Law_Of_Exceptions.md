@@ -418,6 +418,16 @@ Applied honestly to this repository's own results, that means:
 
 ---
 
+## §7a Limits on finite-capacity verdicts
+
+The theorem bounds every model-testing verdict reached at a finite capacity
+([Framing.md](Framing.md) §4). A verdict proved at capacity `R` (or a search to depth `R`) is a verdict
+about the closures admitted at `R`. Because every finite closure has an exception at a greater capacity
+(`law_of_exceptions`), an **impossible** at capacity `R` extends beyond `R` only if the proof does not
+use the bound; otherwise it is **undetermined** above `R`. A **possible** found at `R` stays possible at
+every larger capacity, since closure is irrevocable (`closedAtHorizon_mono`). So finite searches can
+establish possibility outright and impossibility only within their capacity.
+
 ## §8 Honest scope
 
 What is proven is the substrate statement: **every finite-capacity closure has a constructed real

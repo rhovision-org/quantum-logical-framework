@@ -61,6 +61,15 @@ Empirical support:
 
 The transition from subset to whole is a phase transition enforced by *both* theorems.
 
+**Native computation versus simulation.** Two different claims must not be run together
+([Framing.md](Framing.md) §3). *Natural quantum computation* is the universe synthesizing its own
+events by closure; it needs no simulator and is not slowed by the size of the universe, because it is
+the universe. *Classical simulation* (QuCalc, RhoQuCalc, QuantumOS on ordinary hardware) is what this
+page bounds: it can follow a subset exactly and cannot follow the whole. Nothing here limits what the
+substrate computes natively, and nothing about native computation makes a classical simulation
+efficient. Universal *programmable* quantum computation in the substrate is a third claim, still open
+(obligation O1).
+
 ## 5. Philosophical & Physical Implications
 
 - Our reality cannot be a **conventional computing simulation**.

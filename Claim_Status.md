@@ -74,6 +74,23 @@ falsify QLF now but not discriminate it from special relativity. Kill conditions
 - `claim_records/relativity_boost.json` — free Dirac-walk boost covariance; interacting return `NOT_STARTED`, bridge `OPEN`.
 - `claim_records/lepton_mass_ratio.json` — pre-registered lepton mass-ratio protocol; no result, `B-OPEN`.
 
+### Model verdicts
+
+Verdicts from testing other models as closures ([Framing.md](Framing.md) §4), each relative to its
+stated conditions. Certificate fields are in [Proof_to_Physics.md](Proof_to_Physics.md).
+
+| Model | Verdict | Conditions | To the world |
+|---|---|---|---|
+| Local hidden variables (factorizable) | `IMPOSSIBLE` | Two sites, two settings each | Loophole-free Bell tests (Hensen et al. 2015) |
+| Non-contextual value assignments | `IMPOSSIBLE` | Cabello's 18 vectors in dimension 4 | Pure theorem |
+| Continuum of distinguishable states in a bounded region | `IMPOSSIBLE` | Given finite information (A12) | Through A12 |
+| Free duplication of a closure | `IMPOSSIBLE` (substrate) | Identical copies | Through no-cloning, as a reading |
+| Computable predictor of all halting | `IMPOSSIBLE` | Turing's halting theorem | Pure theorem |
+| Boolean circuits | `POSSIBLE` | Any finite function | Substrate only |
+| Logics without weakening | `POSSIBLE`, separated | Kripke models | Substrate only |
+| Universal programmable quantum computation | `UNDETERMINED` | Common-qubit native gates (O1) | — |
+| Anthropic observational equivalence | `EQUIVALENT` for two bodies; general case `UNDETERMINED` | `ObsEquiv` domain (O2) | — |
+
 ## Pre-registered protocols (not claims)
 
 - **Lepton mass ratios (#140)** — [`Lepton_Mass_Ratio_Protocol.md`](Lepton_Mass_Ratio_Protocol.md)

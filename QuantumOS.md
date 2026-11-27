@@ -79,6 +79,24 @@ theorem-persistence happen) is in [`AI.md`](AI.md).
 
 ---
 
+## 1b. A runtime for closure-defined problems
+
+QuantumOS is where closure-oriented programs ([QuCalc.md](QuCalc.md) §1a) run. The runtime contract,
+under the one-conjecture framing ([Framing.md](Framing.md)):
+
+1. **Submit** a problem as an open position `qc` (a room's joint position is the concatenation of its
+   peers' proposals).
+2. **Solve** by `/solve`: the deterministic first-reached closure, the same for every peer, or
+   `{solved: false, residual}` with what is still outstanding.
+3. **Explore** by `/search`: the admissible continuations with their phases, for peers who want the
+   alternatives rather than the selection.
+4. **Report** each answer with its verdict kind ([Framing.md](Framing.md) §4): a returned closure shows
+   the problem is *possible* from that position; an empty search to a depth cap is *undetermined*, never
+   *impossible*.
+
+What runs today is classical simulation of closures (the fourth level of computation, [Framing.md](Framing.md)
+§3). The crystal-QPU target is native; native quantum universality on a common qubit is open (O1).
+
 ## 2. The `rhoqcalc` Kernel & Object-Capability Security
 
 At the absolute bedrock of QuantumOS sits the **`rhoqcalc` execution engine**, a physical realization of Greg Meredith’s **ρ-calculus (Reflective Higher-Order Calculus)** mapped directly onto discrete quantum topologies. The formal Lean 4 implementation is in [`lean/RhoQuCalc.lean`](lean/RhoQuCalc.lean); the process algebra (constructors `action`, `lift`, `parallel`, `sequence`) is defined there, with machine-verified Hermitian structure and ZFA stability. The prose companion is [`QuCalc.md`](QuCalc.md).
