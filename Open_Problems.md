@@ -16,11 +16,12 @@ precision) by collecting the *forward* work in one place.
 **What "open" means here (issue [#78](https://github.com/rhovision-org/quantum-logical-framework/issues/78)).**
 🔵/🟣 "open" means **a value not yet calculated / a rendering not yet formalized — work requiring
 deeper investigation**, *not* a hole where the theory could be wrong. QLF's ontology is **sufficient** —
-the load-bearing posture is a **single premise**: in a possibilist, logically-consistent (`RCA₀`)
-substrate, **Zero Free Action accounts for every terminating computation** — all possible logical Turing
-machines, quantum computations, and formal languages are ZFA strings that survive the closure filter
-([`qlf_universality`](lean/QLF_Universality.lean), the proven *sufficiency* pillar; the filter is
-Church–Turing complete, a selection principle that discards no computable physics, not a restriction).
+the load-bearing posture is **one well-supported conjecture**, equal and opposite logical action
+([`Framing.md`](Framing.md)). The substrate's own gates evaluate every Boolean function
+(`fredkin_complete`); every terminating circuit has a ZFA encoding ([`qlf_universality`](lean/QLF_Universality.lean),
+bookkeeping until shown faithful, [`Principles.md`](Principles.md) P10); native quantum universality and
+the anthropic equivalence are registered obligations (O1, O2). The filter is a selection principle, not
+a restriction.
 Its *exclusivity* is a published conjecture with named defeaters — the full ledger, typed by
 evidential strength with the misses beside the hits, is [`Completeness_Evidence.md`](Completeness_Evidence.md).
 Sufficiency is supported by parameter-free overdetermination (§3 there) and confirmed exclusions (§4c);

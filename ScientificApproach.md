@@ -185,10 +185,10 @@ the object is already physics.
 
 **The ruliad is unpruned. Physics is not.** By §1, every generable history is a real way, so the
 ruliad is real in full; but only histories that reach zero free action **persist as events**. What
-QLF studies is therefore the ruliad **filtered by ZFA** — and `qlf_universality` proves the filter
-discards no computable physics: every *terminating* computation is already a ZFA string, so what is
-pruned is the non-terminating, undecidable, Busy-Beaver tail that could never have been an event
-anyway.
+QLF studies is therefore the ruliad **filtered by ZFA** — and the substrate's own gates evaluate
+every Boolean function (`fredkin_complete`), so the filter discards no finite computation. That what is
+pruned is exactly the non-terminating, undecidable, Busy-Beaver tail is a reading: `qlf_universality`'s
+encoding never uses termination ([`Principles.md`](Principles.md) P10).
 
 $$
 \text{ruliad} \;\xrightarrow{\;\text{ZFA}\;}\; \text{the pruned ruliad} \;=\; \text{the physical census}

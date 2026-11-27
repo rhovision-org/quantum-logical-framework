@@ -45,7 +45,7 @@ established; return incomplete"; `bridge: CLOSED` still requires `TESTED` and a
 
 | Module | Description | Key theorems |
 |---|---|---|
-| [QLF_Universality.lean](QLF_Universality.lean) | Every terminating computation IS a ZFA string — Church-Turing completeness in QLF | `encode_is_zfa`, `encode_is_generated`, `qlf_universality`, `encode_is_phase_only` |
+| [QLF_Universality.lean](QLF_Universality.lean) | Every terminating NAND-delay graph has a ZFA encoding — bookkeeping: the encoding is ZFA for any edge list and never uses termination ([Principles.md](../Principles.md) P10); substrate evaluation is `fredkin_complete` ([QLF_QuantumComputer](QLF_QuantumComputer.lean)) | `encode_is_zfa`, `encode_is_generated`, `qlf_universality`, `encode_is_phase_only` |
 
 ### Spectral Structure & Riemann Program
 

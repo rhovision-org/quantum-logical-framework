@@ -89,8 +89,10 @@ The one law the mechanism cannot bite is the one that **bounds no capacity**. By
 [`no_exception_to_unbounded_closure`](lean/QLF_LawOfExceptions.lean), every exception constructed above
 closes at *some* capacity — so none of them is an exception to closure as such, only to a finite budget.
 ZFA imposes no budget: it is a **selection principle, not a restriction**
-([`Philosophy.md`](Philosophy.md) §4), and `qlf_universality` proves it prunes no computable physics —
-only the non-terminating tail. In the set formulation, `A_ZFA = H`.
+([`Philosophy.md`](Philosophy.md) §4), and the substrate's own gates evaluate every Boolean function
+(`fredkin_complete`), so no finite computation is excluded; that what is pruned is exactly the
+non-terminating tail is a reading (`qlf_universality` is an encoding result,
+[`Principles.md`](Principles.md) P10). In the set formulation, `A_ZFA = H`.
 
 So the exception clause is not a carve-out protecting the law from itself; it is the observation that the
 mechanism needs a *finite capacity* to bite, and one law has none. Any law that does restrict — every

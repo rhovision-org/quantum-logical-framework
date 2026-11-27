@@ -42,7 +42,7 @@ interaction; the logical complexity inside them is far larger.
 | The method: status labels, kill conditions, counting ways | [ScientificApproach.md](ScientificApproach.md), [MostWays_First.md](MostWays_First.md) |
 | The eight twists and why eight | [eight-twists-sufficiency.md](eight-twists-sufficiency.md), [HALF-SPIN-ZFA-EMBEDDING.md](HALF-SPIN-ZFA-EMBEDDING.md) |
 | Closure is a walk back to the origin of `ℤ⁴`; most of possibility never closes | [Closure_Walk.md](Closure_Walk.md) |
-| Every terminating computation is a ZFA string | [Universality.md](Universality.md) |
+| The substrate evaluates every Boolean function with ZFA-preserving gates; every terminating circuit has a ZFA encoding (bookkeeping, Principles P10) | [Universality.md](Universality.md), [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) |
 | No finite closure is final | [Law_Of_Exceptions.md](Law_Of_Exceptions.md) |
 | Timing: listening takes time, closure does not; first shared closure; first-completion counts | [Event_Timing_QLF.md](Event_Timing_QLF.md), [Coincidence_QLF.md](Coincidence_QLF.md), [Closure_Uncertainty_QLF.md](Closure_Uncertainty_QLF.md) (draft programs with finite reference implementations) |
 | How much construction a history needs: its assembly index | [Assembly_Index_QLF.md](Assembly_Index_QLF.md) (computed through length 10; Lean open) |

@@ -69,7 +69,7 @@ they buy the physics. The [QRNG Closure Observatory](QRNG_Closure_Observatory.md
 to data: a citizen-falsification experiment. Open issues with graded difficulty turn spectators into
 contributors, and contributors into advocates.
 
-**Anchor:** the Lean sources build clean across **more than a hundred machine-checked modules** with
+**Anchor:** the Lean sources build clean across **hundreds of machine-checked modules** ([lean/README.md](lean/README.md) has the count) with
 zero `sorry`; [`QRNG_Closure_Observatory.md`](QRNG_Closure_Observatory.md); the graded open-problem
 issues.
 
@@ -154,7 +154,7 @@ Trim to platform length as needed; the first post is the whole pitch if only one
 > LEGEND-1000/nEXO reach (≳ 10 meV), a QRNG deviation, and three more. Each is a standing bet.
 
 > **6/** And you don't have to trust any of it. Clone the repo, run `lake build`. The proofs check or
-> they don't — more than a hundred machine-verified Lean modules, zero gaps in the core.
+> they don't — hundreds of machine-verified Lean modules, zero gaps in the core.
 
 > **7/** One concrete result, checkable today: the galaxy rotation-curve law `a₀ = cH₀/2π`, zero free
 > parameters, blind-tested on 147 real galaxies — hits the observational floor (0.133 dex, zero

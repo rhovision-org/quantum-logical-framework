@@ -7,9 +7,9 @@
 | Kernel primitives (`rhoqcalc`, `full_zeno_prune`, `expand_generation`) | Machine-verified in Lean 4 (this repo) |
 | Pauli exclusion / no-cloning (`pauli_exclusion`, `fermi_nonzero_example`) | Machine-verified in Lean 4 (this repo) |
 | Capability security via ρ-calculus names | Five converging formal foundations: Girard linear logic (1987), Miller object capabilities (2006), Meredith & Radestock ρ-calculus (2005), Honda session types (1993), Wootters & Zurek no-cloning (1982) — QLF inherits all five by construction |
-| ZFA as hardware garbage collector | `full_zeno_prune` machine-verified; `qlf_universality` proves every terminating computation IS a ZFA string — ZFA filter is the complete hardware specification, not an analogy |
+| ZFA as hardware garbage collector | `full_zeno_prune` machine-verified; the substrate's ZFA-preserving gates are classically universal (`substrate_computes`), so the ZFA filter is a hardware specification, not an analogy; native quantum universality is open ([Framing.md](Framing.md) O1) |
 | Error correction via Zeno pruning | `full_zeno_prune` machine-verified; Zeno-subspace QEC established (Beige 2000, Facchi/Pascazio 2002, Viola/Knill/Lloyd 1999); spacetime-as-QECC established (Almheiri/Dong/Harlow, HaPPY code, AdS/CFT); active inference as real-time decoder established (Friston FEP) — QLF instantiates all three natively |
-| Hardware-native AI (Cognitive Geometries) | Active inference grounded in Friston FEP (["The Physics of Sentience"](active_inference.md)); `Form.toMatrix` is a Clifford algebra element — Geometric Deep Learning (Bronstein et al. 2021) establishes these as the correct geometric inductive bias for AI; neuro-symbolic architecture (LLM sensory layer + QuCalc coprocessor) established in [`AI.md`](AI.md); `qlf_universality` proves the execution model is complete, so AI running on QLF hardware runs in machine-verified ZFA-correct code |
+| Hardware-native AI (Cognitive Geometries) | Active inference grounded in Friston FEP (["The Physics of Sentience"](active_inference.md)); `Form.toMatrix` is a Clifford algebra element — Geometric Deep Learning (Bronstein et al. 2021) establishes these as the correct geometric inductive bias for AI; neuro-symbolic architecture (LLM sensory layer + QuCalc coprocessor) established in [`AI.md`](AI.md); the gate set is proved ZFA-preserving and classically universal (`substrate_computes`), so AI running on QLF hardware runs in ZFA-correct code; native quantum universality is open ([Framing.md](Framing.md) O1) |
 
 **Repository:** [`rhovision-org/quantum-logical-framework`](https://github.com/rhovision-org/quantum-logical-framework)
 
@@ -35,7 +35,7 @@ These tokens are Pauli-basis Clifford algebra generators — each maps to a 2×2
 
 * **Zero Free Action (ZFA):** The governing selection principle. Every admissible physical history must achieve local phase balance:
 $$\text{count}_{\text{pos}} = \text{count}_{\text{neg}}$$
-This is machine-verified across the entire repo: `zfa_implies_critical_line` (ZFA implies symmetry), `encode_is_zfa` (every terminating computation achieves ZFA), and `qlf_universality` (ZFA strings are exactly the terminating computations) — proved in [`lean/QLF_Axioms.lean`](lean/QLF_Axioms.lean), [`lean/QLF_Universality.lean`](lean/QLF_Universality.lean). Any history that introduces uncompensated asymmetry is immediately eradicated by `full_zeno_prune`. The Zeno effect interpretation is in [`Zeno_Effect.md`](Zeno_Effect.md); the stable-state count `find_stable_states_length_even` proves there are exactly C(2n,n) stable states of length 2n. The variational grounding of ZFA as condition of origin (not a hardware filter on a pre-existing universe) — including the QPU core (Φ₀=U+M) and security conditions `rho_process_always_symmetric` / `orthogonality_01` — is in [`Lagrangian_Formulation.md`](Lagrangian_Formulation.md).
+This is machine-verified across the entire repo: `zfa_implies_critical_line` (ZFA implies symmetry), `encode_is_zfa` and `qlf_universality` (every terminating circuit has a ZFA encoding; the converse, that ZFA strings are exactly the terminating computations, is not proved, [Principles.md](Principles.md) P10), and `substrate_computes` (the gates are ZFA-preserving and classically universal) — proved in [`lean/QLF_Axioms.lean`](lean/QLF_Axioms.lean), [`lean/QLF_Universality.lean`](lean/QLF_Universality.lean). Any history that introduces uncompensated asymmetry is immediately eradicated by `full_zeno_prune`. The Zeno effect interpretation is in [`Zeno_Effect.md`](Zeno_Effect.md); the stable-state count `find_stable_states_length_even` proves there are exactly C(2n,n) stable states of length 2n. The variational grounding of ZFA as condition of origin (not a hardware filter on a pre-existing universe) — including the QPU core (Φ₀=U+M) and security conditions `rho_process_always_symmetric` / `orthogonality_01` — is in [`Lagrangian_Formulation.md`](Lagrangian_Formulation.md).
 
 ---
 
@@ -48,8 +48,9 @@ from two ends:
 target is the quiet-frequency **crystal QPU** of [`Crystal_QuantumOS.md`](Crystal_QuantumOS.md) —
 rare-earth dopants in fused silica (Eu:YSO worked example) — where QLF primitives map directly onto
 hardware operations (§3 of that doc), quiet frequencies *are* Markov-blanket isolation, and
-`full_zeno_prune` is the on-device active error-correction decoder. Because
-`qlf_universality` proves ZFA balance is the one invariant that subsumes every correctness property,
+`full_zeno_prune` is the on-device active error-correction decoder. As a design thesis (the
+gates are proved ZFA-preserving and classically universal, `substrate_computes`; that one invariant
+subsumes every correctness property is what QuantumOS tests),
 the five subsystems a classical OS keeps separate — security, error correction, scheduling, garbage
 collection, inference — collapse to a single operation on QuantumOS: ZFA enforcement. One kernel
 call is the whole OS, and that call *is* the quantum act (measurement without collapse,
@@ -190,7 +191,7 @@ High-level applications and AI models do not evaluate float-based vector matrice
 
 `Form.toMatrix` maps every QLF form to a 2×2 Pauli-basis Clifford algebra element — a Hermitian matrix over ℂ. This is not an implementation choice: Geometric Deep Learning (Bronstein et al. 2021, "Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges") establishes that Clifford/geometric algebra structures are the correct inductive bias for AI systems that must respect physical symmetries. QLF implements this at the hardware level: the native data type of the QPU *is* the geometric algebra element.
 
-Programs execute as self-assembling topological structures. Because execution paths must conform to the hardware's ZFA constraint, software routines literally *grow* as machine-verified, phase-stable history graphs, guaranteeing that code execution cannot deviate from structural logical correctness. `qlf_universality` proves this is complete: every terminating computation IS a ZFA string, so every AI program running on QLF hardware runs in machine-verified ZFA-correct code.
+Programs execute as self-assembling topological structures. Because execution paths must conform to the hardware's ZFA constraint, software routines literally *grow* as machine-verified, phase-stable history graphs, guaranteeing that code execution cannot deviate from structural logical correctness. `substrate_computes` proves the gate set is classically complete, so every AI program running on QLF hardware runs in machine-verified ZFA-correct code.
 
 The architecture is neuro-symbolic: an LLM or classical sensory layer extracts topological vectors from human-readable input; the QuCalc coprocessor enforces ZFA closure deterministically; the result is a synthesis that is not a probabilistic best-guess but a geometric proof of Zero Free Action. Absolute interpretability follows — the output IS the proof. See the working demonstration in [`ai_demonstration.py`](ai_demonstration.py).
 
@@ -219,7 +220,7 @@ QuantumOS positions its runtime environment relative to Stephen Wolfram’s conc
 
 ### Machine-Verified Universality
 
-This is not an analogy. `qlf_universality` (proved in [`lean/QLF_Universality.lean`](lean/QLF_Universality.lean)) establishes that `expand_generation` + `full_zeno_prune` generates **all and only** the terminating computations encodable as ZFA strings — a formal Church-Turing completeness statement. The ZFA filter is not a restriction on computation; it is the *selection principle* that picks physical reality out of the full computational universe. The `full_zeno_prune` kernel continuously extinguishes any history that introduces broken phase symmetry, so spacetime, local causality, and stable matter emerge precisely because the OS filters the non-local, chaotic Ruliad branches before they can register as physical events.
+`qlf_universality` ([`lean/QLF_Universality.lean`](lean/QLF_Universality.lean)) shows that every terminating circuit's encoding is ZFA and generated by `expand_generation`; that encoding is bookkeeping ([Principles.md](Principles.md) P10), and substrate evaluation is `fredkin_complete`. The ZFA filter is not a restriction on computation; it is the *selection principle* that picks physical reality out of the full computational universe. The `full_zeno_prune` kernel continuously extinguishes any history that introduces broken phase symmetry, so spacetime, local causality, and stable matter emerge precisely because the OS filters the non-local, chaotic Ruliad branches before they can register as physical events.
 
 ### Minimal Logical Subsystem: RCA₀
 
@@ -248,7 +249,7 @@ Standard QEC treats error correction as an artificial software layer bolted on t
 
 Modern quantum gravity has established that the fabric of spacetime is itself a quantum error-correcting code. The AdS/CFT correspondence and the HaPPY code tensor network (Almheiri, Dong, Harlow) show that bulk spatial geometry emerges from the entanglement structure of boundary degrees of freedom — a structure that is precisely an erasure-protecting QECC. TQFT-based work further shows that LOCC protocols between agents induce QECCs on the agent-environment boundary, from which spacetime connectivity emerges.
 
-QLF instantiates this natively (see [`Holographic.md`](Holographic.md), [`QLF_Holographic_Computational_Universe.md`](QLF_Holographic_Computational_Universe.md)). The `expand_generation` loop explores the full ruliadic multiway space; `full_zeno_prune` enforces ZFA balance at every step. The stable geometries that survive are exactly those satisfying the error-correction condition. A stable particle — a localized gauge-fold closure (see [`HadronicDepth.md`](HadronicDepth.md)) — is a fault-tolerant, error-corrected logical codeword in the ruliadic network. Spacetime geometry emerges because the kernel is running a topological error-correction routine. This is not an analogy: `qlf_universality` proves every terminating computation encodes as a ZFA string, making ZFA balance the complete hardware specification.
+QLF instantiates this natively (see [`Holographic.md`](Holographic.md), [`QLF_Holographic_Computational_Universe.md`](QLF_Holographic_Computational_Universe.md)). The `expand_generation` loop explores the full ruliadic multiway space; `full_zeno_prune` enforces ZFA balance at every step. The stable geometries that survive are exactly those satisfying the error-correction condition. A stable particle — a localized gauge-fold closure (see [`HadronicDepth.md`](HadronicDepth.md)) — is a fault-tolerant, error-corrected logical codeword in the ruliadic network. Spacetime geometry emerges because the kernel is running a topological error-correction routine. What is proved is that the gates are ZFA-preserving and classically universal (`substrate_computes`), which makes ZFA balance a hardware specification; the error-correction reading is a proposed correspondence (closure detects but cannot correct single errors, `single_error_not_correctable`).
 
 ### Active Inference as the Native Decoder
 
@@ -285,7 +286,7 @@ Because `rhoqcalc` uses object-capability names as linear resources, the no-clon
 
 In a classical OS, security, error correction, scheduling, garbage collection, and AI are five separate subsystems, each engineered independently and layered on top of hardware. **In QuantumOS, all five are the same operation: ZFA enforcement.** `full_zeno_prune` is simultaneously the garbage collector, the error decoder, the scheduler, the security firewall, and the active inference engine — because all five of these functions reduce to the same predicate: *does this history branch satisfy count\_pos = count\_neg?*
 
-This unification is not an engineering choice. It is a consequence of `qlf_universality`: every terminating computation IS a ZFA string, so ZFA balance is the single invariant that subsumes all correctness properties at once.
+This unification is a design thesis. What is proved is that ZFA-preserving gates are classically universal (`substrate_computes`), so ZFA balance can serve as the one invariant the kernel enforces; that it subsumes every correctness property is the thesis to be tested, not a theorem (`qlf_universality` is an encoding result only, [Principles.md](Principles.md) P10).
 
 ### Breakthrough Capabilities
 
