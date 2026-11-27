@@ -336,6 +336,40 @@ theorem escape_possible_iff_radius {rs r : ℝ} (hrs : 0 ≤ rs) (hr : 0 < r) :
   have hv : 0 ≤ river rs r := Real.sqrt_nonneg _
   rw [escape_possible_iff hv, river_lt_one_iff hrs hr]
 
+/-! ## 2b. The interior grows with the hole's age
+
+Inside (`r < rs`) the Schwarzschild metric is `ds² = −dr²/(rs/r − 1) + (rs/r − 1) dt² + r² dΩ²`: the
+exterior time `t` is a spatial direction. A stretch of it spanning the hole's age `T` has proper length
+`√(rs/r − 1)·T` (`interiorStretch`), exactly `c·T` at `r = rs/2` (`interiorStretch_half`). The
+spheres shrink meanwhile, so the growth is along one axis. The volume per unit time,
+`4π r²·√(rs/r − 1)`, is largest at `r = 3rs/4`, where it is `3√3·π·M²`
+(`interiorVolumeRate_sq_le`, `interiorVolumeRate_sq_max`): the Christodoulou–Rovelli linear growth
+of the maximal interior volume (Phys. Rev. D 91, 064046 (2015)). -/
+
+/-- The proper-length factor of the interior's long direction at radius `r < rs`. -/
+noncomputable def interiorStretch (rs r : ℝ) : ℝ := Real.sqrt (rs / r - 1)
+
+/-- At half the Schwarzschild radius the interior length is exactly `c × (the hole's age)`. -/
+theorem interiorStretch_half {rs : ℝ} (hrs : 0 < rs) : interiorStretch rs (rs / 2) = 1 := by
+  unfold interiorStretch
+  rw [show rs / (rs / 2) - 1 = 1 by field_simp; ring, Real.sqrt_one]
+
+/-- The squared volume rate per unit time, divided by `(4π)²`: `r⁴(rs/r − 1) = rs r³ − r⁴`. -/
+def interiorVolumeRateSq (rs r : ℝ) : ℝ := rs * r ^ 3 - r ^ 4
+
+/-- **The interior volume grows at most at `3√3·π·M²` per unit time**: `rs r³ − r⁴ ≤ 27 rs⁴/256`
+    for `r > 0` (so `4π√(…) ≤ (3√3/4)π rs² = 3√3 π M²`). -/
+theorem interiorVolumeRate_sq_le {rs r : ℝ} (hrs : 0 < rs) (hr : 0 < r) :
+    interiorVolumeRateSq rs r ≤ 27 / 256 * rs ^ 4 := by
+  unfold interiorVolumeRateSq
+  have hq : 0 < r ^ 2 + rs / 2 * r + 3 / 16 * rs ^ 2 := by positivity
+  nlinarith [mul_nonneg (sq_nonneg (r - 3 * rs / 4)) hq.le]
+
+/-- …attained at `r = 3rs/4`. -/
+theorem interiorVolumeRate_sq_max (rs : ℝ) :
+    interiorVolumeRateSq rs (3 * rs / 4) = 27 / 256 * rs ^ 4 := by
+  unfold interiorVolumeRateSq; ring
+
 /-! ## 3. Tidal stretch at the horizon -/
 
 /-- Radial tidal acceleration across a body of length `ℓ` at radius `r`: `rs·ℓ/r³`. -/

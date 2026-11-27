@@ -108,6 +108,24 @@ time-dependent interior cosmology that GR already describes inside `rs` and that
 [`BLACK-HOLES.md`](BLACK-HOLES.md) §4a reads as a nested domain. This is not proved here; what is
 proved is that, up to wherever the geometry holds, the infaller's horizon is strictly ahead of them.
 
+### 1g. The inside is huge, and grows with the hole's age
+
+Inside the horizon the exterior time `t` becomes a direction in space, so the interior is a long
+cylinder: a shrinking sphere times a line. The stretch of that line laid down while the hole has
+existed for a time `T` has proper length `√(rs/r − 1)·c·T` (`interiorStretch`). At `r = rs/2` the
+factor is exactly 1 (`interiorStretch_half`): **the interior is `c × (the hole's age)` long**, and it
+gets longer at `c` for as long as the hole exists. The spheres shrink meanwhile, so the growth is
+along one axis, not an isotropic expansion.
+
+The volume of the largest interior slice grows at a constant rate, `3√3·π·(GM/c²)²·c` per unit
+time (Christodoulou & Rovelli 2015), reached at `r = 3rs/4`; in Lean, `interiorVolumeRate_sq_le` and
+`interiorVolumeRate_sq_max` prove that this is the maximum over all `r`. If Sgr A* has existed for
+about 10 Gyr, its interior volume in this sense is about 6×10⁴⁶ m³, about 10¹⁶ times the
+`(4/3)π rs³` a naive outside view suggests. This is the GR content of the Personal Origin's
+*"black holes must be huge inside"*. In GR the growth ends for each infaller at the singularity; with
+QLF's bounded density the shrinking of the spheres must stop instead, which leaves an interior that
+keeps lengthening (**conjecture**).
+
 ### 1f. Seeing later infallers, older than "our" universe (conjecture and test)
 
 **GR:** an observer inside a Schwarzschild hole still receives light from matter that falls in
@@ -285,6 +303,7 @@ far side fades out in finite time. Worked out in
 | Kerr dragging at the outer horizon is slow for large holes and not felt in free fall | **proved** (`Ω_H ≤ 1/(2M)`, `∝ 1/M`); "not felt" is the geodesic property |
 | No singularity, so the infaller's horizon is never reached | **conjecture** (QLF bounded density) |
 | Kerr mass inflation saturates at the Planck scale | **conjecture** |
+| The interior is `c × (age)` long at `r = rs/2`; its maximal volume grows at `3√3πM²c` per unit time | **proved** (standard GR) |
 | In the nested reading, later infallers into a parent hole appear older than our universe | **conjecture**; no confirmed object yet (HD 140283 consistent with 13.8 Gyr) |
 | Thrust works at every radius; everyone's own horizon is strictly below them | **proved** (`thrust_works`, `own_horizon_below`) |
 | The static radius `r` can increase only outside `rs` | **proved** (standard GR) |
@@ -302,6 +321,8 @@ far side fades out in finite time. Worked out in
   Big Bang", *ApJL* **765**, L12 (2013), [arXiv:1302.3180](https://arxiv.org/abs/1302.3180).
 * C. Guillaume et al., "The age of the Methuselah star in light of stellar evolution models with
   tailored abundances", *A&A* **692**, L3 (2024), [arXiv:2411.12343](https://arxiv.org/abs/2411.12343).
+* M. Christodoulou & C. Rovelli, "How big is a black hole?", *Phys. Rev. D* **91**, 064046 (2015),
+  [arXiv:1411.2854](https://arxiv.org/abs/1411.2854).
 * D. N. Page, "Particle emission rates from a black hole", *Phys. Rev. D* **13**, 198 (1976).
 * B. Carr, K. Kohri, Y. Sato & J. Yokoyama, "Constraints on primordial black holes", *Rep. Prog.
   Phys.* **84**, 116902 (2021), [arXiv:2002.12778](https://arxiv.org/abs/2002.12778).

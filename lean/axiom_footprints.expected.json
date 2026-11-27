@@ -245,6 +245,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.BlackHoleInfall.interiorStretch_half": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.interiorVolumeRate_sq_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.interiorVolumeRate_sq_max": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BlackHoleInfall.kerr_two_horizons": [
     "Classical.choice",
     "Quot.sound",

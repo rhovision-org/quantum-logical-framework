@@ -1143,3 +1143,6 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BlackHoleInfall.inside_all_inward
 #print axioms QLF.BlackHoleInfall.thrust_works
 #print axioms QLF.BlackHoleInfall.own_horizon_below
+#print axioms QLF.BlackHoleInfall.interiorStretch_half
+#print axioms QLF.BlackHoleInfall.interiorVolumeRate_sq_le
+#print axioms QLF.BlackHoleInfall.interiorVolumeRate_sq_max
