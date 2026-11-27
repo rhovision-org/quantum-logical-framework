@@ -93,6 +93,7 @@ the same observer (`no_congruence_reverses_time`). See
 weakening, construction only adds (`weakening_iff_persistence`, `closedAtHorizon_mono`), and from
 that alone no history returns to its own past (`no_time_loops_from_logic`,
 [`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)). Running time backwards is reading a
-record the other way, never going round in a circle. (A logic without weakening can model a loop,
-`loopWorld_has_time_loop`; that is a statement about such a logic, not about any record.) In one line:
-**time goes every way, and never in a loop.**
+record the other way, never going round in a circle. **Only closure is possible**: what happens is a
+closure, every closure is a record, and a record never loops. (A logic without weakening can be written
+down with a loop in it, `loopWorld_has_time_loop`, but nothing closes that way, so nothing happens that
+way.) In one line: **time goes every way, and never in a loop.**
