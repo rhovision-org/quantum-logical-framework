@@ -84,12 +84,15 @@ is exactly where the two come apart. Hypothesis R is a well-motivated conjecture
 
 Time is relative in direction, not only in rate. Every one of the sixteen reversed readings of a closure
 is itself the census (`every_reading_is_the_census`, `sixteen_reversed_readings`,
-[`QLF_TimeReversalPerspective`](lean/QLF_TimeReversalPerspective.lean)), and possibilism admits every
-logic, including those whose histories loop (`loopWorld_has_time_loop`,
-[`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)). So in possibility time goes every way,
-backwards included, by perspective. What is not relative is each perspective's **record**: under the
-law of weakening a record only grows (`weakening_iff_persistence`, `closedAtHorizon_mono`), so every
-perspective reads its own history forward. A reversed reading is a selection among histories, not a
-boost of the same observer (`no_congruence_reverses_time`). See
-[`Time_Reversed_Universe.md`](Time_Reversed_Universe.md). In one line: **time goes every way; each record
-goes one way.**
+[`QLF_TimeReversalPerspective`](lean/QLF_TimeReversalPerspective.lean)), so time goes every way,
+backwards included, by perspective. A reversed reading is a selection among histories, not a boost of
+the same observer (`no_congruence_reverses_time`). See
+[`Time_Reversed_Universe.md`](Time_Reversed_Universe.md).
+
+**No time loops.** Every way is not every loop. Each perspective's record only grows: under the law of
+weakening, construction only adds (`weakening_iff_persistence`, `closedAtHorizon_mono`), and from
+that alone no history returns to its own past (`no_time_loops_from_logic`,
+[`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)). Running time backwards is reading a
+record the other way, never going round in a circle. (A logic without weakening can model a loop,
+`loopWorld_has_time_loop`; that is a statement about such a logic, not about any record.) In one line:
+**time goes every way, and never in a loop.**
