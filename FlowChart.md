@@ -152,9 +152,9 @@ Everything here is **downstream of the derived α** ([`Alpha.md`](Alpha.md) §10
 ## 5. Gravity and GR
 
 
-**Connectors:** *G = L_P^2c^3/hbar* &rarr; Newton's law + G &middot; *43''/century* &rarr; Mercury perihelion &middot; *deltaQ = T deltaS* &rarr; Einstein equations (equation of state) &middot; *causal order -> metric* &rarr; Curvature &middot; *spin-2, v = c* &rarr; Gravitational waves &middot; *Hilbert: delta S = 0 at balance* &rarr; Einstein equations
+**Connectors:** *G = L_P^2c^3/hbar* &rarr; Newton's law + G &middot; *43''/century* &rarr; Mercury perihelion &middot; *deltaQ = T deltaS* &rarr; Einstein equations (equation of state) &middot; *causal order -> metric* &rarr; Curvature &middot; *spin-2, v = c* &rarr; Gravitational waves &middot; *Hilbert: delta S = 0 at balance* &rarr; Einstein equations &middot; *river model* &rarr; Falling into black holes &middot; *equivalence principle* &rarr; 1 g rocket &middot; *horizons are relations* &rarr; Everything is relative
 
-**Open:** [`Gravity_From_Delay.md`](Gravity_From_Delay.md) · [`Mercury_Perihelion.md`](Mercury_Perihelion.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Curvature.md`](Curvature.md) · [`Stationary_Action.md`](Stationary_Action.md)
+**Open:** [`Gravity_From_Delay.md`](Gravity_From_Delay.md) · [`Mercury_Perihelion.md`](Mercury_Perihelion.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Curvature.md`](Curvature.md) · [`Stationary_Action.md`](Stationary_Action.md) · [`Falling_Into_Black_Holes.md`](Falling_Into_Black_Holes.md) · [`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md) · [`Everything_Is_Relative.md`](Everything_Is_Relative.md)
 
 ---
 

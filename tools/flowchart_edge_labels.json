@@ -57,7 +57,10 @@
    "HO>EE": "deltaQ = T deltaS",
    "EE>CV": "causal order -> metric",
    "EE>GW": "spin-2, v = c",
-   "SA>EE": "Hilbert: delta S = 0 at balance"
+   "SA>EE": "Hilbert: delta S = 0 at balance",
+   "CV>BH": "river model",
+   "BH>RK": "equivalence principle",
+   "RK>ER": "horizons are relations"
   },
   {
    "H6>EV": "domain 6",

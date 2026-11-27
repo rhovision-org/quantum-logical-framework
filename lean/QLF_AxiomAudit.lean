@@ -174,6 +174,8 @@ import QLF_DiversityPhase
 import QLF_CoincidenceTrivial
 import QLF_AssemblyIndex
 import QLF_TimeReversalPerspective
+import QLF_BlackHoleInfall
+import QLF_RelativisticRocket
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1116,3 +1118,34 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.Barenco.universality_cz
 #print axioms QLF.Barenco.onQubit_mul_apply
 #print axioms QLF.Barenco.onQubit_comm
+#print axioms QLF.BlackHoleInfall.freefall_proper_time
+#print axioms QLF.BlackHoleInfall.static_exists_iff
+#print axioms QLF.BlackHoleInfall.fall_time_finite
+#print axioms QLF.BlackHoleInfall.infaller_horizon_lt_position
+#print axioms QLF.BlackHoleInfall.infaller_horizon_strictMono
+#print axioms QLF.BlackHoleInfall.infaller_horizon_tendsto_zero
+#print axioms QLF.BlackHoleInfall.infaller_horizon_tendsto_rs
+#print axioms QLF.BlackHoleInfall.tidal_at_horizon_tendsto_zero
+#print axioms QLF.BlackHoleInfall.horizonOmega_le
+#print axioms QLF.BlackHoleInfall.horizonOmega_tendsto_zero
+#print axioms QLF.BlackHoleInfall.kerr_two_horizons
+#print axioms QLF.BlackHoleInfall.evaporated_iff
+#print axioms QLF.BlackHoleInfall.last_half_eighth
+#print axioms QLF.RelativisticRocket.properVelocity_eq_one_iff
+#print axioms QLF.RelativisticRocket.earthTime_at_light
+#print axioms QLF.RelativisticRocket.coordSpeed_at_light
+#print axioms QLF.RelativisticRocket.earthDist_shipTime_to_reach
+#print axioms QLF.RelativisticRocket.shipTime_to_reach_le
+#print axioms QLF.RelativisticRocket.earth_signal_reaches_iff
+#print axioms QLF.RelativisticRocket.emitTime_hasDerivAt
+#print axioms QLF.RelativisticRocket.redshift_limit_iff
+#print axioms QLF.BlackHoleInfall.escape_possible_iff_radius
+#print axioms QLF.BlackHoleInfall.inside_all_inward
+#print axioms QLF.BlackHoleInfall.thrust_works
+#print axioms QLF.BlackHoleInfall.own_horizon_below
+#print axioms QLF.BlackHoleInfall.interiorStretch_half
+#print axioms QLF.BlackHoleInfall.interiorVolumeRate_sq_le
+#print axioms QLF.BlackHoleInfall.interiorVolumeRate_sq_max
+#print axioms QLF.RelativisticRocket.arrivalTime_hasDerivAt
+#print axioms QLF.RelativisticRocket.mutual_redshift
+#print axioms QLF.RelativisticRocket.inertial_redshift_horizon
