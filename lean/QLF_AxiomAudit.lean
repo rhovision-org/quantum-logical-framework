@@ -175,6 +175,7 @@ import QLF_CoincidenceTrivial
 import QLF_AssemblyIndex
 import QLF_TimeReversalPerspective
 import QLF_BlackHoleInfall
+import QLF_RelativisticRocket
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1130,3 +1131,13 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BlackHoleInfall.kerr_two_horizons
 #print axioms QLF.BlackHoleInfall.evaporated_iff
 #print axioms QLF.BlackHoleInfall.last_half_eighth
+#print axioms QLF.RelativisticRocket.properVelocity_eq_one_iff
+#print axioms QLF.RelativisticRocket.earthTime_at_light
+#print axioms QLF.RelativisticRocket.coordSpeed_at_light
+#print axioms QLF.RelativisticRocket.earthDist_shipTime_to_reach
+#print axioms QLF.RelativisticRocket.shipTime_to_reach_le
+#print axioms QLF.RelativisticRocket.earth_signal_reaches_iff
+#print axioms QLF.RelativisticRocket.emitTime_hasDerivAt
+#print axioms QLF.RelativisticRocket.redshift_limit_iff
+#print axioms QLF.BlackHoleInfall.escape_possible_iff_radius
+#print axioms QLF.BlackHoleInfall.inside_all_inward

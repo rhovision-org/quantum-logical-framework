@@ -189,6 +189,31 @@ species, and whether any heavier small holes formed at all.
 
 ---
 
+## 3c. How to escape a black hole
+
+The same perspective view answers the escape question, in four parts.
+
+1. **Outside `rs`: accelerate.** Some outward velocity is available exactly where the river is
+   slower than light, i.e. exactly where `rs < r` (`escape_possible_iff`,
+   `escape_possible_iff_radius`). An escaping rocket also carries its own horizon, and it lies
+   *outside* `rs` (`outward_horizon_gt_rs`): the harder you climb, the more of the hole falls behind
+   your own horizon. That is the rocket of [`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md),
+   which escapes Earth by letting Earth fall behind its horizon.
+2. **Inside `rs`: thrust cannot do it.** Where the river is faster than light every timelike path
+   moves inward, whatever the engine (`inside_all_inward`). This is standard GR and QLF does not
+   change it.
+3. **But the hole does not keep you.** Every hole evaporates in finite time, `t ∝ M³`
+   (`lifetime_strictMono`, §3a), and in QLF a horizon is a Markov blanket whose Hawking unwind
+   returns the closure's information to the outside ([`BLACK-HOLES.md`](BLACK-HOLES.md) §3, §3a).
+   **Reading:** you do not climb out; the hole comes apart around you, and what you were leaves as
+   radiation. For a large hole this takes far longer than the age of the universe.
+4. **Or the inside becomes a cosmos.** In the nested picture ([`BLACK-HOLES.md`](BLACK-HOLES.md)
+   §4a) the interior re-closes as a child domain whose birth surface is the parent's horizon.
+   **Speculative reading:** the infaller never reaches their own horizon (§1e) and finds themselves
+   in a new expanding interior, which is "escape" only in the sense that the hole was never a trap
+   from inside. Nothing inside a hole, or inside ours if we are in one, can cross the parent's horizon
+   outward: it lies in the interior's past.
+
 ## 4. See it in the constructor
 
 The [Spectral Spacetime Constructor](https://rhovision-org.github.io/quantum-logical-framework/spacetime_constructor.html)
@@ -211,6 +236,13 @@ of the closure census, not a cause.
 
 ---
 
+## 4a. The rocket twin
+
+A ship accelerating away from Earth at constant `g` is the flat-space version of the same story: the
+accelerated perspective has a horizon, the free one does not, and with QLF's finite redshift limit the
+far side fades out in finite time. Worked out in
+[`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md) ([`QLF_RelativisticRocket`](lean/QLF_RelativisticRocket.lean)).
+
 ## 5. Status
 
 | Claim | Status |
@@ -222,6 +254,7 @@ of the closure census, not a cause.
 | Kerr dragging at the outer horizon is slow for large holes and not felt in free fall | **proved** (`Ω_H ≤ 1/(2M)`, `∝ 1/M`); "not felt" is the geodesic property |
 | No singularity, so the infaller's horizon is never reached | **conjecture** (QLF bounded density) |
 | Kerr mass inflation saturates at the Planck scale | **conjecture** |
+| Outward paths exist exactly outside `rs`; inside, every path moves inward | **proved** (standard GR) |
 | Primordial holes lighter than about 5×10¹¹ kg are gone | **standard physics**, `M³` law proved |
 | Small holes became matter; none of any small size remain | **QLF reading**, supported by `QLF_QuantumBlackHole` and `QLF_PlanckScale`; open for asteroid-mass holes |
 

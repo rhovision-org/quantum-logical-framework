@@ -379,5 +379,6 @@ lean_lib QLF where
     `QLF_TwoLevelUnitary,
     `QLF_Barenco,
     `QLF_QuantumComputer,
-    `QLF_BlackHoleInfall
+    `QLF_BlackHoleInfall,
+    `QLF_RelativisticRocket
   ]

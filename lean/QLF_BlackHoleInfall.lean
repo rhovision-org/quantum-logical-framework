@@ -45,6 +45,9 @@ river coordinates, not the global event horizon, and GR still says the infaller 
 `rs` in finite proper time (`fall_time_hasDerivAt`, `fall_time_finite`), where far observers see them
 slow to a stop (`farVelocity_at_horizon`).
 
+**Escaping** (`escape_possible_iff_radius`, `inside_all_inward`): an outward timelike path exists
+exactly where `rs < r`; inside, every timelike path moves inward whatever the thrust.
+
 ## 3. "Large enough": the horizon is locally invisible
 
 The radial tidal stretch on a body of length `ℓ` is `rs·ℓ/r³` (exact for radial geodesics in
@@ -277,6 +280,31 @@ theorem outward_horizon_gt_rs {rs u : ℝ} (hrs : 0 < rs) (hu0 : 0 < u) (hu1 : u
   have h : (1 - u) ^ 2 < 1 := by nlinarith
   rw [lt_div_iff₀ (by nlinarith)]
   nlinarith [mul_lt_mul_of_pos_left h hrs]
+
+/-! ## 2a. Escaping -/
+
+/-- **Climbing out is possible exactly where the river is slower than light**: some outward
+    coordinate velocity `u > 0` is timelike iff `v < 1`. -/
+theorem escape_possible_iff {v : ℝ} (hv : 0 ≤ v) : (∃ u, 0 < u ∧ pgInterval v u < 0) ↔ v < 1 := by
+  unfold pgInterval
+  constructor
+  · rintro ⟨u, hu, h⟩
+    nlinarith
+  · intro h
+    refine ⟨(1 - v) / 2, by linarith, ?_⟩
+    nlinarith
+
+/-- **Inside, every timelike path moves inward**: where `v > 1`, any timelike coordinate velocity is
+    negative, whatever the thrust. -/
+theorem inside_all_inward {v u : ℝ} (hv : 1 < v) (h : pgInterval v u < 0) : u < 0 := by
+  unfold pgInterval at h
+  nlinarith
+
+/-- In terms of radius: some outward path exists at `r` iff `rs < r`. -/
+theorem escape_possible_iff_radius {rs r : ℝ} (hrs : 0 ≤ rs) (hr : 0 < r) :
+    (∃ u, 0 < u ∧ pgInterval (river rs r) u < 0) ↔ rs < r := by
+  have hv : 0 ≤ river rs r := Real.sqrt_nonneg _
+  rw [escape_possible_iff hv, river_lt_one_iff hrs hr]
 
 /-! ## 3. Tidal stretch at the horizon -/
 
