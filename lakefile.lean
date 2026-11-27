@@ -290,6 +290,8 @@ lean_lib QLF where
     `QLF_RelativityScale,
     `QLF_LorentzSymbol,
     `QLF_BoostCovariance,
+    `QLF_WalkDispersionBound,
+    `QLF_RelationalClock,
     `QLF_InteractingKinematics,
     `QLF_BoostStates,
     `QLF_BoostAmplitudes,

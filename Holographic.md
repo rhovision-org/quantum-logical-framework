@@ -297,6 +297,16 @@ So the precise statement is:
 > structure, and it provides the constructive template by which larger
 > dimensional manifolds can be built from QuCalc histories.
 
+**A failure of record-only reconstruction (RC0).** Boundary records that keep every perspective's
+ordered word still cannot reconstruct the closure clock: the same three records `+ −` close at depth
+1 or 3 depending on their interleaving (`rc0_record_does_not_determine_clock`,
+[`lean/QLF_RelationalClock.lean`](lean/QLF_RelationalClock.lean)). The clock is reconstructible
+once the dependency order between perspectives is recorded, and for commuting perspectives the
+least depth is a function of the records alone. So the relational part of a boundary record must
+carry the genuine dependencies, not a serialization. See
+[`Planck_Dispersion_Prediction.md`](Planck_Dispersion_Prediction.md) §5 and P25 in
+[`Principles.md`](Principles.md).
+
 ---
 
 ## 7. QuCalc-generated sample histories

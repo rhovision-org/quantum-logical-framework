@@ -2706,6 +2706,50 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.RelationalClock.dependency_increases_capacity": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.dependency_strict_increase": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.different_clocks": [
+    "propext"
+  ],
+  "QLF.RelationalClock.nested_commutes_to_adjacent": [
+    "propext"
+  ],
+  "QLF.RelationalClock.rc0_record_does_not_determine_clock": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_lowers_depth": [
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_nested": [
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_not_always_minimal": [
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_record": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.record_swap": [
+    "propext"
+  ],
+  "QLF.RelationalClock.relCapacity_example": [
+    "propext"
+  ],
+  "QLF.RelationalClock.same_records": [
+    "propext"
+  ],
+  "QLF.RelationalClock.shuffle_reconstructs": [
+    "propext"
+  ],
   "QLF.RelativisticRocket.arrivalTime_hasDerivAt": [
     "Classical.choice",
     "Quot.sound",
@@ -3595,6 +3639,46 @@
     "propext"
   ],
   "QLF.WalkCoupling.link_response": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.diracWalk_axis_exact": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.diracWalk_body_bracket": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.one_axis_le_some_axis": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_axis_exact": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_body_deficit_bounded": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_body_subluminal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_face_subluminal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_group_velocity_le_one": [
     "Classical.choice",
     "Quot.sound",
     "propext"
