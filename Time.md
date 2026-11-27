@@ -140,7 +140,7 @@ If time is a count of ticks and frequency is phase per tick (§2), then a moment
 * [`muon_lifetime_demo.py`](./muon_lifetime_demo.py) — Simulates particle lifetime based on logical bit synthesis rates.
 * [`twist_core.py`](./twist_core.py) — The core engine executing ZFA closures.
 * [`QLF_TimeDoubleSlit.lean`](./lean/QLF_TimeDoubleSlit.lean) — The double slit in time, the light-cone identity of time and space slits, and the time–energy fringe reciprocity (§8a).
-* [`QLF_Universality.lean`](./lean/QLF_Universality.lean) — Formal proof that every terminating computation IS a ZFA string (Church-Turing completeness of the ZFA filter).
+* [`QLF_Universality.lean`](./lean/QLF_Universality.lean) — Every terminating circuit has a ZFA encoding (bookkeeping, [Principles.md](./Principles.md) P10); substrate evaluation is `fredkin_complete` ([`QLF_QuantumComputer.lean`](./lean/QLF_QuantumComputer.lean)).
 
 ## 2026 update
 

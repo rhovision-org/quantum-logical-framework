@@ -6,9 +6,9 @@ Project context for Claude Code sessions. Read this before making any changes.
 
 ## Project overview
 
-**Quantum Logical Framework (QLF)** is a formal proof system machine-verified in Lean 4 across **hundreds of modules with zero `sorry` blocks** (the full count is in [`lean/README.md`](lean/README.md)). It encodes quantum mechanics and spacetime dynamics using phase-string combinatorics (ZFA — Zero-phase Flux Algebra).
+**Quantum Logical Framework (QLF)** is a formal proof system machine-verified in Lean 4 across **hundreds of modules with zero `sorry` blocks** (the full count is in [`lean/README.md`](lean/README.md)). It encodes quantum mechanics and spacetime dynamics using phase-string combinatorics (ZFA — Zero Free Action: equal and opposite quantum logical action with zero free energy, the principle of QLF).
 
-Core claim: *ZFA balance is the selection principle for physical reality.* Every terminating computation is a ZFA string; every ZFA string is symmetric (lies on the critical line). The Church-Turing universe filtered to ZFA-balanced strings is our physical universe.
+Core claim: *ZFA balance is the selection principle for physical reality.* It is QLF's **one well-supported conjecture**; every other statement is derived, a known fact named with its source, a bridge, or a reading, and postulates rest on what is known fundamentally, never on conjectures of emergence. QLF is the quantum computer that tests models: a model is encoded as closures, by an encoding that could fail, and judged necessary, possible, impossible, equivalent or undetermined. See [`Framing.md`](Framing.md) and [`Principles.md`](Principles.md) §A.
 
 **Do NOT build Lean locally on this machine. CI (GitHub Actions) is the only practical way to
 verify Lean changes.** Push to GitHub and wait for CI before reporting success.
@@ -36,7 +36,7 @@ Registered in `lakefile.lean` roots array (build order); sources in `lean/`. **T
 |---|---|
 | `QLF_Axioms` | Types, counting, pruning, ZFA definition |
 | `QLF_QuCalc` | Phase-generation engine; `full_zeno_prune` (the ZFA filter) |
-| `QLF_Universality` | Every terminating computation IS a ZFA string (Church-Turing) |
+| `QLF_Universality` | Every terminating NAND-delay graph has a ZFA encoding — bookkeeping (the encoding is ZFA for any edge list; Principles P10). Substrate evaluation is `fredkin_complete` in `QLF_QuantumComputer` |
 | `SpacetimeDynamics` | The `Form` — Pauli-basis 2×2 Hermitian matrices |
 | `RhoQuCalc` | ρ-process algebra (`RhoProcess`, `eval`, dagger) |
 | `BraKetRhoQuCalc` | Bra-ket ↔ RhoQuCalc; the Σ₈ / `τ = iσ` weak-isospin algebra |
@@ -264,7 +264,7 @@ theorem foo (p : RhoProcess) : achieves_ZFA (toTopoString p) :=
 5. Do NOT run `lake build` locally — see the note under **Project overview** (OOM / slow mount)
 
 ### md-only changes (`.md`, `.py`, `lakefile.lean` roots array, `README.md`)
-1. Edit, then run `python3 scripts/doc_network_check.py` — it fails on any orphaned root `.md` or dead relative link (6,800+ links, seconds) and warns on missing doc↔code back-links (#149). Commit, push — **CI does not run and does not need to.**
+1. Edit, then run `python3 scripts/doc_network_check.py` and `python3 scripts/framing_consistency.py` (cited Lean names exist, registry IDs exist, verdict tokens valid, retired phrasings absent; [`Framing.md`](Framing.md) O6). The first fails on any orphaned root `.md` or dead relative link (6,800+ links, seconds) and warns on missing doc↔code back-links (#149). Commit, push — **CI does not run and does not need to.**
 2. Do NOT mention CI, check CI, or wait for CI after a docs-only commit.
 
 ### Axioms — the audit gates CI
@@ -292,6 +292,36 @@ satisfy it trivially. The outcome decides whether it is a boundary, a citation, 
 ## Philosophical foundations
 
 These commitments are load-bearing for all prose, documentation, and new module framing. New sessions must be consistent with them.
+
+### One conjecture; QLF tests models (binding — Jim, 2026-11-27)
+
+> *"QLF IS the quantum computer that proves other models or not. ... Equal and opposite logical action is
+> the only well supported conjecture. ... Postulates should be based on what we know fundamentally, not
+> conjectures of emergence."*
+
+Canonical statement: [`Framing.md`](Framing.md); registry: [`Principles.md`](Principles.md) §A. Apply it
+when writing anything:
+
+1. **One conjecture.** ZFA (A01) is the only conjecture QLF rests on. Never call anything else a
+   premise or postulate of QLF. Possibilism, no observer potency, synthesized spacetime and the rest
+   (A02–A09) are derived results, readings, or the absence of an assumption.
+2. **Four kinds.** Every other statement is *derived*, a *known fact* named with its source (A10–A14:
+   measurements are counts; incompatible observables exist; Bekenstein, labelled established theory;
+   CODATA units; only hydrogen has a whole two-dimensional interface), a *bridge*, or a *reading*. Structural choices (Pauli frame, uniform measure,
+   measure = probability, logical = physical free energy) stay listed and auditable.
+3. **Postulates rest on what is known fundamentally, never on conjectures of emergence.** A continuum
+   spacetime, a metric, fields, the Born rule or a classical limit are what closures add up to: derive
+   them or call them bridges.
+4. **Five verdicts.** A model encoded as closures, by an encoding that could fail, is *necessary*,
+   *possible*, *impossible*, *equivalent* or *undetermined* relative to stated conditions. Failing to find
+   a closure is undetermined, not impossible; finding one is possible, not necessary.
+5. **Four levels of computation.** Natural quantum computation (the thesis), classical programmable
+   (proved, `fredkin_complete`), universal programmable quantum (proved on presence strands up to a global scalar, `native_universal`,
+   O1), classical simulation (QuCalc/QuantumOS; no efficiency claim). Universality of the native
+   operations is not a built device, and the simulator does not stand in for the thesis.
+6. **Encoding is not execution.** `qlf_universality` gives every terminating circuit a ZFA *encoding*,
+   which is bookkeeping (Principles P10) and never uses termination. Say "has a ZFA encoding", never
+   "every terminating computation IS a ZFA string". Execution is `fredkin_complete`.
 
 ### Core ontology: possibilism + ZFA selection
 
@@ -348,7 +378,7 @@ scope. See [`Philosophy.md`](Philosophy.md) §3d and [`UniversalRelativity.md`](
 
 ### ZFA is the only filter — not a restriction
 
-A critical framing point: **ZFA is not a restriction on what can be computed.** `qlf_universality` proves the ZFA filter is Church-Turing complete — every *terminating* computation IS a ZFA string. What is pruned is not computation; it is the physically unrealizable tail (non-terminating, Turing-undecidable, Busy Beaver-class computations). The ZFA filter selects physical reality from the full ruliadic computational universe without discarding any computable physics.
+A critical framing point: **ZFA is not a restriction on what can be computed.** The substrate's own ZFA-preserving gates evaluate every Boolean function (`fredkin_complete`, `substrate_computes`); `qlf_universality` only shows every terminating NAND-delay graph has a ZFA encoding, which is bookkeeping (Principles P10) and never uses termination. The reading — that what is pruned is not computation but the physically unrealizable tail (non-terminating, Turing-undecidable, Busy Beaver-class computations). The ZFA filter selects physical reality from the full ruliadic computational universe without discarding any computable physics.
 
 The variational physics expression of ZFA is S = ∫ℒ dΩ with **ℒ = 0** — a null Lagrangian that is the condition of origin, not a cutting rule. The discrete form (`isZFAClosed`) and the continuous limit (`EventSynthesisField → Λ_eff`) are both covered in `Lagrangian_Formulation.md`.
 
@@ -399,7 +429,7 @@ The chain: `qlf_universality` → `zfa_implies_critical_line` → `spectral_symm
 
 ### QuantumOS: QLF as a hardware-native OS
 
-QLF is not only a theoretical framework — it is an executable architecture for quantum hardware. In a classical OS, security, error correction, scheduling, garbage collection, and AI are five separate subsystems. In QuantumOS, all five are the same operation — ZFA enforcement (`full_zeno_prune`) — because `qlf_universality` proves ZFA balance is the single invariant that subsumes all correctness properties.
+QLF is not only a theoretical framework — it is an executable architecture for quantum hardware. In a classical OS, security, error correction, scheduling, garbage collection, and AI are five separate subsystems. In QuantumOS, all five are the same operation — ZFA enforcement (`full_zeno_prune`) — as a design thesis: the substrate's gates are proved ZFA-preserving and classically universal (`substrate_computes`), and whether one invariant subsumes all correctness properties is what QuantumOS tests (`qlf_universality` is an encoding result only, [`Principles.md`](Principles.md) P10).
 
 Security grounds in five converging foundations: Girard's linear logic (1987), Miller's object capability model (2006), Meredith & Radestock's ρ-calculus (2005), Honda's session types (1993), Wootters & Zurek no-cloning (1982). Capability names are topological structures; possessing a name IS a proof of authorization (Curry-Howard).
 

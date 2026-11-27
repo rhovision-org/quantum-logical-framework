@@ -56,8 +56,9 @@ that is precisely what QLF prunes.
   [`lean/QLF_Universality.lean`](lean/QLF_Universality.lean),
   [Lagrangian_Formulation.md](Lagrangian_Formulation.md)). A blow-up solution is in
   the pruned set: it is mathematically expressible but not physically realized.
-- **The physical tail is smooth.** `qlf_universality` says every *terminating*
-  computation IS a ZFA string, and these are the realized events. A flow assembled
+- **The physical tail is smooth.** The realized events are ZFA closures (the one
+  conjecture, [Framing.md](Framing.md)); `qlf_universality` gives every terminating
+  circuit a ZFA encoding (bookkeeping, [Principles.md](Principles.md) P10). A flow assembled
   from ZFA-closed events has, at every scale, a bounded per-event quantum — no point
   carries infinite energy, because energy is `count × ℏω` over finitely many events
   in any finite region ([Per_Qubit_Mass_Quantum.md](Per_Qubit_Mass_Quantum.md),

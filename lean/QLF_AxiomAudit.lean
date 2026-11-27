@@ -147,6 +147,17 @@ import QLF_PerspectiveLocality
 import QLF_ControlledUnitary
 import QLF_TwoLevelUnitary
 import QLF_Barenco
+import QLF_NativeBell
+import QLF_ModelTesting
+import QLF_UniformMeasure
+import QLF_AlphabetNecessity
+import QLF_LogicalPersistence
+import QLF_MultiObserver
+import QLF_NoFreeDuplication
+import QLF_PauliFrame
+import QLF_NativeUniversality
+import QLF_AnthropicEquivalence
+import QLF_ClosureSelection
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -1242,3 +1253,74 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.VacuumCorrelation.gauge_pair_never_negI
 #print axioms QLF.VacuumCorrelation.electron_class
 #print axioms QLF.VacuumCorrelation.electron_in_class
+
+-- Native Bell state on one presence qubit and the model-testing interface (Framing.md O1, O3)
+#print axioms QLF.NativeBell.jointSign_eq
+#print axioms QLF.NativeBell.native_bell
+#print axioms QLF.NativeBell.native_bell_not_product
+#print axioms QLF.NativeBell.native_bell_x_correlated
+#print axioms QLF.NativeBell.nativeCZ_eq_cz
+#print axioms QLF.NativeBell.nativeHA_eq
+#print axioms QLF.NativeBell.nativeHB_eq
+#print axioms QLF.NativeBell.native_bell_matches_circuit
+#print axioms QLF.NativeBell.censusRatio_eq_z
+#print axioms QLF.NativeBell.nativePA_eq
+#print axioms QLF.NativeBell.nativePhase_infinite_order
+#print axioms QLF.NativeBell.phaseZ_even_power
+#print axioms QLF.ModelTesting.possible_iff_not_impossible
+#print axioms QLF.ModelTesting.vacuous_of_cannot_fail
+#print axioms QLF.ModelTesting.pairEncoding_cannot_fail
+#print axioms QLF.ModelTesting.identity_can_fail
+#print axioms QLF.UniformMeasure.uniform_forced
+#print axioms QLF.UniformMeasure.symm_of_perm_invariant
+#print axioms QLF.UniformMeasure.word_weight_uniform
+#print axioms QLF.ModelTesting.equivalent_same_verdicts
+#print axioms QLF.noncommuting_iff_eight
+#print axioms QLF.JointClosure.singlet_chsh
+#print axioms QLF.LogicalPersistence.histories_are_a_model
+#print axioms QLF.LogicalPersistence.loopWorld_has_time_loop
+#print axioms QLF.MultiObserver.observers_agree
+#print axioms QLF.NoFreeDuplication.identical_copy_pauli_blocked
+#print axioms QLF.NoFreeDuplication.duplication_pays_log_two
+#print axioms QLF.QuantumComputer.fredkin_complete
+#print axioms QLF.QuantumComputer.substrate_computes
+#print axioms QLF.QuantumComputer.twist_folds_finite
+#print axioms QLF.QuantumComputer.rotation_powers_injective
+#print axioms QLF.QuantumComputer.quantum_power_needs_weighted_ways
+#print axioms QLF.QuantumComputer.completion_perm_closes
+#print axioms QLF.QuantumComputer.closing_cost_exact
+#print axioms QLF.QuantumComputer.joint_closure_is_cz
+#print axioms QLF.QuantumComputer.cz_entangling
+#print axioms QLF.QuantumComputer.no_choice_fixed_in_advance
+#print axioms QLF.QuantumComputer.no_computable_superdeterministic_theory
+#print axioms QLF.QuantumComputer.su2_dense
+#print axioms QLF.PauliFrame.trace_zero_of_anti
+#print axioms QLF.PauliFrame.coeffs_zero
+#print axioms QLF.PauliFrame.span_frame
+#print axioms QLF.PauliFrame.third_axis
+#print axioms QLF.PauliFrame.frame_product
+#print axioms QLF.PauliFrame.no_fourth_axis
+#print axioms QLF.PauliFrame.pauli_is_a_frame
+#print axioms QLF.PauliFrame.gauge_commutes
+#print axioms QLF.NativeUniversality.censusRatioMirror_eq_zbar
+#print axioms QLF.NativeUniversality.D_zpow_native
+#print axioms QLF.NativeUniversality.native_one_dense
+#print axioms QLF.NativeUniversality.nativeBranch_eq
+#print axioms QLF.NativeUniversality.nativeJoint_eq
+#print axioms QLF.NativeUniversality.nativePhase_eq
+#print axioms QLF.NativeUniversality.nativeMirror_eq
+#print axioms QLF.NativeUniversality.cnot_native
+#print axioms QLF.NativeUniversality.native_universal
+#print axioms QLF.AnthropicEquivalence.decode_recordWord
+#print axioms QLF.AnthropicEquivalence.anthropic_equivalence
+#print axioms QLF.AnthropicEquivalence.encodeModel_canFail_iff
+#print axioms QLF.AnthropicEquivalence.verdicts_transfer
+#print axioms QLF.AnthropicEquivalence.frequencies_transfer
+#print axioms QLF.AnthropicEquivalence.same_observations_equivalent
+#print axioms QLF.AnthropicEquivalence.conservation_equivalence
+#print axioms QLF.ClosureSelection.balanced_iff_charge_zero
+#print axioms QLF.ClosureSelection.mem_reachable
+#print axioms QLF.ClosureSelection.selection_closes_iff
+#print axioms QLF.ClosureSelection.closable_iff
+#print axioms QLF.ClosureSelection.reachable_card_le
+#print axioms QLF.ClosureSelection.subset_sum_embeds

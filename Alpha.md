@@ -2,7 +2,7 @@
 
 > **This is a result of the [Quantum Logical Framework (QLF)](README.md)** — read it in that context.
 > QLF derives physics from one substrate (the 8-twist phase-string alphabet, ZFA closure, synthesized
-> spacetime), machine-verified in Lean 4 across a [tree of more than a hundred modules](lean/README.md). α is not a
+> spacetime), machine-verified in Lean 4 across a [tree of hundreds of modules](lean/README.md). α is not a
 > standalone numerology here; it is a **consequence of QLF's derived 3-D rendering** of the closure
 > graph. And that 3-D is **the human/cosmic perspective**: the only dimension in which a relational
 > world renders faithfully and comprehensibly, supports stable atoms and chemistry (hence observers),

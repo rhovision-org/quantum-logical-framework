@@ -102,6 +102,24 @@ a scoped Born-assignment record and a **draft** falsification/test ledger.
 [`claim_records/README.md`](claim_records/README.md) states the promotion policy.
 No entry is a completed preregistration merely because its JSON validates.
 
+## Semantic dependency audit (required alongside the footprint)
+
+An axiom footprint shows which `axiom` declarations a theorem consumes. It cannot show a premise that
+enters as a **definition** or a **hypothesis**: `qlf_universality` has a clean footprint and is still
+bookkeeping, because its encoding makes every input ZFA ([Principles.md](Principles.md) P10). Under the
+one-conjecture framing ([Framing.md](Framing.md)) every anchor theorem used for a claim must also record,
+in its claim record or registry row:
+
+1. **The kinds it rests on:** the one conjecture (A01), which known facts (A10–A14), which structural
+   choices (Pauli frame, uniform measure), which bridges.
+2. **Definitions that carry the conclusion:** any `def` or hypothesis whose content is the result
+   (review protocol step 2 of [Proof_to_Physics.md](Proof_to_Physics.md)).
+3. **Whether the encoding could fail:** for a model-testing theorem, an input on which the encoded
+   predicate is false.
+
+This is a review requirement now; making it machine-checkable is obligation O6 of
+[Framing.md](Framing.md) §6.
+
 ## Limits of this gate
 
 - Exact axiom-footprint enforcement covers the explicit audit anchors, not
