@@ -203,4 +203,128 @@ theorem diracWalk_axis_exact {k E : ℝ} (hk0 : 0 ≤ k) (hk1 : k ≤ Real.pi) (
   apply walk_axis_exact hE0 hE1 hk0 hk1
   rw [hd]; ring
 
+/-! ## Group velocity in every direction
+
+The prediction concerns wave packets, so the group velocity `∇E` matters, not only the phase
+velocity `E/|k|`. For the massless walk `E = arccos (cos k₁ cos k₂ cos k₃)`; its partial derivatives
+are `sin kᵢ ∏_{j≠i} cos kⱼ / √(1 − P²)` with `P = ∏ cos kᵢ`. Writing `aᵢ = sin² kᵢ`, the squared
+speed is (weight of exactly one active axis) / (weight of at least one active axis), which is at most
+`1`. So the walk's group velocity never exceeds `c`, in every direction and at every in-band
+momentum where the dispersion is differentiable (`P ≠ ±1`). -/
+
+/-- The census inequality: one active axis weighs no more than at least one. -/
+theorem one_axis_le_some_axis (k₁ k₂ k₃ : ℝ) :
+    (Real.sin k₁ * Real.cos k₂ * Real.cos k₃) ^ 2 + (Real.cos k₁ * Real.sin k₂ * Real.cos k₃) ^ 2
+      + (Real.cos k₁ * Real.cos k₂ * Real.sin k₃) ^ 2
+      ≤ 1 - (Real.cos k₁ * Real.cos k₂ * Real.cos k₃) ^ 2 := by
+  have e1 := Real.sin_sq_add_cos_sq k₁
+  have e2 := Real.sin_sq_add_cos_sq k₂
+  have e3 := Real.sin_sq_add_cos_sq k₃
+  set a₁ := Real.sin k₁ ^ 2
+  set a₂ := Real.sin k₂ ^ 2
+  set a₃ := Real.sin k₃ ^ 2
+  set b₁ := Real.cos k₁ ^ 2
+  set b₂ := Real.cos k₂ ^ 2
+  set b₃ := Real.cos k₃ ^ 2
+  have h : 1 - (Real.cos k₁ * Real.cos k₂ * Real.cos k₃) ^ 2
+      - ((Real.sin k₁ * Real.cos k₂ * Real.cos k₃) ^ 2 + (Real.cos k₁ * Real.sin k₂ * Real.cos k₃) ^ 2
+        + (Real.cos k₁ * Real.cos k₂ * Real.sin k₃) ^ 2)
+      = a₁ * a₂ * b₃ + a₁ * b₂ * a₃ + b₁ * a₂ * a₃ + a₁ * a₂ * a₃ := by
+    have hb1 : b₁ = 1 - a₁ := by linarith
+    have hb2 : b₂ = 1 - a₂ := by linarith
+    have hb3 : b₃ = 1 - a₃ := by linarith
+    have : (Real.cos k₁ * Real.cos k₂ * Real.cos k₃) ^ 2 = b₁ * b₂ * b₃ := by ring
+    have h1 : (Real.sin k₁ * Real.cos k₂ * Real.cos k₃) ^ 2 = a₁ * b₂ * b₃ := by ring
+    have h2 : (Real.cos k₁ * Real.sin k₂ * Real.cos k₃) ^ 2 = b₁ * a₂ * b₃ := by ring
+    have h3 : (Real.cos k₁ * Real.cos k₂ * Real.sin k₃) ^ 2 = b₁ * b₂ * a₃ := by ring
+    rw [this, h1, h2, h3, hb1, hb2, hb3]; ring
+  have ha1 : 0 ≤ a₁ := sq_nonneg _
+  have ha2 : 0 ≤ a₂ := sq_nonneg _
+  have ha3 : 0 ≤ a₃ := sq_nonneg _
+  have hb1 : 0 ≤ b₁ := sq_nonneg _
+  have hb2 : 0 ≤ b₂ := sq_nonneg _
+  have hb3 : 0 ≤ b₃ := sq_nonneg _
+  have : 0 ≤ a₁ * a₂ * b₃ + a₁ * b₂ * a₃ + b₁ * a₂ * a₃ + a₁ * a₂ * a₃ := by positivity
+  linarith
+
+/-- The partial derivative of `arccos (cos x · c)` in `x`. -/
+theorem hasDerivAt_arccos_cos_mul (x c : ℝ) (h1 : Real.cos x * c ≠ -1) (h2 : Real.cos x * c ≠ 1) :
+    HasDerivAt (fun y => Real.arccos (Real.cos y * c))
+      (Real.sin x * c / Real.sqrt (1 - (Real.cos x * c) ^ 2)) x := by
+  have hin : HasDerivAt (fun y => Real.cos y * c) (-Real.sin x * c) x :=
+    (Real.hasDerivAt_cos x).mul_const c
+  have := (Real.hasDerivAt_arccos h1 h2).comp x hin
+  show HasDerivAt (Real.arccos ∘ fun y => Real.cos y * c) _ x
+  exact this.congr_deriv (by ring)
+
+/-- **The walk's group velocity never exceeds `c`.** At any momentum `(k₁, k₂, k₃)` where
+`P = cos k₁ cos k₂ cos k₃ ≠ ±1`, the massless walk's quasi-energy `E = arccos P` has partial
+derivatives `g₁, g₂, g₃` with `g₁² + g₂² + g₃² ≤ 1`. -/
+theorem walk_group_velocity_le_one (k₁ k₂ k₃ : ℝ)
+    (h1 : Real.cos k₁ * Real.cos k₂ * Real.cos k₃ ≠ -1)
+    (h2 : Real.cos k₁ * Real.cos k₂ * Real.cos k₃ ≠ 1) :
+    ∃ g₁ g₂ g₃ : ℝ,
+      HasDerivAt (fun x => Real.arccos (Real.cos x * Real.cos k₂ * Real.cos k₃)) g₁ k₁ ∧
+      HasDerivAt (fun y => Real.arccos (Real.cos k₁ * Real.cos y * Real.cos k₃)) g₂ k₂ ∧
+      HasDerivAt (fun z => Real.arccos (Real.cos k₁ * Real.cos k₂ * Real.cos z)) g₃ k₃ ∧
+      g₁ ^ 2 + g₂ ^ 2 + g₃ ^ 2 ≤ 1 := by
+  set P := Real.cos k₁ * Real.cos k₂ * Real.cos k₃ with hP
+  set D := Real.sqrt (1 - P ^ 2)
+  have hP2 : P ^ 2 < 1 := by
+    have hle : P ^ 2 ≤ 1 := by
+      have a := Real.cos_sq_le_one k₁
+      have b := Real.cos_sq_le_one k₂
+      have c := Real.cos_sq_le_one k₃
+      have : P ^ 2 = Real.cos k₁ ^ 2 * Real.cos k₂ ^ 2 * Real.cos k₃ ^ 2 := by rw [hP]; ring
+      rw [this]
+      have h0a : 0 ≤ Real.cos k₁ ^ 2 := sq_nonneg _
+      have h0b : 0 ≤ Real.cos k₂ ^ 2 := sq_nonneg _
+      have h0c : 0 ≤ Real.cos k₃ ^ 2 := sq_nonneg _
+      calc Real.cos k₁ ^ 2 * Real.cos k₂ ^ 2 * Real.cos k₃ ^ 2 ≤ 1 * 1 * 1 := by gcongr
+        _ = 1 := by norm_num
+    rcases lt_or_eq_of_le hle with h | h
+    · exact h
+    · exfalso
+      have : (P - 1) * (P + 1) = 0 := by nlinarith
+      rcases mul_eq_zero.mp this with h' | h'
+      · exact h2 (by linarith)
+      · exact h1 (by linarith)
+  have hD2 : D ^ 2 = 1 - P ^ 2 := Real.sq_sqrt (by linarith)
+  have hDpos : 0 < D ^ 2 := by rw [hD2]; linarith
+  -- the three partial derivatives
+  have d1 := hasDerivAt_arccos_cos_mul k₁ (Real.cos k₂ * Real.cos k₃)
+    (by rw [← mul_assoc]; exact h1) (by rw [← mul_assoc]; exact h2)
+  have d2 := hasDerivAt_arccos_cos_mul k₂ (Real.cos k₁ * Real.cos k₃)
+    (by rw [hP] at h1; intro h; apply h1; rw [← h]; ring)
+    (by rw [hP] at h2; intro h; apply h2; rw [← h]; ring)
+  have d3 := hasDerivAt_arccos_cos_mul k₃ (Real.cos k₁ * Real.cos k₂)
+    (by rw [hP] at h1; intro h; apply h1; rw [← h]; ring)
+    (by rw [hP] at h2; intro h; apply h2; rw [← h]; ring)
+  refine ⟨Real.sin k₁ * (Real.cos k₂ * Real.cos k₃) / D,
+    Real.sin k₂ * (Real.cos k₁ * Real.cos k₃) / D,
+    Real.sin k₃ * (Real.cos k₁ * Real.cos k₂) / D, ?_, ?_, ?_, ?_⟩
+  · have e : (fun x => Real.arccos (Real.cos x * Real.cos k₂ * Real.cos k₃))
+        = (fun y => Real.arccos (Real.cos y * (Real.cos k₂ * Real.cos k₃))) := by
+      funext x; rw [mul_assoc]
+    rw [e]
+    have : (Real.cos k₁ * (Real.cos k₂ * Real.cos k₃)) ^ 2 = P ^ 2 := by rw [hP]; ring
+    simpa [D, this] using d1
+  · have e : (fun y => Real.arccos (Real.cos k₁ * Real.cos y * Real.cos k₃))
+        = (fun y => Real.arccos (Real.cos y * (Real.cos k₁ * Real.cos k₃))) := by
+      funext y; congr 1; ring
+    rw [e]
+    have : (Real.cos k₂ * (Real.cos k₁ * Real.cos k₃)) ^ 2 = P ^ 2 := by rw [hP]; ring
+    simpa [D, this] using d2
+  · have e : (fun z => Real.arccos (Real.cos k₁ * Real.cos k₂ * Real.cos z))
+        = (fun z => Real.arccos (Real.cos z * (Real.cos k₁ * Real.cos k₂))) := by
+      funext z; congr 1; ring
+    rw [e]
+    have : (Real.cos k₃ * (Real.cos k₁ * Real.cos k₂)) ^ 2 = P ^ 2 := by rw [hP]; ring
+    simpa [D, this] using d3
+  · have key := one_axis_le_some_axis k₁ k₂ k₃
+    rw [← hP] at key
+    rw [div_pow, div_pow, div_pow, hD2, ← add_div, ← add_div,
+      div_le_one (by linarith)]
+    nlinarith [key]
+
 end QLF.WalkDispersionBound

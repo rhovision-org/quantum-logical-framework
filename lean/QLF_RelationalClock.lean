@@ -20,8 +20,8 @@ The first gate of the relational-capacity bridge (issues #296 and #11; see
 > exists: the factorization condition of issue #296 fails for the closure clock.
 >
 > **`shuffle_reconstructs`** — the record *plus* the interleaving (which perspective acts at each
-> step) reconstructs the history exactly, so it determines the clock. Whether anything smaller than
-> the interleaving suffices (RC1) is open.
+> step) reconstructs the history exactly, so it determines the clock. For commuting perspectives
+> the records suffice: see the RC1 section below (`relCapacity`).
 
 This strengthens `census_cannot_determine_first_passage` of
 [`QLF_ClosureDepthTime`](QLF_ClosureDepthTime.lean) (PR #329), where the multiset of events fails to
@@ -180,5 +180,81 @@ theorem reconcile_nested : reconcile nested = adjacent := by decide
 theorem reconcile_lowers_depth :
     maxExcursion (history nested) = 3 ∧ maxExcursion (history (reconcile nested)) = 1 := by
   rw [reconcile_nested]; exact ⟨nested_depth, adjacent_depth⟩
+
+/-! ## RC1: the relational capacity of independent perspectives
+
+`reconcile` keeps the records but need not minimise depth. With `A = + + − −` and `B = − − + +`, laying
+them end to end has depth `2`, while an interleaving of the same records has depth `1`
+(`reconcile_not_always_minimal`). The serialization-free quantity is the least depth over every
+interleaving the dependencies allow. For independent perspectives these are all shuffles of the
+records, so the capacity is a function of the records alone (`relCapacity`); for the example it is
+`1` (`relCapacity_example`). A dependency only removes interleavings, so every admitted one has depth
+at least the independent capacity (`dependency_increases_capacity`), and the dependency "A closes
+before B starts" raises it strictly, from `1` to `2` (`dependency_strict_increase`). That nature
+realises the minimum is a proposed reading, not a theorem. -/
+
+/-- All interleavings of two lists that keep each list's own order: the first element of `xs` goes
+after some prefix of `ys`, and the rest shuffle with the remaining suffix. -/
+def shuffles {α : Type} : List α → List α → List (List α)
+  | [], ys => [ys]
+  | x :: xs, ys =>
+    (List.range (ys.length + 1)).flatMap
+      (fun k => (shuffles xs (ys.drop k)).map (fun r => ys.take k ++ x :: r))
+
+/-- The least of a list of depths, starting from a ceiling `c`. -/
+def minOver (c : ℕ) (l : List ℕ) : ℕ := l.foldr min c
+
+theorem minOver_le (c : ℕ) : ∀ (l : List ℕ), ∀ y ∈ l, minOver c l ≤ y
+  | [], y, hy => by simp at hy
+  | x :: xs, y, hy => by
+    unfold minOver at *
+    simp only [List.foldr_cons]
+    rcases List.mem_cons.mp hy with h | h
+    · subst h; exact min_le_left _ _
+    · exact le_trans (min_le_right _ _) (minOver_le c xs y h)
+
+/-- The tagged words of two perspectives. -/
+def tagged (i : Fin 3) (w : TopoString) : List Tok := w.map (fun e => (i, e))
+
+def wordA : TopoString := [p, p, n, n]
+def wordB : TopoString := [n, n, p, p]
+
+/-- **Relational capacity** of two independent perspectives: the least closure depth over all
+interleavings of their records. -/
+def relCapacity (wa wb : TopoString) : ℕ :=
+  minOver (wa.length + wb.length)
+    ((shuffles (tagged 0 wa) (tagged 1 wb)).map (fun h => maxExcursion (history h)))
+
+def serialAB : List Tok := tagged 0 wordA ++ tagged 1 wordB
+def interleavedAB : List Tok := [(0, p), (1, n), (0, p), (1, n), (0, n), (1, p), (0, n), (1, p)]
+
+/-- **Reconciliation does not always minimise depth.** Same records, serial depth `2`,
+interleaved depth `1`. -/
+theorem reconcile_not_always_minimal :
+    reconcile interleavedAB = serialAB ∧
+    (∀ i : Fin 3, record serialAB i = record interleavedAB i) ∧
+    maxExcursion (history serialAB) = 2 ∧ maxExcursion (history interleavedAB) = 1 := by
+  decide
+
+theorem relCapacity_example : relCapacity wordA wordB = 1 := by decide +kernel
+
+/-- **Dependencies cannot lower the capacity.** Any interleaving a dependency admits is still an
+interleaving, so its depth is at least the independent capacity. -/
+theorem dependency_increases_capacity (wa wb : TopoString) (h : List Tok)
+    (hh : h ∈ shuffles (tagged 0 wa) (tagged 1 wb)) :
+    relCapacity wa wb ≤ maxExcursion (history h) :=
+  minOver_le _ _ _ (List.mem_map.mpr ⟨h, hh, rfl⟩)
+
+/-- **A dependency can raise it strictly.** If `A` must close before `B` starts, the only admitted
+interleaving is the serial one, depth `2`, against the independent capacity `1`. -/
+theorem dependency_strict_increase :
+    serialAB ∈ shuffles (tagged 0 wordA) (tagged 1 wordB) ∧
+    relCapacity wordA wordB < maxExcursion (history serialAB) := by
+  have hhead : (shuffles (tagged 0 wordA) (tagged 1 wordB)).head? = some serialAB := by
+    decide +kernel
+  refine ⟨List.mem_of_mem_head? hhead, ?_⟩
+  rw [relCapacity_example]
+  have : maxExcursion (history serialAB) = 2 := by decide
+  omega
 
 end QLF.RelationalClock

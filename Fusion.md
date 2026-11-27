@@ -99,7 +99,7 @@ join be **catalyzed** — driven without raising the temperature? It can, and th
 **established physics**: *muon-catalyzed fusion* (μCF). This is the **legitimate cold fusion** —
 fusion at room temperature — proposed by Frank and Sakharov and observed by Alvarez in 1956. It is
 *distinct* from the Fleischmann–Pons electrochemical "cold fusion" claim (1989), for which no
-reproducible net-energy result exists; see §3c for what QLF does and does not say about it. μCF is real, decades-proven, and
+reproducible net-energy result exists; see §3d for what QLF does and does not say about it. μCF is real, decades-proven, and
 QLF reproduces it — in **agreement with the Standard Model**.
 
 **The mechanism.** A μ⁻ (≈207× the electron mass) replaces the electron in a hydrogen molecule. The
@@ -186,18 +186,18 @@ optional. So the status of the candidate channels is fixed:
 | Bound neutron | stabilized closure | Pauli / Markov-blanket block (§3a insulation) — decay gated |
 | pp fusion (stellar) | **requires weak β⁺** | two identical proton blankets cannot join by the strong sector alone (§3a keystone) |
 | Muon-catalyzed fusion | **legitimate cold fusion** | rate enhanced (deeper-generation blanket, §3b); a D–T / D–D path with no weak step; for p-p the weak β⁺ step is *still required* |
-| Electrolytic D–D fusion in metals | **no QLF no-go; no QLF prediction** | deuterons already contain neutrons, so the p-p keystone does not apply (§3c). Enhanced beam-driven D–D rates in loaded metals are measured; reproducible net energy is not |
+| Electrolytic D–D fusion in metals | **no QLF no-go; no QLF prediction** | deuterons already contain neutrons, so the p-p keystone does not apply (§3d). Enhanced beam-driven D–D rates in loaded metals are measured; reproducible net energy is not |
 
 For **p-p**, catalysis accelerates tunneling but never removes the weak β⁺ keystone: no mechanism fuses
 two identical protons without the `u→d` conversion. That keystone says nothing about **D–D**, which is
 the Fleischmann–Pons claim: deuterons are already distinguishable `pn` closures, and D–D fusion needs no
 weak step. So QLF has no no-go against electrolytic D–D fusion. It has no positive prediction either;
-§3c records what is measured and what QLF would have to derive. **Honest scope:** the neutron
+§3d records what is measured and what QLF would have to derive. **Honest scope:** the neutron
 *resonant-enhancement* is the phenomenological decay-chain model ([`prime_cascade_decay.py`](prime_cascade_decay.py),
 couplings `Γ_p, S` open); the β⁺ *necessity* and the Pauli insulation are the Lean-anchored keystones
 (§3a); the ~880 s value and the muon economy are SM/experimental inputs, not QLF derivations.
 
-## 3c. Low-energy D–D fusion in metals: the 2025–2026 data and what QLF has not derived
+## 3d. Low-energy D–D fusion in metals: the 2025–2026 data and what QLF has not derived
 
 **Scope of the keystone.** The weak β⁺ keystone concerns two identical protons. The Fleischmann–Pons
 claim concerns deuterium, whose nuclei already contain neutrons, so the keystone does not apply, and the
@@ -228,6 +228,13 @@ these is evidence for QLF. They are the data a QLF fusion derivation would have 
 | CF5 | Recover the conventional selection rules and conservation laws |
 | CF6 | Branching ratios derived without the measured values |
 | CF7 | An environmental dependence beyond conventional screening, for example in `R(E, B) = σ_{e⁺e⁻}/(σ_n + σ_p)` at fixed energy across two metal environments that the conventional model treats as equivalent |
+
+**Inverse design (a research direction, not a result).** The question can be turned around: instead
+of explaining palladium after the fact, ask which chemical organization the closure requirements
+would select, and predict its nuclear response before measuring it. That needs the coupling between
+chemical-scale relationships and nuclear-scale closures, which nothing in QLF yet derives; #327 gives
+the vocabulary (proximity is not enough, `delay_colour_blind`; joint closures no pair can make,
+`irreducible_three_way_closure`; channels that cancel, `diverse_completions_cancel`), not the coupling.
 
 The CF7 observable is well posed and accessible to existing laboratories, which makes this a stronger
 experimental route than Planck-scale dispersion *if* CF2–CF6 can be derived. None is derived yet, so no

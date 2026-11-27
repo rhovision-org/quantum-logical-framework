@@ -315,6 +315,23 @@ physical law by association.
   nothing here relates phase to energy or mass.
 - **Depends on.** P01, P05. **Status.** Proved; *Internal*.
 
+### P25 · The closure clock is set by dependencies, not by serialization
+- **Statement.** Identical per-perspective records can hide different closure depths: three
+  perspectives each holding `+ −` close at depth 1 side by side and depth 3 nested (RC0). When
+  actions of different perspectives commute, swaps never change a record and carry nested to side by
+  side, so the depth-3 reading belongs to a serialization, not to the records. The
+  serialization-free quantity is the least depth over the interleavings the dependencies allow; for
+  independent perspectives it is a function of the records, and a dependency can only raise it.
+- **Anchors.** `rc0_record_does_not_determine_clock`, `record_swap`, `nested_commutes_to_adjacent`,
+  `reconcile_record`, `reconcile_not_always_minimal`, `relCapacity_example`,
+  `dependency_increases_capacity`, `dependency_strict_increase`
+  ([`QLF_RelationalClock`](lean/QLF_RelationalClock.lean);
+  [`Planck_Dispersion_Prediction.md`](Planck_Dispersion_Prediction.md) §5).
+- **Limits.** RC0 is proved for three perspectives and RC1 for two; the general partial-order
+  version is not formalised. That nature realises the minimum over admissible interleavings is a
+  proposed reading. No observable map (RC2–RC6).
+- **Depends on.** P01. **Status.** Proved within the stated cases; *Internal*.
+
 ---
 
 ## C. Candidate principles

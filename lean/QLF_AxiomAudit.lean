@@ -1220,6 +1220,12 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.RelationalClock.reconcile_record
 #print axioms QLF.RelationalClock.reconcile_nested
 #print axioms QLF.RelationalClock.reconcile_lowers_depth
+#print axioms QLF.WalkDispersionBound.one_axis_le_some_axis
+#print axioms QLF.WalkDispersionBound.walk_group_velocity_le_one
+#print axioms QLF.RelationalClock.reconcile_not_always_minimal
+#print axioms QLF.RelationalClock.relCapacity_example
+#print axioms QLF.RelationalClock.dependency_increases_capacity
+#print axioms QLF.RelationalClock.dependency_strict_increase
 /-! ## Neutrino and vacuum correlation gates N0, V0, V1, H1 (`QLF_VacuumCorrelation`) -/
 
 #print axioms QLF.VacuumCorrelation.fold_eq_nfFold

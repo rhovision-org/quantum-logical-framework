@@ -56,7 +56,9 @@ nulls that could fail.
 registers the Dirac walk's Planck-scale dispersion: exact light speed on the axes, subluminal off them
 (`F`, [`lean/QLF_WalkDispersionBound.lean`](lean/QLF_WalkDispersionBound.lean)), coefficient
 `v_group = 1 − (1 − Σn⁴)(E/E_P)²/4` (`N`), so `E_QG,2 = 3 E_P` on the body diagonal and no linear term.
-The step-equals-Planck-time map is `B`. Comparator: special relativity and the LHAASO/Fermi-LAT
+Group velocity never exceeds `c` in any direction (`walk_group_velocity_le_one`). Four bridges are
+`B`: step = Planck time, fermions follow the walk, a frame prescription, and the open photon law.
+Comparator: special relativity and the photon LHAASO/Fermi-LAT
 limits (`E_QG,2 > 6×10⁻⁸ E_P`); the prediction lies about `5×10⁷` beyond present reach, so it can
 falsify QLF now but not discriminate it from special relativity. Kill conditions are ledger entry
 `planck_dispersion` (`DRAFT`: the comparison data are already public).

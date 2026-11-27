@@ -2706,6 +2706,14 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.RelationalClock.dependency_increases_capacity": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.dependency_strict_increase": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.RelationalClock.different_clocks": [
     "propext"
   ],
@@ -2722,12 +2730,18 @@
   "QLF.RelationalClock.reconcile_nested": [
     "propext"
   ],
+  "QLF.RelationalClock.reconcile_not_always_minimal": [
+    "propext"
+  ],
   "QLF.RelationalClock.reconcile_record": [
     "Classical.choice",
     "Quot.sound",
     "propext"
   ],
   "QLF.RelationalClock.record_swap": [
+    "propext"
+  ],
+  "QLF.RelationalClock.relCapacity_example": [
     "propext"
   ],
   "QLF.RelationalClock.same_records": [
@@ -3639,6 +3653,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.WalkDispersionBound.one_axis_le_some_axis": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.WalkDispersionBound.walk_axis_exact": [
     "Classical.choice",
     "Quot.sound",
@@ -3655,6 +3674,11 @@
     "propext"
   ],
   "QLF.WalkDispersionBound.walk_face_subluminal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_group_velocity_le_one": [
     "Classical.choice",
     "Quot.sound",
     "propext"
