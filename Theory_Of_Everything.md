@@ -7,6 +7,8 @@
 says where each part of the picture lives and how the parts connect. It proves nothing on its own; every
 claim below points to the document or Lean module that carries it. The full visual map is the
 [flow chart](FlowChart.md) ([clickable version](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html)).
+The principles the map rests on (assumptions, proved structural laws, candidates and bridges, each
+with its anchors and status) are registered in [Principles.md](Principles.md).
 
 **Merged formal backbone (12 November 2026).** PR #225 adds the metric-singlet /
 lattice-Einstein representational result ([Einstein_Equations.md](Einstein_Equations.md) §6d–§6e);
