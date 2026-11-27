@@ -1,6 +1,6 @@
 # A registered prediction for issue #11: the walk's Planck-scale dispersion
 
-Part of the [Quantum Logical Framework (QLF)](README.md). Answers, in part, [issue #11](https://github.com/rhovision-org/quantum-logical-framework/issues/11)
+Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and opposite quantum logical action with zero free energy, the principle of QLF. This document answers, in part, [issue #11](https://github.com/rhovision-org/quantum-logical-framework/issues/11)
 ("the framework makes no testable predictions"), using the five-part standard: a machine-checked
 substrate theorem, an explicit observable map, a number, a conventional comparator, and a kill
 condition stated before the comparison.
@@ -19,7 +19,7 @@ by any experiment now running. That is the honest size of this answer to issue #
 
 ## 1. Why not the four suggested routes
 
-Four routes were proposed. Each was checked against the repository; each lacks one named link
+Five routes were proposed. Each was checked against the repository; each lacks one named link
 before it can give a number.
 
 | Route | What is proved | The missing link |
@@ -28,6 +28,7 @@ before it can give a number.
 | α running vs MUonE ([PR #332](https://github.com/rhovision-org/quantum-logical-framework/pull/332), [`Alpha_Residual.md`](Alpha_Residual.md)) | N0/V0/V1/H1; `w = ½` structural | The census mass carries no logarithm ([`alpha_residual_bridge.py`](alpha_residual_bridge.py)); QLF's running is the imported continuum running. MUonE measures the hadronic part, which needs a census-to-`Δα_had(q²)` map. None exists. V0 holds only for common-mode insertion |
 | Electron threshold | `H1` electron-class loops (#332) | No closure-to-mass map; the Koide phase is open ([`Lepton_Mass_Ratio_Protocol.md`](Lepton_Mass_Ratio_Protocol.md)) |
 | Holographic factorization for a strong-field observable ([issue #296](https://github.com/rhovision-org/quantum-logical-framework/issues/296)) | `phase_blind_record_fails`, the river-model horizon algebra ([`Falling_Into_Black_Holes.md`](Falling_Into_Black_Holes.md)), and now RC0 (§5) | The horizon theorems are standard GR algebra; no map from a finite-capacity boundary to a ringdown, echo or polarisation number exists |
+| Low-energy D–D fusion branching in metals ([`Fusion.md`](Fusion.md) §3c) | Nothing nuclear yet; the colour-closure results (#327) are substrate theorems | No closure census of the ⁴He, ³He and tritium channels (CF2–CF3), and no derivation that the environment changes their amplitudes (CF4). The observable `R(E,B)` is well posed and lab-accessible, so this is the strongest experimental route if those gates close |
 
 The dispersion route is the one where every link but the declared step size is already a theorem.
 
