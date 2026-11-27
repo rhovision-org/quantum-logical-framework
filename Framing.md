@@ -65,6 +65,17 @@ a bridge (§2): a result that uses one says so in its footprint, and is conditio
 A well-supported conjecture is allowed, labelled as a conjecture ("no proof, no bs"). What is not
 allowed is to use one as a postulate.
 
+**Postulates rest on what we know fundamentally, not on conjectures of emergence.** A known fact
+that QLF may take as input is a fact at the level of the substrate: what a measurement returns (a
+count), that two observables are incompatible, that a bounded region holds finite information. What
+emerges from closures may not be postulated: a continuum spacetime, a metric, fields, particles as
+given objects, the Born rule, or a classical limit. Each of those is a claim about what many closures
+add up to, so it has to be derived, and until it is, it is a bridge (Principles §D), never an input.
+The test for a candidate postulate: if it describes something QLF says is *synthesized*, it is a
+conjecture of emergence and it is out. Standard physics runs the other way, postulating the emergent
+layer (a manifold, a Hilbert space with a fixed tensor structure, a Lagrangian) and leaving the
+fundamental one unexplained; that is the inversion QLF is built to undo.
+
 ### The known facts QLF takes as inputs
 
 | ID | Known fact | Source | What it is used for |

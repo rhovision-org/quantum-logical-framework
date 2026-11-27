@@ -59,6 +59,12 @@ derivation may rest on. The framing, and what "QLF tests models" means formally,
 [`Framing.md`](Framing.md). A02–A09 keep their IDs (IDs are never reused); the *Kind* column records
 what each now is.
 
+**Postulates rest on what we know fundamentally, not on conjectures of emergence.** A known-fact input
+(A10–A13) must be a fact at the substrate level: what a measurement returns, which observables are
+incompatible, how much a region can hold. Anything that emerges from closures, such as a continuum
+spacetime, a metric, fields, the Born rule or a classical limit, must be derived; until it is, it is a
+bridge in section D, never an input ([`Framing.md`](Framing.md) §2).
+
 | ID | Principle | Kind | Status and anchors |
 |---|---|---|---|
 | **A01** | **ZFA selection.** A history becomes an event exactly when its signed action is zero on every axis: equal and opposite logical action, zero free energy. "Equal and opposite" already contains the signed distinctions (P01), and "becomes an event" already contains the first-closure reading (A07). | **The one well-supported conjecture** | A definition in Lean, not an `axiom` (`achieves_ZFA`, `full_zeno_prune`, [`QLF_Axioms`](lean/QLF_Axioms.lean); `countBalanced`), with models, so it adds nothing to the logic. Empirically uncontradicted so far; kill condition in [`ScientificApproach.md`](ScientificApproach.md) §1a. |
