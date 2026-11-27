@@ -190,6 +190,106 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.BlackHoleInfall.escape_possible_iff_radius": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.evaporated_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.fall_time_finite": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.freefall_proper_time": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.horizonOmega_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.horizonOmega_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_lt_position": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_strictMono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_tendsto_rs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.inside_all_inward": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.interiorStretch_half": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.interiorVolumeRate_sq_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.interiorVolumeRate_sq_max": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.kerr_two_horizons": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.last_half_eighth": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.own_horizon_below": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.static_exists_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.thrust_works": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.tidal_at_horizon_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BoostAmplitudes.beta_mul_chiral": [
     "Classical.choice",
     "Quot.sound",
@@ -2555,6 +2655,61 @@
     "propext"
   ],
   "QLF.Realizability.no_continuum_in_finite_region": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.arrivalTime_hasDerivAt": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.coordSpeed_at_light": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.earthDist_shipTime_to_reach": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.earthTime_at_light": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.earth_signal_reaches_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.emitTime_hasDerivAt": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.inertial_redshift_horizon": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.mutual_redshift": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.properVelocity_eq_one_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.redshift_limit_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.shipTime_to_reach_le": [
     "Classical.choice",
     "Quot.sound",
     "propext"
