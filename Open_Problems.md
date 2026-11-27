@@ -710,8 +710,8 @@ Ledger: [`claim_records/coincidence_slice.json`](claim_records/coincidence_slice
 
 **Cooperative closure (proved slice):** [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md) proves CC0 (consensus
 fallacy), CC3 (provenance conservation) and CC2/CC6 (irreducible synthesis, `n` participants) in
-[`QLF_CooperativeClosure`](lean/QLF_CooperativeClosure.lean), no axioms. Open: CC1 analogical
-listener (next), the semantic-to-ZFA bridge CC4, and CC5 (QLF free action vs Friston free energy, no
+[`QLF_CooperativeClosure`](lean/QLF_CooperativeClosure.lean), no axioms, and CC1 (the analogical listener) in
+[`QLF_AnalogicalListener`](lean/QLF_AnalogicalListener.lean), no axioms. Open: the semantic-to-ZFA bridge CC4, and CC5 (QLF free action vs Friston free energy, no
 identity claimed).
 
 ---

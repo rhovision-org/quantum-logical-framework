@@ -395,5 +395,6 @@ lean_lib QLF where
     `QLF_ColourClosure,
     `QLF_PerspectiveNetwork,
     `QLF_VacuumCorrelation,
-    `QLF_CooperativeClosure
+    `QLF_CooperativeClosure,
+    `QLF_AnalogicalListener
   ]
