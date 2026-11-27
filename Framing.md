@@ -115,7 +115,7 @@ a necessity proof:
 | Choice | Where it enters | Status |
 |---|---|---|
 | The signed distinctions are the signed axes of the Pauli frame | The alphabet ([ScientificApproach.md](ScientificApproach.md) §1c) | Open structural posit; given it, A11 fixes eight twists |
-| Generation is uniform over the alphabet | The cylinder measure `8^{−\|h\|}` (`twist_kraft`) | A stated choice; biased alphabets break stationarity ([Stationary_Action.md](Stationary_Action.md)) |
+| Generation is uniform over the alphabet | The cylinder measure `8^{−\|h\|}` (`twist_kraft`) | **Derived** from relabelling invariance and normalization (`uniform_forced`, [`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean)); the product form (independent steps) stays a choice |
 | The first closure is the event | A01's event semantics (A07) | Part of the conjecture, but auditable: the alternatives were tested and rejected ([ScientificApproach.md](ScientificApproach.md) §11) |
 | Cylinder measure = physical probability | Every frequency claim | Bridge B09 |
 | Logical free action = physical free energy | The `log 2` per closure, thermodynamic readings | Bridge (B08, B14) |
@@ -148,7 +148,7 @@ and the fourth must not be overstated as the first. What is proved toward the pr
 | Those rotations and their Hadamard conjugates are dense in SU(2) | Proved | `su2_dense` |
 | Dense single-qubit gates plus CNOT are universal | Proved, as matrix algebra | [`QLF_Barenco`](lean/QLF_Barenco.lean) ([Barenco_Universality.md](Barenco_Universality.md)) |
 | A joint closure carries the controlled-Z sign table | Proved | `joint_closure_is_cz`, `cz_entangling` |
-| That sign table acts as a gate on superposed presence states | **Open** | [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) §7 |
+| That sign table acts as a gate on superposed presence states | Proved, with native Hadamard and phase on the same qubit | [`QLF_NativeBell`](lean/QLF_NativeBell.lean) (below) |
 
 **The obstacle is a common qubit.** The Hadamard acts on the spinor space that folds live in; the
 controlled-Z signs act on the presence or absence of a closed pair. They do not yet act on the same
@@ -163,8 +163,32 @@ the encoding. The decisive test is the Bell state: take `|00⟩` to `(|00⟩ + |
 operations only, and check its relative phase and correlations without assuming the circuit semantics
 under test.
 
-So QLF is a **classical universal computer in the substrate, proved**, and a **universal programmable
-quantum computer up to O1**. O1 is a proof obligation inside the consequences of ZFA, not a second
+**Done: one qubit, three native gates, the Bell state** ([`QLF_NativeBell`](lean/QLF_NativeBell.lean),
+no axioms). The qubit is the presence of a closed pair on a strand, and a state is a census sum of
+alternate configurations. The one sign used is read off the folds (`jointSign_eq`: interleaved over
+separated is `(−1)^{ab}`), not defined.
+
+- *Native controlled-Z*: close the two strands jointly; it is `CZ` (`nativeCZ_eq_cz`).
+- *Native Hadamard*: branch a strand into both alternatives, each weighted by its joint sign with the
+  old strand; it is `√2·H` on that strand (`nativeHA_eq`, `nativeHB_eq`).
+- *Native phase*: weight a present strand by three alternate histories over their mirror; it is
+  `diag(1, z)` with `z = (3+4i)/5` (`censusRatio_eq_z`, `nativePA_eq`), of infinite order, so not
+  Clifford (`nativePhase_infinite_order`), and its even powers are the rotations used by `su2_dense`
+  up to a global phase (`phaseZ_even_power`).
+- *The Bell state*: `H_B · CZ · H_B · H_A` takes `|00⟩` to `2(|00⟩ + |11⟩)` (`native_bell`), the same
+  vector the standard circuit gives (`native_bell_matches_circuit`), entangled
+  (`native_bell_not_product`) and perfectly correlated in a second basis (`native_bell_x_correlated`).
+
+The branching and phase rules are the encoding choices, and they are stated as such; the signs and the
+gate semantics are not imported, since they are read off folds and checked against the standard
+matrices. **What remains of O1:** composing these into a formal density theorem for the native gate set
+on one presence qubit (`su2_dense` uses integer powers of `z`; the native phase supplies the
+non-positive half) and running Barenco's routing over `n` presence strands. Both are assembly of proved
+pieces, not new mathematics, but they are not yet written.
+
+So QLF is a **classical universal computer in the substrate, proved**, and has **native universal gate
+ingredients on one presence qubit, proved**, with the assembly into universal programmable quantum
+computation open (rest of O1). O1 is a proof obligation inside the consequences of ZFA, not a second
 conjecture. Being a quantum computer gives no NP oracle
 ([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) §4).
 
@@ -271,7 +295,7 @@ In the table below, *refuted* means **impossible** and *realizable* means **poss
 | A computable predictor of every program's halting | **Refuted** (Turing's halting theorem) | `no_computable_superdeterministic_theory` ([`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)) |
 | Boolean circuits | **Realizable**, with the substrate's own gates | `fredkin_complete` |
 | Logics without weakening | **Realizable and separated**: their models contain time loops; QLF's histories satisfy weakening and have none | `loopWorld_has_time_loop`, `histories_are_a_model` ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)) |
-| Universal quantum computation in the substrate | **Undetermined** (O1, §3) | |
+| Universal quantum computation in the substrate | **Undetermined** (rest of O1, §3); the Bell state by native operations is **possible** | `native_bell`, `native_bell_not_product` ([`QLF_NativeBell`](lean/QLF_NativeBell.lean)) |
 
 The tester also refutes QLF's own candidates, and those results stay on the record: the contact-order
 prediction of folding rates ([Protein_Folding.md](Protein_Folding.md) §5e), an every-epoch
@@ -318,16 +342,16 @@ programme (O4, §6), not a result.
 ## 6. Registered obligations
 
 The framing creates proof obligations as well as wording. Each is registered here and in
-[Principles.md](Principles.md) §C; none is claimed proved.
+[Principles.md](Principles.md) §C, with what is done so far.
 
-| ID | Obligation | Principles |
-|---|---|---|
-| O1 | **Native gates on a common qubit.** One encoding `E` and native `T_U` with `T_U(E ψ) ~ E(Uψ)` for Hadamard, the weighted rotation and controlled-Z; decisive test: the Bell state by native operations (§3) | C26 |
-| O2 | **The anthropic equivalence theorem.** `Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`, with `ObsEquiv` extended to `N` bodies and the entangled sector (§3a) | C27 |
-| O3 | **A generic, non-circular model-encoding interface.** A typed interface for "encode a model as closures" whose instances must be able to fail, returning one of the five verdicts (§4) | C28 |
-| O4 | **Closure-oriented programming.** Which problems can be posed as closure obligations, and at what cost (§4a) | C29 |
-| O5 | **Necessity proofs for the structural choices** of §2, or their retention as named choices | P01, B08, B09 |
-| O6 | **Machine-checkable consistency** between this page, [Principles.md](Principles.md), [Claim_Status.md](Claim_Status.md) and the axiom footprints, extending [`scripts/axiom_audit.sh`](scripts/axiom_audit.sh) beyond axiom names to semantic dependencies | — |
+| ID | Obligation | Principles | Done so far |
+|---|---|---|---|
+| O1 | **Native gates on a common qubit.** One encoding `E` and native `T_U` with `T_U(E ψ) ~ E(Uψ)` for Hadamard, the weighted rotation and controlled-Z; decisive test: the Bell state by native operations (§3) | C26 | **Bell state by native operations, proved**; native H, CZ and non-Clifford phase on one presence qubit ([`QLF_NativeBell`](lean/QLF_NativeBell.lean)). Open: the density and routing assembly |
+| O2 | **The anthropic equivalence theorem.** `Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`, with `ObsEquiv` extended to `N` bodies and the entangled sector (§3a) | C27 | Equivalent models get the same verdict on every observable proposition (`equivalent_same_verdicts`, [`QLF_ModelTesting`](lean/QLF_ModelTesting.lean)); `ObsEquiv` for two bodies. Open: the correctness-to-equivalence theorem |
+| O3 | **A generic, non-circular model-encoding interface.** A typed interface for "encode a model as closures" whose instances must be able to fail, returning one of the five verdicts (§4) | C28 | **Proved**: `Encoding`, `Necessary`/`Possible`/`Impossible`/`Equivalent`, `CanFail`; an encoding that cannot fail makes every verdict vacuous (`vacuous_of_cannot_fail`), and the `qlf_universality` pattern cannot fail (`pairEncoding_cannot_fail`) ([`QLF_ModelTesting`](lean/QLF_ModelTesting.lean)) |
+| O4 | **Closure-oriented programming.** Which problems can be posed as closure obligations, and at what cost (§4a) | C29 | Computed by closure so far: imbalance completion (`closing_cost_exact`), AND in the joint sign (`jointSign_eq`), every Boolean function (`fredkin_complete`). Open: a constraint class with a closure encoding of proved cost |
+| O5 | **Necessity proofs for the structural choices** of §2, or their retention as named choices | P01, B08, B09 | **Uniform measure derived**: relabelling invariance plus normalization force `1/8` per step and `8^{−L}` per history (`uniform_forced`, `word_weight_uniform`, [`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean)); the product form stays a choice. Pauli frame: open |
+| O6 | **Machine-checkable consistency** between this page, [Principles.md](Principles.md), [Claim_Status.md](Claim_Status.md) and the axiom footprints, extending [`scripts/axiom_audit.sh`](scripts/axiom_audit.sh) beyond axiom names to semantic dependencies | — | [`scripts/framing_consistency.py`](scripts/framing_consistency.py): cited Lean names exist, registry IDs exist, verdict tokens valid, retired phrasings absent. Open: semantic dependencies themselves |
 
 Related: [Principles.md](Principles.md) · [ScientificApproach.md](ScientificApproach.md) ·
 [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) ·

@@ -83,7 +83,10 @@ canonical status list; when an item moves, update it here and in its owning doc.
 
 **The one-conjecture framing (2026-11-27, [`Framing.md`](Framing.md) §6) adds the obligations that
 enable general model testing, in this order:** O1 native gates on a common qubit, with the Bell state by
-native operations as the decisive test (Principles C26); O3 a typed, non-circular model-encoding
+native operations as the decisive test (Principles C26; the Bell state, native H, CZ and a non-Clifford
+phase are proved in [`QLF_NativeBell`](lean/QLF_NativeBell.lean), the density and routing assembly is
+next); O3 is proved as an interface ([`QLF_ModelTesting`](lean/QLF_ModelTesting.lean)) and O5's
+uniform measure is derived ([`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean)); then O3 a typed, non-circular model-encoding
 interface returning the five verdicts (C28); O2 the anthropic equivalence theorem
 `Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`, extending `ObsEquiv` to `N` bodies and the entangled sector
 (C27); O4 computing by closure (C29); O5 necessity proofs for the structural choices; O6

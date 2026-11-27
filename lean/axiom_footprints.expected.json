@@ -2189,6 +2189,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ModelTesting.equivalent_same_verdicts": [],
+  "QLF.ModelTesting.identity_can_fail": [],
+  "QLF.ModelTesting.pairEncoding_cannot_fail": [
+    "propext"
+  ],
+  "QLF.ModelTesting.possible_iff_not_impossible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ModelTesting.vacuous_of_cannot_fail": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.MondScale.a0_eq_c_times_cyclic_rate": [
     "Classical.choice",
     "Quot.sound",
@@ -2240,6 +2255,66 @@
     "propext"
   ],
   "QLF.MrEUpdate.unrestricted_objective_fails": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.censusRatio_eq_z": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.jointSign_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativeCZ_eq_cz": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativeHA_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativeHB_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativePA_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativePhase_infinite_order": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.native_bell": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.native_bell_matches_circuit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.native_bell_not_product": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.native_bell_x_correlated": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.phaseZ_even_power": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -3562,6 +3637,21 @@
     "propext"
   ],
   "QLF.TwoLevelUnitary.unitary_mem_closure_twoLevel": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.UniformMeasure.symm_of_perm_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.UniformMeasure.uniform_forced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.UniformMeasure.word_weight_uniform": [
     "Classical.choice",
     "Quot.sound",
     "propext"

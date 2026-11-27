@@ -147,6 +147,9 @@ import QLF_PerspectiveLocality
 import QLF_ControlledUnitary
 import QLF_TwoLevelUnitary
 import QLF_Barenco
+import QLF_NativeBell
+import QLF_ModelTesting
+import QLF_UniformMeasure
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -1242,3 +1245,25 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.VacuumCorrelation.gauge_pair_never_negI
 #print axioms QLF.VacuumCorrelation.electron_class
 #print axioms QLF.VacuumCorrelation.electron_in_class
+
+-- Native Bell state on one presence qubit and the model-testing interface (Framing.md O1, O3)
+#print axioms QLF.NativeBell.jointSign_eq
+#print axioms QLF.NativeBell.native_bell
+#print axioms QLF.NativeBell.native_bell_not_product
+#print axioms QLF.NativeBell.native_bell_x_correlated
+#print axioms QLF.NativeBell.nativeCZ_eq_cz
+#print axioms QLF.NativeBell.nativeHA_eq
+#print axioms QLF.NativeBell.nativeHB_eq
+#print axioms QLF.NativeBell.native_bell_matches_circuit
+#print axioms QLF.NativeBell.censusRatio_eq_z
+#print axioms QLF.NativeBell.nativePA_eq
+#print axioms QLF.NativeBell.nativePhase_infinite_order
+#print axioms QLF.NativeBell.phaseZ_even_power
+#print axioms QLF.ModelTesting.possible_iff_not_impossible
+#print axioms QLF.ModelTesting.vacuous_of_cannot_fail
+#print axioms QLF.ModelTesting.pairEncoding_cannot_fail
+#print axioms QLF.ModelTesting.identity_can_fail
+#print axioms QLF.UniformMeasure.uniform_forced
+#print axioms QLF.UniformMeasure.symm_of_perm_invariant
+#print axioms QLF.UniformMeasure.word_weight_uniform
+#print axioms QLF.ModelTesting.equivalent_same_verdicts

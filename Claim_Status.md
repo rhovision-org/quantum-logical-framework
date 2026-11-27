@@ -88,7 +88,8 @@ stated conditions. Certificate fields are in [Proof_to_Physics.md](Proof_to_Phys
 | Computable predictor of all halting | `IMPOSSIBLE` | Turing's halting theorem | Pure theorem |
 | Boolean circuits | `POSSIBLE` | Any finite function | Substrate only |
 | Logics without weakening | `POSSIBLE`, separated | Kripke models | Substrate only |
-| Universal programmable quantum computation | `UNDETERMINED` | Common-qubit native gates (O1) | — |
+| Native Bell state on one presence qubit | `POSSIBLE` | Native CZ, Hadamard, phase (`native_bell`, `QLF_NativeBell`) | Substrate only |
+| Universal programmable quantum computation | `UNDETERMINED` | Density and routing assembly (rest of O1) | — |
 | Anthropic observational equivalence | `EQUIVALENT` for two bodies; general case `UNDETERMINED` | `ObsEquiv` domain (O2) | — |
 
 ## Pre-registered protocols (not claims)

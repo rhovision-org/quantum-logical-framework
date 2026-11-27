@@ -14,7 +14,7 @@ Jim Whitescarver (2026-11-25): *"the QLF universe is the quantum computer. We do
 |---|---|
 | Natural quantum computation: events synthesized by closure | The thesis; what the one conjecture says |
 | Classical programmable computation | Proved in the substrate (`fredkin_complete`, §2.1) |
-| Universal programmable quantum computation | The algebra is proved (`su2_dense`, Barenco); native gates on a **common qubit** are open (obligation O1, §7) |
+| Universal programmable quantum computation | The algebra is proved (`su2_dense`, Barenco); native H, CZ and a non-Clifford phase on one **presence qubit**, and the Bell state from them, are proved ([`QLF_NativeBell`](lean/QLF_NativeBell.lean)); the density and routing assembly is open (rest of O1, §7) |
 | Classical simulation of quantum computation | QuCalc, RhoQuCalc, QuantumOS; cost depends on the history space, no efficiency claim |
 
 The open gate does not weaken the thesis: investigating reality as a quantum logical system does not need the substrate to be programmable for arbitrary circuits. The theorems below say what the thesis entails: **how the substrate computes, where its quantum power comes from, and how it solves problems** (§5). Five headline results answer those questions; later sections add more.
@@ -315,7 +315,7 @@ So in simulation, shared memes are the selections that closed first.
 
 ## 7. Open
 
-- **Native gates on a common qubit (O1, [Framing.md](Framing.md) §3, Principles C26).** The Hadamard acts on the spinor space, controlled-Z on presence; the target is one encoding `E` and native `T_U` with `T_U(E ψ) ~ E(Uψ)` under `ObsEquiv`, and the decisive test is the Bell state `(|00⟩ + |11⟩)/√2` by native operations, with its phase and correlations checked without assuming circuit semantics.
+- **Native gates on a common qubit (O1, [Framing.md](Framing.md) §3, Principles C26). Mostly done.** [`QLF_NativeBell`](lean/QLF_NativeBell.lean) puts all three gates on the presence qubit: CZ by joint closure, Hadamard by branching into both alternatives weighted by the joint sign, and `diag(1, z)` by weighting a present strand with three alternatives over their mirror. The Bell state follows by native operations (`native_bell`), matches the standard circuit, is entangled and is correlated in two bases. This closes the "superposed presence" item for these gates. Still open: the formal density theorem for the native set and routing over `n` strands.
 - **Superposed presence.** §3a shows that a superposition is a census sum of alternate histories. Still open is the specific superposition of a present and an absent pair as one, which needs the presence encoding of §3 stated on census sums rather than on matrices.
 - **Barenco on the substrate.** Density in SU(2) (§3, `su2_dense`) and Barenco universality ([`QLF_Barenco`](lean/QLF_Barenco.lean)) are proved for the matrix algebra. Open is the substrate performing those gates, which first needs the entangling gate acting on superposed presence.
 - **Quasicrystal growth as a closure census.** Test whether forced-tile growth (Onoda et al. 1988) is the first-closure rule on the octagonal projection, with the defect rate as the prediction.
