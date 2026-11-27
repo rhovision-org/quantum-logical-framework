@@ -199,9 +199,17 @@ The same perspective view answers the escape question, in four parts.
    *outside* `rs` (`outward_horizon_gt_rs`): the harder you climb, the more of the hole falls behind
    your own horizon. That is the rocket of [`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md),
    which escapes Earth by letting Earth fall behind its horizon.
-2. **Inside `rs`: thrust cannot do it.** Where the river is faster than light every timelike path
-   moves inward, whatever the engine (`inside_all_inward`). This is standard GR and QLF does not
-   change it.
+2. **Inside `rs`: thrust still works.** Locally nothing is different: at every radius, inside
+   the horizon included, every velocity below `c` relative to the surrounding space is available
+   (`thrust_works`). And every observer, thrusting or not, inside or outside, has their own horizon
+   strictly below them (`own_horizon_below`). So wherever you are, you are in ordinary space with
+   your horizon ahead of you; there is nowhere else to be. What thrust does not do inside is
+   increase the radius `r` (`inside_all_inward`, standard GR): `r` is the label of the static
+   outside observers, and inside you are past *their* limit, not yours. The rocket shows the same
+   thing from the other side: Earth is behind the ship's horizon
+   ([`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md) §4), and everything on Earth, rockets
+   included, works as usual. "Inside" is a relation between two perspectives, not a place where
+   physics stops.
 3. **But the hole does not keep you.** Every hole evaporates in finite time, `t ∝ M³`
    (`lifetime_strictMono`, §3a), and in QLF a horizon is a Markov blanket whose Hawking unwind
    returns the closure's information to the outside ([`BLACK-HOLES.md`](BLACK-HOLES.md) §3, §3a).
@@ -254,7 +262,8 @@ far side fades out in finite time. Worked out in
 | Kerr dragging at the outer horizon is slow for large holes and not felt in free fall | **proved** (`Ω_H ≤ 1/(2M)`, `∝ 1/M`); "not felt" is the geodesic property |
 | No singularity, so the infaller's horizon is never reached | **conjecture** (QLF bounded density) |
 | Kerr mass inflation saturates at the Planck scale | **conjecture** |
-| Outward paths exist exactly outside `rs`; inside, every path moves inward | **proved** (standard GR) |
+| Thrust works at every radius; everyone's own horizon is strictly below them | **proved** (`thrust_works`, `own_horizon_below`) |
+| The static radius `r` can increase only outside `rs` | **proved** (standard GR) |
 | Primordial holes lighter than about 5×10¹¹ kg are gone | **standard physics**, `M³` law proved |
 | Small holes became matter; none of any small size remain | **QLF reading**, supported by `QLF_QuantumBlackHole` and `QLF_PlanckScale`; open for asteroid-mass holes |
 

@@ -1141,3 +1141,5 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.RelativisticRocket.redshift_limit_iff
 #print axioms QLF.BlackHoleInfall.escape_possible_iff_radius
 #print axioms QLF.BlackHoleInfall.inside_all_inward
+#print axioms QLF.BlackHoleInfall.thrust_works
+#print axioms QLF.BlackHoleInfall.own_horizon_below

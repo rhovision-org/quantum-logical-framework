@@ -255,7 +255,17 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.BlackHoleInfall.own_horizon_below": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BlackHoleInfall.static_exists_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.thrust_works": [
     "Classical.choice",
     "Quot.sound",
     "propext"

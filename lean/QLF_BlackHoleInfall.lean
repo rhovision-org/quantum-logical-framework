@@ -45,8 +45,11 @@ river coordinates, not the global event horizon, and GR still says the infaller 
 `rs` in finite proper time (`fall_time_hasDerivAt`, `fall_time_finite`), where far observers see them
 slow to a stop (`farVelocity_at_horizon`).
 
-**Escaping** (`escape_possible_iff_radius`, `inside_all_inward`): an outward timelike path exists
-exactly where `rs < r`; inside, every timelike path moves inward whatever the thrust.
+**Thrust and escape.** Thrust works at every radius: every local velocity below `c` relative to the
+river is available (`thrust_works`), and every timelike observer, thrusting or not, inside or outside,
+has their own perspective horizon strictly below them (`own_horizon_below`). What thrust cannot change
+inside is the static perspective's radius: an outward path in `r` exists exactly where `rs < r`
+(`escape_possible_iff_radius`, `inside_all_inward`).
 
 ## 3. "Large enough": the horizon is locally invisible
 
@@ -299,6 +302,33 @@ theorem escape_possible_iff {v : ℝ} (hv : 0 ≤ v) : (∃ u, 0 < u ∧ pgInter
 theorem inside_all_inward {v u : ℝ} (hv : 1 < v) (h : pgInterval v u < 0) : u < 0 := by
   unfold pgInterval at h
   nlinarith
+
+/-- **Thrust works everywhere**: at every radius, inside the horizon included, every local velocity
+    `w` with `|w| < 1` relative to the river is a timelike motion. -/
+theorem thrust_works (v : ℝ) {w : ℝ} (hw : |w| < 1) : pgInterval v (w - v) < 0 := by
+  unfold pgInterval
+  have : w ^ 2 < 1 := by
+    have := sq_abs w ▸ (pow_lt_one₀ (abs_nonneg w) hw two_ne_zero); simpa using this
+  nlinarith
+
+/-- **Nobody ever reaches their own horizon**: every timelike observer at `r`, thrusting or not,
+    inside `rs` or outside, has their perspective horizon strictly below them. -/
+theorem own_horizon_below {rs r u : ℝ} (hrs : 0 < rs) (hr : 0 < r)
+    (htl : pgInterval (river rs r) u < 0) : perspectiveHorizon rs u < r := by
+  unfold pgInterval at htl
+  have hv := river_pos hrs hr
+  have h1 : u + river rs r < 1 := by nlinarith
+  have hu : u < 1 := by linarith
+  have hph := perspectiveHorizon_pos hrs hu
+  by_contra hle'
+  have hle := not_lt.mp hle'
+  rcases hle.lt_or_eq with hlt | heq
+  · have := river_strictAnti hrs hr hlt
+    rw [river_perspectiveHorizon hrs hu] at this
+    linarith
+  · have := river_perspectiveHorizon hrs hu
+    rw [← heq] at this
+    linarith
 
 /-- In terms of radius: some outward path exists at `r` iff `rs < r`. -/
 theorem escape_possible_iff_radius {rs r : ℝ} (hrs : 0 ≤ rs) (hr : 0 < r) :
