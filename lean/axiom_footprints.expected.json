@@ -190,6 +190,71 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.BlackHoleInfall.evaporated_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.fall_time_finite": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.freefall_proper_time": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.horizonOmega_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.horizonOmega_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_lt_position": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_strictMono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_tendsto_rs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.kerr_two_horizons": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.last_half_eighth": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.static_exists_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.tidal_at_horizon_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BoostAmplitudes.beta_mul_chiral": [
     "Classical.choice",
     "Quot.sound",
