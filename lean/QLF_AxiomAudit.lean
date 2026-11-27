@@ -192,6 +192,7 @@ import QLF_ClosureDepthTime
 import QLF_WalkDispersionBound
 import QLF_RelationalClock
 import QLF_VacuumCorrelation
+import QLF_CooperativeClosure
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1253,6 +1254,26 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.VacuumCorrelation.gauge_pair_never_negI
 #print axioms QLF.VacuumCorrelation.electron_class
 #print axioms QLF.VacuumCorrelation.electron_in_class
+
+-- Cooperative closure gates CC0, CC3, CC2/CC6: no QLF axiom.
+#print axioms QLF.CooperativeClosure.consensus_fallacy
+#print axioms QLF.CooperativeClosure.unobserved_consensus_world_free
+#print axioms QLF.CooperativeClosure.observed_consensus_sound
+#print axioms QLF.CooperativeClosure.support_replicate_le
+#print axioms QLF.CooperativeClosure.copy_adds_no_support
+#print axioms QLF.CooperativeClosure.separate_not_independent
+#print axioms QLF.CooperativeClosure.parity_resolves_iff
+#print axioms QLF.CooperativeClosure.parity_coalition_blind
+#print axioms QLF.CooperativeClosure.parity_irreducible
+#print axioms QLF.CooperativeClosure.xor_synthesis
+#print axioms QLF.CooperativeClosure.dictator_not_irreducible
+#print axioms QLF.CooperativeClosure.coalitionResolves_iff
+#print axioms QLF.CooperativeClosure.echo_chamber_blind
+#print axioms QLF.CooperativeClosure.irrelevant_member
+#print axioms QLF.CooperativeClosure.missing_variable
+#print axioms QLF.CooperativeClosure.star_closes
+#print axioms QLF.CooperativeClosure.star_irreducible
+#print axioms QLF.CooperativeClosure.star_one_is_primordial
 
 -- Native Bell state on one presence qubit and the model-testing interface (Framing.md O1, O3)
 #print axioms QLF.NativeBell.jointSign_eq

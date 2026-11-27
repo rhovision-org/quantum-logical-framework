@@ -1178,6 +1178,83 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.CooperativeClosure.coalitionResolves_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.consensus_fallacy": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.copy_adds_no_support": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.dictator_not_irreducible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.echo_chamber_blind": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.irrelevant_member": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.missing_variable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.observed_consensus_sound": [
+    "propext"
+  ],
+  "QLF.CooperativeClosure.parity_coalition_blind": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.parity_irreducible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.parity_resolves_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.separate_not_independent": [],
+  "QLF.CooperativeClosure.star_closes": [
+    "propext"
+  ],
+  "QLF.CooperativeClosure.star_irreducible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.star_one_is_primordial": [
+    "propext"
+  ],
+  "QLF.CooperativeClosure.support_replicate_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.unobserved_consensus_world_free": [
+    "propext"
+  ],
+  "QLF.CooperativeClosure.xor_synthesis": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.CoupledEvolution.evolve_covariant": [
     "Classical.choice",
     "Quot.sound",
