@@ -114,8 +114,8 @@ on it.
 
 There is no single history threading the possibility space, no preferred route, no chosen path. Every
 ZFA-closing way is taken. What we call a rate, a frequency, an amplitude, a preference — each is a
-*count of ways*, and the outcome we observe first and most is simply the one realized in the most
-ways. This is the reading enforced in [`Spacetime_Constructor.md`](Spacetime_Constructor.md): the
+*count of ways*, and the outcome we observe most often is the one realized in the most ways. Which
+outcome comes *first* is a different question, settled by the order of closing (below). This is the reading enforced in [`Spacetime_Constructor.md`](Spacetime_Constructor.md): the
 census multiplicity is the frequency, read out as space, time, and colour — never a cause.
 
 **Why priority is not multiplicity (2026-10-17, [`MostWays_First.md`](MostWays_First.md)).** Closure is
@@ -144,7 +144,9 @@ as one.
    finite capacity hears everything ([`Law_Of_Exceptions.md`](Law_Of_Exceptions.md)). Both are recorded
    in [`data/census_inventory.json`](data/census_inventory.json); saying which one a number is prevents
    the commonest confusion in this program.
-3. **Report the mode, not the mean.** What happens *first* is the argmax of multiplicity. A mean over
+3. **Report the mode, not the mean, for frequency; report the first closure for priority.** What
+   happens *most often* is the argmax of multiplicity; what happens *first* is the first closure, and
+   the two differ (`depth_one_not_modal`). A mean over
    ways is an average of things that all happen — it need not be a way at all, and it is not what
    dominates. Where a distribution over ways exists, the modal way is the physical statement and the
    mean is a summary.
@@ -172,10 +174,11 @@ multiplicity; a hypothetical rigid, non-composable structure would carry one. An
 is **unique** (every ZFA closure is one ordered sequence of irreducible closures — the free monoid,
 `census_irreducible_resummation`, `G = 1/(1−I)`), so *every* closure is compositionally organized and the
 self-similar organization has multiplicity equal to the entire census. Since frequency is multiplicity,
-it therefore dominates what happens. This is why the recurrences across the repo — the `2π` loop phase,
+it therefore dominates how often things happen. This is why the recurrences across the repo — the `2π` loop phase,
 the `log 2` quantum, the `H↔H†` Millennium involution, the icosa-blanket at every scale, closures within
 closures — are the *expected* output rather than coincidences: scale-invariant multiplicity is what
-maximises the count of ways, and the argmax of multiplicity is what is real.
+maximises the count of ways, and the argmax of multiplicity is what happens most often. (Every way is
+real as possibility; multiplicity ranks frequency, not reality.)
 
 *Concretely* ([`self_similar_closures.py`](self_similar_closures.py)): the **Thue-Morse closure**
 `+--+-++-` (the substitution `σ(+) = +−`, `σ(−) = −+`, iterated) is a ZFA closure at every truncation
@@ -229,9 +232,9 @@ The kill condition is sharp: exhibit any *other* exceptionless law and the Law o
 
 **Why laws look exceptionless anyway.** Because exceptions are the **least-multiplicity** histories.
 The maximal depth holds only the nested singlet and its mirror — exactly two ways, against `C(2n,n)` in
-all ([`QLF_ClosureMultiplicity`](lean/QLF_ClosureMultiplicity.lean), `W_self`). By §3a, the most ways
-happen first — so the exception happens *last*, and a law can be nearly always right while still failing at every
-scale. A capacity-1 law admits a vanishing fraction of the census as histories lengthen (measured
+all ([`QLF_ClosureMultiplicity`](lean/QLF_ClosureMultiplicity.lean), `W_self`). By §3a, what has the most
+ways happens most often, so the exception is the rarest outcome, and a law can be nearly always right while
+still failing at every scale. A capacity-1 law admits a vanishing fraction of the census as histories lengthen (measured
 `0.667, 0.400, 0.229, 0.127, 0.069, …, 0.0055` at `n = 10`; `census_congestion_freezeout.py` part E).
 
 **The methodological corollary**, which is the reason this belongs in a philosophy document rather than
@@ -304,11 +307,11 @@ regress. Its self-maintenance is derived rather than assumed: each ZFA closure r
 ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean),
 [`Active_Inference_Mathematics.md`](Active_Inference_Mathematics.md) §5).
 
-**How agency scales — by multiplicity, not by choice.** What happens is what closes in the most ways
-(§3a). An agent neither overrides that ordering nor needs to: it **changes the counts**, building the
+**How agency scales — by multiplicity, not by choice.** What happens most often is what closes in the most
+ways, and what happens first is the first closure (§3a). An agent neither overrides that weighting nor needs to: it **changes the counts**, building the
 structure under which some closure becomes dominant — exactly the *engineered multiplicity bias* of laser
 cooling ([`Mpemba.md`](Mpemba.md)), where a field reorganises the census so that
-`W(energy-lowering) ≫ W(energy-raising)` and the ordering then does the rest, unchanged. **Doing is not
+`W(energy-lowering) ≫ W(energy-raising)` and the weighting then does the rest, unchanged. **Doing is not
 selecting among ways; it is making ways.** This also gives *degree* of agency a substrate meaning: ways
 made per unit synthesized time. Because binding raises frequency and conscious content is the
 highest-frequency available closure (`freq_bind_ge_left`/`freq_bind_ge_right`, which hold by definition of `bind := min`, `consciousPeriod = min`,

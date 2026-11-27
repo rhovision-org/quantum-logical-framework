@@ -374,6 +374,7 @@ lean_lib QLF where
     `QLF_CoincidenceTrivial,
     `QLF_AssemblyIndex,
     `QLF_PossibilityGrowth,
+    `QLF_TimeDoubleSlit,
     `QLF_LocalityDefinitions,
     `QLF_PerspectiveLocality,
     `QLF_ControlledUnitary,
