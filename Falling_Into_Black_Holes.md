@@ -108,6 +108,29 @@ time-dependent interior cosmology that GR already describes inside `rs` and that
 [`BLACK-HOLES.md`](BLACK-HOLES.md) §4a reads as a nested domain. This is not proved here; what is
 proved is that, up to wherever the geometry holds, the infaller's horizon is strictly ahead of them.
 
+### 1f. Seeing later infallers, older than "our" universe (conjecture and test)
+
+**GR:** an observer inside a Schwarzschild hole still receives light from matter that falls in
+*after* them. It arrives from above, behind them, until the observer meets the singularity. That
+matter aged outside before it fell, so its own clock can show any age, unrelated to the time since
+the observer crossed. Nothing forbids an infaller seeing objects whose ages exceed the age of the
+interior measured from the horizon crossing.
+
+**Nested reading (conjecture):** if our domain is the interior of a parent hole
+([`BLACK-HOLES.md`](BLACK-HOLES.md) §4a), its 13.8 Gyr is the age of *our* clock measured from our
+birth surface. Matter falling into the parent after our domain formed would enter through that
+surface carrying the age of its parent history, and with QLF's bounded density there is no
+singularity to cut the view short, so the reception would continue indefinitely. So the nested
+picture permits, and on this reading predicts, **objects that appear older than the universe**. This
+is a test it can fail: ΛCDM forbids such objects, and the nested reading allows them.
+
+**Observed so far: none confirmed.** The oldest well-measured star, HD 140283, was dated at
+`14.46 ± 0.8` Gyr (Bond et al. 2013), consistent with `13.77 ± 0.06` within errors. Models with
+abundances tailored to the star give 12.3 Gyr (Guillaume et al. 2024). So present data neither
+support nor exclude the prediction. What is open: where in our sky such matter would appear (the
+identification "parent horizon = birth surface" does not fix it), and how many such objects to
+expect. Without those the prediction is qualitative, not yet pre-registered.
+
 ---
 
 ## 2. A spinning (Kerr) hole: being dragged around is not much different
@@ -262,6 +285,7 @@ far side fades out in finite time. Worked out in
 | Kerr dragging at the outer horizon is slow for large holes and not felt in free fall | **proved** (`Ω_H ≤ 1/(2M)`, `∝ 1/M`); "not felt" is the geodesic property |
 | No singularity, so the infaller's horizon is never reached | **conjecture** (QLF bounded density) |
 | Kerr mass inflation saturates at the Planck scale | **conjecture** |
+| In the nested reading, later infallers into a parent hole appear older than our universe | **conjecture**; no confirmed object yet (HD 140283 consistent with 13.8 Gyr) |
 | Thrust works at every radius; everyone's own horizon is strictly below them | **proved** (`thrust_works`, `own_horizon_below`) |
 | The static radius `r` can increase only outside `rs` | **proved** (standard GR) |
 | Primordial holes lighter than about 5×10¹¹ kg are gone | **standard physics**, `M³` law proved |
@@ -274,6 +298,10 @@ far side fades out in finite time. Worked out in
 * A. J. S. Hamilton, "Illusory horizons, thermodynamics, and holography inside black holes",
   [arXiv:1210.4541](https://arxiv.org/abs/1210.4541).
 * E. Poisson & W. Israel, "Internal structure of black holes", *Phys. Rev. D* **41**, 1796 (1990).
+* H. E. Bond et al., "HD 140283: A star in the solar neighborhood that formed shortly after the
+  Big Bang", *ApJL* **765**, L12 (2013), [arXiv:1302.3180](https://arxiv.org/abs/1302.3180).
+* C. Guillaume et al., "The age of the Methuselah star in light of stellar evolution models with
+  tailored abundances", *A&A* **692**, L3 (2024), [arXiv:2411.12343](https://arxiv.org/abs/2411.12343).
 * D. N. Page, "Particle emission rates from a black hole", *Phys. Rev. D* **13**, 198 (1976).
 * B. Carr, K. Kohri, Y. Sato & J. Yokoyama, "Constraints on primordial black holes", *Rep. Prog.
   Phys.* **84**, 116902 (2021), [arXiv:2002.12778](https://arxiv.org/abs/2002.12778).
