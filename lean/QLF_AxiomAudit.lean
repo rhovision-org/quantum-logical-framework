@@ -176,6 +176,7 @@ import QLF_AssemblyIndex
 import QLF_TimeReversalPerspective
 import QLF_BlackHoleInfall
 import QLF_RelativisticRocket
+import QLF_ClosureDepthTime
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1149,3 +1150,16 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.RelativisticRocket.arrivalTime_hasDerivAt
 #print axioms QLF.RelativisticRocket.mutual_redshift
 #print axioms QLF.RelativisticRocket.inertial_redshift_horizon
+
+/-! ## Closure depth as intrinsic logical time (`QLF_ClosureDepthTime`) -/
+
+#print axioms QLF.ClosureDepthTime.firstPassageAt_iff_maxExcursion
+#print axioms QLF.ClosureDepthTime.no_first_passage_gauge
+#print axioms QLF.ClosureDepthTime.same_census_different_latency
+#print axioms QLF.ClosureDepthTime.census_cannot_determine_first_passage
+#print axioms QLF.ClosureDepthTime.latency_spectrum_exact
+#print axioms QLF.ClosureDepthTime.least_capacity_iff_firstPassageAt
+#print axioms QLF.ClosureDepthTime.closes_iff_latency_fits
+#print axioms QLF.ClosureDepthTime.listening_countdown
+#print axioms QLF.ClosureDepthTime.closure_event_atomic
+#print axioms QLF.ClosureDepthTime.balanced_yet_deep

@@ -892,6 +892,53 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureDepthTime.balanced_yet_deep": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.census_cannot_determine_first_passage": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.closes_iff_latency_fits": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.closure_event_atomic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.firstPassageAt_iff_maxExcursion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.latency_spectrum_exact": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.least_capacity_iff_firstPassageAt": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.listening_countdown": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.no_first_passage_gauge": [
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.same_census_different_latency": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureKernel.channel_factorization": [
     "Classical.choice",
     "Quot.sound",
