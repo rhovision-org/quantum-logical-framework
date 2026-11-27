@@ -178,6 +178,7 @@ import QLF_TimeReversalPerspective
 import QLF_BlackHoleInfall
 import QLF_RelativisticRocket
 import QLF_ClosureDepthTime
+import QLF_VacuumCorrelation
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1200,3 +1201,20 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClosureDepthTime.listening_countdown
 #print axioms QLF.ClosureDepthTime.closure_event_atomic
 #print axioms QLF.ClosureDepthTime.balanced_yet_deep
+
+/-! ## Neutrino and vacuum correlation gates N0, V0, V1, H1 (`QLF_VacuumCorrelation`) -/
+
+#print axioms QLF.VacuumCorrelation.fold_eq_nfFold
+#print axioms QLF.VacuumCorrelation.neutrino_vacuum_same_reading
+#print axioms QLF.VacuumCorrelation.nu_reading_order_blind
+#print axioms QLF.VacuumCorrelation.neutrino_block_fold_blind
+#print axioms QLF.VacuumCorrelation.common_mode_cancels
+#print axioms QLF.VacuumCorrelation.one_branch_closure_shifts_phase
+#print axioms QLF.VacuumCorrelation.same_inventory_opposite_phase
+#print axioms QLF.VacuumCorrelation.interleaved_prime
+#print axioms QLF.VacuumCorrelation.interleaving_flips_phase
+#print axioms QLF.VacuumCorrelation.length_two_closures
+#print axioms QLF.VacuumCorrelation.two_axis_classification
+#print axioms QLF.VacuumCorrelation.gauge_pair_never_negI
+#print axioms QLF.VacuumCorrelation.electron_class
+#print axioms QLF.VacuumCorrelation.electron_in_class

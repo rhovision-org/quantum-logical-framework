@@ -86,6 +86,7 @@ interaction; the logical complexity inside them is far larger.
 | Particles and the Standard Model | [Standard_Model.md](Standard_Model.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Three colours from three axes: necessity and existence | [Diversity_Quark_Emergence.md](Diversity_Quark_Emergence.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Every closure is a colour singlet; the gluon vertex is the Borromean triple; the closing delay is colour-blind | [Colour_Closure.md](Colour_Closure.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
+| The neutrino word is a vacuum closure; organization, not inventory, carries phase; the shortest handed closures with the half-spin sign are the electron loops | [Vacuum_Correlation.md](Vacuum_Correlation.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Atoms | [Atomic_Structure_QLF.md](Atomic_Structure_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
 | Molecules: a bond is a shared closure | [Chemistry.md](Chemistry.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
 | Folding | [Protein_Folding.md](Protein_Folding.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |

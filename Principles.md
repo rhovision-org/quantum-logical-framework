@@ -297,6 +297,24 @@ physical law by association.
   concatenation (`winding_not_additive`).
 - **Status.** Proved; *Internal*.
 
+### P24 · Organization carries phase
+- **Statement.** Net action does not fix the fold. `^v><` (two closures in sequence) and `^>v<` (one
+  interleaved closure) are rearrangements of one inventory, both closed, at delay `0` and colour
+  neutral, and they fold to `+I` and `−I`; the interleaving flips the sign in every context. A closure
+  inserted into both branches of a comparison leaves their relative phase unchanged; inserted into one
+  branch it shifts it. On one pair from each of two spatial axes, the fold is `−I` exactly when the
+  pairs cross, and those 8 orderings per plane (the electron loop and its mirror, with rotations) are
+  the shortest closures that are both handed and carry the half-spin sign.
+- **Anchors.** `same_inventory_opposite_phase`, `interleaving_flips_phase`, `interleaved_prime`,
+  `common_mode_cancels`, `one_branch_closure_shifts_phase`, `neutrino_block_fold_blind`,
+  `two_axis_classification`, `electron_class`
+  ([`QLF_VacuumCorrelation`](lean/QLF_VacuumCorrelation.lean); [`Vacuum_Correlation.md`](Vacuum_Correlation.md)).
+- **Limits.** "`−I` exactly when handed" holds at length 4 only: at length 6, 48 of the 720
+  one-pair-per-axis orderings are self-conjugate with `−I` (exact computational,
+  [`vacuum_correlation_census.py`](vacuum_correlation_census.py)). The H1 loops are uncharged, and
+  nothing here relates phase to energy or mass.
+- **Depends on.** P01, P05. **Status.** Proved; *Internal*.
+
 ---
 
 ## C. Candidate principles
@@ -328,6 +346,8 @@ Each row says what is already proved, what is not, and the gate.
 | **C21** | **Closure networks resist perturbation.** | None. | A resilience measure and a theorem about it. | Conjecture. |
 | **C22** | **Conservative self-reference enables self-knowledge.** | Toy forms: `conservative_return` ([`QLF_ConservativeReturn`](lean/QLF_ConservativeReturn.lean)), `no_event_cycle`. | Self-knowledge as a bisimulation is `NOT_STARTED` ([`Strange_Loops.md`](Strange_Loops.md), [`Claim_Status.md`](Claim_Status.md)). | Conjecture. |
 | **C23** | **Recursive perspectival existence** (Jim, 2026-11-27). *Every manifest structure is a perspective with three spatial dimensions; the fourth logical axis expresses its relation to other perspectives; higher-order reality emerges through the shared closure of constituent perspectives.* | **Three plus one is forced.** Every axis frame contains the identity (gauge) axis (`frame_contains_I`), two spatial axes force the third (`two_spatial_axes_force_three`), and eight twists are the only size with non-commuting observables (`noncommuting_iff_eight`) ([`QLF_AlphabetNecessity`](lean/QLF_AlphabetNecessity.lean)), given the posit in P01. **The fourth axis is relation-free inside a perspective.** A gauge twist folds to `±I`, which commutes with every twist and changes no spatial relation, only a sign; in the `Form` it is the `t` (identity) coefficient, and a closure's charge is its gauge count (`chiralCharge_eq_gauge_counts`, [`QLF_ElectronClosure`](lean/QLF_ElectronClosure.lean)). **Higher-order reality by shared closure** is P06, C11 and C13; recursion is P05 and P18. | **Restricts the first clause:** the *frame* has three spatial axes, but a manifest structure need not occupy them; `+−` closes with no spatial twist and `^v` uses one axis. **The second clause is open, and its strong form is false:** shared closure does not need the fourth axis, since `vector_pair_shared` closes two perspectives with spatial twists only. **Participation is not tree-shaped** ([`QLF_PerspectiveNetwork`](lean/QLF_PerspectiveNetwork.lean)): three perspectives can each share a closure with each of the others (`shared_closure_cycle_exists`), so no tree on those perspectives carries the relations as edges (`tree_edges_insufficient`, graph-theoretic bookkeeping; mediator nodes not excluded), and the proton closure splits into three perspectives none of which, alone or in pairs, closes (`irreducible_three_way_closure`). Both witnesses use spatial twists only. A gauge twist keeps the winding and moves the `F₃²` colour (`gauge_keeps_winding_moves_colour`). Gate: show that what separates a joint closure from two separate ones is carried by the gauge axis (for example, the relay sign of `relay_phase_transfer`, [`QLF_SharedReality`](lean/QLF_SharedReality.lean)). | Clause 1: proved for the frame, restricted for structures. Clause 2: conjecture. Clause 3: partial (C11, C13); a hierarchy of perspectives and their participation network are distinct structures (proved witnesses). |
+| **C24** | **Handedness mass gap** (AI review, 2026-11-27). *The electron is the least-energy persistent mode that sustains a confirmed electrical handedness; lighter structures take part in shared closures without a persistent electrical distinction.* | H1: the shortest closures that are handed and carry `−I` are the 24 electron-class loops at length 4; length-2 closures are all self-conjugate (`two_axis_classification`, `length_two_closures`, [`QLF_VacuumCorrelation`](lean/QLF_VacuumCorrelation.lean)). The electron's charge is an unmatched gauge twist (`electronCharged_not_countBalanced`). | Least complex is not least energetic. Gates H0 (confirmed handedness from shared closures), H2 (which loops carry a gauge distinction), H3 (persistence), then the bridge H4–H6 to an energy threshold and the electron mass, and H7 ([`Vacuum_Correlation.md`](Vacuum_Correlation.md) §6). | Conjecture; H1 proved. |
+| **C25** | **A neutrino's significance is relational** (AI review, 2026-11-27). *What separates a neutrino from vacuum activity is the correlations it preserves and the closures it enables, not its energy.* | N0: the neutrino word `^v` reads the same as a vacuum pair, and in every context its fold equals that of any Hermitian pair on any axis (`neutrino_block_fold_blind`); provenance is not in the word (`no_word_observable_separates`, bookkeeping). Interleaving is a relation the fold sees (P24). | N1 (that a neutrino carries a relational invariant), N2 (persistence), N3 (a matched-conditions `ΔW_R ≠ 0`), N4–N5 (phase correlations, oscillation phenomenology). | Conjecture; N0 proved. |
 
 **The overarching candidate.** *The synthesis of reality resolves imbalance while keeping the
 distinctions that can take part in higher closures, so organized complexity is unbounded.* This is a
@@ -359,6 +379,7 @@ None of these is promoted by the formal results it rests on. The `Claim_Status` 
 | **B13** | Constants are closure invariants | α leading 137 and the formal band ([`Claim_Status.md`](Claim_Status.md)) | The coupling, scale and observable maps. |
 | **B14** | Thermodynamic entropy comes from closure statistics | Cut entropy is the von Neumann entropy of cut singlets (`cutEntropy_eq_vonNeumann`, [`QLF_HolographicCompletion`](lean/QLF_HolographicCompletion.lean)) | Thermodynamic ensembles and entropy accounting. |
 | **B15** | Recurring dominance is frequency in the world | C04 | That census multiplicity is the observed rate (needs B09). |
+| **B16** | Vacuum correlations set both the α residual and neutrino phase evolution (AI review, 2026-11-27) | P24 (V0 for common mode, V1); [`QLF_NeutrinoOscillation`](lean/QLF_NeutrinoOscillation.lean) precession; the α bracket ([`Alpha_Residual.md`](Alpha_Residual.md)) | V2: a connected correlation `K_R(a,b)` from a phase-weighted closure measure fixed before the comparison (the post hoc weighting of [`Carbon_Superconductivity.md`](Carbon_Superconductivity.md) §47 failed on the proton, §48); V3–V6: the α correction without fitting, neutrino phase differences, mixing angles and `Δm²`, one mechanism for both, within oscillation decoherence bounds. The 0.36 meV ↔ 87 GHz match with [`VacuumEnergy.md`](VacuumEnergy.md) §4 is a coincidence until a coupling is derived. |
 
 ---
 
