@@ -316,9 +316,9 @@ when writing anything:
    *possible*, *impossible*, *equivalent* or *undetermined* relative to stated conditions. Failing to find
    a closure is undetermined, not impossible; finding one is possible, not necessary.
 5. **Four levels of computation.** Natural quantum computation (the thesis), classical programmable
-   (proved, `fredkin_complete`), universal programmable quantum (open: native gates on a common qubit,
-   O1), classical simulation (QuCalc/QuantumOS; no efficiency claim). Don't let the open gate weaken the
-   thesis, and don't let the simulator stand in for it.
+   (proved, `fredkin_complete`), universal programmable quantum (proved on presence strands up to a global scalar, `native_universal`,
+   O1), classical simulation (QuCalc/QuantumOS; no efficiency claim). Universality of the native
+   operations is not a built device, and the simulator does not stand in for the thesis.
 6. **Encoding is not execution.** `qlf_universality` gives every terminating circuit a ZFA *encoding*,
    which is bookkeeping (Principles P10) and never uses termination. Say "has a ZFA encoding", never
    "every terminating computation IS a ZFA string". Execution is `fredkin_complete`.

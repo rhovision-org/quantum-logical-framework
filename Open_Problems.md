@@ -19,8 +19,9 @@ deeper investigation**, *not* a hole where the theory could be wrong. QLF's onto
 the load-bearing posture is **one well-supported conjecture**, equal and opposite logical action
 ([`Framing.md`](Framing.md)). The substrate's own gates evaluate every Boolean function
 (`fredkin_complete`); every terminating circuit has a ZFA encoding ([`qlf_universality`](lean/QLF_Universality.lean),
-bookkeeping until shown faithful, [`Principles.md`](Principles.md) P10); native quantum universality and
-the anthropic equivalence are registered obligations (O1, O2). The filter is a selection principle, not
+bookkeeping until shown faithful, [`Principles.md`](Principles.md) P10); native quantum universality on
+presence strands and the record-level anthropic equivalence are proved (O1, O2; `native_universal`,
+`anthropic_equivalence`). The filter is a selection principle, not
 a restriction.
 Its *exclusivity* is a published conjecture with named defeaters — the full ledger, typed by
 evidential strength with the misses beside the hits, is [`Completeness_Evidence.md`](Completeness_Evidence.md).
@@ -81,16 +82,19 @@ canonical status list; when an item moves, update it here and in its owning doc.
 
 ## Working priority — what to do next
 
-**The one-conjecture framing (2026-11-27, [`Framing.md`](Framing.md) §6) adds the obligations that
-enable general model testing, in this order:** O1 native gates on a common qubit, with the Bell state by
-native operations as the decisive test (Principles C26; the Bell state, native H, CZ and a non-Clifford
-phase are proved in [`QLF_NativeBell`](lean/QLF_NativeBell.lean), the density and routing assembly is
-next); O3 is proved as an interface ([`QLF_ModelTesting`](lean/QLF_ModelTesting.lean)) and O5's
-uniform measure is derived ([`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean)); then O3 a typed, non-circular model-encoding
-interface returning the five verdicts (C28); O2 the anthropic equivalence theorem
-`Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`, extending `ObsEquiv` to `N` bodies and the entangled sector
-(C27); O4 computing by closure (C29); O5 necessity proofs for the structural choices; O6
-machine-checkable semantic consistency.
+**The one-conjecture framing (2026-11-27, [`Framing.md`](Framing.md) §6) registered six obligations
+for general model testing, and each now has a proved core:** O1 native universality on presence strands
+([`QLF_NativeBell`](lean/QLF_NativeBell.lean), [`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean),
+`native_universal`); O2 the anthropic equivalence at the level of records
+([`QLF_AnthropicEquivalence`](lean/QLF_AnthropicEquivalence.lean), `anthropic_equivalence`); O3 the
+model-encoding interface ([`QLF_ModelTesting`](lean/QLF_ModelTesting.lean)); O4 closure selection with a
+proved polynomial cost ([`QLF_ClosureSelection`](lean/QLF_ClosureSelection.lean)); O5 the uniform measure
+and the Pauli frame on a spin-½ atom ([`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean),
+[`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)); O6 semantic dependency checks against the axiom
+footprints ([`scripts/framing_consistency.py`](scripts/framing_consistency.py)). **What remains:** an
+approximation rate for native circuits (Solovay–Kitaev on the native set), `ObsEquiv` beyond two bodies,
+optimization beyond closure selection, why the atom is two-dimensional, and the worked verdicts (Bell,
+Kochen–Specker) restated as instances of the interface.
 
 Recorded here so it survives a session boundary. The governing question has shifted: not *how many ways*,
 but **given that everything happens every way, exactly how do those ways add?**

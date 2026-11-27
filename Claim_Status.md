@@ -89,8 +89,10 @@ stated conditions. Certificate fields are in [Proof_to_Physics.md](Proof_to_Phys
 | Boolean circuits | `POSSIBLE` | Any finite function | Substrate only |
 | Logics without weakening | `POSSIBLE`, separated | Kripke models | Substrate only |
 | Native Bell state on one presence qubit | `POSSIBLE` | Native CZ, Hadamard, phase (`native_bell`, `QLF_NativeBell`) | Substrate only |
-| Universal programmable quantum computation | `UNDETERMINED` | Density and routing assembly (rest of O1) | — |
-| Anthropic observational equivalence | `EQUIVALENT` for two bodies; general case `UNDETERMINED` | `ObsEquiv` domain (O2) | — |
+| Universal programmable quantum computation | `POSSIBLE` | Every unitary on `n + 1` presence strands, approximately and up to a global scalar (`native_universal`, `QLF_NativeUniversality`) | Substrate only |
+| Any computable model with finite records | `EQUIVALENT` | To its closure encoding on every observable verdict and count (`anthropic_equivalence`, `QLF_AnthropicEquivalence`); that a given model is correct is not claimed | Under the computability premise |
+| Anthropic observational equivalence of histories | `EQUIVALENT` for two bodies; N bodies `UNDETERMINED` | `ObsEquiv` domain | — |
+| Closure selection (choose offers so an obligation closes) | `POSSIBLE` in polynomial time | At most `(2L + 1)⁴` reachable charges (`reachable_card_le`, `QLF_ClosureSelection`) | Substrate only |
 
 ## Pre-registered protocols (not claims)
 

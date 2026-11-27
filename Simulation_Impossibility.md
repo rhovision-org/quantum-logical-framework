@@ -67,8 +67,8 @@ events by closure; it needs no simulator and is not slowed by the size of the un
 the universe. *Classical simulation* (QuCalc, RhoQuCalc, QuantumOS on ordinary hardware) is what this
 page bounds: it can follow a subset exactly and cannot follow the whole. Nothing here limits what the
 substrate computes natively, and nothing about native computation makes a classical simulation
-efficient. Universal *programmable* quantum computation in the substrate is a third claim, still open
-(obligation O1).
+efficient. Universal *programmable* quantum computation in the substrate is a third claim, proved on presence
+strands up to a global scalar (obligation O1, `native_universal`).
 
 ## 5. Philosophical & Physical Implications
 

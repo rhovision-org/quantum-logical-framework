@@ -8,9 +8,17 @@ with the Lean sources:
 2. Every registry ID (A01, P10, C26, B09, ...) cited in Framing.md exists in Principles.md.
 3. Every model verdict in Claim_Status.md uses one of the five verdict tokens.
 4. Retired phrasings do not come back anywhere in the docs.
+5. Semantic dependencies, read from lean/axiom_footprints.expected.json (the `#print axioms` record of
+   every anchor in lean/QLF_AxiomAudit.lean):
+   a. every theorem Framing.md cites is an audit anchor, so its footprint is checked on every build;
+   b. no line of Framing.md, Principles.md or Claim_Status.md that says "no axiom" cites a theorem
+      that consumes a QLF axiom;
+   c. a line of Framing.md that calls something proved or derived and cites a theorem consuming a QLF
+      axiom must name the axiom, a bridge or a boundary.
 
 Exit status 1 on any failure. Run from the repository root: python3 scripts/framing_consistency.py
 """
+import json
 import pathlib
 import re
 import sys
@@ -64,6 +72,60 @@ def cited_lean(text: str) -> set:
     return out
 
 
+LEAN_BASE_AXIOMS = {"propext", "Classical.choice", "Quot.sound"}
+
+
+def lean_theorems() -> set:
+    pat = re.compile(r"^\s*(?:@\[[^\]]*\]\s*)?(?:protected\s+)?(?:theorem|lemma)\s+"
+                     r"([A-Za-z_][A-Za-z0-9_'.]*)")
+    out = set()
+    for f in (ROOT / "lean").glob("*.lean"):
+        for line in f.read_text(encoding="utf-8").splitlines():
+            m = pat.match(line)
+            if m:
+                out.add(m.group(1).split(".")[-1])
+    return out
+
+
+def footprints() -> dict:
+    """Short theorem name -> set of QLF axioms it consumes (union over same-named anchors)."""
+    raw = json.loads((ROOT / "lean" / "axiom_footprints.expected.json").read_text(encoding="utf-8"))
+    out: dict = {}
+    for full, axioms in raw.items():
+        out.setdefault(full.split(".")[-1], set()).update(set(axioms) - LEAN_BASE_AXIOMS)
+    return out
+
+
+def semantic_checks(errors: list) -> int:
+    fp = footprints()
+    theorems = lean_theorems()
+    checked = 0
+    framing = (ROOT / "Framing.md").read_text(encoding="utf-8")
+    for tok in sorted(cited_lean(framing)):
+        if tok in theorems and tok not in fp:
+            errors.append(f"Framing.md: `{tok}` is cited but is not an audit anchor "
+                          "(add it to lean/QLF_AxiomAudit.lean and record its footprint)")
+    for doc in ("Framing.md", "Principles.md", "Claim_Status.md"):
+        lines = (ROOT / doc).read_text(encoding="utf-8").splitlines()
+        for n, line in enumerate(lines, 1):
+            cited = [t for t in cited_lean(line) if t in fp]
+            if not cited:
+                continue
+            checked += 1
+            low = line.lower()
+            heavy = {t: fp[t] for t in cited if fp[t]}
+            if "no axiom" in low:
+                for t, ax in heavy.items():
+                    errors.append(f"{doc}:{n}: says 'no axiom' but `{t}` consumes {sorted(ax)}")
+            if doc == "Framing.md" and re.search(r"\b(proved|derived)\b", low):
+                rest = low.replace("no axiom", "")
+                if heavy and not re.search(r"axiom|bridge|boundary", rest):
+                    for t, ax in heavy.items():
+                        errors.append(f"{doc}:{n}: calls `{t}` proved but it consumes {sorted(ax)}; "
+                                      "name the axiom or bridge")
+    return checked
+
+
 def main() -> int:
     errors = []
     names = lean_names()
@@ -100,8 +162,11 @@ def main() -> int:
                 line = text.count("\n", 0, m.start()) + 1
                 errors.append(f"{f.relative_to(ROOT)}:{line}: retired phrasing '{m.group(0)}' ({fix})")
 
+    checked = semantic_checks(errors)
+
     for e in errors:
         print(e)
+    print(f"semantic dependencies: {checked} citing line(s) checked against axiom footprints")
     print(f"framing consistency: {len(errors)} problem(s)")
     return 1 if errors else 0
 

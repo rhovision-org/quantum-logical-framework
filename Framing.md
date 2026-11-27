@@ -114,7 +114,7 @@ a necessity proof:
 
 | Choice | Where it enters | Status |
 |---|---|---|
-| The signed distinctions are the signed axes of the Pauli frame | The alphabet ([ScientificApproach.md](ScientificApproach.md) §1c) | Open structural posit; given it, A11 fixes eight twists |
+| The signed distinctions are the signed axes of the Pauli frame | The alphabet ([ScientificApproach.md](ScientificApproach.md) §1c) | **Derived on a two-dimensional atom**: mutually incompatible two-outcome axes number at most three and the third is `± i·AB` (`third_axis`, `no_fourth_axis`, [`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)); that the atom is two-dimensional (spin-½) stays a choice; given the frame, A11 fixes eight twists |
 | Generation is uniform over the alphabet | The cylinder measure `8^{−\|h\|}` (`twist_kraft`) | **Derived** from relabelling invariance and normalization (`uniform_forced`, [`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean)); the product form (independent steps) stays a choice |
 | The first closure is the event | A01's event semantics (A07) | Part of the conjecture, but auditable: the alternatives were tested and rejected ([ScientificApproach.md](ScientificApproach.md) §11) |
 | Cylinder measure = physical probability | Every frequency claim | Bridge B09 |
@@ -132,7 +132,7 @@ Four claims about computation are easy to run together, and they need to be kept
 |---|---|---|
 | **Natural quantum computation** | The universe synthesizes its events through quantum logical closure; its evolution *is* the computation | The foundational thesis: what A01 says, read as computation (Lloyd 2006). Not a second conjecture |
 | **Classical programmable computation** | Substrate networks evaluate any finite Boolean function | Proved in the substrate model |
-| **Universal programmable quantum computation** | Substrate operations compose into any quantum circuit on one encoded qubit space | The algebra is proved; native composition on a common qubit is **open** |
+| **Universal programmable quantum computation** | Substrate operations compose into any quantum circuit on one encoded qubit space | **Proved** on presence strands, approximately and up to a global scalar (`native_universal`, [`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean)) |
 | **Classical simulation of quantum computation** | QuCalc, RhoQuCalc, [`qucalc_search.py`](qucalc_search.py) and QuantumOS run closures on ordinary hardware | Implemented; cost depends on the size of the history space, and no efficiency claim is made |
 
 The first level does not wait on the third: investigating reality as a quantum logical system does not
@@ -149,9 +149,10 @@ and the fourth must not be overstated as the first. What is proved toward the pr
 | Dense single-qubit gates plus CNOT are universal | Proved, as matrix algebra | [`QLF_Barenco`](lean/QLF_Barenco.lean) ([Barenco_Universality.md](Barenco_Universality.md)) |
 | A joint closure carries the controlled-Z sign table | Proved | `joint_closure_is_cz`, `cz_entangling` |
 | That sign table acts as a gate on superposed presence states | Proved, with native Hadamard and phase on the same qubit | [`QLF_NativeBell`](lean/QLF_NativeBell.lean) (below) |
+| Native operations are universal on `n + 1` presence strands | Proved, up to a global scalar | `native_one_dense`, `native_universal` ([`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean)) |
 
-**The obstacle is a common qubit.** The Hadamard acts on the spinor space that folds live in; the
-controlled-Z signs act on the presence or absence of a closed pair. They do not yet act on the same
+**The obstacle was a common qubit.** The Hadamard acts on the spinor space that folds live in; the
+controlled-Z signs act on the presence or absence of a closed pair. They did not act on the same
 encoded qubit. The target (obligation O1, §6) is one substrate encoding `E` and native operations
 `T_U` with
 
@@ -181,15 +182,24 @@ separated is `(−1)^{ab}`), not defined.
 
 The branching and phase rules are the encoding choices, and they are stated as such; the signs and the
 gate semantics are not imported, since they are read off folds and checked against the standard
-matrices. **What remains of O1:** composing these into a formal density theorem for the native gate set
-on one presence qubit (`su2_dense` uses integer powers of `z`; the native phase supplies the
-non-positive half) and running Barenco's routing over `n` presence strands. Both are assembly of proved
-pieces, not new mathematics, but they are not yet written.
+matrices.
 
-So QLF is a **classical universal computer in the substrate, proved**, and has **native universal gate
-ingredients on one presence qubit, proved**, with the assembly into universal programmable quantum
-computation open (rest of O1). O1 is a proof obligation inside the consequences of ZFA, not a second
-conjecture. Being a quantum computer gives no NP oracle
+**Done: universality on `n + 1` presence strands** ([`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean),
+no axioms). The mirror census (the same three histories the other way up) gives the inverse phase
+`diag(1, z̄)` (`censusRatioMirror_eq_zbar`). With it every diagonal rotation `D(z^k)`, `k ∈ ℤ`, is a
+scalar times native phases (`D_zpow_native`), so the Euler products of `su2_dense` are native and every
+`SU(2)` gate is a limit of native one-strand products (`native_one_dense`). On `n` strands the native
+operations, branching, joint closure and the two census phases acting on census sums, are proved to be
+`√2·H`, `CZ`, `diag(1, z)` and `diag(1, z̄)` on their strands (`nativeBranch_eq`, `nativeJoint_eq`,
+`nativePhase_eq`, `nativeMirror_eq`); CNOT is `½·had2·CZ·had2` (`cnot_native`); and Barenco's routing
+then gives every unitary on `n + 1` strands as a limit of scalar multiples of native circuits
+(`native_universal`). The scalar is the `√2` normalization per branching and an unobservable global
+phase, so this is universality on rays. No approximation rate is claimed (no Solovay–Kitaev bound).
+
+So QLF is a **classical universal computer in the substrate, proved**, and a **universal quantum
+computer on presence strands, proved**: its own closure operations, read off folds and censuses,
+approximate every unitary. O1 is discharged inside the consequences of ZFA, with no second conjecture.
+Being a quantum computer gives no NP oracle
 ([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) §4).
 
 ---
@@ -206,7 +216,7 @@ universe agrees with QLF on everything that can be observed. The argument has th
 2. **Any solution can be run as closures.** A solution that is computable is a process the
    substrate can evaluate with its own gates: for its classical part this is proved
    (`fredkin_complete`, `substrate_computes`, [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean));
-   for its quantum part it waits on the gate of §3.
+   for its quantum part it is proved on presence strands (`native_universal`, §3).
 3. **What no closure can tell apart is the same.** Two histories are observationally equivalent when
    every closing context closes them with the same phase (`ObsEquiv`,
    [`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean)); that relation is proved
@@ -215,17 +225,33 @@ universe agrees with QLF on everything that can be observed. The argument has th
 
 **Status.** Step 1 is A01 applied to observers. Step 3 is proved for its domain (two bodies, under the
 independence premises of [`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean)). Step 2 is proved
-for classical computation and open for quantum computation. And the three steps do not yet meet:
-**universality alone does not give equivalence**, because a universal computer runs incorrect models
-as readily as correct ones. What is needed is the theorem (obligation O2, §6)
+for classical computation (`fredkin_complete`) and for quantum computation on presence strands
+(`native_universal`). But **universality alone does not give equivalence**, because a universal
+computer runs incorrect models as readily as correct ones. What is needed is the theorem (obligation
+O2, §6)
 
   `Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`,
 
 an encoding of a correct model `M` that preserves its observable distinctions, its dynamics and its
-probability distributions, with `O` the observable map. `ObsEquiv` supplies `O_QLF`; extending its
-domain to `N` bodies and the entangled sector, and building `E_M` non-circularly, is the work. Until
-then the equivalence is the conjecture's predicted consequence, not a theorem. It also carries two
-named premises:
+probability distributions, with `O` the observable map.
+
+**Proved** ([`QLF_AnthropicEquivalence`](lean/QLF_AnthropicEquivalence.lean), no axioms). A model is
+what it can be checked against: a computable admissibility test and the finite record each state
+leaves (A10). For every such model there is an encoding `E_M` that admits exactly the model's allowed
+states and decodes to its records, with **one** decoder `O_QLF` for all models
+(`anthropic_equivalence`). The encoding can fail exactly where the model forbids something
+(`encodeModel_canFail_iff`), so the test is not vacuous; every verdict about the model's observations
+is the same verdict about closures (`verdicts_transfer`); in any finite ensemble the counts agree, which
+is the probability side (`frequencies_transfer`); and models with the same observations are
+`Equivalent` (`same_observations_equivalent`). Dynamics enter by taking trajectories as states.
+
+For an arbitrary model the encoding reads the model's admissibility, so the content there is the
+premise. For models whose selection rule is a **conservation law**, the equal-and-opposite form, it is
+not: the encoding is built part by part from the charges, never consults admissibility, and closes
+exactly when the total charge vanishes (`conservation_equivalence`). There closure computes the
+model's rule. What stays outside: whether a given model is correct (experiment decides), and the finer
+question of which joint closures distinguish `N`-body histories (`ObsEquiv` is proved for two bodies).
+The theorem carries two named premises:
 
 - **The solution is computable.** This is Deutsch's physical Church–Turing principle (1985). With
   A10 (no measurement yields a real number) it is well supported, but it is a premise, and a solution
@@ -237,9 +263,8 @@ named premises:
   anything can be checked.
 
 So the anthropic principle does not add a conjecture. It is A01 read from inside: whatever explains
-our observations explains closures, and QLF computes closures. What it would buy, once O2 is proved,
-is equivalence of observable consequences without equivalence of the competing theories' internal
-representations. It connects to the holographic reconstruction problem (issue
+our observations explains closures, and QLF computes closures. What it buys is equivalence of
+observable consequences without equivalence of the competing theories' internal representations. It connects to the holographic reconstruction problem (issue
 [#296](https://github.com/rhovision-org/quantum-logical-framework/issues/296)), conservative return
 ([ScientificApproach.md](ScientificApproach.md) §5e) and the capacity limits of
 [Law_Of_Exceptions.md](Law_Of_Exceptions.md).
@@ -295,7 +320,8 @@ In the table below, *refuted* means **impossible** and *realizable* means **poss
 | A computable predictor of every program's halting | **Refuted** (Turing's halting theorem) | `no_computable_superdeterministic_theory` ([`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)) |
 | Boolean circuits | **Realizable**, with the substrate's own gates | `fredkin_complete` |
 | Logics without weakening | **Realizable and separated**: their models contain time loops; QLF's histories satisfy weakening and have none | `loopWorld_has_time_loop`, `histories_are_a_model` ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)) |
-| Universal quantum computation in the substrate | **Undetermined** (rest of O1, §3); the Bell state by native operations is **possible** | `native_bell`, `native_bell_not_product` ([`QLF_NativeBell`](lean/QLF_NativeBell.lean)) |
+| Universal quantum computation in the substrate | **Realizable** on presence strands, up to a global scalar; the Bell state by native operations exactly | `native_universal` ([`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean)); `native_bell`, `native_bell_not_product` ([`QLF_NativeBell`](lean/QLF_NativeBell.lean)) |
+| Any computable model with finite records | **Equivalent** to its closure encoding on every observable verdict | `anthropic_equivalence`, `verdicts_transfer` ([`QLF_AnthropicEquivalence`](lean/QLF_AnthropicEquivalence.lean)) |
 
 The tester also refutes QLF's own candidates, and those results stay on the record: the contact-order
 prediction of folding rates ([Protein_Folding.md](Protein_Folding.md) §5e), an every-epoch
@@ -323,9 +349,20 @@ both in [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)). So a problem ca
 This is what `/solve` does ([QucalcSearch.md](QucalcSearch.md)). The limit has to stay attached: the
 theorem solves *conjugate imbalance*, not arbitrary constraint satisfaction, and encoding a hard
 problem as a closure can carry all of its hardness into the encoding
-([P_vs_NP_QLF.md](P_vs_NP_QLF.md)). Which useful problems (composition, optimization, constraint
-satisfaction, collective inference) can be stated directly as closure obligations is a research
-programme (O4, §6), not a result.
+([P_vs_NP_QLF.md](P_vs_NP_QLF.md)).
+
+**One constraint class, with its cost** ([`QLF_ClosureSelection`](lean/QLF_ClosureSelection.lean), no
+axioms). *Closure selection*: an obligation and a list of offered words; choose some offers, in order,
+so that the whole closes. This is the shape of composition, scheduling and resource matching. Closure
+is zero signed charge on four axes (`balanced_iff_charge_zero`), so one sweep over the offers computes
+the reachable charges (`mem_reachable`), and a selection closes exactly when the obligation's opposite
+charge is reachable (`selection_closes_iff`, decided by `closable_iff`). The sweep never holds more than
+`(2L + 1)⁴` charges for offers of total written length `L` (`reachable_card_le`), so the class is
+decided in time polynomial in what is written. Subset Sum embeds (`subset_sum_embeds`), but in unary,
+because a charge is written as a count; no NP-hardness transfers. So closure computes **conservation of
+written counts** in polynomial time, and a problem whose hardness lives in a compact description of
+large quantities is outside the class. Optimization and collective inference beyond this class stay
+open.
 
 ---
 
@@ -346,12 +383,12 @@ The framing creates proof obligations as well as wording. Each is registered her
 
 | ID | Obligation | Principles | Done so far |
 |---|---|---|---|
-| O1 | **Native gates on a common qubit.** One encoding `E` and native `T_U` with `T_U(E ψ) ~ E(Uψ)` for Hadamard, the weighted rotation and controlled-Z; decisive test: the Bell state by native operations (§3) | C26 | **Bell state by native operations, proved**; native H, CZ and non-Clifford phase on one presence qubit ([`QLF_NativeBell`](lean/QLF_NativeBell.lean)). Open: the density and routing assembly |
-| O2 | **The anthropic equivalence theorem.** `Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`, with `ObsEquiv` extended to `N` bodies and the entangled sector (§3a) | C27 | Equivalent models get the same verdict on every observable proposition (`equivalent_same_verdicts`, [`QLF_ModelTesting`](lean/QLF_ModelTesting.lean)); `ObsEquiv` for two bodies. Open: the correctness-to-equivalence theorem |
+| O1 | **Native gates on a common qubit.** One encoding `E` and native `T_U` with `T_U(E ψ) ~ E(Uψ)` for Hadamard, the weighted rotation and controlled-Z; decisive test: the Bell state by native operations (§3) | C26 | **Done.** Bell state by native operations (`native_bell`, [`QLF_NativeBell`](lean/QLF_NativeBell.lean)); native operations universal on `n + 1` presence strands up to a global scalar (`native_universal`, [`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean)) |
+| O2 | **The anthropic equivalence theorem.** `Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`, with `ObsEquiv` extended to `N` bodies and the entangled sector (§3a) | C27 | **Done at the level of records.** Every computable model with finite records has an encoding with `O_QLF ∘ E_M = O_M`, one decoder for all models, failing where the model forbids (`anthropic_equivalence`, `encodeModel_canFail_iff`); verdicts and frequencies transfer; for conservation laws the encoding is non-circular (`conservation_equivalence`, [`QLF_AnthropicEquivalence`](lean/QLF_AnthropicEquivalence.lean)). Still open: `ObsEquiv` beyond two bodies |
 | O3 | **A generic, non-circular model-encoding interface.** A typed interface for "encode a model as closures" whose instances must be able to fail, returning one of the five verdicts (§4) | C28 | **Proved**: `Encoding`, `Necessary`/`Possible`/`Impossible`/`Equivalent`, `CanFail`; an encoding that cannot fail makes every verdict vacuous (`vacuous_of_cannot_fail`), and the `qlf_universality` pattern cannot fail (`pairEncoding_cannot_fail`) ([`QLF_ModelTesting`](lean/QLF_ModelTesting.lean)) |
-| O4 | **Closure-oriented programming.** Which problems can be posed as closure obligations, and at what cost (§4a) | C29 | Computed by closure so far: imbalance completion (`closing_cost_exact`), AND in the joint sign (`jointSign_eq`), every Boolean function (`fredkin_complete`). Open: a constraint class with a closure encoding of proved cost |
-| O5 | **Necessity proofs for the structural choices** of §2, or their retention as named choices | P01, B08, B09 | **Uniform measure derived**: relabelling invariance plus normalization force `1/8` per step and `8^{−L}` per history (`uniform_forced`, `word_weight_uniform`, [`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean)); the product form stays a choice. Pauli frame: open |
-| O6 | **Machine-checkable consistency** between this page, [Principles.md](Principles.md), [Claim_Status.md](Claim_Status.md) and the axiom footprints, extending [`scripts/axiom_audit.sh`](scripts/axiom_audit.sh) beyond axiom names to semantic dependencies | — | [`scripts/framing_consistency.py`](scripts/framing_consistency.py): cited Lean names exist, registry IDs exist, verdict tokens valid, retired phrasings absent. Open: semantic dependencies themselves |
+| O4 | **Closure-oriented programming.** Which problems can be posed as closure obligations, and at what cost (§4a) | C29 | **Done for one class.** Closure selection is decided by a reachable-charge sweep with at most `(2L + 1)⁴` states (`selection_closes_iff`, `reachable_card_le`, [`QLF_ClosureSelection`](lean/QLF_ClosureSelection.lean)); Subset Sum embeds in unary (`subset_sum_embeds`). Also imbalance completion (`closing_cost_exact`) and every Boolean function (`fredkin_complete`). Open: optimization beyond this class |
+| O5 | **Necessity proofs for the structural choices** of §2, or their retention as named choices | P01, B08, B09 | **Uniform measure derived**: relabelling invariance plus normalization force `1/8` per step and `8^{−L}` per history (`uniform_forced`, `word_weight_uniform`, [`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean)); the product form stays a choice. **Pauli frame forced on a spin-½ atom**: at most three mutually anticommuting axes, the third `± i·AB` (`third_axis`, `no_fourth_axis`, [`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)); two-dimensionality stays a choice |
+| O6 | **Machine-checkable consistency** between this page, [Principles.md](Principles.md), [Claim_Status.md](Claim_Status.md) and the axiom footprints, extending [`scripts/axiom_audit.sh`](scripts/axiom_audit.sh) beyond axiom names to semantic dependencies | — | [`scripts/framing_consistency.py`](scripts/framing_consistency.py): cited Lean names exist, registry IDs exist, verdict tokens valid, retired phrasings absent, and **semantic dependencies** read from the axiom footprints: every theorem cited here is an audit anchor, no "no axiom" line cites a theorem that consumes a QLF axiom, and no "proved" line hides one |
 
 Related: [Principles.md](Principles.md) · [ScientificApproach.md](ScientificApproach.md) ·
 [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) ·

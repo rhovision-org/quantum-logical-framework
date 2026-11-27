@@ -7,7 +7,7 @@
 | Kernel primitives (`rhoqcalc`, `full_zeno_prune`, `expand_generation`) | Machine-verified in Lean 4 (this repo) |
 | Pauli exclusion / no-cloning (`pauli_exclusion`, `fermi_nonzero_example`) | Machine-verified in Lean 4 (this repo) |
 | Capability security via ρ-calculus names | Five converging formal foundations: Girard linear logic (1987), Miller object capabilities (2006), Meredith & Radestock ρ-calculus (2005), Honda session types (1993), Wootters & Zurek no-cloning (1982) — QLF inherits all five by construction |
-| ZFA as hardware garbage collector | `full_zeno_prune` machine-verified; the substrate's ZFA-preserving gates are classically universal (`substrate_computes`), so the ZFA filter is a hardware specification, not an analogy; native quantum universality is open ([Framing.md](Framing.md) O1) |
+| ZFA as hardware garbage collector | `full_zeno_prune` machine-verified; the substrate's ZFA-preserving gates are classically universal (`substrate_computes`), so the ZFA filter is a hardware specification, not an analogy; native quantum universality on presence strands is proved (`native_universal`, [Framing.md](Framing.md) O1) |
 | Error correction via Zeno pruning | `full_zeno_prune` machine-verified; Zeno-subspace QEC established (Beige 2000, Facchi/Pascazio 2002, Viola/Knill/Lloyd 1999); spacetime-as-QECC established (Almheiri/Dong/Harlow, HaPPY code, AdS/CFT); active inference as real-time decoder established (Friston FEP) — QLF instantiates all three natively |
 | Hardware-native AI (Cognitive Geometries) | Active inference grounded in Friston FEP (["The Physics of Sentience"](active_inference.md)); `Form.toMatrix` is a Clifford algebra element — Geometric Deep Learning (Bronstein et al. 2021) establishes these as the correct geometric inductive bias for AI; neuro-symbolic architecture (LLM sensory layer + QuCalc coprocessor) established in [`AI.md`](AI.md); the gate set is proved ZFA-preserving and classically universal (`substrate_computes`), so AI running on QLF hardware runs in ZFA-correct code; native quantum universality is open ([Framing.md](Framing.md) O1) |
 
@@ -95,7 +95,7 @@ under the one-conjecture framing ([Framing.md](Framing.md)):
    *impossible*.
 
 What runs today is classical simulation of closures (the fourth level of computation, [Framing.md](Framing.md)
-§3). The crystal-QPU target is native; native quantum universality on a common qubit is open (O1).
+§3). The crystal-QPU target is native; native quantum universality on presence strands is proved (O1, `native_universal`), which says the substrate's operations suffice, not that a device realizes them.
 
 ## 2. The `rhoqcalc` Kernel & Object-Capability Security
 
