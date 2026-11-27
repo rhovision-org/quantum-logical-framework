@@ -17,12 +17,22 @@ Proved, for finite source and target with one binary relation each:
    (`not_consistent_iff`, the `Decidable` instance): a pair of mapped elements whose relation is
    not carried.
 4. **An unresolved analogy is never promoted**: an open obligation means not closed
-   (`open_not_closed`); an inconsistency is permanent under every extension
+   (`open_not_closed`); an inconsistency is permanent under every extension of that branch
    (`inconsistent_persists`), so it is rejected (`inconsistent_rejected`); and a closed analogy has
    no open obligation left (`closed_has_no_obligation`).
 
-Worked case (`rutherford_closes`, `wrong_completion_rejected`): sun : planet :: nucleus : ? closes
-with *electron* and is rejected with *nucleus*.  `similarity_not_correspondence`: a mapping that
+Limits, also proved: **consistency is not extendability**.  A consistent partial map can already be
+a dead end (`consistent_not_extendable`) while another branch closes (`other_branch_closes`), so
+`inconsistent_rejected` has no converse and greedy growth by the local check can stall.  Consistency
+is decidable here; rejection is not decided by anything in this module (finite exhaustion over all
+total maps would decide it).  Offering a target for an already mapped element is a no-op
+(`extend_mapped_noop`), not a conflict verdict.  `Closed` asks for totality and exact agreement of
+the relation on every source pair; it does not ask for injectivity or surjectivity, so a closed
+analogy is not an isomorphism, need not be unique, and need not cover the target's relations.
+
+Worked case (`rutherford_closes`, `wrong_completion_rejected`), a stipulated finite relation model
+rather than physical validation: sun : planet :: nucleus : ? closes with *electron* and is rejected
+with *nucleus*.  `similarity_not_correspondence`: a mapping that
 matches every element's label (a similarity) can still fail to carry the relation.
 
 What this module does **not** do: it does not encode a listener as a twist history.  Whether
@@ -209,7 +219,48 @@ theorem inconsistent_rejected {RS : RelStr S} {RT : RelStr T} {m : Corr S T}
     (hm : ¬ Consistent RS RT m) : Rejected RS RT m :=
   fun _ hext hc => inconsistent_persists hm hext hc.2
 
-/-! ## Worked case: sun : planet :: nucleus : ? -/
+/-- Offering a target for an element that is already mapped is a **no-op**, whatever target is
+offered: `extend` keeps the established mapping and reports no conflict.  Detecting a conflicting
+offer is a separate check this module does not define. -/
+theorem extend_mapped_noop {m : Corr S T} {a : S} {y : T} (x : T) (ha : m a = some y) :
+    extend m a x = m := by
+  funext b
+  unfold extend
+  rw [ha]
+  simp
+
+/-! ## Consistency is not extendability -/
+
+/-- Source: one directed edge `0 → 1`. -/
+def edgeSrc : RelStr (Fin 2) := ⟨fun a b => a = 0 ∧ b = 1⟩
+
+/-- Target: one directed edge `1 → 2`; `0` is isolated. -/
+def edgeTgt : RelStr (Fin 3) := ⟨fun a b => a = 1 ∧ b = 2⟩
+
+/-- **A consistent dead end.**  Mapping source `0` to the isolated target `0` passes every local
+check, yet no extension closes: whatever source `1` maps to, the edge `0 → 1` is not carried.  So
+`inconsistent_rejected` has no converse, and greedy growth by the local check can stall. -/
+theorem consistent_not_extendable :
+    Consistent edgeSrc edgeTgt (extend (fun _ => none) 0 0) ∧
+      Rejected edgeSrc edgeTgt (extend (fun _ => none) 0 0) := by
+  refine ⟨by decide, ?_⟩
+  intro m' hext hc
+  have h0 : m' 0 = some 0 := hext 0 0 (by decide)
+  obtain ⟨y, hy⟩ := Option.isSome_iff_exists.mp (hc.1 1)
+  have := closed_preserves hc 0 1 0 y h0 hy
+  revert this
+  fin_cases y <;> decide
+
+/-- The other branch closes: mapping source `0` to target `1` completes with `1 ↦ 2`.  Rejection
+is relative to the branch taken, not a verdict on the analogy's endpoints. -/
+theorem other_branch_closes :
+    Closed edgeSrc edgeTgt (extend (extend (fun _ => none) 0 1) 1 2) := by
+  refine ⟨by decide, by decide⟩
+
+/-! ## Worked case: sun : planet :: nucleus : ?
+
+A stipulated finite relation model, not physical validation: the two structures are written down
+so that the analogy has one right and one wrong completion. -/
 
 /-- Source: `0` = sun, `1` = planet; the relation is *orbits* (`planet orbits sun`). -/
 def solar : RelStr (Fin 2) := ⟨fun a b => a = 1 ∧ b = 0⟩

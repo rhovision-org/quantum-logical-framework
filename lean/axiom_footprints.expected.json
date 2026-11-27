@@ -34,8 +34,17 @@
   "QLF.AnalogicalListener.consistent_extend_iff": [
     "propext"
   ],
+  "QLF.AnalogicalListener.consistent_not_extendable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.AnalogicalListener.extend_keeps": [],
   "QLF.AnalogicalListener.extend_le": [],
+  "QLF.AnalogicalListener.extend_mapped_noop": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.AnalogicalListener.inconsistent_persists": [
     "Classical.choice",
     "Quot.sound",
@@ -52,6 +61,11 @@
     "propext"
   ],
   "QLF.AnalogicalListener.open_not_closed": [
+    "propext"
+  ],
+  "QLF.AnalogicalListener.other_branch_closes": [
+    "Classical.choice",
+    "Quot.sound",
     "propext"
   ],
   "QLF.AnalogicalListener.rutherford_closes": [

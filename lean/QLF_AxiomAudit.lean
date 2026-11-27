@@ -1360,3 +1360,6 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.AnalogicalListener.rutherford_closes
 #print axioms QLF.AnalogicalListener.wrong_completion_rejected
 #print axioms QLF.AnalogicalListener.similarity_not_correspondence
+#print axioms QLF.AnalogicalListener.extend_mapped_noop
+#print axioms QLF.AnalogicalListener.consistent_not_extendable
+#print axioms QLF.AnalogicalListener.other_branch_closes

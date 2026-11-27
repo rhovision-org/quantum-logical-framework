@@ -160,18 +160,30 @@ onto the target. It is **rejected** when no extension closes.
 | `extend_le`, `extend_keeps` | Filling an obligation never rewrites an established mapping. |
 | `closed_preserves` | A closed analogy carries every source relation onto the target. |
 | `consistent_extend_iff` | Filling one obligation keeps consistency **iff** a local check against the element itself and everything already mapped passes. A listener can grow one contribution at a time, and each contribution is checked against what is there, not re-checked from scratch. |
-| `not_consistent_iff` | An invalid correspondence has a concrete counterexample: two mapped elements whose relation is not carried. Consistency is decidable on finite structures. |
+| `not_consistent_iff` | An invalid correspondence has a concrete counterexample: two mapped elements whose relation is not carried. Consistency is decidable on finite structures. Rejection (no closed extension exists) is not decided by anything in the module. |
 | `open_not_closed`, `closed_has_no_obligation` | An analogy with an open obligation is not closed, so it is never promoted to a validated correspondence. |
-| `inconsistent_persists`, `inconsistent_rejected` | Inconsistency survives every extension, so an inconsistent analogy is rejected outright. |
-| `rutherford_closes`, `wrong_completion_rejected` | Worked case: sun : planet :: nucleus : ? closes with *electron*; filling it with *nucleus* is rejected (planet orbits sun, nucleus does not orbit itself). |
+| `inconsistent_persists`, `inconsistent_rejected` | Inconsistency survives every extension of that branch, so an inconsistent branch is rejected. A failed proposal does not invalidate its consistent parent or other branches. |
+| `consistent_not_extendable`, `other_branch_closes` | **Consistency is not extendability.** Source edge `0 → 1`, target edge `1 → 2` with `0` isolated: mapping `0 ↦ 0` passes every local check yet no extension closes, while `0 ↦ 1` completes with `1 ↦ 2`. So `inconsistent_rejected` has no converse, and greedy growth by the local check can stall. |
+| `extend_mapped_noop` | Offering a target for an element already mapped is a no-op, whatever is offered. It preserves the established mapping; it does not report a conflict. |
+| `rutherford_closes`, `wrong_completion_rejected` | Worked case, a stipulated finite relation model rather than physical validation: sun : planet :: nucleus : ? closes with *electron*; filling it with *nucleus* is rejected (planet orbits sun, nucleus does not orbit itself). |
 | `similarity_not_correspondence` | A map that matches every element's label perfectly can still fail to carry the relation. Similarity can guide the search; it is not a proof. |
 
-**What it is worth.** These are properties of finite partial homomorphisms, standard in model theory;
-the content for this program is the listener's discipline. A contribution is accepted or refused by
-a local, decidable check; refusal is permanent; nothing open is called closed. That is the shape an
-operational listener in Quantum-OS needs, and it fixes the rejection predicate CC6's contradiction
-limit was waiting on: a contradictory contribution is an inconsistency, so it is rejected, not
-averaged. Not done here: competing analogies listening concurrently, higher-order analogies whose
+**What it is worth.** These are properties of finite partial maps, standard in model theory. The
+operational contract they give a Quantum-OS listener is narrow, and should be stated as narrowly:
+
+- A proposal to fill an **open** slot of an **already consistent** map is accepted or refused by a
+  local, decidable check. Passing it keeps the branch consistent; it does not promise the branch can
+  close (`consistent_not_extendable`).
+- A refused branch stays refused under extension, but the refusal is **branch-relative**: the parent
+  and other branches are untouched.
+- A conflicting offer for an already mapped element is silently ignored by `extend`. Detecting and
+  reporting it is a separate check, not defined here.
+- Nothing with an open obligation is called closed.
+- `Closed` is exact agreement of the relation on every source pair under a total map. It imposes no
+  injectivity or surjectivity: not an isomorphism, not unique, not covering the target.
+
+CC6's cooperative contradiction policy (resolve rather than average) is **not** established by this;
+§4 keeps it open. Not done here: competing analogies listening concurrently, higher-order analogies whose
 elements are closed analogies (CC8), and any encoding of a listener as a twist history (CC4).
 
 ---
