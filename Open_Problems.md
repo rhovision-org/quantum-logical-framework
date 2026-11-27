@@ -692,6 +692,12 @@ triviality trap and the CO1/CO2 typed-provenance first-joint-closure schedule. C
 census) and CO4 (capacity-R resolver → finite closure bridge) are out-of-scope follow-ups under #283.
 Ledger: [`claim_records/coincidence_slice.json`](claim_records/coincidence_slice.json).
 
+**Cooperative closure (proved slice):** [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md) proves CC0 (consensus
+fallacy), CC3 (provenance conservation) and CC2/CC6 (irreducible synthesis, `n` participants) in
+[`QLF_CooperativeClosure`](lean/QLF_CooperativeClosure.lean), no axioms. Open: CC1 analogical
+listener (next), the semantic-to-ZFA bridge CC4, and CC5 (QLF free action vs Friston free energy, no
+identity claimed).
+
 ---
 
 ## Future work (scope-limited by specification)
