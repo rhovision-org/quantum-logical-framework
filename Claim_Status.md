@@ -1,6 +1,6 @@
 # Claim status — what QLF claims, and at what approximation
 
-This is the repository-side index for Paper I v0.3. It states each physical claim at the approximation or regime in which QLF makes it, records the provenance of the inputs, and gives the bridge/evidence status. It is an **inventory and status ledger**, not a claim that the physical results are established.
+This is the repository-side index for Paper I v0.3. It states each physical claim at the approximation or regime in which QLF makes it, records the provenance of the inputs, and gives the bridge/evidence status. It is an **inventory and status ledger**, not a claim that the physical results are established. The general principles these claims draw on, with their Lean anchors and statuses, are registered in [`Principles.md`](Principles.md).
 
 The numerical agreements below are as reported by QLF. The claim records in `claim_records/` carry the detailed fields; this table is the human-readable index.
 

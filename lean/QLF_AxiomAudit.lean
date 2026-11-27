@@ -173,6 +173,7 @@ import QLF_ClosureUncertainty
 import QLF_DiversityPhase
 import QLF_CoincidenceTrivial
 import QLF_AssemblyIndex
+import QLF_TimeDoubleSlit
 import QLF_TimeReversalPerspective
 import QLF_BlackHoleInfall
 import QLF_RelativisticRocket
@@ -1015,6 +1016,42 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.AssemblyIndex.strict_gap_up4
 #print axioms QLF.AssemblyIndex.assemblyIndex_lt_closed_up4
 #print axioms QLF.AssemblyIndex.upPotential_le
+
+-- Double slit in time (Double_Slit.md §6): no QLF axiom.
+#print axioms QLF.TimeDoubleSlit.normSq_expI
+#print axioms QLF.TimeDoubleSlit.time_is_twoPath
+#print axioms QLF.TimeDoubleSlit.space_is_twoPath
+#print axioms QLF.TimeDoubleSlit.space_time_duality
+#print axioms QLF.TimeDoubleSlit.twoPath_eq_born
+#print axioms QLF.TimeDoubleSlit.twoPath_fringe_term
+#print axioms QLF.TimeDoubleSlit.twoPath_expand
+#print axioms QLF.TimeDoubleSlit.twoPath_periodic
+#print axioms QLF.TimeDoubleSlit.time_fringe_period
+#print axioms QLF.TimeDoubleSlit.twoPath_equal
+#print axioms QLF.TimeDoubleSlit.time_dark_fringe
+#print axioms QLF.TimeDoubleSlit.time_bright_fringe
+#print axioms QLF.TimeDoubleSlit.single_time_slit_flat
+#print axioms QLF.TimeDoubleSlit.time_shift_iff
+#print axioms QLF.TimeDoubleSlit.space_shift_iff
+#print axioms QLF.TimeDoubleSlit.time_reciprocity
+#print axioms QLF.TimeDoubleSlit.space_reciprocity
+#print axioms QLF.TimeDoubleSlit.interval_null
+#print axioms QLF.TimeDoubleSlit.interval_eq_zero_iff
+#print axioms QLF.TimeDoubleSlit.light_cone_duality
+#print axioms QLF.TimeDoubleSlit.off_cone_distinguishable
+#print axioms QLF.TimeDoubleSlit.reversed_amp
+#print axioms QLF.TimeDoubleSlit.time_reversed_perspective
+#print axioms QLF.TimeDoubleSlit.relPhase_global
+#print axioms QLF.TimeDoubleSlit.relPhase_reversed
+#print axioms QLF.TimeDoubleSlit.reversed_relPhase_differs
+#print axioms QLF.TimeDoubleSlit.reverse_is_negative_frequency
+#print axioms QLF.TimeDoubleSlit.marked_coherent
+#print axioms QLF.TimeDoubleSlit.marked_expand
+#print axioms QLF.TimeDoubleSlit.marked_orthogonal
+#print axioms QLF.TimeDoubleSlit.marked_visibility_bound
+#print axioms QLF.TimeDoubleSlit.tick_amp_phase
+#print axioms QLF.TimeDoubleSlit.tick_conservation
+#print axioms QLF.TimeDoubleSlit.mu4_pattern
 
 -- Locality (issue #315): tick reading, shared closure across spacelike endpoints,
 -- perspective locality, no-signalling and the Bell audit. No QLF axiom.
