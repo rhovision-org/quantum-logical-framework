@@ -3,9 +3,10 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
 
-**Status.** Gates CC0, CC3 and CC2/CC6 are **proved** in Lean, with no axioms:
+**Status.** Gates CC0, CC3 and CC2/CC6 are **proved** in Lean, with no axioms, in
 [`lean/QLF_CooperativeClosure.lean`](lean/QLF_CooperativeClosure.lean). Gate CC1 (the analogical
-listener) is the next proof target. CC4 (semantic-to-ZFA bridge) and CC5 (free action vs Friston free
+listener) is **proved** in [`lean/QLF_AnalogicalListener.lean`](lean/QLF_AnalogicalListener.lean), no
+axioms. CC4 (semantic-to-ZFA bridge) and CC5 (free action vs Friston free
 energy) are **open bridges**. Nothing here claims that QLF closure *is* semantic or empirical truth.
 
 The program is a joint one with [Quantum-OS](https://github.com/rhovision-org/quantum-os): QLF states
@@ -22,6 +23,7 @@ equivalent or undetermined.
 | CC0 consensus fallacy | Derived | **Impossible**: consensus with no observation among its sources cannot discriminate the world. **Possible**: a unanimous, consistent false consensus, for every `n`. |
 | CC3 provenance | Derived | **Necessary**: origins and support are invariant under repetition, replay and copying. |
 | CC2/CC6 synthesis | Derived | **Necessary**: parity needs every holder. **Possible**: an `n`-party irreducible ZFA closure. |
+| CC1 analogical listener | Derived | **Necessary**: extension keeps mappings, closure carries the relation, inconsistency is permanent. **Impossible**: closing with an obligation open. |
 | CC4, CC5 | Bridge | **Undetermined**. |
 
 ---
@@ -118,7 +120,7 @@ hold. Each holds a different bit. Diversity is productive here *because* the que
 variable; `irrelevant_member` and `echo_chamber_blind` are the two ways it fails to be.
 Two of CC6's listed limits are not yet proved: that redundancy can raise reliability without adding
 information (this needs a noise model), and that contradictions must be resolved rather than averaged
-(this needs CC1's rejection predicate).
+(CC1's rejection predicate now exists, §4b; the cooperative statement is not yet proved).
 
 ### 4a. The substrate witness, and how `StrongCoIncides` fits
 
@@ -146,12 +148,39 @@ algebraic** condition, not as the representation of cooperative synthesis:
 
 ---
 
+## 4b. CC1 — the analogical listener (proved)
+
+An analogy `A : B :: C : ?` is a **partial correspondence** from a source relational structure to a
+target one (one binary relation each, finite). Its unmapped source elements are its **open
+obligations**. It **closes** when no obligation is open and every source relation is carried exactly
+onto the target. It is **rejected** when no extension closes.
+
+| Theorem | Statement |
+|---|---|
+| `extend_le`, `extend_keeps` | Filling an obligation never rewrites an established mapping. |
+| `closed_preserves` | A closed analogy carries every source relation onto the target. |
+| `consistent_extend_iff` | Filling one obligation keeps consistency **iff** a local check against the element itself and everything already mapped passes. A listener can grow one contribution at a time, and each contribution is checked against what is there, not re-checked from scratch. |
+| `not_consistent_iff` | An invalid correspondence has a concrete counterexample: two mapped elements whose relation is not carried. Consistency is decidable on finite structures. |
+| `open_not_closed`, `closed_has_no_obligation` | An analogy with an open obligation is not closed, so it is never promoted to a validated correspondence. |
+| `inconsistent_persists`, `inconsistent_rejected` | Inconsistency survives every extension, so an inconsistent analogy is rejected outright. |
+| `rutherford_closes`, `wrong_completion_rejected` | Worked case: sun : planet :: nucleus : ? closes with *electron*; filling it with *nucleus* is rejected (planet orbits sun, nucleus does not orbit itself). |
+| `similarity_not_correspondence` | A map that matches every element's label perfectly can still fail to carry the relation. Similarity can guide the search; it is not a proof. |
+
+**What it is worth.** These are properties of finite partial homomorphisms, standard in model theory;
+the content for this program is the listener's discipline. A contribution is accepted or refused by
+a local, decidable check; refusal is permanent; nothing open is called closed. That is the shape an
+operational listener in Quantum-OS needs, and it fixes the rejection predicate CC6's contradiction
+limit was waiting on: a contradictory contribution is an inconsistency, so it is rejected, not
+averaged. Not done here: competing analogies listening concurrently, higher-order analogies whose
+elements are closed analogies (CC8), and any encoding of a listener as a twist history (CC4).
+
+---
+
 ## 5. Gates not yet proved
 
 | Gate | Status | Note |
 |---|---|---|
 | Constructive closure | Partly addressed | The Need → Offer → Commitment step is closure selection: choose offers so that an obligation closes. [`QLF_ClosureSelection`](lean/QLF_ClosureSelection.lean) `selection_closes_iff` decides it in polynomial time in what is written ([Framing.md](Framing.md) §4a), for conservation of written counts only. Fulfilment and acknowledgement are outside the substrate and stay empirical. |
-| CC1 analogical listener | **Next target** | A finite typed listener (partial correspondence, obligations, closure and rejection predicates). The four listed properties are decidable on a finite class, so this is provable without a bridge. |
 | CC4 semantic → ZFA | **Open bridge** | Needs `Encode : CooperativeHistory → QLFHistory`, fixed independently of the verdict, with soundness and completeness on a declared domain. An encoding that runs an external verifier and emits a balanced or unbalanced word is an encoding of verification, not a QLF mechanism. Until CC4 holds, Quantum-OS results are QLF-inspired verification, not QLF-derived closure. |
 | CC5 free action vs free energy | **Open bridge** | QLF's per-closure `ΔF = −log 2` ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)) is not Friston's variational free energy. No identity is claimed. |
 | CC7 first cooperative closure | Partly addressed | `coalitionResolves_iff` shows resolution is invariant under repetition, popularity and member count. Ordering relative to a schedule without a global "now" (per [Coincidence_QLF.md](Coincidence_QLF.md) and #281) is open. |
@@ -207,8 +236,8 @@ It is a useful prior example for the Quantum-OS side, specifically the certifica
 
 ## 8. Where to go next
 
-1. CC1: a finite analogical listener in Lean (`QLF_AnalogicalListener`), proving extension
-   monotonicity, preservation, decidable counterexample, and no promotion while obligations stay open.
+1. CC1 extensions: concurrent competing listeners, multiple relations, and listeners whose elements
+   are closed listeners (the CC8 hierarchy).
 2. An `n`-origin `StrongCoIncides` and a census of how many irreducible `k`-party closures are strong.
 3. CC4 on a toy domain: an encoding of parity-resolution histories into twist words, specified before
    checking, with a stated soundness or completeness verdict (either outcome is a result).

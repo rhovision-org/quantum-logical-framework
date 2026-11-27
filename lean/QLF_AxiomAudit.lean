@@ -193,6 +193,7 @@ import QLF_WalkDispersionBound
 import QLF_RelationalClock
 import QLF_VacuumCorrelation
 import QLF_CooperativeClosure
+import QLF_AnalogicalListener
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1345,3 +1346,17 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ClosureSelection.closable_iff
 #print axioms QLF.ClosureSelection.reachable_card_le
 #print axioms QLF.ClosureSelection.subset_sum_embeds
+
+-- Analogical listener, gate CC1: no QLF axiom.
+#print axioms QLF.AnalogicalListener.extend_le
+#print axioms QLF.AnalogicalListener.extend_keeps
+#print axioms QLF.AnalogicalListener.closed_preserves
+#print axioms QLF.AnalogicalListener.consistent_extend_iff
+#print axioms QLF.AnalogicalListener.not_consistent_iff
+#print axioms QLF.AnalogicalListener.open_not_closed
+#print axioms QLF.AnalogicalListener.closed_has_no_obligation
+#print axioms QLF.AnalogicalListener.inconsistent_persists
+#print axioms QLF.AnalogicalListener.inconsistent_rejected
+#print axioms QLF.AnalogicalListener.rutherford_closes
+#print axioms QLF.AnalogicalListener.wrong_completion_rejected
+#print axioms QLF.AnalogicalListener.similarity_not_correspondence
