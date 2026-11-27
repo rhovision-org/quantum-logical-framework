@@ -16,11 +16,13 @@ precision) by collecting the *forward* work in one place.
 **What "open" means here (issue [#78](https://github.com/rhovision-org/quantum-logical-framework/issues/78)).**
 🔵/🟣 "open" means **a value not yet calculated / a rendering not yet formalized — work requiring
 deeper investigation**, *not* a hole where the theory could be wrong. QLF's ontology is **sufficient** —
-the load-bearing posture is a **single premise**: in a possibilist, logically-consistent (`RCA₀`)
-substrate, **Zero Free Action accounts for every terminating computation** — all possible logical Turing
-machines, quantum computations, and formal languages are ZFA strings that survive the closure filter
-([`qlf_universality`](lean/QLF_Universality.lean), the proven *sufficiency* pillar; the filter is
-Church–Turing complete, a selection principle that discards no computable physics, not a restriction).
+the load-bearing posture is **one well-supported conjecture**, equal and opposite logical action
+([`Framing.md`](Framing.md)). The substrate's own gates evaluate every Boolean function
+(`fredkin_complete`); every terminating circuit has a ZFA encoding ([`qlf_universality`](lean/QLF_Universality.lean),
+bookkeeping until shown faithful, [`Principles.md`](Principles.md) P10); native quantum universality on
+presence strands and the record-level anthropic equivalence are proved (O1, O2; `native_universal`,
+`anthropic_equivalence`). The filter is a selection principle, not
+a restriction.
 Its *exclusivity* is a published conjecture with named defeaters — the full ledger, typed by
 evidential strength with the misses beside the hits, is [`Completeness_Evidence.md`](Completeness_Evidence.md).
 Sufficiency is supported by parameter-free overdetermination (§3 there) and confirmed exclusions (§4c);
@@ -79,6 +81,20 @@ canonical status list; when an item moves, update it here and in its owning doc.
 ---
 
 ## Working priority — what to do next
+
+**The one-conjecture framing (2026-11-27, [`Framing.md`](Framing.md) §6) registered six obligations
+for general model testing, and each now has a proved core:** O1 native universality on presence strands
+([`QLF_NativeBell`](lean/QLF_NativeBell.lean), [`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean),
+`native_universal`); O2 the anthropic equivalence at the level of records
+([`QLF_AnthropicEquivalence`](lean/QLF_AnthropicEquivalence.lean), `anthropic_equivalence`); O3 the
+model-encoding interface ([`QLF_ModelTesting`](lean/QLF_ModelTesting.lean)); O4 closure selection with a
+proved polynomial cost ([`QLF_ClosureSelection`](lean/QLF_ClosureSelection.lean)); O5 the uniform measure
+and the Pauli frame on a spin-½ atom ([`QLF_UniformMeasure`](lean/QLF_UniformMeasure.lean),
+[`QLF_PauliFrame`](lean/QLF_PauliFrame.lean)); O6 semantic dependency checks against the axiom
+footprints ([`scripts/framing_consistency.py`](scripts/framing_consistency.py)). **What remains:** an
+approximation rate for native circuits (Solovay–Kitaev on the native set), `ObsEquiv` beyond two bodies,
+optimization beyond closure selection, and the worked verdicts (Bell,
+Kochen–Specker) restated as instances of the interface.
 
 Recorded here so it survives a session boundary. The governing question has shifted: not *how many ways*,
 but **given that everything happens every way, exactly how do those ways add?**

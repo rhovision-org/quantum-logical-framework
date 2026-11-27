@@ -19,9 +19,11 @@ This is why ZFA is not a filter applied to a pre-existing world. The null action
 ([`Lagrangian_Formulation.md`](Lagrangian_Formulation.md)): histories without ZFA closure are not deleted
 from reality — *they never had it*. Creation is therefore not the appearance of a something; it is the
 **actualization of what already sums to nothing** ([`Philosophy.md`](Philosophy.md); [`MyStory.md`](MyStory.md):
-"ZFA is the only rule"). And nothing computable is lost in the bargain — every terminating computation *is*
-a ZFA string (`qlf_universality`, [`lean/QLF_Universality.lean`](lean/QLF_Universality.lean)); what is
-pruned is only the non-terminating tail that never closes.
+"ZFA is the only rule"). And nothing computable is lost in the bargain: the substrate's own ZFA-preserving gates evaluate
+every Boolean function (`fredkin_complete`, [`lean/QLF_QuantumComputer.lean`](lean/QLF_QuantumComputer.lean)).
+That what is pruned is only the non-terminating tail is a reading; `qlf_universality`
+([`lean/QLF_Universality.lean`](lean/QLF_Universality.lean)) gives an encoding that never uses
+termination ([`Principles.md`](Principles.md) P10).
 
 ## 2. Everything possible exists a priori
 

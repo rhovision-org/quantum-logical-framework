@@ -14,6 +14,7 @@ on:
       - '*.py'
       - 'lean/**'
       - 'scripts/doc_network_check.py'
+      - 'scripts/framing_consistency.py'
       - '.github/workflows/doc-network-check.yml'
 
   pull_request:
@@ -23,6 +24,7 @@ on:
       - '*.py'
       - 'lean/**'
       - 'scripts/doc_network_check.py'
+      - 'scripts/framing_consistency.py'
       - '.github/workflows/doc-network-check.yml'
 
 jobs:
@@ -39,3 +41,6 @@ jobs:
 
       - name: Check the document network
         run: python3 scripts/doc_network_check.py
+
+      - name: Check framing consistency (Framing.md O6)
+        run: python3 scripts/framing_consistency.py

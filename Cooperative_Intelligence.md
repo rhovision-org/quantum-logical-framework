@@ -10,9 +10,19 @@ energy) are **open bridges**. Nothing here claims that QLF closure *is* semantic
 
 The program is a joint one with [Quantum-OS](https://github.com/rhovision-org/quantum-os): QLF states
 and proves the closure conditions; Quantum-OS would instantiate them among humans and agents and test
-them. In the framing of [PR #334](https://github.com/rhovision-org/quantum-logical-framework/pull/334) (QLF as the quantum computer that tests models), a
-cooperative protocol is a model, and this document records which of its claims are derived, which are
-bookkeeping and which are bridges.
+them. In the framing of [Framing.md](Framing.md), QLF is the quantum computer that tests models, and
+ZFA is its one well-supported conjecture. A cooperative protocol is one more model to test. Every
+statement below is one of the four kinds of [Framing.md](Framing.md) §2: derived (a Lean theorem), a
+known fact (A10–A14 in [Principles.md](Principles.md); none is used here), a bridge, or a reading.
+Each verdict is one of the five of [Framing.md](Framing.md) §4: necessary, possible, impossible,
+equivalent or undetermined.
+
+| Gate | Kind | Verdict |
+|---|---|---|
+| CC0 consensus fallacy | Derived | **Impossible**: consensus with no observation among its sources cannot discriminate the world. **Possible**: a unanimous, consistent false consensus, for every `n`. |
+| CC3 provenance | Derived | **Necessary**: origins and support are invariant under repetition, replay and copying. |
+| CC2/CC6 synthesis | Derived | **Necessary**: parity needs every holder. **Possible**: an `n`-party irreducible ZFA closure. |
+| CC4, CC5 | Bridge | **Undetermined**. |
 
 ---
 
@@ -140,6 +150,7 @@ algebraic** condition, not as the representation of cooperative synthesis:
 
 | Gate | Status | Note |
 |---|---|---|
+| Constructive closure | Partly addressed | The Need → Offer → Commitment step is closure selection: choose offers so that an obligation closes. [`QLF_ClosureSelection`](lean/QLF_ClosureSelection.lean) `selection_closes_iff` decides it in polynomial time in what is written ([Framing.md](Framing.md) §4a), for conservation of written counts only. Fulfilment and acknowledgement are outside the substrate and stay empirical. |
 | CC1 analogical listener | **Next target** | A finite typed listener (partial correspondence, obligations, closure and rejection predicates). The four listed properties are decidable on a finite class, so this is provable without a bridge. |
 | CC4 semantic → ZFA | **Open bridge** | Needs `Encode : CooperativeHistory → QLFHistory`, fixed independently of the verdict, with soundness and completeness on a declared domain. An encoding that runs an external verifier and emits a balanced or unbalanced word is an encoding of verification, not a QLF mechanism. Until CC4 holds, Quantum-OS results are QLF-inspired verification, not QLF-derived closure. |
 | CC5 free action vs free energy | **Open bridge** | QLF's per-closure `ΔF = −log 2` ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)) is not Friston's variational free energy. No identity is claimed. |

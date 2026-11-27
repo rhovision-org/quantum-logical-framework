@@ -70,6 +70,25 @@ A bridge with no such return is not a closed loop, however suggestive the numeri
 6. Reject promotion from conditional to derived unless the bridge itself
    has been proved and reviewed.
 
+## Model-testing and equivalence certificates
+
+A test of a model ([Framing.md](Framing.md) §4, [ScientificApproach.md](ScientificApproach.md) §1d)
+is recorded as a certificate with these fields, so verdicts from different PRs can be compared:
+
+| Field | Content |
+|---|---|
+| `model` | The model and the source that states it |
+| `encoding` | The map from the model's states and events to histories and closures, with its Lean or script anchor |
+| `can_fail` | An input on which the encoded predicate is false (an encoding that makes everything ZFA certifies nothing) |
+| `conditions` | Alphabet, capacity or depth, observational domain |
+| `verdict` | `NECESSARY`, `POSSIBLE`, `IMPOSSIBLE`, `EQUIVALENT` or `UNDETERMINED` |
+| `anchors` | Theorems or exact computations, with footprints and the semantic dependency audit of [Proof_Trust.md](Proof_Trust.md) |
+| `to_world` | The known fact or bridge that carries the verdict to nature, or `none` (a substrate verdict only) |
+
+An `EQUIVALENT` certificate also names its equivalence (for example `ObsEquiv`,
+[`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean)) and its domain. A search
+that finds no closure records `UNDETERMINED` unless the domain is finite and exhausted.
+
 The current research programme is tracked in
 [Open_Problems.md](Open_Problems.md) and issue
 [#11](https://github.com/rhovision-org/quantum-logical-framework/issues/11).
