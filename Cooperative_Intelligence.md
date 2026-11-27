@@ -6,8 +6,12 @@
 **Status.** Gates CC0, CC3 and CC2/CC6 are **proved** in Lean, with no axioms, in
 [`lean/QLF_CooperativeClosure.lean`](lean/QLF_CooperativeClosure.lean). Gate CC1 (the analogical
 listener) is **proved** in [`lean/QLF_AnalogicalListener.lean`](lean/QLF_AnalogicalListener.lean), no
-axioms. CC4 (semantic-to-ZFA bridge) and CC5 (free action vs Friston free
-energy) are **open bridges**. Nothing here claims that QLF closure *is* semantic or empirical truth.
+axioms. CC4, CC7, CC9 and competing listeners are proved in
+[`lean/QLF_CooperativeBridge.lean`](lean/QLF_CooperativeBridge.lean), and CC5 and CC8 in
+[`lean/QLF_CooperativeLimits.lean`](lean/QLF_CooperativeLimits.lean), no axioms. CC4 holds on one
+declared domain (needs and offers) and is proved impossible for order-sensitive semantics. CC5 holds
+only as one located match, and the general identity is refuted. Both stay open bridges beyond those
+scopes (§5). Nothing here claims that QLF closure *is* semantic or empirical truth.
 
 The program is a joint one with [Quantum-OS](https://github.com/rhovision-org/quantum-os): QLF states
 and proves the closure conditions; Quantum-OS would instantiate them among humans and agents and test
@@ -23,8 +27,13 @@ equivalent or undetermined.
 | CC0 consensus fallacy | Derived | **Impossible**: consensus with no observation among its sources cannot discriminate the world. **Possible**: a unanimous, consistent false consensus, for every `n`. |
 | CC3 provenance | Derived | **Necessary**: origins and support are invariant under repetition, replay and copying. |
 | CC2/CC6 synthesis | Derived | **Necessary**: parity needs every holder. **Possible**: an `n`-party irreducible ZFA closure. |
-| CC1 analogical listener | Derived | **Necessary**: extension keeps mappings, closure carries the relation, inconsistency is permanent. **Impossible**: closing with an obligation open. |
-| CC4, CC5 | Bridge | **Undetermined**. |
+| CC1 analogical listener | Derived | **Necessary**: extension keeps mappings, closure carries the relation, an inconsistent branch stays inconsistent under every extension. **Impossible**: closing with an obligation open. |
+| CC4 semantic → ZFA | Bridge, scoped | **Equivalent** on needs and offers: closure iff every need is met. **Impossible**: any per-act encoding of an order-sensitive semantics. **Undetermined** elsewhere. |
+| CC5 free action vs free energy | Bridge, scoped | **Equivalent** only for full resolution of one bit from a uniform prior. **Impossible**: a general identity. |
+| CC7 first closure | Derived | **Necessary**: the final verdict is schedule invariant and a first closure is a record. **Impossible**: a schedule-free first closure. |
+| Competing listeners | Derived | **Possible**: the race winner changes with the schedule. **Necessary**: listeners agree on whether the whole closes. |
+| CC8 hierarchy | Derived | **Necessary**: every level of a parity hierarchy is irreducible. **Impossible**: a finite group of capacity-bounded listeners that hears every closure. |
+| CC9 certificates | Derived (bookkeeping) | **Necessary**: verifiers agree. A certificate built from an external Boolean carries that bit and nothing more. |
 
 ---
 
@@ -41,7 +50,7 @@ Two conditions keep this from being empty.
    [Coincidence_QLF.md](Coincidence_QLF.md) §4). Every theorem below fixes the holders first.
 2. **"Resolves" is defined independently of closure.** Here it means *determines the answer*: agreement
    on what the coalition holds forces agreement on the answer. That is information, not ZFA. Linking the
-   two is CC4 (§6).
+   two is CC4 (§5a).
 
 Four kinds of closure are kept apart throughout. **Social** closure is agreement. **Logical** closure is
 satisfying stated obligations (for QLF, a ZFA verdict). **Empirical** closure is surviving
@@ -183,21 +192,107 @@ operational contract they give a Quantum-OS listener is narrow, and should be st
   injectivity or surjectivity: not an isomorphism, not unique, not covering the target.
 
 CC6's cooperative contradiction policy (resolve rather than average) is **not** established by this;
-§4 keeps it open. Not done here: competing analogies listening concurrently, higher-order analogies whose
-elements are closed analogies (CC8), and any encoding of a listener as a twist history (CC4).
+§4 keeps it open. Not done here: higher-order analogies whose elements are closed analogies, and any
+encoding of an analogy as a twist history. Competing listeners, a hierarchy and CC4 on another domain
+are in §5.
 
 ---
 
-## 5. Gates not yet proved
+## 5. Gates CC4, CC5, CC7, CC8, CC9 and competing listeners
+
+All of these are Lean theorems with no axiom: [`QLF_CooperativeBridge`](lean/QLF_CooperativeBridge.lean)
+(CC4, CC7, listeners, CC9) and [`QLF_CooperativeLimits`](lean/QLF_CooperativeLimits.lean) (CC5, CC8).
+Where a bridge does not hold in general, what is proved is its scope and a counterexample beyond it.
+
+### 5a. CC4: semantic to ZFA, on a declared domain
+
+The domain is **needs and offers on four kinds**. A cooperative history is a list of acts, each
+`need k` or `offer k`. The encoding is fixed act by act before any verdict: a need of kind `k` is the
+twist on axis `k`, and an offer is its conjugate.
+
+| Result | Theorem |
+|---|---|
+| The encoded history closes iff every need is matched by an offer of the same kind. Sound and complete. | `encode_closes_iff_met` |
+| A met history is a full ZFA closure, Pauli fold included. | `met_pauli_closed` |
+| The encoding is a homomorphism, so it cannot see the verdict it produces. | `encode_append` |
+| Any decidable predicate has *some* encoding whose closure is that predicate, so the existence of an encoding is no evidence. | `any_verdict_encodes` |
+| No per-act encoding, into any twist words, represents a semantics that tells `[need, offer]` from `[offer, need]`. | `no_act_encoding_sees_order`, `order_blind` |
+
+So CC4 holds where the question is conservation of needs and offers, and it is impossible where the
+question is whether an offer *answered* a need asked earlier. Count balance is blind to order, and that
+blindness is a theorem, not a gap in effort. Whether a real cooperative task is a needs-and-offers
+history is a reading. Outside this domain CC4 is undetermined, and the Quantum-OS arm E stays
+unavailable for any task that needs order.
+
+### 5b. CC5: QLF's `log 2` is one free-energy change, not free energy
+
+| Result | Theorem |
+|---|---|
+| Fully resolving a binary question with prior `p` gains `−log p`. | `kl_delta_prior` |
+| That gain equals QLF's per-closure `log 2` iff the prior is uniform. | `quantum_matches_iff_uniform` |
+| A belief that resolves the bit only partly gains strictly less. | `partial_belief_below_quantum` |
+| Variational free energy depends on the belief, so no constant equals it for every belief. | `vfe_not_constant`, `no_constant_identity` |
+
+The match is located exactly: one bit, uniform prior, full resolution. Elsewhere the general identity is
+false, and CC5 stays an open bridge for any other generative model.
+
+### 5c. CC7: first closure relative to a schedule
+
+| Result | Theorem |
+|---|---|
+| Whether the whole history closes does not depend on the schedule. | `final_verdict_schedule_invariant` |
+| When it first closes does: the same four acts first close at 2 in one order and at 4 in another. | `first_closure_schedule_dependent` |
+| No function of the multiset of acts gives the first closure. There is no global "now" to read it from. | `no_schedule_free_first_closure` |
+| A first closure is a record: later acts never move it. | `isFirst_append` |
+
+### 5d. Competing listeners
+
+A listener hears only the acts of the kinds it attends to.
+
+| Result | Theorem |
+|---|---|
+| Which of two listeners closes first depends on the schedule. | `race_schedule_dependent` |
+| If the whole history is met, every listener's view is met. | `whole_met_listener_met` |
+| Listeners whose kinds cover all four, each met, make the whole met. | `listeners_cover_met` |
+
+Listeners disagree about *when* and agree about *whether*. A race between listeners is a fact about the
+schedule, and it does not change the verdict.
+
+### 5e. CC8: hierarchy, and the Law of Exceptions
+
+| Result | Theorem |
+|---|---|
+| A two-level hierarchy (blocks report their parity, the top adds the reports) computes the flat parity. | `hierarchical_parity` |
+| The top needs every block's report, and each report needs every member of its block. | `reports_irreducible`, `block_irreducible` |
+| A coalition missing one leaf member cannot resolve the top. | `missing_leaf_blind` |
+| A capacity-`R` listener that does not hear a closure returns *undetermined*, and the closure is real at `R + 1`. | `budget_failure_undetermined` |
+| Pooling two capacity-bounded listeners hears exactly what the larger one hears. | `pooled_capacity` |
+| Any finite group of capacity-bounded listeners misses a real closure. | `group_of_listeners_misses` |
+
+A hierarchy factors an irreducible question and never lets a level skip a member. The capacity results
+are corollaries of [`QLF_LawOfExceptions`](lean/QLF_LawOfExceptions.lean): failing within a budget is
+not impossibility, and no finite committee is final. That a human or AI participant is a
+capacity-bounded listener is a reading.
+
+### 5f. CC9: certificates
+
+| Result | Theorem |
+|---|---|
+| Two procedures that each decide count balance are the same function, so the verdict depends on the certificate, not on who checks it. | `verifiers_agree` |
+| An accepted certificate's claim is the true verdict, and an accepted positive one is a Pauli receipt. | `verify_sound`, `verify_true_pauli` |
+| A certificate built from an external verifier's Boolean verifies exactly when the Boolean is true. | `verdict_certificate_is_the_bit` |
+
+`verifiers_agree` is bookkeeping, true of any decidable checker. The last row is the kill condition "a
+certificate restates an external verdict", proved: such a certificate carries one bit and nothing more.
+
+### 5g. Still open
 
 | Gate | Status | Note |
 |---|---|---|
 | Constructive closure | Partly addressed | The Need → Offer → Commitment step is closure selection: choose offers so that an obligation closes. [`QLF_ClosureSelection`](lean/QLF_ClosureSelection.lean) `selection_closes_iff` decides it in polynomial time in what is written ([Framing.md](Framing.md) §4a), for conservation of written counts only. Fulfilment and acknowledgement are outside the substrate and stay empirical. |
-| CC4 semantic → ZFA | **Open bridge** | Needs `Encode : CooperativeHistory → QLFHistory`, fixed independently of the verdict, with soundness and completeness on a declared domain. An encoding that runs an external verifier and emits a balanced or unbalanced word is an encoding of verification, not a QLF mechanism. Until CC4 holds, Quantum-OS results are QLF-inspired verification, not QLF-derived closure. |
-| CC5 free action vs free energy | **Open bridge** | QLF's per-closure `ΔF = −log 2` ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)) is not Friston's variational free energy. No identity is claimed. |
-| CC7 first cooperative closure | Partly addressed | `coalitionResolves_iff` shows resolution is invariant under repetition, popularity and member count. Ordering relative to a schedule without a global "now" (per [Coincidence_QLF.md](Coincidence_QLF.md) and #281) is open. |
-| CC8 hierarchy | Open | `closure_hierarchy_strict` ([`QLF_LawOfExceptions`](lean/QLF_LawOfExceptions.lean)) gives a strict capacity hierarchy; the bridge from a finite cooperative resolver to a finite restrictive closure is the same missing step as CO4 in #283. Failure within a budget is not impossibility. |
-| CC9 observer-independent verdict | Bookkeeping | `countBalanced` is decidable, so anyone recomputing a certificate gets the same verdict. That is true of any decidable checker and says nothing QLF-specific. |
+| CC4 beyond needs and offers | Open bridge | An encoding of an order-sensitive semantics would need an order-sensitive closure. Pauli closure is order sensitive in general, but count balance already entails it (`count_balanced_pauli_closed`), so ZFA closure cannot supply it. A different mechanism, or a different domain, is needed. |
+| CC5 for other models | Open bridge | Any generative model other than one uniform bit. |
+| CC6 contradiction policy | Open | How a cooperative listener handles conflicting offers. CC1's `extend` silently ignores them. |
 
 Related: [Diversity_Composition_QLF.md](Diversity_Composition_QLF.md) (D8a, cross-type composition)
 is the diversity thread on the substrate; CC6 here is its information-theoretic counterpart.
@@ -248,10 +343,9 @@ It is a useful prior example for the Quantum-OS side, specifically the certifica
 
 ## 8. Where to go next
 
-1. CC1 extensions: concurrent competing listeners, multiple relations, and listeners whose elements
-   are closed listeners (the CC8 hierarchy).
+1. CC1 extensions: multiple relations, and analogies whose elements are closed analogies.
 2. An `n`-origin `StrongCoIncides` and a census of how many irreducible `k`-party closures are strong.
-3. CC4 on a toy domain: an encoding of parity-resolution histories into twist words, specified before
-   checking, with a stated soundness or completeness verdict (either outcome is a result).
+3. CC4 beyond needs and offers: an order-sensitive domain needs a closure that sees order, which ZFA
+   count balance provably does not (§5a, §5g).
 4. The Quantum-OS side, as an issue there: cooperative listener, provenance graph, certificates and the
    five-arm experiment, kept separate from the frozen `quantum-os#322` controller experiment.

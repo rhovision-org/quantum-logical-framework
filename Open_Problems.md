@@ -711,8 +711,12 @@ Ledger: [`claim_records/coincidence_slice.json`](claim_records/coincidence_slice
 **Cooperative closure (proved slice):** [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md) proves CC0 (consensus
 fallacy), CC3 (provenance conservation) and CC2/CC6 (irreducible synthesis, `n` participants) in
 [`QLF_CooperativeClosure`](lean/QLF_CooperativeClosure.lean), no axioms, and CC1 (the analogical listener) in
-[`QLF_AnalogicalListener`](lean/QLF_AnalogicalListener.lean), no axioms. Open: the semantic-to-ZFA bridge CC4, and CC5 (QLF free action vs Friston free energy, no
-identity claimed).
+[`QLF_AnalogicalListener`](lean/QLF_AnalogicalListener.lean), no axioms. CC4, CC7, CC9 and competing listeners are proved in
+[`QLF_CooperativeBridge`](lean/QLF_CooperativeBridge.lean) and CC5 and CC8 in
+[`QLF_CooperativeLimits`](lean/QLF_CooperativeLimits.lean), no axioms. CC4 holds on the needs-and-offers
+domain and is impossible for order-sensitive semantics under any per-act encoding; CC5 matches only full
+resolution of one uniform bit, and a general identity is refuted. Open: CC4 beyond needs and offers,
+CC5 for other generative models, and CC6's contradiction policy.
 
 ---
 

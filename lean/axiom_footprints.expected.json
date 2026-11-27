@@ -1236,6 +1236,73 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.CooperativeBridge.any_verdict_encodes": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.encode_append": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.encode_closes_iff_met": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.final_verdict_schedule_invariant": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.first_closure_schedule_dependent": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.isFirst_append": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.listeners_cover_met": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.met_pauli_closed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.no_act_encoding_sees_order": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.no_schedule_free_first_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.order_blind": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.race_schedule_dependent": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.verdict_certificate_is_the_bit": [],
+  "QLF.CooperativeBridge.verifiers_agree": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.verify_sound": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.verify_true_pauli": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.whole_met_listener_met": [
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.CooperativeClosure.coalitionResolves_iff": [
     "Classical.choice",
     "Quot.sound",
@@ -1309,6 +1376,68 @@
     "propext"
   ],
   "QLF.CooperativeClosure.xor_synthesis": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.block_irreducible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.budget_failure_undetermined": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.group_of_listeners_misses": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.hierarchical_parity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.kl_delta_prior": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.kl_delta_zero_uniform": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.missing_leaf_blind": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.no_constant_identity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.partial_belief_below_quantum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.pooled_capacity": [
+    "propext"
+  ],
+  "QLF.CooperativeLimits.quantum_matches_iff_uniform": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.reports_irreducible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.vfe_not_constant": [
     "Classical.choice",
     "Quot.sound",
     "propext"

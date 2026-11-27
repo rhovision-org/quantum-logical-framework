@@ -396,5 +396,5 @@ lean_lib QLF where
     `QLF_PerspectiveNetwork,
     `QLF_VacuumCorrelation,
     `QLF_CooperativeClosure,
-    `QLF_AnalogicalListener
+    `QLF_AnalogicalListener, `QLF_CooperativeBridge, `QLF_CooperativeLimits
   ]
