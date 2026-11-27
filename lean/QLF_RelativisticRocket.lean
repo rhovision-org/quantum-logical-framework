@@ -183,7 +183,7 @@ theorem emitTime_lt {g : ℝ} (hg : 0 < g) (τ : ℝ) : emitTime g τ < 1 / g :=
   linarith [Real.exp_pos (-(g * τ))]
 
 /-- **The redshift limit.** If no frequency ratio larger than `N > 1` can be realized (for QLF, the
-    Planck frequency over the lowest frequency a finite universe resolves), Earth drops below it at
+    Planck frequency over the background frequency, below which nothing can be seen), Earth drops below it at
     ship time `log N / g` and not before: `e^{−gτ} ≤ 1/N ↔ log N / g ≤ τ`. Finite, not infinite. -/
 theorem redshift_limit_iff {g N τ : ℝ} (hg : 0 < g) (hN : 0 < N) :
     Real.exp (-(g * τ)) ≤ 1 / N ↔ Real.log N / g ≤ τ := by

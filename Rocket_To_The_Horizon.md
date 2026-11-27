@@ -82,30 +82,35 @@ The signal the ship receives at proper time `τ` left Earth at `tₑ(τ) = (c/g)
 from Earth arrives multiplied by `e^{−gτ/c}`**. In special relativity this goes to zero only as
 `τ → ∞`: Earth never quite disappears, it fades forever.
 
-QLF adds a limit. A finite-information universe realizes only a finite range of frequencies
-([`QLF_Realizability`](lean/QLF_Realizability.lean)), with the Planck frequency at the top
-([`QLF_PlanckScale`](lean/QLF_PlanckScale.lean) `planck_length_floor`). Call the largest realizable
-frequency ratio `N`. Then Earth's signals drop below it at ship time
+But nothing can be seen below the background. A signal redshifted down into the background radiation
+is indistinguishable from it, so the usable frequency range has a floor (the background) as well as
+a ceiling (the Planck frequency: a finite-information universe realizes only a finite range of
+frequencies, [`QLF_Realizability`](lean/QLF_Realizability.lean), with the Planck scale at the top,
+[`QLF_PlanckScale`](lean/QLF_PlanckScale.lean) `planck_length_floor`). Call the ratio of ceiling to
+floor `N`. Then even the most energetic signal Earth could send drops into the background at ship
+time
 
 `τ = (c/g) ln N`, exactly, and not before (`redshift_limit_iff`).
 
-That is finite. Take the lowest frequency to be the cosmic one, the Hubble rate `H₀`, so that
-`N = 1/(H₀ t_P) ≈ 8.5×10⁶⁰` and `ln N ≈ 140.3`:
+That is finite. With the cosmic microwave background as the floor, `N = E_P/(k T_CMB) ≈ 5.2×10³¹`
+and `ln N ≈ 73`:
 
-**At 1 g the ship leaves Earth's cosmic horizon after about 136 years of ship time.** After that,
-even a Planck-frequency signal from Earth arrives below the lowest frequency the universe resolves,
-so nothing from Earth can reach the ship as a realizable event.
+**At 1 g the ship leaves Earth's horizon after about 71 years of ship time.** After that, even a
+Planck-energy signal from Earth arrives below the background, so nothing Earth sends can be seen by
+the ship. (Measuring the floor at the CMB peak instead, `2.82 kT`, changes this by one year. Taking
+the far lower floor of the Hubble rate, `N = 1/(H₀ t_P)`, `ln N ≈ 140`, would give 136 years: an
+upper bound for a background-free universe.)
 
 | Milestone | Ship time at 1 g |
 |---|---:|
 | proper velocity reaches `c`; Earth's last arriving signal is sent | 0.85 yr |
 | passes the Hubble distance | 23 yr |
-| Earth passes the redshift limit `ln N ≈ 140` | 136 yr |
+| Earth's brightest possible signal sinks into the background (`ln N ≈ 73`) | 71 yr |
 
 The same limit applies to the black hole. Far observers see the infaller's signals redden as
 `e^{−κt}`, with `κ = c/(2 rs)` the surface gravity (the standard late-time law). With the limit, the
-infaller is gone from the far observers' world after `t = (2 rs/c) ln N`: about 3.3 hours for
-Sgr A* and 28 ms for a 10-solar-mass hole, not "never".
+infaller sinks into the background for the far observers after `t = (2 rs/c) ln N`: about 1.7 hours
+for Sgr A* and 14 ms for a 10-solar-mass hole, not "never".
 
 **Is the ship leaving our black hole?** In the nested picture of [`BLACK-HOLES.md`](BLACK-HOLES.md)
 §4a, no. There our universe is the interior of a parent hole, and the parent's horizon is our
@@ -119,8 +124,9 @@ infaller of [`Falling_Into_Black_Holes.md`](Falling_Into_Black_Holes.md), the sh
 meets a horizon.
 
 **Status and scope.** §1–§4 and the formula `τ = (c/g) ln N` are proved. The choice of `N` is a
-premise: Planck frequency over Hubble rate is the natural reading of QLF's finite frequency range,
-not a theorem, and a different floor changes `ln N` and so the 136 years proportionally. That
+premise: the ceiling is QLF's Planck scale and the floor is the observed background, and a different
+floor changes `ln N` and so the 71 years proportionally. The background floor is ordinary physics
+(signal below noise); the ceiling is the QLF ingredient. That
 crossing the redshift limit is physically "leaving the universe" of Earth is a QLF **reading**: in
 SR the signals still arrive, ever redder; in QLF they stop being realizable. The `e^{−κt}` black-hole
 law is standard GR and is not proved in Lean here. Note also that the substrate's step census has a
