@@ -291,6 +291,7 @@ lean_lib QLF where
     `QLF_BoostCovariance,
     `QLF_InteractingKinematics,
     `QLF_BoostStates,
+    `QLF_BoostAmplitudes,
     `QLF_RealizableWalk,
     `QLF_Tsirelson,
     `QLF_Mass,
@@ -362,6 +363,7 @@ lean_lib QLF where
     `QLF_ClockDomains,
     `QLF_ClockPairing,
     `QLF_ClockIntervention,
+    `QLF_TimeReversalPerspective,
     `QLF_MrEUpdate,
     `QLF_GuptaPrefixClock,
     `QLF_ReadoutCriterion,
@@ -376,5 +378,6 @@ lean_lib QLF where
     `QLF_PerspectiveLocality,
     `QLF_ControlledUnitary,
     `QLF_TwoLevelUnitary,
-    `QLF_Barenco
+    `QLF_Barenco,
+    `QLF_QuantumComputer
   ]

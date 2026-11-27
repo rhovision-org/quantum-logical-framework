@@ -70,13 +70,13 @@ support finishes it (`supported_mem_closure`).
 
 * The gate set here is all one-qubit unitaries, an uncountable set. A finite gate set such as
   Clifford+T can only approximate. Density of rotations about two axes in `SU(2)` is
-  `su2_dense` in `QLF_QuantumComputer` (PR #323, open at the time of writing). The
+  `su2_dense` in [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean). The
   Solovay–Kitaev rate is not proved.
 * No gate count is claimed. The commutator recursion is a proof of membership, not an
   efficient compilation.
 * This is a theorem about the matrix algebra of qubits. It does not by itself show that the
   QLF substrate performs these gates. For that, the entangling gate has to act on superposed
-  presence, which is open (see `QLF_QuantumComputer`, PR #323).
+  presence, which is open (see [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean) and [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md)).
 
 ## Perspectives: the observer holds the gates
 

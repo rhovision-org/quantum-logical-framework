@@ -396,7 +396,7 @@ For a two-body contact-interaction walk on `ℤ³` the conservation law is now d
 | 1. Free propagation covariant in the large | proved (§5b, `diracWalk_boost_covariant`) | — |
 | 2. Interacting kinematics covariant in the large, given lattice conservation and the summed long-wavelength bound; elementary umklapp vectors along a boost axis are not boost-stable | proved (this section, `process_boost_covariant`, `umklapp_x_not_covariant`) | — |
 | 3. Lattice conservation derived for a concrete interacting walk | **proved for two bodies on `ℤ³`** with any contact interaction (`twoBody_lattice_conservation`, `scattering_latticeConserving`) | `N` bodies: the same argument with an `N`-fold joint shift; labour |
-| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b open** | 4b: compare tree-level amplitudes of the two-body contact walk at fixed quasi-energy; prove the `O(κ²)` band bound |
+| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the relative boost defect of the two-body tree-level vertex proxy scales as `κ²` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | prove the `O(κ²)` bounds; extend the stage-3 conservation theorems to a matrix-valued contact; energy-conserving amplitudes; a substrate reason for a Lorentz-scalar contact |
 | 5. Loops: lattice-scale contribution small at low energy (Collins) | open, **blocked on a definition and on analysis** | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
 | 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
 | 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
@@ -512,9 +512,129 @@ the double-cover sign, and is exact on the continuum Dirac form. On the walk it 
 `O(κ²)` at the half-step slice, numerically on the pre-registered grid.
 
 **What it does not settle.** The `O(κ²)` bound is numerical, not proved. Stage 4b, the comparison
-of interacting amplitudes, is not done: the third row of the stage-4 plan, the frame dependence
-of a finite-range contact coupling `ĝ(q)`, is still a prediction. The spin part is borrowed from
+of interacting amplitudes, is below. The spin part is borrowed from
 the continuum, not derived from a moving closure loop.
+
+### Stage 4b pre-registration: tree amplitudes of the two-body contact walk
+
+Stage 4b compares an interacting amplitude between frames. [`boost_amplitudes_check.py`](boost_amplitudes_check.py)
+measures it. This subsection was committed before the script was run on the walk. Only the
+continuum calibration and control were run beforehand, to fix sign conventions and the control's
+statistic.
+
+**Amplitude.** Two walk particles `A` and `B` (masses `m_A`, `m_B`) meet on one site and pick up a
+contact phase `exp(i g Γ)`, with `Γ` acting on the joint spinor space. To first order in `g`, the
+tree level, the amplitude from `(k₁, k₂)` to `(k₁′, k₂′)` is the matrix element of `Γ` between band
+states, times the coupling's Fourier transform `ĝ(q)` at the transfer `q = k₁′ − k₁`. Band
+eigenvectors carry arbitrary phases, so the graded quantity is the spin-summed square
+
+`W(p) = |ĝ(q)|² Tr[(Π₁′ ⊗ Π₂′) Γ (Π₁ ⊗ Π₂) Γ†]`, with `Π = E P(k)`.
+
+For the continuum Dirac operator and a Lorentz-scalar vertex, `W` is invariant. Each leg is
+carried by the stage-4a map: frame 1 uses the walk's own energy `E(k)`, frame 2 the boosted
+`(E′, k′) = Λ(E(k), k)` with the walk's projector at `k′`. The defect is
+`|W(Λp) − W(p)| / |W(p)|`.
+
+**Vertices.**
+
+| Arm | `Γ` | Continuum reading | Prediction |
+|---|---|---|---|
+| `scalar` | `β ⊗ β` | `ψ̄ψ ψ̄ψ`, a Lorentz scalar | covariant to `O(κ²)`, as the band |
+| `vector` | `1 ⊗ 1 − Σᵢ αᵢ ⊗ αᵢ` | `J^μ J_μ`, a Lorentz scalar | covariant to `O(κ²)` |
+| `range` | `β ⊗ β` with `ĝ(q) = 1 + ½ Σᵢ 2 cos qᵢ` (nearest-neighbour range) | instantaneous finite range: `ĝ` depends on the 3-vector `q` | covariant to `O(κ²)`: `q` is of size `κ`, so `ĝ(q′)/ĝ(q) − 1 = O(κ²)` |
+| `blind` | `1 ⊗ 1` | `J⁰ J⁰`, the time component of a vector current only | **frame dependent at `O(1)`**, not suppressed by `κ` |
+
+The `blind` arm is the contact of `QLF_InteractingKinematics.twoBodyStep` as written (stage 3): a
+scalar `g(x₁ − x₂)` that ignores spin. In the continuum, a spin-blind density contact is a `J⁰ J⁰`
+coupling, which is not a Lorentz scalar. So the prediction is that the stage-3 walk, as written, is
+**not** covariant at tree level, for a reason that has nothing to do with the lattice: its vertex
+picks a frame. The fix it points to is a contact that carries spinor structure (`β ⊗ β` or the
+vector form).
+
+**Grid.** Twelve sample pairs of unit directions `d, d′` (seed `20261125`), centre-of-momentum
+elastic kinematics `k₁ = p d`, `k₂ = −p d`, `k₁′ = p d′`, `k₂′ = −p d′`, with `|(p, m_A)| = κ`,
+`m_A/p ∈ {0.5, 1}`, `m_B = 0.6 m_A`; the three boost axes; `η = 0.5`;
+`κ ∈ {0.08, 0.04, 0.02, 0.01, 0.005}`. Half-step slice graded; raw slice reported, not graded.
+The graded number is the log–log slope of the worst defect against `κ`.
+
+**Criteria.**
+
+| Check | Pass | Fail |
+|---|---|---|
+| Calibration: continuum `scalar` and `vector` | below `10⁻¹²` (measured before registration: `9 × 10⁻¹⁶`, `5 × 10⁻¹⁶`) | otherwise nothing is graded |
+| Control: continuum `blind`, median defect | `≥ 10⁻²` at every `κ` (measured before registration: `0.78`; the least sample is `0.0047`, which is why the median is used) | otherwise nothing is graded |
+| **Graded: `scalar`, `vector`, `range` slopes** | `≥ 1.8`: tree amplitudes covariant to second order | `< 1.5`: a first-order frame dependence; stage 4b fails for that vertex and is reported as failed |
+| **Graded: `blind`** | prediction confirmed if the slope is below `0.5` and the worst defect stays `≥ 10⁻²` at every `κ` | otherwise the prediction failed, and is reported as failed |
+
+A slope between `1.5` and `1.8` is inconclusive and leads to a finer grid, not a verdict. Every
+sample is checked before reduction (finite non-zero `W`, finite positive defect), and a non-finite
+slope makes the run `INVALID`.
+
+### Stage 4b result
+
+| Check | Measured | Verdict |
+|---|---|---|
+| Calibration: continuum `scalar`, `vector` | `9.1 × 10⁻¹⁶`, `5.1 × 10⁻¹⁶` | the script is sound |
+| Control: continuum `blind`, median defect | `0.78` at every `κ` | the defect detects a frame-dependent vertex |
+| **`scalar` slope** | **`2.001`** (worst defect `2.9 × 10⁻³` at `κ = 0.08`, `1.1 × 10⁻⁵` at `κ = 0.005`) | **PASS** |
+| **`vector` slope** | **`2.000`** (`1.8 × 10⁻³` to `7.1 × 10⁻⁶`) | **PASS** |
+| **`range` slope** | **`2.001`** (`3.0 × 10⁻³` to `1.2 × 10⁻⁵`) | **PASS** |
+| **`blind`** | slope `0.000`, worst defect `6.43` at every tested `κ` | **prediction confirmed**: frame dependent at `O(1)` on the grid |
+| raw slice (not graded) | `scalar`, `vector`, `range` slopes `2.00`; `blind` `0.00` | the spin-summed `W` does not see the raw slice's fixed spinor rotation at first order |
+
+Data: [`data/boost_amplitudes_check.json`](data/boost_amplitudes_check.json).
+
+**On the tested grid, the relative boost defect of the two-body contact walk's tree-level vertex proxy
+`W` scales as `κ²` for the three Lorentz-scalar vertices tested**: the scalar `ψ̄ψ ψ̄ψ` form, the vector
+`J^μ J_μ` form, and the scalar form with a nearest-neighbour range. An instantaneous finite range is
+not Lorentz invariant at finite `κ`; it enters through `ĝ(q)` at `q ~ κ`, and its frame dependence
+scales as `κ²` on this grid. The finite range was the predicted failure point in the stage-4 plan,
+and on this grid it does not show at first order. These are observed scalings on four vertices and
+five values of `κ`, not a classification of vertices and not an all-`κ` result.
+
+**The stage-3 walk as written fails.** Its contact is a scalar phase `g(x₁ − x₂)` that ignores
+spin, which is a `J⁰ J⁰` coupling. Its tree amplitude changes by order one under a boost at every
+`κ`, in the continuum as much as on the walk. This is not a lattice effect. The vertex itself picks
+a frame. The natural candidates for a covariant two-body walk are contacts with spinor structure,
+`exp(i g β ⊗ β)` or the vector form. These are matrix-valued, and `twoBodyStep` takes a scalar
+`g(x₁ − x₂)`, so the stage-3 conservation theorems do not yet cover them: extending
+`twoBody_translation_commute` and `twoBody_lattice_conservation` to a matrix-valued contact that
+depends only on relative position is a stated generalization still to be checked in Lean.
+
+[`lean/QLF_BoostAmplitudes.lean`](lean/QLF_BoostAmplitudes.lean) proves the vertex part, with no
+axioms:
+
+| Theorem | Statement |
+|---|---|
+| `chiral_conjTranspose` | `(chiral R L)ᴴ = chiral Rᴴ Lᴴ` |
+| `scalar_bilinear_invariant` | for every `A` with invertible determinant, `Sᴴ β S = β`: the scalar density is the same in every frame |
+| `scalar_vertex_invariant` | so `S ⊗ S` preserves the scalar contact `β ⊗ β` |
+| `blind_density_not_invariant` | for a `z`-boost with `a·b = 1`, `a² ≠ 1`, `Sᴴ S ≠ 1`: the spin-blind density changes with the frame |
+| `blind_vertex_not_invariant` | so the spin-blind contact `1 ⊗ 1` is not preserved by any genuine boost |
+
+**What this settles.** At tree level, with the approved map and on the tested grid, the vertex
+proxy's relative boost defect scales as `κ²` for the scalar, vector and nearest-neighbour scalar contacts, and the
+spin-blind contact of stage 3 has an order-one defect at every tested `κ`. Proved, independent of
+`κ`: the spin action preserves the scalar vertex and no genuine boost preserves the spin-blind one.
+
+**Clarifications after review (2026-11-26).** These do not change the registered grid, criteria
+or readings.
+
+- `W` is a **vertex proxy**, not an energy-conserving S-matrix element. The grid is elastic for
+  the continuum shell, but the walk's shell `cos E = cos m Π cos kᵢ` is not isotropic, so equal
+  `|k|` in different directions need not give equal quasi-energy. The script now reports the
+  worst relative mismatch `|E₁ + E₂ − E₁′ − E₂′| / (E₁ + E₂)` on the half-step slice as a
+  diagnostic, not graded: `1.0 × 10⁻⁴` at `κ = 0.08` falling to `4.0 × 10⁻⁷` at `κ = 0.005`, i.e.
+  `O(κ²)`, the stage-1 shell error.
+- `W` is a spin-summed square, so every sample must now be real and positive, with a relative
+  imaginary residual of at most `10⁻¹²`, or the run is `INVALID`. The largest residual on the grid
+  is `1.5 × 10⁻¹⁶`. Tests cover a negative and a complex `W`.
+
+**What it does not settle.** The `O(κ²)` bounds are numerical on a finite grid, not proved. The
+vector vertex's invariance is numerical only. Tree level is first order in `g`; loops are
+stage 5. Which contact the substrate itself selects, scalar, vector or spin-blind, is not derived
+here: §6's shared pair folds to `−I` on every axis, which is a statement about the census weight,
+not about the spinor structure of a contact on the walk.
 
 ## 7a. Claim-record status and open obligations
 
@@ -526,6 +646,7 @@ This result is **formal `F` for free propagation** and **`B-OPEN` for the physic
 | Census limits / Lorentz-symbol determinant | `F`; anchors in the same baseline |
 | Interacting kinematics (allowed processes) covariant in the large, conditional on lattice conservation; elementary umklapp vectors not boost-stable | `F`; `QLF_InteractingKinematics` (§6a), audit anchors added |
 | Frame-comparison map for the walk's states (stage 4a) | `F` for its algebra (`QLF_BoostStates`); `N` for `O(κ²)` covariance of the band on the half-step slice (pre-registered PASS, [`boost_states_check.py`](boost_states_check.py)) |
+| Tree amplitudes of the two-body contact walk (stage 4b) | `F` for the vertex part: the scalar contact is preserved by the spin action, the spin-blind one is not (`QLF_BoostAmplitudes`); `N` for `O(κ²)` covariance of scalar, vector and finite-range amplitudes, and `O(1)` frame dependence of the spin-blind one (pre-registered, [`boost_amplitudes_check.py`](boost_amplitudes_check.py)) |
 | Interacting boost covariance (amplitudes, loops) | `B-OPEN`; conservative return `NOT_STARTED`; dependency chain in §6a |
 | Kinetic reading of the census symbol | assumption, not a theorem |
 | Census-vs-walk off-axis sign | open; the palindromic walk has the opposite sign |

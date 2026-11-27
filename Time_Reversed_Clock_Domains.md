@@ -144,3 +144,7 @@ So the two-way age-counting hypothesis needs equal durations as a separate premi
 ## Verified finite-record anchors
 
 In namespace `QLF.ClockDomains`: `canonical_admissible`, `extendedLeft_admissible`, `extendedRight_admissible`, `alternative_completions`, `counterparts_distinct`, `records_equal`, `records_distinct`, `accessible_nonconstant`, `collision_blocks_reconstruction`, `no_exact_reconstruction`, and `prescribed_counterpart_reconstructible`. These discharge the concrete closure-only record target. The paired local-clock model and the fixed-point census are in [QLF_ClockPairing](lean/QLF_ClockPairing.lean), listed under the second-stage outcome above. The physical horizon and the age map remain open.
+
+## The reversed universe as a perspective
+
+The follow-on to this program, [Time_Reversed_Universe.md](Time_Reversed_Universe.md), proves that the reversed reading adds no histories: reversal, `dagger` and `J` all map the census onto itself (`reversed_census_is_census` in [QLF_TimeReversalPerspective](lean/QLF_TimeReversalPerspective.lean)), and the time order of spacelike pairs is by perspective while that of causal pairs is not.

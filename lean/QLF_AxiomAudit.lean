@@ -88,6 +88,7 @@ import QLF_LorentzSymbol
 import QLF_BoostCovariance
 import QLF_InteractingKinematics
 import QLF_BoostStates
+import QLF_BoostAmplitudes
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -173,6 +174,7 @@ import QLF_DiversityPhase
 import QLF_CoincidenceTrivial
 import QLF_AssemblyIndex
 import QLF_TimeDoubleSlit
+import QLF_TimeReversalPerspective
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -888,6 +890,14 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BoostStates.halfWalk_unitary
 #print axioms QLF.BoostStates.halfWalk_dispersion
 #print axioms QLF.BoostStates.dirac_boostZ_covariant
+#print axioms QLF.BoostAmplitudes.chiral_conjTranspose
+#print axioms QLF.BoostAmplitudes.beta_mul_chiral
+#print axioms QLF.BoostAmplitudes.scalar_bilinear_invariant
+#print axioms QLF.BoostAmplitudes.scalar_vertex_invariant
+#print axioms QLF.BoostAmplitudes.chiralAct_boostZ
+#print axioms QLF.BoostAmplitudes.blind_density_entry
+#print axioms QLF.BoostAmplitudes.blind_density_not_invariant
+#print axioms QLF.BoostAmplitudes.blind_vertex_not_invariant
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self
@@ -1072,6 +1082,41 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.PerspectiveLocality.no_signalling_typed
 #print axioms QLF.PerspectiveLocality.chsh_factorizable_le
 #print axioms QLF.PerspectiveLocality.no_factorizable_model
+
+-- QLF_TimeReversalPerspective: the time-reversed universe exists by perspective
+#print axioms QLF.TimeReversalPerspective.timeReverse_interval
+#print axioms QLF.TimeReversalPerspective.boost_interval
+#print axioms QLF.TimeReversalPerspective.split_by_perspective
+#print axioms QLF.TimeReversalPerspective.spacelike_order_by_perspective
+#print axioms QLF.TimeReversalPerspective.timelike_order_invariant
+#print axioms QLF.TimeReversalPerspective.null_order_invariant
+#print axioms QLF.TimeReversalPerspective.boost_null_iff
+#print axioms QLF.TimeReversalPerspective.timeReverse_null_iff
+#print axioms QLF.TimeReversalPerspective.timeReverse_not_a_boost
+#print axioms QLF.TimeReversalPerspective.no_congruence_reverses_time
+#print axioms QLF.TimeReversalPerspective.reverse_closure_iff
+#print axioms QLF.TimeReversalPerspective.dagger_closure_iff
+#print axioms QLF.TimeReversalPerspective.J_admissible_iff
+#print axioms QLF.TimeReversalPerspective.reversed_census_is_census
+#print axioms QLF.TimeReversalPerspective.self_reversed_exists
+#print axioms QLF.TimeReversalPerspective.reversed_reading_distinct
+#print axioms QLF.TimeReversalPerspective.handednessOn_reverse
+#print axioms QLF.TimeReversalPerspective.handednessOn_dagger
+#print axioms QLF.TimeReversalPerspective.reversed_tick_opposite_handedness
+#print axioms QLF.TimeReversalPerspective.closure_totals_blind
+#print axioms QLF.TimeReversalPerspective.reversal_vs_dagger_differ
+#print axioms QLF.TimeReversalPerspective.readingBy_involutive
+#print axioms QLF.TimeReversalPerspective.readingBy_false
+#print axioms QLF.TimeReversalPerspective.readingBy_true
+#print axioms QLF.TimeReversalPerspective.handednessOn_readingBy
+#print axioms QLF.TimeReversalPerspective.readingBy_closure_iff
+#print axioms QLF.TimeReversalPerspective.every_reading_is_the_census
+#print axioms QLF.TimeReversalPerspective.sixteen_reversed_readings
+#print axioms QLF.TimeReversalPerspective.selection_identifiable
+#print axioms QLF.TimeReversalPerspective.reading_has_unique_history
+#print axioms QLF.TimeReversalPerspective.readingBy_eq_of_agree
+#print axioms QLF.TimeReversalPerspective.selectors_coincide_on_empty
+#print axioms QLF.TimeReversalPerspective.joint_recovery_fails
 #print axioms QLF.ControlledUnitary.su2_euler
 #print axioms QLF.ControlledUnitary.abc_decomposition
 #print axioms QLF.ControlledUnitary.unitary_eq_phase_smul_su2
