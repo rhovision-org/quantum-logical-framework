@@ -62,7 +62,10 @@
   "EE": "Einstein_Equations.md",
   "CV": "Curvature.md",
   "GW": "Einstein_Equations.md",
-  "SA": "Stationary_Action.md"
+  "SA": "Stationary_Action.md",
+  "BH": "Falling_Into_Black_Holes.md",
+  "RK": "Rocket_To_The_Horizon.md",
+  "ER": "Everything_Is_Relative.md"
  },
  {
   "H6": "#master-map--the-substrate-and-its-ten-domains",
