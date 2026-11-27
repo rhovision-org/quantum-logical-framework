@@ -86,6 +86,14 @@ other redshifted by `e^{−η}` at relative rapidity `η`, and each is past the 
 properties of one observer.** What acceleration adds in special relativity is a sharp causal cutoff
 (§4's `c/g`); the redshift horizon belongs to every pair.
 
+The converse also holds: **the ship's sky fills with things Earth cannot see.** Ahead, the ship's
+Doppler factor `e^{η}` compresses Earth's whole sky into a forward cone of half-angle about `1/γ`
+and blueshifts it. Behind, Earth's direction reddens into the background. With the redshift limit, a
+source receding from Earth at rapidity `η ≥ ln N` is past Earth's horizon for good
+(`inertial_redshift_horizon`), and a ship that has built up that rapidity in the same direction sees it
+plainly. In special relativity alone, Earth would eventually see everything, only ever redder; it is
+the finite limit that makes the two skies permanently different.
+
 ## 5. The redshift limit: leaving the cosmic horizon
 
 The signal the ship receives at proper time `τ` left Earth at `tₑ(τ) = (c/g)(1 − e^{−gτ/c})`
