@@ -83,7 +83,7 @@ ship's signals arrive redshifted by the same factor `e^{−gτ/c}` that the ship
 ship at exactly the ship time at which the ship loses Earth. Even two inertial observers see each
 other redshifted by `e^{−η}` at relative rapidity `η`, and each is past the other's horizon once
 `η ≥ ln N` (`inertial_redshift_horizon`). **Horizons are relations between perspectives, not
-properties of one observer.** What acceleration adds in special relativity is a sharp causal cutoff
+properties of one observer** ([`Everything_Is_Relative.md`](Everything_Is_Relative.md)). What acceleration adds in special relativity is a sharp causal cutoff
 (§4's `c/g`); the redshift horizon belongs to every pair.
 
 The converse also holds: **the ship's sky fills with things Earth cannot see.** Ahead, the ship's

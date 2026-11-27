@@ -10,6 +10,8 @@ Jim's father taught him that *motion is only relative, even falling into a black
 spinning hole, and small holes. For each it separates three layers: what standard general relativity
 says, what is proved in Lean here, and where QLF goes further (labelled as conjecture where it is one).
 
+The principle behind all three is summarized in [`Everything_Is_Relative.md`](Everything_Is_Relative.md).
+
 Every Lean statement below is algebra on standard GR, in units `c = 1` with Schwarzschild radius
 `rs = 2GM/c²`. What the proofs settle is **which statements are statements about a perspective**.
 
