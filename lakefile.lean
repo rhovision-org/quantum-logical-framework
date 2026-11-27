@@ -384,5 +384,6 @@ lean_lib QLF where
     `QLF_BlackHoleInfall,
     `QLF_RelativisticRocket,
     `QLF_ColourClosure,
-    `QLF_PerspectiveNetwork
+    `QLF_PerspectiveNetwork,
+    `QLF_VacuumCorrelation
   ]

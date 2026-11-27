@@ -3522,6 +3522,55 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.VacuumCorrelation.common_mode_cancels": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.electron_class": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.electron_in_class": [
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.fold_eq_nfFold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.gauge_pair_never_negI": [],
+  "QLF.VacuumCorrelation.interleaved_prime": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.interleaving_flips_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.length_two_closures": [],
+  "QLF.VacuumCorrelation.neutrino_block_fold_blind": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.neutrino_vacuum_same_reading": [],
+  "QLF.VacuumCorrelation.nu_reading_order_blind": [],
+  "QLF.VacuumCorrelation.one_branch_closure_shifts_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.same_inventory_opposite_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.two_axis_classification": [
+    "propext"
+  ],
   "QLF.VacuumResolvent.chain_tendsto": [
     "Classical.choice",
     "Quot.sound",
