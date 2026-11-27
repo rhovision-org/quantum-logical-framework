@@ -101,4 +101,84 @@ theorem shuffle_reconstructs :
     rebuild (shuffle adjacent) (record adjacent) = adjacent ∧
     rebuild (shuffle nested) (record nested) = nested := by decide
 
+/-! ## Commuting independent perspectives
+
+If actions of different perspectives commute (neither depends on the other), a history is only defined
+up to swapping neighbouring actions with different tags. Such swaps never change any perspective's
+record (`record_swap`), and they carry the nested arrangement to the adjacent one
+(`nested_commutes_to_adjacent`). So within one commutation class the least closure depth is `1`, and
+the depth-`3` reading belongs to the nested *order*, which is physical only if the cross-perspective
+order is a real dependence. RC0's gap therefore lives exactly in the dependence relation between
+perspectives, not in the records. -/
+
+/-- Swapping two neighbouring actions of different perspectives leaves every record unchanged. -/
+theorem record_swap (pre post : List Tok) (a b : Tok) (h : a.1 ≠ b.1) (i : Fin 3) :
+    record (pre ++ a :: b :: post) i = record (pre ++ b :: a :: post) i := by
+  unfold record
+  by_cases ha : a.1 = i <;> by_cases hb : b.1 = i
+  · exact absurd (ha.trans hb.symm) h
+  all_goals simp [List.filter_append, List.filter_cons, ha, hb]
+
+/-- Swap positions `k` and `k+1` when they belong to different perspectives. -/
+def swapAt : ℕ → List Tok → Option (List Tok)
+  | 0, a :: b :: rest => if a.1 ≠ b.1 then some (b :: a :: rest) else none
+  | k + 1, a :: rest => (swapAt k rest).map (a :: ·)
+  | _, _ => none
+
+/-- Apply a list of commuting swaps in order. -/
+def runSwaps : List ℕ → List Tok → Option (List Tok)
+  | [], l => some l
+  | k :: ks, l => (swapAt k l).bind (runSwaps ks)
+
+/-- **The nested arrangement commutes to the adjacent one** by six swaps of independent actions:
+`A−` moves left past `B−`, `C−`, `C+`, `B+`, then `B−` past `C−`, `C+`. -/
+theorem nested_commutes_to_adjacent :
+    runSwaps [4, 3, 2, 1, 4, 3] nested = some adjacent := by decide
+
+/-- In the commutation class the closure depth drops from `3` to `1`. -/
+theorem commuting_lowers_depth :
+    runSwaps [4, 3, 2, 1, 4, 3] nested = some adjacent ∧
+    maxExcursion (history nested) = 3 ∧ maxExcursion (history adjacent) = 1 :=
+  ⟨nested_commutes_to_adjacent, nested_depth, adjacent_depth⟩
+
+/-! ## A computable reconciliation
+
+`reconcile` closes each perspective's own word before the next one opens: it lays the records end to
+end. It is a function, so it can be run on any tagged history; it keeps every record
+(`reconcile_record`), so for independent perspectives it stays in the same commutation class; and on
+the nested tree it returns the adjacent one (`reconcile_nested`), dropping the depth from `3` to `1`
+by moving both ends at once: every perspective's opening and closing actions are brought together. -/
+
+/-- Lay the per-perspective records end to end, in perspective order. -/
+def reconcile (h : List Tok) : List Tok :=
+  (List.finRange 3).flatMap (fun j => h.filter (fun t => t.1 = j))
+
+theorem filter_filter_tag (h : List Tok) (i j : Fin 3) :
+    (h.filter (fun t => t.1 = j)).filter (fun t => t.1 = i) =
+      if j = i then h.filter (fun t => t.1 = i) else [] := by
+  by_cases hji : j = i
+  · subst hji; simp [List.filter_filter]
+  · simp only [hji, if_false, List.filter_filter]
+    apply List.filter_eq_nil_iff.mpr
+    intro t _; simp only [Bool.and_eq_true, decide_eq_true_eq, not_and]
+    intro h1 h2; exact hji (h2.symm.trans h1)
+
+/-- **Reconciliation keeps every perspective's record.** -/
+theorem reconcile_record (h : List Tok) (i : Fin 3) : record (reconcile h) i = record h i := by
+  unfold record reconcile
+  congr 1
+  rw [List.filter_flatMap]
+  simp only [filter_filter_tag]
+  have hr : List.finRange 3 = [0, 1, 2] := by decide
+  rw [hr]
+  fin_cases i <;> simp
+
+/-- **On the nested tree, reconciliation returns the adjacent closures.** -/
+theorem reconcile_nested : reconcile nested = adjacent := by decide
+
+/-- Depth before and after: `3` and `1`. -/
+theorem reconcile_lowers_depth :
+    maxExcursion (history nested) = 3 ∧ maxExcursion (history (reconcile nested)) = 1 := by
+  rw [reconcile_nested]; exact ⟨nested_depth, adjacent_depth⟩
+
 end QLF.RelationalClock

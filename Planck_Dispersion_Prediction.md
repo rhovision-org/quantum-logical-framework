@@ -155,13 +155,25 @@ contribute the ordered word `+ −`:
 - `shuffle_reconstructs`: the records plus the interleaving (who acts at each step) rebuild the
   history, so they do fix the clock.
 
+**Reconciling both ends.** If actions of different perspectives commute, the nested tree is not a
+different history. Swapping neighbouring actions of different perspectives never changes a record
+(`record_swap`), and six such swaps carry nested to adjacent (`nested_commutes_to_adjacent`). The
+computable `reconcile` does this for any tagged history: it closes each perspective's opening and
+closing ends together by laying the records end to end. It keeps every record (`reconcile_record`,
+proved for all histories) and maps nested to adjacent, depth 3 to depth 1 (`reconcile_lowers_depth`).
+So the depth-3 clock is real only if the cross-perspective order is a genuine dependence, one
+perspective's action waiting on another's. RC0's gap lives in that dependence relation, not in the
+records. For fully independent perspectives the commutation class is fixed by the records, so its
+least depth is a function of them.
+
 This strengthens `census_cannot_determine_first_passage` in
 [`lean/QLF_ClosureDepthTime.lean`](lean/QLF_ClosureDepthTime.lean) from the multiset of events to
 the ordered record each perspective holds. That module already proves the inventory version at every
 depth `d`; the perspective-record version here is for three perspectives.
 
-**Open.** RC1 (the least relational data that fixes the clock: the interleaving suffices, whether
-less does is unknown). RC2 to RC6, which would carry the clock to an observable. The black-hole
+**Open.** RC1 (the least relational data that fixes the clock: the interleaving suffices, and for
+independent perspectives nothing beyond the records is needed; for dependent ones, whether the
+dependence relation alone suffices is unknown). RC2 to RC6, which would carry the clock to an observable. The black-hole
 entropy ratio `4 ln 2` between the uncorrected boundary count and Bekenstein–Hawking remains the
 normalization gap recorded in [`Holography_Audit.md`](Holography_Audit.md). Reading it as relational
 redundancy, `N_eff/N = 1/(4 ln 2)`, is a conjecture with no derivation yet. RC0 gives no laboratory

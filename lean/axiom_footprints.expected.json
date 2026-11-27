@@ -2709,8 +2709,25 @@
   "QLF.RelationalClock.different_clocks": [
     "propext"
   ],
+  "QLF.RelationalClock.nested_commutes_to_adjacent": [
+    "propext"
+  ],
   "QLF.RelationalClock.rc0_record_does_not_determine_clock": [
     "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_lowers_depth": [
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_nested": [
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_record": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.record_swap": [
     "propext"
   ],
   "QLF.RelationalClock.same_records": [

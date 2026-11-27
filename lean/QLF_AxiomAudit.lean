@@ -1214,3 +1214,8 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.RelationalClock.different_clocks
 #print axioms QLF.RelationalClock.rc0_record_does_not_determine_clock
 #print axioms QLF.RelationalClock.shuffle_reconstructs
+#print axioms QLF.RelationalClock.record_swap
+#print axioms QLF.RelationalClock.nested_commutes_to_adjacent
+#print axioms QLF.RelationalClock.reconcile_record
+#print axioms QLF.RelationalClock.reconcile_nested
+#print axioms QLF.RelationalClock.reconcile_lowers_depth
