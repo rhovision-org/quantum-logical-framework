@@ -104,18 +104,41 @@ withdrawn, results resting on it would become conditional, and they say so.
 | A08 | Finite perspective | Derived (the listening, P17); "capacity = apparatus resolution" is a bridge |
 | A09 | Synthesized spacetime | Reading, with each physical form a bridge in [Principles.md](Principles.md) §D |
 
-One structural item stays open, and it is named rather than hidden: that the signed distinctions are
-the signed axes of the Pauli frame ([ScientificApproach.md](ScientificApproach.md) §1c). Given that,
-the alphabet size follows from A11.
+### Structural choices that stay auditable
+
+Reclassifying an assumption does not eliminate it. "Equal and opposite" alone does not fix the Pauli
+algebra, since many structures satisfy cancellation. So QLF has **one proposed fundamental principle**,
+and every structural choice, empirical input and open bridge is accounted for separately. These are
+the structural choices still carried, each to be audited on its own and, where possible, replaced by
+a necessity proof:
+
+| Choice | Where it enters | Status |
+|---|---|---|
+| The signed distinctions are the signed axes of the Pauli frame | The alphabet ([ScientificApproach.md](ScientificApproach.md) §1c) | Open structural posit; given it, A11 fixes eight twists |
+| Generation is uniform over the alphabet | The cylinder measure `8^{−\|h\|}` (`twist_kraft`) | A stated choice; biased alphabets break stationarity ([Stationary_Action.md](Stationary_Action.md)) |
+| The first closure is the event | A01's event semantics (A07) | Part of the conjecture, but auditable: the alternatives were tested and rejected ([ScientificApproach.md](ScientificApproach.md) §11) |
+| Cylinder measure = physical probability | Every frequency claim | Bridge B09 |
+| Logical free action = physical free energy | The `log 2` per closure, thermodynamic readings | Bridge (B08, B14) |
+
+---
 
 ---
 
 ## 3. QLF is the quantum computer
 
-Under ZFA, a physical process turns open histories into closures, and turning inputs into outputs by
-a fixed rule is computation. So "the universe is a quantum computer" (Lloyd 2006) is not a second
-premise here. It is a claim about what ZFA closure can compute, and each part of it is either proved
-or open ([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md)):
+Four claims about computation are easy to run together, and they need to be kept apart:
+
+| Level | What it is | Status |
+|---|---|---|
+| **Natural quantum computation** | The universe synthesizes its events through quantum logical closure; its evolution *is* the computation | The foundational thesis: what A01 says, read as computation (Lloyd 2006). Not a second conjecture |
+| **Classical programmable computation** | Substrate networks evaluate any finite Boolean function | Proved in the substrate model |
+| **Universal programmable quantum computation** | Substrate operations compose into any quantum circuit on one encoded qubit space | The algebra is proved; native composition on a common qubit is **open** |
+| **Classical simulation of quantum computation** | QuCalc, RhoQuCalc, [`qucalc_search.py`](qucalc_search.py) and QuantumOS run closures on ordinary hardware | Implemented; cost depends on the size of the history space, and no efficiency claim is made |
+
+The first level does not wait on the third: investigating reality as a quantum logical system does not
+need the substrate to be programmable for arbitrary circuits. The third is a capability to establish,
+and the fourth must not be overstated as the first. What is proved toward the programmable levels
+([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md)):
 
 | Part | Status | Anchor |
 |---|---|---|
@@ -127,11 +150,23 @@ or open ([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md)):
 | A joint closure carries the controlled-Z sign table | Proved | `joint_closure_is_cz`, `cz_entangling` |
 | That sign table acts as a gate on superposed presence states | **Open** | [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) §7 |
 
-So QLF is a **classical universal computer in the substrate, proved**, and a **universal quantum
-computer up to one open gate**. That gate is a proof obligation inside the consequences of ZFA, not a
-second conjecture: until it is built, the quantum half of "QLF is the quantum computer" is unproved,
-and it is stated that way. Being a quantum computer gives no
-NP oracle ([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) §4).
+**The obstacle is a common qubit.** The Hadamard acts on the spinor space that folds live in; the
+controlled-Z signs act on the presence or absence of a closed pair. They do not yet act on the same
+encoded qubit. The target (obligation O1, §6) is one substrate encoding `E` and native operations
+`T_U` with
+
+  `T_U(E(ψ)) ~ E(Uψ)`,
+
+where `~` is observational equivalence (`ObsEquiv`, below), for `U` the Hadamard, the count-weighted
+rotation and controlled-Z, preserving coherence and composing, without defining the gate action into
+the encoding. The decisive test is the Bell state: take `|00⟩` to `(|00⟩ + |11⟩)/√2` by native
+operations only, and check its relative phase and correlations without assuming the circuit semantics
+under test.
+
+So QLF is a **classical universal computer in the substrate, proved**, and a **universal programmable
+quantum computer up to O1**. O1 is a proof obligation inside the consequences of ZFA, not a second
+conjecture. Being a quantum computer gives no NP oracle
+([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) §4).
 
 ---
 
@@ -151,11 +186,22 @@ universe agrees with QLF on everything that can be observed. The argument has th
 3. **What no closure can tell apart is the same.** Two histories are observationally equivalent when
    every closing context closes them with the same phase (`ObsEquiv`,
    [`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean)); that relation is proved
-   to be the tensor quotient (`obsEquiv_iff_pairEquiv`), so nothing finer is observable. A solution
-   that agrees with what is observed therefore agrees with QLF up to this equivalence.
+   to be the tensor quotient (`obsEquiv_iff_pairEquiv`), so nothing finer is observable within its
+   domain.
 
-**Status.** Step 1 is A01 applied to observers. Step 3 is proved. Step 2 is proved for classical
-computation and open for quantum computation. The equivalence also carries two named premises:
+**Status.** Step 1 is A01 applied to observers. Step 3 is proved for its domain (two bodies, under the
+independence premises of [`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean)). Step 2 is proved
+for classical computation and open for quantum computation. And the three steps do not yet meet:
+**universality alone does not give equivalence**, because a universal computer runs incorrect models
+as readily as correct ones. What is needed is the theorem (obligation O2, §6)
+
+  `Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`,
+
+an encoding of a correct model `M` that preserves its observable distinctions, its dynamics and its
+probability distributions, with `O` the observable map. `ObsEquiv` supplies `O_QLF`; extending its
+domain to `N` bodies and the entangled sector, and building `E_M` non-circularly, is the work. Until
+then the equivalence is the conjecture's predicted consequence, not a theorem. It also carries two
+named premises:
 
 - **The solution is computable.** This is Deutsch's physical Church–Turing principle (1985). With
   A10 (no measurement yields a real number) it is well supported, but it is a premise, and a solution
@@ -167,7 +213,12 @@ computation and open for quantum computation. The equivalence also carries two n
   anything can be checked.
 
 So the anthropic principle does not add a conjecture. It is A01 read from inside: whatever explains
-our observations explains closures, and QLF computes closures.
+our observations explains closures, and QLF computes closures. What it would buy, once O2 is proved,
+is equivalence of observable consequences without equivalence of the competing theories' internal
+representations. It connects to the holographic reconstruction problem (issue
+[#296](https://github.com/rhovision-org/quantum-logical-framework/issues/296)), conservative return
+([ScientificApproach.md](ScientificApproach.md) §5e) and the capacity limits of
+[Law_Of_Exceptions.md](Law_Of_Exceptions.md).
 
 ---
 
@@ -189,12 +240,27 @@ logic, a folding rule, one of QLF's own candidate readings. QLF tests it in four
 4. **Carry the verdict to the world.** A substrate verdict becomes a verdict about nature only through
    a known fact (§2) or a bridge, and it names which.
 
-The two verdicts are not symmetric. **Realizable** means the model happens in *some* way: a
-construction proves possibility, not uniqueness ([Law_Of_Exceptions.md](Law_Of_Exceptions.md)), and it
-never shows the model is how nature does it. **Refuted** is stronger: if a model forbids what the
-substrate does and what is observed, it is out.
+A test returns one of five verdicts, each relative to stated conditions (an alphabet, a capacity, an
+observational domain):
+
+| Verdict | Meaning | How it is established |
+|---|---|---|
+| **Necessary** | Every admissible realization satisfies the proposition | A theorem over all histories in the domain |
+| **Possible** (realizable) | At least one admissible realization exists | A witness: possibility, never uniqueness ([Law_Of_Exceptions.md](Law_Of_Exceptions.md)) |
+| **Impossible** (refuted) | No admissible realization exists under the conditions | A theorem, or exhaustion of a finite domain |
+| **Equivalent** | Two models are indistinguishable in a stated observational domain | `ObsEquiv` or a proved bijection of observables |
+| **Undetermined** | The computation or proof available does not decide it | The default; stated with what was tried |
+
+Two errors this table blocks. **Failing to find a closure is not impossibility**: a search to depth `d`
+that finds nothing returns *undetermined* unless the domain is finite and exhausted. And **finding a
+closure is not necessity**: it shows the model happens in some way, not that nature does it that way.
+Finite-capacity verdicts are bounded by the Law of Exceptions: every finite closure capacity has an
+exception at a greater one (P12), so an *impossible* proved at capacity `R` says nothing beyond `R`
+unless the theorem is capacity-free.
 
 ### Verdicts so far
+
+In the table below, *refuted* means **impossible** and *realizable* means **possible**.
 
 | Model | Verdict | Anchors |
 |---|---|---|
@@ -205,7 +271,7 @@ substrate does and what is observed, it is out.
 | A computable predictor of every program's halting | **Refuted** (Turing's halting theorem) | `no_computable_superdeterministic_theory` ([`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)) |
 | Boolean circuits | **Realizable**, with the substrate's own gates | `fredkin_complete` |
 | Logics without weakening | **Realizable and separated**: their models contain time loops; QLF's histories satisfy weakening and have none | `loopWorld_has_time_loop`, `histories_are_a_model` ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean)) |
-| Universal quantum computation in the substrate | **Open** (§3) | |
+| Universal quantum computation in the substrate | **Undetermined** (O1, §3) | |
 
 The tester also refutes QLF's own candidates, and those results stay on the record: the contact-order
 prediction of folding rates ([Protein_Folding.md](Protein_Folding.md) §5e), an every-epoch
@@ -220,6 +286,25 @@ collected in [Completeness_Evidence.md](Completeness_Evidence.md) §4a.
 
 ---
 
+## 4a. Computing by closure
+
+Two proved results suggest a way of computing that does not prescribe an algorithm. The shortest
+continuation that closes a history has length exactly its imbalance, `min_{c : F(hc)=0} |c| = F(h)`
+(`closing_cost_exact`), and every ordering of that minimal completion closes (`completion_perm_closes`,
+both in [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)). So a problem can be stated as its
+**unresolved distinctions**, and the substrate supplies an admissible closure:
+
+  problem → algorithm → solution  becomes  problem → logical obligations → admissible closure.
+
+This is what `/solve` does ([QucalcSearch.md](QucalcSearch.md)). The limit has to stay attached: the
+theorem solves *conjugate imbalance*, not arbitrary constraint satisfaction, and encoding a hard
+problem as a closure can carry all of its hardness into the encoding
+([P_vs_NP_QLF.md](P_vs_NP_QLF.md)). Which useful problems (composition, optimization, constraint
+satisfaction, collective inference) can be stated directly as closure obligations is a research
+programme (O4, §6), not a result.
+
+---
+
 ## 5. What would change this framing
 
 - A persistent event that needs non-zero free action refutes the conjecture itself (§1).
@@ -227,6 +312,22 @@ collected in [Completeness_Evidence.md](Completeness_Evidence.md) §4a.
   conditional, and its row moves to **Bridge**.
 - If a result is found to need an assumption not listed here, it is either derived, added as a named
   known fact or bridge, or withdrawn. It is never kept with the assumption unstated.
+
+---
+
+## 6. Registered obligations
+
+The framing creates proof obligations as well as wording. Each is registered here and in
+[Principles.md](Principles.md) §C; none is claimed proved.
+
+| ID | Obligation | Principles |
+|---|---|---|
+| O1 | **Native gates on a common qubit.** One encoding `E` and native `T_U` with `T_U(E ψ) ~ E(Uψ)` for Hadamard, the weighted rotation and controlled-Z; decisive test: the Bell state by native operations (§3) | C26 |
+| O2 | **The anthropic equivalence theorem.** `Correct(M) ⟹ ∃ E_M, O_QLF ∘ E_M = O_M`, with `ObsEquiv` extended to `N` bodies and the entangled sector (§3a) | C27 |
+| O3 | **A generic, non-circular model-encoding interface.** A typed interface for "encode a model as closures" whose instances must be able to fail, returning one of the five verdicts (§4) | C28 |
+| O4 | **Closure-oriented programming.** Which problems can be posed as closure obligations, and at what cost (§4a) | C29 |
+| O5 | **Necessity proofs for the structural choices** of §2, or their retention as named choices | P01, B08, B09 |
+| O6 | **Machine-checkable consistency** between this page, [Principles.md](Principles.md), [Claim_Status.md](Claim_Status.md) and the axiom footprints, extending [`scripts/axiom_audit.sh`](scripts/axiom_audit.sh) beyond axiom names to semantic dependencies | — |
 
 Related: [Principles.md](Principles.md) · [ScientificApproach.md](ScientificApproach.md) ·
 [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) ·

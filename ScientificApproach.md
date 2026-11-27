@@ -159,6 +159,20 @@ Two things this exposes that prose was hiding. The alphabet was carrying a **suf
 where it reads as a necessity one — now half-closed, with the residual named. And the row that most
 looks like a result, the cylinder measure, is *two* rows: a proved measure and an open bridge.
 
+### 1d. Testing any model, not only QLF's own
+
+The method above was written to test QLF's own conjectures. It applies unchanged to **any finitely
+expressible model**: encode the model's states and processes as histories and its predicted events as
+closures, with an encoding that keeps apart what the model distinguishes and so could fail, then run
+it. The result is one of five verdicts, each relative to stated conditions: **necessary** (every
+admissible realization satisfies it), **possible** (a witness exists), **impossible** (no realization
+exists), **equivalent** (indistinguishable in a stated observational domain) or **undetermined** (the
+computation or proof does not decide it). Undetermined is the default: failing to find a closure is
+not impossibility, and finding one is not necessity. A substrate verdict reaches the world only
+through a named known fact or bridge. The framing, the worked verdicts and the registered obligations
+are in [`Framing.md`](Framing.md) §4 and §6; certificates follow the conservative-return protocol of
+§5e and [`Proof_to_Physics.md`](Proof_to_Physics.md).
+
 ---
 
 ## 2. A new kind of science — on a pruned ruliad
