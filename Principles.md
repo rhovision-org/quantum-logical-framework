@@ -3,7 +3,7 @@
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
 
-This page lists QLF's principles: the one thing it assumes (and the known facts it takes as input), the structural laws it proves from them,
+This page lists QLF's principles: the one conjecture it rests on (and the known facts it takes as input), the structural laws it proves from them,
 the candidate principles it is working toward, and the bridges that would connect them to physics.
 Each principle has a stable ID, a statement, its scope and assumptions, its Lean anchors, what it
 depends on, its known limits and counterexamples, the gate it still has to pass, and a status.
@@ -52,8 +52,8 @@ can see what failed.
 
 ## A. Foundations (what is assumed)
 
-QLF assumes one thing: **A01**, equal and opposite logical action (ZFA). Everything else in this
-section is one of three kinds, never a second assumption: **derived** from A01 (a theorem), a **known
+QLF rests on one well-supported conjecture: **A01**, equal and opposite logical action (ZFA).
+Everything else in this section is one of three kinds, never a second conjecture: **derived** from A01 (a theorem), a **known
 fact** taken as input and named with its source (A10–A13), or a **reading** or **bridge** that no
 derivation may rest on. The framing, and what "QLF tests models" means formally, is
 [`Framing.md`](Framing.md). A02–A09 keep their IDs (IDs are never reused); the *Kind* column records
@@ -61,7 +61,7 @@ what each now is.
 
 | ID | Principle | Kind | Status and anchors |
 |---|---|---|---|
-| **A01** | **ZFA selection.** A history becomes an event exactly when its signed action is zero on every axis: equal and opposite logical action, zero free energy. "Equal and opposite" already contains the signed distinctions (P01), and "becomes an event" already contains the first-closure reading (A07). | **The one assumption** | A definition in Lean, not an `axiom` (`achieves_ZFA`, `full_zeno_prune`, [`QLF_Axioms`](lean/QLF_Axioms.lean); `countBalanced`), with models, so it adds nothing to the logic. Empirically uncontradicted so far; kill condition in [`ScientificApproach.md`](ScientificApproach.md) §1a. |
+| **A01** | **ZFA selection.** A history becomes an event exactly when its signed action is zero on every axis: equal and opposite logical action, zero free energy. "Equal and opposite" already contains the signed distinctions (P01), and "becomes an event" already contains the first-closure reading (A07). | **The one well-supported conjecture** | A definition in Lean, not an `axiom` (`achieves_ZFA`, `full_zeno_prune`, [`QLF_Axioms`](lean/QLF_Axioms.lean); `countBalanced`), with models, so it adds nothing to the logic. Empirically uncontradicted so far; kill condition in [`ScientificApproach.md`](ScientificApproach.md) §1a. |
 | **A02** | **Possibilism.** Every generable history exists a priori as a way. Possibilism needs only one way: a single closure suffices for a thing to happen, and the first closure is the strongest way. | Absence of a second filter, plus a reading | Formal content: nothing but A01 restricts which histories count as ways. That unclosed ways are *real* is a reading ([`Philosophy.md`](Philosophy.md) §3). |
 | **A03** | **Only logic is assumed.** Nature is assumed logical, not assumed to be QLF's construction; the construction is one model of the logical laws. | Method | A01 is that logical assumption: every distinction has its opposite. Worked case proved: `weakening_iff_persistence`, `no_time_loops_from_logic`, `histories_are_a_model`, and the counter-model `loopWorld_has_time_loop` ([`QLF_LogicalPersistence`](lean/QLF_LogicalPersistence.lean); [`Philosophy.md`](Philosophy.md) §3d). |
 | **A04** | **Finite realizability.** A finite-information region cannot hold an actual continuum of distinguishable states; possibility is unbounded, but each manifestation is finite. | Derived from a known fact | `no_continuum_in_finite_region` ([`QLF_Realizability`](lean/QLF_Realizability.lean)) from the finite-information bound A12. |
@@ -452,7 +452,7 @@ those drafts, so the next revision does not reintroduce them:
   programme).
 - **Universality.** The anchor is real, but the encoding is ZFA by construction (P10).
 - **Information preservation.** Restated (C06), since closure is many-to-one.
-- **Reframed (2026-11-27).** Section A now assumes A01 alone. A02–A09 are reclassified as derived
+- **Reframed (2026-11-27).** Section A now rests on the one conjecture A01. A02–A09 are reclassified as derived
   results, readings, or the absence of an assumption, and the known-fact inputs A10–A13 are added
   ([`Framing.md`](Framing.md)).
 - **Added.** P22 (transience) and P23 (colour), which neither draft listed, and the foundation A03

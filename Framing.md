@@ -1,20 +1,24 @@
-# One assumption: QLF as the quantum computer that tests models
+# One conjecture: QLF as the quantum computer that tests models
 
 > Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and
 > opposite quantum logical action with zero free energy, the principle of QLF.
 
 Jim Whitescarver (2026-11-27): *"QLF IS the quantum computer that proves other models or not. ... We
 assume equal and opposite logical action only. It stands without contradiction. Postulates based on
-what we know rather than conjecture."*
+what we know rather than conjecture."* And: *"Equal and opposite logical action is the only well
+supported conjecture. The anthropic principle proves QLF is equivalent to any solution."*
 
 This page states that framing once, in the form the rest of the repository should follow. It has
-three parts: the one assumption (§1), the four kinds every other statement falls into (§2), and what it
-means for QLF to be a quantum computer (§3) that tests other models (§4). The registry form, with
+four parts: the one conjecture (§1), the four kinds every other statement falls into (§2), what it
+means for QLF to be a quantum computer (§3) equivalent to any solution (§3a), and how it tests other
+models (§4). The registry form, with
 stable IDs, is [Principles.md](Principles.md) §A.
 
 ---
 
-## 1. The one assumption
+## 1. The one conjecture
+
+QLF rests on one well-supported conjecture, and on nothing else that is conjectural.
 
 **ZFA.** A history becomes an event exactly when every action in it has been matched by its equal and
 opposite action, so that its free action, and its free energy, is zero.
@@ -24,7 +28,7 @@ marked as a bridge or a reading (§2). Two things are already inside the stateme
 
 - **Signed distinctions.** "Equal and opposite" means each elementary action has an opposite. That is
   the conjugate pairing of the twist alphabet (P01 in [Principles.md](Principles.md)), so it is not a
-  second assumption.
+  second conjecture.
 - **Closure is the event.** The statement says when a history *becomes an event*: at its first
   closure. The absorbing reading recorded as A07 is this half of the statement, not an extra posit.
 
@@ -44,7 +48,7 @@ marked as a bridge or a reading (§2). Two things are already inside the stateme
    where it is most exposed. That is a record of tests passed, not a proof, and the tests continue.
 
 The named `axiom` declarations in the repository (the Millennium boundaries and the continuum limits,
-listed in the axiom inventory of [CLAUDE.md](CLAUDE.md)) are **not** further assumptions of QLF. Each is
+listed in the axiom inventory of [CLAUDE.md](CLAUDE.md)) are **not** further conjectures of QLF. Each is
 a bridge (§2): a result that uses one says so in its footprint, and is conditional on it.
 
 ---
@@ -75,11 +79,11 @@ withdrawn, results resting on it would become conditional, and they say so.
 
 ### The former foundations, reclassified
 
-[Principles.md](Principles.md) §A listed nine foundations. Under this framing only A01 is assumed:
+[Principles.md](Principles.md) §A listed nine foundations. Under this framing A01 is the only conjecture:
 
 | ID | Was | Now |
 |---|---|---|
-| A01 | ZFA selection | **The one assumption** |
+| A01 | ZFA selection | **The one well-supported conjecture** |
 | A02 | Possibilism | Its formal content is the absence of any second filter: nothing but ZFA restricts which histories count as ways. That the unclosed ways are *real* is a reading |
 | A03 | Only logic is assumed | The method; ZFA is that logical assumption (every distinction has its opposite) |
 | A04 | Finite realizability | Derived (`no_continuum_in_finite_region`) from the known fact A12 |
@@ -113,9 +117,46 @@ or open ([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md)):
 | That sign table acts as a gate on superposed presence states | **Open** | [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) §7 |
 
 So QLF is a **classical universal computer in the substrate, proved**, and a **universal quantum
-computer up to one open gate**. Until that gate is built, "QLF is the quantum computer" is a
-well-supported conjecture with one named obligation, not a theorem. Being a quantum computer gives no
+computer up to one open gate**. That gate is a proof obligation inside the consequences of ZFA, not a
+second conjecture: until it is built, the quantum half of "QLF is the quantum computer" is unproved,
+and it is stated that way. Being a quantum computer gives no
 NP oracle ([Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) §4).
+
+---
+
+## 3a. Equivalence to any solution: the anthropic argument
+
+Jim's claim is that **QLF is equivalent to any solution**: any theory that correctly describes our
+universe agrees with QLF on everything that can be observed. The argument has three steps.
+
+1. **Observation is closure.** We exist, and every observation we make is an event. Under A01 an
+   event is a closure, so every observation is a closure, and so is every observer's record of it
+   (A06: an apparatus is a closure inventory). This is the anthropic step: a solution only has to
+   account for what can be observed from inside, and what can be observed is what closes.
+2. **Any solution can be run as closures.** A solution that is computable is a process the
+   substrate can evaluate with its own gates: for its classical part this is proved
+   (`fredkin_complete`, `substrate_computes`, [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean));
+   for its quantum part it waits on the gate of §3.
+3. **What no closure can tell apart is the same.** Two histories are observationally equivalent when
+   every closing context closes them with the same phase (`ObsEquiv`,
+   [`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean)); that relation is proved
+   to be the tensor quotient (`obsEquiv_iff_pairEquiv`), so nothing finer is observable. A solution
+   that agrees with what is observed therefore agrees with QLF up to this equivalence.
+
+**Status.** Step 1 is A01 applied to observers. Step 3 is proved. Step 2 is proved for classical
+computation and open for quantum computation. The equivalence also carries two named premises:
+
+- **The solution is computable.** This is Deutsch's physical Church–Turing principle (1985). With
+  A10 (no measurement yields a real number) it is well supported, but it is a premise, and a solution
+  that used an uncomputable resource would fall outside the argument.
+- **Equivalence is observational, not internal.** Two solutions that agree on every closure can still
+  differ in what they say happens between closures. That is why Bohm, Everett and ZFA are not
+  separated by any experiment ([Completeness_Evidence.md](Completeness_Evidence.md) §5): QLF does not
+  claim to be the only internal story, only that every correct story is equivalent to it where
+  anything can be checked.
+
+So the anthropic principle does not add a conjecture. It is A01 read from inside: whatever explains
+our observations explains closures, and QLF computes closures.
 
 ---
 
@@ -163,14 +204,14 @@ models would not be one.
 
 Several of these verdicts are classical theorems (Bell, Kochen–Specker, Turing) proved here in Lean.
 What QLF adds is not the theorem but the other side of the comparison: the closure that the refuted
-model forbids, built from the one assumption. Rival classes that others have already excluded are
+model forbids, built from the one conjecture. Rival classes that others have already excluded are
 collected in [Completeness_Evidence.md](Completeness_Evidence.md) §4a.
 
 ---
 
 ## 5. What would change this framing
 
-- A persistent event that needs non-zero free action refutes the assumption itself (§1).
+- A persistent event that needs non-zero free action refutes the conjecture itself (§1).
 - If a known fact in §2 turns out to rest on a conjecture, every result that uses it becomes
   conditional, and its row moves to **Bridge**.
 - If a result is found to need an assumption not listed here, it is either derived, added as a named
