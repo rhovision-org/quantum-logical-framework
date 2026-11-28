@@ -234,7 +234,9 @@ flowchart TD
 
 ```mermaid
 flowchart TD
+  EN["Entropy = forgotten record (C06; finite census, conditional holography)"]
   HO["Holographic event-counting + log 2"]
+  EN --> HO
   HO --> NG["Newton's law + G"]
   NG --> ME["Mercury perihelion"]
   HO --> EE["Einstein equations equation of state"]
@@ -247,9 +249,9 @@ flowchart TD
   RK --> ER["Everything is relative: views differ, closures agree"]
 ```
 
-**Connectors:** *G = L_P^2c^3/hbar* &rarr; Newton's law + G &middot; *43''/century* &rarr; Mercury perihelion &middot; *deltaQ = T deltaS* &rarr; Einstein equations (equation of state) &middot; *causal order -> metric* &rarr; Curvature &middot; *spin-2, v = c* &rarr; Gravitational waves &middot; *Hilbert: delta S = 0 at balance* &rarr; Einstein equations &middot; *river model* &rarr; Falling into black holes &middot; *equivalence principle* &rarr; 1 g rocket &middot; *horizons are relations* &rarr; Everything is relative
+**Connectors:** *C06 + finite census* &rarr; entropy as forgotten record &middot; *G = L_P^2c^3/hbar* &rarr; Newton's law + G &middot; *43''/century* &rarr; Mercury perihelion &middot; *deltaQ = T deltaS* &rarr; Einstein equations (equation of state) &middot; *causal order -> metric* &rarr; Curvature &middot; *spin-2, v = c* &rarr; Gravitational waves &middot; *Hilbert: delta S = 0 at balance* &rarr; Einstein equations &middot; *river model* &rarr; Falling into black holes &middot; *equivalence principle* &rarr; 1 g rocket &middot; *horizons are relations* &rarr; Everything is relative
 
-**Open:** [`Gravity_From_Delay.md`](Gravity_From_Delay.md) · [`Mercury_Perihelion.md`](Mercury_Perihelion.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Curvature.md`](Curvature.md) · [`Stationary_Action.md`](Stationary_Action.md) · [`Falling_Into_Black_Holes.md`](Falling_Into_Black_Holes.md) · [`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md) · [`Everything_Is_Relative.md`](Everything_Is_Relative.md)
+**Open:** [`Entropy.md`](Entropy.md) · [`Gravity_From_Delay.md`](Gravity_From_Delay.md) · [`Mercury_Perihelion.md`](Mercury_Perihelion.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Curvature.md`](Curvature.md) · [`Stationary_Action.md`](Stationary_Action.md) · [`Falling_Into_Black_Holes.md`](Falling_Into_Black_Holes.md) · [`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md) · [`Everything_Is_Relative.md`](Everything_Is_Relative.md)
 
 ---
 

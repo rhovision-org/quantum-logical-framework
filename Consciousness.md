@@ -127,7 +127,9 @@ price (`zfa_closure_minimizes_free_energy`, [`QLF_FreeEnergy`](lean/QLF_FreeEner
 listener quotient is disciplined forgetting: it discards exactly the distinctions no declared
 continuation can recover, while staying lossless for the continuations it declares. That is what
 keeps the relative world-database finite and leaves room for a next expression. It is not free,
-not always benign, and not erasure by an observer; qualia remain bracketed.
+not always benign, and not erasure by an observer; qualia remain bracketed. The same record
+partition, its finite sign census and the proposed space/GR bridge are developed in
+[`Entropy.md`](Entropy.md) §3 and §6.
 
 **The unit of that integrated information is machine-verified — *it from bit*.** What binding integrates,
 and what the frequency-hierarchy carries, is *information* — and its atom is now a theorem. The smallest

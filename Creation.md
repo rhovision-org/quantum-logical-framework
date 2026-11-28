@@ -91,9 +91,11 @@ It **oscillates at a frequency set by the number of bits it contains** — mass 
 that oscillation it carries a **virtual antiproton** that permits cancellation — and given high-energy
 noise, that virtual half is lifted into an actual proton (pair production), a synthesis whose synergy
 **intensifies with the available energy**. Its bits do not decay: a ZFA closure is stable and stores its
-information holographically, on a horizon of area law `S = 4πR²log2`
+information holographically, on a horizon whose model count is `S = 4πR²log2`
 ([`Holographic.md`](Holographic.md); `hadron_horizon_entropy_eq`,
-[`lean/QLF_QuantumBlackHole.lean`](lean/QLF_QuantumBlackHole.lean)).
+[`lean/QLF_QuantumBlackHole.lean`](lean/QLF_QuantumBlackHole.lean)). That count is a re-export of the
+declared event count, not the Bekenstein–Hawking normalization; the area law itself is conditional on
+locality ([`Holography_Audit.md`](Holography_Audit.md), [`Entropy.md`](Entropy.md) §5).
 
 This is a direction QLF leans **into**, not away from. Proton generation is no strained edge case:
 baryogenesis is **generic** — the three Sakharov conditions are met on the substrate (matter and antimatter

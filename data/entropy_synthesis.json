@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "generator": "entropy_synthesis.py",
+    "version": 1,
+    "framing": "one law: equal and opposite logical action; entropy is derived record bookkeeping, not a second premise",
+    "measure": "uniform over enumerated ZFA closures",
+    "units": "bits in the finite census; physical nats require the QLF map"
+  },
+  "sign_census": [
+    {
+      "length": 2,
+      "closures": 8,
+      "plus": 0,
+      "minus": 8,
+      "H_total_bits": 3.0,
+      "H_sign_bits": 0.0,
+      "forgotten_bits": 3.0,
+      "sign_is_at_most_one_bit": true
+    },
+    {
+      "length": 4,
+      "closures": 168,
+      "plus": 144,
+      "minus": 24,
+      "H_total_bits": 7.392317422778761,
+      "H_sign_bits": 0.5916727785823275,
+      "forgotten_bits": 6.800644644196433,
+      "sign_is_at_most_one_bit": true
+    },
+    {
+      "length": 6,
+      "closures": 5120,
+      "plus": 1488,
+      "minus": 3632,
+      "H_total_bits": 12.321928094887362,
+      "H_sign_bits": 0.8695272322370979,
+      "forgotten_bits": 11.452400862650263,
+      "sign_is_at_most_one_bit": true
+    }
+  ],
+  "route_erasure": {
+    "a": "^v",
+    "b": "v^",
+    "distinct": true,
+    "both_closed": true,
+    "same_fold": true,
+    "future_rule": "after a balanced prefix, count-balanced continuations are the same and the fold is multiplied by the one sign of the prefix",
+    "lean_anchor": "QLF_ClosureRenewal.closure_renewal"
+  },
+  "pair_account": {
+    "global": "singlet: pure, S(AB) = 0",
+    "local_each": "S(A) = S(B) = log 2 nats",
+    "lean_anchors": [
+      "QLF_HolographicCompletion.singlet_reduced",
+      "QLF_HolographicCompletion.entropy_half_half",
+      "QLF_HolographicCompletion.cutEntropy_eq_vonNeumann"
+    ],
+    "scope": "local accessibility, not a proof of permanent loss; the pair may re-interact and the 50% rule is not a theorem"
+  },
+  "proof_obligations": [
+    "derive permanent local loss relative to an admissible continuation domain",
+    "derive thermodynamic work in joules from the dimensionless log 2 quantum",
+    "derive horizon entropy normalization from closure counting",
+    "derive the GR thermodynamic bridge from closure locality and flux"
+  ],
+  "not_claimed": [
+    "that half of all information is permanently lost to space",
+    "that a qubit pair physically destroys a qubit",
+    "that the sign entropy is thermodynamic entropy",
+    "that the finite census proves the area law or GR"
+  ]
+}

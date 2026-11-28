@@ -98,7 +98,7 @@ The same `blanket_kinematics.py` module treats the `+`–`−` gauge fold as a m
 
 ## 7. Ties to Other Documents
 
-- `Entropy.md`: Blanket = holographic screen; gauge folds produce microscopic area-law entropy.  
+- [`Entropy.md`](Entropy.md): Blanket = record boundary; gauge folds are modelled as microscopic closure entropy, while the area law is conditional on locality and the `¼` stays open.
 - `Gravity.md`: Blanket distortion = local curvature (inward bias from time-creating gauge folds).  
 - `SpaceTime.md`: Density-dependent space/time role swap originates at the blanket boundary.  
 - `Frequency_Synchronization.md`: Constructing delay inside the blanket = source of local time.  

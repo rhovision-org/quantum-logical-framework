@@ -47,7 +47,7 @@ From [Conservation.md §6](Conservation.md) (ledger): the total information acro
 
 Standard decoherence theory faces the **information paradox** of how a unitary universe can produce apparently irreversible classical outcomes. QLF resolves this: information is never destroyed. What appears irreversible is the blanket's coarse-grained record; the underlying coherent state is fully reversible and information-preserving at the algebra level. The classical record is a low-resolution projection of a coherent global state.
 
-This is the same answer QLF gives for **black-hole information**: Hawking radiation carries the gauge-fold information bit-for-bit ([Entropy.md §1a](Entropy.md), [Annihilation.md §4.4](Annihilation.md)). The "information paradox" of black holes and the "decoherence paradox" of measurement are two faces of the same algebraic fact.
+This is the same answer QLF gives for **black-hole information**: Hawking radiation carries the gauge-fold information bit-for-bit ([Entropy.md §4a](Entropy.md), [Annihilation.md §4.4](Annihilation.md)). The "information paradox" of black holes and the "decoherence paradox" of measurement are two faces of the same algebraic fact.
 
 ## 4a. A measured coherence length: the blanket's capacity sets how long a preparation stays readable
 
