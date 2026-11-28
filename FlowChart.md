@@ -198,6 +198,8 @@ same length and opposite charge and baryon number, for every word
 
 **Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and formal fold-closure results. [Nested-frontier audit](Perspective_Holography_Frontier.md) separates fold closure, territorial ZFA, overlapping records and face counting; no physical holography claim is closed.
 
+**Cooperative-construction spine:** [`Cooperative_Construction.md`](Cooperative_Construction.md) indexes the proved CC0–CC9 stack in [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md). It is an index, not a TOE upgrade: consensus is not evidence, provenance is conserved, irreducible synthesis and the analogical listener are proved in their stated scopes, count balance is proved order-blind, and first closure is schedule-relative ([`QLF_CooperativeClosure`](lean/QLF_CooperativeClosure.lean), [`QLF_AnalogicalListener`](lean/QLF_AnalogicalListener.lean), [`QLF_CooperativeBridge`](lean/QLF_CooperativeBridge.lean), [`QLF_CooperativeLimits`](lean/QLF_CooperativeLimits.lean), no axioms).
+
 QLF meets the three TOE-candidate programs — and reproduces their wins from the substrate. The merged metric-singlet/lattice-Einstein and Manifestation results are **`F`** as exact named statements, but they strengthen the **ToE claim map**, not the physical bridge: their physical readings remain **`B-OPEN`**, and neither closes G3/G5. The ToE index is a map, not evidence ([`Theory_Of_Everything.md`](Theory_Of_Everything.md), [`Manifestation.md`](Manifestation.md), [`Claim_Status.md`](Claim_Status.md)).
 
 
