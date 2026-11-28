@@ -41,14 +41,23 @@ class LoopBoostCheckTests(unittest.TestCase):
     def test_feynman_terms_cancel_on_the_walk(self) -> None:
         """The both-positive and both-negative sums are the same integral on the walk."""
         mA = 0.04 / np.sqrt(2)
-        m = lbc.Model(lbc.walk_bands("half"), True, mA, 0.6 * mA)
         n = 16
         g = (np.arange(n) + 0.5) * 2 * np.pi / n - np.pi
         pts = np.stack(np.meshgrid(g, g, g, indexing="ij"), axis=-1).reshape(-1, 3)
-        (xpp, a1, b1), (xmm, a2, b2) = m.terms(pts, 0.07, np.array([0.01, -0.02, 0.03]))
-        tpp = lbc._acc(0.5 / np.tan((xpp + 0.3j) / 2), a1, b1)
-        tmm = lbc._acc(0.5 / np.tan((xmm + 0.3j) / 2), a2, b2)
-        self.assertLess(np.abs(tpp - tmm).max(), 1e-14 * np.abs(tpp).max() + 1e-16)
+        for slice_ in ("half", "raw"):
+            m = lbc.Model(lbc.walk_bands(slice_), True, mA, 0.6 * mA)
+            (xpp, a1, b1), (xmm, a2, b2) = m.terms(pts, 0.07, np.array([0.01, -0.02, 0.03]))
+            tpp = lbc._acc(0.5 / np.tan((xpp + 0.3j) / 2), a1, b1)
+            tmm = lbc._acc(0.5 / np.tan((xmm + 0.3j) / 2), a2, b2)
+            self.assertLess(np.abs(tpp - tmm).max(), 1e-14 * np.abs(tpp).max() + 1e-16)
+
+    def test_controls_gate_every_verdict(self) -> None:
+        for s in (2.0, 1.0, 1.7):
+            self.assertEqual(lbc.verdict(s, False, True), "INCONCLUSIVE")
+            self.assertEqual(lbc.verdict(s, True, False), "INCONCLUSIVE")
+        self.assertEqual(lbc.verdict(2.0, True, True), "PASS")
+        self.assertEqual(lbc.verdict(1.0, True, True), "FAIL")
+        self.assertEqual(lbc.verdict(1.7, True, True), "INCONCLUSIVE")
 
     def test_zero_vertex_is_invalid(self) -> None:
         P = np.eye(4, dtype=complex) / 2

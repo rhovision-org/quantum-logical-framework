@@ -736,7 +736,7 @@ are `w_gauge = −1` and `w_x = w_y = w_z = +1`, the Minkowski relative sign, an
 [`lean/QLF_SharedPairSign.lean`](lean/QLF_SharedPairSign.lean) with no axioms
 (`splitPair_singlet_sign`: a shared pair acts on the singlet as `−1` on the gauge axis and `+1` on a
 spatial one). Read with [`QLF_MetricSinglet`](lean/QLF_MetricSinglet.lean) `metric_is_singlet`, this is
-one statement: the Minkowski metric is the shared pair's state. What stays a reading, not a theorem,
+one correspondence of relative signs: the metric's `(+, −, −, −)` is, up to the overall sign, the shared pair's signs on the singlet. It does not close the physical bridge. What stays a reading, not a theorem,
 is that a shared pair's weight is its signed phase on that state and that the walk's current along a
 twist's axis is `αᵢ` (the gauge axis carrying the density `1`). So the vector contact is the contact
 the substrate's shared pairs give on this reading, and stage 5 uses it; `β ⊗ β` is not needed as a
@@ -816,8 +816,11 @@ The pre-registered run ([`loop_boost_check.py`](loop_boost_check.py), log in
 - **Calibration passes.** The Pauli–Villars continuum loop gives a worst defect of `7.3 × 10⁻⁷`
   (vector) and `5.2 × 10⁻⁷` (scalar), below the registered `10⁻⁶`. The integration settings were fixed
   by the calibration alone, and the log of settings tried is in the script.
-- **The walk's loop is zero.** On the half-step and raw slices, `L(E, P)` vanishes to rounding
-  (`|L| = 3.7 × 10⁻¹³` against `1.4 × 10⁻²` for each ball's contribution). So `Γ₂ = 0`, `W₂ = 0`, and the
+- **The walk's loop is zero.** On the half-step slice `L(E, P)` vanishes to rounding
+  (`|L| = 3.7 × 10⁻¹³` against `1.4 × 10⁻²` for each ball's contribution). The run stops at that first
+  gate, so the log is a numerical record for the half-step slice only; the raw slice is covered by
+  the analytical argument below and by the cancellation regression in
+  [`tests/test_loop_boost_check.py`](tests/test_loop_boost_check.py), not by a completed run. So `Γ₂ = 0`, `W₂ = 0`, and the
   defect is `0/0`. The run is `INVALID, NOT_GRADED`. The gate that reports this was added after the
   cause below was found and before any graded defect was read; without it the run would have graded
   rounding noise.
@@ -829,7 +832,9 @@ An eigenvector keeps its vector and flips its eigenvalue (`halfWalk_shift_z_eige
 `Λ⁺(k + π e_z) = Λ⁻(k)` and `ω(k + π e_z) = π − ω(k)`. A pair of negative-band states at
 `(p, P − p)` is then a pair of positive-band states at `(p + π e_z, P − p + π e_z)` whose total
 quasi-energy differs by `2π`, which the Floquet kernel does not see. The two terms of the Feynman
-ordering are the same integral and cancel, at every `E` and `P`, on both slices.
+ordering are the same integral and cancel, at every `E` and `P`, on both slices. The step identity
+is proved; the cancellation of the integral follows from it with the kernel's periodicity and a
+change of integration variable, and is not itself formalized.
 
 **What this settles and what it does not.**
 - It does not test Collins: there is no loop to compare.

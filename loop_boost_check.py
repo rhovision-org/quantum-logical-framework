@@ -451,6 +451,13 @@ def stability(kind):
     return worst
 
 
+def verdict(s, blind_ok, raw_ok):
+    """The registered verdict: both controls must fail, or the run does not discriminate."""
+    if not (blind_ok and raw_ok):
+        return "INCONCLUSIVE"
+    return "PASS" if s >= PASS_SLOPE else ("FAIL" if s < KILL_SLOPE else "INCONCLUSIVE")
+
+
 def run(log=print):
     res = {"seed": SEED, "eta": ETA, "kappas": list(KAPPAS), "pass_slope": PASS_SLOPE,
            "kill_slope": KILL_SLOPE, "calibration_max": CAL_MAX, "settings": SETTINGS}
@@ -485,10 +492,7 @@ def run(log=print):
     graded = {}
     for g in ("vector", "scalar"):
         s = res["half"][g]["slope"]
-        v = "PASS" if s >= PASS_SLOPE else ("FAIL" if s < KILL_SLOPE else "INCONCLUSIVE")
-        if v == "PASS" and not (blind_ok and raw_ok):
-            v = "INCONCLUSIVE"
-        graded[g] = v
+        graded[g] = verdict(s, blind_ok, raw_ok)
         log(f"graded {g}: slope {s:.3f} -> {v}")
     log(f"controls: blind fails {blind_ok}, raw fails {raw_ok} (raw slope "
         f"{res['raw']['vector']['slope']:.3f})")
