@@ -1,18 +1,26 @@
 # Cooperative Construction — the TOE spine and its gates
 
 **Status:** synthesis/index, not a new physical claim. Every domain below keeps its existing status
-label. Tracking issue: [#270](https://github.com/rhovision-org/quantum-logical-framework/issues/270).
+label. The index and its domain-status audit are complete at that scope and it is proposed for
+merge on that basis. General bridges remain open where they are labelled open. Tracking issue:
+[#270](https://github.com/rhovision-org/quantum-logical-framework/issues/270).
+
+**Framing.** QLF has one conjecture, equal and opposite logical action ([`Framing.md`](Framing.md)
+A01), and tests models inside it. This document is an **index of existing results**, not a second
+premise. Read computationally ([`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md)), it
+asks how separately held closures compose into a larger closure, and which top-down constraints are
+admissible. It does not promote any row merely because the row uses cooperative language.
 
 **The rule at the top.** *No shared vocabulary is evidence of a shared mechanism.* A domain joins
 this spine only when its existing objects instantiate the common definitions or a pre-registered
 operational bridge succeeds. Otherwise it stays a neighbor, not an instance.
 
 **Layers.** The static flat-history assembly index is [`Assembly_Index_QLF.md`](Assembly_Index_QLF.md)
-(#264 / PR #265); the tensor-sector index is #266; the transport screen is
-[PR #268](https://github.com/rhovision-org/quantum-logical-framework/pull/268) (#267, negative); the
-finite uncertainty kernel is
-[PR #271](https://github.com/rhovision-org/quantum-logical-framework/pull/271) (#269, draft). This
-document is the index over those layers, not a replacement for any of them.
+(#264); the tensor-sector index is #266; the transport screen is
+[`Cooperative_Assembly_QLF.md`](Cooperative_Assembly_QLF.md) (#267, negative); the finite
+uncertainty kernel is [`Closure_Uncertainty_QLF.md`](Closure_Uncertainty_QLF.md) (#269); and the
+proved cooperative-closure stack is [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md)
+(CC0–CC9). This document is the index over those layers, not a replacement for any of them.
 
 ---
 
@@ -58,11 +66,49 @@ not reach back and change what was possible.
 - **Cooperative step.** `X_{k+1} = S_{B_k}(J(X_k, E_k))`, where `X_k` is the persistent library and
   `E_k` is the environment.
 
+**The equation is intentionally schematic.** `J`, `S_B`, `X_k` and `E_k` are not given a new
+universal definition here. The flat-history `J` is the concatenation/assembly operation of
+[`Assembly_Index_QLF.md`](Assembly_Index_QLF.md); the tensor-sector `J` is #266; the filter `S_B`
+and its provenance are the subject of the proved gates below. Reading the notation as a derived
+mechanism would violate gate C0.
+
 **A terminology warning.** [`Theory_Of_Everything.md`](Theory_Of_Everything.md) uses “orientation
 from the top down” for the fact that an open history's completion is fixed by its own imbalance. That
 is a different axis from top-down **constraint**. Orientation is about the completion of one
 history; cooperative top-down is about which continuations an enclosing closure admits. Both are
 real; they are not the same claim and should not be merged.
+
+### 1a. The proved cooperative-closure stack (CC0–CC9)
+
+The index now sits over proved results, not only a proposal. Full statements, scopes and
+counterexamples are in [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md).
+
+| gate | proved content | status |
+|---|---|---|
+| **CC0 consensus** | agreement whose provenance contains no observation is the same in both worlds (`unobserved_consensus_world_free`); a unanimous consistent false consensus exists for every community size (`consensus_fallacy`) | **impossible** as evidence; **possible** as a social state |
+| **CC3 provenance** | copying one source adds no origin or independent support (`origins_replicate`, `support_replicate_le`); replay preserves origins (`replay_invariance`) | **necessary** bookkeeping |
+| **CC2/CC6 synthesis** | parity is resolved by all holders and by no proper subset (`parity_irreducible`, `coalition_parity_iff`); an `n`-party irreducible ZFA closure exists | **necessary/possible** in the information and substrate witnesses |
+| **CC1 analogical listener** | a local check keeps or refuses an open-slot proposal without rewriting the mapping (`consistent_extend_iff`); a closed analogy carries every source relation (`closed_preserves`); an inconsistent branch stays rejected (`inconsistent_rejected`) | **proved finite contract**; not a general search theorem |
+| **CC4 semantic → ZFA** | exact one-for-one needs/offers balance is sound and complete (`encode_closes_iff_met`); count balance cannot distinguish need-then-offer from offer-then-need (`no_act_encoding_sees_order`) | **bridge, scoped**; order-sensitive semantics are outside it |
+| **CC5 free energy** | QLF's `log 2` matches one free-energy change in magnitude under a uniform prior (`quantum_matches_iff_uniform`), with the sign fixed by the direction of resolution (`vfe_resolution_signed`) | **magnitude match only**; no constant identity |
+| **CC7 first closure** | the final verdict is schedule invariant, but the first closure is not (`first_closure_schedule_dependent`); a first closure stays first in every extension (`isFirst_append`) | **proved**; no schedule-free global now |
+| **CC8 hierarchy** | every level of a parity hierarchy is irreducible; no finite group of capacity-bounded listeners hears every closure | **proved**; physical hierarchy remains a reading |
+| **CC9 certificates** | verifiers agree (`verifiers_agree`); a certificate carries only its external bit | **proved bookkeeping** |
+| **competing listeners** | the race winner changes with the schedule (`race_schedule_dependent`); covering balanced views balance the whole (`listeners_cover_met`) | **proved** |
+
+**What this changes for the spine.** CC0 and CC3 make provenance part of the top-down filter `S_B`:
+agreement and repetition do not create independent constraint. CC2/CC6 supply the first exact
+information form of irreducible synthesis. CC1 supplies the listener-side acceptance rule. CC4
+locates the semantic bridge precisely: exact conservation of needs and offers is encodable, but
+count balance alone is blind to order, so a cooperative system that must know whether an offer
+answered an earlier need needs ordered histories and fulfilment evidence, not only a balance. CC7
+shows that the first closure is schedule-relative even though the final balance is not.
+
+These results **do not upgrade any domain row** in §3. They constrain what a future row can claim.
+In particular, "cooperative" is not identified with "consensus", "copying", "agreement" or
+"balance"; and the analogical listener is not identified with a bisimulation quotient. The Quantum-OS
+instantiation therefore has an explicit obligation: retain ordered, listener-relative histories and
+provenance when order or fulfilment matters.
 
 ---
 
@@ -104,10 +150,10 @@ an instance of the cooperative step.
 
 | gate | requirement | current status |
 |---|---|---|
-| **C1 — no backwards causation** | top-down restricts admissible continuations; it is not retrocausation and not a new force | stated; no formal claim |
-| **C2 — negative-result preservation** | the closure-census turbulence kill stands; no Kolmogorov, Zipf, or `1/f` exponent may be inserted into a transport model | preserved in [PR #268](https://github.com/rhovision-org/quantum-logical-framework/pull/268) |
-| **C3 — status labels** | every domain is theorem / structural / bridge / open / negative | this ledger |
-| **C4 — affect gate** | feelings and consciousness enter only as an affect hypothesis with measurable timescales, not as a theorem about qualia | §6 |
+| **C1 — no backwards causation** | top-down restricts admissible continuations; it is not retrocausation and not a new force | stated; [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md) adds the schedule-relative first-closure result (CC7), not a new force |
+| **C2 — negative-result preservation** | the closure-census turbulence kill stands; no Kolmogorov, Zipf, or `1/f` exponent may be inserted into a transport model | preserved in [`Cooperative_Assembly_QLF.md`](Cooperative_Assembly_QLF.md) |
+| **C3 — status labels** | every domain is theorem / structural / bridge / open / negative | ledger audit complete here; no row is promoted by this document |
+| **C4 — affect gate** | feelings and consciousness enter only as an affect hypothesis with measurable timescales, not as a theorem about qualia | §6; the finite model is [the conscious-dynamics model](https://github.com/rhovision-org/quantum-logical-framework/pull/279) when that PR lands |
 
 If a gate fails, the domain does not move up the ladder. The failure is recorded.
 
@@ -123,6 +169,15 @@ If a gate fails, the domain does not move up the ladder. The failure is recorded
 - Atoms and folding have closure-counting theorems.
 - Quantum vortices are quantized; the `−5/3` exponent follows from the flux-invariance premise.
 - The raw closure census has no inertial range, vacuum or seeded.
+- Consensus without an observation in its provenance carries no information (CC0), and copying a
+  source adds no support (CC3).
+- Parity synthesis is irreducible: the whole resolves it, no proper part does (CC2/CC6).
+- The analogical listener's local extension/rejection contract is proved (CC1).
+- Exact needs/offers balance is encodable, and fixed per-act count balance is proved order-blind
+  (CC4).
+- The first closure is schedule-relative while the final balance is not (CC7).
+- The cooperative limits: no constant free-energy identity (CC5), no finite capacity hears every
+  closure (CC8), and verifiers agree (CC9).
 
 **Bridge / open.**
 
@@ -131,12 +186,20 @@ If a gate fails, the domain does not move up the ladder. The failure is recorded
   screen was negative).
 - A molecular Assembly-Theory bridge with fragmentation data.
 - A derivation of motion as biased closure renewal.
+- A physical Markov-blanket instantiation of `S_B`, and its Quantum-OS implementation, including
+  ordered listener-relative histories for order-sensitive fulfilment.
+- CC4 beyond exact needs/offers balance; the semantic bridge there is scoped and does not establish
+  ordinary fulfilment, commitment or causal matching.
 
 **Not claimed.**
 
 - That quarks, games, chemistry, turbulence, and consciousness are “the same mechanism.”
 - That the cooperative step is a new force or a new axiom.
 - That the TOE is complete, or that the ladder is a derivation rather than an index.
+- That agreement is evidence, that copying is corroboration, or that balance alone is fulfilment.
+- That the analogical listener is a bisimulation quotient, or that either is a general N-body
+  theorem.
+- That a schedule-free global “now” follows from the final closure verdict.
 
 ---
 
@@ -204,13 +267,15 @@ The TOE rows keep their own status labels. The spine does not upgrade them.
 
 ## 9. References
 
+- [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md) — proved CC0–CC9 stack, scopes and
+  counterexamples.
 - [`Assembly_Index_QLF.md`](Assembly_Index_QLF.md) — static flat-history assembly.
-- [PR #271](https://github.com/rhovision-org/quantum-logical-framework/pull/271) — finite
-  first-completion uncertainty kernel (`Closure_Uncertainty_QLF.md`).
+- [`Closure_Uncertainty_QLF.md`](Closure_Uncertainty_QLF.md) — finite first-completion uncertainty
+  kernel.
 - [PR #277](https://github.com/rhovision-org/quantum-logical-framework/pull/277) — cosmic closure
   gates G1–G6 (`Cosmic_Closure_QLF.md`), including the `^<v` correction.
-- [PR #268](https://github.com/rhovision-org/quantum-logical-framework/pull/268) — pre-registered
-  transport screen (`Cooperative_Assembly_QLF.md`), negative.
+- [`Cooperative_Assembly_QLF.md`](Cooperative_Assembly_QLF.md) — pre-registered transport screen,
+  negative.
 - [`Hierarchical_Control.md`](Hierarchical_Control.md) — bottom-up synthesis / top-down blanket
   constraint.
 - [`Turbulence.md`](Turbulence.md), [`Navier_Stokes_Geometry.md`](Navier_Stokes_Geometry.md) —

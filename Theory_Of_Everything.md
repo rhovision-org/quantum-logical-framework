@@ -108,7 +108,12 @@ with bottom-up construction and top-down blanket constraint as the two direction
 not an upgrade**: every rung above keeps its own status label, and the no-analogy gate C0 says a
 domain joins the spine only when its existing objects instantiate the common definitions or a
 pre-registered bridge succeeds. The same document carries the turbulence negative result and the
-affect-hypothesis gate.
+affect-hypothesis gate. Its §1a now indexes the proved cooperative-closure stack CC0–CC9 in
+[`Cooperative_Intelligence.md`](Cooperative_Intelligence.md): consensus without observation is not
+evidence, provenance is conserved, parity synthesis is irreducible, the analogical listener has a
+proved local contract, the semantic-to-ZFA bridge is scoped, first closure is schedule-relative,
+and a fixed per-act count balance cannot see order. These results constrain the rows; they do not
+promote any of them.
 
 ## 5. Forces and the cosmos
 
