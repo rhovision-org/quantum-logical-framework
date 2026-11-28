@@ -1,7 +1,7 @@
 # Perspective Holography — Stage C Audit
 
 Issue: [#296](https://github.com/rhovision-org/quantum-logical-framework/issues/296)  
-Implementation: [Draft PR #300](https://github.com/rhovision-org/quantum-logical-framework/pull/300)
+Implementation: [PR #300](https://github.com/rhovision-org/quantum-logical-framework/pull/300)
 
 ## Scope and epistemic status
 
@@ -35,11 +35,11 @@ The witnesses demonstrate information loss in this chosen action-projection surr
 ## Lean targets (now proved in [`QLF_PerspectiveHolography`](lean/QLF_PerspectiveHolography.lean))
 
 1. **Factorization criterion:** `reconstructs_iff` proves `D(h₁)=D(h₂) → O(h₁)=O(h₂)` iff a reconstruction map exists, for any types; `not_reconstructs_iff` makes every failure a collision witness, which is what `factor_reconstruction` reports on a finite sample.
-2. **Closure preservation:** `closure_verdict_reconstructible` proves the joint fold determines whether a two-body history closes now, so a record containing it cannot identify an open history with a closure.
+2. **Fold closure versus territorial ZFA:** `closure_verdict_reconstructible` proves only that the joint fold determines scalar fold closure. It does not determine the count-balanced ZFA event verdict: [QLF_TerritoryReturn](lean/QLF_TerritoryReturn.lean) proves `zfa_not_from_fold` (the empty history and a single gauge + have the same fold, different ZFA). The integer ledger suffices for territorial ZFA (`ledger_returns_zfa`). The dictionary must preserve that distinction.
 3. **Overlapping perspectives:** `shared_respects_chain` is the non-circular shared-observable interface: an observable both records reconstruct is constant along every chain of histories that share a record in either one. On the two-body system, `single_body_perspectives_share_only_constants` shows the two one-body perspectives share only constant observables, while `joint_record_reconstructs` and `joint_record_minimal` show the joint fold is the coarsest record that reconstructs the full joint-closure test. `phase_blind_record_fails` is the collision for a record that drops the phase.
 
 These are statements about record maps. A physical Markov blanket, causal accessibility and metric reconstruction remain open.
 
 ## Decision
 
-**Stage C finite surrogate: implemented and locally focused-tested.** The physical blanket semantics, justified observable algebra, and Lean formalization remain open. Do not promote this result to a holography claim or cosmic metric reconstruction.
+**Stage C finite surrogate: implemented and locally focused-tested.** The generic factorization and two-body fold-closure Lean results are present after #305; the physical blanket semantics, territorial-ZFA-preserving accessibility, justified physical observable algebra and cosmic bridge remain open. Do not promote this result to a holography claim or cosmic metric reconstruction.
