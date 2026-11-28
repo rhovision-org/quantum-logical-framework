@@ -9,8 +9,9 @@ listener) is **proved** in [`lean/QLF_AnalogicalListener.lean`](lean/QLF_Analogi
 axioms. CC4, CC7, CC9 and competing listeners are proved in
 [`lean/QLF_CooperativeBridge.lean`](lean/QLF_CooperativeBridge.lean), and CC5 and CC8 in
 [`lean/QLF_CooperativeLimits.lean`](lean/QLF_CooperativeLimits.lean), no axioms. CC4 holds on one
-declared domain (needs and offers) and is proved impossible for order-sensitive semantics. CC5 holds
-only as one located match, and the general identity is refuted. Both stay open bridges beyond those
+declared domain (exact one-for-one balance of needs and offers) and is proved impossible for
+order-sensitive semantics under fixed per-act encodings. CC5 is a match in magnitude only, at one
+located point, and a constant identity is refuted. Both stay open bridges beyond those
 scopes (§5). Nothing here claims that QLF closure *is* semantic or empirical truth.
 
 The program is a joint one with [Quantum-OS](https://github.com/rhovision-org/quantum-os): QLF states
@@ -28,10 +29,10 @@ equivalent or undetermined.
 | CC3 provenance | Derived | **Necessary**: origins and support are invariant under repetition, replay and copying. |
 | CC2/CC6 synthesis | Derived | **Necessary**: parity needs every holder. **Possible**: an `n`-party irreducible ZFA closure. |
 | CC1 analogical listener | Derived | **Necessary**: extension keeps mappings, closure carries the relation, an inconsistent branch stays inconsistent under every extension. **Impossible**: closing with an obligation open. |
-| CC4 semantic → ZFA | Bridge, scoped | **Equivalent** on needs and offers: closure iff every need is met. **Impossible**: any per-act encoding of an order-sensitive semantics. **Undetermined** elsewhere. |
-| CC5 free action vs free energy | Bridge, scoped | **Equivalent** only for full resolution of one bit from a uniform prior. **Impossible**: a general identity. |
-| CC7 first closure | Derived | **Necessary**: the final verdict is schedule invariant and a first closure is a record. **Impossible**: a schedule-free first closure. |
-| Competing listeners | Derived | **Possible**: the race winner changes with the schedule. **Necessary**: listeners agree on whether the whole closes. |
+| CC4 semantic → ZFA | Bridge, scoped | **Equivalent** to exact one-for-one balance of needs and offers per kind; a surplus offer does not close, so this is not fulfilment or commitment. **Impossible**: any fixed per-act encoding checked by count balance that must see order. **Undetermined** elsewhere. |
+| CC5 free action vs free energy | Bridge, scoped | **Magnitude match** only: full resolution of one bit from a uniform prior changes free energy by `log 2` in size, and the decrement is the move away from resolution. **Impossible**: a constant identity over beliefs. Other models **undetermined**. |
+| CC7 first closure | Derived | **Necessary**: the final verdict is schedule invariant, and a first closure stays first in every extension. **Impossible**: a permutation-invariant function giving the first balanced prefix. |
+| Competing listeners | Derived | **Possible**: the race winner changes with the schedule. **Necessary**: a balanced whole balances every listener's view (not a closure for a listener that hears nothing), and covering views, each balanced, balance the whole. |
 | CC8 hierarchy | Derived | **Necessary**: every level of a parity hierarchy is irreducible. **Impossible**: a finite group of capacity-bounded listeners that hears every closure. |
 | CC9 certificates | Derived (bookkeeping) | **Necessary**: verifiers agree. A certificate built from an external Boolean carries that bit and nothing more. |
 
@@ -212,14 +213,16 @@ twist on axis `k`, and an offer is its conjugate.
 
 | Result | Theorem |
 |---|---|
-| The encoded history closes iff every need is matched by an offer of the same kind. Sound and complete. | `encode_closes_iff_met` |
+| The encoded history closes iff, for every kind, needs and offers are equal in number. Sound and complete for exact one-for-one balance. | `encode_closes_iff_met` |
+| A surplus offer leaves every need answered, yet the history is not balanced and does not close. | `surplus_offer_not_met` |
 | A met history is a full ZFA closure, Pauli fold included. | `met_pauli_closed` |
 | The encoding is a homomorphism, so it cannot see the verdict it produces. | `encode_append` |
 | Any decidable predicate has *some* encoding whose closure is that predicate, so the existence of an encoding is no evidence. | `any_verdict_encodes` |
-| No per-act encoding, into any twist words, represents a semantics that tells `[need, offer]` from `[offer, need]`. | `no_act_encoding_sees_order`, `order_blind` |
+| No fixed, context-free per-act encoding into twist words, checked by count balance, represents a semantics that tells `[need, offer]` from `[offer, need]`. | `no_act_encoding_sees_order`, `order_blind` |
 
-So CC4 holds where the question is conservation of needs and offers, and it is impossible where the
-question is whether an offer *answered* a need asked earlier. Count balance is blind to order, and that
+So CC4 holds where the question is exact conservation of needs and offers, one for one. It is not
+ordinary fulfilment, commitment or causal matching, and it is impossible, for this class of encodings,
+where the question is whether an offer *answered* a need asked earlier. Count balance is blind to order, and that
 blindness is a theorem, not a gap in effort. Whether a real cooperative task is a needs-and-offers
 history is a reading. Outside this domain CC4 is undetermined, and the Quantum-OS arm E stays
 unavailable for any task that needs order.
@@ -230,11 +233,16 @@ unavailable for any task that needs order.
 |---|---|
 | Fully resolving a binary question with prior `p` gains `−log p`. | `kl_delta_prior` |
 | That gain equals QLF's per-closure `log 2` iff the prior is uniform. | `quantum_matches_iff_uniform` |
-| A belief that resolves the bit only partly gains strictly less. | `partial_belief_below_quantum` |
+| Against a uniform reference, a belief that resolves the bit only partly gains strictly less. The bound is for the uniform reference only: with `p = 1/100`, `q = 1/2` already exceeds `log 2`. | `partial_belief_below_quantum` |
+| The sign: under `vfe`, moving from the uniform belief to full resolution *raises* free energy by `log 2`, and the reverse move lowers it by `log 2`. | `vfe_resolution_signed` |
 | Variational free energy depends on the belief, so no constant equals it for every belief. | `vfe_not_constant`, `no_constant_identity` |
 
-The match is located exactly: one bit, uniform prior, full resolution. Elsewhere the general identity is
-false, and CC5 stays an open bridge for any other generative model.
+These are information gains, not dynamics. The match with QLF's per-closure decrement `−log 2`
+([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)) is in **magnitude** at one located point (one bit,
+uniform prior, full resolution), and the decrement corresponds to the move *away* from resolution.
+Read the KL probabilistically only for `0 < p < 1`: Lean's `log 0 = 0` and totalized division do not
+represent the infinite divergence of a delta on an impossible outcome. Nothing here excludes numerical
+matches in other generative models; CC5 stays an open bridge for them.
 
 ### 5c. CC7: first closure relative to a schedule
 
@@ -242,8 +250,8 @@ false, and CC5 stays an open bridge for any other generative model.
 |---|---|
 | Whether the whole history closes does not depend on the schedule. | `final_verdict_schedule_invariant` |
 | When it first closes does: the same four acts first close at 2 in one order and at 4 in another. | `first_closure_schedule_dependent` |
-| No function of the multiset of acts gives the first closure. There is no global "now" to read it from. | `no_schedule_free_first_closure` |
-| A first closure is a record: later acts never move it. | `isFirst_append` |
+| No permutation-invariant function returns the first balanced prefix: the first closure is a fact about the schedule. This says nothing about whether a physical global clock exists. | `no_schedule_free_first_closure` |
+| A first closure stays the first closure of every extension. It is a fact about a past prefix, not the current closure state. | `isFirst_append` |
 
 ### 5d. Competing listeners
 
@@ -252,11 +260,14 @@ A listener hears only the acts of the kinds it attends to.
 | Result | Theorem |
 |---|---|
 | Which of two listeners closes first depends on the schedule. | `race_schedule_dependent` |
-| If the whole history is met, every listener's view is met. | `whole_met_listener_met` |
+| If the whole history is met, every listener's view is met. A met view is not a closure. | `whole_met_listener_met` |
+| One listener's view can be met while another's is not (`[need 0, offer 0, need 1]`), and a listener that hears nothing is vacuously met and never closes. | `partial_listener_views`, `vacuous_listener_never_closes` |
 | Listeners whose kinds cover all four, each met, make the whole met. | `listeners_cover_met` |
 
-Listeners disagree about *when* and agree about *whether*. A race between listeners is a fact about the
-schedule, and it does not change the verdict.
+Listeners can disagree about *when*. They agree about *whether* only in the sense of the two
+implications above: a balanced whole balances every view, and views that together cover every kind,
+each balanced, balance the whole. Without the coverage premise the reverse fails, and views of an
+unbalanced whole can differ. A race between listeners is a fact about the schedule.
 
 ### 5e. CC8: hierarchy, and the Law of Exceptions
 
@@ -273,6 +284,11 @@ A hierarchy factors an irreducible question and never lets a level skip a member
 are corollaries of [`QLF_LawOfExceptions`](lean/QLF_LawOfExceptions.lean): failing within a budget is
 not impossibility, and no finite committee is final. That a human or AI participant is a
 capacity-bounded listener is a reading.
+
+Scope. Irreducibility is for the stated parity hierarchy with independently variable inputs, and a
+multi-level synthesis is meaningful only with nonempty blocks. `pooled_capacity` is the disjunction of
+two nested horizon predicates on the same history; it bounds neither arbitrary cooperative computation
+nor compositional pooling. The step from a cooperative resolver to a horizon is a modelling assumption.
 
 ### 5f. CC9: certificates
 

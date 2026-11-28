@@ -21,9 +21,14 @@ proposal asked whether they are the same quantity. They are not, and the overlap
 * **`vfe_not_constant`**, **`no_constant_identity`**: free energy varies with the belief, so no
   identity with a constant per-closure quantum holds.
 
-So the `log 2` is one variational free-energy change: a complete resolution of one bit from a uniform
-prior. That match is **derived on that domain** and nowhere else. Calling QLF's closure quantum
-"Friston free energy" in general is false; CC5 stays an open bridge for any other model.
+* **`vfe_resolution_signed`**: under `vfe`, the move to full resolution *raises* free energy by
+  `log 2`; the reverse move lowers it by `log 2`.
+
+So the match with QLF's decrement `−log 2` is in **magnitude**, at one located point, and the decrement
+is the move away from resolution. The KL values are information gains, not dynamics, and are read
+probabilistically only for `0 < p < 1` (Lean's `log 0 = 0` does not represent an infinite divergence).
+The partial-belief bound is for the uniform reference only. Nothing here excludes numerical matches in
+other models; CC5 stays an open bridge for them.
 
 ## CC8: hierarchy, and the Law of Exceptions
 
@@ -35,6 +40,8 @@ prior. That match is **derived on that domain** and nowhere else. Calling QLF's 
   *undetermined*, and the closure is real at `R + 1` (`QLF_LawOfExceptions`). Failing within a budget
   is not impossibility.
 * **`pooled_capacity`**: pooling two capacity-bounded listeners hears exactly what the larger hears.
+  This is the disjunction of two nested horizon predicates on one history, not a bound on arbitrary
+  cooperative computation.
 * **`group_of_listeners_misses`**: any finite group of capacity-bounded listeners misses a real
   closure. No finite committee is final.
 
@@ -88,6 +95,21 @@ theorem vfe_not_constant (ev : ℝ) : vfe (1/2) (1/2) ev ≠ vfe 1 (1/2) ev := b
   rw [binary_kl_delta_uniform]
   intro h
   linarith
+
+/-- A uniform belief against a uniform posterior has zero divergence. -/
+theorem kl_uniform_uniform : binary_kl (1/2) (1/2) = 0 := by
+  unfold binary_kl
+  norm_num
+
+/-- **The sign.** Under `vfe`, moving from the uniform belief to full resolution *raises* free energy
+by `log 2`; the reverse move lowers it by `log 2`. The magnitude matches QLF's quantum; the direction
+of a decrement is the reverse transition. -/
+theorem vfe_resolution_signed (ev : ℝ) :
+    vfe 1 (1/2) ev - vfe (1/2) (1/2) ev = Real.log 2 ∧
+      vfe (1/2) (1/2) ev - vfe 1 (1/2) ev = - Real.log 2 := by
+  unfold vfe
+  rw [binary_kl_delta_uniform, kl_uniform_uniform]
+  constructor <;> ring
 
 /-- **No identity with a constant per-closure quantum.** No constant equals the free energy of every
 belief on a uniform bit. -/

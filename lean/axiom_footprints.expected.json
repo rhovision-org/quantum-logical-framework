@@ -1281,9 +1281,18 @@
   "QLF.CooperativeBridge.order_blind": [
     "propext"
   ],
+  "QLF.CooperativeBridge.partial_listener_views": [
+    "propext"
+  ],
   "QLF.CooperativeBridge.race_schedule_dependent": [
     "Classical.choice",
     "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.surplus_offer_not_met": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.vacuous_listener_never_closes": [
     "propext"
   ],
   "QLF.CooperativeBridge.verdict_certificate_is_the_bit": [],
@@ -1409,6 +1418,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.CooperativeLimits.kl_uniform_uniform": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.CooperativeLimits.missing_leaf_blind": [
     "Classical.choice",
     "Quot.sound",
@@ -1438,6 +1452,11 @@
     "propext"
   ],
   "QLF.CooperativeLimits.vfe_not_constant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.vfe_resolution_signed": [
     "Classical.choice",
     "Quot.sound",
     "propext"

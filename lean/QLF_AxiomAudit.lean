@@ -1373,6 +1373,7 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.CooperativeBridge.any_verdict_encodes
 #print axioms QLF.CooperativeBridge.no_act_encoding_sees_order
 #print axioms QLF.CooperativeBridge.order_blind
+#print axioms QLF.CooperativeBridge.surplus_offer_not_met
 #print axioms QLF.CooperativeBridge.final_verdict_schedule_invariant
 #print axioms QLF.CooperativeBridge.first_closure_schedule_dependent
 #print axioms QLF.CooperativeBridge.no_schedule_free_first_closure
@@ -1380,6 +1381,8 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.CooperativeBridge.race_schedule_dependent
 #print axioms QLF.CooperativeBridge.whole_met_listener_met
 #print axioms QLF.CooperativeBridge.listeners_cover_met
+#print axioms QLF.CooperativeBridge.partial_listener_views
+#print axioms QLF.CooperativeBridge.vacuous_listener_never_closes
 #print axioms QLF.CooperativeBridge.verifiers_agree
 #print axioms QLF.CooperativeBridge.verify_sound
 #print axioms QLF.CooperativeBridge.verify_true_pauli
@@ -1391,6 +1394,8 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.CooperativeLimits.quantum_matches_iff_uniform
 #print axioms QLF.CooperativeLimits.partial_belief_below_quantum
 #print axioms QLF.CooperativeLimits.vfe_not_constant
+#print axioms QLF.CooperativeLimits.kl_uniform_uniform
+#print axioms QLF.CooperativeLimits.vfe_resolution_signed
 #print axioms QLF.CooperativeLimits.no_constant_identity
 #print axioms QLF.CooperativeLimits.hierarchical_parity
 #print axioms QLF.CooperativeLimits.reports_irreducible

@@ -14,8 +14,9 @@ The domain is **needs and offers on four kinds**. A cooperative history is a lis
 is the twist on axis `k` and an offer is its conjugate, act by act (`encode`). On this domain:
 
 * **`encode_closes_iff_met`**: the encoded history is count balanced (so ZFA closed, both conjuncts,
-  by `count_balanced_pauli_closed`) **iff every need is matched by an offer of the same kind**. Sound
-  and complete.
+  by `count_balanced_pauli_closed`) **iff, for every kind, needs and offers are equal in number**.
+  Sound and complete for exact one-for-one balance. **`surplus_offer_not_met`**: this is not
+  fulfilment; a surplus offer answers every need and still does not close.
 * **`encode_append`**: the encoding is a homomorphism, so it cannot see the verdict it produces.
 
 Two limits, both proved:
@@ -23,7 +24,8 @@ Two limits, both proved:
 * **`any_verdict_encodes`**: for any decidable predicate there is an encoding whose closure is that
   predicate. So the *existence* of an encoding is no evidence. An encoding counts only when it is fixed
   per act, as `encode` is.
-* **`no_act_encoding_sees_order`**: no per-act encoding, into any twist words, can represent a
+* **`no_act_encoding_sees_order`**: no fixed, context-free per-act encoding into twist words, checked
+  by count balance, can represent a
   semantics that distinguishes `[need, offer]` from `[offer, need]`. Count balance is order blind.
   "Answered after it was asked" is outside every structural encoding of this kind.
 
@@ -35,9 +37,10 @@ shorter nonempty prefix does.
 * **`final_verdict_schedule_invariant`**: whether the whole history closes does not depend on the
   schedule.
 * **`first_closure_schedule_dependent`**: when it first closes does.
-* **`no_schedule_free_first_closure`**: no function of the multiset of acts gives the first closure.
-  There is no global "now" to read it from.
-* **`isFirst_append`**: a first closure is a record. Later acts never move it.
+* **`no_schedule_free_first_closure`**: no permutation-invariant function returns the first balanced
+  prefix. This is about the schedule, not about whether a physical global clock exists.
+* **`isFirst_append`**: a first closure stays first in every extension. It is a fact about a past
+  prefix, not the current closure state.
 
 ## Competing listeners
 
@@ -45,8 +48,9 @@ A listener hears only the acts whose kind it attends to. `listenerFirst K h k` i
 on the stream.
 
 * **`race_schedule_dependent`**: which of two listeners closes first depends on the schedule.
-* **`whole_met_listener_met`**: if the whole history is met, every listener's view is met. Listeners
-  that disagree on *when* still agree on *whether*.
+* **`whole_met_listener_met`**: if the whole history is met, every listener's view is met. A met view
+  is not a closure: **`vacuous_listener_never_closes`** (a listener that hears nothing) and
+  **`partial_listener_views`** (views of an unbalanced whole can differ).
 * **`listeners_cover_met`**: conversely, listeners whose kinds together cover all four, each met,
   make the whole history met.
 
@@ -183,6 +187,11 @@ theorem order_blind :
     Met [Act.need 0, Act.offer 0] ∧ Met [Act.offer 0, Act.need 0] := by
   decide
 
+/-- **The domain is exact conservation, not fulfilment.** A surplus offer leaves every need answered
+yet the history is not met and does not close. -/
+theorem surplus_offer_not_met : ¬ Met [Act.need 0, Act.offer 0, Act.offer 0] := by
+  decide
+
 /-! ## CC7 -/
 
 /-- The prefix of length `k` is nonempty and closes. -/
@@ -264,6 +273,23 @@ theorem race_schedule_dependent :
       (ListenerFirst L0 schedA 2 ∧ ListenerFirst L1 schedA 4) ∧
       (ListenerFirst L1 schedC 2 ∧ ListenerFirst L0 schedC 4) := by
   decide
+
+/-- **A met projection is not a closure.** One listener's view can be met while another's is not,
+and a listener that hears nothing is vacuously met yet never closes. -/
+theorem partial_listener_views :
+    Met (heard L0 [Act.need 0, Act.offer 0, Act.need 1]) ∧
+      ¬ Met (heard L1 [Act.need 0, Act.offer 0, Act.need 1]) := by
+  decide
+
+/-- A listener that hears nothing is vacuously met and never closes. -/
+theorem vacuous_listener_never_closes :
+    Met (heard L1 [Act.need 0, Act.offer 0]) ∧
+      ∀ k, ¬ ListenerCloses L1 [Act.need 0, Act.offer 0] k := by
+  refine ⟨by decide, ?_⟩
+  rintro k ⟨_, hk, hne, _⟩
+  apply hne
+  simp only [List.length_cons, List.length_nil] at hk
+  interval_cases k <;> decide
 
 private theorem count_heard (K : Fin 4 → Bool) (h : List Act) (a : Act) :
     (heard K h).count a = if K a.kind then h.count a else 0 := by
