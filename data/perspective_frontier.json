@@ -1,0 +1,126 @@
+{
+  "histories": 14425,
+  "max_length": 3,
+  "checks": {
+    "AB_B_ledger": {
+      "reconstructible": true
+    },
+    "BC_B_ledger": {
+      "reconstructible": true
+    },
+    "AB_B_zfa": {
+      "reconstructible": true
+    },
+    "BC_B_zfa": {
+      "reconstructible": true
+    },
+    "A_B_ledger": {
+      "reconstructible": false,
+      "witness": [
+        [],
+        [
+          [
+            "B",
+            "^"
+          ]
+        ]
+      ],
+      "observable_values": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    "C_B_ledger": {
+      "reconstructible": false,
+      "witness": [
+        [],
+        [
+          [
+            "B",
+            "^"
+          ]
+        ]
+      ],
+      "observable_values": [
+        [
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    "AB_global_zfa": {
+      "reconstructible": false,
+      "witness": [
+        [],
+        [
+          [
+            "C",
+            "^"
+          ]
+        ]
+      ],
+      "observable_values": [
+        true,
+        false
+      ]
+    },
+    "BC_global_zfa": {
+      "reconstructible": false,
+      "witness": [
+        [],
+        [
+          [
+            "A",
+            "^"
+          ]
+        ]
+      ],
+      "observable_values": [
+        true,
+        false
+      ]
+    },
+    "B_fold_B_zfa": {
+      "reconstructible": false,
+      "witness": [
+        [],
+        [
+          [
+            "B",
+            "+"
+          ]
+        ]
+      ],
+      "observable_values": [
+        true,
+        false
+      ]
+    }
+  },
+  "nested_record_restrictions": true,
+  "face_accounting": {
+    "cumulative_sum": 6,
+    "increment_sum": 3,
+    "terminal_count": 3,
+    "partition_valid": true
+  },
+  "scope": "finite tagged surrogate; physical bridge B-OPEN"
+}
