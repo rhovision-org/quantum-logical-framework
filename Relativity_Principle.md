@@ -398,7 +398,7 @@ For a two-body contact-interaction walk on `ℤ³` the conservation law is now d
 | 1. Free propagation covariant in the large | proved (§5b, `diracWalk_boost_covariant`) | — |
 | 2. Interacting kinematics covariant in the large, given lattice conservation and the summed long-wavelength bound; elementary umklapp vectors along a boost axis are not boost-stable | proved (this section, `process_boost_covariant`, `umklapp_x_not_covariant`) | — |
 | 3. Lattice conservation derived for a concrete interacting walk | **proved for two bodies on `ℤ³`** with any contact interaction (`twoBody_lattice_conservation`, `scattering_latticeConserving`) | `N` bodies: the same argument with an `N`-fold joint shift; labour |
-| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the relative boost defect of the two-body tree-level vertex proxy scales as `κ²` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | **4c**: stage-3 conservation extended to a matrix-valued contact (`QLF_SpinorContact`); the half-step slice is its own time reverse, the structural reason for `O(κ²)` (`QLF_HalfStepReversal`). Open: the analytic `O(κ²)` bound; energy-conserving amplitudes; which contact the substrate gives (§6b, "Which contact?") |
+| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the relative boost defect of the two-body tree-level vertex proxy scales as `κ²` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | **4c**: stage-3 conservation extended to a matrix-valued contact (`QLF_SpinorContact`); the half-step slice's parameter-reversal identity, a structural explanation of the `O(κ²)` slopes (`QLF_HalfStepReversal`). Open: the analytic `O(κ²)` bound; interacting covariance of the contact step (vertex invariance and coin unitarity do not give it); energy-conserving amplitudes; which contact the substrate gives (§6b, "Which contact?") |
 | 5. Loops: lattice-scale contribution small at low energy (Collins) | open, **blocked on a definition and on analysis** | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
 | 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
 | 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
@@ -648,10 +648,19 @@ lattice momentum as a character (`spinorStep_conserves_momentum`), and on `ℤ³
 the reciprocal lattice (`spinorStep_lattice_conservation`). The proof uses only that `G` depends
 on the relative position and is linear; unitarity is not needed. The stage-4b scalar contact
 `exp(i g β ⊗ β) = cos g + i sin g β ⊗ β` is unitary (`scalarContact_unitary`). This closes the
-obligation recorded in the 4b review: the covariant contacts carry the stage-3 conservation law.
+obligation recorded in the 4b review: the contacts whose vertices passed 4b carry the stage-3
+conservation law. Three facts are separate here. Vertex invariance (`scalar_vertex_invariant`) is a
+congruence of `β ⊗ β` under the spin action `T = S ⊗ S`; coin unitarity makes the contact a walk
+step; translation conservation is the law above. None of them is boost covariance of the
+interacting step. For a non-unitary boost, `Tᴴ G T = cos g · Tᴴ T + i sin g · β ⊗ β` differs from
+`G`, and similarity covariance does not follow either. At rapidity `0.5` and `g = 0.2` the
+max-entry defects are `2.2 × 10⁻¹⁶` for the vertex congruence, `1.68` for the coin congruence and
+`0.34` for the coin similarity (Aria's check in the 4c review). Whether a properly defined
+interacting evolution and frame map are covariant stays open.
 
-**The structural reason for `O(κ²)`.** [`lean/QLF_HalfStepReversal.lean`](lean/QLF_HalfStepReversal.lean)
-proves, with no axioms, that the half-step slice is its own time reverse:
+**A structural explanation of the `O(κ²)` slopes.** [`lean/QLF_HalfStepReversal.lean`](lean/QLF_HalfStepReversal.lean)
+proves, with no axioms, a parameter-reversal identity for the half-step slice. It reverses every
+momentum and the mass together; it is not the antiunitary time reversal of a fixed-mass particle.
 
 | Theorem | Statement |
 |---|---|
@@ -660,18 +669,25 @@ proves, with no axioms, that the half-step slice is its own time reverse:
 | **`halfWalk_reversal`** | `halfWalk(−k, −m) = halfWalk(k, m)ᴴ` |
 | `halfWalk_reversal_inv` | so `halfWalk(−k, −m) · halfWalk(k, m) = 1` |
 
-Write the step as `exp(−i H(p))` with `p = (k, m)` and eigenphases in `(−π, π)`. Reversal says
-`U(−p) = U(p)⁻¹`, so the generator is odd in `p` and has no `κ²` term; its first-order term is the
-Dirac operator (`realWalk_generator` and the mass step), so `H = H_Dirac + O(κ³)` and the band
-follows the Dirac band to `O(κ²)`. The raw slice is not its own reverse: its adjoint is
-`handed(−k) · massStep(−m)`, the factors in the opposite order. Numerically, at
-`k = (0.03, −0.02, 0.05)`, `m = 0.04`, the reversal defect is `4.0 × 10⁻³` for the raw slice and
-`1.1 × 10⁻¹⁶` for the half-step slice. This is why stage 4a found slope 1 on one slice and 2 on the
-other, and why stage 4b's scalings are 2.
+With the walk's conventions (`diracWalk_generator`, `massStep m = cos m + i sin m β`, and positive
+eigenphases for the positive band) the generator is `H(p) = −i Log U(p)`, so `U = exp(i H)`. On the
+principal branch near the identity, reversal says `U(−p) = U(p)⁻¹`, so `H` is odd in `p` and has no
+second-order term; its first-order term is the Dirac operator, so `H = H_Dirac + O(κ³)`. Numerically,
+at `(k, m) = (0.03, −0.02, 0.05, 0.04)`, the max-entry defect of `−i Log U` against `H_Dirac` is
+`5.1 × 10⁻⁵` and falls by about eight when the point is halved. The raw slice is not reversed this
+way: its adjoint is `handed(−k) · massStep(−m)`, the factors in the opposite order, and its reversal
+defect at the same point is `4.0 × 10⁻³` against `1.1 × 10⁻¹⁶` for the half-step slice.
 
-**What stays open.** The analytic step, a matrix logarithm of `U` near `1` with a Taylor bound on
-its cubic remainder, is not formalized, so the `O(κ²)` bounds of 4a and 4b are still numerical.
-The reversal theorem is the reason they hold; it is not the bound.
+The two slices are unitarily conjugate and have the same dispersion (`halfWalk_dispersion`), so the
+different orders that 4a and 4b measured concern the band-projector comparison and the vertex proxy,
+not the eigenvalues. The identity is a structural explanation consistent with the measured slopes,
+not a proof that they follow.
+
+**What stays open.** The analytic bridge is not formalized: a matrix logarithm of `U` near `1` with a
+bound on its cubic remainder, a spectral gap that does not close under scaling (for the relative
+projector estimate), and control of the vertex proxy's normalization (for the relative `W`
+defect). So the `O(κ²)` bounds of 4a and 4b are still numerical, and the audited fact is the
+identity.
 
 ### Which contact? Substrate readings, not yet a derivation
 

@@ -6,10 +6,19 @@ import QLF_Mass
 
 Part of the [Quantum Logical Framework (QLF)](../README.md). Stage 4b
 ([`Relativity_Principle.md`](../Relativity_Principle.md) §6b) found that the spin-blind contact of
-`twoBodyStep`, a scalar phase `g(x₁ − x₂)`, is a `J⁰ J⁰` coupling and picks a frame, while a contact
-with spinor structure, such as `exp(i g β ⊗ β)`, does not. That contact is matrix-valued, and the
-stage-3 conservation theorems were stated for a scalar one. This module states them for a contact
-that is any linear map on the joint internal space depending only on the relative position.
+`twoBodyStep`, a scalar phase `g(x₁ − x₂)`, is a `J⁰ J⁰` coupling whose vertex `1 ⊗ 1` a boost does
+not preserve, while the scalar vertex `β ⊗ β` is preserved by the spin action
+(`QLF.BoostAmplitudes.scalar_vertex_invariant`). A contact built on that vertex, such as
+`exp(i g β ⊗ β)`, is matrix-valued, and the stage-3 conservation theorems were stated for a scalar
+one. This module states them for a contact that is any linear map on the joint internal space
+depending only on the relative position.
+
+Three facts are kept apart. Vertex invariance (stage 4b) is a congruence of `β ⊗ β` under the spin
+action. Coin unitarity (`scalarContact_unitary`, below) says the contact is a legitimate walk step.
+Translation conservation (below) says it conserves lattice momentum. None of them is boost
+covariance of the interacting step: for a non-unitary boost `T = S ⊗ S`, the congruence
+`Tᴴ G T = cos g · Tᴴ T + i sin g · β ⊗ β` differs from `G` in general, so whether the interacting
+evolution is covariant under a suitably defined frame map is open.
 
 * **`spinorStep`**: the two-body step with a matrix-valued contact `G (x₁ − x₂)`.
 * **`spinorStep_of_scalar`**: the scalar contact of `twoBodyStep` is the special case
@@ -19,7 +28,8 @@ that is any linear map on the joint internal space depending only on the relativ
 * **`spinorStep_lattice_conservation`**: on `ℤ³`, a plane wave goes to a state of total momentum
   `K′` only if `k₁ + k₂ − K′` is a reciprocal vector.
 * **`scalarContact_unitary`**: the stage-4b scalar contact `exp(i g β ⊗ β) = cos g + i sin g β ⊗ β`
-  is unitary, so it is a legitimate walk step, and an instance of `G` above.
+  is unitary, so it is a legitimate walk step, and an instance of `G` above. This is not a
+  statement that the contact is boost covariant.
 
 No axioms. The proof uses only that `G` depends on the relative position, and the linearity of each
 `G r`; unitarity is not needed.

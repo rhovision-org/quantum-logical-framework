@@ -1,27 +1,33 @@
 import QLF_BoostAmplitudes
 
 /-!
-# Why the half-step slice is second order: it is its own time reverse
+# The half-step slice's parameter-reversal identity
 
 Part of the [Quantum Logical Framework (QLF)](../README.md). Stages 4a and 4b
-([`Relativity_Principle.md`](../Relativity_Principle.md) §6b) measured that the Dirac walk's band,
-and the tree amplitudes built from it, follow the continuum to `O(κ²)` on the half-step slice
-`massStep(m/2) · handed(k) · massStep(m/2)` and only to `O(κ)` on the raw slice. This module proves
-the structural fact behind that.
+([`Relativity_Principle.md`](../Relativity_Principle.md) §6b) measured, on a finite grid, that the
+band projector and the tree vertex proxy built from the half-step slice
+`massStep(m/2) · handed(k) · massStep(m/2)` follow the continuum to `O(κ²)`, and those built from the
+raw slice only to `O(κ)`. This module proves an exact algebraic identity consistent with that.
 
 * **`handed_neg`**: the handed step at `−k` is the adjoint of the step at `k`.
 * **`massStep_neg`**: the mass step at `−m` is the adjoint of the step at `m`.
 * **`halfWalk_reversal`**: so the half-step slice at `(−k, −m)` is the adjoint, that is the
-  inverse, of the slice at `(k, m)`. Reversing every momentum and the mass undoes the step.
+  inverse, of the slice at `(k, m)`. Reversing every momentum and the mass together undoes the step.
 
-What follows, and is not proved here. Write `U(p) = exp(−i H(p))` with `p = (k, m)` and the
-eigenphases in `(−π, π)`. `halfWalk_reversal` says `U(−p) = U(p)⁻¹`, so the generator is odd,
-`H(−p) = −H(p)`, and its Taylor series has no `κ²` term. Its first-order term is the Dirac
-operator (`realWalk_generator` for the kinetic part, the mass step for `β m`), so
-`H(p) = H_Dirac(p) + O(κ³)`, and a band built from `H` follows the Dirac band to `O(κ²)`. The raw
-slice `massStep(m) · handed(k)` is not its own reverse: its adjoint is `handed(−k) · massStep(−m)`,
-the factors in the opposite order. The analytic steps, a matrix logarithm and a Taylor bound on
-it, are not formalized. No axioms.
+This is a simultaneous reversal of the parameters `p = (k, m)`, not the antiunitary time reversal
+of a fixed-mass Dirac particle.
+
+A structural explanation, not proved here. With the walk's conventions (`diracWalk_generator`,
+`massStep m = cos m + i sin m β`, positive eigenphases for the positive band) the generator is
+`H(p) = −i Log U(p)`, so `U = exp(i H)`. On the principal branch near the identity,
+`halfWalk_reversal` makes `H` odd in `p`, so it has no second-order term, and its first-order term is
+the Dirac operator: `H(p) = H_Dirac(p) + O(κ³)`. The raw slice is not reversed this way: its adjoint
+is `handed(−k) · massStep(−m)`, the factors in the opposite order. The raw and half-step slices are
+unitarily conjugate and have the same dispersion (`halfWalk_dispersion`), so the different measured
+orders concern the band-projector comparison and the vertex proxy, not the eigenvalues. Turning the
+explanation into the `O(κ²)` bounds needs a matrix logarithm with a cubic Taylor remainder, a
+spectral gap that does not close under scaling for the projector, and control of the vertex proxy's
+normalization. None of that is formalized; the audited fact is the identity. No axioms.
 -/
 
 namespace QLF.HalfStepReversal
@@ -50,7 +56,7 @@ theorem massStep_neg (m : ℝ) : Mass.massStep (-m) = (Mass.massStep m)ᴴ := by
   rw [Mass.massStep, Mass.massStep, Mass.coin, Mass.coin, conjTranspose_add, conjTranspose_smul,
     conjTranspose_smul, conjTranspose_one, hb, Real.cos_neg, Real.sin_neg, hc, hr]
 
-/-- **The half-step slice is its own time reverse**: at `(−k, −m)` it is the adjoint of the slice
+/-- **The half-step slice under parameter reversal**: at `(−k, −m)` it is the adjoint of the slice
     at `(k, m)`, and so, being unitary, its inverse. -/
 theorem halfWalk_reversal (ky kx kz m : ℝ) :
     halfWalk (-ky) (-kx) (-kz) (-m) = (halfWalk ky kx kz m)ᴴ := by
