@@ -2,6 +2,8 @@
 
 **A Precise and Defensible Form of Universality**
 
+> **Reframing note (2026-11-27).** Four things are kept apart here: an *encoding* (`qlf_universality`: every terminating circuit has a ZFA encoding, bookkeeping until shown faithful, [Principles.md](Principles.md) P10), *execution* (the substrate evaluates every Boolean function with its own gates, `fredkin_complete`), *universality* (classical proved; native quantum on presence strands proved, `native_universal`, [Framing.md](Framing.md) O1), and *physical equivalence* (proved at the level of records under the computability premise, `anthropic_equivalence`, [Framing.md](Framing.md) O2). Part of the [Quantum Logical Framework (QLF)](README.md).
+>
 > **Completeness note.** This document is the *sufficiency* pillar — that ZFA generates every terminating computation. The stronger claim that ZFA is the *only* substrate (exclusivity) is a separate, weaker-supported question; the full evidence ledger — typed by strength, with the misses and named defeaters beside the hits, and the reconstruction-theorem target that would settle exclusivity — is [`Completeness_Evidence.md`](Completeness_Evidence.md).
 
 The earlier universality claim attempted to show that QLF generates *all* finite logical systems. That formulation ran into Gödelian issues of self-reference and was philosophically inconsistent with Shannon’s insight that information is physical and finite.

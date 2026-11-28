@@ -14,7 +14,7 @@ identification with a physical observable and from an experimental test.
 | Hodge | [QLF_Hodge](lean/QLF_Hodge.lean): closure encoding; explicit `hodge_algebraicity` bridge | Relate encoded classes faithfully to algebraic cycles of actual varieties | A concrete cycle/cohomology construction and proof of the geometric realization |
 | P versus NP | [QLF_PvsNP](lean/QLF_PvsNP.lean): finite counting and an abstract `CostModel` | Link `PTime` and `search` to a standard uniform machine model | A stated complexity model and a separation proof without assuming the separation |
 | Riemann hypothesis | [QLF_Riemann](lean/QLF_Riemann.lean), [QLF_RiemannMRE](lean/QLF_RiemannMRE.lean): formal implications from spectral or factorization axioms | Discharge the named conjecture-strength assumptions | An unconditional kernel-checked theorem about Mathlib's analytic zeta function |
-| Relativity / boost covariance | [QLF_RelativityScale](lean/QLF_RelativityScale.lean), [QLF_LorentzSymbol](lean/QLF_LorentzSymbol.lean), [QLF_BoostCovariance](lean/QLF_BoostCovariance.lean), [QLF_InteractingKinematics](lean/QLF_InteractingKinematics.lean): census limits, Lorentz-symbol determinant, free Dirac-walk shell covariance, interacting kinematics covariant at long wavelength (conditional on lattice conservation), elementary umklapp vectors not boost-stable | Interacting boost covariance of amplitudes and loops; a conservative return from interacting records to closure invariants; identification of the physical propagation law | `F` for free propagation in the 375 baseline; `B-OPEN` bridge; no `N` or `E`; [claim_records/relativity_boost.json](claim_records/relativity_boost.json) |
+| Relativity / boost covariance | [QLF_RelativityScale](lean/QLF_RelativityScale.lean), [QLF_LorentzSymbol](lean/QLF_LorentzSymbol.lean), [QLF_BoostCovariance](lean/QLF_BoostCovariance.lean), [QLF_InteractingKinematics](lean/QLF_InteractingKinematics.lean), [QLF_BoostStates](lean/QLF_BoostStates.lean): census limits, Lorentz-symbol determinant, free Dirac-walk shell covariance, interacting kinematics covariant at long wavelength (conditional on lattice conservation), elementary umklapp vectors not boost-stable, the frame-comparison map's algebra | Interacting boost covariance of amplitudes and loops; a conservative return from interacting records to closure invariants; identification of the physical propagation law | `F` for free propagation in the 375 baseline; `B-OPEN` bridge; no `N` or `E`; [claim_records/relativity_boost.json](claim_records/relativity_boost.json) |
 | Causal continuum | [QLF_CausalContinuum](lean/QLF_CausalContinuum.lean), [QLF_OrderMetric](lean/QLF_OrderMetric.lean): discrete constructions and explicit continuum limit axioms | Establish convergence to Lorentzian geometric objects | Precise assumptions, convergence topology and quantitative error estimates |
 | Gravity / metric | [QLF_MetricSinglet](lean/QLF_MetricSinglet.lean), [QLF_LatticeDivergence](lean/QLF_LatticeDivergence.lean): metric = singlet; null-cone step as singlet uniqueness; lattice divergence/Einstein equations; [QLF_LatticeBianchi](lean/QLF_LatticeBianchi.lean) proves discrete Bianchi and conservation for the linearized curvature (nonlinear stays a hypothesis); [QLF_TensorFromClosure](lean/QLF_TensorFromClosure.lean) derives the tensor composition and [QLF_TensorConservativeReturn](lean/QLF_TensorConservativeReturn.lean) proves quotient coherence | Local Rindler/Raychaudhuri derivation; substrate curvature; physical selection of the tensor quotient; the causal-order return `CausalMetricConservativeReturn`; an apparatus/observable map | Exact anchors in the 375-entry baseline, including the tensor quotient return; explicit premises; physical causal return still open |
 | Manifestation / selection | [QLF_Manifestation](lean/QLF_Manifestation.lean): orientation, isolation-is-closure, unbounded closures, `distance_eq_delay`, proton as the simplest isolated imbalance | Physical selection mechanism; apparatus/detector map; identification of the closure “proton” with the QCD proton; empirical test | [Manifestation.md](Manifestation.md); claim map only; no `E` |
@@ -69,6 +69,25 @@ A bridge with no such return is not a closed loop, however suggestive the numeri
    from conventional physics.
 6. Reject promotion from conditional to derived unless the bridge itself
    has been proved and reviewed.
+
+## Model-testing and equivalence certificates
+
+A test of a model ([Framing.md](Framing.md) §4, [ScientificApproach.md](ScientificApproach.md) §1d)
+is recorded as a certificate with these fields, so verdicts from different PRs can be compared:
+
+| Field | Content |
+|---|---|
+| `model` | The model and the source that states it |
+| `encoding` | The map from the model's states and events to histories and closures, with its Lean or script anchor |
+| `can_fail` | An input on which the encoded predicate is false (an encoding that makes everything ZFA certifies nothing) |
+| `conditions` | Alphabet, capacity or depth, observational domain |
+| `verdict` | `NECESSARY`, `POSSIBLE`, `IMPOSSIBLE`, `EQUIVALENT` or `UNDETERMINED` |
+| `anchors` | Theorems or exact computations, with footprints and the semantic dependency audit of [Proof_Trust.md](Proof_Trust.md) |
+| `to_world` | The known fact or bridge that carries the verdict to nature, or `none` (a substrate verdict only) |
+
+An `EQUIVALENT` certificate also names its equivalence (for example `ObsEquiv`,
+[`QLF_ObservationalEquivalence`](lean/QLF_ObservationalEquivalence.lean)) and its domain. A search
+that finds no closure records `UNDETERMINED` unless the domain is finite and exhausted.
 
 The current research programme is tracked in
 [Open_Problems.md](Open_Problems.md) and issue

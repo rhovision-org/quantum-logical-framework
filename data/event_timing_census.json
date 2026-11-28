@@ -1,0 +1,84 @@
+{
+  "gates": {
+    "ET0_definition": "frozen",
+    "ET1_timing": "tau_listen>0; tau_event=0",
+    "ET2_separation": "frequency and priority are distinct",
+    "ET3_no_backward_causation": "event steps increase; cited",
+    "ET4_dependencies": "#271, #272, #275, #277, #279"
+  },
+  "highest_frequency": {
+    "distance": 5,
+    "frequency": 1.0,
+    "name": "fast_recurrent",
+    "period": 1
+  },
+  "meta": {
+    "generator": "event_timing.py",
+    "issue": 280,
+    "pre_registration": "Event_Timing_QLF.md",
+    "rule": "listening takes time; closure does not",
+    "version": 1
+  },
+  "priority_next": {
+    "distance": 1,
+    "frequency": 0.1,
+    "name": "slow_near",
+    "period": 10
+  },
+  "race": [
+    {
+      "distance": 5,
+      "eligible": true,
+      "frequency": 1.0,
+      "name": "fast_recurrent",
+      "period": 1
+    },
+    {
+      "distance": 1,
+      "eligible": true,
+      "frequency": 0.1,
+      "name": "slow_near",
+      "period": 10
+    },
+    {
+      "distance": 2,
+      "eligible": true,
+      "frequency": 0.5,
+      "name": "percept",
+      "period": 2
+    }
+  ],
+  "separation": {
+    "distinct": true,
+    "fastest": "fast_recurrent",
+    "priority": "slow_near"
+  },
+  "trace": {
+    "atomic": true,
+    "candidate": "slow_trace",
+    "tau_event": 0,
+    "tau_listen": 3,
+    "trace": [
+      {
+        "distance": 3,
+        "event": "listening",
+        "step": 0
+      },
+      {
+        "distance": 2,
+        "event": "listening",
+        "step": 1
+      },
+      {
+        "distance": 1,
+        "event": "listening",
+        "step": 2
+      },
+      {
+        "distance": 0,
+        "event": "CLOSE",
+        "step": 3
+      }
+    ]
+  }
+}

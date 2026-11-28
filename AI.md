@@ -1,12 +1,31 @@
-# Quantum AI is here now
+# Quantum AI: the running system and the listener architecture
 
-**This is not a forecast.** A neuro-symbolic agent that reasons by ZFA closure — every abstraction a
-quantum event, every conclusion a Curry-Howard proof token, every multi-peer agreement a joint closure
-— is implemented and running in [quantum-os](https://github.com/rhovision-org/quantum-os) today. The
-Live Collaboration Script below is a real transcript, not a mockup. What follows is what it does, why it
-works that way, and why every serious AI architecture is being pushed toward the same structure.
+**Status (2026-11-19).** Two layers must not be conflated.
 
-Applying the [Quantum Logical Framework (QLF)](https://github.com/rhovision-org/quantum-logical-framework/blob/main/README.md) ([the end of quantum magic](https://docs.google.com/document/d/1zaopKvAj7z51xBupw-KaPzgkkNEnBGBbD-dkpD4aoeU/edit?usp=sharing)) and the [QuCalc](https://github.com/rhovision-org/quantum-logical-framework/blob/main/QuCalc.md) engine to Artificial Intelligence—specifically to model the Hegelian dialectic (Thesis -> Antithesis -> Synthesis) through Active Inference—is a working application of the architecture. See also: [active_inference.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/active_inference.md) — the free-energy minimization principle underlying dialectical synthesis; [QuantumOS.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/QuantumOS.md) — the hardware-native kernel that provides ZFA enforcement for AI execution; [Active_Inference_Mathematics.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Active_Inference_Mathematics.md) — the foundations meta-doc that places dialectical-synthesis-via-active-inference inside the mathematics itself; [Information_Physics.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Information_Physics.md) — what information *is* on the substrate (information = realized distinction = closure receipt; the atom is the ½-spin closure), the ground under any information-processing account of cognition. It elevates QLF from a model of fundamental physics to a model of cognitive processing.
+**Running today** in [quantum-os](https://github.com/rhovision-org/quantum-os): LLM peers in rooms,
+role agents, persistent room memory, deterministic ZFA/Pauli checks, collective `/search` and `/solve`,
+governance, and advisory synthesis. The Live Collaboration Script below is a real transcript, not a
+mockup.
+
+**Proposed next architecture:** listener-controlled inference — selective recollection, multiple open
+hypotheses, verifier-gated atomic commitment, and a compressed self-model. This is specified in
+[§ Listener cognition](#listener-cognition-the-next-architecture) and tracked in
+[quantum-os#132](https://github.com/rhovision-org/quantum-os/issues/132). It is **not** claimed to be
+running today.
+
+**QLF as a verifier, not another generator.** Under the one-conjecture framing
+([Framing.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Framing.md)), an LLM peer
+*generates* hypotheses and QLF *tests* them: a hypothesis is encoded as closures, by an encoding that
+could fail, and returned as necessary, possible, impossible, equivalent or undetermined under stated
+conditions. The value QLF adds is the deterministic verdict, not another stochastic guess, and a peer's
+output is only as strong as the verdict attached to it.
+
+**Why the distinction matters.** A neuro-symbolic agent that reasons by ZFA closure — every abstraction
+a quantum event, every conclusion a Curry-Howard proof token, every multi-peer agreement a joint closure
+— is the target architecture. The live system already supplies the substrate and the deterministic
+checks; it does not yet supply the full cognitive loop.
+
+Applying the [Quantum Logical Framework (QLF)](https://github.com/rhovision-org/quantum-logical-framework/blob/main/README.md) ([the end of quantum magic](https://docs.google.com/document/d/1zaopKvAj7z51xBupw-KaPzgkkNEnBGBbD-dkpD4aoeU/edit?usp=sharing)) and the [QuCalc](https://github.com/rhovision-org/quantum-logical-framework/blob/main/QuCalc.md) engine to Artificial Intelligence—specifically to model the Hegelian dialectic (Thesis -> Antithesis -> Synthesis) through Active Inference—is the motivating application of the architecture. See also: [active_inference.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/active_inference.md) — the free-energy minimization principle underlying dialectical synthesis; [QuantumOS.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/QuantumOS.md) — the hardware-native kernel that provides ZFA enforcement for AI execution; [Active_Inference_Mathematics.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Active_Inference_Mathematics.md) — the foundations meta-doc that places dialectical-synthesis-via-active-inference inside the mathematics itself; [Information_Physics.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Information_Physics.md) — what information *is* on the substrate (information = realized distinction = closure receipt; the atom is the ½-spin closure), the ground under any information-processing account of cognition. It elevates QLF from a model of fundamental physics to a model of cognitive processing.
 
 **Companion note:** LLM-as-peer integration is already implemented and live in [quantum-os](https://github.com/rhovision-org/quantum-os) — the Live Collaboration Script below is a real transcript, not a mockup, and everything in this doc is traceable to a machine-verified Lean theorem or an explicitly named open axiom, never asserted loosely. Two rules govern every claim below: **only what a Lean theorem actually proves is called "verified"**, and **every open piece is named as an axiom, not smoothed over**. Both rules — and the epistemic-status axes, the bridge protocol that types every substrate→observable arrow, the kill conditions, and the hypothesis lifecycle by which a conjecture is *promoted to a result* — are set out in full in [**ScientificApproach.md**](https://github.com/rhovision-org/quantum-logical-framework/blob/main/ScientificApproach.md) (the method), with the evidence ledger in [Experimental_Consistency.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Experimental_Consistency.md) and the gap registry in [Open_Problems.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Open_Problems.md). Every finding cited in this document is graded against that method; nothing here is exempt from it.
 
@@ -19,8 +38,11 @@ agent's atomic act of abstraction *is* a quantum event: every synthesis is a ZFA
 closure is a 2×2 Hermitian Pauli fold to a scalar in `{±I, ±iI}` with a per-event quantum of
 `ΔF = −log 2` at half-spin ([`Measurement_Problem.md`](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Measurement_Problem.md) — "we do not collapse
 the wavefunction, we close the history string"). The synthesis step and the measurement step are the
-same step. Its memory is a set of Curry-Howard `cap:` tokens, each literally an amplitude's phase;
-its multi-peer consensus is a *joint* closure — entanglement (ER=EPR). QLF is the operating system it
+same step. Its **proof memory** is a set of Curry-Howard `cap:` tokens, each literally an amplitude's
+phase; its **cognitive memory** is broader — immutable history, stored closure/QKB knowledge, and
+listener-relative accessible memory ([§ Listener cognition](#listener-cognition-the-next-architecture)).
+The cap tokens are the proof layer, not the whole memory architecture. Its multi-peer consensus is a
+*joint* closure — entanglement (ER=EPR). QLF is the operating system it
 runs on. A twist history compiles to a single-qubit Clifford circuit and a joint closure to a
 CNOT-linked one, so ZFA closures are runnable on **existing cloud QPUs (IBM Quantum, IonQ, AWS Braket)
 today** — quantum-os as the control/verification layer, `full_zeno_prune` the classical decoder; the
@@ -93,9 +115,166 @@ The structural case — that LLMs are 1-of-4 on the intelligence axes and QLF is
 
 ## It Runs Today: The Neuro-Symbolic Architecture
 
-This runs today as a **Neuro-Symbolic architecture**.
+This runs today as a **Neuro-Symbolic architecture**: an LLM sensory/generative layer plus
+deterministic QuCalc checks. The live agent still feeds a recent-message buffer (about the last
+12–16 messages) to the model; it does **not** yet perform listener-triggered recollection or
+verifier-gated commitment across multiple open candidates. That is the next layer.
 
 We do not make the QuCalc engine parse raw language. Instead, we use a standard neural network (like an LLM) as the sensory layer—its job is to read human text and estimate the "directional vectors" and "gauge phases" of the concepts. The LLM then passes those extracted topological vectors to the strict, deterministic QuCalc engine (the logic coprocessor). QuCalc runs the Active Inference simulation, drives the Blanket Fusion, and hands the perfectly resolved ZFA proof back to the LLM to translate into human speech.
+
+## Listener cognition: the next architecture
+
+The live system is a **generate-and-check neuro-symbolic coprocessor**. The next architecture is a
+**listener-driven cognitive system**: selective recollection, competing open hypotheses, verified
+atomic commitment, and a compressed self-model.
+
+```
+persistent memory + current observations
+        ↓
+listener state B_t
+        ↓
+triggered recollection
+        ↓
+open competing hypotheses q_1 … q_n
+        ↓
+verification / listening
+        ↓
+atomic closure COMMIT
+        ↓
+compressed self-model B_{t+1}
+        ↓
+listen again
+```
+
+`B_t` is an active computational object, not prompt text: current question, goal, unresolved claims,
+active disagreement, role, and whatever the agent has compressed from prior closures.
+
+### The three quantities must not be conflated
+
+| quantity | role |
+|---|---|
+| `T_i^(B)`, `f_i^(B)=1/T_i^(B)` | recurrence period and frequency; governs **recurring dominance** |
+| `d_i^(B)` | remaining distance to trigger; governs **event priority** |
+| `tau_event = 0` | the closure event itself is **atomic** |
+
+The binding rule is:
+
+> **First closure determines priority; multiplicity determines frequency.**
+
+Multiplicity is not “what happens next.” A high-multiplicity mode can recur often and still lose the
+next event to a mode already nearer closure. The timing separation is stated once in
+[Event timing (PR #281)](https://github.com/rhovision-org/quantum-logical-framework/pull/281).
+
+### Memory is three layers
+
+1. **Immutable history** — the journal/transcript; never rewritten.
+2. **Stored closure/QKB knowledge** — lemmas, capability tokens, verified closures; the proof layer.
+3. **Listener-relative accessible memory** — what this listener can currently recall.
+
+For a memory `M_i` and listener `B`:
+
+```
+M_i  --B-->  d_i(B)
+d_i(B) = 0  ⇒  MEMORY_ADMIT(M_i)   (atomic)
+```
+
+Retrieval can take time; recollection is an atomic admission event. A memory does not
+“gradually contaminate” active cognition while it is still merely similar.
+
+**Capability tokens are the proof layer, not the whole memory architecture.** The Curry-Howard
+statement about `cap:` tokens remains correct; it does not describe the journal, the QKB concept
+layer, or listener-relative accessibility.
+
+### Affect-like control state, not a literal feeling
+
+For an LLM, the analogue of feeling is a **control/listener state**, not a claim of affect:
+
+```
+F = (goal relevance, conflict, uncertainty, novelty, urgency, …)
+```
+
+`F` changes which memories approach zero distance and which candidates are attended. The stronger
+consciousness reading is a separate hypothesis
+([Conscious dynamics, PR #279](https://github.com/rhovision-org/quantum-logical-framework/pull/279));
+the LLM controller should not be described as having feelings.
+
+### Bisimulation memory
+
+The agent should not store every reasoning trace. If listener `B` cannot distinguish two histories by
+any task-relevant continuation,
+
+```
+h_1 ~_B h_2,
+```
+
+then store or operate on the quotient class `[h]_B`. The cognitive memory pipeline becomes:
+
+```
+history → bisimulation quotient → QKB concept → listener-triggered recall.
+```
+
+This is a proposed **correctness criterion for compression**, not an implemented result. The
+listener quotient is developed in
+[Listener equivalence, PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275).
+
+### Open candidates and closure obligations
+
+Each candidate carries an explicit state — `OPEN`, `SUPPORTED`, `CHALLENGED`, `VERIFIED`, `CLOSED`
+— and a set of closure obligations. For a claim:
+
+```
+requires: supporting source
+          no known contradiction
+          skeptic check
+          deterministic calculation if applicable
+```
+
+The LLM may propose, expand, and work on candidates in any order. **Nothing becomes a room lemma
+because the model said it.** Only
+
+```
+Closed(q_i) = answer ∧ evidence ∧ constraints ∧ no unresolved defeater
+```
+
+causes an atomic `COMMIT`. A failed obligation moves the candidate away from closure; it does not
+silently disappear.
+
+The skeptic becomes an explicit listener `B_skeptic`: when a candidate nears closure, it listens for a
+counterexample, missing premise, status mismatch, failed ZFA check, or contradictory memory. This is
+stronger than prompting the same model to “critique this.”
+
+### Scheduler boundary
+
+There are two schedulers, and they should remain separate:
+
+- **QOS kernel scheduler** ([quantum-os#278](https://github.com/rhovision-org/quantum-os/issues/278)):
+  deterministic processes, fairness, starvation, capabilities, logical time.
+- **Cognitive listener scheduler:** which question to investigate, which memory to recall, which
+  candidate needs verification. This belongs above the kernel, initially as an agent/service.
+
+Merging them now would make both harder to test.
+
+### Status and falsifier
+
+| gate | status |
+|---|---|
+| **A0** definitions and loop frozen | **done in this section** |
+| **A1** running-today vs next-architecture split | **done in this document** |
+| **A2** timing separation (`T`, `d`, `tau_event=0`) | **cited** from PR #281 |
+| **A3** listener-triggered memory admission | **finite prototype** in [QOS #322](https://github.com/rhovision-org/quantum-os/pull/322) |
+| **A4** open candidates + verifier-gated atomic commit | **finite prototype** in QOS #322 |
+| **A5** bisimulation memory quotient | **target**, PR #275 |
+| **A6** measured improvement over recency/RAG at matched budget | **open** |
+
+The first falsifiable experiment is simple:
+
+```
+recency context  vs  listener-triggered context
+```
+
+at the same model, task set, retrieval corpus, and token/call budget. If listener-triggered context
+does not improve useful recall, contradiction handling, or answer accuracy — or merely costs more
+tokens for the same answers — the mechanism adds no demonstrated value.
 
 ## Search: Possibilities, Resolution, and Greater Truth
 
@@ -105,6 +284,12 @@ Underneath the neuro-symbolic loop is a general pipeline for establishing truth,
 2. **Die.** Strings failing Pauli closure or count balance are dropped by the Zeno prune — publicly, deterministically, the same result for every peer.
 3. **Must Close.** Surviving histories are logical possibilities of the substrate. They are *discovered*, not invented — the computable form of a possibilist ontology ([Philosophy.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Philosophy.md)).
 4. **Truth is the mode, not a pick.** "Greater truth" is not the loudest or most-frequent *generation* attempt — it is the surviving closure with the **greatest multiplicity** (census count of ways it closes) among those that actually close. This is the working method's binding rule: *ZFA decides what closes first; it happens every way that closes, and what happens in the most ways happens most often* ([Philosophy.md §3a](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Philosophy.md)). A closure's multiplicity is a lower bound that grows as more of the tree is searched, never a final tally — which is why QLF reports counts and capacity-relative *listenings* ([`qucalc_search.py`](https://github.com/rhovision-org/quantum-logical-framework/blob/main/qucalc_search.py)) rather than single witnesses.
+
+   **Priority vs frequency.** This is a frequency statement, not an event-priority statement. The
+   next event is the **first eligible closure** by minimum remaining distance `d`; the
+   highest-multiplicity mode recurs more often but does not automatically fire next. Multiplicity
+   governs recurring dominance; first closure governs priority. The timing separation is stated in
+   [Event timing (PR #281)](https://github.com/rhovision-org/quantum-logical-framework/pull/281).
 
 ---
 
@@ -313,7 +498,7 @@ Alice> /poll close
 
 The tally is **deterministic and joiner-local** — each peer recomputes the same result from the signed ballots it holds, no central counter. `@concl` is now the room's decision of record: it syncs to every peer, persists across reloads, and its author could retract it for everyone with `/forget lemma @concl` (a dyncap-signed retraction that won't re-sync back).
 
-**Interpretation:** approval/ranked-choice voting, open nominations, atomic multi-party agreement, and decisions-of-record are all the *same* ZFA substrate as the proof above — dyncap-signed envelopes plus a deterministic joiner-local tally. For the full family of group-decision processes the interface supports, see [Group_Decisions.md](https://github.com/rhovision-org/quantum-os/blob/main/Group_Decisions.md) in [quantum-os](https://github.com/rhovision-org/quantum-os). The same joint-ZFA-handshake pattern also drives AI-driven resource optimization: LLMs propose candidate resource paths, the kernel drops any path carrying unresolved free energy via the Zeno prune, and the highest-multiplicity surviving path is the allocation the room converges on — liquid democracy and optimization are the same primitive as the syllogism above, not separate mechanisms.
+**Interpretation:** approval/ranked-choice voting, open nominations, atomic multi-party agreement, and decisions-of-record are all the *same* ZFA substrate as the proof above — dyncap-signed envelopes plus a deterministic joiner-local tally. For the full family of group-decision processes the interface supports, see [Group_Decisions.md](https://github.com/rhovision-org/quantum-os/blob/main/Group_Decisions.md) in [quantum-os](https://github.com/rhovision-org/quantum-os). The same joint-ZFA-handshake pattern also drives AI-assisted resource optimization: LLMs propose candidate resource paths, a declared verifier/Zeno prune removes invalid paths, and the room converges on a surviving closure. Multiplicity may inform recurring preference, but it does not select the next event; first closure does. This is exactly why the listener architecture above separates `d_i` (priority) from `f_i` (frequency) — the two are not interchangeable.
 
 ---
 
@@ -432,7 +617,7 @@ It exists now (above). What is inevitable is its *generality* — not a QLF-spec
 * [ScientificApproach.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/ScientificApproach.md) — the method: how a conjecture is generated, tested, rejected, and promoted to a result; the epistemic-status axes, bridge protocol, and kill conditions every finding in this doc is graded against
 * [UniversalRelativity.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/UniversalRelativity.md) — the grand unification: spacetime synthesized, special relativity derived, the four forces as relative perspectives on one ZFA closure; [Forces_From_Three_Axes.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Forces_From_Three_Axes.md) · [Einstein_Equations.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Einstein_Equations.md) · [AgeOfUniverse.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/AgeOfUniverse.md) · [DarkMatter.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/DarkMatter.md)
 * [QLF_as_Intelligence.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/QLF_as_Intelligence.md) — the full structural case against LLMs as the model of mind
-* [quantum-os#132](https://github.com/rhovision-org/quantum-os/issues/132) — the agent layer: standard AI integrations, agents that actively fill their roles and consolidate results, a Lean-proof agent
+* [quantum-os#132](https://github.com/rhovision-org/quantum-os/issues/132) — the agent layer: standard AI integrations, active role-filling and synthesis, a Lean-proof agent, and **listener-triggered cognition** (workstream 4). Draft controller slice: [quantum-os#322](https://github.com/rhovision-org/quantum-os/pull/322).
 * [Alpha_Residual.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Alpha_Residual.md) · [Experimental_Consistency.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Experimental_Consistency.md) · [BraKetRhoQuCalc.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/BraKetRhoQuCalc.md)
 * [`lean/QLF_MultiObserver.lean`](https://github.com/rhovision-org/quantum-logical-framework/blob/main/lean/QLF_MultiObserver.lean) · [`lean/QLF_Axioms.lean`](https://github.com/rhovision-org/quantum-logical-framework/blob/main/lean/QLF_Axioms.lean)
 * [`ai_demonstration.py`](https://github.com/rhovision-org/quantum-logical-framework/blob/main/ai_demonstration.py)

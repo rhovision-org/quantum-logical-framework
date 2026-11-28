@@ -1,0 +1,167 @@
+{
+  "record_type": "claim",
+  "record_id": "QLF-SPATIAL-RESPONSE-DERIVED-001",
+  "version": "0.3.0-draft",
+  "source_revision": "b97c37a62f0dff0b1d3a093b07a6d6d24c9742c9",
+  "informal_statement": "Issue #287 SR3 with both ledgers derived from the same twist steps: the orientation ledger Delta S = 2 e_p.e_q does not predict contraction of the separation r = x_A - x_B. By the parallelogram law the mean growth of |r|^2 is 2 - Delta S, so binding (opposite) steps push apart on average and like steps hold the separation fixed.",
+  "approximation_or_regime": {
+    "name": "Two-body joint steps on Z^3",
+    "description": "36 events (p, q) of spatial twists at all 129 sites |r|_1 <= 4; Delta S from the joint-cost identity; Delta d from the l1 separation.",
+    "validity_limits": "Uniform over events; no selection by closure; no aggregation, gravity or propagation."
+  },
+  "formal_statement": {
+    "namespace": "QLF",
+    "theorems": [
+      "QLF.SpatialResponseDerived.joint_step_identity",
+      "QLF.SpatialResponseDerived.symmetric_mean",
+      "QLF.SpatialResponseDerived.unit_symmetric_mean",
+      "QLF.SpatialResponseDerived.orthogonal_brings_closer",
+      "QLF.SpatialResponseDerived.opposite_pushes_apart"
+    ],
+    "statement_scope": "Vector identities and two witnesses; true for any steps (bookkeeping by rule 4)."
+  },
+  "formal_object": {
+    "primary_files": [
+      "lean/QLF_SpatialResponseDerived.lean",
+      "lean/QLF_MagneticOrientation.lean"
+    ],
+    "type": "joint-step identity on Z^3"
+  },
+  "dependencies": {
+    "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
+    "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
+    "audit_baseline": "Five new anchors added to QLF_AxiomAudit and the exact-footprint baseline (526 entries).",
+    "qlf_bridge_axioms": "None. Footprints are propext, Classical.choice, Quot.sound, or none."
+  },
+  "inputs": [
+    {
+      "name": "orientation ledger",
+      "value": "Delta S = 2 e_p . e_q",
+      "provenance": "derived",
+      "source": "QLF.MagneticOrientation.joint_square applied to steps"
+    },
+    {
+      "name": "separation",
+      "value": "r = x_A - x_B, d = |r|_1",
+      "provenance": "declared",
+      "source": "the integer ledger (Map_Is_Territory.md section 3b)"
+    }
+  ],
+  "interpretation": {
+    "map": "joint step -> (Delta S, Delta d)",
+    "formal_status": "Identity and witnesses formal; the census is exact enumeration.",
+    "noncircularity_test": "R1-R4 and the verdict rule committed (b97c37a) before the script; neither ledger defined from the other."
+  },
+  "strange_loop": {
+    "name": "joint steps -> orientation ledger -> separation returned",
+    "levels": [
+      "two-body joint steps",
+      "orientation ledger Delta S",
+      "separation ledger Delta d",
+      "closure-relevant spatial invariant"
+    ],
+    "return_level": "the mean separation growth per orientation class",
+    "conservative_return": "The orientation class returns the mean growth of |r|^2 exactly (2 - Delta S), but not the sign of Delta d for any event; the return is the opposite of the hypothesised contraction.",
+    "noncircularity_witness": "Pre-registered; R1 and R2 could have passed.",
+    "status": "B-OPEN",
+    "first_order_evidence": "F+N",
+    "first_order_note": "F: QLF_SpatialResponseDerived. N: spatial_response_derived.py, exact.",
+    "defeater": "A selection rule (first or joint closure) under which binding events contract the mean separation.",
+    "proof_obligation": {
+      "domain": "joint steps at finite separation",
+      "codomain": "separation change",
+      "forward_map": "(p, q, r) -> (Delta S, Delta d)",
+      "return_map": "Delta S -> mean Delta |r|^2",
+      "composite_identity_on": "mean separation growth per orientation class",
+      "conservative_return_status": "PARTIAL",
+      "proof_artifact": "lean/QLF_SpatialResponseDerived.lean (unit_symmetric_mean)",
+      "imported_axioms": "none",
+      "falsifier": "a selection under which opposite steps contract on average"
+    }
+  },
+  "observable": {
+    "symbol": "Delta d, Delta |r|^2 by orientation class",
+    "baseline": "Delta d < 0 iff Delta S < 0 (hypothesis)",
+    "uncertainties": "exact"
+  },
+  "measurement_protocol": {
+    "status": "FORMAL_ONLY",
+    "design": "No empirical measurement. Pre-registered R1-R4 in Spatial_Response_Derived.md section 1; exhaustive enumeration.",
+    "failure_condition": "Verdict rule: R1, R2 failing with R3 holding means the ledger does not predict contraction.",
+    "execution_status": "not_performed"
+  },
+  "reported_agreement": {
+    "value": "hypothesis reversed on average",
+    "comparator": "pre-registered verdict rule",
+    "uncertainty": "none",
+    "comparison_type": "not_applicable"
+  },
+  "evidence": {
+    "F": "Parallelogram identity; mean growth 2 - Delta S; witnesses for R1 and R2 failing.",
+    "N": "spatial_response_derived.py: 36 events x 129 sites; R1 336 counterexamples (orthogonal); R2 114 closer / 150 same / 510 farther.",
+    "E": "None.",
+    "reviewer": "pending review"
+  },
+  "defeaters": {
+    "formal": "A counterexample to the QLF_SpatialResponseDerived anchors.",
+    "interpretation": "The displacement reading of space is declared, not derived.",
+    "numerical": "Not applicable (exact).",
+    "empirical": "Not applicable.",
+    "conceptual": "Uniform event weighting; selection by closure is untested."
+  },
+  "gate_outcomes": {
+    "G0": {
+      "status": "PASS",
+      "reason": "Scope, tests and verdict rule stated before the run."
+    },
+    "G1": {
+      "status": "PASS",
+      "reason": "Anchors in QLF_AxiomAudit and the exact-footprint baseline."
+    },
+    "G2": {
+      "status": "INCOMPLETE",
+      "reason": "No physical selection rule for which events happen."
+    },
+    "G3": {
+      "status": "INCOMPLETE",
+      "reason": "Return PARTIAL: mean growth per class only."
+    },
+    "G4": {
+      "status": "NOT_APPLICABLE",
+      "reason": "No reproduced data set."
+    },
+    "G5": {
+      "status": "INCOMPLETE",
+      "reason": "No empirical test."
+    },
+    "G6": {
+      "status": "INCOMPLETE",
+      "reason": "No receipt yet."
+    }
+  },
+  "evidence_status": {
+    "formal": "CANDIDATE",
+    "numerical": "NOT_ESTABLISHED",
+    "empirical": "NOT_ESTABLISHED",
+    "bridge": "OPEN"
+  },
+  "reviewer_independence": {
+    "source_inspection": "pending",
+    "enumeration": "project CI for the formal anchors",
+    "original_lean_kernel": "project CI build and exact-footprint gate",
+    "measurement": "none",
+    "independence_tier": "collaborator",
+    "receipt": null
+  },
+  "provenance": {
+    "repository": "rhovision-org/quantum-logical-framework",
+    "source_revision": "b97c37a62f0dff0b1d3a093b07a6d6d24c9742c9",
+    "reference_documents": [
+      "Spatial_Response_Derived.md",
+      "lean/QLF_SpatialResponseDerived.lean",
+      "spatial_response_derived.py",
+      "data/spatial_response_derived.json"
+    ],
+    "status": "pre-merge draft record for #287 SR3 (derived ledgers); no bridge promotion"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "R1_binding_events_with_dS_ge_0": {
+    "orthogonal": 336
+  },
+  "R2_closer": 114,
+  "R2_farther": 510,
+  "R2_opposite_events": 774,
+  "R2_same": 150,
+  "R3_identity_failures": 0,
+  "R3_mean_equals_2_minus_dS": true,
+  "R4_mean_growth_by_class": {
+    "like": [
+      "0"
+    ],
+    "opposite": [
+      "4"
+    ],
+    "orthogonal": [
+      "2"
+    ]
+  },
+  "events": 36,
+  "radius": 4,
+  "separation_change_by_class": {
+    "like": {
+      "same": 774
+    },
+    "opposite": {
+      "closer": 114,
+      "farther": 510,
+      "same": 150
+    },
+    "orthogonal": {
+      "closer": 336,
+      "farther": 1320,
+      "same": 1440
+    }
+  },
+  "sites": 129
+}

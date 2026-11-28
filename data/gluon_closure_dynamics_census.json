@@ -1,0 +1,529 @@
+{
+  "census": {
+    "distance_counts": {
+      "0": 54,
+      "1": 192,
+      "2": 144,
+      "3": 64,
+      "None": 40
+    },
+    "examples": {
+      "create": {
+        "blocked": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "d_after": null,
+          "d_before": 3
+        },
+        "distance_increasing": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "d_after": 3,
+          "d_before": 1
+        },
+        "distance_neutral": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "d_after": 1,
+          "d_before": 1
+        },
+        "distance_reducing": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "d_after": 0,
+          "d_before": 1
+        }
+      },
+      "glue": {
+        "blocked": {
+          "after": [
+            [
+              2,
+              2
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "d_after": null,
+          "d_before": 1
+        },
+        "distance_increasing": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "d_after": 2,
+          "d_before": 1
+        },
+        "distance_neutral": {
+          "after": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              1
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "d_after": 1,
+          "d_before": 1
+        },
+        "distance_reducing": {
+          "after": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              2
+            ]
+          ],
+          "before": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ]
+          ],
+          "d_after": 1,
+          "d_before": 2
+        }
+      }
+    },
+    "first_singlet_moves": {
+      "create": {
+        "distance_reducing": 120
+      },
+      "glue": {
+        "distance_reducing": 120
+      }
+    },
+    "max_search_size": 5,
+    "max_state_size": 4,
+    "move_classes": {
+      "create": {
+        "blocked": 744,
+        "distance_increasing": 72,
+        "distance_neutral": 24,
+        "distance_reducing": 216
+      },
+      "glue": {
+        "blocked": 96,
+        "distance_increasing": 336,
+        "distance_neutral": 192,
+        "distance_reducing": 456
+      }
+    },
+    "note": "Two-channel vertex toy: creation adds p = -(q+r); gluing replaces q, r by p. Both are defined from symp != 0 and p + q + r = 0, independently of d_G. Not full QCD.",
+    "states": 494,
+    "with_distance": 454,
+    "without_distance": 40,
+    "witness_audit": {
+      "all_pairs_noncollinear": true,
+      "all_triples_close": true,
+      "witnesses": 1584
+    }
+  },
+  "gates": {
+    "GL0_definition": "finite; d_G, T, f, tau_event separated",
+    "GL1_confinement": "cited charged_not_closed / singlet_closure",
+    "GL2_gluon_move": "vertex creation + gluing: p + q + r = 0, symp(q,r) != 0",
+    "GL3_distance_effect": "finite census; both channels reduce, neutral, increase",
+    "GL4_first_closure": "first singlet is d=0; commit atomic",
+    "GL5_harmonic": "T_bind = min(T_parts); f_bind >= each f_part",
+    "GL6_atomic": "tau_event = 0, cited #281",
+    "GL7_spatial": "open bridge; no physical distance claim",
+    "GL8_string_tension": "open; not claimed"
+  },
+  "meta": {
+    "generator": "gluon_closure_dynamics.py",
+    "issue": 286,
+    "pre_registration": "Gluon_Closure_Dynamics.md",
+    "version": 1
+  },
+  "worked": {
+    "gluing_to_singlet": {
+      "create_moves": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "d": 1,
+      "glue_moves": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        [
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        [
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "state": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "harmonic": {
+      "T_bind": 3,
+      "f_bind": 0.3333333333333333,
+      "f_parts": [
+        0.2,
+        0.3333333333333333
+      ],
+      "periods": [
+        5,
+        3
+      ]
+    },
+    "open_pair": {
+      "closure": {
+        "atomic": true,
+        "distance": 1,
+        "event": "CLOSE",
+        "moves": [
+          "create"
+        ],
+        "path": [
+          [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              2
+            ]
+          ]
+        ],
+        "tau_event": 0
+      },
+      "create_moves": [
+        [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "d": 1,
+      "glue_moves": [
+        [
+          [
+            2,
+            2
+          ]
+        ]
+      ],
+      "state": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "two_gluon_singlet": {
+      "create_moves": [],
+      "d": 0,
+      "glue_moves": [],
+      "state": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    }
+  }
+}
