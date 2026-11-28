@@ -42,9 +42,9 @@ General relativity emerges as the **continuum coarse-graining** of these discret
 
 From [Holographic.md](Holographic.md) and [QLF_Holographic_Computational_Universe.md](QLF_Holographic_Computational_Universe.md): "the universe is a holographic computational structure where physical reality emerges from information processing on a lower-dimensional boundary. In QLF, the boundary is the information ecology where logical constraints (RhoQuCalc twists) are resolved; the 3D+time world is the emergent projection."
 
-Holography in QLF is automatic. The cosmic causal frontier is the boundary; the local bulk states are determined by the prior the frontier imposes. The 't Hooft / Susskind holographic principle (one bit per ~4 Planck areas on the boundary) is the QLF observation that each Hermitian-pair atom on the horizon contributes exactly $\log 2$ nats ([MRE.md](MRE.md), [Entropy.md §1a](Entropy.md)).
+Holography in QLF is **conditional, not automatic**. Closure is a boundary property, and a cut through local shared singlets obeys an area law, but the locality of shared-pair birth and the Bekenstein–Hawking normalization remain open ([Holography_Audit.md](Holography_Audit.md), [Entropy.md §5](Entropy.md)). The 't Hooft / Susskind reading has a precise QLF shadow: each Hermitian-pair atom on the horizon contributes exactly $\log 2$ nats ([MRE.md](MRE.md), [Entropy.md §4a](Entropy.md)), which is a count, not a derivation of the continuum bound.
 
-The Ryu–Takayanagi formula relating entanglement entropy to minimal-surface area becomes (in QLF terms) the per-atom $\log 2$ accounting summed over the atoms threading any minimal surface separating two bulk regions. The formula is not a postulate; it is the area law applied to the same constructive per-atom quantum.
+The Ryu–Takayanagi formula relating entanglement entropy to minimal-surface area is a **target**, not a result: the conditional area law and the per-atom $\log 2$ accounting are proved, but the minimal-surface theorem and its physical normalization are not. Do not read the consistency as a derivation.
 
 ## 5. Cosmic expansion as causal-frontier growth
 
@@ -111,7 +111,7 @@ These are the algebraic foundation. The four faces of §1–§6 follow as physic
 - [Entanglement.md](Entanglement.md) — §3 ER=EPR; Bell violations; no-signaling
 - [Conservation.md](Conservation.md) — information conservation across cosmological scales
 - [MRE.md](MRE.md) — per-event $\log 2$ quantum; holographic area-law microscopic origin
-- [Entropy.md](Entropy.md) — Bekenstein-Hawking area law; per-event entropy production
+- [Entropy.md](Entropy.md) — record-relative entropy, per-event quantum and the conditional horizon/GR bridge
 - [Frequency_Synchronization.md](Frequency_Synchronization.md) — vacuum frequency = cosmic clock
 - [E_mc2_derivation.md](E_mc2_derivation.md) — mass = gauge-fold constructing delay
 - [Experimental_Consistency.md](Experimental_Consistency.md) — §10 falsifiability; open quantitative tests

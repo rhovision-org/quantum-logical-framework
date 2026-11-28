@@ -74,7 +74,7 @@ single result but a **sector**: every entry below reuses the same `4π R²` coun
 | **Strength of gravity `α_G = exp(−28π)`** | 0.068% on the log (from the integer `b₀=7`) | [`QLF_GravitationalCoupling`](lean/QLF_GravitationalCoupling.lean) | Gravity_From_Delay §1.1 |
 | **Einstein equations as equation of state** | coefficient `8πG=2π/η`, `Λ=log 2` (Jacobson skeleton) | [`QLF_EinsteinEquations`](lean/QLF_EinsteinEquations.lean) | [`Einstein_Equations.md`](Einstein_Equations.md) |
 | **Horizon temperatures (Unruh/Hawking/de Sitter)** | one Unruh master relation `T=ℏa/2πck_B`, three `a` | [`QLF_HorizonTemperature`](lean/QLF_HorizonTemperature.lean) | Gravity_From_Delay §5.1 |
-| **Holographic entropy `S=4πR²log2`; BH residual `4 log 2`** | residual = derived product (Einstein quarter × `log 2`) | [`QLF_HolographicDensity`](lean/QLF_HolographicDensity.lean) | Gravity_From_Delay §9 |
+| **Horizon count `S=4πR²log2`; BH residual `4 log 2`** | QLF count proved; the `4 log 2` gap to Bekenstein–Hawking is measured, not derived; the `¼` stays open | [`QLF_HolographicDensity`](lean/QLF_HolographicDensity.lean) | Gravity_From_Delay §9; [`Entropy.md`](Entropy.md) §5 |
 | **Planck length = the closure floor** | by construction (`μ²=1/2`), not a posit | [`QLF_PlanckScale`](lean/QLF_PlanckScale.lean) | [`Planck_Scale.md`](Planck_Scale.md) |
 | **Substrate = a spin network of half-spin closures (LQG)** | entropy-count correspondence, `γ` fixed | [`QLF_LoopQuantumGravity`](lean/QLF_LoopQuantumGravity.lean) | [`LQG_QLF.md`](LQG_QLF.md) |
 | **Schwarzschild weak-field metric** | `g_tt`/`g_rr` from Cross-Frequency Lorentz | (Mercury module) | [`GR_Schwarzschild.md`](GR_Schwarzschild.md) |
@@ -148,7 +148,8 @@ ratio, and none is proposed. What this section establishes: `G`'s open content i
 - [`SpaceTime.md`](SpaceTime.md) & [`Time.md`](Time.md) — the density-dependent role swap as the origin
   of relativistic frames; gravity as the **local departure from the statistically uniform stateless
   ether**, the same uniformity from which Lorentz invariance emerges.
-- [`Entropy.md`](Entropy.md) — gravity screens unresolved distinctions (area law `S = A/4ℓ_P²`).
+- [`Entropy.md`](Entropy.md) — record-relative entropy and the proposed gravity/horizon bridge; the
+  area law is conditional on locality and the Bekenstein–Hawking `¼` remains open.
 - [`Frequency_Synchronization.md`](Frequency_Synchronization.md) — constructing delay `R/f` as the
   source of local time.
 - [`Hadron_BlackHoles.md`](Hadron_BlackHoles.md) & [`BLACK-HOLES.md`](BLACK-HOLES.md) — the particle ↔

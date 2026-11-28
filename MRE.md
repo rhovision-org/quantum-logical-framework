@@ -39,7 +39,7 @@ $$\mathbb{E}[D_{\text{KL}}] = H(\alpha) = -\alpha \log \alpha - (1-\alpha) \log(
 
 with equality only at $\alpha = 1/2$. The 50/50 binary closure is the *unique* shape that saturates per-event information gain under the ZFA Hermitian-pair constraint.
 
-**Statistical-mechanics lineage.** The functional $H(\alpha) = -\sum_i p_i \log p_i$ maximized here is **Gibbs' entropy** $S = -k_B \sum_i p_i \ln p_i$ (1902) — equivalently Shannon's $H$ up to the log base and the unit $k_B$. Its uniform-ensemble special case is **Boltzmann's** $S = k_B \ln W$ (the prior $p = 1/N$ over $W = N$ admissible branches). So the QLF claim "the ZFA closure maximizes relative entropy per fold" is the constructive, observer-relative refinement of the classical **maximum-entropy principle** (Jaynes 1957): Boltzmann/Gibbs maximize entropy over an ensemble of microstates; QLF maximizes the KL information *gain* of a single closure over the admissible-branch ensemble, and the ZFA Hermitian-pair constraint forces the maximizer to the 50/50 binary atom. See [Entropy.md §1](Entropy.md) for the $S = k_B \ln W$ ↔ multiplicity bridge and [Relative_Entropy.md](Relative_Entropy.md) for the observer-relative ensemble.
+**Statistical-mechanics lineage.** The functional $H(\alpha) = -\sum_i p_i \log p_i$ maximized here is **Gibbs' entropy** $S = -k_B \sum_i p_i \ln p_i$ (1902) — equivalently Shannon's $H$ up to the log base and the unit $k_B$. Its uniform-ensemble special case is **Boltzmann's** $S = k_B \ln W$ (the prior $p = 1/N$ over $W = N$ admissible branches). So the QLF claim "the ZFA closure maximizes relative entropy per fold" is the constructive, observer-relative refinement of the classical **maximum-entropy principle** (Jaynes 1957): Boltzmann/Gibbs maximize entropy over an ensemble of microstates; QLF maximizes the KL information *gain* of a single closure over the admissible-branch ensemble, and the ZFA Hermitian-pair constraint forces the maximizer to the 50/50 binary atom. See [Relative_Entropy.md §1](Relative_Entropy.md) for the $S = k_B \ln W$ ↔ multiplicity bridge and [Relative_Entropy.md](Relative_Entropy.md) for the observer-relative ensemble.
 
 ### 2.2 Pauli closure of the 1/2-spin atom
 
@@ -137,7 +137,7 @@ $\log 2$ is *synthesized* at the boundary, not *erased*.
   - [HALF-SPIN-ZFA-EMBEDDING.md](./HALF-SPIN-ZFA-EMBEDDING.md) — foundational embedding
   - [Experimental_Consistency.md](./Experimental_Consistency.md) — §2.1 on the count-balance ∧ Pauli-closure ZFA conjunction
   - [Relative_Entropy.md](./Relative_Entropy.md) — observer ledger
-  - [Entropy.md](./Entropy.md) — von Neumann + area law
+  - [Entropy.md](./Entropy.md) — record entropy + conditional holography
   - [TheBigProblem.md](./TheBigProblem.md) — ZFA as origin
   - [QuCalc.md](./QuCalc.md) & [BraKetRhoQuCalc.md](./BraKetRhoQuCalc.md) — notation
   - [Lagrangian_Formulation.md](./Lagrangian_Formulation.md) — Σ₈ algebra, $\mathcal{L} = 0$ variational principle

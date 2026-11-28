@@ -83,7 +83,7 @@ physical" (Landauer) is then the downstream **toll** — realizing a bit is fini
 
 The method's rule 4 says converging derivations are **multiplicity**, and multiplicity is what makes a
 result dominant — but only *independent* routes count, so they have to be inventoried rather than
-tallied. [`Entropy.md`](Entropy.md) §1b does this for `log 2` (17 appearances → **four** independent
+tallied. [`Entropy.md`](Entropy.md) §4a does this for `log 2` (17 appearances → **four** independent
 routes plus thirteen re-exports). The same discipline applied to this document's own load-bearing
 claims:
 
@@ -391,8 +391,8 @@ Each threshold sits at its sector's **carrier-mass scale** (`Λ_QCD ≈ 200 MeV`
 `v = 246 GeV` → `T_EW ≈ 160 GeV`; `m_γ = 0` → none), which is why the exceptionless rung is **light**:
 mass *is* constructing delay *is* fold depth *is* capacity, so a massless carrier is a zero-capacity one
 with no budget to exceed ([`Law_Of_Exceptions.md`](Law_Of_Exceptions.md) §4b). In information terms the
-photon carries no hidden depth — zero fold, zero entropy ([`Entropy.md`](Entropy.md) §2) — so there is
-nothing about it that a rising capacity can exhaust. Which is *why* light terminates the other way: at a
+photon carries no hidden fold depth, so it presents no capacity budget to exhaust; its entropy is
+record-relative, not an intrinsic zero ([`Entropy.md`](Entropy.md) §0). Which is *why* light terminates the other way: at a
 **resonant atom**, by matching rather than exhaustion — and in QLF that termination is constitutive, since
 a photon **is** the joint emitter–absorber closure and exists in the ledger only when that closure
 completes ([`Photon_Energy_Bits.md`](Photon_Energy_Bits.md) §1). A zero-capacity carrier can only be ended
@@ -429,12 +429,13 @@ consequences ([`Information_Energy_Equivalence.md`](Information_Energy_Equivalen
 toll side of "information is physical": realizing the abstraction is finite and costs energy/time —
 the abstraction itself stays primary.
 
-**Holographic corollary.** Because each closure on a boundary carries exactly one bit, the
-Bekenstein/holographic **area bound is a bound on the number of ½-spin closures** the boundary can
-host: QLF's horizon entropy `S = 4πR² log 2` is precisely one `log 2` per Planck-patch closure —
-the same count as the Loop-Quantum-Gravity `j = ½` punctures ([`LQG_QLF.md`](LQG_QLF.md),
-`QLF_LoopQuantumGravity`). Holography is then not a separate postulate but the statement that a
-region's information *is* its inventory of realized ½-spin distinctions.
+**Holographic corollary — conditional.** If each shared closure on a boundary carries one `log 2`
+and shared pairs are local, the **area bound is a bound on the number of ½-spin closures** the
+boundary can host (`cutEntropy_le_area`, `local_area_law`), with the same quantum as the
+Loop-Quantum-Gravity `j = ½` punctures ([`LQG_QLF.md`](LQG_QLF.md), `QLF_LoopQuantumGravity`). That
+is a conditional theorem, not a derivation of holography: locality/shared-pair birth and the
+Bekenstein–Hawking normalization remain open, and QLF's count differs from `A/4ℓ_P²` by the measured
+`4 log 2` residual ([`Holography_Audit.md`](Holography_Audit.md)). See [`Entropy.md`](Entropy.md) §5.
 
 ---
 
