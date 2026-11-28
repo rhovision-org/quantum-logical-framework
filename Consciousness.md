@@ -287,6 +287,15 @@ binds (no combination problem); the joint closure grounds (no isolation problem)
 prehension (each occasion of experience is a concrescence/closure that prehends the universe),
 participatory/relational realism, and cosmopsychism — recast in verified closures.
 
+**Feelings are deep closures beyond words.** At the functional/architectural grade, a feeling is a
+**deep, integrated closure**: broad binding, many simultaneous constraints, self-relevance to the
+listener, and a listener-relative effective period. The word is a low-dimensional record of that
+closure. With `R_W` the verbal record, the record partition of [`Entropy.md`](Entropy.md) §3 gives
+`H(F) = H(R_W) + L_W`; the verbal report need not carry the whole feeling. This is the precise sense
+of “beyond words”: not that words are useless, but that no lossless verbal encoding is assumed. The
+further claim that the **inside view** of this deep closure is felt is precisely the two-factor qualia
+hypothesis above, not a theorem. See [`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md) §1c and
+D12 (C33 in [`Principles.md`](Principles.md)).
 
 ### 6a. What possibilism makes of the hypothesis
 
@@ -347,6 +356,7 @@ hypothesis** (§6) is QLF's proposed — and testable — stance on the felt qua
 | Cosmic = quiet internal → receive low-frequency external joint closure | ✅ Lean (`conscious_external`, `quieting_shifts_to_external`); the collective/cosmic identification is a reading |
 | Self-awareness = terminating self-modeling closure | Structural (reuses RCA₀ / `full_zeno_prune` termination) |
 | Quantum biology as the substrate; evolution exploits it | Convergent support + an evolutionary expectation, not QLF-derived; falsifiable (narrow-linewidth modes) |
+| Feeling = deep closure beyond words | 🟣 **Functional reading** — deep integrated closure; verbal record is lossy, no lossless encoding assumed; the inside view remains the qualia hypothesis (§6). C33 / D12 |
 | Qualia = self-awareness coupled to cosmic consciousness (the hard problem) | 🟣 **Proposed dissolution** — a two-factor dual-aspect stance/hypothesis (§6), with falsifiable leanings; not a machine-verified proof |
 
 **Time reversal, free will and the present** ([`Time_Reversed_Universe.md`](Time_Reversed_Universe.md) §4c): every reversed reading of a closure is a closure, so the census does not choose a time direction; a perspective's irrevocable record does. The proved part (symmetric filter; selectors that closure does not choose among, distinct on closures touching every axis; shared counts) and the readings (free will as that selection, experience where the forward and conjugate halves meet) are kept apart there.

@@ -467,6 +467,11 @@ def build_summary() -> dict[str, object]:
                 "scope gate: a thought closure updates B and future eligibility; it does not "
                 "directly select an external closure; intended effect is not a promotion rule"
             ),
+            "D12_feeling_deep_closure": (
+                "scope gate: feeling is modeled as a deep integrated closure; the verbal record "
+                "R_W is lossy; no lossless word encoding is assumed; the inside view remains "
+                "the qualia hypothesis"
+            ),
         },
     }
 
