@@ -188,6 +188,12 @@ only. That is why §2 and §3 apply to it directly.
 
 ## 5. Summary for QLF
 
+**For model testing** ([Framing.md](Framing.md) §4): computational priority and multiplicity are
+different verdict inputs. Which closure a model reaches *first* is decided by the shared history and
+irrevocability, and is what `/solve` returns; how *many* ways it closes is a census count under a stated
+measure. A model verdict that rests on "the most ways" must say which of the two it means, and a
+priority claim cannot be read off a multiplicity count unless the competitors share no history (§2).
+
 0. **Order of principles (Jim, 2026-10-17): ZFA is first, most ways is second.** We assume ZFA and prove
    the ways. Every exception above is decided by *which pattern closes first*: in §3.2–3.3 the winner is
    the pattern whose completion comes earlier in the shared history, and in §3.1 the shallowest closure is

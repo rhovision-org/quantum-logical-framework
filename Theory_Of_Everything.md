@@ -7,6 +7,8 @@
 says where each part of the picture lives and how the parts connect. It proves nothing on its own; every
 claim below points to the document or Lean module that carries it. The full visual map is the
 [flow chart](FlowChart.md) ([clickable version](https://rhovision-org.github.io/quantum-logical-framework/FlowChart.html)).
+The principles the map rests on (assumptions, proved structural laws, candidates and bridges, each
+with its anchors and status) are registered in [Principles.md](Principles.md).
 
 **Merged formal backbone (12 November 2026).** PR #225 adds the metric-singlet /
 lattice-Einstein representational result ([Einstein_Equations.md](Einstein_Equations.md) §6d–§6e);
@@ -34,12 +36,13 @@ interaction; the logical complexity inside them is far larger.
 
 | Topic | Read |
 |---|---|
+| The one conjecture (equal and opposite logical action); QLF as the quantum computer that tests models, equivalent to any solution | [Framing.md](Framing.md), [Principles.md](Principles.md) §A |
 | Possibilist ontology; ZFA first, then every way | [Philosophy.md](Philosophy.md) §3a, [possibilist-ontology.md](possibilist-ontology.md) |
 | Only logic is assumed; QLF's construction is one model | [Philosophy.md](Philosophy.md) §3d, [UniversalRelativity.md](UniversalRelativity.md) §4b |
 | The method: status labels, kill conditions, counting ways | [ScientificApproach.md](ScientificApproach.md), [MostWays_First.md](MostWays_First.md) |
 | The eight twists and why eight | [eight-twists-sufficiency.md](eight-twists-sufficiency.md), [HALF-SPIN-ZFA-EMBEDDING.md](HALF-SPIN-ZFA-EMBEDDING.md) |
 | Closure is a walk back to the origin of `ℤ⁴`; most of possibility never closes | [Closure_Walk.md](Closure_Walk.md) |
-| Every terminating computation is a ZFA string | [Universality.md](Universality.md) |
+| The substrate evaluates every Boolean function with ZFA-preserving gates; every terminating circuit has a ZFA encoding (bookkeeping, Principles P10) | [Universality.md](Universality.md), [Universe_Quantum_Computer.md](Universe_Quantum_Computer.md) |
 | No finite closure is final | [Law_Of_Exceptions.md](Law_Of_Exceptions.md) |
 | Timing: listening takes time, closure does not; first shared closure; first-completion counts | [Event_Timing_QLF.md](Event_Timing_QLF.md), [Coincidence_QLF.md](Coincidence_QLF.md), [Closure_Uncertainty_QLF.md](Closure_Uncertainty_QLF.md) (draft programs with finite reference implementations) |
 | How much construction a history needs: its assembly index | [Assembly_Index_QLF.md](Assembly_Index_QLF.md) (computed through length 10; Lean open) |
@@ -83,6 +86,8 @@ interaction; the logical complexity inside them is far larger.
 | **The proton: the simplest isolated imbalance.** No closure shorter than six carries baryon number (the junction winding); the proton word closes at six with baryon number +1, and at least `2ⁿ` histories of length `6 + 2n` carry it | [Proton_Resonance_R_e.md](Proton_Resonance_R_e.md), [SEX.md](SEX.md), `QLF_BaryonWinding`, [Manifestation.md](Manifestation.md) (`proton_simplest_isolated_imbalance`, `proton_ways_unbounded`), [`QLF_Manifestation`](lean/QLF_Manifestation.lean) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Particles and the Standard Model | [Standard_Model.md](Standard_Model.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Three colours from three axes: necessity and existence | [Diversity_Quark_Emergence.md](Diversity_Quark_Emergence.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
+| Every closure is a colour singlet; the gluon vertex is the Borromean triple; the closing delay is colour-blind | [Colour_Closure.md](Colour_Closure.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
+| The neutrino word is a vacuum closure; organization, not inventory, carries phase; the shortest handed closures with the half-spin sign are the electron loops | [Vacuum_Correlation.md](Vacuum_Correlation.md) | [7 Particles](FlowChart.md#7-particles-and-the-standard-model) |
 | Atoms | [Atomic_Structure_QLF.md](Atomic_Structure_QLF.md) | [4 Atoms and QED](FlowChart.md#4-atoms-and-qed) |
 | Molecules: a bond is a shared closure | [Chemistry.md](Chemistry.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
 | Folding | [Protein_Folding.md](Protein_Folding.md) | [11 Chemistry](FlowChart.md#11-chemistry-molecules-and-folding) |
@@ -97,6 +102,7 @@ interaction; the logical complexity inside them is far larger.
 |---|---|---|
 | Three gauge forces as one substrate interaction | [Forces_From_Three_Axes.md](Forces_From_Three_Axes.md), [Gluon_Abelian_Control.md](Gluon_Abelian_Control.md) (the non-Abelian vertex only lengthens singlet distance) | [3 Forces](FlowChart.md#3-forces) |
 | The relativity principle: what the census proves and what it does not yet | [Relativity_Principle.md](Relativity_Principle.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
+| A registered prediction (issue #11): the walk's light speed is exact on its axes and quadratically slower off them, `E_QG,2 = 3 E_P`; RC0, identical perspective records with different closure clocks | [Planck_Dispersion_Prediction.md](Planck_Dispersion_Prediction.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
 | Locality: local statistics depend only on local information; closures are timelike; Bell's outcome independence fails, no-signalling holds | [Locality.md](Locality.md) | [1 Space and time](FlowChart.md#1-space-time-and-the-continuum) |
 | Magnetism from orientation | [Magnetism_Spatial_Dynamics.md](Magnetism_Spatial_Dynamics.md), [Collective_Electrodynamics.md](Collective_Electrodynamics.md) (orientation proofs: [`QLF_MeadTransaction`](lean/QLF_MeadTransaction.lean), [`QLF_MagneticOrientation`](lean/QLF_MagneticOrientation.lean)) | [3 Forces](FlowChart.md#3-forces) |
 | Gravity from balance; distance equals delay | [Gravity_From_Delay.md](Gravity_From_Delay.md), [Gravity.md](Gravity.md), [Quantum_Gravity.md](Quantum_Gravity.md) | [5 Gravity](FlowChart.md#5-gravity-and-gr) |

@@ -20,7 +20,7 @@ ZFA is not a restriction on computation — it is a *selection principle*. Every
 full computational possibility space that achieves ZFA closure. What is pruned is not physics but the
 non-terminating, Turing-undecidable, Busy-Beaver-class tail.
 
-The framework is formally verified in **Lean 4 across more than a hundred modules with zero `sorry` blocks**, its
+The framework is formally verified in **Lean 4 across hundreds of modules with zero `sorry` blocks** ([count](lean/README.md)), its
 combinatorial core operating strictly within **RCA₀** — below the Axiom of Choice, below the
 continuum, below the Busy Beaver horizon. From the one postulate follow: spacetime synthesized
 event-by-event; particles and spin from twist parity; the Standard Model gauge groups and mass

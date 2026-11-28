@@ -361,8 +361,9 @@ substrate physics is made of**, with QLF as its operating system (§7c).
 [`QuantumOS.md`](QuantumOS.md) and [`Crystal_QuantumOS.md`](Crystal_QuantumOS.md) carry the full case;
 the one-line thesis, stated here because it is the natural home of the "new AI" framing: **in
 QuantumOS, security, error correction, scheduling, garbage collection, and inference are one
-operation — ZFA enforcement (`full_zeno_prune`) — because `qlf_universality` proves ZFA balance is
-the single invariant that subsumes every correctness property.** A classical OS needs five subsystems;
+operation — ZFA enforcement (`full_zeno_prune`) — as a design thesis: the gates are proved ZFA-preserving and classically universal
+(`substrate_computes`), and whether one invariant subsumes every correctness property is what
+QuantumOS tests.** A classical OS needs five subsystems;
 QuantumOS needs one, and that one *is* the quantum act.
 
 This makes QLF a control plane for real quantum hardware, not only simulators. The concrete target is

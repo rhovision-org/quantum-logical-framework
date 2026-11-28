@@ -8,7 +8,16 @@ Machine-verified core: [`lean/QLF_QuantumComputer.lean`](lean/QLF_QuantumCompute
 
 Jim Whitescarver (2026-11-25): *"the QLF universe is the quantum computer. We don't need to build one, we have one. QLF admits the universe as a quantum logical system."* And: *"There's no question. It is a very reasonable assumption of QLF. But we can connect it to how the universe solves problems."*
 
-**The premise.** QLF takes it as a working premise that the universe is a quantum logical system computing its own evolution. The thesis has a long pedigree (§1). The theorems below do not derive the premise; they say what it entails: **how the substrate computes, where its quantum power comes from, and how it solves problems** (§5). Five headline results answer those questions; later sections add more.
+**Not a second premise.** QLF's one conjecture is equal and opposite logical action ([Framing.md](Framing.md)). Read as computation, it says the universe synthesizes its events by quantum logical closure, so its evolution *is* a computation: that is **natural quantum computation**, the thesis, with a long pedigree (§1). Three further levels are claims to establish, and they are kept apart ([Framing.md](Framing.md) §3):
+
+| Level | Status |
+|---|---|
+| Natural quantum computation: events synthesized by closure | The thesis; what the one conjecture says |
+| Classical programmable computation | Proved in the substrate (`fredkin_complete`, §2.1) |
+| Universal programmable quantum computation | The algebra is proved (`su2_dense`, Barenco); native H, CZ and a non-Clifford phase on one **presence qubit**, and the Bell state from them, are proved ([`QLF_NativeBell`](lean/QLF_NativeBell.lean)); and native operations are universal on `n + 1` strands up to a global scalar (`native_universal`, [`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean)) |
+| Classical simulation of quantum computation | QuCalc, RhoQuCalc, QuantumOS; cost depends on the history space, no efficiency claim |
+
+The open gate does not weaken the thesis: investigating reality as a quantum logical system does not need the substrate to be programmable for arbitrary circuits. The theorems below say what the thesis entails: **how the substrate computes, where its quantum power comes from, and how it solves problems** (§5). Five headline results answer those questions; later sections add more.
 
 1. **The substrate computes every Boolean function with closure-preserving gates.** Every `f : {0,1}ⁿ → {0,1}` is the output of a network of at most `2ⁿ − 1` Fredkin gates, (`fredkin_complete`). The admissibility clause of `substrate_computes` adds nothing, because the encoding of `QLF_Fredkin` makes every register balanced; and the multiplexer tree fans out inputs and discards two output lines per gate, so the network as a whole is not conservative logic.
 2. **A single twist history is not a quantum computer.** However long, it folds into a sixteen-element group, `{±1, ±i}·{I, σx, σy, σz}` (`twist_folds_finite`).
@@ -100,7 +109,7 @@ This 5 is the Gaussian prime `5 = (2+i)(2−i)`. It is not the fivefold symmetry
 
 ## 4. What this does not show
 
-- **That nature is this construction.** The premise is that the universe is a quantum logical system; it is not that nature *is* QLF's construction ([CLAUDE.md](CLAUDE.md) "Only logic is assumed"). The theorems show that QLF's construction is *one model* of such a system: classical in single closures, with quantum power in weighted superpositions (modulo §3 and §7).
+- **That nature is this construction.** The thesis is that the universe is a quantum logical system; it is not that nature *is* QLF's construction ([CLAUDE.md](CLAUDE.md) "Only logic is assumed"). The theorems show that QLF's construction is *one model* of such a system: classical in single closures, with quantum power in weighted superpositions (modulo §3 and §7).
 - **That "having one" means "being able to use it."** A computer is something whose inputs one prepares and whose outputs one reads. The universe computing its own evolution is Feynman's point: nature simulates itself efficiently. Laboratory quantum computers are the parts of it that can be programmed; that is why they still have to be built.
 - **Any speed-up for hard problems.** An amplitude is a signed sum over paths, so an exact answer costs the whole set of paths: quantum polynomial time lies inside PP (Adleman, DeMarrais and Huang 1997). Unstructured quantum search needs `Θ(√N)` queries (Bennett, Bernstein, Brassard and Vazirani 1997), which over closures is still exponential ([Possibility_Growth.md](Possibility_Growth.md) §4). The universe being a quantum computer gives no NP oracle, and [P_vs_NP_QLF.md](P_vs_NP_QLF.md)'s guardrails stand: growth alone is not hardness, and `qlf_cost_model` is untouched.
 - **That the universe cannot be simulated.** [Simulation_Impossibility.md](Simulation_Impossibility.md) argues that a full classical simulation is infeasible. Nothing here strengthens or weakens that argument.
@@ -306,8 +315,9 @@ So in simulation, shared memes are the selections that closed first.
 
 ## 7. Open
 
-- **Superposed presence.** §3a shows that a superposition is a census sum of alternate histories. Still open is the specific superposition of a present and an absent pair as one, which needs the presence encoding of §3 stated on census sums rather than on matrices.
-- **Barenco on the substrate.** Density in SU(2) (§3, `su2_dense`) and Barenco universality ([`QLF_Barenco`](lean/QLF_Barenco.lean)) are proved for the matrix algebra. Open is the substrate performing those gates, which first needs the entangling gate acting on superposed presence.
+- **Native gates on a common qubit (O1, [Framing.md](Framing.md) §3, Principles C26). Done.** [`QLF_NativeBell`](lean/QLF_NativeBell.lean) puts all three gates on the presence qubit: CZ by joint closure, Hadamard by branching into both alternatives weighted by the joint sign, and `diag(1, z)` by weighting a present strand with three alternatives over their mirror. The Bell state follows by native operations (`native_bell`), matches the standard circuit, is entangled and is correlated in two bases. This closes the "superposed presence" item for these gates. [`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean) assembles them: the mirror census supplies `diag(1, z̄)`, native one-strand products are dense in `SU(2)` up to a scalar (`native_one_dense`), and every unitary on `n + 1` presence strands is a limit of scalar multiples of native circuits (`native_universal`). Open: an approximation rate.
+- **Superposed presence.** §3a shows that a superposition is a census sum of alternate histories; the presence encoding is now stated on census sums ([`QLF_NativeBell`](lean/QLF_NativeBell.lean), [`QLF_NativeUniversality`](lean/QLF_NativeUniversality.lean)).
+- **Barenco on the substrate.** Density in SU(2) (§3, `su2_dense`) and Barenco universality ([`QLF_Barenco`](lean/QLF_Barenco.lean)) are proved for the matrix algebra. The substrate performs them natively on presence strands, approximately and up to a global scalar (`native_universal`).
 - **Quasicrystal growth as a closure census.** Test whether forced-tile growth (Onoda et al. 1988) is the first-closure rule on the octagonal projection, with the defect rate as the prediction.
 - **Normalization beyond rational phases.** Every rational phase is a ratio of alternatives to their mirror (`rational_phase_is_mirror_ratio`, Hilbert 90). A general SU(2) element is a limit of such ratios, not one; a statement for matrices (a Cayley transform on census sums) is not proved.
 

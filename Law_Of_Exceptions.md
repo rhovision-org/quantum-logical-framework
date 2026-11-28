@@ -89,8 +89,10 @@ The one law the mechanism cannot bite is the one that **bounds no capacity**. By
 [`no_exception_to_unbounded_closure`](lean/QLF_LawOfExceptions.lean), every exception constructed above
 closes at *some* capacity — so none of them is an exception to closure as such, only to a finite budget.
 ZFA imposes no budget: it is a **selection principle, not a restriction**
-([`Philosophy.md`](Philosophy.md) §4), and `qlf_universality` proves it prunes no computable physics —
-only the non-terminating tail. In the set formulation, `A_ZFA = H`.
+([`Philosophy.md`](Philosophy.md) §4), and the substrate's own gates evaluate every Boolean function
+(`fredkin_complete`), so no finite computation is excluded; that what is pruned is exactly the
+non-terminating tail is a reading (`qlf_universality` is an encoding result,
+[`Principles.md`](Principles.md) P10). In the set formulation, `A_ZFA = H`.
 
 So the exception clause is not a carve-out protecting the law from itself; it is the observation that the
 mechanism needs a *finite capacity* to bite, and one law has none. Any law that does restrict — every
@@ -415,6 +417,16 @@ Applied honestly to this repository's own results, that means:
   present formalization, not a fact about reality.
 
 ---
+
+## §7a Limits on finite-capacity verdicts
+
+The theorem bounds every model-testing verdict reached at a finite capacity
+([Framing.md](Framing.md) §4). A verdict proved at capacity `R` (or a search to depth `R`) is a verdict
+about the closures admitted at `R`. Because every finite closure has an exception at a greater capacity
+(`law_of_exceptions`), an **impossible** at capacity `R` extends beyond `R` only if the proof does not
+use the bound; otherwise it is **undetermined** above `R`. A **possible** found at `R` stays possible at
+every larger capacity, since closure is irrevocable (`closedAtHorizon_mono`). So finite searches can
+establish possibility outright and impossibility only within their capacity.
 
 ## §8 Honest scope
 

@@ -69,6 +69,12 @@ One structure — the 8-twist alphabet with its 6+2 split and the closure census
 
 Evidence that *only* ZFA is happening can only come from absences — extra ingredients leave traces, and the traces are searched for.
 
+These exclusions are model-testing verdicts in the sense of [Framing.md](Framing.md) §4: a rival model
+encoded as closures and found `IMPOSSIBLE` under stated conditions. The verdict table is in
+[Claim_Status.md](Claim_Status.md) (model verdicts). Rival *reconstructions* that survive (§5) are the
+`EQUIVALENT` case: indistinguishable on every closure, which is what the anthropic argument of
+[Framing.md](Framing.md) §3a predicts for every correct, computable model.
+
 ### 4a. Inherited no-go theorems (T4) — rival classes killed by others
 
 There is no theorem "no hidden variables." There is a family, each killing a **named class**, premises stated:
