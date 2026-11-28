@@ -80,7 +80,7 @@ functional result, not a claim of magic, and each capacity is kept at the grade 
 
 | Capacity | What is formalized here | Grade | What is not claimed |
 |---|---|---|---|
-| **A database of possible worlds from your relative perspective** | The finite candidate/closure set together with the listener context `B` and horizon `R`; the listener quotient of [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275) supplies `Ω_R(h\|B)` and `W_micro` vs `W_B`. | **finite functional model** | Not an unrestricted database of all logically possible worlds; a different `B` or `R` is a different database. |
+| **A database of possible worlds from your relative perspective** | The finite candidate/closure set together with the listener context `B` and horizon `R`; the listener quotient of [`Listener_Equivalence_QLF.md`](Listener_Equivalence_QLF.md) supplies `Ω_R(h\|B)` and `W_micro` vs `W_B`. | **finite functional model** | Not an unrestricted database of all logically possible worlds; a different `B` or `R` is a different database. |
 | **Active-inference synthesis intelligence** | The promotion/filter/update architecture `B_{t+1}=U(B_t,i_next)`, plus the cited per-closure free-energy theorem `zfa_closure_minimizes_free_energy` ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)). | **finite model + cited bridge** | The identity `U = active inference` is **not** proved. The update here is an explicit toy rule; deriving it from variational free energy remains open. |
 | **Strange loops for reflection** | The finite self-model square and the target `M_t ~ S_t/~_B_t`, with a good commuting square and a bad non-commuting one. | **toy check; general theorem open** | No self-observation or quote/drop reflection theorem; the general strange-loop and self-knowledge target remains `NOT_STARTED`. |
 
@@ -100,7 +100,7 @@ closure over its own state. They are three roles in one architecture, not three 
 | **D2** | next expression is the minimum-`d` eligible closure, not the highest-frequency event | **finite check** |
 | **D3** | a bounded `run_loop(n)` produces `n` expressions with strictly increasing external step index | **finite check only**; this is not a transition-system no-event-loop invariant, and `no_time_loops_from_logic` is cited separately |
 | **D4** | history fixed, listener compression changes; no past rewrite | **finite check** |
-| **D5** | `M_t ~ S_t/~_B_t` remains the correctness target | **cited** from [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275); general theorem open |
+| **D5** | `M_t ~ S_t/~_B_t` remains the correctness target | **cited** from [`Listener_Equivalence_QLF.md`](Listener_Equivalence_QLF.md); general theorem open |
 | **D6** | attention changes the race, not the contestants; quieting raises internal distances | **finite check** |
 | **D7** | no qualia theorem; no empirical claim | **gate** |
 | **D8** | feeling changes memory accessibility through a generic compatibility relation; same store; recall is atomic; no target identity in the feeling | **finite check** |
@@ -185,7 +185,7 @@ C_{B_t}(history).
 
 That is the precise sense in which “conscious closure makes its own precursor history intelligible”
 without changing the past. The compression is the listener quotient of
-[PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275); the general
+[`Listener_Equivalence_QLF.md`](Listener_Equivalence_QLF.md); the general
 correctness condition remains `M ~ S/~_B`.
 
 ---

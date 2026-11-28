@@ -443,7 +443,7 @@ def build_summary() -> dict[str, object]:
                 "no transition-system no-event-loop invariant is proved"
             ),
             "D4_retrospective_compression": "finite check; history fixed, compression changes",
-            "D5_bisimulation": "cited from #275; general theorem open",
+            "D5_bisimulation": "cited from Listener_Equivalence_QLF.md; general theorem open",
             "D6_attention_quieting": "finite check; race changes without new contestants",
             "D7_qualia": "bracketed; no theorem",
             "D8_affective_recollection": (

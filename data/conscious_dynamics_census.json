@@ -76,7 +76,7 @@
     "D2_promotion_filter": "finite check; next trigger is argmin d; fast micro-event is ineligible",
     "D3_bounded_trace": "finite check only: a bounded trace has increasing external step index; no transition-system no-event-loop invariant is proved",
     "D4_retrospective_compression": "finite check; history fixed, compression changes",
-    "D5_bisimulation": "cited from #275; general theorem open",
+    "D5_bisimulation": "cited from Listener_Equivalence_QLF.md; general theorem open",
     "D6_attention_quieting": "finite check; race changes without new contestants",
     "D7_qualia": "bracketed; no theorem",
     "D8_affective_recollection": "finite check; same store, feeling features change accessibility; no target identity; RECALL is atomic",
