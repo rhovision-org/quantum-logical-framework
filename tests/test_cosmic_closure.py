@@ -32,6 +32,12 @@ class CosmicClosureTests(unittest.TestCase):
             measured["by_length"]["4"]["P_total"],
         )
 
+    def test_measure_base_validation(self) -> None:
+        completions = cc.first_completions("^", 4)
+        for bad_base in (1, 0, -2, 1.5, True):
+            with self.assertRaises(ValueError):
+                cc.measure(completions, base=bad_base)  # type: ignore[arg-type]
+
     def test_holographic_compression(self) -> None:
         self.assertTrue(cc.compression_preserves(cc.SAFE_BOUNDARY, cc.OBSERVABLE))
         self.assertFalse(cc.compression_preserves(cc.LOSSY_BOUNDARY, cc.OBSERVABLE))

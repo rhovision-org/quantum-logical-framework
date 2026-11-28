@@ -162,6 +162,8 @@ Everything here is **downstream of the derived α** ([`Alpha.md`](Alpha.md) §10
 
 **Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and the next formal targets; no physical holography claim is closed.
 
+**Cosmic closure audit:** [`Cosmic_Closure_QLF.md`](Cosmic_Closure_QLF.md) records the finite logical-origin, compression, measure, potential-infinity and clock gates G1–G6. It makes no numerical-age or continuum claim; `N` is not derived, and the physical holography bridge stays B-OPEN.
+
 
 **Connectors:** *gauge 2/8* &rarr; Horizon count closes the 10^122 catastrophe; Omega_Lambda ~ log 2 matched &middot; *high-V epoch* &rarr; Inflation (same field) &middot; *denser logic* &rarr; Dark matter (no particle) &middot; *residual w = -1* &rarr; Dark energy &middot; *event rate* &rarr; H0-calibrated cosmic age; N open &middot; *freeze-out n/p* &rarr; ^4He fraction Y_p ~ 1/4 &middot; *measured values* &rarr; Concordant with LCDM data &middot; *interpretive pillars* &rarr; Divergent on LCDM interpretation &middot; *equation of state* &rarr; Thermodynamic gravity
 

@@ -75,7 +75,14 @@ def first_completions(start: str = "^", max_length: int = 4) -> tuple[str, ...]:
 
 
 def measure(completions: Iterable[str], base: int = 8) -> dict[str, object]:
-    """Cylinder/Kraft weights for the completion words (gate G4)."""
+    """Cylinder/Kraft weights for the completion words (gate G4).
+
+    A length-sensitive cylinder measure requires an integer base greater than
+    one.  ``base=1`` would erase length discrimination; non-positive or
+    non-integer bases are not a coherent measure for this interpretation.
+    """
+    if isinstance(base, bool) or not isinstance(base, int) or base <= 1:
+        raise ValueError("measure base must be an integer greater than 1")
     words = tuple(completions)
     weights = [base ** (-len(word)) for word in words]
     total = sum(weights)

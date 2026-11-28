@@ -1,8 +1,17 @@
 # Cosmic Closure — logical origin, holographic listening, and potential infinity
 
-**Status:** pre-registration plus a finite reference implementation. This is a **cosmology
-instantiation**, not a derivation of the observed universe. Tracking issue:
+**Status:** pre-registration plus a finite reference implementation. This is a **scoped finite
+cosmological model**, not a derivation of the observed universe or its age. It is complete at that
+scope and is proposed for merge on that basis; the physical holography, continuum and clock bridges
+remain open. Tracking issue:
 [#276](https://github.com/rhovision-org/quantum-logical-framework/issues/276).
+
+**Framing.** QLF has one conjecture, equal and opposite logical action ([`Framing.md`](Framing.md)
+A01), and tests models inside it. This document asks what a finite closure model can say about a
+logical origin, compression and unbounded extension; it is not a second premise and does not claim
+that the observed cosmos is this model. The computational reading is
+[`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md): a logical bang is an event, not a
+metric singularity, and cosmic time is assembled between atomic closures.
 
 **The rule at the top.** *No shared vocabulary is evidence of a shared mechanism.* A cosmological
 claim joins this layer only when it reuses an existing theorem or passes a declared gate. The
@@ -10,11 +19,11 @@ logical origin, the information reading, the blanket hierarchy, and the cosmic c
 status labels.
 
 **Layers.** The uncertainty kernel and its measure gate are
-[PR #271](https://github.com/rhovision-org/quantum-logical-framework/pull/271); the Lean finite-check
-layer is [PR #273](https://github.com/rhovision-org/quantum-logical-framework/pull/273); the
-cooperative-construction spine and its C0–C4 gates are
-[PR #272](https://github.com/rhovision-org/quantum-logical-framework/pull/272); the listener quotient
-is [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275).
+[`Closure_Uncertainty_QLF.md`](Closure_Uncertainty_QLF.md); the Lean finite-check layer is
+[`QLF_ClosureUncertainty`](lean/QLF_ClosureUncertainty.lean); the proved cooperative-closure stack
+is [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md), indexed by
+[PR #272](https://github.com/rhovision-org/quantum-logical-framework/pull/272); the listener
+quotient is [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275).
 
 ---
 
@@ -48,11 +57,13 @@ keeps its own status.
 | **G1 — logical origin** | reuse `first_distinction_closes`; no metric singularity claim | **theorem** in [`QLF_LogicalBang`](lean/QLF_LogicalBang.lean) |
 | **G2 — information** | explain how a closed binary distinction gets the one-bit/`log 2` reading; do not equate information and energy without the existing bridge | **interpretation**; no new theorem |
 | **G3 — holographic compression** | define `C_B : interior histories → boundary classes`; show it preserves the claimed closure observable | **finite toy** in `cosmic_closure.py`; general N-body theorem open |
-| **G4 — measure** | replace raw path count with a declared measure before physical probability | **candidate**: cylinder/Kraft `μ(c)=8^(-|c|)`; finite check in PR #271 |
+| **G4 — measure** | replace raw path count with a declared measure before physical probability | **candidate**: cylinder/Kraft `μ(c)=8^(-|c|)`; finite check, with integer `base > 1` validated |
 | **G5 — time** | prove finite at every realized horizon + unbounded possible extension | **theorem / cited**; physical eternal universe is interpretation |
 | **G6 — cosmic clock** | no numerical age until horizon/closure depth `N` is independently mapped to proper time | **B-OPEN**; [`AgeOfUniverse.md`](AgeOfUniverse.md) already says `N` is not derived |
 
-The PR is draft. G1, G5, and G6 are mostly status discipline; G3 and G4 are the new finite checks.
+This is a finite model, complete at that scope. G1 and G5 are cited results, G2 is an
+interpretation, G3 and G4 are finite checks, and G6 is explicitly B-OPEN. None of these is a
+numerical-age or continuum claim.
 
 ---
 
@@ -129,9 +140,15 @@ measure. The candidate is the cylinder/Kraft weight
 P(c | h, B) = μ(c) / Σ_{c' ∈ Ω_R(h|B)} μ(c').
 ```
 
-The uncertainty kernel's U5 gate (PR #271) computes this for the flat-ZFA completions. The raw
-`W_R` stays a count; `P` is the normalized weight. No cosmological use of `W` is allowed before this
-declaration. The cylinder weight is a **candidate**, not the final physical measure.
+The uncertainty kernel's U5 gate ([`Closure_Uncertainty_QLF.md`](Closure_Uncertainty_QLF.md))
+computes this for the flat-ZFA completions. The raw `W_R` stays a count; `P` is the normalized
+weight. No cosmological use of `W` is allowed before this declaration. The cylinder weight is a
+**candidate**, not the final physical measure.
+
+The implementation now validates its parameter: `base` must be an integer greater than 1. `base=1`
+erases length discrimination; zero, negative and non-integer bases are not the cylinder measure
+described above. Boundary tests are part of the regression suite. This is a guard on the candidate
+measure, not a derivation of it.
 
 ---
 
@@ -204,7 +221,7 @@ not a change to the Euler count.
   `order_at_every_scale`).
 - The two-body observational quotient is the greatest bisimulation
   (`obsEquiv_iff_exists_bisim`).
-- The raw completion count and the cylinder-normalized weight are distinct (PR #271 U5).
+- The raw completion count and the cylinder-normalized weight are distinct (U5 in [`Closure_Uncertainty_QLF.md`](Closure_Uncertainty_QLF.md)).
 - `N` is not derived (`AgeOfUniverse.md`).
 
 **Bridge / open.**
@@ -233,3 +250,13 @@ python3 -m unittest tests.test_cosmic_closure -v
 
 The run writes `data/cosmic_closure_census.json`. The definitions are frozen at the commit that adds
 this file; a different boundary/observable or measure is a new pre-registration.
+
+## 11. Registry links
+
+- [`Open_Problems.md`](Open_Problems.md) — the open cosmological and holographic obligations,
+  including `N` not derived and the physical Markov-blanket bridge.
+- [`FlowChart.md`](FlowChart.md) §6 — the cosmology index entry, with this audit marked finite and
+  the physical holography bridge marked B-OPEN.
+- [`Theory_Of_Everything.md`](Theory_Of_Everything.md) — the TOE map; this document supplies a
+  scoped gate record, not an upgrade of a row.
+- [`Framing.md`](Framing.md) — the one-conjecture framing used above.
