@@ -46,7 +46,27 @@ class ListenerEquivalenceTests(unittest.TestCase):
         self.assertEqual(cw["W_B"], 1)
         self.assertEqual(fw["W_B"], 2)
         self.assertLessEqual(cw["W_B"], cw["W_micro"])
+        self.assertEqual(cw["measure"], "uniform")
         self.assertAlmostEqual(sum(cw["weights"].values()), 1.0)
+
+    def test_explicit_measure_is_not_silently_uniform(self) -> None:
+        fine = le.uncertainty_system("cyan")
+        fw = le.listener_uncertainty(
+            fine,
+            "s",
+            2,
+            le.refine(fine),
+            {
+                ("x", "x"): 1.0,
+                ("x", "y"): 0.0,
+                ("y", "x"): 1.0,
+                ("y", "y"): 3.0,
+            },
+        )
+        self.assertEqual(fw["measure"], "explicit")
+        self.assertEqual(fw["W_B"], 2)
+        self.assertAlmostEqual(fw["weights"]["c1"], 0.2)
+        self.assertAlmostEqual(fw["weights"]["c2"], 0.8)
 
     def test_qkb_concept_quotient(self) -> None:
         demo = le.qkb_concept_demo()
@@ -55,10 +75,14 @@ class ListenerEquivalenceTests(unittest.TestCase):
         self.assertLessEqual(demo["listener_ways"], demo["ways"])
 
     def test_self_model_square(self) -> None:
-        self.assertTrue(le.square_commutes(le.good_model()))
-        self.assertFalse(le.square_commutes(le.bad_model()))
-        self.assertTrue(le.no_event_loop(le.good_model()))
-        self.assertTrue(le.no_event_loop(le.bad_model()))
+        good = le.good_model()
+        bad = le.bad_model()
+        self.assertTrue(le.square_commutes(good))
+        self.assertFalse(le.square_commutes(bad))
+        self.assertTrue(le.levels_nondecreasing(good))
+        self.assertTrue(le.levels_nondecreasing(bad))
+        self.assertNotIn("m0", le.self_loop_states(good))
+        self.assertIn("m0", le.self_loop_states(bad))
 
     def test_summary_schema(self) -> None:
         summary = le.build_summary()
@@ -68,6 +92,8 @@ class ListenerEquivalenceTests(unittest.TestCase):
         self.assertIn("qkb", summary)
         self.assertIn("self_model", summary)
         self.assertEqual(summary["gates"]["L1_equivalence_right_congruence"], "finite pass")
+        self.assertIn("L6_level_monotonicity", summary["gates"])
+        self.assertTrue(summary["self_model"]["bad_has_m0_self_loop"])
 
 
 if __name__ == "__main__":

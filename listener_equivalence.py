@@ -8,7 +8,9 @@ Definitions are frozen in ``Listener_Equivalence_QLF.md``:
     observed transition system, computed by partition refinement;
   * ``W_micro`` is the number of first-completion paths;
   * ``W_B`` is the number of listener classes among their endpoints;
-  * a self-model square is faithful when it commutes up to the model bisimulation.
+  * the uniform measure is an explicit default; ``path_weights`` supplies mu(c);
+  * a self-model square is faithful when it commutes up to the model bisimulation;
+  * L6 checks nondecreasing levels only.  It does not exclude same-level loops.
 
 The script is a finite check, not the general N-body theorem.  It does not modify
 QKB storage and makes no consciousness/qualia claim.
@@ -176,8 +178,19 @@ def first_completions(
 
 
 def listener_uncertainty(
-    system: ListenerSystem, start: str, horizon: int, block: dict[str, int]
+    system: ListenerSystem,
+    start: str,
+    horizon: int,
+    block: dict[str, int],
+    path_weights: dict[tuple[str, ...], float] | None = None,
 ) -> dict[str, object]:
+    """Listener-relative completion weights.
+
+    ``path_weights`` supplies mu(c) for every first-completion path.  When it
+    is omitted the measure is explicitly uniform, ``mu(c) = 1``.  Keeping this
+    parameter separate prevents the uniform specialization from silently
+    standing in for the general weighted formula.
+    """
     paths = first_completions(system, start, horizon)
     endpoints = [system.next_path(start, path) for path in paths]
     classes = [block[endpoint] for endpoint in endpoints]
@@ -189,20 +202,41 @@ def listener_uncertainty(
         return "|".join(sorted(class_states[cls]))
 
     labels = [label(cls) for cls in classes]
+    if path_weights is None:
+        path_weight_values = [1.0] * len(paths)
+        measure_name = "uniform"
+    else:
+        missing = [path for path in paths if path not in path_weights]
+        if missing:
+            raise ValueError(f"path_weights missing first-completion path {missing[0]!r}")
+        path_weight_values = [float(path_weights[path]) for path in paths]
+        if any(weight < 0 for weight in path_weight_values):
+            raise ValueError("path_weights must be nonnegative")
+        measure_name = "explicit"
+
+    total_weight = sum(path_weight_values)
+    if paths and total_weight <= 0:
+        raise ValueError("path_weights must have positive total mass")
+
     counts: dict[str, int] = {}
-    for cls_label in labels:
+    weighted: dict[str, float] = {}
+    for cls_label, weight in zip(labels, path_weight_values):
         counts[cls_label] = counts.get(cls_label, 0) + 1
-    total = len(paths)
+        weighted[cls_label] = weighted.get(cls_label, 0.0) + weight
+
     return {
         "start": start,
         "horizon": horizon,
-        "W_micro": total,
-        "W_B": len(set(labels)),
+        "measure": measure_name,
+        "W_micro": len(paths),
+        "W_B": sum(1 for weight in weighted.values() if weight > 0),
         "class_counts": dict(sorted(counts.items())),
         "weights": {
-            cls_label: count / total for cls_label, count in sorted(counts.items())
+            cls_label: weight / total_weight
+            for cls_label, weight in sorted(weighted.items())
+            if weight > 0
         }
-        if total
+        if total_weight
         else {},
     }
 
@@ -268,12 +302,28 @@ def square_commutes(toy: SelfModelToy) -> bool:
     )
 
 
-def no_event_loop(toy: SelfModelToy) -> bool:
+def levels_nondecreasing(toy: SelfModelToy) -> bool:
+    """The finite monotonicity check, not an event-loop exclusion theorem.
+
+    A transition that stays at the same level, including a self-loop, passes
+    this check.  The name says exactly what is verified.
+    """
     return all(
         toy.level[toy.system_next[s]] >= toy.level[s] for s in toy.system_states
     ) and all(
         toy.level[toy.model_next[m]] >= toy.level[m] for m in toy.model_states
     )
+
+
+def self_loop_states(toy: SelfModelToy) -> tuple[str, ...]:
+    """States whose one-step successor is themselves, in system or model.
+
+    This is the counterexample witness: ``bad_model`` has ``m0 -> m0`` at a
+    constant level, so a passing monotonicity check is not a no-loop proof.
+    """
+    loops = [s for s in toy.system_states if toy.system_next[s] == s]
+    loops += [m for m in toy.model_states if toy.model_next[m] == m]
+    return tuple(loops)
 
 
 # ---------------------------------------------------------------------------
@@ -343,8 +393,11 @@ def build_summary() -> dict[str, object]:
         "self_model": {
             "good_square": square_commutes(toy_good),
             "bad_square": square_commutes(toy_bad),
-            "good_no_event_loop": no_event_loop(toy_good),
-            "bad_no_event_loop": no_event_loop(toy_bad),
+            "good_levels_nondecreasing": levels_nondecreasing(toy_good),
+            "bad_levels_nondecreasing": levels_nondecreasing(toy_bad),
+            "good_self_loops": list(self_loop_states(toy_good)),
+            "bad_self_loops": list(self_loop_states(toy_bad)),
+            "bad_has_m0_self_loop": "m0" in self_loop_states(toy_bad),
         },
         "gates": {
             "L0_definition": "frozen",
@@ -352,10 +405,14 @@ def build_summary() -> dict[str, object]:
             "L2_coarsest_lossless": (
                 "finite brute-force pass; two-body Lean theorem cited; N-body open"
             ),
-            "L3_uncertainty_factorization": "finite pass; general theorem open",
+            "L3_uncertainty_factorization": (
+                "finite pass; uniform default made explicit and mu(c) parameterized; general theorem open"
+            ),
             "L4_qkb_concept_quotient": "prototype only; storage unchanged",
             "L5_self_model_square": "toy pass; general theorem open",
-            "L6_no_event_loop": "cited + toy level check",
+            "L6_level_monotonicity": (
+                "finite pass only; same-level self-loop counterexample retained; no event-loop theorem"
+            ),
         },
     }
 
@@ -386,7 +443,25 @@ def self_test() -> None:
     assert cw["W_B"] == 1, f"expected one coarse listener class, got {cw['W_B']}"
     assert fw["W_B"] == 2, f"expected two fine listener classes, got {fw['W_B']}"
     assert cw["W_B"] <= cw["W_micro"], "listener classes exceeded microscopic paths"
+    assert cw["measure"] == "uniform", "default measure must be labelled uniform"
     assert abs(sum(cw["weights"].values()) - 1.0) < 1e-12, "weights must sum to one"
+
+    fw_weighted = listener_uncertainty(
+        fine,
+        "s",
+        2,
+        fb,
+        {
+            ("x", "x"): 1.0,
+            ("x", "y"): 0.0,
+            ("y", "x"): 1.0,
+            ("y", "y"): 3.0,
+        },
+    )
+    assert fw_weighted["measure"] == "explicit"
+    assert fw_weighted["W_B"] == 2
+    assert abs(fw_weighted["weights"]["c1"] - 0.2) < 1e-12
+    assert abs(fw_weighted["weights"]["c2"] - 0.8) < 1e-12
 
     qkb = qkb_concept_demo()
     assert qkb["listener_ways"] <= qkb["ways"], "listener ways exceeded microscopic ways"
@@ -395,8 +470,12 @@ def self_test() -> None:
     bad = bad_model()
     assert square_commutes(good), "good model square should commute"
     assert not square_commutes(bad), "bad model square should fail"
-    assert no_event_loop(good), "good model must not loop event time"
-    assert no_event_loop(bad), "bad model still must not loop event time"
+    assert levels_nondecreasing(good), "good model levels should be nondecreasing"
+    assert levels_nondecreasing(bad), (
+        "the monotonicity check must not silently become a no-loop theorem"
+    )
+    assert "m0" not in self_loop_states(good)
+    assert "m0" in self_loop_states(bad), "bad model must retain its m0 self-loop witness"
 
     print("self-test: OK")
 
