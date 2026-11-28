@@ -433,6 +433,11 @@ def build_summary() -> dict[str, object]:
             "strange_loop_reflection": (
                 "finite self-model square M ~ S/~_B; toy commutativity only, general theorem open"
             ),
+            "gift_of_forgetfulness": (
+                "disciplined listener quotient: drop only distinctions no declared continuation "
+                "can recover; many-to-one closure price and persistence-by-copying are cited, "
+                "not re-proved"
+            ),
         },
         "gates": {
             "D0_definition": "frozen",
@@ -453,6 +458,10 @@ def build_summary() -> dict[str, object]:
             "D9_frequency_priority_separation": (
                 "finite check; fast_recurrent has f=1.0 but slow_near has d=1; "
                 "the next trigger is slow_near"
+            ),
+            "D10_bounded_forgetting": (
+                "scope gate + cited results: discard only distinctions no declared continuation "
+                "can recover; many-to-one closure and its -log 2 price are not re-proved"
             ),
         },
     }

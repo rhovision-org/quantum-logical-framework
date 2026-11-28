@@ -12,6 +12,12 @@ states.
 The structural skeleton is formalized in [`lean/QLF_Consciousness.lean`](lean/QLF_Consciousness.lean): simple lemmas about
 closure periods (`f = 1/R`, binding takes the shorter period), not a proof about minds.
 
+**The one law.** QLF assumes equal and opposite logical action and nothing else. Read
+computationally, **the universe is the quantum computer that runs that one law**; every other
+principle is derived from it, cited from a known fact, or explicitly labelled a bridge or reading
+([`Framing.md`](Framing.md) A01, [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md)).
+This document is a model of consciousness inside that law, not a second premise.
+
 **The one-realm thesis (the interpretive frame).** QLF is not dualist: physical and mental are not two
 substances but the **outside and inside views of the same ZFA closures** — the very *realized
 distinctions* that are the atom of information everywhere else in the framework (one bit = one two-valued
@@ -104,11 +110,24 @@ takes time and the closure event is atomic. The shared semantics are stated once
 the next expression is the first eligible trigger `argmin d_i^(B)`, not the highest recurrence
 frequency. Promotion is restricted to eligible self-relevant integrated closures; the winner updates
 the listener (`B_{t+1} = U(B_t, i_next)`), and attention/quieting changes the race rather than adding
-contestants. The model is finite and functional; qualia remain bracketed (D7). It also declares the
-three capacities Jim calls the "magical powers" — a bounded database of possible worlds relative to
-the listener, active-inference synthesis intelligence, and strange loops for reflection — at their
-exact grades in [`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md) §1a: finite model, cited
-bridge, and toy self-model square respectively. None is promoted to a theory of consciousness.
+contestants. The model is finite and functional; qualia remain bracketed (D7). It declares the
+capacities Jim calls the "magical powers" — a bounded database of possible worlds relative to the
+listener, active-inference synthesis intelligence, and strange loops for reflection and
+self-awareness — and the ultimate **gift of forgetfulness**, at their exact grades in
+[`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md) §1a. None is promoted to a theory of
+consciousness.
+
+**The gift of forgetfulness.** A finite self-model cannot retain every possible world or every
+microhistory. Closure is many-to-one (`time_reverse_involutive_but_closure_degenerate`,
+[`QLF_Reversibility`](lean/QLF_Reversibility.lean)); after a balanced history only one sign reaches
+its future (`closure_renewal`, [`QLF_ClosureRenewal`](lean/QLF_ClosureRenewal.lean)); persistence is
+copying and redundancy, not permanence ([`Open_Eternal_Mind.md`](Open_Eternal_Mind.md) §2,
+[`Memetics_QLF.md`](Memetics_QLF.md) §9); and many-to-one closure carries the `−log 2` free-energy
+price (`zfa_closure_minimizes_free_energy`, [`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)). The
+listener quotient is disciplined forgetting: it discards exactly the distinctions no declared
+continuation can recover, while staying lossless for the continuations it declares. That is what
+keeps the relative world-database finite and leaves room for a next expression. It is not free,
+not always benign, and not erasure by an observer; qualia remain bracketed.
 
 **The unit of that integrated information is machine-verified — *it from bit*.** What binding integrates,
 and what the frequency-hierarchy carries, is *information* — and its atom is now a theorem. The smallest
