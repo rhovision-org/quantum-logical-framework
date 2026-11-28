@@ -493,7 +493,7 @@ def run(log=print):
     for g in ("vector", "scalar"):
         s = res["half"][g]["slope"]
         graded[g] = verdict(s, blind_ok, raw_ok)
-        log(f"graded {g}: slope {s:.3f} -> {v}")
+        log(f"graded {g}: slope {s:.3f} -> {graded[g]}")
     log(f"controls: blind fails {blind_ok}, raw fails {raw_ok} (raw slope "
         f"{res['raw']['vector']['slope']:.3f})")
     res["graded"] = graded

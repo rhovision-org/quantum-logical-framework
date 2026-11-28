@@ -59,6 +59,37 @@ class LoopBoostCheckTests(unittest.TestCase):
         self.assertEqual(lbc.verdict(1.0, True, True), "FAIL")
         self.assertEqual(lbc.verdict(1.7, True, True), "INCONCLUSIVE")
 
+    def test_run_grades_and_reports(self) -> None:
+        """The grading and reporting path of run(), with the integrals mocked."""
+        from unittest import mock
+
+        def fake(slopes, blind):
+            def slice_run(kind, kp, st, contacts):
+                if kind == "continuum":
+                    return {g: [1e-7] for g in contacts}, None
+                out = {}
+                for g in contacts:
+                    out[g] = [blind] if g == "blind" else [kp ** slopes[kind, g]]
+                return out, None
+            return slice_run
+
+        cases = [
+            ({("half", "vector"): 2.0, ("half", "scalar"): 1.0, ("raw", "vector"): 1.0}, 0.5,
+             {"vector": "PASS", "scalar": "FAIL"}),
+            ({("half", "vector"): 2.0, ("half", "scalar"): 1.0, ("raw", "vector"): 2.0}, 0.5,
+             {"vector": "INCONCLUSIVE", "scalar": "INCONCLUSIVE"}),
+            ({("half", "vector"): 2.0, ("half", "scalar"): 1.0, ("raw", "vector"): 1.0}, 1e-4,
+             {"vector": "INCONCLUSIVE", "scalar": "INCONCLUSIVE"}),
+        ]
+        for slopes, blind, want in cases:
+            lines = []
+            with mock.patch.object(lbc, "slice_run", fake(slopes, blind)), \
+                    mock.patch.object(lbc, "stability", lambda kind: 1e-6):
+                res = lbc.run(log=lines.append)
+            self.assertEqual(res["graded"], want)
+            for g, v in want.items():
+                self.assertTrue(any(l.startswith(f"graded {g}:") and l.endswith(v) for l in lines))
+
     def test_zero_vertex_is_invalid(self) -> None:
         P = np.eye(4, dtype=complex) / 2
         with self.assertRaises(lbc.Invalid):
