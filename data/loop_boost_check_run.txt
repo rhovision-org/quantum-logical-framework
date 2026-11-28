@@ -1,0 +1,2 @@
+calibration (continuum, Pauli-Villars): vector 7.31e-07  scalar 5.21e-07
+INVALID, NOT_GRADED: the Feynman-ordered loop vanishes to rounding on the walk (|L| = 3.7e-13 against ball terms 1.4e-02; QLF_PiDoubler): Gamma_2 = 0 and the defect is 0/0

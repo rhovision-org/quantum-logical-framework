@@ -30,7 +30,8 @@ continuum is regulated by Pauli-Villars and integrated radially to a large radiu
 
 Gates (fail closed, INVALID, nothing graded): every walk step has bands +-w with the projector
 identity holding to 1e-9; every singular surface is inside a ball (checked on every outer grid
-point and every ray); every W_2 is finite, real and positive; the calibration is below 1e-6; the
+point and every ray); the walk's loop does not vanish to rounding (a gate added after
+QLF_PiDoubler, before any graded defect was read); every W_2 is finite, real and positive; the calibration is below 1e-6; the
 vector Gamma_2 is stable under a finer integration to 1e-3 relative at the largest and smallest
 kappa.
 
@@ -134,7 +135,12 @@ def dirac_bands(p, m):
 # ============================ loop integral ==============================
 
 def kern(x, lattice):
-    return 0.5 / np.tan(x / 2) if lattice else 1.0 / x
+    # A node can land exactly on the threshold point (x = 0 to rounding) only at r -> 0, where the
+    # integrand r^2 R(x) has a finite limit and the node's weight vanishes; it contributes nothing.
+    z = x == 0
+    xs = np.where(z, 1.0, x)
+    out = 0.5 / np.tan(xs / 2) if lattice else 1.0 / xs
+    return np.where(z, 0.0, out)
 
 
 def _acc(a, A, B):
@@ -324,8 +330,18 @@ def loop(model, E, P, st):
     if model.lattice:
         cen = singular_centers(model, E, P)
         tot = outer_lattice(model, cen, E, P, st)
+        scale = 0.0
         for c, which in cen:
-            tot += ball(model, c, which, E, P, st, [(1.0, 1.0)])
+            b = ball(model, c, which, E, P, st, [(1.0, 1.0)])
+            scale += float(np.abs(b).max())
+            tot += b
+        # Gate added after QLF_PiDoubler was found and before any graded defect was read: on the
+        # walk the both-negative term is the both-positive term at k + pi e_z, so L can vanish
+        # identically; then Gamma_2 = 0 and the defect is 0/0, not a measurement.
+        if not np.abs(tot).max() > 1e-8 * scale:
+            raise Invalid(f"the Feynman-ordered loop vanishes to rounding on the walk "
+                          f"(|L| = {np.abs(tot).max():.1e} against ball terms {scale:.1e}; "
+                          f"QLF_PiDoubler): Gamma_2 = 0 and the defect is 0/0")
         return tot
     co = pv_coeffs()
     (c, which), = singular_centers(model, E, P)
