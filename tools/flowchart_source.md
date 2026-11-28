@@ -32,7 +32,7 @@ flowchart LR
   FRN --> D10["10 Beyond the SM"]
   FND --> MTH["Methods and evidence: Paper I v0.3"]
   FND --> SL["Two-phase / strange-loop bootstrapping"]
-  FND --> REL["Relativity: free Dirac-walk boost covariance F; interacting return NOT_STARTED (#207)"]
+  FND --> REL["Relativity: free Dirac-walk boost covariance F; tree-level contact amplitudes covariant to O(κ²) (N); loops untested; interacting return NOT_STARTED (#207)"]
   FND --> LEP["Lepton mass-ratio protocol (#140): B-OPEN; delta not derived; L=8 filter / L=10 ambiguity"]
   FND --> MAP["Map ≡ territory under ZFA (B-OPEN interpretation; issue #213)"]
   SL -.->|frames| MTH
@@ -66,7 +66,7 @@ The **Methods and evidence** layer is **cross-cutting**, not a sixth domain: it 
 
 **Gravity and long-range order (B-OPEN):** the orientation-blind count between balanced bodies is a gravity *hypothesis*, not a theorem; the physical return from oriented area to curvature is `NOT_STARTED`. The Peierls wall count is formal, but the contour map to long-range order is not proved. See [`Collective_Electrodynamics.md`](Collective_Electrodynamics.md) §7a, issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207), and [`Open_Problems.md`](Open_Problems.md).
 
-**Relativity split:** free Dirac-walk boost covariance is `F` in the 375-anchor baseline; interacting boost covariance and the conservative return are `B-OPEN`/`NOT_STARTED`. The census symbol's kinetic reading is an assumption, and the census-vs-walk off-axis sign remains open. See [`Relativity_Principle.md`](Relativity_Principle.md) §7a, [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json), and issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207).
+**Relativity split:** free Dirac-walk boost covariance is `F` in the 375-anchor baseline. Interacting stage 4 is done on its grid: tree-level amplitudes of Lorentz-scalar contacts are covariant to `O(κ²)` (`N`), stage-3 conservation holds for a matrix contact ([`QLF_SpinorContact`](lean/QLF_SpinorContact.lean)), and on reading (A) shared pairs give the vector contact ([`QLF_SharedPairSign`](lean/QLF_SharedPairSign.lean)). Stage 5 (loops, the Collins test) was pre-registered and its run is `INVALID`: the Feynman-ordered loop vanishes on the walk ([`QLF_PiDoubler`](lean/QLF_PiDoubler.lean)), so it waits on stage 6. Interacting boost covariance and the conservative return stay `B-OPEN`/`NOT_STARTED`. The census symbol's kinetic reading is an assumption, and the census-vs-walk off-axis sign remains open. See [`Relativity_Principle.md`](Relativity_Principle.md) §7a, [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json), and issue [#207](https://github.com/rhovision-org/quantum-logical-framework/issues/207).
 
 **Evidence layer (cross-cutting, not a sixth domain):** Paper I v0.3's claim-record method separates **`F`** (audited formal statement), **`N`** (reproduced numerical result), **`B-OPEN`** (interpretation bridge) and **`E`** (empirical evidence; none established here), with the **G0–G6** gates and the reviewed **375-anchor** baseline. The map below is a navigation map, not a claim that every numerical agreement is a closed physical theorem. See [Methods and evidence: Paper I v0.3](#methods-and-evidence-paper-i-v03), [`Claim_Status.md`](Claim_Status.md), [`Proof_to_Physics.md`](Proof_to_Physics.md), the [Paper I v0.3 Gist](https://gist.github.com/jimscarver/71a87155e7e65099c9bfd8ba710462f1), and [`verification/paper-i-v0.3/`](verification/paper-i-v0.3/README.md).
 
