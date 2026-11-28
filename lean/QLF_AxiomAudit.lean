@@ -89,6 +89,8 @@ import QLF_BoostCovariance
 import QLF_InteractingKinematics
 import QLF_BoostStates
 import QLF_BoostAmplitudes
+import QLF_SpinorContact
+import QLF_HalfStepReversal
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -917,6 +919,16 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.BoostAmplitudes.blind_density_entry
 #print axioms QLF.BoostAmplitudes.blind_density_not_invariant
 #print axioms QLF.BoostAmplitudes.blind_vertex_not_invariant
+#print axioms QLF.SpinorContact.spinorStep_of_scalar
+#print axioms QLF.SpinorContact.spinorStep_translation_commute
+#print axioms QLF.SpinorContact.spinorStep_conserves_momentum
+#print axioms QLF.SpinorContact.spinorStep_lattice_conservation
+#print axioms QLF.SpinorContact.scalarCoin_unitary
+#print axioms QLF.SpinorContact.scalarContact_unitary
+#print axioms QLF.HalfStepReversal.handed_neg
+#print axioms QLF.HalfStepReversal.massStep_neg
+#print axioms QLF.HalfStepReversal.halfWalk_reversal
+#print axioms QLF.HalfStepReversal.halfWalk_reversal_inv
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self

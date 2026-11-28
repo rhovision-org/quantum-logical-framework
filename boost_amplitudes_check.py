@@ -218,15 +218,42 @@ def run():
     return res
 
 
+EXPLORATORY = {
+    # Not pre-registered: candidate substrate readings of the contact (Relativity_Principle.md §6b,
+    # "Which contact"). Reported, never graded.
+    "euclid": np.kron(I4, I4) + sum(np.kron(a, a) for a in ALPHA),
+    "pseudoscalar": np.kron(1j * BETA @ ALPHA[0] @ ALPHA[1] @ ALPHA[2],
+                            1j * BETA @ ALPHA[0] @ ALPHA[1] @ ALPHA[2]),
+}
+
+
+def exploratory():
+    out = {}
+    for name, g in EXPLORATORY.items():
+        cont = [worst(bsc.dirac_band, g, kp) for kp in KAPPAS]
+        wk = [worst(walk_band("half"), g, kp, require_positive=True) for kp in KAPPAS]
+        out[name] = {"continuum_worst": cont, "half_worst": wk, "half_slope": slope(wk)}
+        print(f"exploratory {name:12s} continuum worst {cont[0]:.3e}  half slope {slope(wk):6.3f}  "
+              + "  ".join(f"{y:.3e}" for y in wk))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", default=None)
+    ap.add_argument("--exploratory", action="store_true",
+                    help="also print the ungraded candidate contacts (not pre-registered)")
     a = ap.parse_args()
     try:
         res = run()
     except Invalid as e:
         print(f"INVALID, NOT_GRADED: {e}")
         raise SystemExit(2)
+    if a.exploratory:
+        try:
+            exploratory()
+        except Invalid as e:
+            print(f"exploratory run INVALID: {e}")
     if a.json:
         with open(a.json, "w") as f:
             json.dump(res, f, indent=2)

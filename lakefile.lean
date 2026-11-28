@@ -295,6 +295,8 @@ lean_lib QLF where
     `QLF_InteractingKinematics,
     `QLF_BoostStates,
     `QLF_BoostAmplitudes,
+    `QLF_SpinorContact,
+    `QLF_HalfStepReversal,
     `QLF_RealizableWalk,
     `QLF_Tsirelson,
     `QLF_Mass,
