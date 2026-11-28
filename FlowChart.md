@@ -160,7 +160,9 @@ Everything here is **downstream of the derived α** ([`Alpha.md`](Alpha.md) §10
 
 ## 6. Cosmology and the dark sector
 
-**Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and formal fold-closure results. [Nested-frontier audit](Perspective_Holography_Frontier.md) separates fold closure, territorial ZFA, overlapping records and face counting; no physical holography claim is closed.
+**Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and the next formal targets; no physical holography claim is closed.
+
+**Cosmic closure audit:** [`Cosmic_Closure_QLF.md`](Cosmic_Closure_QLF.md) records the finite logical-origin, compression, measure, potential-infinity and clock gates G1–G6. It makes no numerical-age or continuum claim; `N` is not derived, and the physical holography bridge stays B-OPEN.
 
 
 **Connectors:** *gauge 2/8* &rarr; Horizon count closes the 10^122 catastrophe; Omega_Lambda ~ log 2 matched &middot; *high-V epoch* &rarr; Inflation (same field) &middot; *denser logic* &rarr; Dark matter (no particle) &middot; *residual w = -1* &rarr; Dark energy &middot; *event rate* &rarr; H0-calibrated cosmic age; N open &middot; *freeze-out n/p* &rarr; ^4He fraction Y_p ~ 1/4 &middot; *measured values* &rarr; Concordant with LCDM data &middot; *interpretive pillars* &rarr; Divergent on LCDM interpretation &middot; *equation of state* &rarr; Thermodynamic gravity
@@ -196,7 +198,7 @@ same length and opposite charge and baryon number, for every word
 
 ## 8. Quantum-gravity / TOE pillars
 
-**Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and formal fold-closure results. [Nested-frontier audit](Perspective_Holography_Frontier.md) separates fold closure, territorial ZFA, overlapping records and face counting; no physical holography claim is closed.
+**Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and the next formal targets; no physical holography claim is closed.
 
 **Cooperative-construction spine:** [`Cooperative_Construction.md`](Cooperative_Construction.md) indexes the proved CC0–CC9 stack in [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md). It is an index, not a TOE upgrade: consensus is not evidence, provenance is conserved, irreducible synthesis and the analogical listener are proved in their stated scopes, count balance is proved order-blind, and first closure is schedule-relative ([`QLF_CooperativeClosure`](lean/QLF_CooperativeClosure.lean), [`QLF_AnalogicalListener`](lean/QLF_AnalogicalListener.lean), [`QLF_CooperativeBridge`](lean/QLF_CooperativeBridge.lean), [`QLF_CooperativeLimits`](lean/QLF_CooperativeLimits.lean), no axioms).
 
