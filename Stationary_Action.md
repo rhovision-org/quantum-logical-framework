@@ -152,6 +152,73 @@ rendering. It does **not** establish that the substrate chooses that path becaus
 count. Event priority has already been fixed by first closure; this theorem says where the census is
 stationary and most concentrated.
 
+## §2a The continuum rendering of §2 (census action limit)
+
+[`QLF_CensusActionLimit`](lean/QLF_CensusActionLimit.lean) renders §2 at the census scale and proves
+the rendering converges. The cost of displacing a balanced history by `d` up-steps is
+`I_n(d) = log W(n) − log W(n+d)`. One exact identity, `W(n+j+1)(n+j+1) = W(n+j)(n−j)`, makes each
+increment a single logarithm, and the two elementary log bounds give an exact sandwich with no
+asymptotics:
+
+\[
+\frac{d^2}{n+d} \;\le\; I_n(d) \;\le\; \frac{d^2}{n-d+1}\qquad (0 \le d \le n).
+\]
+
+| Theorem | Statement | Reading |
+|---|---|---|
+| `censusCost_sandwich` | the bound above, every `d ≤ n` | finite and exact |
+| `censusCost_gaussian_limit` | `I_n(⌊x√n⌋) → x²` | the value limit (#303 S1) |
+| `censusCost_variation_limit` | `√n·(I_n(d+1) − I_n(d)) → 2x` | the **variations** converge to the derivative of the limit (#303 S2), proved on their own because value convergence does not give it (`sin(nx)/n`) |
+| `censusCost_curvature_limit` | `n·(I_n(1) + I_n(−1) − 2I_n(0)) → 2` | the return: the continuum curvature, recovered from the exact count |
+| `censusCost_eq_zero_iff` | `I_n(d) = 0 ⟺ d = 0` | the limit's minimizer `x = 0` returns to balance, `balance_is_mode` |
+| `euclidean_action_limit` | `ħ·I_n → ħx²` | `ħ` is a fixed constant; the limit is in `x = d/√n`, never in `ħ` |
+
+So the continuum is a rendering at large census scale with `S ≫ ħ`, and the quantum of action does
+not vanish. What this fixes and what it does not:
+
+* It is **one** stationary continuum functional for a specified finite counting functional (#303
+  level S-MATH). The log normalization is a choice the limit inherits: the cost `1 − W(n+d)/W(n)` has
+  the same discrete mode and limit `1 − e^{−x²}` ([`census_action_limit.py`](census_action_limit.py),
+  check K4).
+* `−ħ log W` is a Euclidean, large-deviation weight. The Lorentzian action with its phase `e^{iS/ħ}`
+  needs the signed construction of §5a carried to a limit (#303 S3–S5), and that is open.
+* The mode is a frequency statistic. Priority is still first closure.
+
+The companion [`census_action_limit.py`](census_action_limit.py) shows the rates numerically (error
+`O(1/n)` when `x√n` is an integer, `O(1/√n)` from the floor otherwise). It is evidence, not a
+certificate; the proof is the Lean module. Claim record:
+[`claim_records/stationary_action.json`](claim_records/stationary_action.json) (`B-OPEN`).
+
+## §2b A physical action whose stationarity forces closure (link sector)
+
+[`QLF_LinkAction`](lean/QLF_LinkAction.lean) has a genuine variational equation: the finite link
+action is stationary under every single-link variation iff `curl F = J`. [`QLF_LinkClosure`](lean/QLF_LinkClosure.lean)
+sources it with a history. A history of signed axis steps, started at a site, deposits a current
+`J` that counts each link traversal with its sign; nothing about the action enters that map.
+
+| Theorem | Statement |
+|---|---|
+| `sum_walkCurrent` | the total current on axis `k` is the history's net count `#(k,+) − #(k,−)` |
+| `div_walkCurrent` | `div J = δ_start − δ_end` |
+| `stationary_forces_count_balance` | if **any** link configuration is stationary for this `J`, the history is count-balanced on every axis |
+| `stationary_forces_return` | and it returns to its start |
+| `open_history_no_stationary` | an unbalanced history has no stationary configuration at all (one step is the minimal witness) |
+| `closed_history_gauge_invariant` | a returning history makes the coupling gauge invariant |
+
+So stationarity of a physical-style action, under all variations rather than closure-preserving
+ones, forces ZFA's count condition on its source, and with `count_balanced_pauli_closed` full
+closure. The reason is short: `curl F` has zero total on every axis, and the current's total is the
+net count. The converse, that every count-balanced history admits a stationary configuration, is a
+finite Hodge decomposition and is not proved. [`link_closure.py`](link_closure.py) checks it in
+exact rational arithmetic on `(ℤ₃)²`, `(ℤ₄)²` (lengths ≤ 6), `(ℤ₃)³` (≤ 5) and `(ℤ₃)⁴` (≤ 4):
+stationary exists exactly for the count-balanced histories, and winding histories, which return on
+the torus without balancing, have none. On four axes the balanced count at length 4 is 168, the
+closed-plaquette count. This is the link sector at fixed time (#303 S-PHYS candidate, not S-PHYS);
+it does not identify the link action with the census cost of §2a.
+
+The same current, used as fluxoid labels for a Regge geometry, is the next roadmap step (#301
+milestone 1). Its kill conditions are pre-registered in [`Continuum_Limit.md`](Continuum_Limit.md).
+
 ## §3 Why this is not bookkeeping — the kill condition
 
 Method rule 4 ([`CLAUDE.md`](CLAUDE.md), [`ScientificApproach.md`](ScientificApproach.md)): a claim has
@@ -244,6 +311,70 @@ S1 (`|A(x)| = |A(−x)|`) **PASS**; S2 (signed mode at balance) **PASS**, and th
 (`A₀ = −8, 120, −2144, 41896, −868608, 18816384`). S3 (*coherence* `|A|/W` largest at balance)
 **FAIL**, and it failed because it was badly posed rather than because of the physics: any endpoint
 reached by a single path has coherence exactly `1`. It is recorded as a failure and not reworded.
+
+## §5b Is the phase an action? (#303 S4–S5, K5–K7) — pre-registration
+
+This section was committed before [`signed_phase_track.py`](signed_phase_track.py) existed. Results are in §5c.
+
+**What is already proved.** For a balanced history the fold is
+`(−1)^{#neg} · (−1)^{Φ}`, where `Φ = A_XY + A_XZ + A_YZ` is the sum of the three projected areas
+([`QLF_PlaquetteArea`](lean/QLF_PlaquetteArea.lean), `fold_eq_projected_phase`). Count balance makes
+`#neg = L/2`. So the phase reads `θ(h) = π·(L/2) + π·Φ(h)` mod `2π`: a constant phase per step pair
+plus a uniform flux `π` through every spatial plaquette. This is derived from the matrices, not
+assigned, and it is the S4 candidate. It composes under concatenation (`amp_add`) and is fixed by
+reversal on closed histories, since `−θ ≡ θ` for a ℤ₂ phase.
+
+**The family of countermodels.** Replace the QLF connection by a U(1) connection with flux `φ`
+through every spatial plaquette and sign `σ` on every negative step. QLF is `(φ, σ) = (π, −1)`. The
+test family is `φ ∈ {0, π/2, 2π/3, π}`, `σ ∈ {+1, −1}`, on all of `ℤ⁴` with the gauge axis flux-free
+as in `QLF_EdgeSign`.
+
+| | Claim under test | Passes if | Prior |
+|---|---|---|---|
+| P1 (K5) | the stationary-phase bound identifies the phase | `\|A(2m; 0, x)\| ≤ \|A(2m; 0, 0)\|` **fails** for some `(φ, σ) ≠ (π, −1)` at some `2m ≤ 10` | **fail**: the transfer operator is Hermitian or anti-Hermitian with translation-covariant diagonal for every `(φ, σ)`, so Cauchy–Schwarz gives the bound for all of them |
+| P2 (K6) | the Pauli fold fixes the action | `(π, −1)` is the only member whose weight equals the fold on every balanced history of length `≤ 6` | pass, with `φ = −π` indistinguishable from `π`: the phase fixes the plaquette action only mod `2πħ` and up to sign |
+| P3 (S4 laws) | the phase composes and reverses | weight(`u ++ w`) = weight(`u`)·weight(`w`) for closed `u, w`; weight(reverse `h`) = conjugate(weight `h`)·`σ^L` | pass, structural |
+| P4 (K7) | the action has a smooth limit with `ħ` fixed | recorded before the run, not computed | **fail** for an Aharonov–Bohm reading: flux `π` per plaquette of side `a` is a field `π/a²`, which diverges as `a → 0` |
+
+**Verdict rule.** If P1 fails as expected, the bound `signed_mode_at_balance` is supporting evidence
+only (as #303 says) and no phase/action identification may rest on it. If P2 passes, the phase
+fixes the plaquette action to the ℤ₂ class `π` mod `2π`, and that, not the bound, is what the
+identification must use. P4 failing means the S4 candidate does not render as a smooth classical
+action. The standing continuum reading of a uniform π-flux lattice is a Dirac operator (staggered
+fermions, Kogut & Susskind 1975; the symbol is `QLF_LorentzSymbol`'s `2i·Form(sin k)`), so S5 must
+be posed for that kinetic phase, not for an area action.
+
+## §5c The phase/action test — results
+
+Run: [`signed_phase_track.py`](signed_phase_track.py), exact amplitudes in `ℤ[ζ₁₂]` on all of `ℤ⁴`,
+output [`data/signed_phase_track.json`](data/signed_phase_track.json). The candidate form is now a
+theorem: [`QLF_PhaseAction`](lean/QLF_PhaseAction.lean) `phase_action_form` proves that a closure of
+length `L` has phase `(−1)^{L/2}·(−1)^{Φ}`, from `two_negCount_of_balanced` (`2·#neg = L`).
+
+| | Outcome | What was found |
+|---|---|---|
+| P1 (K5) | **fails, as predicted** | the stationary-phase bound `\|A(2m;0,x)\| ≤ \|A(2m;0,0)\|` holds for **all eight** members `(φ, σ)` at every `2m ≤ 10` (and at `12`). The bound does not identify the phase. The QLF row reproduces the registry: `\|A₀\| = 8, 120, 2144, 41896, 868608` |
+| P2 (K6) | passes | of the ten members tested (`±π` included) on the 5,296 balanced histories of length `≤ 6`, only `(π, −1)` and `(−π, −1)` match the Pauli fold. `(π, +1)` fails exactly when `L/2` is odd, from `+−` on. So the fold fixes the flux to the ℤ₂ class `±π` and the step sign to `−1` |
+| P3 (S4 laws) | passes, structurally | composition and reversal hold for every member on all 177 closed histories of length `≤ 4` |
+| P4 (K7) | **fails** (recorded before the run) | flux `π` per plaquette of side `a` is the field `π/a²`, which has no limit as `a → 0` |
+
+`σ` never changes a modulus. The number of negative steps to a fixed endpoint is fixed by the
+length, so `σ` is a sign per endpoint, and P1 is in effect a test of `φ` alone.
+
+**Verdict.** No phase/action identification can rest on `signed_mode_at_balance`: the bound holds for
+every U(1) flux, so it is supporting evidence only, as #303 says. What the phase data do fix is the
+ℤ₂ class. Each spatial plaquette carries action `πħ` mod `2πħ`, up to sign, and each step pair
+carries phase `π`. That is the S4 candidate, derived and not assigned, and it composes and reverses
+correctly. It does not render as a smooth area action at fixed `ħ` (P4). The open S5 problem is
+therefore the kinetic reading: the uniform π-flux lattice is the staggered-fermion lattice (Kogut &
+Susskind 1975), whose continuum symbol is `QLF_LorentzSymbol`'s `2i·Form(sin k)`. Stationary phase
+has to be posed for that Dirac phase. An area action is not available.
+
+Post hoc, not pre-registered: within the family, the return amplitude `\|A₀\|` falls monotonically
+from `φ = 0` to `φ = π` at every `2m ≥ 4`. QLF's flux gives the most cancellation of the family.
+This was not a test, so it is not evidence.
+
+The [long-time kinetic phase audit](Kinetic_Phase_Scale.md) separately tests two conditional propagation candidates with a common leading continuum limit. Their off-axis phase differences survive joint large-time/coarse-graining scaling; no physical propagator or S5 promotion follows.
 
 ## §6 Honest scope
 

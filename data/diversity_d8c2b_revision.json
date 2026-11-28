@@ -1,0 +1,96 @@
+{
+  "gates": {
+    "D8c2": "not passed; a genuinely new relation is required",
+    "D8c2b_phase_revision": "fail: phase label adds no classes",
+    "D8c2b_two_interface": "fail: no advantage; null matches ZFA exactly"
+  },
+  "meta": {
+    "gate": "D8c2b revision synthesis",
+    "generator": "diversity_advantage_variants.py",
+    "issue": 290,
+    "pre_registration": "Diversity_Revision_D8c2b.md",
+    "version": 1
+  },
+  "phase": {
+    "bases_with_added_classes": 0,
+    "by_length": {
+      "3": {
+        "bases": 512,
+        "phase_added_classes": 0
+      },
+      "4": {
+        "bases": 4096,
+        "phase_added_classes": 0
+      },
+      "5": {
+        "bases": 32768,
+        "phase_added_classes": 0
+      }
+    },
+    "lengths": [
+      3,
+      4,
+      5
+    ],
+    "total_bases": 37376,
+    "verdict": "phase_label_adds_no_classes"
+  },
+  "two_interface": {
+    "by_length": {
+      "3": {
+        "groups": {
+          "0": {
+            "bases": 8,
+            "mean_K2": 0.5
+          },
+          "1": {
+            "bases": 168,
+            "mean_K2": 0.21428571428571427
+          },
+          "2": {
+            "bases": 288,
+            "mean_K2": 0.08333333333333333
+          },
+          "3": {
+            "bases": 48,
+            "mean_K2": 0.0
+          }
+        },
+        "heterogeneous_advantage": false,
+        "heterogeneous_mean_K2": 0.07142857142857142,
+        "homogeneous_mean_K2": 0.21428571428571427
+      },
+      "4": {
+        "groups": {
+          "0": {
+            "bases": 16,
+            "mean_K2": 0.75
+          },
+          "1": {
+            "bases": 720,
+            "mean_K2": 0.55
+          },
+          "2": {
+            "bases": 2400,
+            "mean_K2": 0.33
+          },
+          "3": {
+            "bases": 960,
+            "mean_K2": 0.15
+          }
+        },
+        "heterogeneous_advantage": false,
+        "heterogeneous_mean_K2": 0.2785714285714286,
+        "homogeneous_mean_K2": 0.55
+      }
+    },
+    "lengths": [
+      3,
+      4
+    ],
+    "null_differences": 0,
+    "null_matches_exactly": true,
+    "total_bases": 4608,
+    "verdict": "negative_no_two_interface_advantage"
+  }
+}

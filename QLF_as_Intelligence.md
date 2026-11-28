@@ -226,6 +226,56 @@ gradient descent on floats (e.g. credit assignment without differentiability) is
 the *operation* (synthesis = disjunctive closure, Lean) and the *token-as-proof* primitive; the
 learning dynamics on that basis are the research frontier the issue points at.
 
+### §6a The listener correction: the LLM generates inside a closure controller
+
+The contrast above — “LLMs only generate” — is a structural statement about what an LLM does by
+itself. It is not a claim that an LLM cannot participate in a QLF cognitive architecture. The sharper
+architecture puts the LLM *inside* a listener controller:
+
+```
+B_t  →  open candidates q_1 … q_n
+     →  listener-triggered recollection
+     →  evidence/verification
+     →  first eligible trigger
+     →  atomic COMMIT
+     →  B_{t+1}
+```
+
+Three quantities must remain distinct:
+
+| quantity | role |
+|---|---|
+| `T_i^(B)`, `f_i^(B)=1/T_i^(B)` | recurrence and frequency; recurring dominance |
+| `d_i^(B)` | remaining distance to trigger; event priority |
+| `tau_event = 0` | the closure event is atomic |
+
+The LLM may propose, expand, retrieve, and draft. It does not get closure authority. A verifier or
+declared closure obligation must accept before the result is committed. This is the missing control
+layer between “the model said something plausible” and “the system installed it.”
+
+Memory is correspondingly three layers:
+
+1. immutable history;
+2. stored closure/QKB knowledge (lemmas, capability tokens, verified closures);
+3. listener-relative accessible memory `M_i --B--> d_i(B)`, admitted only at `d_i=0`.
+
+The Curry-Howard `cap:` token is the proof layer, not the whole memory architecture. The compression
+target is the listener quotient `[h]_B`: histories indistinguishable by any task-relevant
+continuation need not be stored separately.
+
+**Status.** The live QuantumOS layer has LLM peers, role agents, persistence, and deterministic ZFA
+checks. It does **not** yet implement the full listener loop, listener-triggered memory, or
+bisimulation quotient. The running/proposed split and gates A0–A6 are in
+[`AI.md`](AI.md#listener-cognition-the-next-architecture); the timing separation is in
+[Event timing (PR #281)](https://github.com/rhovision-org/quantum-logical-framework/pull/281); the
+listener quotient is in
+[Listener equivalence (PR #275)](https://github.com/rhovision-org/quantum-logical-framework/pull/275);
+the finite controller slice is in
+[quantum-os#322](https://github.com/rhovision-org/quantum-os/pull/322).
+
+This correction strengthens the structural case: the LLM is not asked to be the whole mind. It is the
+generative engine inside a controller that supplies memory, priority, verification, and commitment.
+
 ---
 
 ## §7 What this means for intelligence
@@ -311,8 +361,9 @@ substrate physics is made of**, with QLF as its operating system (§7c).
 [`QuantumOS.md`](QuantumOS.md) and [`Crystal_QuantumOS.md`](Crystal_QuantumOS.md) carry the full case;
 the one-line thesis, stated here because it is the natural home of the "new AI" framing: **in
 QuantumOS, security, error correction, scheduling, garbage collection, and inference are one
-operation — ZFA enforcement (`full_zeno_prune`) — because `qlf_universality` proves ZFA balance is
-the single invariant that subsumes every correctness property.** A classical OS needs five subsystems;
+operation — ZFA enforcement (`full_zeno_prune`) — as a design thesis: the gates are proved ZFA-preserving and classically universal
+(`substrate_computes`), and whether one invariant subsumes every correctness property is what
+QuantumOS tests.** A classical OS needs five subsystems;
 QuantumOS needs one, and that one *is* the quantum act.
 
 This makes QLF a control plane for real quantum hardware, not only simulators. The concrete target is

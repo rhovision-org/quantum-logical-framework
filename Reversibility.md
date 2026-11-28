@@ -351,3 +351,7 @@ In 2026 Gaztañaga, Kumar and Marto proposed that the Einstein–Rosen bridge is
 forward-in-time and a backward-in-time component rather than a tunnel. Here time reversal is the
 Hermitian conjugate, and `mirror_closes` (`QLF_Discoveries2026`) proves that any history joined to its
 time-mirror closes. QLF reached the temporal reading independently ([Discoveries_2026 V12](Discoveries_2026.md#v12)).
+
+## The reversed reading is a perspective
+
+The reversed reading the dagger involution guarantees lies inside the same census, not in a second one, and no Lorentz perspective reverses a causal time direction. See [Time_Reversed_Universe.md](Time_Reversed_Universe.md) and [QLF_TimeReversalPerspective](lean/QLF_TimeReversalPerspective.lean).

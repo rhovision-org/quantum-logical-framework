@@ -243,6 +243,13 @@ What is proved and what is not:
 
 ---
 
+### 5a. Why closures and not truth values: proved
+
+Two theorems in [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean) back this design's first rule (see [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md) §6h):
+
+- **No table of context-free truth values exists** once the propositions include the eighteen four-dimensional directions of Cabello's Kochen–Specker set (`no_choice_fixed_in_advance`). A base that stored such a non-contextual table would store a falsehood. A context-indexed table is not ruled out, so storing closures in context is consistent, not forced. MO3 alone does admit context-free assignments, and that four-dimensional projectors model the twist records is a reading.
+- **A held record carries the choice and not the phase.** A copy of a record admits exactly the futures of the original (`meme_transmits_choice`), and a copy with the same twists can fold to the opposite phase (`meme_does_not_transmit_phase`). This holds under the definition that a meme is a count record copied in any order; an exact copy keeps the phase. Under that definition, R counts holders of a selection, not of its phase.
+
 ## 6. Decentralizing it: sharding
 
 Everything the base stores only grows. Attester sets, the ways under a name and the answers to a

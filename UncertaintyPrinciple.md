@@ -60,6 +60,8 @@ This is not an operator commutator postulate imposed from outside; it is the dir
 
 The minimal equality case occurs for Gaussian-like history ensembles (minimum-uncertainty wave packets), exactly as in standard QM.
 
+**Both pairs in one experiment.** The double slit in space and the double slit in time show the position–momentum and time–energy pairs as one theorem: the slit separation fixes the fringe spacing in the conjugate variable exactly, `q·|Δx| ≥ 2π` and `p·|Δt| ≥ 2π` for every fringe spacing, with equality at the least one (`ΔE·Δt = h`, `Δp·Δx = h` for the spacing), and which-slit records cut the fringe in proportion to their overlap ([`Double_Slit.md`](Double_Slit.md) §6–§7, [`lean/QLF_TimeDoubleSlit.lean`](lean/QLF_TimeDoubleSlit.lean)). These are Fourier reciprocities of the spacing, not the variance bound above.
+
 ## 3a. Uncertainty IS the count↔phase (Shannon↔Fourier) conjugacy — and its entropic form
 
 §3 says it almost in passing, but it is the whole point: the two conjugate observables are the **count** (the integer number of net twists — Shannon's domain) and the **phase** (the continuous order parameter across the superposed branches — Fourier's domain). They are Fourier-dual faces of one ZFA closure, related by the non-commutative 8-twist algebra. The uncertainty principle is the statement that a closure cannot be sharp in **both** faces at once.

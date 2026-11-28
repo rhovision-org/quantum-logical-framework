@@ -4,7 +4,7 @@ Part of the [Quantum Logical Framework (QLF)](README.md). Status ledger: [Claim_
 
 **Question (Jim, 2026-11-16).** Can any of the missing bridges be closed now, perhaps with strange loops, fractals, Zipf's law, bisimulation or turbulence, reasoned possibilistically?
 
-**Short answer.** One bridge requirement is now a theorem, in its possibilist form: **one closure decides**, and the first closure is one that does (§2). One route to the Koide phase is shown not to close, which is a fact about that route only (§3). Zipf's law holds for the closure inventory, but its exponent is bookkeeping, and only its correction carries content (§4). The ledger statuses of the physical bridges (α's scale map, Born, the clock map, the detector map, map ≡ territory) are unchanged, and §5 says what one way would look like for each.
+**Short answer.** One bridge requirement is now a theorem, in its possibilist form: **one closure decides**, and the first closure is one that does (§2). One route to the Koide phase is shown not to close, which is a fact about that route only (§3). Zipf's law holds for the closure inventory, but its exponent is bookkeeping, and only its correction carries content (§4). The ledger statuses of the physical bridges (α's scale map, Born, the clock map, the detector map, map ≡ territory) are unchanged, and §5 says what one way would look like for each. §6 records the bridge-closure plan of 2026-11-21: seven pre-registered steps, each with a Lean module and no new axiom.
 
 **How "possibilistically" is read (Jim, 2026-11-16).** *Possibilism only requires one way. The first closure is the strongest way.* A bridge exists once one way across it is exhibited; nothing has to be shown about all ways. Among the ways, the first closure has priority, because closure is irrevocable (`closedAtHorizon_mono`). Two consequences follow. A route that fails to close (§3) counts for nothing against the bridge it aimed at. And the quantifier over every context in §2 is not needed: one closing context does all the work.
 
@@ -89,8 +89,70 @@ Under the possibilist standard each of these needs **one** exhibited way, and it
 - **α scale map.** Self-similarity fixes the octave-to-scale map's form, `Q(R) = Q₀λ^R`, and the bifibration fixes `w = ½` ([Alpha_Residual.md](Alpha_Residual.md) §9b–§9c). The map's two constants are a physical identification, and none of the five tools supplies them. Turbulence was the candidate that could have supplied a per-octave exponent, and §1 records why it did not.
 - **Born uniqueness.** `born_from_ways` holds given refinement additivity. What is missing is a dynamics that performs an amplitude-preserving refinement. PR #245 (readout criterion) is the live work, and nothing here bears on it.
 - **Gupta clock map.** This is in the clock-domain stack (PRs #237 and #246), which none of the five tools touches.
-- **MO2 → detector, map ≡ territory.** §2 reduces the formal side to one statement: an apparatus map that factors through the joint-closure observable and respects continuation. The physical side is that statement, and it stays `B-OPEN`.
+- **MO2 → detector, map ≡ territory.** §2 reduces the formal side to an apparatus map that respects continuation. That apparatus cannot factor through the joint-closure observable alone: the gauge twist `+` folds to `I`, so the observational record does not return ZFA ([`QLF_TerritoryReturn`](lean/QLF_TerritoryReturn.lean), §6). It must also read the integer ledger. The physical side, what apparatus reads it, stays `B-OPEN`.
 - **SPARC.** This needs prospective, blinded replication ([blinded_protocol.md](verification/strange-loop/blinded_protocol.md)), not a new tool.
+
+## 6. The bridge-closure plan (2026-11-21)
+
+Jim asked for one plan merging the ChatGPT and Grok roadmaps, aimed at a first verified continuum
+reconstruction. The ground rules were:
+
+- `ħ` is never sent to zero;
+- one way suffices, and the first closure is preferred;
+- the Python companion comes first, then Lean;
+- every step keeps a `B-OPEN` claim record whose `strange_loop` returns a finite invariant;
+- kill conditions are committed before the run, and nothing is identified by definition.
+
+Each step below follows those rules and adds no axiom. The census action limit merged in PR #304;
+the other six are PR #305.
+
+| Step | Issue | Result | Status | Where |
+|---|---|---|---|---|
+| Census action limit | #303 S1–S2 | The census cost `I_n(⌊x√n⌋) → x²`, with first variation `→ 2x` and curvature `→ 2`, at fixed `ħ`. Exact sandwich `d²/(n+d) ≤ I ≤ d²/(n−d+1)` | **proved**, S-MATH only (a Euclidean weight, not the physical action) | [`QLF_CensusActionLimit`](lean/QLF_CensusActionLimit.lean), [Stationary_Action.md](Stationary_Action.md) §2a |
+| Link closure | #303 §3.2 | The link action sourced by a history is stationary under every link variation only if the history is count-balanced and returns. The converse is checked exactly, not proved | **proved** (one direction) | [`QLF_LinkClosure`](lean/QLF_LinkClosure.lean), [link_closure.py](link_closure.py), [Stationary_Action.md](Stationary_Action.md) §2b |
+| Perspective holography | #296 | Reconstruction ⟺ equal records force equal values. The joint fold is the minimal record for joint closure. Two one-body perspectives share only constants | **proved** | [`QLF_PerspectiveHolography`](lean/QLF_PerspectiveHolography.lean), [Holographic.md](Holographic.md) |
+| Fluxoid → Regge | #301 milestone 1 | The current labeling gives a geometry finer than the closure class (143 geometries in the closed class). The axis labeling is constant on closure. ZFA is the vertex identity `div = 0`, not a face identity | **rejected** by its kill conditions | [`QLF_FluxoidRegge`](lean/QLF_FluxoidRegge.lean), [Continuum_Limit.md](Continuum_Limit.md), [fluxoid_regge.py](fluxoid_regge.py) |
+| Signed phase | #303 S4–S5 | The closure phase is `π(L/2 + Φ)`, Φ the projected area. The stationary-phase bound holds for every U(1) flux, so it cannot identify the action. Only the fold fixes flux `±π`, and that flux has no smooth area-action limit | **S4 candidate proved; S5 open** (Dirac reading) | [`QLF_PhaseAction`](lean/QLF_PhaseAction.lean), [Stationary_Action.md](Stationary_Action.md) §5b–§5c, [signed_phase_track.py](signed_phase_track.py) |
+| Territory return | #213 | The observational record (joint closure tests with phase) does not return ZFA: `[(A,+)]` is equivalent to `[]`, and only `[]` closes. The 64 classes are `(K_A, K_B, phase)`. The integer ledger returns ZFA | **observational reading refuted**; map ≡ territory stays `B-OPEN` | [`QLF_TerritoryReturn`](lean/QLF_TerritoryReturn.lean), [Map_Is_Territory.md](Map_Is_Territory.md) §3a–§3b, [territory_return.py](territory_return.py) |
+| Spatial response | #287 SR3 | With both ledgers derived from the same steps, the mean growth of the squared separation is `2 − ΔS` (the parallelogram law). Binding steps push apart on average | **hypothesis reversed** for per-event ledgers; selection is untested | [`QLF_SpatialResponseDerived`](lean/QLF_SpatialResponseDerived.lean), [Spatial_Response_Derived.md](Spatial_Response_Derived.md), [spatial_response_derived.py](spatial_response_derived.py) |
+
+**What the plan established.** Three of the seven steps closed what they set out to close (the
+census limit, link closure, perspective holography). The other four were decided negatively, and
+each one locates its gap precisely:
+
+- a continuum geometry must come from a labeling that is a class function and still varies on
+  closure;
+- the action must be read from the Dirac phase, not from an area;
+- a return to the territory needs an apparatus that reads the integer ledger;
+- spatial contraction, if it exists, comes from which events happen, not from the per-event ledger.
+
+Under possibilism none of these failures counts against its bridge. Each records one route that does
+not close, together with the first step a route that does would have to take.
+
+### The deferred items (2026-11-22)
+
+The six items the plan deferred were each given one pre-registered step, run the same way.
+
+| Step | Issue | Result | Verdict | Anchors |
+|---|---|---|---|---|
+| Local scale symmetry | #302 C1 | Among position-dependent multiplicity fields only constant ones preserve ZFA. The global symmetry found is 96 frames times the odd dilations; even dilations erase the phase. No local frame change in the family tested is exploratory (W4's pre-registered condition was mis-specified and is not met) | **scoped candidate obstruction** for letter substitutions; C1 in general (causal, relational invariants, other primitives) stays open | [`QLF_ConformalComparison`](lean/QLF_ConformalComparison.lean), [Conformal_Comparison.md](Conformal_Comparison.md) |
+| Novel closure type | #290 E1 | Self-composition reaches only `+I`; complementary open pairs reach `−I` (minimal pair `^`, `v`), and `−I` is the majority type among closing open pairs | **E1 holds, D8b passes** on concatenation | [`QLF_DiversityNovelOutcome`](lean/QLF_DiversityNovelOutcome.lean), [Diversity_Novel_Outcome_E1.md](Diversity_Novel_Outcome_E1.md) |
+| Abelian control | #286 | The non-Abelian gate of #289's vertex channels only lengthens singlet distance: 24 states from 1 to 2, 32 blocked (under the pre-registered size bound, which #289's search narrows). "Every first-singlet move reduces `d_G`" holds for every relation | **non-Abelian structure obstructs, never shortens**; the first-singlet result is bookkeeping | [`QLF_GluonAbelianControl`](lean/QLF_GluonAbelianControl.lean), [Gluon_Abelian_Control.md](Gluon_Abelian_Control.md) |
+| Lepton Stage B | #140 | The admissible observables separate the rungs only through `L = 4 + 2k` and orbit `24 · 2^k`, one progression. So `δ` must be global | **no ratio prediction** under the frozen protocol; a new observable is needed | [`QLF_LeptonStageB`](lean/QLF_LeptonStageB.lean), [Lepton_Stage_B.md](Lepton_Stage_B.md) |
+| Calibration-free target | #234 | Age ratios and `H₀·t₀` are invariant under any clock calibration, and one scale fits two ages only if the ratios agree. The benchmark's content: `0.2187`, `0.1299`, `1.98` | **target fixed**; #234 stays INCOMPLETE | [`QLF_ClockCalibration`](lean/QLF_ClockCalibration.lean), [Gupta_ScaleFree.md](Gupta_ScaleFree.md) |
+| Update rule | #278 | Independent clocks and global reset both make the fastest eligible closure the modal expression and switch it at the same quieting threshold (strictly `2q > 8`; the static skeleton's `e ≤ i` breaks the tie the other way); only the reset makes it exclusive. No update law is derived | **receiver regime is rule-independent as the mode** | [`QLF_ConsciousUpdateRule`](lean/QLF_ConsciousUpdateRule.lean), [Conscious_Update_Rule.md](Conscious_Update_Rule.md) |
+
+**Claim records** (all `B-OPEN`):
+[`stationary_action.json`](claim_records/stationary_action.json),
+[`continuum_limit.json`](claim_records/continuum_limit.json),
+[`map_is_territory.json`](claim_records/map_is_territory.json),
+[`spatial_response_derived.json`](claim_records/spatial_response_derived.json),
+[`conformal_comparison.json`](claim_records/conformal_comparison.json),
+[`diversity_novel_outcome.json`](claim_records/diversity_novel_outcome.json),
+[`gluon_abelian_control.json`](claim_records/gluon_abelian_control.json),
+[`lepton_stage_b.json`](claim_records/lepton_stage_b.json),
+[`gupta_scale_free.json`](claim_records/gupta_scale_free.json) and
+[`conscious_update_rule.json`](claim_records/conscious_update_rule.json).
 
 ## References
 
