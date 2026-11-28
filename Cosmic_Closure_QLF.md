@@ -22,7 +22,7 @@ status labels.
 [`Closure_Uncertainty_QLF.md`](Closure_Uncertainty_QLF.md); the Lean finite-check layer is
 [`QLF_ClosureUncertainty`](lean/QLF_ClosureUncertainty.lean); the proved cooperative-closure stack
 is [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md), indexed by
-[PR #272](https://github.com/rhovision-org/quantum-logical-framework/pull/272); the listener
+[`Cooperative_Construction.md`](Cooperative_Construction.md); the listener
 quotient is [`Listener_Equivalence_QLF.md`](Listener_Equivalence_QLF.md).
 
 ---
@@ -167,7 +167,7 @@ extensions (`no_terminal_phase`, `order_at_every_scale`; see
 **Timing.** Cosmic time accumulates **between and nested among atomic closures**, not during a
 closure. The unbounded extension is a sequence of events with `tau_event = 0`, not a single event of
 infinite duration. This is the same listening-vs-event distinction as the D9 gate in
-[PR #279](https://github.com/rhovision-org/quantum-logical-framework/pull/279).
+[`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md).
 
 That is **potential infinity**. It does not prove that the physical cosmos actualizes an endless
 sequence of those extensions. The distinction is:
