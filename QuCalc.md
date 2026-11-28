@@ -32,6 +32,26 @@ This remains the core of the framework.
 
 What has changed is that QuCalc is supported by a higher layer: **RhoQuCalc**.
 
+### 1a. Closure-oriented programming semantics
+
+Under the one-conjecture framing ([Framing.md](Framing.md) §4a), a QuCalc program is stated by its
+**unresolved distinctions**, not by the steps that resolve them:
+
+- **Program.** An open prefix `h`. Its free action `F(h)` (the signed imbalance on each axis) is the
+  specification: what any solution must supply.
+- **Execution.** Appending a continuation `c` with `F(hc) = 0`. The least such continuation has length
+  exactly `F(h)` (`closing_cost_exact`), and every ordering of it closes (`completion_perm_closes`,
+  [`QLF_QuantumComputer`](lean/QLF_QuantumComputer.lean)).
+- **Result.** The closure the substrate reaches first, which `/solve` returns deterministically
+  ([QucalcSearch.md](QucalcSearch.md)); `/search` lists the alternatives.
+- **Composition.** Closed programs compose into closed programs (P07), and a closed part changes its
+  context only by a global phase (P05).
+
+Scope: these semantics solve *conjugate imbalance*. Which other problems (constraint satisfaction,
+optimization, collective inference) have a closure encoding of proved cost is obligation O4 of
+[Framing.md](Framing.md) §6, and an encoding can carry a problem's hardness with it
+([P_vs_NP_QLF.md](P_vs_NP_QLF.md)).
+
 ---
 
 ## 2. The 8-Twist Alphabet

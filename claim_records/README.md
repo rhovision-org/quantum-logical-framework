@@ -15,6 +15,7 @@ allowlist. JSON-only changes trigger the Python workflow.
 | `three_polarizer.json` | Finite MO2 properties and imported ideal-optics comparator |
 | `born_rule.json` | Characterization under `ProbAssignment` assumptions; physical realization remains open |
 | `strange_loop` fields | Typed two-phase/return specification in the four bridge records; all four are `B-OPEN` |
+| `stationary_action.json` | Census action limit (`QLF_CensusActionLimit`): Euclidean census functional proved; physical action bridge `B-OPEN` |
 | `kill_conditions.json` | Draft falsification/test ledger, not a completed preregistration |
 
 The [Gupta CCC+TL ledger](gupta_ccc_tl.json) tracks a retrospective external numerical benchmark and draft bridge tests. It is a `test_ledger`, with no invented theorem anchors or component promotion.

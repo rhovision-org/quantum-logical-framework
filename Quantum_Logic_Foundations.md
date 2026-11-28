@@ -137,7 +137,7 @@ histories that terminate and close. The propositions that are formally undecidab
 correspond *one-to-one* to the histories that never achieve ZFA closure — the
 non-terminating computations that `full_zeno_prune` removes **before they can become
 physical events** ([`lean/QLF_Universality.lean`](lean/QLF_Universality.lean):
-`qlf_universality` — every *terminating* computation is a ZFA string). Within the realized
+`qlf_universality` gives a ZFA encoding of every terminating circuit; the one-to-one correspondence with undecidable propositions is a reading, since that encoding never uses termination — [Principles.md](Principles.md) P10). Within the realized
 domain, ZFA closure is decidable, so **every physical proposition has a definite truth
 value.** There are no undecidable questions about what exists; there are only undecidable
 questions about what does *not* — the unrealized over-reach.

@@ -1,0 +1,400 @@
+{
+  "conditional_variation": {
+    "a_given_length_lz78": {
+      "buckets": 18,
+      "max_values_in_bucket": 6,
+      "mixed_buckets": 11,
+      "mixed_weight_fraction": 0.9946676003119582
+    },
+    "a_given_length_zlib": {
+      "buckets": 14,
+      "max_values_in_bucket": 4,
+      "mixed_buckets": 8,
+      "mixed_weight_fraction": 0.9999675453357239
+    },
+    "a_zfa_given_length_a": {
+      "buckets": 17,
+      "max_values_in_bucket": 3,
+      "mixed_buckets": 5,
+      "mixed_weight_fraction": 0.1847644037242219
+    },
+    "a_zfa_given_length_a_lz78": {
+      "buckets": 45,
+      "max_values_in_bucket": 3,
+      "mixed_buckets": 13,
+      "mixed_weight_fraction": 0.16336497827012705
+    },
+    "a_zfa_given_length_a_lz78_zlib": {
+      "buckets": 81,
+      "max_values_in_bucket": 3,
+      "mixed_buckets": 30,
+      "mixed_weight_fraction": 0.16252705784699692
+    },
+    "a_zfa_given_length_a_zlib": {
+      "buckets": 30,
+      "max_values_in_bucket": 3,
+      "mixed_buckets": 15,
+      "mixed_weight_fraction": 0.1847644037242219
+    },
+    "a_zfa_given_length_lz78": {
+      "buckets": 18,
+      "max_values_in_bucket": 6,
+      "mixed_buckets": 11,
+      "mixed_weight_fraction": 0.9946676003119582
+    }
+  },
+  "correlations": {
+    "spearman_a_a_zfa": 0.813029953885497,
+    "spearman_a_distinct_substrings": 0.6608596474989558,
+    "spearman_a_length": 0.3693869328845115,
+    "spearman_a_lz78": 0.33264842207831496,
+    "spearman_a_zfa_distinct_substrings": 0.5138980713578291,
+    "spearman_a_zfa_length": 0.4326545650062966,
+    "spearman_a_zfa_lz78": 0.27622067755340834,
+    "spearman_a_zfa_zlib_bytes": 0.4676790236488786,
+    "spearman_a_zlib_bytes": 0.44135241705407974
+  },
+  "distributions": {
+    "a": {
+      "1": 8,
+      "2": 8,
+      "3": 176,
+      "4": 504,
+      "5": 7080,
+      "6": 28952,
+      "7": 323808,
+      "8": 1318032,
+      "9": 6455856
+    },
+    "a_zfa": {
+      "1": 8,
+      "2": 8,
+      "3": 176,
+      "4": 504,
+      "5": 6248,
+      "6": 24320,
+      "7": 226464,
+      "8": 907824,
+      "9": 6968872
+    },
+    "gap": {
+      "0": 7559832,
+      "1": 527064,
+      "2": 47528
+    }
+  },
+  "entropy_bits": {
+    "H_a": 0.9142417903685842,
+    "H_a_given_length": 0.7904819734186176,
+    "H_a_given_length_lz78": 0.723055131745441,
+    "H_a_given_length_zlib": 0.7381210173790556,
+    "H_a_zfa": 0.7223078223535927,
+    "H_a_zfa_given_length": 0.5799540117952764,
+    "H_a_zfa_given_length_a": 0.18452588702427056,
+    "H_a_zfa_given_length_a_lz78": 0.16397412996964275,
+    "H_a_zfa_given_length_a_lz78_zlib": 0.15941176789637213,
+    "H_a_zfa_given_length_a_zlib": 0.18090248346232726,
+    "H_a_zfa_given_length_lz78": 0.5359279918186985
+  },
+  "examples": [
+    {
+      "a": 6,
+      "a_zfa": 7,
+      "gap": 1,
+      "label": "smallest word with a_ZFA > a",
+      "length": 8,
+      "lz78": 6,
+      "weight": 48,
+      "word": "^><<^>vv"
+    },
+    {
+      "a": 5,
+      "a_zfa": 7,
+      "gap": 2,
+      "label": "largest gap",
+      "length": 8,
+      "lz78": 5,
+      "weight": 8,
+      "word": "^^^^vvvv"
+    },
+    {
+      "a": 7,
+      "a_zfa": 9,
+      "gap": 2,
+      "label": "largest gap at maximum length",
+      "length": 10,
+      "lz78": 6,
+      "weight": 8,
+      "word": "^vvvvv^^^^"
+    },
+    {
+      "a": 2,
+      "a_zfa": 2,
+      "gap": 0,
+      "label": "same length/LZ78, different a (n=4, lz78=3)",
+      "length": 4,
+      "lz78": 3,
+      "weight": 8,
+      "word": "^v^v"
+    },
+    {
+      "a": 3,
+      "a_zfa": 3,
+      "gap": 0,
+      "label": "same length/LZ78, different a (n=4, lz78=3)",
+      "length": 4,
+      "lz78": 3,
+      "weight": 8,
+      "word": "^vv^"
+    },
+    {
+      "a": 5,
+      "a_zfa": 5,
+      "gap": 0,
+      "label": "same length/a, different a_ZFA (n=8, a=5)",
+      "length": 8,
+      "lz78": 5,
+      "weight": 48,
+      "word": "^><><><v"
+    },
+    {
+      "a": 5,
+      "a_zfa": 7,
+      "gap": 2,
+      "label": "same length/a, different a_ZFA (n=8, a=5)",
+      "length": 8,
+      "lz78": 5,
+      "weight": 8,
+      "word": "^^vvvv^^"
+    }
+  ],
+  "fold_classes": {
+    "10": {
+      "0": 3535200,
+      "2": 4403808
+    },
+    "2": {
+      "2": 8
+    },
+    "4": {
+      "0": 144,
+      "2": 24
+    },
+    "6": {
+      "0": 1488,
+      "2": 3632
+    },
+    "8": {
+      "0": 116008,
+      "2": 74112
+    }
+  },
+  "meta": {
+    "closure_constrained_index": "minimum joins; only count-balanced objects have unlimited reuse; non-closed objects have fan-out one",
+    "generator": "assembly_index.py",
+    "max_length": 10,
+    "object_semantics": "raw twist words over ^ v < > / \\ + -; primitives are the eight single twists; a join is concatenation; previously constructed objects may be reused",
+    "ordinary_index": "minimum joins, unrestricted reuse (SLP size)",
+    "symmetry_group_order": 384,
+    "version": 1
+  },
+  "per_length": [
+    {
+      "a_distribution": {
+        "1": 8
+      },
+      "a_zfa_distribution": {
+        "1": 8
+      },
+      "balanced_words": 8,
+      "canonical_classes": 1,
+      "gap_distribution": {
+        "0": 8
+      },
+      "length": 2,
+      "max_a": 1,
+      "max_a_zfa": 1,
+      "max_gap": 0,
+      "mean_a": 1.0,
+      "mean_a_zfa": 1.0,
+      "prime_words": 8,
+      "words_with_gap": 0
+    },
+    {
+      "a_distribution": {
+        "2": 8,
+        "3": 160
+      },
+      "a_zfa_distribution": {
+        "2": 8,
+        "3": 160
+      },
+      "balanced_words": 168,
+      "canonical_classes": 6,
+      "gap_distribution": {
+        "0": 168
+      },
+      "length": 4,
+      "max_a": 3,
+      "max_a_zfa": 3,
+      "max_gap": 0,
+      "mean_a": 2.9523809523809526,
+      "mean_a_zfa": 2.9523809523809526,
+      "prime_words": 104,
+      "words_with_gap": 0
+    },
+    {
+      "a_distribution": {
+        "3": 8,
+        "4": 336,
+        "5": 4776
+      },
+      "a_zfa_distribution": {
+        "3": 8,
+        "4": 336,
+        "5": 4776
+      },
+      "balanced_words": 5120,
+      "canonical_classes": 70,
+      "gap_distribution": {
+        "0": 5120
+      },
+      "length": 6,
+      "max_a": 5,
+      "max_a_zfa": 5,
+      "max_gap": 0,
+      "mean_a": 4.93125,
+      "mean_a_zfa": 4.93125,
+      "prime_words": 2944,
+      "words_with_gap": 0
+    },
+    {
+      "a_distribution": {
+        "3": 8,
+        "4": 160,
+        "5": 1504,
+        "6": 19104,
+        "7": 169344
+      },
+      "a_zfa_distribution": {
+        "3": 8,
+        "4": 160,
+        "5": 672,
+        "6": 16640,
+        "7": 172640
+      },
+      "balanced_words": 190120,
+      "canonical_classes": 1365,
+      "gap_distribution": {
+        "0": 186392,
+        "1": 3328,
+        "2": 400
+      },
+      "length": 8,
+      "max_a": 7,
+      "max_a_zfa": 7,
+      "max_gap": 2,
+      "mean_a": 6.8810014727540505,
+      "mean_a_zfa": 6.90271407532085,
+      "prime_words": 108136,
+      "words_with_gap": 3728
+    },
+    {
+      "a_distribution": {
+        "4": 8,
+        "5": 800,
+        "6": 9848,
+        "7": 154464,
+        "8": 1318032,
+        "9": 6455856
+      },
+      "a_zfa_distribution": {
+        "4": 8,
+        "5": 800,
+        "6": 7680,
+        "7": 53824,
+        "8": 907824,
+        "9": 6968872
+      },
+      "balanced_words": 7939008,
+      "canonical_classes": 37926,
+      "gap_distribution": {
+        "0": 7368144,
+        "1": 523736,
+        "2": 47128
+      },
+      "length": 10,
+      "max_a": 9,
+      "max_a_zfa": 9,
+      "max_gap": 2,
+      "mean_a": 8.790938112167163,
+      "mean_a_zfa": 8.868780583166059,
+      "prime_words": 4525888,
+      "words_with_gap": 570864
+    }
+  ],
+  "validation": {
+    "per_length": [
+      {
+        "balanced_words": 8,
+        "canonical_classes": 1,
+        "fold_classes": {
+          "2": 8
+        },
+        "length": 2,
+        "orbit_weight_sum": 8
+      },
+      {
+        "balanced_words": 168,
+        "canonical_classes": 6,
+        "fold_classes": {
+          "0": 144,
+          "2": 24
+        },
+        "length": 4,
+        "orbit_weight_sum": 168
+      },
+      {
+        "balanced_words": 5120,
+        "canonical_classes": 70,
+        "fold_classes": {
+          "0": 1488,
+          "2": 3632
+        },
+        "length": 6,
+        "orbit_weight_sum": 5120
+      },
+      {
+        "balanced_words": 190120,
+        "canonical_classes": 1365,
+        "fold_classes": {
+          "0": 116008,
+          "2": 74112
+        },
+        "length": 8,
+        "orbit_weight_sum": 190120
+      },
+      {
+        "balanced_words": 7939008,
+        "canonical_classes": 37926,
+        "fold_classes": {
+          "0": 3535200,
+          "2": 4403808
+        },
+        "length": 10,
+        "orbit_weight_sum": 7939008
+      }
+    ],
+    "totals": {
+      "balanced_words": 8134424,
+      "canonical_classes": 39368,
+      "lengths": [
+        2,
+        4,
+        6,
+        8,
+        10
+      ]
+    }
+  }
+}

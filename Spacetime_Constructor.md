@@ -65,6 +65,8 @@ from the Planck top and the constructor walks the *logical bang*'s phases outwar
 **Planck-mass black holes** → **hadrons** emerging as they Hawking-cascade (the nucleon ring `p`, `n`) →
 recombination into **atoms** as it cools. None of it is scripted — it falls out of ZFA and the census, so the tool
 reproduces **primordial black holes** and the **hadron epoch** as consequences of the substrate, not inputs.
+(Why none of those small holes are left, and what falling into a large one looks like from each perspective:
+[`Falling_Into_Black_Holes.md`](Falling_Into_Black_Holes.md).)
 (Legacy pictures like "recombination at ~3000 K" are one rendering of the same closure dynamics; we obey ZFA and
 let them emerge, never hardcode them.) The Planck black-hole genesis — the Compton = Schwarzschild crossing at
 `μ² = 1/2` — is computed exactly in [`genesis.py`](genesis.py) §7 / [`Genesis.md`](Genesis.md)

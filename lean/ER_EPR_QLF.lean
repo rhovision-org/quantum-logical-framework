@@ -14,7 +14,7 @@ posit the wormhole / shared-constraint relation:
 * **ER (the wormhole) = that shared closure rendered in the causal geometry as a non-causal
   connection.** Geometry is the *rendering* of closures, and the substrate causal order is
   `reachable` (prefix, `QLF_ReachableEvent`). A bridge is a shared closure between *spacelike*
-  events — a real connection (one closure) with no causal path (non-traversable).
+  events (spacelike in the prefix order, i.e. incomparable; not Minkowski-spacelike, see `Spacelike`) — a real connection (one closure) with no causal path (non-traversable).
 * **ER = EPR** (`er_equals_epr`). Given spacelike separation, the geometric bridge exists *exactly*
   when the histories are entangled — the bridge IS the shared closure. Not a duality; an identity.
 * **No FTL** (`no_ftl_in_epr`). The bridge is spacelike, so neither end reaches the other: nothing is
@@ -38,8 +38,13 @@ open QLF.ReachableEvent
     the verified ZFA filter. -/
 def SharedClosure (A B : TopoString) : Prop := achieves_ZFA (A ++ B)
 
-/-- **Spacelike** — neither history lies in the other's causal past, in the substrate causal set
-    (`reachable = prefix`, `QLF_ReachableEvent`). -/
+/-- **Spacelike (in the prefix order)** — neither history lies in the other's causal past, in the
+    substrate causal set (`reachable = prefix`, `QLF_ReachableEvent`). This is order
+    incomparability, **not** Minkowski spacelikeness: in the tick reading the primordial pair's
+    halves land on the same event (`QLF_LocalityDefinitions.prefixSpacelike_not_spacelike`), and a
+    moved pair's endpoints are Minkowski-spacelike (`pair_endpoints_spacelike`). Likewise
+    `no_ftl_in_epr` restates this conjunct of `ERBridge`; operational no-signalling is
+    `QLF_PerspectiveLocality.no_signalling_typed` (issue #315). -/
 def Spacelike (A B : TopoString) : Prop := ¬ reachable A B ∧ ¬ reachable B A
 
 /-- **ER — the wormhole.** A shared closure between spacelike events: a real connection (one closure)

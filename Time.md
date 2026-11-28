@@ -1,5 +1,7 @@
 # Time in the Quantum Logical Framework
 
+> Part of the [Quantum Logical Framework (QLF)](README.md). **ZFA** (Zero Free Action) is equal and opposite quantum logical action with zero free energy, the principle of QLF.
+
 ## 1. Why the "Time is an Illusion" Myth Exists
 
 The myth exists because all possible logical systems exist a priori. They don't need to be computed—they are simply "there" as a static landscape of possibilities. Modern physics often describes these structures as timeless because the equations of general relativity (like the Wheeler-DeWitt equation) do not contain a time variable.
@@ -121,12 +123,24 @@ possibility, not a time loop in the record; see [`Strange_Loops.md`](Strange_Loo
 
 
 
+## 8a. The Double Slit in Time
+
+If time is a count of ticks and frequency is phase per tick (§2), then a moment can be a slit. Let a history through at two instants instead of two places and the interference appears in the **spectrum** instead of on a screen. This has been measured: a mirror switched on twice gives spectral fringes whose spacing is the inverse of the gap between the switchings (Tirole et al., [*Nature Physics* **19**, 999 (2023)](https://doi.org/10.1038/s41567-023-01993-w)). [`lean/QLF_TimeDoubleSlit.lean`](lean/QLF_TimeDoubleSlit.lean) proves it in QLF, with no axioms; the full account is [`Double_Slit.md`](Double_Slit.md) §6–§7.
+
+* **A time slit and a space slit are one theorem.** Both patterns are the same function of the accumulated phase, `ω·Δt` in time and `k·Δx` in space (`space_time_duality`).
+* **On the light cone the two patterns coincide.** With equal signed separations running with the light (`t₂ − t₁ = x₂ − x₁`, `c = 1`), read at a common frequency `ω = k`, the time and space patterns are equal at every frequency (`light_cone_duality`). That is the precise content of *time and space are identical at light speed* that this module supports: under those hypotheses no two-slit pattern tells them apart. Both hypotheses are inputs (`ω = k` is not derived), and off the cone `off_cone_distinguishable` gives one counterexample, not a general converse.
+* **The time–energy relation is exact for the fringe spacing.** A frequency shift leaves the spectrum unchanged iff it is a whole number of turns, so every spacing obeys `p·|Δt| ≥ 2π`, with equality at the least (`time_reciprocity`); with `E = ℏω`, `ΔE·Δt = h` for the spacing. The position–momentum twin is `space_reciprocity`. These are Fourier reciprocities, not the `ℏ/2` variance bounds.
+* **Fringes redistribute, they do not create.** On an `N`-tick clock the amplitude reads only the substrate phase `n mod N` (`tick_amp_phase`), and the spectrum summed over a cycle is unchanged by interference (`tick_conservation`). On the Pauli-scalar clock `ζ = i` the pattern is `4, 2, 0, 2` (`mu4_pattern`): the dark fringe is the phase `i² = −1`.
+* **Reverse time exists by perspective, and handedness is the distinction.** Read backwards (instants negated, amplitudes conjugated, since reversal is the Hermitian conjugate), the experiment shows the same fringes (`time_reversed_perspective`) but holds the conjugate gauge-invariant relative phase (`relPhase_reversed`, `reversed_relPhase_differs`), a difference this pair's intensity cannot reveal. At the level of events, conjugation reverses handedness on every axis (`handednessOn_map_conj`, [`lean/QLF_Handedness.lean`](lean/QLF_Handedness.lean)), so the two time directions share the closures and differ in the handedness each perspective holds.
+* **Learning *when* costs the fringe.** A record of which instant the history passed weakens the fringes in proportion to the records' overlap and erases them when the records are orthogonal (`marked_visibility_bound`, `marked_orthogonal`).
+
 ## 9. Repository Verification
 
 * [`SpaceTime.py`](./SpaceTime.py) — Shows local time emerging from frequency-based bit resolution.
 * [`muon_lifetime_demo.py`](./muon_lifetime_demo.py) — Simulates particle lifetime based on logical bit synthesis rates.
 * [`twist_core.py`](./twist_core.py) — The core engine executing ZFA closures.
-* [`QLF_Universality.lean`](./lean/QLF_Universality.lean) — Formal proof that every terminating computation IS a ZFA string (Church-Turing completeness of the ZFA filter).
+* [`QLF_TimeDoubleSlit.lean`](./lean/QLF_TimeDoubleSlit.lean) — The double slit in time, the light-cone identity of time and space slits, and the time–energy fringe reciprocity (§8a).
+* [`QLF_Universality.lean`](./lean/QLF_Universality.lean) — Every terminating circuit has a ZFA encoding (bookkeeping, [Principles.md](./Principles.md) P10); substrate evaluation is `fredkin_complete` ([`QLF_QuantumComputer.lean`](./lean/QLF_QuantumComputer.lean)).
 
 ## 2026 update
 

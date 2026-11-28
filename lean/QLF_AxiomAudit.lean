@@ -66,6 +66,8 @@ import QLF_CensusCurvature
 import QLF_LorentzCover
 import QLF_RiemannMRE
 import QLF_StationaryAction
+import QLF_CensusActionLimit
+import QLF_LinkClosure
 import QLF_StationaryPhase
 import QLF_ClosureKernel
 import QLF_ClosureLeakage
@@ -85,6 +87,10 @@ import QLF_RelativityScale
 import QLF_LorentzSymbol
 import QLF_BoostCovariance
 import QLF_InteractingKinematics
+import QLF_BoostStates
+import QLF_BoostAmplitudes
+import QLF_SpinorContact
+import QLF_HalfStepReversal
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -126,6 +132,34 @@ import QLF_StrangeLoopBorn
 import QLF_ConservativeReturn
 import QLF_TensorConservativeReturn
 import QLF_ObservationalEquivalence
+import QLF_PerspectiveHolography
+import QLF_FluxoidRegge
+import QLF_PhaseAction
+import QLF_TerritoryReturn
+import QLF_SharedReality
+import QLF_SharedEvent
+import QLF_ClassFactoring
+import QLF_SphereCount
+import QLF_HolographicCompletion
+import QLF_SpatialResponseDerived
+import QLF_ConformalComparison
+import QLF_DiversityNovelOutcome
+import QLF_LocalityDefinitions
+import QLF_PerspectiveLocality
+import QLF_ControlledUnitary
+import QLF_TwoLevelUnitary
+import QLF_Barenco
+import QLF_NativeBell
+import QLF_ModelTesting
+import QLF_UniformMeasure
+import QLF_AlphabetNecessity
+import QLF_LogicalPersistence
+import QLF_MultiObserver
+import QLF_NoFreeDuplication
+import QLF_PauliFrame
+import QLF_NativeUniversality
+import QLF_AnthropicEquivalence
+import QLF_ClosureSelection
 
 -- Paper I v0.3: MO2/QuantumLogic and headline-claim anchors.
 -- The baseline for these anchors is intentionally updated only after a
@@ -144,6 +178,26 @@ import QLF_MercuryPerihelion
 import QLF_Discoveries2026
 import QLF_StrongCP
 import QLF_Majorana
+import QLF_GluonAbelianControl
+import QLF_LeptonStageB
+import QLF_ClockCalibration
+import QLF_ConsciousUpdateRule
+import QLF_ClosureUncertainty
+import QLF_DiversityPhase
+import QLF_CoincidenceTrivial
+import QLF_AssemblyIndex
+import QLF_TimeDoubleSlit
+import QLF_TimeReversalPerspective
+import QLF_BlackHoleInfall
+import QLF_RelativisticRocket
+import QLF_ClosureDepthTime
+import QLF_WalkDispersionBound
+import QLF_RelationalClock
+import QLF_VacuumCorrelation
+import QLF_CooperativeClosure
+import QLF_AnalogicalListener
+import QLF_CooperativeBridge
+import QLF_CooperativeLimits
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -155,6 +209,119 @@ import QLF_Majorana
 #print axioms QLF.Realizability.no_continuum_in_finite_region
 #print axioms QLF.LawOfExceptions.law_of_exceptions
 #print axioms QLF.StationaryAction.balance_is_stationary_mode
+#print axioms QLF.CensusActionLimit.census_action_limit
+#print axioms QLF.LinkClosure.link_stationarity_forces_closure
+#print axioms QLF.PerspectiveHolography.reconstructs_iff
+#print axioms QLF.PerspectiveHolography.shared_respects_chain
+#print axioms QLF.PerspectiveHolography.two_body_dictionary
+#print axioms QLF.PerspectiveHolography.closure_verdict_reconstructible
+#print axioms QLF.PerspectiveHolography.single_body_perspectives_share_only_constants
+#print axioms QLF.LinkClosure.stationary_forces_count_balance
+#print axioms QLF.LinkClosure.stationary_forces_return
+#print axioms QLF.FluxoidRegge.div_smooth
+#print axioms QLF.FluxoidRegge.smooth_preserves_closure
+#print axioms QLF.FluxoidRegge.plaquette_circulates
+#print axioms QLF.FluxoidRegge.current_not_class_function
+#print axioms QLF.FluxoidRegge.axisLabel_closed
+#print axioms QLF.PhaseAction.two_negCount_of_balanced
+#print axioms QLF.PhaseAction.phase_action_form
+#print axioms QLF.PhaseAction.fold_action_form
+#print axioms QLF.TerritoryReturn.zfa_not_class_function
+#print axioms QLF.TerritoryReturn.zfa_not_reconstructible
+#print axioms QLF.TerritoryReturn.zfa_not_from_fold
+#print axioms QLF.TerritoryReturn.ledger_returns_zfa
+#print axioms QLF.TerritoryReturn.joint_record_with_ledger_returns_zfa
+#print axioms QLF.SharedReality.single_body_territorial_share_only_constants
+#print axioms QLF.SharedReality.territorial_record_reconstructs
+#print axioms QLF.SharedReality.zfa_not_from_one_body
+#print axioms QLF.SharedReality.shared_iff_overlap
+#print axioms QLF.SharedReality.endpoints_share_only_constants
+#print axioms QLF.SharedReality.zfa_A_not_from_BC
+#print axioms QLF.SharedReality.global_zfa_not_from_pair
+#print axioms QLF.SharedReality.global_zfa_from_all
+#print axioms QLF.SharedReality.pairBuilt_ledger_transfer
+#print axioms QLF.SharedReality.pairBuilt_zfa_iff
+#print axioms QLF.SharedReality.ledger_transfer_fails_without_pairs
+#print axioms QLF.SharedReality.relay_ledger_transfer
+#print axioms QLF.SharedReality.relay_zfa_iff
+#print axioms QLF.SharedReality.relay_closes_at_B
+#print axioms QLF.SharedReality.chain_without_relay_fails
+#print axioms QLF.SharedReality.no_signal_to_C
+#print axioms QLF.SharedReality.view_changes_only_through_own_events
+#print axioms QLF.SharedReality.relay_domain_reconstructs_zfa
+#print axioms QLF.SharedReality.relay_phase_transfer
+#print axioms QLF.SharedReality.relay_domain_reconstructs_fold
+#print axioms QLF.SharedReality.link_domain_not_reconstructs_zfa
+#print axioms QLF.SharedReality.pair_domain_reconstructs_zfa
+#print axioms QLF.SharedEvent.pairBuilt_events_unique
+#print axioms QLF.SharedEvent.perspectives_agree_on_events
+#print axioms QLF.SharedEvent.history_from_A
+#print axioms QLF.SharedEvent.history_from_B
+#print axioms QLF.SharedEvent.pair_phase_transfer
+#print axioms QLF.SharedEvent.pair_domain_reconstructs_record
+#print axioms QLF.SharedEvent.shared_event_not_from_bodies
+#print axioms QLF.SharedEvent.both_close_on_each_body
+#print axioms QLF.SharedEvent.pairing_not_reconstructible
+#print axioms QLF.SharedEvent.pairing_not_from_records
+#print axioms QLF.SharedEvent.relay_agree_on_events
+#print axioms QLF.ClassFactoring.fold_eq_classBit
+#print axioms QLF.ClassFactoring.class_function_factors
+#print axioms QLF.ClassFactoring.classBit_separates
+#print axioms QLF.ClassFactoring.circulation_invisible
+#print axioms QLF.SphereCount.sphere3_card
+#print axioms QLF.SphereCount.sphere3_card_zero
+#print axioms QLF.SphereCount.circle_card
+#print axioms QLF.SphereCount.sphere3_card_stack
+#print axioms QLF.HolographicCompletion.singlet_reduced
+#print axioms QLF.HolographicCompletion.entropy_half_half
+#print axioms QLF.HolographicCompletion.entropy_product
+#print axioms QLF.HolographicCompletion.half_id_kronecker
+#print axioms QLF.HolographicCompletion.entropy_uniform_pow
+#print axioms QLF.HolographicCompletion.cutEntropy_eq_vonNeumann
+#print axioms QLF.HolographicCompletion.insertion_detected
+#print axioms QLF.HolographicCompletion.deletion_detected
+#print axioms QLF.HolographicCompletion.substitution_detected
+#print axioms QLF.HolographicCompletion.conjugate_pair_undetected
+#print axioms QLF.HolographicCompletion.single_error_not_correctable
+#print axioms QLF.SpatialResponseDerived.joint_step_identity
+#print axioms QLF.SpatialResponseDerived.symmetric_mean
+#print axioms QLF.SpatialResponseDerived.unit_symmetric_mean
+#print axioms QLF.SpatialResponseDerived.orthogonal_brings_closer
+#print axioms QLF.SpatialResponseDerived.opposite_pushes_apart
+#print axioms QLF.ConformalComparison.count_dilate
+#print axioms QLF.ConformalComparison.dilate_balanced
+#print axioms QLF.ConformalComparison.fold_dilate_odd
+#print axioms QLF.ConformalComparison.fold_dilate_even
+#print axioms QLF.ConformalComparison.local_dilation_breaks_balance
+#print axioms QLF.DiversityNovelOutcome.self_compose_balanced_iff
+#print axioms QLF.DiversityNovelOutcome.self_composition_type_one
+#print axioms QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure
+#print axioms QLF.DiversityNovelOutcome.minimal_complementary_pair
+#print axioms QLF.GluonAbelianControl.first_singlet_move_reduces
+#print axioms QLF.GluonAbelianControl.create_total
+#print axioms QLF.GluonAbelianControl.glue_total
+#print axioms QLF.GluonAbelianControl.create_closes_iff
+#print axioms QLF.GluonAbelianControl.glue_closes_iff
+#print axioms QLF.GluonAbelianControl.same_label_blocked_gated
+#print axioms QLF.GluonAbelianControl.same_label_closes_ungated
+#print axioms QLF.GluonAbelianControl.gate_lengthens_witness
+#print axioms QLF.LeptonStageB.rung_length
+#print axioms QLF.LeptonStageB.rung_balanced
+#print axioms QLF.LeptonStageB.rung_first_return
+#print axioms QLF.LeptonStageB.rung_phase
+#print axioms QLF.LeptonStageB.rung_fold
+#print axioms QLF.ClockCalibration.age_ratio_calibration_free
+#print axioms QLF.ClockCalibration.age_rate_product_calibration_free
+#print axioms QLF.ClockCalibration.one_scale_fits_two_ages_iff
+#print axioms QLF.ConsciousUpdateRule.independent_count
+#print axioms QLF.ConsciousUpdateRule.independent_mode
+#print axioms QLF.ConsciousUpdateRule.reset_threshold
+#print axioms QLF.ConsciousUpdateRule.reset_percept_below
+#print axioms QLF.LinkClosure.closed_history_gauge_invariant
+#print axioms QLF.CensusActionLimit.censusCost_sandwich
+#print axioms QLF.CensusActionLimit.censusCost_gaussian_limit
+#print axioms QLF.CensusActionLimit.censusCost_variation_limit
+#print axioms QLF.CensusActionLimit.censusCost_curvature_limit
 #print axioms QLF.StationaryPhase.signed_stationary_phase
 #print axioms QLF.StationaryPhase.ways_mode_at_balance
 
@@ -730,6 +897,41 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.InteractingKinematics.twoBody_lattice_conservation
 #print axioms QLF.InteractingKinematics.scattering_latticeConserving
 
+-- Stage 4a: the frame-comparison map's algebra; amplitude covariance is numerical only.
+#print axioms QLF.BoostStates.chiral_mul
+#print axioms QLF.BoostStates.chiral_one
+#print axioms QLF.BoostStates.handed_eq_chiral
+#print axioms QLF.BoostStates.beta_chiral_beta
+#print axioms QLF.BoostStates.chiralAct_one
+#print axioms QLF.BoostStates.chiralAct_mul
+#print axioms QLF.BoostStates.inv_neg_two
+#print axioms QLF.BoostStates.chiralAct_neg
+#print axioms QLF.BoostStates.chiralAct_chirality
+#print axioms QLF.BoostStates.chiralAct_of_unitary
+#print axioms QLF.BoostStates.massStep_add
+#print axioms QLF.BoostStates.halfWalk_eq_conj
+#print axioms QLF.BoostStates.halfWalk_unitary
+#print axioms QLF.BoostStates.halfWalk_dispersion
+#print axioms QLF.BoostStates.dirac_boostZ_covariant
+#print axioms QLF.BoostAmplitudes.chiral_conjTranspose
+#print axioms QLF.BoostAmplitudes.beta_mul_chiral
+#print axioms QLF.BoostAmplitudes.scalar_bilinear_invariant
+#print axioms QLF.BoostAmplitudes.scalar_vertex_invariant
+#print axioms QLF.BoostAmplitudes.chiralAct_boostZ
+#print axioms QLF.BoostAmplitudes.blind_density_entry
+#print axioms QLF.BoostAmplitudes.blind_density_not_invariant
+#print axioms QLF.BoostAmplitudes.blind_vertex_not_invariant
+#print axioms QLF.SpinorContact.spinorStep_of_scalar
+#print axioms QLF.SpinorContact.spinorStep_translation_commute
+#print axioms QLF.SpinorContact.spinorStep_conserves_momentum
+#print axioms QLF.SpinorContact.spinorStep_lattice_conservation
+#print axioms QLF.SpinorContact.scalarCoin_unitary
+#print axioms QLF.SpinorContact.scalarContact_unitary
+#print axioms QLF.HalfStepReversal.handed_neg
+#print axioms QLF.HalfStepReversal.massStep_neg
+#print axioms QLF.HalfStepReversal.halfWalk_reversal
+#print axioms QLF.HalfStepReversal.halfWalk_reversal_inv
+
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self
 #print axioms QLF.ClockRedshift.ratio_pos
@@ -825,3 +1027,392 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.ReadoutCriterion.readout_tendsto_iff
 #print axioms QLF.ReadoutCriterion.readout_summable_iff
 #print axioms QLF.ReadoutCriterion.amplitude_exists_iff
+
+-- Closure uncertainty U1, D3T phase/axis clauses, co-incidence CO0: no QLF axiom.
+#print axioms QLF.ClosureUncertainty.completions_sublist_of_context
+#print axioms QLF.ClosureUncertainty.WIn_mono
+#print axioms QLF.DiversityPhase.twistMatrixFold_append
+#print axioms QLF.DiversityPhase.prefix_fold_determines_phase
+#print axioms QLF.DiversityPhase.stream_folds_miss_interleaving
+#print axioms QLF.DiversityPhase.axis_match_of_countBalanced_append
+#print axioms QLF.CoincidenceTrivial.co0_trivial_split
+
+-- Assembly index, flat sector, stage 1 (#264): no QLF axiom.
+#print axioms QLF.AssemblyIndex.assemblyIndex_le_length_sub_one
+#print axioms QLF.AssemblyIndex.reuse_saves_a_join
+#print axioms QLF.AssemblyIndex.assemblyIndex_le_closed
+#print axioms QLF.AssemblyIndex.assemblyIndexClosed_le_length_sub_one
+#print axioms QLF.AssemblyIndex.libIndex_mono
+#print axioms QLF.AssemblyIndex.libIndex_of_mem
+#print axioms QLF.AssemblyIndex.strict_gap_up4
+#print axioms QLF.AssemblyIndex.assemblyIndex_lt_closed_up4
+#print axioms QLF.AssemblyIndex.upPotential_le
+
+-- Double slit in time (Double_Slit.md §6): no QLF axiom.
+#print axioms QLF.TimeDoubleSlit.normSq_expI
+#print axioms QLF.TimeDoubleSlit.time_is_twoPath
+#print axioms QLF.TimeDoubleSlit.space_is_twoPath
+#print axioms QLF.TimeDoubleSlit.space_time_duality
+#print axioms QLF.TimeDoubleSlit.twoPath_eq_born
+#print axioms QLF.TimeDoubleSlit.twoPath_fringe_term
+#print axioms QLF.TimeDoubleSlit.twoPath_expand
+#print axioms QLF.TimeDoubleSlit.twoPath_periodic
+#print axioms QLF.TimeDoubleSlit.time_fringe_period
+#print axioms QLF.TimeDoubleSlit.twoPath_equal
+#print axioms QLF.TimeDoubleSlit.time_dark_fringe
+#print axioms QLF.TimeDoubleSlit.time_bright_fringe
+#print axioms QLF.TimeDoubleSlit.single_time_slit_flat
+#print axioms QLF.TimeDoubleSlit.time_shift_iff
+#print axioms QLF.TimeDoubleSlit.space_shift_iff
+#print axioms QLF.TimeDoubleSlit.time_reciprocity
+#print axioms QLF.TimeDoubleSlit.space_reciprocity
+#print axioms QLF.TimeDoubleSlit.interval_null
+#print axioms QLF.TimeDoubleSlit.interval_eq_zero_iff
+#print axioms QLF.TimeDoubleSlit.light_cone_duality
+#print axioms QLF.TimeDoubleSlit.off_cone_distinguishable
+#print axioms QLF.TimeDoubleSlit.reversed_amp
+#print axioms QLF.TimeDoubleSlit.time_reversed_perspective
+#print axioms QLF.TimeDoubleSlit.relPhase_global
+#print axioms QLF.TimeDoubleSlit.relPhase_reversed
+#print axioms QLF.TimeDoubleSlit.reversed_relPhase_differs
+#print axioms QLF.TimeDoubleSlit.reverse_is_negative_frequency
+#print axioms QLF.TimeDoubleSlit.marked_coherent
+#print axioms QLF.TimeDoubleSlit.marked_expand
+#print axioms QLF.TimeDoubleSlit.marked_orthogonal
+#print axioms QLF.TimeDoubleSlit.marked_visibility_bound
+#print axioms QLF.TimeDoubleSlit.tick_amp_phase
+#print axioms QLF.TimeDoubleSlit.tick_conservation
+#print axioms QLF.TimeDoubleSlit.mu4_pattern
+
+-- Locality (issue #315): tick reading, shared closure across spacelike endpoints,
+-- perspective locality, no-signalling and the Bell audit. No QLF axiom.
+#print axioms QLF.LocalityDefinitions.tick_causal
+#print axioms QLF.LocalityDefinitions.closure_timelike
+#print axioms QLF.LocalityDefinitions.straight_run_null
+#print axioms QLF.LocalityDefinitions.null_not_closed
+#print axioms QLF.LocalityDefinitions.tick_reading_nondegenerate
+#print axioms QLF.LocalityDefinitions.zero_displacement_degenerate
+#print axioms QLF.LocalityDefinitions.pair_shared_closure
+#print axioms QLF.LocalityDefinitions.pair_endpoints_spacelike
+#print axioms QLF.LocalityDefinitions.no_history_connects
+#print axioms QLF.LocalityDefinitions.null_legs_from_one_event
+#print axioms QLF.LocalityDefinitions.reachable_causal
+#print axioms QLF.LocalityDefinitions.causal_not_reachable
+#print axioms QLF.LocalityDefinitions.prefixSpacelike_not_spacelike
+#print axioms QLF.LocalityDefinitions.shared_closure_vs_reachable
+#print axioms QLF.LocalityDefinitions.null_lorentz_invariant
+#print axioms QLF.LocalityDefinitions.census_postselection_signals
+#print axioms QLF.PerspectiveLocality.jointFold_factorizes
+#print axioms QLF.PerspectiveLocality.fold_unitary
+#print axioms QLF.PerspectiveLocality.local_expectation_local
+#print axioms QLF.PerspectiveLocality.perspective_locality
+#print axioms QLF.PerspectiveLocality.perspective_locality_nontrivial
+#print axioms QLF.PerspectiveLocality.no_signalling
+#print axioms QLF.PerspectiveLocality.singlet_outcome_dependent
+#print axioms QLF.PerspectiveLocality.locality_profile
+#print axioms QLF.PerspectiveLocality.probT_nonneg
+#print axioms QLF.PerspectiveLocality.probT_sum
+#print axioms QLF.PerspectiveLocality.no_signalling_typed
+#print axioms QLF.PerspectiveLocality.chsh_factorizable_le
+#print axioms QLF.PerspectiveLocality.no_factorizable_model
+
+-- QLF_TimeReversalPerspective: the time-reversed universe exists by perspective
+#print axioms QLF.TimeReversalPerspective.timeReverse_interval
+#print axioms QLF.TimeReversalPerspective.boost_interval
+#print axioms QLF.TimeReversalPerspective.split_by_perspective
+#print axioms QLF.TimeReversalPerspective.spacelike_order_by_perspective
+#print axioms QLF.TimeReversalPerspective.timelike_order_invariant
+#print axioms QLF.TimeReversalPerspective.null_order_invariant
+#print axioms QLF.TimeReversalPerspective.boost_null_iff
+#print axioms QLF.TimeReversalPerspective.timeReverse_null_iff
+#print axioms QLF.TimeReversalPerspective.timeReverse_not_a_boost
+#print axioms QLF.TimeReversalPerspective.no_congruence_reverses_time
+#print axioms QLF.TimeReversalPerspective.reverse_closure_iff
+#print axioms QLF.TimeReversalPerspective.dagger_closure_iff
+#print axioms QLF.TimeReversalPerspective.J_admissible_iff
+#print axioms QLF.TimeReversalPerspective.reversed_census_is_census
+#print axioms QLF.TimeReversalPerspective.self_reversed_exists
+#print axioms QLF.TimeReversalPerspective.reversed_reading_distinct
+#print axioms QLF.TimeReversalPerspective.handednessOn_reverse
+#print axioms QLF.TimeReversalPerspective.handednessOn_dagger
+#print axioms QLF.TimeReversalPerspective.reversed_tick_opposite_handedness
+#print axioms QLF.TimeReversalPerspective.closure_totals_blind
+#print axioms QLF.TimeReversalPerspective.reversal_vs_dagger_differ
+#print axioms QLF.TimeReversalPerspective.readingBy_involutive
+#print axioms QLF.TimeReversalPerspective.readingBy_false
+#print axioms QLF.TimeReversalPerspective.readingBy_true
+#print axioms QLF.TimeReversalPerspective.handednessOn_readingBy
+#print axioms QLF.TimeReversalPerspective.readingBy_closure_iff
+#print axioms QLF.TimeReversalPerspective.every_reading_is_the_census
+#print axioms QLF.TimeReversalPerspective.sixteen_reversed_readings
+#print axioms QLF.TimeReversalPerspective.selection_identifiable
+#print axioms QLF.TimeReversalPerspective.reading_has_unique_history
+#print axioms QLF.TimeReversalPerspective.readingBy_eq_of_agree
+#print axioms QLF.TimeReversalPerspective.selectors_coincide_on_empty
+#print axioms QLF.TimeReversalPerspective.joint_recovery_fails
+#print axioms QLF.ControlledUnitary.su2_euler
+#print axioms QLF.ControlledUnitary.abc_decomposition
+#print axioms QLF.ControlledUnitary.unitary_eq_phase_smul_su2
+#print axioms QLF.ControlledUnitary.controlled_eq_abc
+#print axioms QLF.ControlledUnitary.controlled_unitary_eq
+#print axioms QLF.ControlledUnitary.su2_three_commutators
+#print axioms QLF.TwoLevelUnitary.givens_exists
+#print axioms QLF.TwoLevelUnitary.clear_column
+#print axioms QLF.TwoLevelUnitary.row_of_column
+#print axioms QLF.TwoLevelUnitary.supported_mem_closure
+#print axioms QLF.TwoLevelUnitary.unitary_mem_closure_twoLevel
+#print axioms QLF.TwoLevelUnitary.unitary_eq_prod_twoLevel
+#print axioms QLF.Barenco.lift_mul
+#print axioms QLF.Barenco.onQubit_apply
+#print axioms QLF.Barenco.cnot_apply
+#print axioms QLF.Barenco.ctrl_comm
+#print axioms QLF.Barenco.ctrl_single_su2
+#print axioms QLF.Barenco.ctrl_phase_switch
+#print axioms QLF.Barenco.ctrl_mem
+#print axioms QLF.Barenco.flip_isPerm
+#print axioms QLF.Barenco.cnot_isPerm
+#print axioms QLF.Barenco.pair_allOnes_mem
+#print axioms QLF.Barenco.pair_mem
+#print axioms QLF.Barenco.pair_cnot_mem
+#print axioms QLF.Barenco.twoLevel_mem_circuits
+#print axioms QLF.Barenco.universality
+#print axioms QLF.Barenco.universality_list
+#print axioms QLF.Barenco.circuits_eq_unitary
+#print axioms QLF.Barenco.cnot_eq_h_cz_h
+#print axioms QLF.Barenco.cz_eq_diagonal
+#print axioms QLF.Barenco.cz_symm
+#print axioms QLF.Barenco.eq_diagonal_of_signs
+#print axioms QLF.Barenco.eq_cz_of_sign_table
+#print axioms QLF.Barenco.universality_cz
+#print axioms QLF.Barenco.onQubit_mul_apply
+#print axioms QLF.Barenco.onQubit_comm
+#print axioms QLF.BlackHoleInfall.freefall_proper_time
+#print axioms QLF.BlackHoleInfall.static_exists_iff
+#print axioms QLF.BlackHoleInfall.fall_time_finite
+#print axioms QLF.BlackHoleInfall.infaller_horizon_lt_position
+#print axioms QLF.BlackHoleInfall.infaller_horizon_strictMono
+#print axioms QLF.BlackHoleInfall.infaller_horizon_tendsto_zero
+#print axioms QLF.BlackHoleInfall.infaller_horizon_tendsto_rs
+#print axioms QLF.BlackHoleInfall.tidal_at_horizon_tendsto_zero
+#print axioms QLF.BlackHoleInfall.horizonOmega_le
+#print axioms QLF.BlackHoleInfall.horizonOmega_tendsto_zero
+#print axioms QLF.BlackHoleInfall.kerr_two_horizons
+#print axioms QLF.BlackHoleInfall.evaporated_iff
+#print axioms QLF.BlackHoleInfall.last_half_eighth
+#print axioms QLF.RelativisticRocket.properVelocity_eq_one_iff
+#print axioms QLF.RelativisticRocket.earthTime_at_light
+#print axioms QLF.RelativisticRocket.coordSpeed_at_light
+#print axioms QLF.RelativisticRocket.earthDist_shipTime_to_reach
+#print axioms QLF.RelativisticRocket.shipTime_to_reach_le
+#print axioms QLF.RelativisticRocket.earth_signal_reaches_iff
+#print axioms QLF.RelativisticRocket.emitTime_hasDerivAt
+#print axioms QLF.RelativisticRocket.redshift_limit_iff
+#print axioms QLF.BlackHoleInfall.escape_possible_iff_radius
+#print axioms QLF.BlackHoleInfall.inside_all_inward
+#print axioms QLF.BlackHoleInfall.thrust_works
+#print axioms QLF.BlackHoleInfall.own_horizon_below
+#print axioms QLF.BlackHoleInfall.interiorStretch_half
+#print axioms QLF.BlackHoleInfall.interiorVolumeRate_sq_le
+#print axioms QLF.BlackHoleInfall.interiorVolumeRate_sq_max
+#print axioms QLF.RelativisticRocket.arrivalTime_hasDerivAt
+#print axioms QLF.RelativisticRocket.mutual_redshift
+#print axioms QLF.RelativisticRocket.inertial_redshift_horizon
+
+/-! ## Closure depth as intrinsic logical time (`QLF_ClosureDepthTime`) -/
+
+#print axioms QLF.ClosureDepthTime.firstPassageAt_iff_maxExcursion
+#print axioms QLF.ClosureDepthTime.no_first_passage_gauge
+#print axioms QLF.ClosureDepthTime.same_census_different_latency
+#print axioms QLF.ClosureDepthTime.census_cannot_determine_first_passage
+#print axioms QLF.ClosureDepthTime.latency_spectrum_exact
+#print axioms QLF.ClosureDepthTime.least_capacity_iff_firstPassageAt
+#print axioms QLF.ClosureDepthTime.closes_iff_latency_fits
+#print axioms QLF.ClosureDepthTime.listening_countdown
+#print axioms QLF.ClosureDepthTime.closure_event_atomic
+#print axioms QLF.ClosureDepthTime.balanced_yet_deep
+
+-- Issue #11 Planck-dispersion prediction and RC0 (Planck_Dispersion_Prediction.md)
+#print axioms QLF.WalkDispersionBound.walk_axis_exact
+#print axioms QLF.WalkDispersionBound.walk_face_subluminal
+#print axioms QLF.WalkDispersionBound.walk_body_subluminal
+#print axioms QLF.WalkDispersionBound.walk_body_deficit_bounded
+#print axioms QLF.WalkDispersionBound.diracWalk_body_bracket
+#print axioms QLF.WalkDispersionBound.diracWalk_axis_exact
+#print axioms QLF.RelationalClock.same_records
+#print axioms QLF.RelationalClock.different_clocks
+#print axioms QLF.RelationalClock.rc0_record_does_not_determine_clock
+#print axioms QLF.RelationalClock.shuffle_reconstructs
+#print axioms QLF.RelationalClock.record_swap
+#print axioms QLF.RelationalClock.nested_commutes_to_adjacent
+#print axioms QLF.RelationalClock.reconcile_record
+#print axioms QLF.RelationalClock.reconcile_nested
+#print axioms QLF.RelationalClock.reconcile_lowers_depth
+#print axioms QLF.WalkDispersionBound.one_axis_le_some_axis
+#print axioms QLF.WalkDispersionBound.walk_group_velocity_le_one
+#print axioms QLF.RelationalClock.reconcile_not_always_minimal
+#print axioms QLF.RelationalClock.relCapacity_example
+#print axioms QLF.RelationalClock.dependency_increases_capacity
+#print axioms QLF.RelationalClock.dependency_strict_increase
+/-! ## Neutrino and vacuum correlation gates N0, V0, V1, H1 (`QLF_VacuumCorrelation`) -/
+
+#print axioms QLF.VacuumCorrelation.fold_eq_nfFold
+#print axioms QLF.VacuumCorrelation.neutrino_vacuum_same_reading
+#print axioms QLF.VacuumCorrelation.nu_reading_order_blind
+#print axioms QLF.VacuumCorrelation.neutrino_block_fold_blind
+#print axioms QLF.VacuumCorrelation.common_mode_cancels
+#print axioms QLF.VacuumCorrelation.one_branch_closure_shifts_phase
+#print axioms QLF.VacuumCorrelation.same_inventory_opposite_phase
+#print axioms QLF.VacuumCorrelation.interleaved_prime
+#print axioms QLF.VacuumCorrelation.interleaving_flips_phase
+#print axioms QLF.VacuumCorrelation.length_two_closures
+#print axioms QLF.VacuumCorrelation.two_axis_classification
+#print axioms QLF.VacuumCorrelation.gauge_pair_never_negI
+#print axioms QLF.VacuumCorrelation.electron_class
+#print axioms QLF.VacuumCorrelation.electron_in_class
+
+-- Cooperative closure gates CC0, CC3, CC2/CC6: no QLF axiom.
+#print axioms QLF.CooperativeClosure.consensus_fallacy
+#print axioms QLF.CooperativeClosure.unobserved_consensus_world_free
+#print axioms QLF.CooperativeClosure.observed_consensus_sound
+#print axioms QLF.CooperativeClosure.support_replicate_le
+#print axioms QLF.CooperativeClosure.copy_adds_no_support
+#print axioms QLF.CooperativeClosure.separate_not_independent
+#print axioms QLF.CooperativeClosure.parity_resolves_iff
+#print axioms QLF.CooperativeClosure.parity_coalition_blind
+#print axioms QLF.CooperativeClosure.parity_irreducible
+#print axioms QLF.CooperativeClosure.xor_synthesis
+#print axioms QLF.CooperativeClosure.dictator_not_irreducible
+#print axioms QLF.CooperativeClosure.coalitionResolves_iff
+#print axioms QLF.CooperativeClosure.echo_chamber_blind
+#print axioms QLF.CooperativeClosure.irrelevant_member
+#print axioms QLF.CooperativeClosure.missing_variable
+#print axioms QLF.CooperativeClosure.star_closes
+#print axioms QLF.CooperativeClosure.star_irreducible
+#print axioms QLF.CooperativeClosure.star_one_is_primordial
+
+-- Native Bell state on one presence qubit and the model-testing interface (Framing.md O1, O3)
+#print axioms QLF.NativeBell.jointSign_eq
+#print axioms QLF.NativeBell.native_bell
+#print axioms QLF.NativeBell.native_bell_not_product
+#print axioms QLF.NativeBell.native_bell_x_correlated
+#print axioms QLF.NativeBell.nativeCZ_eq_cz
+#print axioms QLF.NativeBell.nativeHA_eq
+#print axioms QLF.NativeBell.nativeHB_eq
+#print axioms QLF.NativeBell.native_bell_matches_circuit
+#print axioms QLF.NativeBell.censusRatio_eq_z
+#print axioms QLF.NativeBell.nativePA_eq
+#print axioms QLF.NativeBell.nativePhase_infinite_order
+#print axioms QLF.NativeBell.phaseZ_even_power
+#print axioms QLF.ModelTesting.possible_iff_not_impossible
+#print axioms QLF.ModelTesting.vacuous_of_cannot_fail
+#print axioms QLF.ModelTesting.pairEncoding_cannot_fail
+#print axioms QLF.ModelTesting.identity_can_fail
+#print axioms QLF.UniformMeasure.uniform_forced
+#print axioms QLF.UniformMeasure.symm_of_perm_invariant
+#print axioms QLF.UniformMeasure.word_weight_uniform
+#print axioms QLF.ModelTesting.equivalent_same_verdicts
+#print axioms QLF.noncommuting_iff_eight
+#print axioms QLF.JointClosure.singlet_chsh
+#print axioms QLF.LogicalPersistence.histories_are_a_model
+#print axioms QLF.LogicalPersistence.loopWorld_has_time_loop
+#print axioms QLF.MultiObserver.observers_agree
+#print axioms QLF.NoFreeDuplication.identical_copy_pauli_blocked
+#print axioms QLF.NoFreeDuplication.duplication_pays_log_two
+#print axioms QLF.QuantumComputer.fredkin_complete
+#print axioms QLF.QuantumComputer.substrate_computes
+#print axioms QLF.QuantumComputer.twist_folds_finite
+#print axioms QLF.QuantumComputer.rotation_powers_injective
+#print axioms QLF.QuantumComputer.quantum_power_needs_weighted_ways
+#print axioms QLF.QuantumComputer.completion_perm_closes
+#print axioms QLF.QuantumComputer.closing_cost_exact
+#print axioms QLF.QuantumComputer.joint_closure_is_cz
+#print axioms QLF.QuantumComputer.cz_entangling
+#print axioms QLF.QuantumComputer.no_choice_fixed_in_advance
+#print axioms QLF.QuantumComputer.no_computable_superdeterministic_theory
+#print axioms QLF.QuantumComputer.su2_dense
+#print axioms QLF.PauliFrame.trace_zero_of_anti
+#print axioms QLF.PauliFrame.coeffs_zero
+#print axioms QLF.PauliFrame.span_frame
+#print axioms QLF.PauliFrame.third_axis
+#print axioms QLF.PauliFrame.frame_product
+#print axioms QLF.PauliFrame.no_fourth_axis
+#print axioms QLF.PauliFrame.pauli_is_a_frame
+#print axioms QLF.PauliFrame.gauge_commutes
+#print axioms QLF.NativeUniversality.censusRatioMirror_eq_zbar
+#print axioms QLF.NativeUniversality.D_zpow_native
+#print axioms QLF.NativeUniversality.native_one_dense
+#print axioms QLF.NativeUniversality.nativeBranch_eq
+#print axioms QLF.NativeUniversality.nativeJoint_eq
+#print axioms QLF.NativeUniversality.nativePhase_eq
+#print axioms QLF.NativeUniversality.nativeMirror_eq
+#print axioms QLF.NativeUniversality.cnot_native
+#print axioms QLF.NativeUniversality.native_universal
+#print axioms QLF.AnthropicEquivalence.decode_recordWord
+#print axioms QLF.AnthropicEquivalence.anthropic_equivalence
+#print axioms QLF.AnthropicEquivalence.encodeModel_canFail_iff
+#print axioms QLF.AnthropicEquivalence.verdicts_transfer
+#print axioms QLF.AnthropicEquivalence.frequencies_transfer
+#print axioms QLF.AnthropicEquivalence.same_observations_equivalent
+#print axioms QLF.AnthropicEquivalence.conservation_equivalence
+#print axioms QLF.ClosureSelection.balanced_iff_charge_zero
+#print axioms QLF.ClosureSelection.mem_reachable
+#print axioms QLF.ClosureSelection.selection_closes_iff
+#print axioms QLF.ClosureSelection.closable_iff
+#print axioms QLF.ClosureSelection.reachable_card_le
+#print axioms QLF.ClosureSelection.subset_sum_embeds
+
+-- Analogical listener, gate CC1: no QLF axiom.
+#print axioms QLF.AnalogicalListener.extend_le
+#print axioms QLF.AnalogicalListener.extend_keeps
+#print axioms QLF.AnalogicalListener.closed_preserves
+#print axioms QLF.AnalogicalListener.consistent_extend_iff
+#print axioms QLF.AnalogicalListener.not_consistent_iff
+#print axioms QLF.AnalogicalListener.open_not_closed
+#print axioms QLF.AnalogicalListener.closed_has_no_obligation
+#print axioms QLF.AnalogicalListener.inconsistent_persists
+#print axioms QLF.AnalogicalListener.inconsistent_rejected
+#print axioms QLF.AnalogicalListener.rutherford_closes
+#print axioms QLF.AnalogicalListener.wrong_completion_rejected
+#print axioms QLF.AnalogicalListener.similarity_not_correspondence
+#print axioms QLF.AnalogicalListener.extend_mapped_noop
+#print axioms QLF.AnalogicalListener.consistent_not_extendable
+#print axioms QLF.AnalogicalListener.other_branch_closes
+
+-- Cooperative closure gates CC4, CC7, CC9 and competing listeners: no QLF axiom.
+#print axioms QLF.CooperativeBridge.encode_closes_iff_met
+#print axioms QLF.CooperativeBridge.met_pauli_closed
+#print axioms QLF.CooperativeBridge.encode_append
+#print axioms QLF.CooperativeBridge.any_verdict_encodes
+#print axioms QLF.CooperativeBridge.no_act_encoding_sees_order
+#print axioms QLF.CooperativeBridge.order_blind
+#print axioms QLF.CooperativeBridge.surplus_offer_not_met
+#print axioms QLF.CooperativeBridge.final_verdict_schedule_invariant
+#print axioms QLF.CooperativeBridge.first_closure_schedule_dependent
+#print axioms QLF.CooperativeBridge.no_schedule_free_first_closure
+#print axioms QLF.CooperativeBridge.isFirst_append
+#print axioms QLF.CooperativeBridge.race_schedule_dependent
+#print axioms QLF.CooperativeBridge.whole_met_listener_met
+#print axioms QLF.CooperativeBridge.listeners_cover_met
+#print axioms QLF.CooperativeBridge.partial_listener_views
+#print axioms QLF.CooperativeBridge.vacuous_listener_never_closes
+#print axioms QLF.CooperativeBridge.verifiers_agree
+#print axioms QLF.CooperativeBridge.verify_sound
+#print axioms QLF.CooperativeBridge.verify_true_pauli
+#print axioms QLF.CooperativeBridge.verdict_certificate_is_the_bit
+
+-- Cooperative closure gates CC5 and CC8: no QLF axiom.
+#print axioms QLF.CooperativeLimits.kl_delta_prior
+#print axioms QLF.CooperativeLimits.kl_delta_zero_uniform
+#print axioms QLF.CooperativeLimits.quantum_matches_iff_uniform
+#print axioms QLF.CooperativeLimits.partial_belief_below_quantum
+#print axioms QLF.CooperativeLimits.vfe_not_constant
+#print axioms QLF.CooperativeLimits.kl_uniform_uniform
+#print axioms QLF.CooperativeLimits.vfe_resolution_signed
+#print axioms QLF.CooperativeLimits.no_constant_identity
+#print axioms QLF.CooperativeLimits.hierarchical_parity
+#print axioms QLF.CooperativeLimits.reports_irreducible
+#print axioms QLF.CooperativeLimits.block_irreducible
+#print axioms QLF.CooperativeLimits.missing_leaf_blind
+#print axioms QLF.CooperativeLimits.budget_failure_undetermined
+#print axioms QLF.CooperativeLimits.pooled_capacity
+#print axioms QLF.CooperativeLimits.group_of_listeners_misses

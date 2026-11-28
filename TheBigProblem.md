@@ -14,9 +14,9 @@ Each half-spin closure reduces the space of possible futures by half. That halvi
 
 ## Entanglement and Spooky Action
 
-The Quantum Logical Framework treats entanglement as emerging from shared logical constraints rather than action at a distance. As explained in **entanglement.md**, these correlations arise naturally from the relational structure at the moment of creation.
+The Quantum Logical Framework treats entanglement as emerging from shared logical constraints rather than action at a distance. As explained in **entanglement.md**, these correlations arise naturally from the relational structure at the moment of creation. Einstein's rejection of action at a distance is vindicated operationally: in QLF's two-body operator representation, nothing done to one half changes the other's statistics ([Locality.md](Locality.md) §2).
 
-At the speed of light, both time and space shrink to zero. In the eight-fold gauge structure, this means there are no folds in other directions — the logical bit travels along a single, straight logical path. This is covered in **SpaceTime.md** and **Gauge.md**. Because there are no lateral folds to cross, all quantum events remain purely local.
+At the speed of light, both time and space shrink to zero. In the eight-fold gauge structure, this means there are no folds in other directions — the logical bit travels along a single, straight logical path. This is covered in **SpaceTime.md** and **Gauge.md**. QLF's proposed reading is that, because there are no lateral folds to cross, all quantum events remain purely local. What is proved is narrower: operational no-signalling in the operator representation ([Locality.md](Locality.md) §2). Causal locality at the substrate level is open.
 
 ## Quantum Gravity and Spacetime
 
