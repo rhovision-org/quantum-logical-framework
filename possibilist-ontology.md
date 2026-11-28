@@ -2,9 +2,11 @@
 
 **Document Status**: Core philosophical foundation for the QLF repository  
 **File**: `possibilist-ontology.md` at the repository root (companion: [`zfa-catalog-rho-notation.md`](zfa-catalog-rho-notation.md); the `/docs/` layout and `performance-comparison.md` proposed in v0.1 were never created)  
-**Version**: 0.1  
+**Version**: 0.2
 **Author**: Jim Whitescarver, Grok – directly extends the RhoQuCalc ZFA catalog, QuCalc engine, and constructive logic already in `qucalc_engine.py`, `hermitian.py`, and `path_integral.py`  
 **Repo reference**: https://github.com/rhovision-org/quantum-logical-framework (explicitly described as “constructive possibilist quantum logical synthesis”)
+
+**Status and scope (2026-11-28).** This is an **ontological reading and method**, not a theorem and not a second law. Its formal content is A02: A01 is the only filter, so denying an admissible synthesis a mode of existence would require an additional selector that QLF does not have. The reading does **not** claim that every admissible synthesis is manifest to every perspective. Existence as a way, accessibility through a record, manifestation as closure, and persistence/dominance are four different grades ([`Entropy.md`](Entropy.md) §0a, [`Principles.md`](Principles.md) A02). The comparisons and consequences below are readings unless they carry a Lean anchor.
 
 ## 1. What Is Possibilist Ontology?
 

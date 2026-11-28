@@ -36,6 +36,11 @@ every conceivable law and every conceivable distribution over histories, which b
 physical content only when it changes a count of ways. Unpacked, it says *restrictive laws are
 restrictive*.
 
+Possibilism (A02) supplies existence as a way, not manifestation in a finite perspective: there is no
+second selector forbidding an admissible synthesis, but accessibility still depends on capacity,
+closure and persistence ([`Entropy.md`](Entropy.md) §0a). That is why the load-bearing notion below is
+**capacity**, not permission.
+
 The universal premise has to be earned somewhere else.
 
 ---

@@ -96,7 +96,7 @@ withdrawn, results resting on it would become conditional, and they say so.
 | ID | Was | Now |
 |---|---|---|
 | A01 | ZFA selection | **The one well-supported conjecture** |
-| A02 | Possibilism | Its formal content is the absence of any second filter: nothing but ZFA restricts which histories count as ways. That the unclosed ways are *real* is a reading |
+| A02 | Possibilism | Its formal content is the absence of any second selector: nothing but ZFA restricts which histories count as ways, and denying an admissible synthesis would require an additional filter. That the unclosed ways are *real* is a reading. Possibility is not yet manifestation; accessibility, closure and persistence remain the further task ([`Entropy.md`](Entropy.md) §0a) |
 | A03 | Only logic is assumed | The method; ZFA is that logical assumption (every distinction has its opposite) |
 | A04 | Finite realizability | Derived (`no_continuum_in_finite_region`) from the known fact A12 |
 | A05 | Information primacy | Reading |
