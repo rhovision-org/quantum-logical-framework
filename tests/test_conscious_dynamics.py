@@ -97,7 +97,12 @@ class ConsciousDynamicsTests(unittest.TestCase):
         self.assertIn("loop", summary)
         self.assertIn("retrospective", summary)
         self.assertIn("memory", summary)
+        self.assertIn("magical_powers", summary)
+        self.assertIn("relative_world_database", summary["magical_powers"])
+        self.assertIn("active_inference_synthesis", summary["magical_powers"])
+        self.assertIn("strange_loop_reflection", summary["magical_powers"])
         self.assertEqual(summary["gates"]["D7_qualia"], "bracketed; no theorem")
+        self.assertIn("D3_bounded_trace", summary["gates"])
         self.assertIn("D8_affective_recollection", summary["gates"])
         self.assertIn("D9_frequency_priority_separation", summary["gates"])
 

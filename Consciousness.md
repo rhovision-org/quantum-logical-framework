@@ -104,7 +104,11 @@ takes time and the closure event is atomic. The shared semantics are stated once
 the next expression is the first eligible trigger `argmin d_i^(B)`, not the highest recurrence
 frequency. Promotion is restricted to eligible self-relevant integrated closures; the winner updates
 the listener (`B_{t+1} = U(B_t, i_next)`), and attention/quieting changes the race rather than adding
-contestants. The model is finite and functional; qualia remain bracketed (D7).
+contestants. The model is finite and functional; qualia remain bracketed (D7). It also declares the
+three capacities Jim calls the "magical powers" — a bounded database of possible worlds relative to
+the listener, active-inference synthesis intelligence, and strange loops for reflection — at their
+exact grades in [`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md) §1a: finite model, cited
+bridge, and toy self-model square respectively. None is promoted to a theory of consciousness.
 
 **The unit of that integrated information is machine-verified — *it from bit*.** What binding integrates,
 and what the frequency-hierarchy carries, is *information* — and its atom is now a theorem. The smallest

@@ -1,7 +1,16 @@
 # Conscious Dynamics — effective frequency, promotion, and the finite strange loop
 
 **Status:** pre-registration plus a finite reference implementation. This is a **functional model**,
-not a theory of qualia. Tracking issue: [#278](https://github.com/rhovision-org/quantum-logical-framework/issues/278).
+not a theory of qualia. It is complete at the finite functional scope and is proposed for merge on
+that basis; D5 and the general dynamic theorem remain open. Tracking issue:
+[#278](https://github.com/rhovision-org/quantum-logical-framework/issues/278).
+
+**Framing.** QLF has one conjecture, equal and opposite logical action
+([`Framing.md`](Framing.md) A01), and tests models inside it. This document is one such model: a
+bounded listener's next expression is selected from its finite candidate closures. It is not a
+second premise, a new force, or a theory of consciousness. The computational reading is
+[`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md): the universe computes by closure,
+and this model asks how a bounded listener reads the resulting race.
 
 **The rule at the top.** *No shared vocabulary is evidence of a shared mechanism.* A candidate
 closure becomes conscious content only if the listener-relative delay, eligibility filter, promotion
@@ -64,6 +73,22 @@ What is **new** here:
 5. the past is fixed but its **listener-relative compression changes**, which is the formal version
    of “that was what I was thinking all along.”
 
+### 1a. The three "magical powers", at their exact grades
+
+Jim's three capacities are now part of the model's declared scope. "Magical" is a label for the
+functional result, not a claim of magic, and each capacity is kept at the grade actually established.
+
+| Capacity | What is formalized here | Grade | What is not claimed |
+|---|---|---|---|
+| **A database of possible worlds from your relative perspective** | The finite candidate/closure set together with the listener context `B` and horizon `R`; the listener quotient of [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275) supplies `Ω_R(h\|B)` and `W_micro` vs `W_B`. | **finite functional model** | Not an unrestricted database of all logically possible worlds; a different `B` or `R` is a different database. |
+| **Active-inference synthesis intelligence** | The promotion/filter/update architecture `B_{t+1}=U(B_t,i_next)`, plus the cited per-closure free-energy theorem `zfa_closure_minimizes_free_energy` ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)). | **finite model + cited bridge** | The identity `U = active inference` is **not** proved. The update here is an explicit toy rule; deriving it from variational free energy remains open. |
+| **Strange loops for reflection** | The finite self-model square and the target `M_t ~ S_t/~_B_t`, with a good commuting square and a bad non-commuting one. | **toy check; general theorem open** | No self-observation or quote/drop reflection theorem; the general strange-loop and self-knowledge target remains `NOT_STARTED`. |
+
+The first capacity is the one this model can state with concrete finite objects: the candidate set
+is the model's local world-database, and the listener context determines which distinctions in it
+are available. The second is the dynamics over that database. The third is the model's reflective
+closure over its own state. They are three roles in one architecture, not three new substances.
+
 ---
 
 ## 2. Gates
@@ -73,7 +98,7 @@ What is **new** here:
 | **D0** | candidates, intrinsic delay, listener context, effective delay, eligibility, promotion, update frozen | **done** here |
 | **D1** | `T>0`, `f=1/T`; listening can change `T` and `d`; no free-quark clock | **finite check**; general theorem open |
 | **D2** | next expression is the minimum-`d` eligible closure, not the highest-frequency event | **finite check** |
-| **D3** | `B_t → listening → i_next → B_{t+1}` is finite and does not loop event time | **finite check**; `no_time_loops_from_logic` cited |
+| **D3** | a bounded `run_loop(n)` produces `n` expressions with strictly increasing external step index | **finite check only**; this is not a transition-system no-event-loop invariant, and `no_time_loops_from_logic` is cited separately |
 | **D4** | history fixed, listener compression changes; no past rewrite | **finite check** |
 | **D5** | `M_t ~ S_t/~_B_t` remains the correctness target | **cited** from [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275); general theorem open |
 | **D6** | attention changes the race, not the contestants; quieting raises internal distances | **finite check** |
@@ -81,14 +106,17 @@ What is **new** here:
 | **D8** | feeling changes memory accessibility through a generic compatibility relation; same store; recall is atomic; no target identity in the feeling | **finite check** |
 | **D9** | frequency and event priority are distinct; a faster recurrent mode need not be the next trigger | **finite check** |
 
-The PR is draft. D1–D4 and D6–D9 are finite checks; D5 and the general dynamic theorem remain open.
+This is a finite functional model, complete at that scope. D1–D4 and D6–D9 are finite checks; D5
+and the general dynamic theorem remain open obligations, not conditions on the finite model. D3
+checks a bounded trace with an external counter; it does **not** prove that the transition system
+excludes a zero-progress event loop.
 
 ---
 
 ## 3. Electron and quark: the qualification
 
 An electron is already a persistent closed mode. Listening can synchronize or bind it into a faster
-effective closure, so `R_e^(B) < R_e` is meaningful.
+effective closure, so `T_e^(B) < T_e` is meaningful.
 
 A quark is not an independently closed object in QLF (`quark_not_closed`,
 `charged_not_closed`). Its meaningful period belongs to the larger hadronic closure. The correct

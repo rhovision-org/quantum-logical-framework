@@ -74,7 +74,7 @@
     "D0_definition": "frozen",
     "D1_effective_frequency": "finite check; T>0, f=1/T, d separate",
     "D2_promotion_filter": "finite check; next trigger is argmin d; fast micro-event is ineligible",
-    "D3_finite_loop": "finite promotion sequence; event step increases",
+    "D3_bounded_trace": "finite check only: a bounded trace has increasing external step index; no transition-system no-event-loop invariant is proved",
     "D4_retrospective_compression": "finite check; history fixed, compression changes",
     "D5_bisimulation": "cited from #275; general theorem open",
     "D6_attention_quieting": "finite check; race changes without new contestants",
@@ -157,6 +157,11 @@
       "winner": "external"
     }
   ],
+  "magical_powers": {
+    "active_inference_synthesis": "explicit promotion/update U in this toy; identity with active inference remains B-OPEN",
+    "relative_world_database": "finite candidate set + listener context B; a bounded relative database, not an unrestricted inventory of all possible worlds",
+    "strange_loop_reflection": "finite self-model square M ~ S/~_B; toy commutativity only, general theorem open"
+  },
   "memory": {
     "feeling_fields": [
       "name",

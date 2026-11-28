@@ -3,13 +3,14 @@
 
 Frozen definitions are in ``Conscious_Dynamics_QLF.md``:
 
-  * f_i^(B) = 1 / R_i^(B);
-  * C_t* = argmax over eligible, self-relevant, integrated closures;
+  * f_i^(B) = 1 / T_i^(B);
+  * C_t* = argmin d_i over eligible, self-relevant, integrated closures;
   * B_{t+1} = U(B_t, C_t*).
 
 The script is a functional toy, not a theory of qualia.  It shows the
-listener-relative race, attention, quieting, a finite promotion loop, and the
-fixed-history/changing-compression distinction.
+listener-relative race, attention, quieting, a bounded promotion trace, and the
+fixed-history/changing-compression distinction.  D3 checks the external step
+index of a bounded trace; it does not prove a no-event-loop transition invariant.
 
 Run:
 
@@ -420,11 +421,27 @@ def build_summary() -> dict[str, object]:
         "loop": loop,
         "retrospective": retrospective_compression(),
         "memory": affective_recollection(),
+        "magical_powers": {
+            "relative_world_database": (
+                "finite candidate set + listener context B; a bounded relative database, "
+                "not an unrestricted inventory of all possible worlds"
+            ),
+            "active_inference_synthesis": (
+                "explicit promotion/update U in this toy; identity with active inference "
+                "remains B-OPEN"
+            ),
+            "strange_loop_reflection": (
+                "finite self-model square M ~ S/~_B; toy commutativity only, general theorem open"
+            ),
+        },
         "gates": {
             "D0_definition": "frozen",
             "D1_effective_frequency": "finite check; T>0, f=1/T, d separate",
             "D2_promotion_filter": "finite check; next trigger is argmin d; fast micro-event is ineligible",
-            "D3_finite_loop": "finite promotion sequence; event step increases",
+            "D3_bounded_trace": (
+                "finite check only: a bounded trace has increasing external step index; "
+                "no transition-system no-event-loop invariant is proved"
+            ),
             "D4_retrospective_compression": "finite check; history fixed, compression changes",
             "D5_bisimulation": "cited from #275; general theorem open",
             "D6_attention_quieting": "finite check; race changes without new contestants",
