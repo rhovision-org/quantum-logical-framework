@@ -153,7 +153,7 @@ an instance of the cooperative step.
 | **C1 — no backwards causation** | top-down restricts admissible continuations; it is not retrocausation and not a new force | stated; [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md) adds the schedule-relative first-closure result (CC7), not a new force |
 | **C2 — negative-result preservation** | the closure-census turbulence kill stands; no Kolmogorov, Zipf, or `1/f` exponent may be inserted into a transport model | preserved in [`Cooperative_Assembly_QLF.md`](Cooperative_Assembly_QLF.md) |
 | **C3 — status labels** | every domain is theorem / structural / bridge / open / negative | ledger audit complete here; no row is promoted by this document |
-| **C4 — affect gate** | feelings and consciousness enter only as an affect hypothesis with measurable timescales, not as a theorem about qualia | §6; the finite model is [the conscious-dynamics model](https://github.com/rhovision-org/quantum-logical-framework/pull/279) when that PR lands |
+| **C4 — affect gate** | feelings and consciousness enter only as an affect hypothesis with measurable timescales, not as a theorem about qualia | §6; the finite model is [`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md) |
 
 If a gate fails, the domain does not move up the ladder. The failure is recorded.
 
