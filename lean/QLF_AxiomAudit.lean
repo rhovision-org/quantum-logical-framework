@@ -196,6 +196,8 @@ import QLF_RelationalClock
 import QLF_VacuumCorrelation
 import QLF_CooperativeClosure
 import QLF_AnalogicalListener
+import QLF_CooperativeBridge
+import QLF_CooperativeLimits
 
 /-! ## The combinatorial core — expected: no QLF axiom -/
 
@@ -1375,3 +1377,42 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.AnalogicalListener.extend_mapped_noop
 #print axioms QLF.AnalogicalListener.consistent_not_extendable
 #print axioms QLF.AnalogicalListener.other_branch_closes
+
+-- Cooperative closure gates CC4, CC7, CC9 and competing listeners: no QLF axiom.
+#print axioms QLF.CooperativeBridge.encode_closes_iff_met
+#print axioms QLF.CooperativeBridge.met_pauli_closed
+#print axioms QLF.CooperativeBridge.encode_append
+#print axioms QLF.CooperativeBridge.any_verdict_encodes
+#print axioms QLF.CooperativeBridge.no_act_encoding_sees_order
+#print axioms QLF.CooperativeBridge.order_blind
+#print axioms QLF.CooperativeBridge.surplus_offer_not_met
+#print axioms QLF.CooperativeBridge.final_verdict_schedule_invariant
+#print axioms QLF.CooperativeBridge.first_closure_schedule_dependent
+#print axioms QLF.CooperativeBridge.no_schedule_free_first_closure
+#print axioms QLF.CooperativeBridge.isFirst_append
+#print axioms QLF.CooperativeBridge.race_schedule_dependent
+#print axioms QLF.CooperativeBridge.whole_met_listener_met
+#print axioms QLF.CooperativeBridge.listeners_cover_met
+#print axioms QLF.CooperativeBridge.partial_listener_views
+#print axioms QLF.CooperativeBridge.vacuous_listener_never_closes
+#print axioms QLF.CooperativeBridge.verifiers_agree
+#print axioms QLF.CooperativeBridge.verify_sound
+#print axioms QLF.CooperativeBridge.verify_true_pauli
+#print axioms QLF.CooperativeBridge.verdict_certificate_is_the_bit
+
+-- Cooperative closure gates CC5 and CC8: no QLF axiom.
+#print axioms QLF.CooperativeLimits.kl_delta_prior
+#print axioms QLF.CooperativeLimits.kl_delta_zero_uniform
+#print axioms QLF.CooperativeLimits.quantum_matches_iff_uniform
+#print axioms QLF.CooperativeLimits.partial_belief_below_quantum
+#print axioms QLF.CooperativeLimits.vfe_not_constant
+#print axioms QLF.CooperativeLimits.kl_uniform_uniform
+#print axioms QLF.CooperativeLimits.vfe_resolution_signed
+#print axioms QLF.CooperativeLimits.no_constant_identity
+#print axioms QLF.CooperativeLimits.hierarchical_parity
+#print axioms QLF.CooperativeLimits.reports_irreducible
+#print axioms QLF.CooperativeLimits.block_irreducible
+#print axioms QLF.CooperativeLimits.missing_leaf_blind
+#print axioms QLF.CooperativeLimits.budget_failure_undetermined
+#print axioms QLF.CooperativeLimits.pooled_capacity
+#print axioms QLF.CooperativeLimits.group_of_listeners_misses
