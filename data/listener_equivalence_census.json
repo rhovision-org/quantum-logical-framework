@@ -1,0 +1,152 @@
+{
+  "gates": {
+    "L0_definition": "frozen",
+    "L1_equivalence_right_congruence": "finite pass",
+    "L2_coarsest_lossless": "finite brute-force pass; two-body Lean theorem cited; N-body open",
+    "L3_uncertainty_factorization": "finite pass; uniform default made explicit and mu(c) parameterized; general theorem open",
+    "L4_qkb_concept_quotient": "prototype only; storage unchanged",
+    "L5_self_model_square": "toy pass; general theorem open",
+    "L6_level_monotonicity": "finite pass only; same-level self-loop counterexample retained; no event-loop theorem"
+  },
+  "meta": {
+    "W_B": "number of listener classes among completion endpoints",
+    "W_micro": "number of first-completion paths",
+    "generator": "listener_equivalence.py",
+    "issue": 274,
+    "listener_equivalence": "s ~_B t iff same observation and all one-token successors remain equivalent",
+    "pre_registration": "Listener_Equivalence_QLF.md",
+    "version": 1
+  },
+  "partition": {
+    "coarse_blocks": [
+      [
+        "a"
+      ],
+      [
+        "b"
+      ],
+      [
+        "c1",
+        "c2"
+      ],
+      [
+        "s"
+      ]
+    ],
+    "coarse_coarsest_blocks": [
+      [
+        "c1",
+        "c2"
+      ],
+      [
+        "b"
+      ],
+      [
+        "a"
+      ],
+      [
+        "s"
+      ]
+    ],
+    "coarse_right_congruence": true,
+    "fine_blocks": [
+      [
+        "a"
+      ],
+      [
+        "b"
+      ],
+      [
+        "c1"
+      ],
+      [
+        "c2"
+      ],
+      [
+        "s"
+      ]
+    ],
+    "fine_coarsest_blocks": [
+      [
+        "c2"
+      ],
+      [
+        "c1"
+      ],
+      [
+        "b"
+      ],
+      [
+        "a"
+      ],
+      [
+        "s"
+      ]
+    ],
+    "fine_right_congruence": true
+  },
+  "qkb": {
+    "closures": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+    ],
+    "listener_obs": {
+      "c1": "blue",
+      "c2": "blue",
+      "c3": "red",
+      "c4": "red"
+    },
+    "listener_ways": 2,
+    "ways": 4
+  },
+  "self_model": {
+    "bad_has_m0_self_loop": true,
+    "bad_levels_nondecreasing": true,
+    "bad_self_loops": [
+      "s2",
+      "s3",
+      "m0",
+      "m1"
+    ],
+    "bad_square": false,
+    "good_levels_nondecreasing": true,
+    "good_self_loops": [
+      "s2",
+      "s3",
+      "m1"
+    ],
+    "good_square": true
+  },
+  "uncertainty": {
+    "coarse": {
+      "W_B": 1,
+      "W_micro": 4,
+      "class_counts": {
+        "c1|c2": 4
+      },
+      "horizon": 2,
+      "measure": "uniform",
+      "start": "s",
+      "weights": {
+        "c1|c2": 1.0
+      }
+    },
+    "fine": {
+      "W_B": 2,
+      "W_micro": 4,
+      "class_counts": {
+        "c1": 2,
+        "c2": 2
+      },
+      "horizon": 2,
+      "measure": "uniform",
+      "start": "s",
+      "weights": {
+        "c1": 0.5,
+        "c2": 0.5
+      }
+    }
+  }
+}
