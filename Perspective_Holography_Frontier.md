@@ -104,3 +104,35 @@ F4 remains a separate face-set accounting check.
 This is a replication protocol and executable test, not a reported result
 until the pinned CI execution succeeds. No change to the frozen protocol,
 historical JSON, or physical bridge status is implied.
+
+## Scope closure: possible record and actual event
+
+The audit is complete for the question it asks. It constructs and tests the
+**record** side: which tagged histories exist in a bounded domain, what their
+eight signed counts are, and which views reconstruct that record. It does not
+pretend that a bounded census is a census of Nature. The distinction is
+already formal:
+
+- **What can happen** is a possible history. The eight signed counts are four
+  conjugate axes, three of them spatial in the usual 3-D reading plus the gauge
+  axis; a view is a projection of a record, not an extra dimension.
+- **That something happens** is a ZFA closure: equal and opposite action on
+  every axis, with the Pauli closure following (`count_balanced_pauli_closed`).
+- **When it happens** is the first-closure rule along an actual schedule.
+  `QLF_CooperativeBridge` proves the first closure depends on the schedule
+  (`first_closure_schedule_dependent`, `no_schedule_free_first_closure`) and that a first
+  closure, once recorded, stays first in every extension (`isFirst_append`).
+  A top-down blanket can filter which continuations are admissible; it cannot
+  retroactively change the realized record.
+- **No finite enumeration is final.** `QLF_LawOfExceptions` proves every finite
+  closure capacity has a genuine closure outside it (`law_of_exceptions`,
+  `no_final_closure`). The 14,425 histories are therefore an exact bounded
+  provenance set, not a total inventory of reality's events.
+
+So the finite conclusions here do not need a future issue to be well defined:
+they are exactly the record results stated above. What remains B-OPEN is the
+**physical** map from this record structure to a realized observer's schedule,
+blanket and face identification. That is a different claim, and this audit does
+not promote it. The `CC7` schedule result and the Law of Exceptions are the
+formal reason the "top-down when" cannot be read off a count alone; they are
+not an excuse to defer the count-level result that is delivered here.
