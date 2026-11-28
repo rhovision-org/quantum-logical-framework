@@ -108,6 +108,8 @@ class ConsciousDynamicsTests(unittest.TestCase):
         self.assertIn("D8_affective_recollection", summary["gates"])
         self.assertIn("D9_frequency_priority_separation", summary["gates"])
         self.assertIn("D10_bounded_forgetting", summary["gates"])
+        self.assertIn("D11_thought_effect_separation", summary["gates"])
+        self.assertIn("external closure", summary["gates"]["D11_thought_effect_separation"])
 
 
 if __name__ == "__main__":

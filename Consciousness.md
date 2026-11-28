@@ -131,6 +131,14 @@ not always benign, and not erasure by an observer; qualia remain bracketed. The 
 partition, its finite sign census and the proposed space/GR bridge are developed in
 [`Entropy.md`](Entropy.md) §3 and §6.
 
+**Thoughts are things, not commands.** A thought is a realized closure in the listener's model: it
+enters the record, updates `B`, and changes which closures are eligible and nearest next. That is a
+real effect inside the agent and on any action it enables. It is not observer potency: the content of a
+thought is not a promotion rule for an external closure, and the external race contains other closures
+and conditions. The effect can therefore differ from the intention—the thought is real, but the
+outcome is selected by closure conditions, not by the wish. This is the finite reading in
+[`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md) §1b, gate D11; no psychokinesis is claimed.
+
 **The unit of that integrated information is machine-verified — *it from bit*.** What binding integrates,
 and what the frequency-hierarchy carries, is *information* — and its atom is now a theorem. The smallest
 closure is the two-valued **spin-½**, carrying exactly one bit (`binary_kl 1 (1/2) = log 2`) while a
