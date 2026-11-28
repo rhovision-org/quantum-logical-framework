@@ -1,0 +1,43 @@
+{
+  "prefixes": 456,
+  "mask_comparisons": 1824,
+  "base_reconstructs": false,
+  "collision": {
+    "histories": [
+      "^+",
+      "+^"
+    ],
+    "same_record": true,
+    "differing_terminal": [
+      "-v",
+      [
+        1,
+        0
+      ]
+    ],
+    "terminal_counts": [
+      1,
+      1
+    ]
+  },
+  "augmented_record_matches_all": true,
+  "overlap_matches_all": true,
+  "view_loss": {
+    "prefix": "^",
+    "view": "A",
+    "missing_terminal": [
+      "/v\\",
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  "terminal_counts": {
+    "full": 1344,
+    "A": 492,
+    "B": 492,
+    "shared": 112
+  },
+  "scope": "finite successor policy; physical causal accessibility B-OPEN"
+}

@@ -2,7 +2,7 @@
 """Document-network check (issue #149).
 
 QLF is 180 root Markdown files plus lean/README.md, and readability means a reader following
-a claim always lands on its proof or its parent doc. Three things are checked, all cheap:
+a claim always lands on its proof or its parent doc. Four things are checked, all cheap:
 
   1. Orphans   -- every root .md except README.md must be named by at least one OTHER .md.
   2. Dead links -- every relative Markdown link, in every .md file, must resolve on disk.
@@ -11,8 +11,11 @@ a claim always lands on its proof or its parent doc. Three things are checked, a
   3. Back-links -- warning only: an X.md with an X.py or lean/QLF_X.lean of the same name
                    should mention it, and vice versa. Reported, not fatal, because the pairing
                    is by name alone and a few legitimate pairs are documented elsewhere.
+  4. Module count -- the number in lean/README.md must equal the unique `roots` registered in
+                   lakefile.lean, and every registered root must have a source file. This is
+                   derived from the build definition, not maintained by hand.
 
-Exit status is non-zero on any orphan or dead link, so this can gate CI.
+Exit status is non-zero on any orphan, dead link, or module-registry mismatch, so this can gate CI.
 
     python3 scripts/doc_network_check.py            # report
     python3 scripts/doc_network_check.py --quiet    # only failures
@@ -89,14 +92,63 @@ def check_backlinks(texts):
     return out
 
 
+ROOTS_BLOCK = re.compile(r"roots\s*:=\s*#\[(.*?)\]", re.S)
+ROOT_NAME = re.compile(r"`([A-Za-z_][A-Za-z0-9_.]*)")
+DOCUMENTED_MODULES = re.compile(r"(\d+)\s+active modules")
+
+
+def check_module_registry(texts):
+    """Derive the active-module count from lakefile.lean and compare the README.
+
+    The manual count drifted repeatedly (#328): 359, 361, 376 and 380 were each
+    correct at one commit and stale at the next.  The registered Lean roots are
+    the source of truth, so this check reads them directly, rejects duplicate or
+    missing roots, and verifies the single documented total.
+    """
+    lakefile = read("lakefile.lean")
+    match = ROOTS_BLOCK.search(lakefile)
+    if not match:
+        return None, ["lakefile.lean: could not find the `roots := #[...]` block"]
+
+    roots = ROOT_NAME.findall(match.group(1))
+    errors = []
+    duplicates = sorted({name for name in roots if roots.count(name) > 1})
+    if duplicates:
+        errors.append("lakefile.lean: duplicate roots: " + ", ".join(duplicates))
+
+    for name in roots:
+        source = os.path.join("lean", *name.split(".")) + ".lean"
+        if not os.path.isfile(source):
+            errors.append(f"lakefile.lean: root `{name}` has no source file {source}")
+
+    readme = texts.get("lean/README.md", "")
+    documented = DOCUMENTED_MODULES.search(readme)
+    if not documented:
+        errors.append("lean/README.md: no '<n> active modules' declaration found")
+    elif int(documented.group(1)) != len(roots):
+        errors.append(
+            "lean/README.md: documents "
+            f"{documented.group(1)} active modules but lakefile.lean registers {len(roots)}"
+        )
+    return len(roots), errors
+
+
 def main():
     texts = {p: read(p) for p in all_markdown()}
     orphans = check_orphans(texts)
     n_links, dead = check_links(texts)
     backlinks = check_backlinks(texts)
+    n_roots, registry_errors = check_module_registry(texts)
 
     if not QUIET:
-        print(f"markdown files: {len(texts)}   relative links: {n_links}")
+        print(
+            f"markdown files: {len(texts)}   relative links: {n_links}   "
+            f"Lean roots: {n_roots if n_roots is not None else 'UNREADABLE'}"
+        )
+    if registry_errors:
+        print("MODULE REGISTRY MISMATCH:")
+        for error in registry_errors:
+            print("   ", error)
     if orphans:
         print("ORPHANS (no incoming link from any other .md):")
         for m in orphans:
@@ -110,7 +162,7 @@ def main():
         print("back-link gaps (warning only):")
         for b in backlinks:
             print("   ", b)
-    ok = not orphans and not dead
+    ok = not orphans and not dead and not registry_errors
     if not QUIET:
         print("OK" if ok else "FAIL")
     sys.exit(0 if ok else 1)

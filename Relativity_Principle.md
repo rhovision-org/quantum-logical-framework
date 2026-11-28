@@ -10,8 +10,20 @@ shared-pair interactions), and [`lean/QLF_BoostCovariance.lean`](lean/QLF_BoostC
 covariance of the Dirac walk), and [`lean/QLF_InteractingKinematics.lean`](lean/QLF_InteractingKinematics.lean)
 (interacting kinematics and umklapp, §6a). Brute-force cross-check: [`relativity_scale_check.py`](relativity_scale_check.py).
 **The relativity principle is proved for free propagation in the large, and not beyond that** (§5b).
-With interactions it is open, and for the census symbol the step to a propagation law is still an
+With interactions it is open. Interacting kinematics is proved in the large, conditional on lattice
+conservation (§6a). Tree-level amplitudes of Lorentz-scalar contacts are numerically covariant to
+`O(κ²)` on a finite grid (§6b, stages 4a–4c), and on one reading the substrate's shared pairs give
+such a contact, the vector one. Loops are untested: the Feynman-ordered loop vanishes on the walk
+(§6b, "Stage 5 result"). For the census symbol the step to a propagation law is still an
 assumption, labelled where it is used.
+
+**Framing.** This is not a second premise. QLF has one conjecture, equal and opposite logical action
+([`Framing.md`](Framing.md) A01), and this document tests a model inside it: the Dirac walk's
+census. "The relativity principle is derived, not postulated" therefore means *derived within that
+model at the stated order*, not that Nature has been shown to obey it beyond the tested regime. The
+same split appears in [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md): the universe's
+computation is the one conjecture read as closure, while every model of that computation is a claim
+that can fail.
 
 Einstein's first postulate says the laws of physics are the same for every observer in uniform
 motion. QLF does not assume it. What the census of histories proves is narrower:
@@ -398,9 +410,9 @@ For a two-body contact-interaction walk on `ℤ³` the conservation law is now d
 | 1. Free propagation covariant in the large | proved (§5b, `diracWalk_boost_covariant`) | — |
 | 2. Interacting kinematics covariant in the large, given lattice conservation and the summed long-wavelength bound; elementary umklapp vectors along a boost axis are not boost-stable | proved (this section, `process_boost_covariant`, `umklapp_x_not_covariant`) | — |
 | 3. Lattice conservation derived for a concrete interacting walk | **proved for two bodies on `ℤ³`** with any contact interaction (`twoBody_lattice_conservation`, `scattering_latticeConserving`) | `N` bodies: the same argument with an `N`-fold joint shift; labour |
-| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the relative boost defect of the two-body tree-level vertex proxy scales as `κ²` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | **4c**: stage-3 conservation extended to a matrix-valued contact (`QLF_SpinorContact`); the half-step slice's parameter-reversal identity, a structural explanation of the `O(κ²)` slopes (`QLF_HalfStepReversal`). Open: the analytic `O(κ²)` bound; interacting covariance of the contact step (vertex invariance and coin unitarity do not give it); energy-conserving amplitudes; which contact the substrate gives (§6b, "Which contact?") |
-| 5. Loops: lattice-scale contribution small at low energy (Collins) | open, **blocked on a definition and on analysis** | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
-| 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
+| 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the relative boost defect of the two-body tree-level vertex proxy scales as `κ²` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | **4c**: stage-3 conservation extended to a matrix-valued contact (`QLF_SpinorContact`); the half-step slice's parameter-reversal identity, a structural explanation of the `O(κ²)` slopes (`QLF_HalfStepReversal`). Open: the analytic `O(κ²)` bound; interacting covariance of the contact step (vertex invariance and coin unitarity do not give it); energy-conserving amplitudes. **Which contact**: on reading (A), shared pairs give the vector contact (pre-registered, PASS; the sign proved in `QLF_SharedPairSign`) |
+| 5. Loops: lattice-scale contribution small at low energy (Collins) | **pre-registered and run: INVALID** (§6b, "Stage 5 result"). The Feynman-ordered one-loop vertex vanishes identically on the walk, because `kz ↦ kz + π` negates the step (`QLF_PiDoubler`), so an antiparticle pair is a `π`-shifted particle pair. The calibration passed (`7.3 × 10⁻⁷`). Collins is untested | stage 6: what the walk's antiparticles are decides which intermediate states a loop sums over; then a loop expansion and a bound on its lattice-scale part |
+| 6. Pair creation as a change in census strand number | **step 1 done** (§6b, "Stage 6, step 1"): the walk's particle/antiparticle split is global only on its doubled description, where it is odd under `k ↦ k + π e_z`; on its conserved parity sector the arcs meet where some `kᵢ = ±π/2` (`halfWalk_sq_shift_z_eigen`). Still **blocked on a definition** | the census with a variable number of strands, or a pre-registered lattice-scale cut; §6 has two persistent strands only |
 | 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
 
 ## 6b. Stage 4: how a boost acts on the walk's states
@@ -711,6 +723,236 @@ walk's only closure between the two chiral halves, so a shared mass tick gives `
 reading the substrate takes is a definition to be chosen and then tested. It is not derived here,
 and the axis-blind result of §6 does not settle it, because §6 is about the unsigned census weight.
 
+**Pre-registered test of reading (A)** ([`shared_pair_sign_check.py`](shared_pair_sign_check.py), frozen
+in the commit that adds it, before it was run; Jim's decision of 2026-11-28 is to test (A) first and
+fall back to (B) if it fails). A pair shared between two strands is not a sequence on one strand:
+body A performs `t` and body B performs `t†`, so it acts as the composite `t ⊗ t†`
+([`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean) `splitPair_fold`) on the two-body state
+every shared strong pair fixes (`split_strong_iff_singlet`). The test reads each axis's weight as
+the shared pair's signed phase on that state, `w_a = ⟨ψ| t ⊗ t† |ψ⟩`, with `ψ` computed as a null
+space rather than written in. **(A) passes** iff the three spatial weights agree and the gauge
+weight is their negative, the Minkowski relative sign; it **fails** on equal signs (Euclidean) or
+unequal spatial weights. The control, the same weights read from the one-strand fold
+`½ tr(t t†)`, must come out Euclidean (it reproduces `shared_pair_fold_axis_blind`), or the run is
+invalid. With the walk's currents `J⁰ = 1`, `Jⁱ = αᵢ`, a pass must give a vertex `Σ_a w_a Jᵃ ⊗ Jᵃ`
+that is a multiple of the vector contact to `10⁻¹²`.
+
+**Result: (A) passes.** The selected state is the singlet `(|01⟩ − |10⟩)/√2`. The control comes out
+Euclidean (every one-strand fold weight is `−1`), so the test discriminates. The two-strand weights
+are `w_gauge = −1` and `w_x = w_y = w_z = +1`, the Minkowski relative sign, and the induced vertex is
+`−1` times the vector contact `1 ⊗ 1 − Σ αᵢ ⊗ αᵢ`, at distance `0` from it. The sign is proved in
+[`lean/QLF_SharedPairSign.lean`](lean/QLF_SharedPairSign.lean) with no axioms
+(`splitPair_singlet_sign`: a shared pair acts on the singlet as `−1` on the gauge axis and `+1` on a
+spatial one). Read with [`QLF_MetricSinglet`](lean/QLF_MetricSinglet.lean) `metric_is_singlet`, this is
+one correspondence of relative signs: the metric's `(+, −, −, −)` is, up to the overall sign, the shared pair's signs on the singlet. It does not close the physical bridge. What stays a reading, not a theorem,
+is that a shared pair's weight is its signed phase on that state and that the walk's current along a
+twist's axis is `αᵢ` (the gauge axis carrying the density `1`). So the vector contact is the contact
+the substrate's shared pairs give on this reading, and stage 5 uses it; `β ⊗ β` is not needed as a
+fallback.
+
+### Stage 5 pre-registration: the one-loop contact amplitude
+
+Frozen in the commit that adds this subsection, before any loop code was written or run. Jim
+approved the plan on 2026-11-28 (the contact from reading (A); the four loop choices), with the
+Feynman ordering of intermediate states in place of the fixed-two-particle sum, for the reason
+below. The external reference is Collins, Perez, Sudarsky, Urrutia and Vucetich, *Phys. Rev. Lett.*
+**93**, 191301 (2004), [arXiv:gr-qc/0403053](https://arxiv.org/abs/gr-qc/0403053): Lorentz violation
+at the cutoff, suppressed at tree level, can return at order one through loops.
+
+**Why Feynman ordering.** A loop that keeps exactly two particles and sums all four combinations of
+positive and negative bands is not the covariant one-loop diagram even in the continuum (the
+Brown–Ravenhall problem); covariance needs the pair-creation terms. Integrating the energy of the
+continuum Feynman bubble gives exactly two terms, both-positive and both-negative intermediate
+pairs with opposite signs, and the mixed pairs drop out. Stage 5 uses that ordering on the walk.
+It is borrowed from quantum field theory, not derived from the walk; deriving it is stage 6
+(pair creation).
+
+**The amplitude.** Each walk particle has the one-step operator `U(k, m)` of the half-step slice,
+with positive and negative band projectors `Λ±(k)` and quasi-energy `ω(k) ∈ (0, π)`. For total
+quasi-energy `E` and total momentum `P`,
+
+    L(E, P) = ∫_BZ d³p/(2π)³ [ Λ₁⁺(p) ⊗ Λ₂⁺(P−p) R(E − ω₁(p) − ω₂(P−p))
+                            − Λ₁⁻(p) ⊗ Λ₂⁻(P−p) R(E + ω₁(p) + ω₂(P−p)) ],
+
+with the Floquet kernel `R(x) = ½ cot((x + i0)/2)`, so energies are compared mod `2π`. This is the
+walk's resolvent `i/(e^{i(x+i0)} − 1)` without its constant `−i/2`: in the walk's own sum over all
+intermediate states that constant multiplies the completeness relation and cancels the coin's
+second-order term `−g²Γ²/2` exactly, so both are left out together. The internal sum runs over the
+whole zone, and nothing internal is mapped between frames. The one-loop vertex is
+`Γ₂(E, P) = Γ L(E, P) Γ − c Γ`, with one counterterm `c`, the Hilbert–Schmidt component along `Γ` of
+`Γ L Γ` at the rest-frame threshold (`P = 0`, `E = ω₁(0) + ω₂(0)`), computed once per slice, mass
+and `κ` and used in both frames.
+
+**The graded quantity.** As in stage 4b, with external legs only mapped by the stage-4a map, and
+`Π = E·P(k)` the external band projectors:
+
+    W₂ = Tr[(Π₁′ ⊗ Π₂′) Γ₂ (Π₁ ⊗ Π₂) Γ₂†],    defect = |W₂(Λp) − W₂(p)| / W₂(p),
+
+frame 1 with the walk's own energies at `P = 0` (centre-of-momentum elastic kinematics), frame 2
+with the boosted energies and momenta, `L` evaluated at the in-state's `(E, P)` in each frame.
+Grid: `κ ∈ {0.08, 0.04, 0.02, 0.01, 0.005}`, rapidity `0.5` along each axis, four seeded direction
+pairs, mass ratio 1, `m_B/m_A = 0.6`; worst defect over samples and axes at each `κ`, slope of
+`log defect` against `log κ`.
+
+**Verdicts.**
+- *Graded*: the vector contact `1 ⊗ 1 − Σ αᵢ ⊗ αᵢ` (the contact reading (A) gives), on the
+  half-step slice. **PASS** if the slope is at least `1.95`; **FAIL** if it is below `1.5`
+  (the Collins leakage: the lattice-scale part does not fall with `κ²`, and the relativity principle
+  does not survive the first loop for this contact and walk); **INCONCLUSIVE** between.
+- *Second graded arm*: the scalar contact `β ⊗ β`, the same thresholds, reported separately (Jim's
+  card of 2026-11-28 asked for both).
+- *Controls*, each of which must fail or the run does not discriminate and is reported
+  `INCONCLUSIVE`: the spin-blind contact `1 ⊗ 1` on the half-step slice must have a median defect of at
+  least `10⁻²` at every `κ`; the raw slice must have slope below `1.5` for the vector contact.
+- *Calibration*: the continuum Dirac loop computed by the same code, regulated by Pauli–Villars
+  (four regulator mass pairs scaled by `3, 4, 5, 6`, coefficients cancelling the first four moments,
+  integrated to a radius well beyond the regulators) must give a worst vector-contact defect below
+  `10⁻⁶`. No momentum cutoff is boost invariant, so roundoff is not attainable.
+- *Gates* (fail closed, run `INVALID`): every `W₂` finite, real and positive; every singular surface
+  of `R` lies inside a region integrated with explicit pole handling; the result is stable under a
+  finer integration (the vector `Γ₂` changes by less than `10⁻³` relative at the largest and smallest
+  `κ`).
+
+Integration settings are chosen by convergence of `L` and the calibration, never of a graded defect.
+The script is [`loop_boost_check.py`](loop_boost_check.py), added after this commit.
+
+### Stage 5 result: INVALID, because the Feynman-ordered loop vanishes on the walk
+
+The pre-registered run ([`loop_boost_check.py`](loop_boost_check.py), log in
+[`data/loop_boost_check_run.txt`](data/loop_boost_check_run.txt)) stops before any graded defect:
+
+- **Calibration passes.** The Pauli–Villars continuum loop gives a worst defect of `7.3 × 10⁻⁷`
+  (vector) and `5.2 × 10⁻⁷` (scalar), below the registered `10⁻⁶`. The integration settings were fixed
+  by the calibration alone, and the log of settings tried is in the script.
+- **The walk's loop is zero.** On the half-step slice `L(E, P)` vanishes to rounding
+  (`|L| = 3.7 × 10⁻¹³` against `1.4 × 10⁻²` for each ball's contribution). The run stops at that first
+  gate, so the log is a numerical record for the half-step slice only; the raw slice is covered by
+  the analytical argument below and by the cancellation regression in
+  [`tests/test_loop_boost_check.py`](tests/test_loop_boost_check.py), not by a completed run. So `Γ₂ = 0`, `W₂ = 0`, and the
+  defect is `0/0`. The run is `INVALID, NOT_GRADED`. The gate that reports this was added after the
+  cause below was found and before any graded defect was read; without it the run would have graded
+  rounding noise.
+
+**The cause is proved.** [`lean/QLF_PiDoubler.lean`](lean/QLF_PiDoubler.lean), with no axioms: the
+real walk takes its `z` step as two adjacent half steps, so shifting `kz` by `π` multiplies the step
+by `i² = −1` and changes nothing else (`realWalk_shift_z`, `halfWalk_shift_z`, `diracWalk_shift_z`).
+An eigenvector keeps its vector and flips its eigenvalue (`halfWalk_shift_z_eigen`), so
+`Λ⁺(k + π e_z) = Λ⁻(k)` and `ω(k + π e_z) = π − ω(k)`. A pair of negative-band states at
+`(p, P − p)` is then a pair of positive-band states at `(p + π e_z, P − p + π e_z)` whose total
+quasi-energy differs by `2π`, which the Floquet kernel does not see. The two terms of the Feynman
+ordering are the same integral and cancel, at every `E` and `P`, on both slices. The step identity
+is proved; the cancellation of the integral follows from it with the kernel's periodicity and a
+change of integration variable, and is not itself formalized.
+
+**What this settles and what it does not.**
+- It does not test Collins: there is no loop to compare.
+- It shows that the Feynman ordering, borrowed from quantum field theory, does not carry over to the
+  walk. On the walk an antiparticle pair and a `π`-shifted particle pair are the same states, so the
+  subtraction that makes the continuum loop covariant removes the walk's loop entirely.
+- The walk's own time-ordered sum (fixed two particles, all four band pairs) does not vanish:
+  the same map turns its both-negative term into its both-positive term with a plus sign. Its
+  continuum reference is not covariant (Brown–Ravenhall), so it cannot be calibrated as stage 5 was.
+- So what the walk's antiparticles are decides the loop. That is stage 6, pair creation as a change
+  in strand number, and stage 5 now depends on it.
+
+### Stage 6, step 1: what separates the walk's particles from its antiparticles
+
+Jim chose on 2026-11-28 to settle this before any new loop test. The question has three parts: what
+distinguishes the two sectors, which intermediate states a loop may sum over, and whether the
+resulting prescription has the right continuum limit. The structural facts are checked in
+[`walk_antiparticle_check.py`](walk_antiparticle_check.py) (output
+[`data/walk_antiparticle_check.json`](data/walk_antiparticle_check.json)), on both slices, and the
+new periodicity facts are proved in [`lean/QLF_PiDoubler.lean`](lean/QLF_PiDoubler.lean), with no
+axioms.
+
+**The Feynman ordering is Stueckelberg's.** The two kernels of stage 5 are a time-ordered sum: the
+arc `e^{+iω}` propagated forward in time and the arc `e^{−iω}` propagated backward give
+`R(E − ω)` and `R(E + ω)`, with the constants that cancel the seagull (check S5, residual
+`7 × 10⁻¹⁴`). So the ordering is not an extra prescription once one arc is read as running backward
+in time. In QLF's terms that is the bra direction, the dagger (`lift`); that the backward arc is
+the antiparticle is a reading.
+
+**On the full lattice the split exists and is odd under a symmetry.** The dispersion is
+`cos ω = cos m · Π cos kᵢ` (S1), so `ω ∈ [m, π − m]` and the step is gapped at quasi-energy `0` and
+at `π` (S2). The two arcs are separated everywhere, and the split into forward and backward arcs is
+global. But `k ↦ k + π e_z` swaps the arcs (S3, `halfWalk_shift_z_eigen`), and that is the whole
+reason the stage-5 loop vanished: every both-backward pair is a shifted both-forward pair.
+
+**On the walk's conserved sector there is no global split.** Every step displaces `z` by an odd
+amount (that is what `U(k + π e_z) = −U(k)` says in position space), so the parity of `t + z` is
+conserved and the full lattice is two decoupled, identical copies. On one copy `k` and `k + π e_z`
+are the same momentum: two steps are `π`-periodic in `k_z` (`halfWalk_sq_shift_z`,
+`diracWalk_sq_shift_z`), and a forward-arc state at `k + π e_z` and a backward-arc state at `k` have
+the same two-step eigenvalue (`halfWalk_sq_shift_z_eigen`). Following the forward arc once around
+the copy's `k_z` circle ends on the backward arc. The two arcs meet on the surface Σ where some
+`kᵢ = ±π/2`, where the two-step walk is `−I` exactly (S4): there no evolution separates them.
+
+**What a loop may sum over, and the continuum limit.** Near the band bottoms (`Π cos kᵢ = 1`) the
+split is the continuum's, so every candidate agrees in the region a low-energy observer probes. The
+candidates differ at the lattice scale:
+
+| Prescription | Intermediate states | Continuum limit of the loop |
+|---|---|---|
+| Doubled lattice, Feynman–Stueckelberg | both copies, global arc split | **wrong**: the loop is identically `0` (stage 5); the backward-arc term at `p` cancels the forward-arc term at `p + π e_z` |
+| One copy, fixed two strands, all arc pairs | one copy, no split needed | not covariant even in the continuum (Brown–Ravenhall), so no calibration |
+| One copy, Feynman–Stueckelberg with a cut | one copy, arcs split by a surface through Σ | depends on the cut; Σ is at the lattice scale, so the cut is a frame-dependent choice made exactly where Collins's leakage would come from |
+| Variable strand number (the census) | histories that create and close pairs | undefined until the census with a variable number of strands is written down |
+
+So the walk does not supply the antiparticle sector a covariant loop needs. Its global split is an
+artifact of the doubled description, and on its irreducible sector the split exists only away from
+Σ. Any one-loop prescription on the walk therefore either loses the loop or makes a lattice-scale
+choice, and the next stage-5 test has to say which, before it is run. The variable-strand census is
+the one candidate that would derive the split rather than choose it.
+
+### Stage 5, second run: the two-step cut (pre-registration)
+
+Frozen in the commit that adds this subsection, before any code for it was written or run. Jim chose
+on 2026-11-28 to run a cut first, as a probe, and then build the variable-strand census and compare.
+
+**The split.** A state is a *particle* if its two-step quasi-energy `2θ` (mod `2π`, in `(−π, π]`) is
+positive, and an *antiparticle* otherwise, where `e^{iθ}` is its one-step eigenvalue. On the forward
+arc (`θ = ω`) that is `ω < π/2`; on the backward arc (`θ = −ω`) it is `ω > π/2`. The cut is the
+surface Σ (`ω = π/2`, some `kᵢ = ±π/2`) where the two-step walk is `−I` and the two arcs meet. This
+is the only split that the walk's conserved sector defines (`halfWalk_sq_shift_z_eigen`): it is
+invariant under `k ↦ k + π e_z`, unlike the arc split of the first run, and it agrees with the
+continuum near every band bottom. It is still a choice of where to cut, and the cut sits at the
+lattice scale.
+
+**The amplitude.** With `P(p)`, `A(p)` the particle and antiparticle projectors and `θ_P`, `θ_A`
+their one-step phases,
+
+    L(E, P) = ∫_BZ d³p/(2π)³ [ P₁(p) ⊗ P₂(P−p) R(E − θ_P₁ − θ_P₂)
+                            − A₁(p) ⊗ A₂(P−p) R(E − θ_A₁ − θ_A₂) ],
+
+with the same kernel `R(x) = ½ cot((x + i0)/2)`, particles forward in time and antiparticles
+backward (Stueckelberg, check S5). Where both momenta lie below the cut this is the first run's
+integrand; where both lie above it is minus that integrand, so by the π-shift the two regions add
+instead of cancelling. Where the two momenta lie on opposite sides of Σ, mixed-arc pairs enter.
+Everything else is frozen as in the first run: `Γ₂ = Γ L Γ − c Γ` with `c` at the rest-frame
+threshold, `W₂`, the defect, the grid of `κ`, rapidity `0.5` on each axis, the four seeded samples,
+the masses, the verdict thresholds (PASS slope `≥ 1.95`, FAIL `< 1.5`), the scalar arm, the
+controls (blind contact median defect `≥ 10⁻²`, raw-slice vector slope `< 1.5`; a control that
+does not fail makes every verdict `INCONCLUSIVE`), the continuum calibration (`< 10⁻⁶`), and the
+gates (finite positive `W₂`; singular surfaces inside explicitly handled balls; the loop not zero
+to rounding; the vector `Γ₂` stable to `10⁻³` under finer integration).
+
+**Prediction, stated before the run: FAIL.** In the rest frame `ω(p) = ω(−p)`, so the two momenta
+never straddle Σ. A boost gives the pair a total momentum `|P| ≈ 0.5 E`, and then a slab of width
+`O(|P|)` around Σ carries straddling pairs whose energy denominators are only
+`E − |P|·|∇ω| = O(κ)`. That region contributes at `O(κ⁰)` in the boosted frame and not at all in the
+rest frame, so the vector defect should not fall with `κ`. If it passes, the cut is harmless at one
+loop and the mechanism above is wrong; if it fails, the frame dependence sits where the cut is,
+which is the outcome a cut at the lattice scale was expected to have.
+
+**Integration.** The ball construction around the eight zone corners is unchanged (all eight are now
+singular in the particle term: band bottoms with both momenta below the cut, band tops with both
+above). The rest of the zone is integrated on a tensor grid of Gauss–Legendre panels whose
+breakpoints include every cut plane of both particles (`pᵢ = ±π/2` and `pᵢ = Pᵢ ± π/2`), so the
+integrand is smooth inside each panel. The singular-surface gate outside the balls is
+`|x| ≥ (E − |P|)/5`, since straddling pairs have small but non-zero denominators. Panel counts are
+chosen by the stability gate and the calibration, never by a graded defect. The script will be
+`loop_cut_check.py`.
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
@@ -722,6 +964,9 @@ This result is **formal `F` for free propagation** and **`B-OPEN` for the physic
 | Interacting kinematics (allowed processes) covariant in the large, conditional on lattice conservation; elementary umklapp vectors not boost-stable | `F`; `QLF_InteractingKinematics` (§6a), audit anchors added |
 | Frame-comparison map for the walk's states (stage 4a) | `F` for its algebra (`QLF_BoostStates`); `N` for `O(κ²)` covariance of the band on the half-step slice (pre-registered PASS, [`boost_states_check.py`](boost_states_check.py)) |
 | Tree amplitudes of the two-body contact walk (stage 4b) | `F` for the vertex part: the scalar contact is preserved by the spin action, the spin-blind one is not (`QLF_BoostAmplitudes`); `N` for `O(κ²)` covariance of scalar, vector and finite-range amplitudes, and `O(1)` frame dependence of the spin-blind one (pre-registered, [`boost_amplitudes_check.py`](boost_amplitudes_check.py)) |
+| Contact from shared pairs (reading (A)) | `F` for the sign (`QLF_SharedPairSign`); `N` for the induced vector contact (pre-registered PASS, [`shared_pair_sign_check.py`](shared_pair_sign_check.py)); that a pair's weight is its signed phase on the singlet is a reading |
+| One-loop contact amplitude (stage 5) | pre-registered run `INVALID`: the Feynman-ordered loop vanishes on the walk, `F` for the cause (`QLF_PiDoubler`); Collins untested |
+| Particle/antiparticle split on the walk (stage 6, step 1) | `F` for the two-step periodicity (`halfWalk_sq_shift_z`, `halfWalk_sq_shift_z_eigen`); exact numerical checks for the gaps, the arc swap, `U² = −I` on Σ and the Stueckelberg kernels ([`walk_antiparticle_check.py`](walk_antiparticle_check.py)); that the backward arc is the antiparticle is a reading |
 | Interacting boost covariance (amplitudes, loops) | `B-OPEN`; conservative return `NOT_STARTED`; dependency chain in §6a |
 | Kinetic reading of the census symbol | assumption, not a theorem |
 | Census-vs-walk off-axis sign | open; the palindromic walk has the opposite sign |
