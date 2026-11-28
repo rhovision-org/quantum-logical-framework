@@ -74,6 +74,7 @@
     "D0_definition": "frozen",
     "D10_bounded_forgetting": "scope gate + cited results: discard only distinctions no declared continuation can recover; many-to-one closure and its -log 2 price are not re-proved",
     "D11_thought_effect_separation": "scope gate: a thought closure updates B and future eligibility; it does not directly select an external closure; intended effect is not a promotion rule",
+    "D12_feeling_deep_closure": "scope gate: feeling is modeled as a deep integrated closure; the verbal record R_W is lossy; no lossless word encoding is assumed; the inside view remains the qualia hypothesis",
     "D1_effective_frequency": "finite check; T>0, f=1/T, d separate",
     "D2_promotion_filter": "finite check; next trigger is argmin d; fast micro-event is ineligible",
     "D3_bounded_trace": "finite check only: a bounded trace has increasing external step index; no transition-system no-event-loop invariant is proved",

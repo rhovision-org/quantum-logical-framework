@@ -74,7 +74,9 @@ What is **new** here:
 5. the past is fixed but its **listener-relative compression changes**, which is the formal version
    of “that was what I was thinking all along”;
 6. a thought is a **closure that updates `B` and future eligibility**, but not a direct external
-   selector; D11 separates its real consequences from intention-control.
+   selector; D11 separates its real consequences from intention-control;
+7. a feeling is a **deep integrated closure** whose verbal record is lossy; D12 separates the
+   functional depth of feeling from the qualia hypothesis.
 
 ### 1a. The magical powers and the gift of forgetfulness
 
@@ -125,6 +127,30 @@ The claim is therefore a **reading with a finite dynamic shadow**, not psychokin
 as a closure and has consequences, but the consequences are selected by closure conditions rather than
 by the intention alone.
 
+### 1c. Feelings are deep closures beyond words
+
+A feeling is not a verbal label. In the model it is a **deep, integrated closure/context `F`**:
+broad binding, many simultaneous constraints, self-relevance to `B`, and a listener-relative effective
+period `T_i^(B)`. "Deep" here means depth of integration and closure, not merely a long clock time; a
+brief feeling can bind a large closure.
+
+The word is a **low-dimensional record** of a higher-dimensional closure. Let `R_W` be the listener's
+verbal record. The record partition of [`Entropy.md`](Entropy.md) §3 gives
+
+\[
+H(F)=H(R_W)+L_W,
+\]
+
+where `L_W = H(F\mid R_W)` is what the verbal record does not carry. A word can name a feeling, evoke
+it, or partially report it; it cannot be assumed to encode the whole closure. This is the precise
+functional content of **beyond words**: the feeling is not exhausted by its report.
+
+At the **functional/architectural grade**, feeling is equivalent to a deep closure: it is the wide,
+integrated, self-relevant closure that changes access and subsequent eligibility (D8). The further claim
+that the **inside view** of that closure is felt is the qualia hypothesis of
+[`Consciousness.md`](Consciousness.md) §6, not a theorem. No lossless word encoding is proved or
+assumed.
+
 ---
 
 ## 2. Gates
@@ -143,15 +169,18 @@ by the intention alone.
 | **D9** | frequency and event priority are distinct; a faster recurrent mode need not be the next trigger | **finite check** |
 | **D10** | forgetting is constrained: discard only distinctions that no declared continuation can recover; retain closure-relevant record; many-to-one closure and its `−log 2` price are cited | **scope gate + cited results**; no new theorem |
 | **D11** | a thought closure updates `B` and future eligibility; it does not directly select an external closure; the intended effect is not a promotion rule | **scope gate**; no observer potency (A06) |
+| **D12** | feeling is a deep integrated closure; its verbal record `R_W` is lossy; no lossless word encoding is assumed; the inside view remains the §6 qualia hypothesis | **scope gate**; no qualia theorem |
 
-This is a finite functional model, complete at that scope. D1–D4 and D6–D11 are finite checks or
+This is a finite functional model, complete at that scope. D1–D4 and D6–D12 are finite checks or
 scope gates; D5 and the general dynamic theorem remain open obligations, not conditions on the
 finite model. D3 checks a bounded trace with an external counter; it does **not** prove that the
 transition system excludes a zero-progress event loop. D10 distinguishes disciplined forgetting
 from arbitrary loss: the listener quotient is lossless for its declared continuations, while
 many-to-one closure physically forgets the path and carries the stated free-energy price. D11
 distinguishes a thought's real consequences from intention-control: the thought is an actual closure
-in `B`, but the external outcome is not selected by the thought's content.
+in `B`, but the external outcome is not selected by the thought's content. D12 distinguishes a
+feeling's functional depth from its verbal report: the closure can be real and causally relevant
+(D8), while the word record is lossy; the inside view remains the qualia hypothesis.
 
 ---
 
@@ -314,6 +343,9 @@ dynamic loop produces a finite trigger sequence, and each trigger is atomic.
   and selection of what to forget is not derived.
 - No claim that a thought directly actualizes its content outside the listener; D11 is the
   separation, and A06 forbids observer potency.
+- No claim that words cannot evoke or partially report a feeling; D12 says only that no lossless
+  word encoding is assumed.
+- No claim that every deep closure is felt; the inside view is the qualia hypothesis, not a theorem.
 - No claim that an observer can erase the substrate, and no therapy or clinical claim.
 
 ---
