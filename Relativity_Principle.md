@@ -711,6 +711,20 @@ walk's only closure between the two chiral halves, so a shared mass tick gives `
 reading the substrate takes is a definition to be chosen and then tested. It is not derived here,
 and the axis-blind result of §6 does not settle it, because §6 is about the unsigned census weight.
 
+**Pre-registered test of reading (A)** ([`shared_pair_sign_check.py`](shared_pair_sign_check.py), frozen
+in the commit that adds it, before it was run; Jim's decision of 2026-11-28 is to test (A) first and
+fall back to (B) if it fails). A pair shared between two strands is not a sequence on one strand:
+body A performs `t` and body B performs `t†`, so it acts as the composite `t ⊗ t†`
+([`QLF_TensorFromClosure`](lean/QLF_TensorFromClosure.lean) `splitPair_fold`) on the two-body state
+every shared strong pair fixes (`split_strong_iff_singlet`). The test reads each axis's weight as
+the shared pair's signed phase on that state, `w_a = ⟨ψ| t ⊗ t† |ψ⟩`, with `ψ` computed as a null
+space rather than written in. **(A) passes** iff the three spatial weights agree and the gauge
+weight is their negative, the Minkowski relative sign; it **fails** on equal signs (Euclidean) or
+unequal spatial weights. The control, the same weights read from the one-strand fold
+`½ tr(t t†)`, must come out Euclidean (it reproduces `shared_pair_fold_axis_blind`), or the run is
+invalid. With the walk's currents `J⁰ = 1`, `Jⁱ = αᵢ`, a pass must give a vertex `Σ_a w_a Jᵃ ⊗ Jᵃ`
+that is a multiple of the vector contact to `10⁻¹²`.
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
