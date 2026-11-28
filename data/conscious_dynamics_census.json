@@ -1,0 +1,529 @@
+{
+  "attention_winner": {
+    "distance": 1,
+    "frequency": 0.2,
+    "integration": 0.9,
+    "name": "thought",
+    "period": 5
+  },
+  "default_race": [
+    {
+      "base_distance": 0,
+      "distance": 0,
+      "eligible": false,
+      "frequency": 1.0,
+      "integration": 0.2,
+      "intrinsic_period": 1,
+      "name": "micro",
+      "period": 1,
+      "self_relevant": false
+    },
+    {
+      "base_distance": 2,
+      "distance": 2,
+      "eligible": true,
+      "frequency": 0.5,
+      "integration": 0.8,
+      "intrinsic_period": 2,
+      "name": "percept",
+      "period": 2,
+      "self_relevant": true
+    },
+    {
+      "base_distance": 5,
+      "distance": 5,
+      "eligible": true,
+      "frequency": 0.2,
+      "integration": 0.9,
+      "intrinsic_period": 5,
+      "name": "thought",
+      "period": 5,
+      "self_relevant": true
+    },
+    {
+      "base_distance": 7,
+      "distance": 7,
+      "eligible": true,
+      "frequency": 0.14285714285714285,
+      "integration": 0.95,
+      "intrinsic_period": 7,
+      "name": "feeling",
+      "period": 7,
+      "self_relevant": true
+    },
+    {
+      "base_distance": 8,
+      "distance": 8,
+      "eligible": true,
+      "frequency": 0.125,
+      "integration": 0.85,
+      "intrinsic_period": 8,
+      "name": "external",
+      "period": 8,
+      "self_relevant": true
+    }
+  ],
+  "default_winner": {
+    "distance": 2,
+    "frequency": 0.5,
+    "integration": 0.8,
+    "name": "percept",
+    "period": 2
+  },
+  "gates": {
+    "D0_definition": "frozen",
+    "D1_effective_frequency": "finite check; T>0, f=1/T, d separate",
+    "D2_promotion_filter": "finite check; next trigger is argmin d; fast micro-event is ineligible",
+    "D3_bounded_trace": "finite check only: a bounded trace has increasing external step index; no transition-system no-event-loop invariant is proved",
+    "D4_retrospective_compression": "finite check; history fixed, compression changes",
+    "D5_bisimulation": "cited from Listener_Equivalence_QLF.md; general theorem open",
+    "D6_attention_quieting": "finite check; race changes without new contestants",
+    "D7_qualia": "bracketed; no theorem",
+    "D8_affective_recollection": "finite check; same store, feeling features change accessibility; no target identity; RECALL is atomic",
+    "D9_frequency_priority_separation": "finite check; fast_recurrent has f=1.0 but slow_near has d=1; the next trigger is slow_near"
+  },
+  "loop": [
+    {
+      "distance": 2,
+      "frequency": 0.5,
+      "integration": 0.8,
+      "listener_after": {
+        "distance_bonus": {
+          "percept": 6,
+          "thought": -2
+        },
+        "period_bonus": {}
+      },
+      "name": "percept",
+      "next_successor": "thought",
+      "period": 2,
+      "step": 1,
+      "winner": "percept"
+    },
+    {
+      "distance": 3,
+      "frequency": 0.2,
+      "integration": 0.9,
+      "listener_after": {
+        "distance_bonus": {
+          "feeling": -2,
+          "percept": 6,
+          "thought": 4
+        },
+        "period_bonus": {}
+      },
+      "name": "thought",
+      "next_successor": "feeling",
+      "period": 5,
+      "step": 2,
+      "winner": "thought"
+    },
+    {
+      "distance": 5,
+      "frequency": 0.14285714285714285,
+      "integration": 0.95,
+      "listener_after": {
+        "distance_bonus": {
+          "external": -2,
+          "feeling": 4,
+          "percept": 6,
+          "thought": 4
+        },
+        "period_bonus": {}
+      },
+      "name": "feeling",
+      "next_successor": "external",
+      "period": 7,
+      "step": 3,
+      "winner": "feeling"
+    },
+    {
+      "distance": 6,
+      "frequency": 0.125,
+      "integration": 0.85,
+      "listener_after": {
+        "distance_bonus": {
+          "external": 4,
+          "feeling": 4,
+          "percept": 6,
+          "thought": 4
+        },
+        "period_bonus": {}
+      },
+      "name": "external",
+      "next_successor": null,
+      "period": 8,
+      "step": 4,
+      "winner": "external"
+    }
+  ],
+  "magical_powers": {
+    "active_inference_synthesis": "explicit promotion/update U in this toy; identity with active inference remains B-OPEN",
+    "relative_world_database": "finite candidate set + listener context B; a bounded relative database, not an unrestricted inventory of all possible worlds",
+    "strange_loop_reflection": "finite self-model square M ~ S/~_B; toy commutativity only, general theorem open"
+  },
+  "memory": {
+    "feeling_fields": [
+      "name",
+      "features"
+    ],
+    "kill_condition": "the feeling carries generic features only; it never contains the target memory",
+    "runs": [
+      {
+        "feeling": "neutral",
+        "feeling_features": [],
+        "recall": {
+          "atomic": true,
+          "event": "RECALL",
+          "memory": "M_A",
+          "tau_recall": 0
+        },
+        "rows": [
+          {
+            "base_distance": 4,
+            "gain": 1,
+            "memory": "M_A",
+            "overlap": 0,
+            "trigger_step": 4
+          },
+          {
+            "base_distance": 5,
+            "gain": 1,
+            "memory": "M_B",
+            "overlap": 0,
+            "trigger_step": 5
+          },
+          {
+            "base_distance": 7,
+            "gain": 1,
+            "memory": "M_C",
+            "overlap": 0,
+            "trigger_step": 7
+          }
+        ],
+        "store": [
+          "M_A",
+          "M_B",
+          "M_C"
+        ],
+        "store_unchanged": true,
+        "trace": [
+          {
+            "distances": {
+              "M_A": 3,
+              "M_B": 4,
+              "M_C": 6
+            },
+            "event": "listening",
+            "step": 1
+          },
+          {
+            "distances": {
+              "M_A": 2,
+              "M_B": 3,
+              "M_C": 5
+            },
+            "event": "listening",
+            "step": 2
+          },
+          {
+            "distances": {
+              "M_A": 1,
+              "M_B": 2,
+              "M_C": 4
+            },
+            "event": "listening",
+            "step": 3
+          },
+          {
+            "distances": {
+              "M_A": 0,
+              "M_B": 1,
+              "M_C": 3
+            },
+            "event": "RECALL",
+            "step": 4
+          }
+        ],
+        "trigger_step": 4,
+        "winner": "M_A"
+      },
+      {
+        "feeling": "F_blue_room",
+        "feeling_features": [
+          "blue",
+          "room"
+        ],
+        "recall": {
+          "atomic": true,
+          "event": "RECALL",
+          "memory": "M_A",
+          "tau_recall": 0
+        },
+        "rows": [
+          {
+            "base_distance": 4,
+            "gain": 5,
+            "memory": "M_A",
+            "overlap": 2,
+            "trigger_step": 1
+          },
+          {
+            "base_distance": 5,
+            "gain": 3,
+            "memory": "M_B",
+            "overlap": 1,
+            "trigger_step": 2
+          },
+          {
+            "base_distance": 7,
+            "gain": 3,
+            "memory": "M_C",
+            "overlap": 1,
+            "trigger_step": 3
+          }
+        ],
+        "store": [
+          "M_A",
+          "M_B",
+          "M_C"
+        ],
+        "store_unchanged": true,
+        "trace": [
+          {
+            "distances": {
+              "M_A": 0,
+              "M_B": 2,
+              "M_C": 4
+            },
+            "event": "RECALL",
+            "step": 1
+          }
+        ],
+        "trigger_step": 1,
+        "winner": "M_A"
+      },
+      {
+        "feeling": "F_song_summer",
+        "feeling_features": [
+          "song",
+          "summer"
+        ],
+        "recall": {
+          "atomic": true,
+          "event": "RECALL",
+          "memory": "M_B",
+          "tau_recall": 0
+        },
+        "rows": [
+          {
+            "base_distance": 4,
+            "gain": 1,
+            "memory": "M_A",
+            "overlap": 0,
+            "trigger_step": 4
+          },
+          {
+            "base_distance": 5,
+            "gain": 5,
+            "memory": "M_B",
+            "overlap": 2,
+            "trigger_step": 1
+          },
+          {
+            "base_distance": 7,
+            "gain": 1,
+            "memory": "M_C",
+            "overlap": 0,
+            "trigger_step": 7
+          }
+        ],
+        "store": [
+          "M_A",
+          "M_B",
+          "M_C"
+        ],
+        "store_unchanged": true,
+        "trace": [
+          {
+            "distances": {
+              "M_A": 3,
+              "M_B": 0,
+              "M_C": 6
+            },
+            "event": "RECALL",
+            "step": 1
+          }
+        ],
+        "trigger_step": 1,
+        "winner": "M_B"
+      },
+      {
+        "feeling": "F_loss_winter",
+        "feeling_features": [
+          "loss",
+          "winter"
+        ],
+        "recall": {
+          "atomic": true,
+          "event": "RECALL",
+          "memory": "M_C",
+          "tau_recall": 0
+        },
+        "rows": [
+          {
+            "base_distance": 4,
+            "gain": 1,
+            "memory": "M_A",
+            "overlap": 0,
+            "trigger_step": 4
+          },
+          {
+            "base_distance": 5,
+            "gain": 1,
+            "memory": "M_B",
+            "overlap": 0,
+            "trigger_step": 5
+          },
+          {
+            "base_distance": 7,
+            "gain": 5,
+            "memory": "M_C",
+            "overlap": 2,
+            "trigger_step": 2
+          }
+        ],
+        "store": [
+          "M_A",
+          "M_B",
+          "M_C"
+        ],
+        "store_unchanged": true,
+        "trace": [
+          {
+            "distances": {
+              "M_A": 3,
+              "M_B": 4,
+              "M_C": 2
+            },
+            "event": "listening",
+            "step": 1
+          },
+          {
+            "distances": {
+              "M_A": 2,
+              "M_B": 3,
+              "M_C": 0
+            },
+            "event": "RECALL",
+            "step": 2
+          }
+        ],
+        "trigger_step": 2,
+        "winner": "M_C"
+      }
+    ],
+    "store": [
+      "M_A",
+      "M_B",
+      "M_C"
+    ],
+    "store_unchanged_across_feelings": true,
+    "target_field_present": false,
+    "winners": {
+      "F_blue_room": "M_A",
+      "F_loss_winter": "M_C",
+      "F_song_summer": "M_B",
+      "neutral": "M_A"
+    }
+  },
+  "meta": {
+    "distance": "d_i^(B) = remaining distance to the next trigger",
+    "frequency": "f_i^(B) = 1 / T_i^(B), a recurrence frequency",
+    "generator": "conscious_dynamics.py",
+    "issue": 278,
+    "pre_registration": "Conscious_Dynamics_QLF.md",
+    "priority": "i_next = argmin d_i over eligible closures",
+    "update": "B_{t+1} = U(B_t, C_t*)",
+    "version": 3
+  },
+  "priority_fastest": {
+    "distance": 5,
+    "frequency": 1.0,
+    "integration": 0.8,
+    "name": "fast_recurrent",
+    "period": 1
+  },
+  "priority_next": {
+    "distance": 1,
+    "frequency": 0.1,
+    "integration": 0.9,
+    "name": "slow_near",
+    "period": 10
+  },
+  "priority_race": [
+    {
+      "base_distance": 1,
+      "distance": 1,
+      "eligible": true,
+      "frequency": 0.1,
+      "integration": 0.9,
+      "intrinsic_period": 10,
+      "name": "slow_near",
+      "period": 10,
+      "self_relevant": true
+    },
+    {
+      "base_distance": 2,
+      "distance": 2,
+      "eligible": true,
+      "frequency": 0.5,
+      "integration": 0.8,
+      "intrinsic_period": 2,
+      "name": "percept",
+      "period": 2,
+      "self_relevant": true
+    },
+    {
+      "base_distance": 5,
+      "distance": 5,
+      "eligible": true,
+      "frequency": 1.0,
+      "integration": 0.8,
+      "intrinsic_period": 1,
+      "name": "fast_recurrent",
+      "period": 1,
+      "self_relevant": true
+    }
+  ],
+  "quieting_winner": {
+    "distance": 8,
+    "frequency": 0.125,
+    "integration": 0.85,
+    "name": "external",
+    "period": 8
+  },
+  "retrospective": {
+    "compression_after": {
+      "h1": "A",
+      "h2": "B",
+      "h3": "B",
+      "h4": "B"
+    },
+    "compression_before": {
+      "h1": "A",
+      "h2": "A",
+      "h3": "B",
+      "h4": "C"
+    },
+    "compression_changed": true,
+    "history": [
+      "h1",
+      "h2",
+      "h3",
+      "h4"
+    ],
+    "history_unchanged": true,
+    "note": "the past is fixed; the listener-relative compression changes"
+  }
+}
