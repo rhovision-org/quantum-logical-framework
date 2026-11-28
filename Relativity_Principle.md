@@ -404,7 +404,7 @@ For a two-body contact-interaction walk on `ℤ³` the conservation law is now d
 | 3. Lattice conservation derived for a concrete interacting walk | **proved for two bodies on `ℤ³`** with any contact interaction (`twoBody_lattice_conservation`, `scattering_latticeConserving`) | `N` bodies: the same argument with an `N`-fold joint shift; labour |
 | 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the relative boost defect of the two-body tree-level vertex proxy scales as `κ²` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | **4c**: stage-3 conservation extended to a matrix-valued contact (`QLF_SpinorContact`); the half-step slice's parameter-reversal identity, a structural explanation of the `O(κ²)` slopes (`QLF_HalfStepReversal`). Open: the analytic `O(κ²)` bound; interacting covariance of the contact step (vertex invariance and coin unitarity do not give it); energy-conserving amplitudes. **Which contact**: on reading (A), shared pairs give the vector contact (pre-registered, PASS; the sign proved in `QLF_SharedPairSign`) |
 | 5. Loops: lattice-scale contribution small at low energy (Collins) | **pre-registered and run: INVALID** (§6b, "Stage 5 result"). The Feynman-ordered one-loop vertex vanishes identically on the walk, because `kz ↦ kz + π` negates the step (`QLF_PiDoubler`), so an antiparticle pair is a `π`-shifted particle pair. The calibration passed (`7.3 × 10⁻⁷`). Collins is untested | stage 6: what the walk's antiparticles are decides which intermediate states a loop sums over; then a loop expansion and a bound on its lattice-scale part |
-| 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
+| 6. Pair creation as a change in census strand number | **step 1 done** (§6b, "Stage 6, step 1"): the walk's particle/antiparticle split is global only on its doubled description, where it is odd under `k ↦ k + π e_z`; on its conserved parity sector the arcs meet where some `kᵢ = ±π/2` (`halfWalk_sq_shift_z_eigen`). Still **blocked on a definition** | the census with a variable number of strands, or a pre-registered lattice-scale cut; §6 has two persistent strands only |
 | 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
 
 ## 6b. Stage 4: how a boost acts on the walk's states
@@ -847,6 +847,55 @@ change of integration variable, and is not itself formalized.
 - So what the walk's antiparticles are decides the loop. That is stage 6, pair creation as a change
   in strand number, and stage 5 now depends on it.
 
+### Stage 6, step 1: what separates the walk's particles from its antiparticles
+
+Jim chose on 2026-11-28 to settle this before any new loop test. The question has three parts: what
+distinguishes the two sectors, which intermediate states a loop may sum over, and whether the
+resulting prescription has the right continuum limit. The structural facts are checked in
+[`walk_antiparticle_check.py`](walk_antiparticle_check.py) (output
+[`data/walk_antiparticle_check.json`](data/walk_antiparticle_check.json)), on both slices, and the
+new periodicity facts are proved in [`lean/QLF_PiDoubler.lean`](lean/QLF_PiDoubler.lean), with no
+axioms.
+
+**The Feynman ordering is Stueckelberg's.** The two kernels of stage 5 are a time-ordered sum: the
+arc `e^{+iω}` propagated forward in time and the arc `e^{−iω}` propagated backward give
+`R(E − ω)` and `R(E + ω)`, with the constants that cancel the seagull (check S5, residual
+`7 × 10⁻¹⁴`). So the ordering is not an extra prescription once one arc is read as running backward
+in time. In QLF's terms that is the bra direction, the dagger (`lift`); that the backward arc is
+the antiparticle is a reading.
+
+**On the full lattice the split exists and is odd under a symmetry.** The dispersion is
+`cos ω = cos m · Π cos kᵢ` (S1), so `ω ∈ [m, π − m]` and the step is gapped at quasi-energy `0` and
+at `π` (S2). The two arcs are separated everywhere, and the split into forward and backward arcs is
+global. But `k ↦ k + π e_z` swaps the arcs (S3, `halfWalk_shift_z_eigen`), and that is the whole
+reason the stage-5 loop vanished: every both-backward pair is a shifted both-forward pair.
+
+**On the walk's conserved sector there is no global split.** Every step displaces `z` by an odd
+amount (that is what `U(k + π e_z) = −U(k)` says in position space), so the parity of `t + z` is
+conserved and the full lattice is two decoupled, identical copies. On one copy `k` and `k + π e_z`
+are the same momentum: two steps are `π`-periodic in `k_z` (`halfWalk_sq_shift_z`,
+`diracWalk_sq_shift_z`), and a forward-arc state at `k + π e_z` and a backward-arc state at `k` have
+the same two-step eigenvalue (`halfWalk_sq_shift_z_eigen`). Following the forward arc once around
+the copy's `k_z` circle ends on the backward arc. The two arcs meet on the surface Σ where some
+`kᵢ = ±π/2`, where the two-step walk is `−I` exactly (S4): there no evolution separates them.
+
+**What a loop may sum over, and the continuum limit.** Near the band bottoms (`Π cos kᵢ = 1`) the
+split is the continuum's, so every candidate agrees in the region a low-energy observer probes. The
+candidates differ at the lattice scale:
+
+| Prescription | Intermediate states | Continuum limit of the loop |
+|---|---|---|
+| Doubled lattice, Feynman–Stueckelberg | both copies, global arc split | **wrong**: the loop is identically `0` (stage 5); the backward-arc term at `p` cancels the forward-arc term at `p + π e_z` |
+| One copy, fixed two strands, all arc pairs | one copy, no split needed | not covariant even in the continuum (Brown–Ravenhall), so no calibration |
+| One copy, Feynman–Stueckelberg with a cut | one copy, arcs split by a surface through Σ | depends on the cut; Σ is at the lattice scale, so the cut is a frame-dependent choice made exactly where Collins's leakage would come from |
+| Variable strand number (the census) | histories that create and close pairs | undefined until the census with a variable number of strands is written down |
+
+So the walk does not supply the antiparticle sector a covariant loop needs. Its global split is an
+artifact of the doubled description, and on its irreducible sector the split exists only away from
+Σ. Any one-loop prescription on the walk therefore either loses the loop or makes a lattice-scale
+choice, and the next stage-5 test has to say which, before it is run. The variable-strand census is
+the one candidate that would derive the split rather than choose it.
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
@@ -860,6 +909,7 @@ This result is **formal `F` for free propagation** and **`B-OPEN` for the physic
 | Tree amplitudes of the two-body contact walk (stage 4b) | `F` for the vertex part: the scalar contact is preserved by the spin action, the spin-blind one is not (`QLF_BoostAmplitudes`); `N` for `O(κ²)` covariance of scalar, vector and finite-range amplitudes, and `O(1)` frame dependence of the spin-blind one (pre-registered, [`boost_amplitudes_check.py`](boost_amplitudes_check.py)) |
 | Contact from shared pairs (reading (A)) | `F` for the sign (`QLF_SharedPairSign`); `N` for the induced vector contact (pre-registered PASS, [`shared_pair_sign_check.py`](shared_pair_sign_check.py)); that a pair's weight is its signed phase on the singlet is a reading |
 | One-loop contact amplitude (stage 5) | pre-registered run `INVALID`: the Feynman-ordered loop vanishes on the walk, `F` for the cause (`QLF_PiDoubler`); Collins untested |
+| Particle/antiparticle split on the walk (stage 6, step 1) | `F` for the two-step periodicity (`halfWalk_sq_shift_z`, `halfWalk_sq_shift_z_eigen`); exact numerical checks for the gaps, the arc swap, `U² = −I` on Σ and the Stueckelberg kernels ([`walk_antiparticle_check.py`](walk_antiparticle_check.py)); that the backward arc is the antiparticle is a reading |
 | Interacting boost covariance (amplitudes, loops) | `B-OPEN`; conservative return `NOT_STARTED`; dependency chain in §6a |
 | Kinetic reading of the census symbol | assumption, not a theorem |
 | Census-vs-walk off-axis sign | open; the palindromic walk has the opposite sign |

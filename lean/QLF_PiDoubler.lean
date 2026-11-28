@@ -16,6 +16,9 @@ Shifting `kz` by `π` multiplies each half step's two phases by `i` and `−i`, 
 * **`halfWalk_shift_z_eigen`**: an eigenvector of the step at `k` with eigenvalue `λ` is an
   eigenvector at `k + π e_z` with eigenvalue `−λ`: the quasi-energy moves by `π`, and the positive
   and negative bands trade places.
+* **`halfWalk_sq_shift_z`**, **`diracWalk_sq_shift_z`**, **`halfWalk_sq_shift_z_eigen`** (stage 6):
+  two steps are `π`-periodic in `kz`, so on the walk's conserved parity sector the band label that
+  separates particles from antiparticles is not a property of the state.
 
 Consequence for stage 5 (computed in [`loop_boost_check.py`](../loop_boost_check.py), not proved
 here): a pair of negative-band states at `(p, P − p)` is a pair of positive-band states at
@@ -128,5 +131,26 @@ theorem halfWalk_shift_z_eigen (ky kx kz m : ℝ) (v : Fin 2 × Fin 2 → ℂ) (
     (h : halfWalk ky kx kz m *ᵥ v = lam • v) :
     halfWalk ky kx (kz + Real.pi) m *ᵥ v = (-lam) • v := by
   rw [halfWalk_shift_z, neg_mulVec, h, neg_smul]
+
+/-- **Two steps do not see the shift.** The half-step slice squared is `π`-periodic in `kz`: on the
+    walk's conserved parity sector, `k` and `k + π e_z` are one momentum (stage 6). -/
+theorem halfWalk_sq_shift_z (ky kx kz m : ℝ) :
+    halfWalk ky kx (kz + Real.pi) m * halfWalk ky kx (kz + Real.pi) m =
+      halfWalk ky kx kz m * halfWalk ky kx kz m := by
+  rw [halfWalk_shift_z, neg_mul_neg]
+
+/-- **Two steps do not see the shift**, raw slice. -/
+theorem diracWalk_sq_shift_z (ky kx kz m : ℝ) :
+    diracWalk ky kx (kz + Real.pi) m * diracWalk ky kx (kz + Real.pi) m =
+      diracWalk ky kx kz m * diracWalk ky kx kz m := by
+  rw [diracWalk_shift_z, neg_mul_neg]
+
+/-- **The shift is a band label, not a state.** An eigenvector of the step at `k` with eigenvalue
+    `λ` has the two-step eigenvalue `λ²` at both `k` and `k + π e_z`: the two-step evolution cannot
+    tell a negative-band state at `k` from the positive-band state at `k + π e_z`. -/
+theorem halfWalk_sq_shift_z_eigen (ky kx kz m : ℝ) (v : Fin 2 × Fin 2 → ℂ) (lam : ℂ)
+    (h : halfWalk ky kx kz m *ᵥ v = lam • v) :
+    (halfWalk ky kx (kz + Real.pi) m * halfWalk ky kx (kz + Real.pi) m) *ᵥ v = (lam * lam) • v := by
+  rw [halfWalk_sq_shift_z, ← mulVec_mulVec, h, mulVec_smul, h, smul_smul]
 
 end QLF.PiDoubler

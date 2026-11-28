@@ -940,6 +940,9 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.PiDoubler.halfWalk_shift_z
 #print axioms QLF.PiDoubler.diracWalk_shift_z
 #print axioms QLF.PiDoubler.halfWalk_shift_z_eigen
+#print axioms QLF.PiDoubler.halfWalk_sq_shift_z
+#print axioms QLF.PiDoubler.diracWalk_sq_shift_z
+#print axioms QLF.PiDoubler.halfWalk_sq_shift_z_eigen
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self

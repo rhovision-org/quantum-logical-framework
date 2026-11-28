@@ -2934,12 +2934,27 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.PiDoubler.diracWalk_sq_shift_z": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.PiDoubler.halfWalk_shift_z": [
     "Classical.choice",
     "Quot.sound",
     "propext"
   ],
   "QLF.PiDoubler.halfWalk_shift_z_eigen": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PiDoubler.halfWalk_sq_shift_z": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PiDoubler.halfWalk_sq_shift_z_eigen": [
     "Classical.choice",
     "Quot.sound",
     "propext"
