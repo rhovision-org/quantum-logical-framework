@@ -23,7 +23,7 @@ status labels.
 [`QLF_ClosureUncertainty`](lean/QLF_ClosureUncertainty.lean); the proved cooperative-closure stack
 is [`Cooperative_Intelligence.md`](Cooperative_Intelligence.md), indexed by
 [PR #272](https://github.com/rhovision-org/quantum-logical-framework/pull/272); the listener
-quotient is [PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275).
+quotient is [`Listener_Equivalence_QLF.md`](Listener_Equivalence_QLF.md).
 
 ---
 
@@ -112,7 +112,7 @@ but a continuation can distinguish their closure outcomes, the compression is lo
 claim fails.
 
 This is the same correctness condition as the listener quotient in
-[PR #275](https://github.com/rhovision-org/quantum-logical-framework/pull/275):
+[`Listener_Equivalence_QLF.md`](Listener_Equivalence_QLF.md):
 
 ```
 s ~_B t  ⇔  same observation and every continuation stays equivalent.
