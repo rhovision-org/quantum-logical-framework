@@ -725,6 +725,19 @@ unequal spatial weights. The control, the same weights read from the one-strand 
 invalid. With the walk's currents `J⁰ = 1`, `Jⁱ = αᵢ`, a pass must give a vertex `Σ_a w_a Jᵃ ⊗ Jᵃ`
 that is a multiple of the vector contact to `10⁻¹²`.
 
+**Result: (A) passes.** The selected state is the singlet `(|01⟩ − |10⟩)/√2`. The control comes out
+Euclidean (every one-strand fold weight is `−1`), so the test discriminates. The two-strand weights
+are `w_gauge = −1` and `w_x = w_y = w_z = +1`, the Minkowski relative sign, and the induced vertex is
+`−1` times the vector contact `1 ⊗ 1 − Σ αᵢ ⊗ αᵢ`, at distance `0` from it. The sign is proved in
+[`lean/QLF_SharedPairSign.lean`](lean/QLF_SharedPairSign.lean) with no axioms
+(`splitPair_singlet_sign`: a shared pair acts on the singlet as `−1` on the gauge axis and `+1` on a
+spatial one). Read with [`QLF_MetricSinglet`](lean/QLF_MetricSinglet.lean) `metric_is_singlet`, this is
+one statement: the Minkowski metric is the shared pair's state. What stays a reading, not a theorem,
+is that a shared pair's weight is its signed phase on that state and that the walk's current along a
+twist's axis is `αᵢ` (the gauge axis carrying the density `1`). So the vector contact is the contact
+the substrate's shared pairs give on this reading, and stage 5 uses it; `β ⊗ β` is not needed as a
+fallback.
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).

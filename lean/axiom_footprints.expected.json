@@ -3348,6 +3348,16 @@
   "QLF.SharedEvent.shared_event_not_from_bodies": [
     "propext"
   ],
+  "QLF.SharedPairSign.splitPair_singlet_relative_sign": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedPairSign.splitPair_singlet_sign": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SharedReality.chain_without_relay_fails": [
     "Classical.choice",
     "Quot.sound",

@@ -91,6 +91,7 @@ import QLF_BoostStates
 import QLF_BoostAmplitudes
 import QLF_SpinorContact
 import QLF_HalfStepReversal
+import QLF_SharedPairSign
 import QLF_Maxwell
 import QLF_LinkAction
 import QLF_MaxwellTime
@@ -929,6 +930,8 @@ tensor quotient return. They are part of the 343-anchor baseline. -/
 #print axioms QLF.HalfStepReversal.massStep_neg
 #print axioms QLF.HalfStepReversal.halfWalk_reversal
 #print axioms QLF.HalfStepReversal.halfWalk_reversal_inv
+#print axioms QLF.SharedPairSign.splitPair_singlet_sign
+#print axioms QLF.SharedPairSign.splitPair_singlet_relative_sign
 
 -- Clock/redshift algebra only; physical selection and return remain open.
 #print axioms QLF.ClockRedshift.ratio_self
