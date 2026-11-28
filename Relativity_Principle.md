@@ -17,6 +17,14 @@ such a contact, the vector one. Loops are untested: the Feynman-ordered loop van
 (§6b, "Stage 5 result"). For the census symbol the step to a propagation law is still an
 assumption, labelled where it is used.
 
+**Framing.** This is not a second premise. QLF has one conjecture, equal and opposite logical action
+([`Framing.md`](Framing.md) A01), and this document tests a model inside it: the Dirac walk's
+census. "The relativity principle is derived, not postulated" therefore means *derived within that
+model at the stated order*, not that Nature has been shown to obey it beyond the tested regime. The
+same split appears in [`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md): the universe's
+computation is the one conjecture read as closure, while every model of that computation is a claim
+that can fail.
+
 Einstein's first postulate says the laws of physics are the same for every observer in uniform
 motion. QLF does not assume it. What the census of histories proves is narrower:
 
