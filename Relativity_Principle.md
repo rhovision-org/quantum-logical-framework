@@ -399,7 +399,7 @@ For a two-body contact-interaction walk on `ℤ³` the conservation law is now d
 | 2. Interacting kinematics covariant in the large, given lattice conservation and the summed long-wavelength bound; elementary umklapp vectors along a boost axis are not boost-stable | proved (this section, `process_boost_covariant`, `umklapp_x_not_covariant`) | — |
 | 3. Lattice conservation derived for a concrete interacting walk | **proved for two bodies on `ℤ³`** with any contact interaction (`twoBody_lattice_conservation`, `scattering_latticeConserving`) | `N` bodies: the same argument with an `N`-fold joint shift; labour |
 | 4. Amplitudes covariant at tree level | **4a done**: the frame-comparison map is defined (§6b, approved 2026-11-22), its algebra is proved (`QLF_BoostStates`), and the walk's band is covariant to `O(κ²)` on the half-step slice (pre-registered, PASS). **4b done on its grid**: the relative boost defect of the two-body tree-level vertex proxy scales as `κ²` for scalar, vector and nearest-neighbour scalar contacts (pre-registered, PASS); the spin-blind contact of stage 3 has an `O(1)` defect (predicted, confirmed); the spin-blind vertex is not boost invariant (`QLF_BoostAmplitudes`) | **4c**: stage-3 conservation extended to a matrix-valued contact (`QLF_SpinorContact`); the half-step slice's parameter-reversal identity, a structural explanation of the `O(κ²)` slopes (`QLF_HalfStepReversal`). Open: the analytic `O(κ²)` bound; interacting covariance of the contact step (vertex invariance and coin unitarity do not give it); energy-conserving amplitudes; which contact the substrate gives (§6b, "Which contact?") |
-| 5. Loops: lattice-scale contribution small at low energy (Collins) | open, **blocked on a definition and on analysis** | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
+| 5. Loops: lattice-scale contribution small at low energy (Collins) | **pre-registered** (§6b, "Stage 5 pre-registration"): one-loop contact amplitude, Feynman ordering, vector contact from reading (A) | a loop expansion of the interacting walk, and a bound on the lattice-scale part of the Brillouin-zone sum (umklapp and finite-spacing shell corrections both). §6's axis-blind result is the census-side partial answer |
 | 6. Pair creation as a change in census strand number | open, **blocked on a definition** | the census with a variable number of strands; §6 has two persistent strands only |
 | 7. Conservative return: interacting record → closure invariants | `NOT_STARTED` | stages 3–6 |
 
@@ -737,6 +737,72 @@ is that a shared pair's weight is its signed phase on that state and that the wa
 twist's axis is `αᵢ` (the gauge axis carrying the density `1`). So the vector contact is the contact
 the substrate's shared pairs give on this reading, and stage 5 uses it; `β ⊗ β` is not needed as a
 fallback.
+
+### Stage 5 pre-registration: the one-loop contact amplitude
+
+Frozen in the commit that adds this subsection, before any loop code was written or run. Jim
+approved the plan on 2026-11-28 (the contact from reading (A); the four loop choices), with the
+Feynman ordering of intermediate states in place of the fixed-two-particle sum, for the reason
+below. The external reference is Collins, Perez, Sudarsky, Urrutia and Vucetich, *Phys. Rev. Lett.*
+**93**, 191301 (2004), [arXiv:gr-qc/0403053](https://arxiv.org/abs/gr-qc/0403053): Lorentz violation
+at the cutoff, suppressed at tree level, can return at order one through loops.
+
+**Why Feynman ordering.** A loop that keeps exactly two particles and sums all four combinations of
+positive and negative bands is not the covariant one-loop diagram even in the continuum (the
+Brown–Ravenhall problem); covariance needs the pair-creation terms. Integrating the energy of the
+continuum Feynman bubble gives exactly two terms, both-positive and both-negative intermediate
+pairs with opposite signs, and the mixed pairs drop out. Stage 5 uses that ordering on the walk.
+It is borrowed from quantum field theory, not derived from the walk; deriving it is stage 6
+(pair creation).
+
+**The amplitude.** Each walk particle has the one-step operator `U(k, m)` of the half-step slice,
+with positive and negative band projectors `Λ±(k)` and quasi-energy `ω(k) ∈ (0, π)`. For total
+quasi-energy `E` and total momentum `P`,
+
+    L(E, P) = ∫_BZ d³p/(2π)³ [ Λ₁⁺(p) ⊗ Λ₂⁺(P−p) R(E − ω₁(p) − ω₂(P−p))
+                            − Λ₁⁻(p) ⊗ Λ₂⁻(P−p) R(E + ω₁(p) + ω₂(P−p)) ],
+
+with the Floquet kernel `R(x) = ½ cot((x + i0)/2)`, so energies are compared mod `2π`. This is the
+walk's resolvent `i/(e^{i(x+i0)} − 1)` without its constant `−i/2`: in the walk's own sum over all
+intermediate states that constant multiplies the completeness relation and cancels the coin's
+second-order term `−g²Γ²/2` exactly, so both are left out together. The internal sum runs over the
+whole zone, and nothing internal is mapped between frames. The one-loop vertex is
+`Γ₂(E, P) = Γ L(E, P) Γ − c Γ`, with one counterterm `c`, the Hilbert–Schmidt component along `Γ` of
+`Γ L Γ` at the rest-frame threshold (`P = 0`, `E = ω₁(0) + ω₂(0)`), computed once per slice, mass
+and `κ` and used in both frames.
+
+**The graded quantity.** As in stage 4b, with external legs only mapped by the stage-4a map, and
+`Π = E·P(k)` the external band projectors:
+
+    W₂ = Tr[(Π₁′ ⊗ Π₂′) Γ₂ (Π₁ ⊗ Π₂) Γ₂†],    defect = |W₂(Λp) − W₂(p)| / W₂(p),
+
+frame 1 with the walk's own energies at `P = 0` (centre-of-momentum elastic kinematics), frame 2
+with the boosted energies and momenta, `L` evaluated at the in-state's `(E, P)` in each frame.
+Grid: `κ ∈ {0.08, 0.04, 0.02, 0.01, 0.005}`, rapidity `0.5` along each axis, four seeded direction
+pairs, mass ratio 1, `m_B/m_A = 0.6`; worst defect over samples and axes at each `κ`, slope of
+`log defect` against `log κ`.
+
+**Verdicts.**
+- *Graded*: the vector contact `1 ⊗ 1 − Σ αᵢ ⊗ αᵢ` (the contact reading (A) gives), on the
+  half-step slice. **PASS** if the slope is at least `1.95`; **FAIL** if it is below `1.5`
+  (the Collins leakage: the lattice-scale part does not fall with `κ²`, and the relativity principle
+  does not survive the first loop for this contact and walk); **INCONCLUSIVE** between.
+- *Second graded arm*: the scalar contact `β ⊗ β`, the same thresholds, reported separately (Jim's
+  card of 2026-11-28 asked for both).
+- *Controls*, each of which must fail or the run does not discriminate and is reported
+  `INCONCLUSIVE`: the spin-blind contact `1 ⊗ 1` on the half-step slice must have a median defect of at
+  least `10⁻²` at every `κ`; the raw slice must have slope below `1.5` for the vector contact.
+- *Calibration*: the continuum Dirac loop computed by the same code, regulated by Pauli–Villars
+  (four regulator mass pairs scaled by `3, 4, 5, 6`, coefficients cancelling the first four moments,
+  integrated to a radius well beyond the regulators) must give a worst vector-contact defect below
+  `10⁻⁶`. No momentum cutoff is boost invariant, so roundoff is not attainable.
+- *Gates* (fail closed, run `INVALID`): every `W₂` finite, real and positive; every singular surface
+  of `R` lies inside a region integrated with explicit pole handling; the result is stable under a
+  finer integration (the vector `Γ₂` changes by less than `10⁻³` relative at the largest and smallest
+  `κ`).
+
+Integration settings are chosen by convergence of `L` and the calibration, never of a graded defect.
+The script will be `loop_boost_check.py`, added after this commit.
 
 ## 7a. Claim-record status and open obligations
 
