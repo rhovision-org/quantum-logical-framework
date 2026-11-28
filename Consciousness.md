@@ -204,6 +204,25 @@ Anastassiou et al. 2011, *Nat. Neurosci.* 14, 217). The fuller treatment, includ
 and the reading of spirit as possibility that closes in minds, is
 [`Unreasonable_Classical_Mathematics.md`](Unreasonable_Classical_Mathematics.md) §8.
 
+**Wish realization and deeper closure — candidate, not result.** The report that cosmic-consciousness
+states are often accompanied by apparently realized wishes is compatible with a **deeper enabling
+closure**, but it is not evidence for observer potency. Three readings must be separated:
+
+1. **Ordinary action/attention.** The wish is a thought closure that changes `B`, attention and
+   subsequent action; the outcome follows through the agent's behavior. This is already covered by C31
+   and D11.
+2. **Deeper enabling closure.** The quieted receiver regime couples to a slower joint closure that
+   makes an already-admissible outcome more accessible. The wish does not select the outcome; the
+   larger closure enables the path.
+3. **Selection, ambiguity and reporting bias.** Wishes are often vague, remembered after the fact, or
+   counted without a baseline. “Most often” is not a rate until the wish, time window, specificity and
+   denominator are fixed.
+
+Only reading 2 is a distinct QLF claim, and it is **C32, a conjecture**. Its kill condition is explicit:
+pre-register the wish and window, estimate the base rate, and control for action and attention. If the
+realized rate is not above that baseline, the deeper-closure reading is rejected for that dataset. No
+psychokinesis and no observer potency are implied.
+
 ## 5. Quantum biology is the substrate — and evolution exploits it
 
 If cognition is **resonant access** to pre-existing closures (the possibilist ontology — the landscape
