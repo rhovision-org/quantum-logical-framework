@@ -36,13 +36,46 @@ already in the registry:
 > recover only a continuation-relevant record, not the path. The inventory's older phrase “closure
 > preserves information” is false as stated and is retired.
 
-Three grades must be kept apart:
+Three evidence grades must be kept apart:
 
 | Grade | What it means | Example |
 |---|---|---|
 | **Proved / cited** | A Lean theorem or a standard finite identity | `closure_renewal`, `singlet_reduced`, `garbageBill_eq_closures` |
 | **Finite census** | An exact count over a declared finite domain | the sign census below |
 | **Bridge** | A physical identification not derived from A01 | “the inaccessible complement is space”, Landauer in joules, horizon entropy |
+
+### 0a. The possibilist methodological principle
+
+A01 is the only filter. If a synthesis is admissible under equal and opposite logical action, it needs
+no further permission to exist in the possibilistic structure. Denying it would require a **second
+selector**—an additional law saying which admissible syntheses are allowed to exist and which are not.
+QLF has no such selector. This is the formal content of **A02 possibilism**
+([`Principles.md`](Principles.md) A02, [`Philosophy.md`](Philosophy.md) §3,
+[`possibilist-ontology.md`](possibilist-ontology.md)). It is a **reading/method**, not a theorem.
+
+The principle does **not** say that every admissible synthesis is manifest to every perspective at
+every time. Four grades must be kept apart:
+
+| Grade | Meaning |
+|---|---|
+| **Possible** | admitted by A01; a real way in the possibilistic structure |
+| **Accessible** | a finite perspective has a record path by which the synthesis can be reached |
+| **Manifest** | an actual closure occurs for that perspective |
+| **Persistent / dominant** | the closure is copied or repeated, and survives competition under the stated measure |
+
+The existence of our universe, life and consciousness is an **existence proof** that extraordinary
+organized synthesis is physically possible. It is not a proof that such organization is thermodynamically
+free, nor that every admissible synthesis is manifest here. Local order still has to be paid for at the
+closure boundary; the question is what makes it accessible and persistent.
+
+This changes the explanatory burden:
+
+> The challenge is not to explain how possibility comes into existence. It is to explain how a
+> particular possible synthesis becomes accessible, manifests as a closure, and persists or dominates
+> within a finite perspective.
+
+That is the method of this document. Entropy is what the finite record does **not** carry; it is not a
+second permission law governing what may exist.
 
 ---
 
@@ -291,9 +324,17 @@ every finite closure capacity excludes a closure that a larger capacity admits
 significant at another. Therefore a finite observer's forgotten information is not automatically
 permanent loss; permanence requires the third statement, which is not proved here.
 
+The possibilist principle adds a precise constraint to this list. If a distinction or synthesis is
+admissible at all, there is no extra law forbidding it from existing as a way. What changes with an
+expanded perspective is **accessibility**, not permission. “Forgotten here” and “nonexistent” are
+therefore different claims; only the third category above is permanent local loss. The task is to
+derive the record map and the admissible continuation domain, not to postulate a selector.
+
 Thermodynamic entropy increase likewise does not imply entropy increase in every local subsystem.
 Life, intelligence, error correction and cooperative organization may build persistent local order
-while exporting entropy. Whether QLF derives that as a theorem is C20/C21, both open.
+while exporting entropy. Their existence is an existence proof that such organization is possible; it
+is not a proof that the organization is thermodynamically free. Whether QLF derives the general
+mechanism is C20/C21, both open.
 
 ---
 
@@ -307,6 +348,7 @@ because they are already proved.
 | `closure_information_partition` — `H(H)=H(R_B)+L_B` | standard identity; finite census checks the uniform case; general Lean target |
 | `pair_local_entropy_log_two` — singlet `S(A)=log 2` | **proved** (`singlet_reduced`, `entropy_half_half`, `cutEntropy_eq_vonNeumann`) |
 | `closure_growth_local_compression` — census growth with bounded forward record | **partly proved**: `W_n = C(2n,n)` and `closure_renewal`; actualized-information growth open |
+| `manifestation_from_accessibility` — when an admissible synthesis becomes an actual closure for a perspective | open; the central target of §0a |
 | `forgetting_iff_noninjective` — a record loses a distinction iff it is noninjective | standard; Lean target |
 | `irrecoverable_iff_no_future_distinguishes` | open |
 | `perspective_expansion_recovers_information` | open |
@@ -339,11 +381,15 @@ research obligations, not hidden axioms.
 >
 > Reality does not overcome entropy by preventing all information loss. It may overcome entropy
 > locally by discovering what is worth preserving.
+>
+> Reality does not have to invent the means of overcoming entropy. Possibilistically, every
+> admissible means already exists as a way. What emerges is the closure that makes it manifest.
 
-The greater objective is to derive how reality defeats entropy through selective synthesis rather
-than indefinite accumulation. That is the bridge joining QLF, active inference, consciousness and
-the cooperative intelligence sought in QuantumOS. It is a target of the one-law framework, not an
-additional postulate.
+The greater objective is therefore not to create possibility. It is to derive **manifestation**:
+how a possible synthesis becomes accessible, closes, persists and dominates within a finite
+perspective. That is the bridge joining QLF, active inference, consciousness and the cooperative
+intelligence sought in QuantumOS. It is a target of the one-law framework, not an additional
+postulate.
 
 ---
 

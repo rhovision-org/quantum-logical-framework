@@ -27,20 +27,28 @@ termination ([`Principles.md`](Principles.md) P10).
 
 ## 2. Everything possible exists a priori
 
-The second premise is **possibilism**: every logically admissible history — every string in the free
-monoid of the eight twists `^ v < > / \ + −` — exists *a priori* as pure possibility. Physical reality is
-the **self-selecting subset that achieves ZFA** ([`Philosophy.md`](Philosophy.md),
-[`possibilist-ontology.md`](possibilist-ontology.md)). This is a computable form of modal realism
-(Lewis 1986) with a selection rule, and the slice-of-the-ruliad picture of Wolfram.
+The possibilist register is **not a second premise**: every logically admissible history — every string
+in the free monoid of the eight twists `^ v < > / \ + −` — exists *a priori* as pure possibility.
+Physical reality is the **self-selecting subset that achieves ZFA** ([`Philosophy.md`](Philosophy.md),
+[`possibilist-ontology.md`](possibilist-ontology.md)). Its formal content is A02: there is no second
+selector, so denying an admissible synthesis would require an additional filtering law QLF does not
+have. This is a computable form of modal realism (Lewis 1986) with a selection rule, and the
+slice-of-the-ruliad picture of Wolfram.
+
+That grants **existence as a way**, not manifestation in a given finite perspective. Accessibility,
+closure and persistence are the separate task, and the one that entropy studies
+([`Entropy.md`](Entropy.md) §0a). The existence of our universe is evidence that extraordinary
+organization is possible; it is not evidence that every possible organization is manifest here.
 
 The consequence is the heart of the matter: **creation does not have to figure out what is possible — it
 knows a priori.** The catalog of everything that can exist is just the exhaustive combinatoric set of ways
 to close a history ([`Primordial_Entanglement.md`](Primordial_Entanglement.md) §2). Creation does not
 search possibility space and then build; possibility space *is* already there, and the ZFA-balanced members
-of it are, by that fact alone, actual. Filling a niche costs no deliberation. It is filled *because it is
-possible*. (This is the timeless possibility-space register; *within any one actual, reachable history*
-a niche can still stand open — reachability, exclusion, and cost constrain which possibilities a given
-walk realizes. See [`Evolution.md`](Evolution.md) §3.)
+of it are, by that fact alone, real possibilities. Filling a niche costs no deliberation: its filling
+closure exists as a way because it is possible. (This is the timeless possibility-space register;
+*within any one actual, reachable history* a niche can still stand open — reachability, exclusion and
+cost constrain which possibilities a given walk manifests. See [`Evolution.md`](Evolution.md) §3 and
+[`Entropy.md`](Entropy.md) §0a.)
 
 ## 3. Creation is the separation of nothing into conjugates
 

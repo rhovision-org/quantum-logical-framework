@@ -234,7 +234,7 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-  EN["Entropy = forgotten record (C06; finite census, conditional holography)"]
+  EN["Entropy = forgotten record (A02 possibilism; C06; finite census)"]
   HO["Holographic event-counting + log 2"]
   EN --> HO
   HO --> NG["Newton's law + G"]

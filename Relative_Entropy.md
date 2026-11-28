@@ -9,6 +9,11 @@ that a declared record does not carry. “Relative” does not mean that differe
 different physics. It means that the **record map** `R_B` and the admissible continuations are part
 of the statement.
 
+**Possibilism and relativity of record.** Every admissible synthesis exists as a way (A02); a finite
+record's blindness is not a second permission law. Relative entropy is about which distinctions a
+perspective can access, not about which possibilities are allowed to exist. The existence/manifestation
+distinction is stated in [`Entropy.md`](Entropy.md) §0a.
+
 ## 1. Global purity, local entropy
 
 The elementary case is the singlet:

@@ -43,6 +43,8 @@ class EntropySynthesisTests(unittest.TestCase):
         summary = es.build_summary()
         self.assertIn("sign_census", summary)
         self.assertIn("pair_account", summary)
+        self.assertIn("possibilism", summary)
+        self.assertEqual(summary["possibilism"]["grades"][0], "possible")
         self.assertIn("proof_obligations", summary)
         self.assertIn("not_claimed", summary)
         self.assertEqual(summary["pair_account"]["global"], "singlet: pure, S(AB) = 0")

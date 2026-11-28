@@ -108,14 +108,19 @@ def build_summary() -> dict[str, object]:
             "generator": "entropy_synthesis.py",
             "version": 1,
             "framing": (
-                "one law: equal and opposite logical action; entropy is derived "
-                "record bookkeeping, not a second premise"
+                "one law: equal and opposite logical action; A02 possibilism means no "
+                "second selector, while entropy concerns access and retention, not permission"
             ),
             "measure": "uniform over enumerated ZFA closures",
             "units": "bits in the finite census; physical nats require the QLF map",
         },
         "sign_census": rows,
         "route_erasure": route_erasure_witness(),
+        "possibilism": {
+            "principle": "A02: A01 is the only filter; denying an admissible synthesis would need a second selector",
+            "grades": ["possible", "accessible", "manifest", "persistent_or_dominant"],
+            "scope": "possibility is not manifestation; the census counts ways, not physical actualization",
+        },
         "pair_account": {
             "global": "singlet: pure, S(AB) = 0",
             "local_each": "S(A) = S(B) = log 2 nats",
@@ -140,6 +145,7 @@ def build_summary() -> dict[str, object]:
             "that a qubit pair physically destroys a qubit",
             "that the sign entropy is thermodynamic entropy",
             "that the finite census proves the area law or GR",
+            "that every admissible synthesis is manifest to every perspective",
         ],
     }
 

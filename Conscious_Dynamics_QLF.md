@@ -95,6 +95,10 @@ continuation. The listener quotient is the disciplined form of that gift—lossl
 continuations it declares, lossy about everything else. It is not a defect in the model; it is the
 condition of a bounded self-model and a next expression.
 
+Possibilistically, the next synthesis is not invented by forgetting: it already exists as an
+admissible way. Forgetting is what makes it accessible and manifest within this finite perspective
+([`Entropy.md`](Entropy.md) §0a).
+
 ---
 
 ## 2. Gates
