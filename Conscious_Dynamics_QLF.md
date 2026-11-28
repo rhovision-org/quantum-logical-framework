@@ -72,7 +72,9 @@ What is **new** here:
 3. the promotion rule is filtered by **self-relevance and integration**, not raw global frequency;
 4. the winner **updates the listener**, so the next race is different;
 5. the past is fixed but its **listener-relative compression changes**, which is the formal version
-   of “that was what I was thinking all along.”
+   of “that was what I was thinking all along”;
+6. a thought is a **closure that updates `B` and future eligibility**, but not a direct external
+   selector; D11 separates its real consequences from intention-control.
 
 ### 1a. The magical powers and the gift of forgetfulness
 
@@ -99,6 +101,30 @@ Possibilistically, the next synthesis is not invented by forgetting: it already 
 admissible way. Forgetting is what makes it accessible and manifest within this finite perspective
 ([`Entropy.md`](Entropy.md) §0a).
 
+### 1b. Thoughts are closures, not commands
+
+A thought is not an abstract label floating above the substrate. It is a **realized closure in the
+listener's model**: it enters the record, updates `B`, and changes which closures are eligible and
+nearest next (`B_{t+1}=U(B_t,i_next)`). That is a real effect inside the agent and on any action the
+agent subsequently enables. In this precise sense, **thoughts are things**.
+
+But a thought is not a command on the external world. QLF has **no observer potency** (A06): the
+observer does not directly select an external closure, and the content of a thought is not a promotion
+rule for reality. The external race still contains other closures, other listeners and the conditions
+that make a closure accessible. Intention is one constraint on the agent's candidate set, not a
+guarantee on the outcome.
+
+This is why the effect is often not the effect intended:
+
+- the thought changes `B`, but `B` changes which candidate is selected next;
+- closure is many-to-one, so the route and the reason are partly lost;
+- the external closure may be ineligible, unavailable or outcompeted;
+- the realized effect is the closure that actually happens, not the content that was wished.
+
+The claim is therefore a **reading with a finite dynamic shadow**, not psychokinesis: a thought exists
+as a closure and has consequences, but the consequences are selected by closure conditions rather than
+by the intention alone.
+
 ---
 
 ## 2. Gates
@@ -116,13 +142,16 @@ admissible way. Forgetting is what makes it accessible and manifest within this 
 | **D8** | feeling changes memory accessibility through a generic compatibility relation; same store; recall is atomic; no target identity in the feeling | **finite check** |
 | **D9** | frequency and event priority are distinct; a faster recurrent mode need not be the next trigger | **finite check** |
 | **D10** | forgetting is constrained: discard only distinctions that no declared continuation can recover; retain closure-relevant record; many-to-one closure and its `−log 2` price are cited | **scope gate + cited results**; no new theorem |
+| **D11** | a thought closure updates `B` and future eligibility; it does not directly select an external closure; the intended effect is not a promotion rule | **scope gate**; no observer potency (A06) |
 
-This is a finite functional model, complete at that scope. D1–D4 and D6–D10 are finite checks or
+This is a finite functional model, complete at that scope. D1–D4 and D6–D11 are finite checks or
 scope gates; D5 and the general dynamic theorem remain open obligations, not conditions on the
 finite model. D3 checks a bounded trace with an external counter; it does **not** prove that the
 transition system excludes a zero-progress event loop. D10 distinguishes disciplined forgetting
 from arbitrary loss: the listener quotient is lossless for its declared continuations, while
-many-to-one closure physically forgets the path and carries the stated free-energy price.
+many-to-one closure physically forgets the path and carries the stated free-energy price. D11
+distinguishes a thought's real consequences from intention-control: the thought is an actual closure
+in `B`, but the external outcome is not selected by the thought's content.
 
 ---
 
@@ -283,6 +312,8 @@ dynamic loop produces a finite trigger sequence, and each trigger is atomic.
   kill-condition-satisfying toy, not a validated memory model.
 - No claim that forgetting is always beneficial or free; the many-to-one closure price is cited,
   and selection of what to forget is not derived.
+- No claim that a thought directly actualizes its content outside the listener; D11 is the
+  separation, and A06 forbids observer potency.
 - No claim that an observer can erase the substrate, and no therapy or clinical claim.
 
 ---

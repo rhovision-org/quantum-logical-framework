@@ -463,6 +463,10 @@ def build_summary() -> dict[str, object]:
                 "scope gate + cited results: discard only distinctions no declared continuation "
                 "can recover; many-to-one closure and its -log 2 price are not re-proved"
             ),
+            "D11_thought_effect_separation": (
+                "scope gate: a thought closure updates B and future eligibility; it does not "
+                "directly select an external closure; intended effect is not a promotion rule"
+            ),
         },
     }
 
