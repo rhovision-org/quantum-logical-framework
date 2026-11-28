@@ -2929,6 +2929,41 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.PiDoubler.diracWalk_shift_z": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PiDoubler.halfWalk_shift_z": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PiDoubler.halfWalk_shift_z_eigen": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PiDoubler.handed_shift_z": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PiDoubler.realStep_sq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PiDoubler.realWalk_shift_z": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PiDoubler.realWalk_shift_z_sub": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.PlaquetteArea.fold_eq_projected_phase": [
     "Classical.choice",
     "Quot.sound",

@@ -296,7 +296,7 @@ lean_lib QLF where
     `QLF_BoostStates,
     `QLF_BoostAmplitudes,
     `QLF_SpinorContact,
-    `QLF_HalfStepReversal, `QLF_SharedPairSign,
+    `QLF_HalfStepReversal, `QLF_SharedPairSign, `QLF_PiDoubler,
     `QLF_RealizableWalk,
     `QLF_Tsirelson,
     `QLF_Mass,
