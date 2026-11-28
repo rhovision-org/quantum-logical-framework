@@ -1,0 +1,27 @@
+{
+  "absolute_comparisons": 456,
+  "collision": {
+    "absolute_events": [
+      "^+^-vv",
+      "+^^-vv"
+    ],
+    "common_suffix": "-vv",
+    "phase": [
+      -1,
+      0
+    ],
+    "prefixes": [
+      "^+^",
+      "+^^"
+    ]
+  },
+  "first_closure_leaves": 1248,
+  "nonempty_same_state_pairs": 72,
+  "prefix_identity_repairs": true,
+  "prefixes": 456,
+  "reduced_state_classes": 384,
+  "reduced_state_reconstructs_absolute": false,
+  "same_state_pairs": 72,
+  "scope": "bounded word identity and first closure; physical accessibility B-OPEN",
+  "tree_matches": true
+}
