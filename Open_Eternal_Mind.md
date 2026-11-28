@@ -65,6 +65,11 @@ possibilities is timeless. Whether the whole has a beginning or an end is not se
   permanence.
 - **Forgetting has a price — Proved + Standard.** Each many-to-one closure costs `ΔF = −log 2`
   ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)), which is Landauer's bound. Reversible steps cost nothing.
+- **The gift of forgetfulness — Interpretation, built on the results above.**
+  [`Consciousness.md`](Consciousness.md) and [`Conscious_Dynamics_QLF.md`](Conscious_Dynamics_QLF.md)
+  name the finite consequence: a self-model can retain only a closure-relevant quotient of the
+  path, not the full microhistory. The loss is not a defect in the model; it is what leaves room
+  for a next expression.
 - **The possibility landscape is timeless — Interpretation.** "The map is timeless, the journey is
   synthesized" ([`Time.md`](Time.md) §1). This is the possibilist ontology
   ([`possibilist-ontology.md`](possibilist-ontology.md)), not a theorem.

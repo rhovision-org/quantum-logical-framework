@@ -72,6 +72,7 @@
   },
   "gates": {
     "D0_definition": "frozen",
+    "D10_bounded_forgetting": "scope gate + cited results: discard only distinctions no declared continuation can recover; many-to-one closure and its -log 2 price are not re-proved",
     "D1_effective_frequency": "finite check; T>0, f=1/T, d separate",
     "D2_promotion_filter": "finite check; next trigger is argmin d; fast micro-event is ineligible",
     "D3_bounded_trace": "finite check only: a bounded trace has increasing external step index; no transition-system no-event-loop invariant is proved",
@@ -159,6 +160,7 @@
   ],
   "magical_powers": {
     "active_inference_synthesis": "explicit promotion/update U in this toy; identity with active inference remains B-OPEN",
+    "gift_of_forgetfulness": "disciplined listener quotient: drop only distinctions no declared continuation can recover; many-to-one closure price and persistence-by-copying are cited, not re-proved",
     "relative_world_database": "finite candidate set + listener context B; a bounded relative database, not an unrestricted inventory of all possible worlds",
     "strange_loop_reflection": "finite self-model square M ~ S/~_B; toy commutativity only, general theorem open"
   },

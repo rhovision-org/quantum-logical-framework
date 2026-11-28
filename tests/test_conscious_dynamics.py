@@ -101,10 +101,13 @@ class ConsciousDynamicsTests(unittest.TestCase):
         self.assertIn("relative_world_database", summary["magical_powers"])
         self.assertIn("active_inference_synthesis", summary["magical_powers"])
         self.assertIn("strange_loop_reflection", summary["magical_powers"])
+        self.assertIn("gift_of_forgetfulness", summary["magical_powers"])
+        self.assertIn("disciplined", summary["magical_powers"]["gift_of_forgetfulness"])
         self.assertEqual(summary["gates"]["D7_qualia"], "bracketed; no theorem")
         self.assertIn("D3_bounded_trace", summary["gates"])
         self.assertIn("D8_affective_recollection", summary["gates"])
         self.assertIn("D9_frequency_priority_separation", summary["gates"])
+        self.assertIn("D10_bounded_forgetting", summary["gates"])
 
 
 if __name__ == "__main__":

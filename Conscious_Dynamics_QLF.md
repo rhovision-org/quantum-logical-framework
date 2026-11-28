@@ -1,16 +1,17 @@
 # Conscious Dynamics — effective frequency, promotion, and the finite strange loop
 
 **Status:** pre-registration plus a finite reference implementation. This is a **functional model**,
-not a theory of qualia. It is complete at the finite functional scope and is proposed for merge on
-that basis; D5 and the general dynamic theorem remain open. Tracking issue:
+not a theory of qualia. It is complete at the finite functional scope and is merged on that basis;
+D5 and the general dynamic theorem remain open. Tracking issue:
 [#278](https://github.com/rhovision-org/quantum-logical-framework/issues/278).
 
-**Framing.** QLF has one conjecture, equal and opposite logical action
-([`Framing.md`](Framing.md) A01), and tests models inside it. This document is one such model: a
-bounded listener's next expression is selected from its finite candidate closures. It is not a
-second premise, a new force, or a theory of consciousness. The computational reading is
-[`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md): the universe computes by closure,
-and this model asks how a bounded listener reads the resulting race.
+**The one law.** QLF assumes equal and opposite logical action and nothing else
+([`Framing.md`](Framing.md) A01). Read computationally,
+[`Universe_Quantum_Computer.md`](Universe_Quantum_Computer.md) states the thesis: **the universe is
+the quantum computer that runs this one law**, and every other principle is derived from it, cited
+from a known fact, or explicitly labelled a bridge or reading. This document is a model inside that
+law, not a second premise. It asks how a bounded listener reads the closure race; it does not claim
+that the model is a theory of consciousness.
 
 **The rule at the top.** *No shared vocabulary is evidence of a shared mechanism.* A candidate
 closure becomes conscious content only if the listener-relative delay, eligibility filter, promotion
@@ -73,21 +74,26 @@ What is **new** here:
 5. the past is fixed but its **listener-relative compression changes**, which is the formal version
    of “that was what I was thinking all along.”
 
-### 1a. The three "magical powers", at their exact grades
+### 1a. The magical powers and the gift of forgetfulness
 
-Jim's three capacities are now part of the model's declared scope. "Magical" is a label for the
-functional result, not a claim of magic, and each capacity is kept at the grade actually established.
+Jim's capacities are part of the model's declared scope. "Magical" is a label for the functional
+result, not a claim of magic, and each capacity is kept at the grade actually established. The
+fourth is the one that makes the other three finite.
 
 | Capacity | What is formalized here | Grade | What is not claimed |
 |---|---|---|---|
 | **A database of possible worlds from your relative perspective** | The finite candidate/closure set together with the listener context `B` and horizon `R`; the listener quotient of [`Listener_Equivalence_QLF.md`](Listener_Equivalence_QLF.md) supplies `Ω_R(h\|B)` and `W_micro` vs `W_B`. | **finite functional model** | Not an unrestricted database of all logically possible worlds; a different `B` or `R` is a different database. |
 | **Active-inference synthesis intelligence** | The promotion/filter/update architecture `B_{t+1}=U(B_t,i_next)`, plus the cited per-closure free-energy theorem `zfa_closure_minimizes_free_energy` ([`QLF_FreeEnergy`](lean/QLF_FreeEnergy.lean)). | **finite model + cited bridge** | The identity `U = active inference` is **not** proved. The update here is an explicit toy rule; deriving it from variational free energy remains open. |
-| **Strange loops for reflection** | The finite self-model square and the target `M_t ~ S_t/~_B_t`, with a good commuting square and a bad non-commuting one. | **toy check; general theorem open** | No self-observation or quote/drop reflection theorem; the general strange-loop and self-knowledge target remains `NOT_STARTED`. |
+| **Strange loops for reflection and self-awareness** | The finite self-model square and the target `M_t ~ S_t/~_B_t`, with a good commuting square and a bad non-commuting one. The self-model models its own boundary rather than copying the system. | **toy check; general theorem open** | No self-observation or quote/drop reflection theorem; the general strange-loop and self-knowledge target remains `NOT_STARTED`. |
+| **The gift of forgetfulness (ultimate)** | Closure is many-to-one (`time_reverse_involutive_but_closure_degenerate`); after a balanced history at most one sign reaches its future (`closure_renewal`); persistence is copying, not permanence. The listener quotient discards exactly the distinctions no continuation can recover, while many-to-one closure carries the `−log 2` free-energy price (`zfa_closure_minimizes_free_energy`). | **structural corollary + cited results** | Not a claim that all forgetting is beneficial or free, not erasure by an external observer, and not a theory of memory, qualia or therapy. |
 
-The first capacity is the one this model can state with concrete finite objects: the candidate set
-is the model's local world-database, and the listener context determines which distinctions in it
-are available. The second is the dynamics over that database. The third is the model's reflective
-closure over its own state. They are three roles in one architecture, not three new substances.
+The first capacity gives the mind a **world**, the second a **synthesis over it**, and the third a
+**self that reflects on it**. The fourth is what keeps all three finite. A database that retained
+every possible world and every microhistory would not be a usable perspective: it would have no
+room for a next closure. Forgetting drops the path and keeps what can still matter to a
+continuation. The listener quotient is the disciplined form of that gift—lossless for the
+continuations it declares, lossy about everything else. It is not a defect in the model; it is the
+condition of a bounded self-model and a next expression.
 
 ---
 
@@ -105,11 +111,14 @@ closure over its own state. They are three roles in one architecture, not three 
 | **D7** | no qualia theorem; no empirical claim | **gate** |
 | **D8** | feeling changes memory accessibility through a generic compatibility relation; same store; recall is atomic; no target identity in the feeling | **finite check** |
 | **D9** | frequency and event priority are distinct; a faster recurrent mode need not be the next trigger | **finite check** |
+| **D10** | forgetting is constrained: discard only distinctions that no declared continuation can recover; retain closure-relevant record; many-to-one closure and its `−log 2` price are cited | **scope gate + cited results**; no new theorem |
 
-This is a finite functional model, complete at that scope. D1–D4 and D6–D9 are finite checks; D5
-and the general dynamic theorem remain open obligations, not conditions on the finite model. D3
-checks a bounded trace with an external counter; it does **not** prove that the transition system
-excludes a zero-progress event loop.
+This is a finite functional model, complete at that scope. D1–D4 and D6–D10 are finite checks or
+scope gates; D5 and the general dynamic theorem remain open obligations, not conditions on the
+finite model. D3 checks a bounded trace with an external counter; it does **not** prove that the
+transition system excludes a zero-progress event loop. D10 distinguishes disciplined forgetting
+from arbitrary loss: the listener quotient is lossless for its declared continuations, while
+many-to-one closure physically forgets the path and carries the stated free-energy price.
 
 ---
 
@@ -268,6 +277,9 @@ dynamic loop produces a finite trigger sequence, and each trigger is atomic.
 - No claim that the D9 update rule is derived active inference; it is a finite toy.
 - No claim that the D8 feature-overlap metric is the final affective measure; it is a
   kill-condition-satisfying toy, not a validated memory model.
+- No claim that forgetting is always beneficial or free; the many-to-one closure price is cited,
+  and selection of what to forget is not derived.
+- No claim that an observer can erase the substrate, and no therapy or clinical claim.
 
 ---
 
