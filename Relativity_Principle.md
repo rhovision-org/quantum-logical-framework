@@ -896,6 +896,55 @@ artifact of the doubled description, and on its irreducible sector the split exi
 choice, and the next stage-5 test has to say which, before it is run. The variable-strand census is
 the one candidate that would derive the split rather than choose it.
 
+### Stage 5, second run: the two-step cut (pre-registration)
+
+Frozen in the commit that adds this subsection, before any code for it was written or run. Jim chose
+on 2026-11-28 to run a cut first, as a probe, and then build the variable-strand census and compare.
+
+**The split.** A state is a *particle* if its two-step quasi-energy `2θ` (mod `2π`, in `(−π, π]`) is
+positive, and an *antiparticle* otherwise, where `e^{iθ}` is its one-step eigenvalue. On the forward
+arc (`θ = ω`) that is `ω < π/2`; on the backward arc (`θ = −ω`) it is `ω > π/2`. The cut is the
+surface Σ (`ω = π/2`, some `kᵢ = ±π/2`) where the two-step walk is `−I` and the two arcs meet. This
+is the only split that the walk's conserved sector defines (`halfWalk_sq_shift_z_eigen`): it is
+invariant under `k ↦ k + π e_z`, unlike the arc split of the first run, and it agrees with the
+continuum near every band bottom. It is still a choice of where to cut, and the cut sits at the
+lattice scale.
+
+**The amplitude.** With `P(p)`, `A(p)` the particle and antiparticle projectors and `θ_P`, `θ_A`
+their one-step phases,
+
+    L(E, P) = ∫_BZ d³p/(2π)³ [ P₁(p) ⊗ P₂(P−p) R(E − θ_P₁ − θ_P₂)
+                            − A₁(p) ⊗ A₂(P−p) R(E − θ_A₁ − θ_A₂) ],
+
+with the same kernel `R(x) = ½ cot((x + i0)/2)`, particles forward in time and antiparticles
+backward (Stueckelberg, check S5). Where both momenta lie below the cut this is the first run's
+integrand; where both lie above it is minus that integrand, so by the π-shift the two regions add
+instead of cancelling. Where the two momenta lie on opposite sides of Σ, mixed-arc pairs enter.
+Everything else is frozen as in the first run: `Γ₂ = Γ L Γ − c Γ` with `c` at the rest-frame
+threshold, `W₂`, the defect, the grid of `κ`, rapidity `0.5` on each axis, the four seeded samples,
+the masses, the verdict thresholds (PASS slope `≥ 1.95`, FAIL `< 1.5`), the scalar arm, the
+controls (blind contact median defect `≥ 10⁻²`, raw-slice vector slope `< 1.5`; a control that
+does not fail makes every verdict `INCONCLUSIVE`), the continuum calibration (`< 10⁻⁶`), and the
+gates (finite positive `W₂`; singular surfaces inside explicitly handled balls; the loop not zero
+to rounding; the vector `Γ₂` stable to `10⁻³` under finer integration).
+
+**Prediction, stated before the run: FAIL.** In the rest frame `ω(p) = ω(−p)`, so the two momenta
+never straddle Σ. A boost gives the pair a total momentum `|P| ≈ 0.5 E`, and then a slab of width
+`O(|P|)` around Σ carries straddling pairs whose energy denominators are only
+`E − |P|·|∇ω| = O(κ)`. That region contributes at `O(κ⁰)` in the boosted frame and not at all in the
+rest frame, so the vector defect should not fall with `κ`. If it passes, the cut is harmless at one
+loop and the mechanism above is wrong; if it fails, the frame dependence sits where the cut is,
+which is the outcome a cut at the lattice scale was expected to have.
+
+**Integration.** The ball construction around the eight zone corners is unchanged (all eight are now
+singular in the particle term: band bottoms with both momenta below the cut, band tops with both
+above). The rest of the zone is integrated on a tensor grid of Gauss–Legendre panels whose
+breakpoints include every cut plane of both particles (`pᵢ = ±π/2` and `pᵢ = Pᵢ ± π/2`), so the
+integrand is smooth inside each panel. The singular-surface gate outside the balls is
+`|x| ≥ (E − |P|)/5`, since straddling pairs have small but non-zero denominators. Panel counts are
+chosen by the stability gate and the calibration, never by a graded defect. The script will be
+`loop_cut_check.py`.
+
 ## 7a. Claim-record status and open obligations
 
 This result is **formal `F` for free propagation** and **`B-OPEN` for the physical/interacting bridge**. The detailed record is [`claim_records/relativity_boost.json`](claim_records/relativity_boost.json).
