@@ -13,7 +13,7 @@ with no free end. That single fact is most of confinement.
 
 ---
 
-## 1. Colour — the three axes (essentially complete ✓)
+## 1. Colour — the three axes (finite colour algebra ✓; physical SU(3) identification conditional)
 
 > **What is the colour structure of μ and τ?** Split **net charge** from **content**. *Net charge:*
 > leptons are colour **singlets** (`B = 0`, `singlet_closure`) — no net colour, hence *free* (a
@@ -34,21 +34,29 @@ with no free end. That single fact is most of confinement.
   and `B = 0`. So a baryon needs all three quarks/axes — no one- or two-colour baryon. The minimal baryon
   `>^/` carries exactly one twist per axis (`minimal_baryon_one_per_axis`): three quarks = three axes.
 
-This is a genuine proof of the colour structure (three colours, SU(3), Borromean closure, singlets).
+This proves the finite colour structure: three colour axes, the traceless `sl(3)` algebra, the three-axis
+necessity of winding, and zero total `F₃²` colour on every closure (`closure_is_colour_singlet`,
+[`QLF_ColourClosure`](lean/QLF_ColourClosure.lean)). Zero `F₃²` colour is not yet a physical
+SU(3)-invariant singlet; that identification is conditional.
 
-## 2. Confinement — the singlet-closure obstruction (proven ✓)
+## 2. Confinement — the colour-closure obstruction (proven ✓); dynamical confinement (open)
 
-Confinement is **proven**, as the closure obstruction already established for charge, applied to colour
-([`QLF_Confinement`](lean/QLF_Confinement.lean)):
+The **colour-closure obstruction** is proven: net colour never closes. Dynamical confinement (a
+separation-dependent cost) is not ([`QLF_Confinement`](lean/QLF_Confinement.lean),
+[`QLF_ColourClosure`](lean/QLF_ColourClosure.lean)):
 
 - **`charged_not_closed`** — a state carrying a net annihilation-odd charge (electric, or the strong
   instance **colour**) is **not** a ZFA closure. A lone quark carries net colour ⟹ it **cannot close** ⟹
   it is not a physical state.
-- **`singlet_closure`** — every ZFA closure has zero net charge/colour: **only singlets close**.
-- **`baryon_needs_all_three_axes`** — and the only nonzero-baryon closure is the three-axis Borromean
-  triple. **`single_colour_not_baryon`** — a history on a single colour axis has `B = 0`: a lone quark's
+- **`singlet_closure`** — every ZFA closure has zero net charge (the binary charge weight).
+  **`closure_is_colour_singlet`** proves the colour statement on the `F₃²` labels themselves: only
+  colour singlets close. The converse fails: `>^/` is a singlet and not a closure.
+- **`baryon_needs_all_three_axes`** — nonzero baryon number needs a twist on all three axes. Many
+  distinct closures realise it: 576 of the 720 minimal orderings
+  (exact computational, [`borromean_census.py`](borromean_census.py) `--minimal`), and the winding is read from the first event
+  (`winding_not_rotation_invariant`). **`single_colour_not_baryon`** — a history on a single colour axis has `B = 0`: a lone quark's
   colour content is not a baryon. Together: physical hadrons are colour-neutral, and a baryon is exactly
-  the three-colour lock — no lone or two-colour baryon.
+  a three-axis winding — no lone or two-colour baryon.
 
 **The dynamical reading — confinement as the 3-body threshold (⚠ cited dynamics, QLF-native bridge).**
 The closure ladder is the n-body integrability ladder:
@@ -57,15 +65,24 @@ The closure ladder is the n-body integrability ladder:
 |---|---|---|
 | 1 (neutrino) | 1-body | trivially closes |
 | 2 (electron, positronium, muonium) | 2-body, **integrable** | always closes — leptons are free, **no confinement** |
-| 3 (baryon) | 3-body, **chaotic** (Poincaré) | closes **only** in the special Borromean lock |
+| 3 (baryon) | 3-body, **chaotic** (Poincaré) | winding needs all three axes; wound closures are common, not a special lock |
 
-A *generic* 3-axis history is chaotic ⇒ non-terminating ⇒ **pruned** (`full_zeno_prune`; a terminating
-computation is exactly a ZFA closure, `qlf_universality`). So a lone or perturbed quark configuration is
-chaotic and never closes — you cannot pull a quark out. Confinement = the onset of three-body chaos; the
-Borromean triple is the integrable island (the prime-3 lock, [`QLF_PrimeResonance`](lean/QLF_PrimeResonance.lean),
-"balanced and prime"). The **flux tube / linear potential `V(r) ∝ r`** is the structural reading (the
-closure cost grows with separation); its *value* and the asymptotic-freedom→confinement RG flow stay open
-(`confinement_in_progress`).
+*Reading, not established:* that a generic 3-axis history is chaotic and therefore non-terminating and
+pruned, with the Borromean triple as an integrable island (the prime-3 lock,
+[`QLF_PrimeResonance`](lean/QLF_PrimeResonance.lean)). Neither the census nor the three-body analogy
+establishes it, and `full_zeno_prune` on the binary pos/neg projection does not remove colour at all
+(`binary_projection_blind`); the eight-twist balance does. The **flux tube / linear potential
+`V(r) ∝ r`** is likewise a reading: the closing delay grows linearly with separation but is
+colour-blind (`delay_colour_blind`), so it is not a flux tube. Its *value* and the
+asymptotic-freedom→confinement RG flow stay open (`confinement_in_progress`).
+
+**Checked against the exact census ([`Colour_Closure.md`](Colour_Closure.md)).** What is proved: every
+closure is a colour singlet (`closure_is_colour_singlet`), so net colour never closes, and the spatial
+three-gluon vertex is exactly the Borromean triple (`spatial_vertex_iff_borromean`). What the census does
+**not** support is the reading that wound three-axis histories are a rare island: wound (`B ≠ 0`)
+closures are 31 % at length 6 and 77 % at length 14, more often among first closures. The closure cost
+does grow linearly with separation (`distance_eq_delay`), but for every open history, coloured or not
+(`delay_colour_blind`), so it is not yet a string tension.
 
 **Confinement as a phase of the weighted census** ([`Carbon_Superconductivity.md`](Carbon_Superconductivity.md)
 §19–§24). Weighting closed colour lines by `w` per step turns confinement into a computable phase.
@@ -288,13 +305,14 @@ relevance). **3** and the `1/3`-from-three-colours of **4** are proven; the dime
 
 ## Honest scope
 
-- ✓ **Proven:** colour = 3 axes + SU(3); the Borromean three-colour necessity; confinement (only singlets
-  close, `charged_not_closed`/`singlet_closure`; no lone-quark baryon, `single_colour_not_baryon`); charge
+- ✓ **Proven:** colour = 3 axes and the finite `sl(3)` colour algebra (physical SU(3) conditional); the
+  three-axis necessity of winding; the colour-closure obstruction (only `F₃²` singlets close,
+  `closure_is_colour_singlet`, `charged_not_closed`; no lone-quark baryon, `single_colour_not_baryon`); charge
   conservation, neutrality, `charged_not_closed`, and **quantisation in thirds from the three colours**
   (`charge_quantum_from_colours`, `down_quark_charge_third`); three generations.
-- ⚠ **Structural reading:** the integrability/chaos cause of confinement (the bridge *chaotic ⇒
-  non-terminating ⇒ pruned* is QLF-native; 3-body chaos itself is cited Poincaré); the flux-tube linear
-  potential; the quark-as-junction picture; the `1/d`-in-`d`-dimensions counterfactual.
+- ⚠ **Structural reading:** the integrability/chaos cause of confinement (*chaotic ⇒ non-terminating ⇒
+  pruned* is not established; 3-body chaos itself is cited Poincaré); the flux-tube linear potential
+  (the delay is colour-blind); the quark-as-junction picture; the `1/d`-in-`d`-dimensions counterfactual.
 - ⚠ **Proposed:** the per-flavour twist signature. The up quark is the positive twist on its colour axis, the down quark is that twist followed by `+`, so `Q = (2/3)N − n_g`, and the W is a single gauge twist ([Carbon_Superconductivity.md](Carbon_Superconductivity.md) §30). It is derived from the electron's charge twist and the ℤ₆ lock, and picked by beta decay as a twist transfer.
 - ✗ **Open:** quark masses; the string-tension value and the
   asymptotic-freedom→confinement RG flow.

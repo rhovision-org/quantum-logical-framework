@@ -36,7 +36,7 @@ skeleton: [`QLF_HarmonicClosure`](lean/QLF_HarmonicClosure.lean) (reuse-only, no
    (`component_freq`, reusing [`QLF_Consciousness`](lean/QLF_Consciousness.lean)'s `freq`; the
    Markov-blanket local clock, [`QLF_LocalClock`](lean/QLF_LocalClock.lean)). The spectrum is ordered —
    a higher-frequency (shorter-period) closure **dominates the rendering** (`higher_freq_dominates`), and
-   binding sub-closures into a closure-of-closures **raises the harmonic** (`binding_raises_harmonic`).
+   binding sub-closures into a closure-of-closures **raises the harmonic** (`binding_raises_harmonic`, true by definition, since `bind := min`, so it fixes a convention for the bound period rather than deriving promotion ([Morphogenesis.md](Morphogenesis.md) §2)).
    The **prime** frequencies are the irreducible, vacuum-proof modes (`irreducible_mode`,
    [`QLF_PrimeResonance`](lean/QLF_PrimeResonance.lean)) — the proton's `n=3` lock. Mass **is** a
    frequency (`m = 1/R`, [`QLF_HiggsMechanism`](lean/QLF_HiggsMechanism.lean)); the frequency-octave

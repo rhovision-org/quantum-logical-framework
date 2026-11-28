@@ -40,12 +40,20 @@ A faster recurrent mode need not be the next one to fire if a slower mode is alr
   `consciousPeriod`. Those are **recurring-dominance** statements; they do not by themselves pick the
   next event.
 - [`QLF_HarmonicClosure`](lean/QLF_HarmonicClosure.lean) proves `higher_freq_dominates` and
-  `freq_bind_ge_left/right` — again a recurrence/binding result.
+  `freq_bind_ge_left/right` — again a recurrence/binding result, and the binding half holds by definition (`bind := min`, [Morphogenesis.md](Morphogenesis.md) §2).
 - `QLF_LocalClock` supplies the local-clock period `R`.
 - [`Manifestation.md`](Manifestation.md) supplies `distance_eq_delay`; this document treats the
   remaining distance as trigger proximity, not event duration.
 - `no_time_loops_from_logic` keeps realized event histories acyclic even when the listener/model
   relation is a loop.
+
+[`QLF_ClosureDepthTime`](lean/QLF_ClosureDepthTime.lean) derives ET1 from `zeno_prune` itself, with
+`tau_listen` the first-passage time of a gauge-free balanced history: each pass lowers the remaining
+latency by exactly one (`listening_countdown`), the state is open at every earlier pass
+(`listening_open_before`), it is one pass from closure at `tau_listen − 1` (`listening_trigger`), and
+at `tau_listen` it is the empty history, which has latency `0` and which every later pass leaves
+unchanged (`closure_event_atomic`). The theorem counts passes. Reading the fixed closed state as
+`tau_event = 0` is this document's interpretation. ET2 and ET3 are still finite checks.
 
 No existing theorem is overturned. The new layer separates two quantities that the static
 highest-frequency reading did not distinguish.
@@ -57,7 +65,7 @@ highest-frequency reading did not distinguish.
 | gate | requirement | status |
 |---|---|---|
 | **ET0** | `T`, `f`, `d`, eligibility, priority, atomic closure frozen | **done** here |
-| **ET1** | `tau_listen > 0`; `tau_event = 0`; no duration assigned to closure | **finite check** |
+| **ET1** | `tau_listen > 0`; `tau_event = 0`; no duration assigned to closure | **proved in Lean** for the pruning clock ([`QLF_ClosureDepthTime`](lean/QLF_ClosureDepthTime.lean) §5); finite check below |
 | **ET2** | frequency and event priority are distinct; a faster recurrent mode need not be next | **finite check** |
 | **ET3** | event steps increase; no backward causation | **finite check + cited** |
 | **ET4** | dependent PRs use the same semantics | **cited**: #271, #272, #275, #277, #279 |

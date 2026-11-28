@@ -129,11 +129,30 @@ each one locates its gap precisely:
 Under possibilism none of these failures counts against its bridge. Each records one route that does
 not close, together with the first step a route that does would have to take.
 
+### The deferred items (2026-11-22)
+
+The six items the plan deferred were each given one pre-registered step, run the same way.
+
+| Step | Issue | Result | Verdict | Anchors |
+|---|---|---|---|---|
+| Local scale symmetry | #302 C1 | Among position-dependent multiplicity fields only constant ones preserve ZFA. The global symmetry found is 96 frames times the odd dilations; even dilations erase the phase. No local frame change in the family tested is exploratory (W4's pre-registered condition was mis-specified and is not met) | **scoped candidate obstruction** for letter substitutions; C1 in general (causal, relational invariants, other primitives) stays open | [`QLF_ConformalComparison`](lean/QLF_ConformalComparison.lean), [Conformal_Comparison.md](Conformal_Comparison.md) |
+| Novel closure type | #290 E1 | Self-composition reaches only `+I`; complementary open pairs reach `−I` (minimal pair `^`, `v`), and `−I` is the majority type among closing open pairs | **E1 holds, D8b passes** on concatenation | [`QLF_DiversityNovelOutcome`](lean/QLF_DiversityNovelOutcome.lean), [Diversity_Novel_Outcome_E1.md](Diversity_Novel_Outcome_E1.md) |
+| Abelian control | #286 | The non-Abelian gate of #289's vertex channels only lengthens singlet distance: 24 states from 1 to 2, 32 blocked (under the pre-registered size bound, which #289's search narrows). "Every first-singlet move reduces `d_G`" holds for every relation | **non-Abelian structure obstructs, never shortens**; the first-singlet result is bookkeeping | [`QLF_GluonAbelianControl`](lean/QLF_GluonAbelianControl.lean), [Gluon_Abelian_Control.md](Gluon_Abelian_Control.md) |
+| Lepton Stage B | #140 | The admissible observables separate the rungs only through `L = 4 + 2k` and orbit `24 · 2^k`, one progression. So `δ` must be global | **no ratio prediction** under the frozen protocol; a new observable is needed | [`QLF_LeptonStageB`](lean/QLF_LeptonStageB.lean), [Lepton_Stage_B.md](Lepton_Stage_B.md) |
+| Calibration-free target | #234 | Age ratios and `H₀·t₀` are invariant under any clock calibration, and one scale fits two ages only if the ratios agree. The benchmark's content: `0.2187`, `0.1299`, `1.98` | **target fixed**; #234 stays INCOMPLETE | [`QLF_ClockCalibration`](lean/QLF_ClockCalibration.lean), [Gupta_ScaleFree.md](Gupta_ScaleFree.md) |
+| Update rule | #278 | Independent clocks and global reset both make the fastest eligible closure the modal expression and switch it at the same quieting threshold (strictly `2q > 8`; the static skeleton's `e ≤ i` breaks the tie the other way); only the reset makes it exclusive. No update law is derived | **receiver regime is rule-independent as the mode** | [`QLF_ConsciousUpdateRule`](lean/QLF_ConsciousUpdateRule.lean), [Conscious_Update_Rule.md](Conscious_Update_Rule.md) |
+
 **Claim records** (all `B-OPEN`):
 [`stationary_action.json`](claim_records/stationary_action.json),
 [`continuum_limit.json`](claim_records/continuum_limit.json),
-[`map_is_territory.json`](claim_records/map_is_territory.json) and
-[`spatial_response_derived.json`](claim_records/spatial_response_derived.json).
+[`map_is_territory.json`](claim_records/map_is_territory.json),
+[`spatial_response_derived.json`](claim_records/spatial_response_derived.json),
+[`conformal_comparison.json`](claim_records/conformal_comparison.json),
+[`diversity_novel_outcome.json`](claim_records/diversity_novel_outcome.json),
+[`gluon_abelian_control.json`](claim_records/gluon_abelian_control.json),
+[`lepton_stage_b.json`](claim_records/lepton_stage_b.json),
+[`gupta_scale_free.json`](claim_records/gupta_scale_free.json) and
+[`conscious_update_rule.json`](claim_records/conscious_update_rule.json).
 
 ## References
 

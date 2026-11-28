@@ -144,6 +144,10 @@ flowchart TD
 
 **Open:** [`README.md`](README.md) · [`SpaceTime.md`](SpaceTime.md) · [`TheContinuum.md`](TheContinuum.md)
 
+**Draft finite slice:** [`Spatial_Response_QLF.md`](Spatial_Response_QLF.md) — independent `ΔS`/`Δd`
+ledger; binding does not automatically imply contraction. Gravity, 3D metric and string tension are
+out of scope.
+
 `3` is the minimal dimension that renders any relational structure faithfully — and it reappears
 everywhere below ([`SpaceTime.md`](SpaceTime.md) §3a).
 
@@ -201,6 +205,8 @@ flowchart TD
 
 **Open:** [`Forces_From_Three_Axes.md`](Forces_From_Three_Axes.md) · [`Electricity.md`](Electricity.md) · [`Weak_Force.md`](Weak_Force.md) · [`Alpha.md`](Alpha.md) · [`Forces_From_Alpha.md`](Forces_From_Alpha.md)
 
+**Draft finite slice:** [`Gluon_Closure_Dynamics.md`](Gluon_Closure_Dynamics.md) — two-channel `F₃²` vertex-gluing model with a finite `d_G` census. GL7 (logical → physical distance) and GL8 (string tension) are out of scope; no QCD/potential claim.
+
 ---
 
 ## 4. Atoms and QED
@@ -236,15 +242,20 @@ flowchart TD
   EE --> GW["Gravitational waves"]
   SA["Stationary action = most ways"]
   SA --> EE
+  CV --> BH["Falling into black holes: the horizon is a perspective"]
+  BH --> RK["1 g rocket: every perspective has a horizon"]
+  RK --> ER["Everything is relative: views differ, closures agree"]
 ```
 
-**Connectors:** *G = L_P^2c^3/hbar* &rarr; Newton's law + G &middot; *43''/century* &rarr; Mercury perihelion &middot; *deltaQ = T deltaS* &rarr; Einstein equations (equation of state) &middot; *causal order -> metric* &rarr; Curvature &middot; *spin-2, v = c* &rarr; Gravitational waves &middot; *Hilbert: delta S = 0 at balance* &rarr; Einstein equations
+**Connectors:** *G = L_P^2c^3/hbar* &rarr; Newton's law + G &middot; *43''/century* &rarr; Mercury perihelion &middot; *deltaQ = T deltaS* &rarr; Einstein equations (equation of state) &middot; *causal order -> metric* &rarr; Curvature &middot; *spin-2, v = c* &rarr; Gravitational waves &middot; *Hilbert: delta S = 0 at balance* &rarr; Einstein equations &middot; *river model* &rarr; Falling into black holes &middot; *equivalence principle* &rarr; 1 g rocket &middot; *horizons are relations* &rarr; Everything is relative
 
-**Open:** [`Gravity_From_Delay.md`](Gravity_From_Delay.md) · [`Mercury_Perihelion.md`](Mercury_Perihelion.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Curvature.md`](Curvature.md) · [`Stationary_Action.md`](Stationary_Action.md)
+**Open:** [`Gravity_From_Delay.md`](Gravity_From_Delay.md) · [`Mercury_Perihelion.md`](Mercury_Perihelion.md) · [`Einstein_Equations.md`](Einstein_Equations.md) · [`Curvature.md`](Curvature.md) · [`Stationary_Action.md`](Stationary_Action.md) · [`Falling_Into_Black_Holes.md`](Falling_Into_Black_Holes.md) · [`Rocket_To_The_Horizon.md`](Rocket_To_The_Horizon.md) · [`Everything_Is_Relative.md`](Everything_Is_Relative.md)
 
 ---
 
 ## 6. Cosmology and the dark sector
+
+**Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and the next formal targets; no physical holography claim is closed.
 
 ```mermaid
 flowchart TD
@@ -313,6 +324,8 @@ same length and opposite charge and baryon number, for every word
 ---
 
 ## 8. Quantum-gravity / TOE pillars
+
+**Perspective holography audit:** [`Perspective_Holography_StageC.md`](Perspective_Holography_StageC.md) records finite-surrogate reconstruction failures and the next formal targets; no physical holography claim is closed.
 
 QLF meets the three TOE-candidate programs — and reproduces their wins from the substrate. The merged metric-singlet/lattice-Einstein and Manifestation results are **`F`** as exact named statements, but they strengthen the **ToE claim map**, not the physical bridge: their physical readings remain **`B-OPEN`**, and neither closes G3/G5. The ToE index is a map, not evidence ([`Theory_Of_Everything.md`](Theory_Of_Everything.md), [`Manifestation.md`](Manifestation.md), [`Claim_Status.md`](Claim_Status.md)).
 
@@ -412,11 +425,12 @@ flowchart TD
   HP --> FOLD
   V --> W2["water = two closure inventories - density maximum"]
   XL --> POL["polaron = impurity + bath composite closure"]
+  V --> MG["morphogenesis: closure erases the balanced part, the conserved ledger segregates"]
 ```
 
-**Connectors:** *saturate* &rarr; shared closure = bond &middot; *H2O, CO2, graphite, rust* &rarr; molecules and carbon allotropes &middot; *Pauli holds them apart* &rarr; crystals and condensates &middot; *(v-2)/2 each* &rarr; closure count &middot; *b1 counts them* &rarr; double bond = ring = one closure &middot; *only k is free* &rarr; reaction class &middot; *free valence for water?* &rarr; hydrophobic / polar &middot; *valence 2 is neutral* &rarr; divalent chains &middot; *backbone carries none* &rarr; folding &middot; *only H-H pays* &rarr; folding &middot; *two liquids (2026)* &rarr; water = two closure inventories &middot; *impurity + bath* &rarr; polaron = composite closure
+**Connectors:** *saturate* &rarr; shared closure = bond &middot; *H2O, CO2, graphite, rust* &rarr; molecules and carbon allotropes &middot; *Pauli holds them apart* &rarr; crystals and condensates &middot; *(v-2)/2 each* &rarr; closure count &middot; *b1 counts them* &rarr; double bond = ring = one closure &middot; *only k is free* &rarr; reaction class &middot; *free valence for water?* &rarr; hydrophobic / polar &middot; *valence 2 is neutral* &rarr; divalent chains &middot; *backbone carries none* &rarr; folding &middot; *only H-H pays* &rarr; folding &middot; *two liquids (2026)* &rarr; water = two closure inventories &middot; *impurity + bath* &rarr; polaron = composite closure &middot; *open strands bind by opposite charge* &rarr; morphogenesis
 
-**Open:** [`Chemistry.md`](Chemistry.md) · [`Protein_Folding.md`](Protein_Folding.md) · [`Polarons_QLF.md`](Polarons_QLF.md) · [`lean/QLF_Unsaturation.lean`](lean/QLF_Unsaturation.lean) · [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`hydrocarbon_census.py`](hydrocarbon_census.py) · [`protein_census.py`](protein_census.py)
+**Open:** [`Chemistry.md`](Chemistry.md) · [`Protein_Folding.md`](Protein_Folding.md) · [`Polarons_QLF.md`](Polarons_QLF.md) · [`lean/QLF_Unsaturation.lean`](lean/QLF_Unsaturation.lean) · [`lean/QLF_Folding.lean`](lean/QLF_Folding.lean) · [`hydrocarbon_census.py`](hydrocarbon_census.py) · [`protein_census.py`](protein_census.py) · [`Morphogenesis.md`](Morphogenesis.md) · [`lean/QLF_Morphogenesis.lean`](lean/QLF_Morphogenesis.lean)
 
 **The counting layer.** An atom's valence is what it contributes to a molecule's **closure count**,
 `(valence − 2)/2`, and the cycle rank `b₁ = E − V + 1` counts the closures the molecule carries. That
@@ -433,6 +447,14 @@ contact is a ZFA closure in the literal sense: zero net displacement, count-bala
 keystone ([`QLF_Folding`](lean/QLF_Folding.lean)). The lattice-protein parity rule and the `log 2` contact
 quantum follow; the **mirror no-go** — counting cannot select a handedness — bounds what the census can
 ever answer ([`Protein_Folding.md`](Protein_Folding.md)).
+
+**Morphogenesis: what closure alone can differentiate.** On closures the compatibility graph is
+complete, so it sorts nothing; on open strands binding is an opposite-charge rule, and every local
+event conserves a region's ledger, so closure erases exactly the balanced part
+([`QLF_Morphogenesis`](lean/QLF_Morphogenesis.lean), no axioms). A pre-registered lattice test finds
+that this conserved residue segregates a patternless eight-species population into domains in 1D and
+2D, the classical `A + B → 0` result; a pattern with a preferred scale is open
+([`Morphogenesis.md`](Morphogenesis.md)).
 
 **Polarons as composite closures.** [`Polarons_QLF.md`](Polarons_QLF.md) now has a machine-verified
 substrate core in [`QLF_Polarons`](lean/QLF_Polarons.lean): an open impurity plus bath can form one

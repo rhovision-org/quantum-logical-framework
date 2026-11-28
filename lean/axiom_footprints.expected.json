@@ -25,6 +25,396 @@
     "propext"
   ],
   "QLF.AlphaRigidity.inverseAlpha_at_three": [],
+  "QLF.AnalogicalListener.closed_has_no_obligation": [
+    "propext"
+  ],
+  "QLF.AnalogicalListener.closed_preserves": [
+    "propext"
+  ],
+  "QLF.AnalogicalListener.consistent_extend_iff": [
+    "propext"
+  ],
+  "QLF.AnalogicalListener.consistent_not_extendable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnalogicalListener.extend_keeps": [],
+  "QLF.AnalogicalListener.extend_le": [],
+  "QLF.AnalogicalListener.extend_mapped_noop": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnalogicalListener.inconsistent_persists": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnalogicalListener.inconsistent_rejected": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnalogicalListener.not_consistent_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnalogicalListener.open_not_closed": [
+    "propext"
+  ],
+  "QLF.AnalogicalListener.other_branch_closes": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnalogicalListener.rutherford_closes": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnalogicalListener.similarity_not_correspondence": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnalogicalListener.wrong_completion_rejected": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnthropicEquivalence.anthropic_equivalence": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnthropicEquivalence.conservation_equivalence": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnthropicEquivalence.decode_recordWord": [
+    "propext"
+  ],
+  "QLF.AnthropicEquivalence.encodeModel_canFail_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnthropicEquivalence.frequencies_transfer": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AnthropicEquivalence.same_observations_equivalent": [
+    "propext"
+  ],
+  "QLF.AnthropicEquivalence.verdicts_transfer": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.assemblyIndexClosed_le_length_sub_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.assemblyIndex_le_closed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.assemblyIndex_le_length_sub_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.assemblyIndex_lt_closed_up4": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.libIndex_mono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.libIndex_of_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.reuse_saves_a_join": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.strict_gap_up4": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.AssemblyIndex.upPotential_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.circuits_eq_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cnot_apply": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cnot_eq_h_cz_h": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cnot_isPerm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.ctrl_comm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.ctrl_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.ctrl_phase_switch": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.ctrl_single_su2": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cz_eq_diagonal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.cz_symm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.eq_cz_of_sign_table": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.eq_diagonal_of_signs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.flip_isPerm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.lift_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.onQubit_apply": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.onQubit_comm": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.onQubit_mul_apply": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.pair_allOnes_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.pair_cnot_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.pair_mem": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.twoLevel_mem_circuits": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.universality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.universality_cz": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.Barenco.universality_list": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.escape_possible_iff_radius": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.evaporated_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.fall_time_finite": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.freefall_proper_time": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.horizonOmega_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.horizonOmega_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_lt_position": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_strictMono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_tendsto_rs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.infaller_horizon_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.inside_all_inward": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.interiorStretch_half": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.interiorVolumeRate_sq_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.interiorVolumeRate_sq_max": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.kerr_two_horizons": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.last_half_eighth": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.own_horizon_below": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.static_exists_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.thrust_works": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BlackHoleInfall.tidal_at_horizon_tendsto_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.beta_mul_chiral": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.blind_density_entry": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.blind_density_not_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.blind_vertex_not_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.chiralAct_boostZ": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.chiral_conjTranspose": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.scalar_bilinear_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostAmplitudes.scalar_vertex_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.BoostCovariance.diracWalk_boost_covariant": [
     "Classical.choice",
     "Quot.sound",
@@ -46,6 +436,81 @@
     "propext"
   ],
   "QLF.BoostCovariance.shell_taylor": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.beta_chiral_beta": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_chirality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_of_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiralAct_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiral_mul": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.chiral_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.dirac_boostZ_covariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_dispersion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_eq_conj": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.halfWalk_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.handed_eq_chiral": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.inv_neg_two": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.BoostStates.massStep_add": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -105,6 +570,39 @@
     "propext"
   ],
   "QLF.ChannelGroupoid.kernel_dagger": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.circulation_invisible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.classBit_separates": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.class_function_factors": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClassFactoring.fold_eq_classBit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.age_rate_product_calibration_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.age_ratio_calibration_free": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClockCalibration.one_scale_fits_two_ages_iff": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -479,6 +977,53 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureDepthTime.balanced_yet_deep": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.census_cannot_determine_first_passage": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.closes_iff_latency_fits": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.closure_event_atomic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.firstPassageAt_iff_maxExcursion": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.latency_spectrum_exact": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.least_capacity_iff_firstPassageAt": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.listening_countdown": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.no_first_passage_gauge": [
+    "propext"
+  ],
+  "QLF.ClosureDepthTime.same_census_different_latency": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureKernel.channel_factorization": [
     "Classical.choice",
     "Quot.sound",
@@ -514,6 +1059,44 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ClosureSelection.balanced_iff_charge_zero": [
+    "propext"
+  ],
+  "QLF.ClosureSelection.closable_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureSelection.mem_reachable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureSelection.reachable_card_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureSelection.selection_closes_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureSelection.subset_sum_embeds": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUncertainty.WIn_mono": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ClosureUncertainty.completions_sublist_of_context": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.ClosureUnitarity.antiHermitian_seed_forbidden": [
     "Classical.choice",
     "Quot.sound",
@@ -536,6 +1119,10 @@
   ],
   "QLF.ClosureUnitarity.zero_taxonomy": [
     "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CoincidenceTrivial.co0_trivial_split": [
     "Quot.sound",
     "propext"
   ],
@@ -579,6 +1166,35 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ConformalComparison.count_dilate": [
+    "propext"
+  ],
+  "QLF.ConformalComparison.dilate_balanced": [
+    "propext"
+  ],
+  "QLF.ConformalComparison.fold_dilate_even": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConformalComparison.fold_dilate_odd": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConformalComparison.local_dilation_breaks_balance": [],
+  "QLF.ConsciousUpdateRule.independent_count": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConsciousUpdateRule.independent_mode": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ConsciousUpdateRule.reset_percept_below": [],
+  "QLF.ConsciousUpdateRule.reset_threshold": [],
   "QLF.ConservativeReturn.F_closed": [],
   "QLF.ConservativeReturn.F_invariants": [],
   "QLF.ConservativeReturn.conservative_return": [],
@@ -590,6 +1206,261 @@
   "QLF.ConservativeReturn.toyQuotientTrigger_exists": [],
   "QLF.ConservativeReturn.toyTrigger_composite": [],
   "QLF.ConservativeReturn.toyTrigger_exists": [],
+  "QLF.ControlledUnitary.abc_decomposition": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.controlled_eq_abc": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.controlled_unitary_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.su2_euler": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.su2_three_commutators": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ControlledUnitary.unitary_eq_phase_smul_su2": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.any_verdict_encodes": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.encode_append": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.encode_closes_iff_met": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.final_verdict_schedule_invariant": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.first_closure_schedule_dependent": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.isFirst_append": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.listeners_cover_met": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.met_pauli_closed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.no_act_encoding_sees_order": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.no_schedule_free_first_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.order_blind": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.partial_listener_views": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.race_schedule_dependent": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.surplus_offer_not_met": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.vacuous_listener_never_closes": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.verdict_certificate_is_the_bit": [],
+  "QLF.CooperativeBridge.verifiers_agree": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.verify_sound": [
+    "propext"
+  ],
+  "QLF.CooperativeBridge.verify_true_pauli": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeBridge.whole_met_listener_met": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.coalitionResolves_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.consensus_fallacy": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.copy_adds_no_support": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.dictator_not_irreducible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.echo_chamber_blind": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.irrelevant_member": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.missing_variable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.observed_consensus_sound": [
+    "propext"
+  ],
+  "QLF.CooperativeClosure.parity_coalition_blind": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.parity_irreducible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.parity_resolves_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.separate_not_independent": [],
+  "QLF.CooperativeClosure.star_closes": [
+    "propext"
+  ],
+  "QLF.CooperativeClosure.star_irreducible": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.star_one_is_primordial": [
+    "propext"
+  ],
+  "QLF.CooperativeClosure.support_replicate_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeClosure.unobserved_consensus_world_free": [
+    "propext"
+  ],
+  "QLF.CooperativeClosure.xor_synthesis": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.block_irreducible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.budget_failure_undetermined": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.group_of_listeners_misses": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.hierarchical_parity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.kl_delta_prior": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.kl_delta_zero_uniform": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.kl_uniform_uniform": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.missing_leaf_blind": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.no_constant_identity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.partial_belief_below_quantum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.pooled_capacity": [
+    "propext"
+  ],
+  "QLF.CooperativeLimits.quantum_matches_iff_uniform": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.reports_irreducible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.vfe_not_constant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.CooperativeLimits.vfe_resolution_signed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.CoupledEvolution.evolve_covariant": [
     "Classical.choice",
     "Quot.sound",
@@ -694,6 +1565,46 @@
     "propext"
   ],
   "QLF.Discoveries2026.charge3W_antiparticle": [
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.complementary_composition_creates_novel_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.minimal_complementary_pair": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.self_compose_balanced_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityNovelOutcome.self_composition_type_one": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.axis_match_of_countBalanced_append": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.prefix_fold_determines_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.stream_folds_miss_interleaving": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.DiversityPhase.twistMatrixFold_append": [
+    "Classical.choice",
+    "Quot.sound",
     "propext"
   ],
   "QLF.FieldEnergy.J_sq_le": [
@@ -808,6 +1719,42 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.GluonAbelianControl.create_closes_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.create_total": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.first_singlet_move_reduces": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.gate_lengthens_witness": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.glue_closes_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.glue_total": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.same_label_blocked_gated": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.GluonAbelianControl.same_label_closes_ungated": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.GluonGluing.chan_ne_zero_iff": [
     "Classical.choice",
     "Quot.sound",
@@ -873,6 +1820,26 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.HalfStepReversal.halfWalk_reversal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HalfStepReversal.halfWalk_reversal_inv": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HalfStepReversal.handed_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HalfStepReversal.massStep_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.HiddenZeros.A4_zero": [
     "Classical.choice",
     "Quot.sound",
@@ -919,6 +1886,54 @@
   ],
   "QLF.HolographicBoundary.nonlocal_pairs_break_area_law": [
     "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.conjugate_pair_undetected": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.cutEntropy_eq_vonNeumann": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.deletion_detected": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_half_half": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_product": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.entropy_uniform_pow": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.half_id_kronecker": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.insertion_detected": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.single_error_not_correctable": [],
+  "QLF.HolographicCompletion.singlet_reduced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HolographicCompletion.substitution_detected": [
     "Quot.sound",
     "propext"
   ],
@@ -1012,6 +2027,11 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.JointClosure.singlet_chsh": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.JointClosure.singlet_corr": [
     "Classical.choice",
     "Quot.sound",
@@ -1091,6 +2111,31 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.LeptonStageB.rung_balanced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_first_return": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_length": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LeptonStageB.rung_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.LinkAction.first_variation": [
     "Classical.choice",
     "Quot.sound",
@@ -1149,6 +2194,83 @@
   "QLF.LocalGauge.ringWalk_norm": [
     "Classical.choice",
     "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.causal_not_reachable": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.census_postselection_signals": [
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.closure_timelike": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.no_history_connects": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_legs_from_one_event": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_lorentz_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.null_not_closed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.pair_endpoints_spacelike": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.pair_shared_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.prefixSpacelike_not_spacelike": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.reachable_causal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.shared_closure_vs_reachable": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.straight_run_null": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.tick_causal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.tick_reading_nondegenerate": [
+    "propext"
+  ],
+  "QLF.LocalityDefinitions.zero_displacement_degenerate": [
+    "propext"
+  ],
+  "QLF.LogicalPersistence.histories_are_a_model": [
+    "propext"
+  ],
+  "QLF.LogicalPersistence.loopWorld_has_time_loop": [
     "propext"
   ],
   "QLF.LorentzCover.properOrthochronous_id": [
@@ -1436,6 +2558,21 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.ModelTesting.equivalent_same_verdicts": [],
+  "QLF.ModelTesting.identity_can_fail": [],
+  "QLF.ModelTesting.pairEncoding_cannot_fail": [
+    "propext"
+  ],
+  "QLF.ModelTesting.possible_iff_not_impossible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.ModelTesting.vacuous_of_cannot_fail": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.MondScale.a0_eq_c_times_cyclic_rate": [
     "Classical.choice",
     "Quot.sound",
@@ -1487,6 +2624,126 @@
     "propext"
   ],
   "QLF.MrEUpdate.unrestricted_objective_fails": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.MultiObserver.observers_agree": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.censusRatio_eq_z": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.jointSign_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativeCZ_eq_cz": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativeHA_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativeHB_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativePA_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.nativePhase_infinite_order": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.native_bell": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.native_bell_matches_circuit": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.native_bell_not_product": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.native_bell_x_correlated": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeBell.phaseZ_even_power": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.D_zpow_native": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.censusRatioMirror_eq_zbar": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.cnot_native": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.nativeBranch_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.nativeJoint_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.nativeMirror_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.nativePhase_eq": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.native_one_dense": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NativeUniversality.native_universal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NoFreeDuplication.duplication_pays_log_two": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.NoFreeDuplication.identical_copy_pauli_blocked": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1675,6 +2932,46 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.PauliFrame.coeffs_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PauliFrame.frame_product": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PauliFrame.gauge_commutes": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PauliFrame.no_fourth_axis": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PauliFrame.pauli_is_a_frame": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PauliFrame.span_frame": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PauliFrame.third_axis": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PauliFrame.trace_zero_of_anti": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.PerspectiveHolography.closure_verdict_reconstructible": [
     "Classical.choice",
     "Quot.sound",
@@ -1692,6 +2989,71 @@
     "propext"
   ],
   "QLF.PerspectiveHolography.two_body_dictionary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.chsh_factorizable_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.fold_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.jointFold_factorizes": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.local_expectation_local": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.locality_profile": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_factorizable_model": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_signalling": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.no_signalling_typed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.perspective_locality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.perspective_locality_nontrivial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.probT_nonneg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.probT_sum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.PerspectiveLocality.singlet_outcome_dependent": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1771,6 +3133,63 @@
     "propext"
   ],
   "QLF.PoleFactorization.resolvent_partial": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.closing_cost_exact": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.completion_perm_closes": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.cz_entangling": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.fredkin_complete": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.joint_closure_is_cz": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.no_choice_fixed_in_advance": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.no_computable_superdeterministic_theory": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.quantum_power_needs_weighted_ways": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.rotation_powers_injective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.su2_dense": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.substrate_computes": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.QuantumComputer.twist_folds_finite": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -1888,6 +3307,105 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.RelationalClock.dependency_increases_capacity": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.dependency_strict_increase": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.different_clocks": [
+    "propext"
+  ],
+  "QLF.RelationalClock.nested_commutes_to_adjacent": [
+    "propext"
+  ],
+  "QLF.RelationalClock.rc0_record_does_not_determine_clock": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_lowers_depth": [
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_nested": [
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_not_always_minimal": [
+    "propext"
+  ],
+  "QLF.RelationalClock.reconcile_record": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelationalClock.record_swap": [
+    "propext"
+  ],
+  "QLF.RelationalClock.relCapacity_example": [
+    "propext"
+  ],
+  "QLF.RelationalClock.same_records": [
+    "propext"
+  ],
+  "QLF.RelationalClock.shuffle_reconstructs": [
+    "propext"
+  ],
+  "QLF.RelativisticRocket.arrivalTime_hasDerivAt": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.coordSpeed_at_light": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.earthDist_shipTime_to_reach": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.earthTime_at_light": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.earth_signal_reaches_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.emitTime_hasDerivAt": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.inertial_redshift_horizon": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.mutual_redshift": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.properVelocity_eq_one_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.redshift_limit_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.RelativisticRocket.shipTime_to_reach_le": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.RelativityScale.anisotropy_ratio": [
     "Classical.choice",
     "Quot.sound",
@@ -1938,6 +3456,149 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.SharedEvent.both_close_on_each_body": [],
+  "QLF.SharedEvent.history_from_A": [
+    "propext"
+  ],
+  "QLF.SharedEvent.history_from_B": [
+    "propext"
+  ],
+  "QLF.SharedEvent.pairBuilt_events_unique": [
+    "propext"
+  ],
+  "QLF.SharedEvent.pair_domain_reconstructs_record": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pair_phase_transfer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pairing_not_from_records": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.pairing_not_reconstructible": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.perspectives_agree_on_events": [
+    "propext"
+  ],
+  "QLF.SharedEvent.relay_agree_on_events": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedEvent.shared_event_not_from_bodies": [
+    "propext"
+  ],
+  "QLF.SharedReality.chain_without_relay_fails": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.endpoints_share_only_constants": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.global_zfa_from_all": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.global_zfa_not_from_pair": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.ledger_transfer_fails_without_pairs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.link_domain_not_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.no_signal_to_C": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.pairBuilt_ledger_transfer": [
+    "propext"
+  ],
+  "QLF.SharedReality.pairBuilt_zfa_iff": [
+    "propext"
+  ],
+  "QLF.SharedReality.pair_domain_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_closes_at_B": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_domain_reconstructs_fold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_domain_reconstructs_zfa": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_ledger_transfer": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_phase_transfer": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.relay_zfa_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.shared_iff_overlap": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.single_body_territorial_share_only_constants": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.territorial_record_reconstructs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.view_changes_only_through_own_events": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.zfa_A_not_from_BC": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SharedReality.zfa_not_from_one_body": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.SpatialResponseDerived.joint_step_identity": [
     "Classical.choice",
     "Quot.sound",
@@ -1959,6 +3620,56 @@
     "propext"
   ],
   "QLF.SpatialResponseDerived.unit_symmetric_mean": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.circle_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card_stack": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SphereCount.sphere3_card_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.scalarCoin_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.scalarContact_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.spinorStep_conserves_momentum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.spinorStep_lattice_conservation": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.spinorStep_of_scalar": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.spinorStep_translation_commute": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -2114,6 +3825,308 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TimeDoubleSlit.interval_eq_zero_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.interval_null": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.light_cone_duality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.marked_coherent": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.marked_expand": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.marked_orthogonal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.marked_visibility_bound": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.mu4_pattern": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.normSq_expI": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.off_cone_distinguishable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.relPhase_global": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.relPhase_reversed": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.reverse_is_negative_frequency": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.reversed_amp": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.reversed_relPhase_differs": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.single_time_slit_flat": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.space_is_twoPath": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.space_reciprocity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.space_shift_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.space_time_duality": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.tick_amp_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.tick_conservation": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_bright_fringe": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_dark_fringe": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_fringe_period": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_is_twoPath": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_reciprocity": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_reversed_perspective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.time_shift_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_eq_born": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_equal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_expand": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_fringe_term": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeDoubleSlit.twoPath_periodic": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.J_admissible_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.boost_interval": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.boost_null_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.closure_totals_blind": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.dagger_closure_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.every_reading_is_the_census": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_dagger": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_readingBy": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.handednessOn_reverse": [
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.joint_recovery_fails": [],
+  "QLF.TimeReversalPerspective.no_congruence_reverses_time": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.null_order_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_closure_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_eq_of_agree": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_false": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_involutive": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.readingBy_true": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.reading_has_unique_history": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.reversal_vs_dagger_differ": [],
+  "QLF.TimeReversalPerspective.reverse_closure_iff": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.reversed_census_is_census": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.reversed_reading_distinct": [],
+  "QLF.TimeReversalPerspective.reversed_tick_opposite_handedness": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.selection_identifiable": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.selectors_coincide_on_empty": [],
+  "QLF.TimeReversalPerspective.self_reversed_exists": [],
+  "QLF.TimeReversalPerspective.sixteen_reversed_readings": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.spacelike_order_by_perspective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.split_by_perspective": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.timeReverse_interval": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.timeReverse_not_a_boost": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.timeReverse_null_iff": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TimeReversalPerspective.timelike_order_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.Tsirelson.chsh_classical": [
     "propext"
   ],
@@ -2154,6 +4167,100 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.TwoLevelUnitary.clear_column": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.givens_exists": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.row_of_column": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.supported_mem_closure": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.unitary_eq_prod_twoLevel": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.TwoLevelUnitary.unitary_mem_closure_twoLevel": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.UniformMeasure.symm_of_perm_invariant": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.UniformMeasure.uniform_forced": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.UniformMeasure.word_weight_uniform": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.common_mode_cancels": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.electron_class": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.electron_in_class": [
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.fold_eq_nfFold": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.gauge_pair_never_negI": [],
+  "QLF.VacuumCorrelation.interleaved_prime": [
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.interleaving_flips_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.length_two_closures": [],
+  "QLF.VacuumCorrelation.neutrino_block_fold_blind": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.neutrino_vacuum_same_reading": [],
+  "QLF.VacuumCorrelation.nu_reading_order_blind": [],
+  "QLF.VacuumCorrelation.one_branch_closure_shifts_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.same_inventory_opposite_phase": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.VacuumCorrelation.two_axis_classification": [
+    "propext"
+  ],
   "QLF.VacuumResolvent.chain_tendsto": [
     "Classical.choice",
     "Quot.sound",
@@ -2178,6 +4285,46 @@
     "propext"
   ],
   "QLF.WalkCoupling.link_response": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.diracWalk_axis_exact": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.diracWalk_body_bracket": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.one_axis_le_some_axis": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_axis_exact": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_body_deficit_bounded": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_body_subluminal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_face_subluminal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.WalkDispersionBound.walk_group_velocity_le_one": [
     "Classical.choice",
     "Quot.sound",
     "propext"
@@ -2291,6 +4438,7 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.noncommuting_iff_eight": [],
   "QLF.only_2_gauge_matches_observed_Omega_Lambda": [
     "Classical.choice",
     "Quot.sound",

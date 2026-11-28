@@ -374,6 +374,8 @@ Post hoc, not pre-registered: within the family, the return amplitude `\|A₀\|`
 from `φ = 0` to `φ = π` at every `2m ≥ 4`. QLF's flux gives the most cancellation of the family.
 This was not a test, so it is not evidence.
 
+The [long-time kinetic phase audit](Kinetic_Phase_Scale.md) separately tests two conditional propagation candidates with a common leading continuum limit. Their off-axis phase differences survive joint large-time/coarse-graining scaling; no physical propagator or S5 promotion follows.
+
 ## §6 Honest scope
 
 * **Signed = quantum half, in the stationary-phase sense only.** §5a proves the signed amplitude

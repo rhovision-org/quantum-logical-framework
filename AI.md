@@ -13,6 +13,13 @@ hypotheses, verifier-gated atomic commitment, and a compressed self-model. This 
 [quantum-os#132](https://github.com/rhovision-org/quantum-os/issues/132). It is **not** claimed to be
 running today.
 
+**QLF as a verifier, not another generator.** Under the one-conjecture framing
+([Framing.md](https://github.com/rhovision-org/quantum-logical-framework/blob/main/Framing.md)), an LLM peer
+*generates* hypotheses and QLF *tests* them: a hypothesis is encoded as closures, by an encoding that
+could fail, and returned as necessary, possible, impossible, equivalent or undetermined under stated
+conditions. The value QLF adds is the deterministic verdict, not another stochastic guess, and a peer's
+output is only as strong as the verdict attached to it.
+
 **Why the distinction matters.** A neuro-symbolic agent that reasons by ZFA closure — every abstraction
 a quantum event, every conclusion a Curry-Howard proof token, every multi-peer agreement a joint closure
 — is the target architecture. The live system already supplies the substrate and the deterministic

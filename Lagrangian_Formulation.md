@@ -69,8 +69,8 @@ Real-time pruning removes any component that violates the zero-action condition.
 
 Two machine-verified theorems establish that this is a **selection, not a restriction**:
 
-- `encode_is_zfa` ([QLF_Universality.lean:60](lean/QLF_Universality.lean)): every terminating computation encodes as a ZFA-closed string — nothing computable is pruned.
-- `qlf_universality` ([QLF_Universality.lean:74](lean/QLF_Universality.lean)): the ZFA filter is Church-Turing complete. What `full_zeno_prune` eliminates is precisely the physically unrealizable tail — non-terminating, Busy Beaver-class computations that never achieve closure. See [Universality.md](Universality.md) for the full argument and [ReverseMathematics.md](ReverseMathematics.md) for why the core operates in RCA₀ below the Busy Beaver horizon.
+- `encode_is_zfa` ([QLF_Universality.lean:60](lean/QLF_Universality.lean)): every terminating computation encodes as a ZFA-closed string (bookkeeping, [Principles.md](Principles.md) P10; that nothing computable is pruned rests on `fredkin_complete`).
+- `qlf_universality` ([QLF_Universality.lean:74](lean/QLF_Universality.lean)): every terminating circuit has a ZFA encoding (bookkeeping: the encoding is ZFA for any edge list, [Principles.md](Principles.md) P10); substrate evaluation is `fredkin_complete`. The reading is that what `full_zeno_prune` eliminates is the physically unrealizable tail — non-terminating, Busy Beaver-class computations that never achieve closure. See [Universality.md](Universality.md) for the full argument and [ReverseMathematics.md](ReverseMathematics.md) for why the core operates in RCA₀ below the Busy Beaver horizon.
 
 Only states that remain consistent with ℒ = 0 persist. This implements QLF's core rule: *asymmetric distinctions are pruned.*
 

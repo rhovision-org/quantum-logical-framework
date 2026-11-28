@@ -421,7 +421,8 @@ reusable structure that QLF does not certify as isolated.
   the census is a first test of whether it is worth pursuing.
 - No dynamics. `a_ZFA` is a static minimum construction cost, not a state variable that carries
   memory across scales. The cooperative assembly transport proposal is a separate program
-  ([#267](https://github.com/rhovision-org/quantum-logical-framework/issues/267)); the finite
+  ([#267](https://github.com/rhovision-org/quantum-logical-framework/issues/267)); its frozen screen
+  and negative result are in [`Cooperative_Assembly_QLF.md`](Cooperative_Assembly_QLF.md). The finite
   uncertainty kernel is [`Closure_Uncertainty_QLF.md`](Closure_Uncertainty_QLF.md) (#269).
 - No turbulence. The closure-census transfer has no inertial range, vacuum or seeded
   ([`intermittency_bridge.py`](intermittency_bridge.py),
@@ -441,7 +442,21 @@ ensemble; a formal possibility count and an observed copy count must not be iden
 
 ### 8.1 Lean targets
 
-The next PR should be a `QLF_AssemblyIndex` module, not more prose. Minimum targets:
+**Stage 1 is done.** [`QLF_AssemblyIndex`](lean/QLF_AssemblyIndex.lean) (no axioms) defines an
+assembly pathway (free primitives, joins of earlier entries, unlimited reuse) and `assemblyIndex` as
+its least join count. It proves `assemblyIndex_le_length_sub_one`, and `reuse_saves_a_join` shows
+that `^v^v` needs only 2 joins. The pathway list plays the role of the DAG in target 1. **Stage 2 is
+done too:** `ClosedPathway` keeps a pool in which a closed word survives being joined and an open
+word is consumed, `assemblyIndexClosed` is its least join count, and `assemblyIndex_le_closed` proves
+`a ≤ a_ZFA` by simulating every closed-reuse pathway with an ordinary one. The comb gives
+`a_ZFA ≤ |w| − 1`. Starting from a library `L` of available parts, `libIndex_mono` proves that a
+larger library (as a multiset) never costs more joins. That holds by construction for any
+distribution of parts, so it is not evidence that diversity helps; that would need diverse and
+homogeneous libraries of equal size. The gap is exhibited in Lean: `strict_gap_up4` proves `a(^^^^) ≤ 2` and `a_ZFA(^^^^) = 3`. The
+lower bound is a potential argument, since `^^` is open and cannot be joined to itself. `^^^^` is not
+count-balanced, so a witness among the balanced words the census counts is still open. Target 4 is
+already proved: [`QLF_PhaseRule`](lean/QLF_PhaseRule.lean) `phase_rule_real` shows that every
+count-balanced fold is `+I` or `−I`. The original target list:
 
 1. Define an `AssemblyDAG` for `List Twist`: leaves are primitives, internal nodes are joins, and
    the root is the target.

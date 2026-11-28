@@ -11,6 +11,9 @@
 > **relative perspectives on one ZFA closure**, seen from different 3-axis projections, at different
 > logical densities, in different Markov-blanket frames. There is one substrate; physics is the set of
 > relative views of it. (§4a.)
+>
+> One-page summary of what is relative, what every perspective shares, and what is proved:
+> [`Everything_Is_Relative.md`](Everything_Is_Relative.md).
 
 ## Problem statement and hypothesis
 

@@ -95,8 +95,11 @@ closed words checked: 5296
 failures: 0
 ```
 
-This is a **finite check of the proof sketch**, not a Lean theorem. The analytic argument covers
-arbitrary length; the Lean/formal target remains open.
+This is a finite check of the proof sketch. The general statement is now a Lean theorem:
+[`QLF_CoincidenceTrivial`](lean/QLF_CoincidenceTrivial.lean) `co0_trivial_split` proves that every
+count-balanced history `t :: rest` splits into two open parts `[t]` and `rest`, for every length
+(`closed_length_ge_two` makes both parts nonempty). Count balance is the full ZFA verdict by
+`count_balanced_pauli_closed`. No axioms.
 
 ---
 
@@ -226,7 +229,6 @@ Important qualifications:
   provenance for feeling and memory.
 - No claim that lexical overlap, embeddings, or unification are interchangeable listener relations.
 - No change to the frozen `quantum-os#322` experiment.
-- No Lean theorem yet for CO0; only the finite check and the analytic proof sketch.
 
 ---
 
@@ -258,7 +260,7 @@ Methods hygiene: DRAFT test ledger `claim_records/coincidence_slice.json`; regis
 
 ## 10. Anchors
 
-- [`lean/ER_EPR_QLF.lean`](lean/ER_EPR_QLF.lean) — `SharedClosure`, `Spacelike`, `ERBridge`,
+- [`lean/ER_EPR_QLF.lean`](lean/ER_EPR_QLF.lean) — `SharedClosure`, `Spacelike` (prefix-order incomparability, not Minkowski spacelikeness: [Locality.md](Locality.md) §5), `ERBridge`,
   `no_ftl_in_epr`.
 - [`lean/QLF_IndexedFactors.lean`](lean/QLF_IndexedFactors.lean) — `shared_closure_not_factorizable`,
   `gauge_pair_is_product_sector`.
