@@ -1672,6 +1672,26 @@
     "Quot.sound",
     "propext"
   ],
+  "QLF.HalfStepReversal.halfWalk_reversal": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HalfStepReversal.halfWalk_reversal_inv": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HalfStepReversal.handed_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.HalfStepReversal.massStep_neg": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
   "QLF.HiddenZeros.A4_zero": [
     "Classical.choice",
     "Quot.sound",
@@ -3472,6 +3492,36 @@
     "propext"
   ],
   "QLF.SphereCount.sphere3_card_zero": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.scalarCoin_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.scalarContact_unitary": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.spinorStep_conserves_momentum": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.spinorStep_lattice_conservation": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.spinorStep_of_scalar": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "QLF.SpinorContact.spinorStep_translation_commute": [
     "Classical.choice",
     "Quot.sound",
     "propext"
