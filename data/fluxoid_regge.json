@@ -1,0 +1,88 @@
+{
+  "K1_closed_with_nonzero_face_obligation": 2984,
+  "K1_example": ">^<v",
+  "K2_flat_iff_zero_current": true,
+  "K4_flat_closed_histories": [
+    "",
+    "<>",
+    "><",
+    "^v",
+    "v^",
+    "<<>>",
+    "<><>",
+    "<>><",
+    "<>^v",
+    "<>v^",
+    "<^v>",
+    "<v^>"
+  ],
+  "K4_flat_set_identical_across_maps": true,
+  "K5": {
+    "N=2": {
+      "closed_histories_div_changed": 0,
+      "div_commutes_with_smoothing_failures": 0,
+      "nonzero_currents_still_integral": 0,
+      "open_histories_div_changed": 82040
+    },
+    "N=4": {
+      "closed_histories_div_changed": 0,
+      "div_commutes_with_smoothing_failures": 0,
+      "nonzero_currents_still_integral": 0,
+      "open_histories_div_changed": 82040
+    }
+  },
+  "K6": {
+    "classes": 4097,
+    "classes_with_closures_in_both_bodies": 672,
+    "of_those_cross_body_order_varies": 672,
+    "per_body_order_violations": 0
+  },
+  "K7_labeling_B_geometries_on_closed": 1,
+  "L": 10,
+  "closed": 5341,
+  "closed_with_zero_current": 2357,
+  "histories": 87381,
+  "labeling_A": {
+    "1+m": {
+      "all_undefined": 1620,
+      "classes": 145,
+      "classes_with_more_than_one_geometry": 137,
+      "closed_curved": 2976,
+      "closed_flat": 2357,
+      "closed_undefined": 8,
+      "gauss_bonnet_max_abs_sum": 4.440892098500626e-15,
+      "geometries_in_closed_class": 140
+    },
+    "1+m/2": {
+      "all_undefined": 0,
+      "classes": 145,
+      "classes_with_more_than_one_geometry": 137,
+      "closed_curved": 2984,
+      "closed_flat": 2357,
+      "closed_undefined": 0,
+      "gauss_bonnet_max_abs_sum": 8.881784197001252e-15,
+      "geometries_in_closed_class": 143
+    },
+    "1+m/4": {
+      "all_undefined": 0,
+      "classes": 145,
+      "classes_with_more_than_one_geometry": 137,
+      "closed_curved": 2984,
+      "closed_flat": 2357,
+      "closed_undefined": 0,
+      "gauss_bonnet_max_abs_sum": 6.217248937900877e-15,
+      "geometries_in_closed_class": 143
+    },
+    "sqrt(1+m)": {
+      "all_undefined": 0,
+      "classes": 145,
+      "classes_with_more_than_one_geometry": 137,
+      "closed_curved": 2984,
+      "closed_flat": 2357,
+      "closed_undefined": 0,
+      "gauss_bonnet_max_abs_sum": 8.881784197001252e-15,
+      "geometries_in_closed_class": 143
+    }
+  },
+  "max_len": 8
+}

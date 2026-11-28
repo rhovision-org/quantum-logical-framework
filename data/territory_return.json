@@ -1,0 +1,28 @@
+{
+  "M1_classes_with_zfa": 2,
+  "M1_mixed_classes": 2,
+  "M2_distinct_invariants": 64,
+  "M2_invariant_constant_on_classes": true,
+  "M2_invariant_separates_classes": true,
+  "M3_zfa_function_of_ledger": true,
+  "M4": {
+    "K_A=I,K_B=I,phase=+1+0i": {
+      "distinct_ledgers": 211,
+      "members": 2247,
+      "non_zfa": 1574,
+      "shortest_non_zfa_len": 1,
+      "zfa": 673
+    },
+    "K_A=I,K_B=I,phase=-1+0i": {
+      "distinct_ledgers": 107,
+      "members": 2246,
+      "non_zfa": 2182,
+      "shortest_non_zfa_len": 1,
+      "zfa": 64
+    }
+  },
+  "classes": 64,
+  "histories": 69905,
+  "klein_parity_mismatches": 0,
+  "max_len": 4
+}

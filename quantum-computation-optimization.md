@@ -115,6 +115,20 @@ These are *projected* gains for the **bounded-history (low-entanglement / struct
 
 These gains come directly from replacing Hilbert-space evolution with **constructive ZFA composition** — exactly what the repo’s possibilist ontology enables.
 
+## 4a. Native-gate tests and resource benchmarks
+
+This page is about **classical simulation** of quantum circuits, the fourth level of computation in
+[Framing.md](Framing.md) §3. It is not evidence for native quantum universality in the substrate, which
+is obligation O1, now proved in Lean (`native_universal`). Two executable tests belong with it:
+
+1. **Native Bell state.** Take `|00⟩` to `(|00⟩ + |11⟩)/√2` using only substrate operations (the
+   Hadamard Form, count-weighted rotations, the joint-closure sign table), and check the relative phase
+   and the correlations against `singlet_chsh`, without importing the circuit semantics being tested.
+   The Lean form is proved (`native_bell`, [`QLF_NativeBell`](lean/QLF_NativeBell.lean)); the executable test should reproduce `2(|00⟩ + |11⟩)` from the same native rules.
+2. **Resource benchmarks.** For each circuit family, record history-space size, wall time and memory
+   against a state-vector baseline, and publish the cases where the catalog is slower. A projected
+   speed-up is not a benchmark (§4).
+
 ## 5. Integration Plan for the QLF Repo
 
 *Status:* `qc_assembler.py`, `quantum_simulator.py`, `qucalc_engine.py`, `path_integral.py`, and `tutorial_01_bell_state.py` exist. The items below (the catalog wrappers, `tutorial_02_grover.py` / `tutorial_03_qft.py`, and the `benchmarks/` suite) are **roadmap — not yet built**; this doc is the design, not a finished feature.

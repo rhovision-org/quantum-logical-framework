@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-DIVERSITY-D8C2B-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "d0c0a891efc698ce2117b9f07bf087f4a4910eb2",
+  "reviewer": "jimscarver",
+  "purpose": "Draft D8c2b negative-synthesis ledger (#290): phase-labelled closure classes add no new classes, and two-interface continuation remains negative with an exact net-zero null match. D8c2 is not passed; a genuinely new relation is required.",
+  "entries": [
+    {
+      "id": "diversity_d8c2b_phase_and_two_interface",
+      "claim": "Under the frozen D3 conjugate-boundary join, adding fold phase to canonical closure classes adds zero classes over 37,376 bases of length 3-5. A two-interface continuation (a->b->c, extension bound 2) remains negative: length-3 homogeneous mean K2=0.214 vs heterogeneous 0.071; length-4 0.550 vs 0.279; the net-zero null matches ZFA exactly over 4,608 bases.",
+      "anchors": [],
+      "formal_scope": "Finite twist words; frozen D3 join; canonical and phase-labelled classes; two-interface continuation. This is a negative synthesis, not a D8c2 pass. No Penrose, persistence, or physical claim.",
+      "comparator": "Exhaustive variants in diversity_advantage_variants.py and data/diversity_d8c2b_revision.json.",
+      "kill_condition": "Any phase-labelled class addition, any length where two-interface heterogeneous support has higher mean K2, or any null/ZFA continuation-set difference (which would reopen the revision).",
+      "status": "DRAFT",
+      "source": "Diversity_Revision_D8c2b.md; diversity_advantage_variants.py; tests/test_diversity_advantage_variants.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}

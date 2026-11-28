@@ -29,7 +29,9 @@ ER=EPR is not just a conceptual identification — it is the structural predicti
 ## The EPR Paradox
 The EPR paradox, proposed by Einstein, Podolsky, and Rosen in 1935, argued that quantum entanglement implied "spooky action at a distance." It suggested that measuring one particle instantly affects its entangled partner, seemingly violating locality and requiring faster-than-light influences.
 
-**See also:** (./Entanglement.md) which shows that entanglement in QLF is simply **shared logical constraints from the past**, resolved locally with no signaling required.
+**Einstein was right that no spooky action can be used or seen as a signal.** In QLF's two-body operator representation, nothing done to one particle changes the other's statistics, for any entangled state ([`QLF_PerspectiveLocality`](lean/QLF_PerspectiveLocality.lean) `perspective_locality`, `no_signalling_typed`). The endpoints of a shared pair are spacelike, and no history joins them ([`QLF_LocalityDefinitions`](lean/QLF_LocalityDefinitions.lean) `no_history_connects`). So the measurement does not change the partner's statistics, and Einstein's principle of local action is vindicated operationally. Whether any ontic influence exists is not settled by these theorems. What EPR also assumed, separate pre-existing values for each particle, is the part Bell excluded, and QLF agrees (`no_factorizable_model`). See [Locality.md](Locality.md) §2.
+
+**See also:** [Entanglement.md](Entanglement.md), which shows that entanglement in QLF is simply **shared logical constraints from the past**, resolved locally with no signaling required.
 
 ## Leonard Susskind’s ER = EPR Conjecture
 Physicist Leonard Susskind (with Juan Maldacena) proposed that **EPR = ER** — that quantum entanglement (EPR) and Einstein-Rosen bridges (wormholes) are two descriptions of the same underlying phenomenon.
@@ -63,6 +65,8 @@ See the Lean file: [`lean/ER_EPR_QLF.lean`](lean/ER_EPR_QLF.lean). The module do
 - **`er_equals_epr`** — given spacelike separation, the bridge exists *exactly* when the histories are entangled: the bridge **is** the shared closure. An identity, not a duality.
 - **`no_ftl_in_epr`** — a bridge is spacelike, so neither end reaches the other; nothing is transmitted *through* the geometry.
 - **`primordial_wormhole`** — a **verified witness**: the conjugate pair `[+, −]` closes (`conjugate_pair_closes`, `native_decide`) and is spacelike (`conjugate_pair_spacelike`) — the simplest ER=EPR instance, entirely from the core.
+
+**Audit (issue #315, [Locality.md](Locality.md)).** `Spacelike` here is incomparability in the prefix order, not Minkowski spacelikeness: in the tick reading the primordial pair's two halves land on the same event ([`QLF_LocalityDefinitions`](lean/QLF_LocalityDefinitions.lean) `prefixSpacelike_not_spacelike`). `no_ftl_in_epr` is the second conjunct of `ERBridge` and does not by itself establish no-signalling; that is [`QLF_PerspectiveLocality`](lean/QLF_PerspectiveLocality.lean) `no_signalling` and `perspective_locality`. A moved pair's endpoints are spacelike (interval `−4|x|²`), not null, and no history joins them (`no_history_connects`): the shared closure is a relation no causal history carries.
 
 ## Implications
 This unification suggests that spacetime connectivity itself emerges from entanglement. The logical lattice, not spacetime, is fundamental.

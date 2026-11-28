@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-DIVERSITY-D8A-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "dc1f8d45f3c83639ecece317865505c5df5658af",
+  "reviewer": "jimscarver",
+  "purpose": "Draft finite-slice ledger for D8a of the diversity program (#290): one primitive cross-type composition witness plus a short census. D8b (novel outcome) and D8c (measured advantage) are not claimed.",
+  "entries": [
+    {
+      "id": "diversity_d8a_cross_type_composition",
+      "claim": "With provisional type kind(w)=net(w), composition by concatenation, and admissibility requiring both constituents open and the composite ZFA-closed, the pair a='^', b='v' is an admissible cross-type composition: kind(a)!=kind(b) and a+b='^v' is ZFA-closed. The short census finds 112 admissible cross-type compositions and 0 same-type at depth 2.",
+      "anchors": [],
+      "formal_scope": "Finite twist words of length 1-2 over the 8-twist alphabet; provisional oriented net-action type; concatenation-only composition. This is not a Penrose/golden-ratio claim, not a novel-outcome theorem (D8b), and not a measured diversity advantage (D8c).",
+      "comparator": "Exhaustive short census in diversity_composition.py and data/diversity_d8a_census.json.",
+      "kill_condition": "A witness that is not cross-type under the declared type, a composite that is not ZFA-closed, or any D8b/D8c/diversity-advantage conclusion inferred from D8a alone.",
+      "status": "DRAFT",
+      "source": "Diversity_Composition_QLF.md; diversity_composition.py; tests/test_diversity_composition.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "census": {
+    "admissible_compositions": 112,
+    "cross_type_compositions": 112,
+    "cross_type_witness": {
+      "a": "^",
+      "a_open": true,
+      "b": "v",
+      "b_open": true,
+      "composite": "^v",
+      "composite_closed": true,
+      "composite_fold": 2,
+      "kind_a": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "kind_b": [
+        -1,
+        0,
+        0,
+        0
+      ],
+      "kind_composite": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "distinct_composite_kinds": 1,
+    "examples": [
+      {
+        "a": "^",
+        "b": "v",
+        "composite": "^v",
+        "kind_a": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "kind_b": [
+          -1,
+          0,
+          0,
+          0
+        ],
+        "kind_composite": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "a": "v",
+        "b": "^",
+        "composite": "v^",
+        "kind_a": [
+          -1,
+          0,
+          0,
+          0
+        ],
+        "kind_b": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "kind_composite": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "a": "<",
+        "b": ">",
+        "composite": "<>",
+        "kind_a": [
+          0,
+          -1,
+          0,
+          0
+        ],
+        "kind_b": [
+          0,
+          1,
+          0,
+          0
+        ],
+        "kind_composite": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "a": ">",
+        "b": "<",
+        "composite": "><",
+        "kind_a": [
+          0,
+          1,
+          0,
+          0
+        ],
+        "kind_b": [
+          0,
+          -1,
+          0,
+          0
+        ],
+        "kind_composite": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "a": "/",
+        "b": "\\",
+        "composite": "/\\",
+        "kind_a": [
+          0,
+          0,
+          1,
+          0
+        ],
+        "kind_b": [
+          0,
+          0,
+          -1,
+          0
+        ],
+        "kind_composite": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "max_length": 2,
+    "note": "D8a only: a finite cross-type witness. D8b (novel outcome) and D8c (measured advantage) are not claimed.",
+    "open_words": 64,
+    "same_type_compositions": 0,
+    "words": 72
+  },
+  "gates": {
+    "D8a_cross_composition": "pass: explicit primitive witness ^ + v -> ^v",
+    "D8b_novel_outcome": "open; not attempted",
+    "D8c_measured_advantage": "open; no measure/comparison"
+  },
+  "meta": {
+    "gate": "D8a",
+    "generator": "diversity_composition.py",
+    "issue": 290,
+    "pre_registration": "Diversity_Composition_QLF.md",
+    "version": 1
+  }
+}

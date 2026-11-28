@@ -57,7 +57,10 @@
    "HO>EE": "deltaQ = T deltaS",
    "EE>CV": "causal order -> metric",
    "EE>GW": "spin-2, v = c",
-   "SA>EE": "Hilbert: delta S = 0 at balance"
+   "SA>EE": "Hilbert: delta S = 0 at balance",
+   "CV>BH": "river model",
+   "BH>RK": "equivalence principle",
+   "RK>ER": "horizons are relations"
   },
   {
    "H6>EV": "domain 6",
@@ -121,7 +124,8 @@
    "V>CH": "valence 2 is neutral",
    "CH>FOLD": "backbone carries none",
    "HP>FOLD": "only H-H pays",
-   "V>W2": "two liquids (2026)"
+   "V>W2": "two liquids (2026)",
+   "V>MG": "open strands bind by opposite charge"
   },
   {
    "PT>ORD": "grade by closure",

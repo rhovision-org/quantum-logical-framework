@@ -1,0 +1,31 @@
+{
+  "record_id": "QLF-COINCIDENCE-001",
+  "record_type": "test_ledger",
+  "version": "0.3.1-draft",
+  "source_revision": "e2b904b5c2a9fdfd4c570e508fda86c8f6bd348b",
+  "reviewer": "jimscarver",
+  "purpose": "Draft finite-slice ledger for the typed-provenance coincidence model (#283 / PR #284). This is not an all-events theorem and does not close CO3 or CO4.",
+  "entries": [
+    {
+      "id": "coincidence_co0_co1_co2_finite",
+      "claim": "The bare split definition is vacuous on every closed word of length at least two (CO0). On a typed provenance schedule (Origin x Twist), first joint closure (CO1/CO2) is well-defined; a strong co-incidence has both sides open and not in the product sector, while a product-sector contrast is not strong.",
+      "anchors": [],
+      "formal_scope": "Finite ZFA-closed words through length 6 for CO0, plus fixed typed-provenance examples for CO1/CO2. This is not a census of all interaction events, not an all-events resolution theorem, and not a causation claim.",
+      "comparator": "Exhaustive CO0 census and declared CO1/CO2 examples in coincidence.py and data/coincidence_census.json.",
+      "kill_condition": "A closed word of length >= 2 without a vacuous split, a first-joint-closure example whose provenance is assigned after the split, or any all-events conclusion not backed by CO3/CO4.",
+      "status": "DRAFT",
+      "source": "Coincidence_QLF.md; coincidence.py; tests/test_coincidence.py",
+      "registration": {
+        "specification_revision": null,
+        "registered_at": null,
+        "data_access": "not_established",
+        "observable": null,
+        "analysis_rule": null,
+        "uncertainty": null,
+        "rejection_rule": null,
+        "dataset_or_experiment": null,
+        "chronology_evidence": null
+      }
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
   "record_type": "claim",
   "record_id": "QLF-RELATIVITY-001",
-  "version": "0.3.2-draft",
-  "source_revision": "d575748cb10923257442d7f7b90a7f7a3d7e9320",
+  "version": "0.3.7-draft",
+  "source_revision": "00af579e8553d6da78fffed59c2f3bf3082797f0",
   "informal_statement": "The free Dirac walk approaches Lorentz-covariant propagation in the long-wavelength regime, with a calculable lattice error, while exact invariance and interacting boost covariance remain open.",
   "approximation_or_regime": {
     "name": "Long-wavelength free Dirac walk",
@@ -30,23 +30,40 @@
       "QLF.InteractingKinematics.umklapp_leg_bound",
       "QLF.InteractingKinematics.soft_umklapp",
       "QLF.InteractingKinematics.twoBody_lattice_conservation",
-      "QLF.InteractingKinematics.scattering_latticeConserving"
+      "QLF.InteractingKinematics.scattering_latticeConserving",
+      "QLF.BoostStates.chiralAct_mul",
+      "QLF.BoostStates.chiralAct_neg",
+      "QLF.BoostStates.chiralAct_of_unitary",
+      "QLF.BoostStates.halfWalk_eq_conj",
+      "QLF.BoostStates.halfWalk_dispersion",
+      "QLF.BoostStates.dirac_boostZ_covariant",
+      "QLF.BoostAmplitudes.scalar_bilinear_invariant",
+      "QLF.BoostAmplitudes.scalar_vertex_invariant",
+      "QLF.BoostAmplitudes.blind_density_not_invariant",
+      "QLF.BoostAmplitudes.blind_vertex_not_invariant",
+      "QLF.SpinorContact.spinorStep_lattice_conservation",
+      "QLF.SpinorContact.scalarContact_unitary",
+      "QLF.HalfStepReversal.halfWalk_reversal"
     ],
-    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and a conditional kinematic layer of interactions: given reciprocal-lattice conservation and a summed long-wavelength bound, processes conserve exactly and remain allowed in every Lorentz frame to the free-shell order; the two elementary umklapp vectors along a boost axis are not boost-stable; an umklapp process forces a leg of size only 2*pi/(N+M); a two-body contact-interaction walk on Z^3 conserves total momentum mod the reciprocal lattice, derived from its translation symmetry (for more than two bodies reciprocal-lattice conservation remains the definition of a process). They do not establish boost covariance of interacting amplitudes or loops, any decomposition of loops into frame-dependent and frame-independent parts, a physical propagation law, or a conservative return from interacting records."
+    "statement_scope": "The formal theorems establish the census limits, the Lorentz-symbol determinant, free Dirac-walk shell covariance, and a conditional kinematic layer of interactions: given reciprocal-lattice conservation and a summed long-wavelength bound, processes conserve exactly and remain allowed in every Lorentz frame to the free-shell order; the two elementary umklapp vectors along a boost axis are not boost-stable; an umklapp process forces a leg of size only 2*pi/(N+M); a two-body contact-interaction walk on Z^3 conserves total momentum mod the reciprocal lattice, derived from its translation symmetry (for more than two bodies reciprocal-lattice conservation remains the definition of a process). Stage 4a: the approved frame-comparison map on the walk's states has its algebra proved (the chiral SL(2,C) action is a homomorphism with the double-cover sign, the half-step slice is the walk conjugated by a fixed unitary with the same dispersion, and a z-boost is exact on the continuum Dirac form (E + H) beta); the walk band's O(kappa^2) covariance on the half-step slice is a pre-registered numerical result, not a theorem. They do not establish boost covariance of interacting amplitudes or loops, any decomposition of loops into frame-dependent and frame-independent parts, a physical propagation law, or a conservative return from interacting records."
   },
   "formal_object": {
     "primary_files": [
       "lean/QLF_RelativityScale.lean",
       "lean/QLF_LorentzSymbol.lean",
       "lean/QLF_BoostCovariance.lean",
-      "lean/QLF_InteractingKinematics.lean"
+      "lean/QLF_InteractingKinematics.lean",
+      "lean/QLF_BoostStates.lean",
+      "lean/QLF_BoostAmplitudes.lean",
+      "lean/QLF_SpinorContact.lean",
+      "lean/QLF_HalfStepReversal.lean"
     ],
     "type": "finite census moments, signed Pauli-symbol algebra, and the unitary Dirac-walk dispersion; lattice energy-momentum conservation for interacting processes"
   },
   "dependencies": {
     "lean_toolchain": "leanprover/lean4:v4.34.0-rc1",
     "mathlib": "abec794dccc82583e8ac6f31968adf01c264d2da",
-    "audit_baseline": "Reviewed 375-entry baseline after #222; the relativity/boost anchors are enforced there.",
+    "audit_baseline": "Reviewed 375-entry baseline after #222; the relativity/boost anchors are enforced there. QLF_BoostStates anchors added to lean/axiom_footprints.expected.json (541 entries).",
     "qlf_bridge_axioms": "No project bridge axiom in the selected footprints. The kinetic reading of the census symbol is a physical assumption, not a Lean axiom."
   },
   "inputs": [
@@ -107,22 +124,22 @@
     "uncertainties": "S approximately (L_P/lambda)^2; the bound requires both frames to remain long-wavelength"
   },
   "measurement_protocol": {
-    "status": "FORMAL_ONLY",
-    "design": "Compare the derived Dirac-walk shell with its Lorentz transform under the stated long-wavelength hypotheses.",
-    "failure_condition": "A shell mismatch outside the O(S^2) bound, or an interacting case with no conservative return.",
-    "execution_status": "not_performed"
+    "status": "FORMAL_PLUS_PREREGISTERED_NUMERICAL",
+    "design": "Formal: compare the derived Dirac-walk shell with its Lorentz transform under the stated long-wavelength hypotheses. Numerical (stage 4a, separate from the formal shell claim): boost_states_check.py, pre-registered in Relativity_Principle.md section 6b at commit d3efbaf before any graded run, measures the defect ||S Pi(k) S^-1 - E' P(k') beta||_max / E' of the walk's positive-band projector under the chiral SL(2,C) action, with E' the boosted continuum energy (not the walk's E(k')), on the registered grid (12 directions, seed 20261122, m/|k| in {0.5,1}, three boost axes, eta=0.5, kappa in {0.08,...,0.005}); graded number = log-log slope of the worst defect on the half-step slice. Fail-closed gates: calibration below 1e-12, positive band of rank 2, finite non-zero defects, and a wrong-sign negative control with defect at least 1e-2. Stage 4b: boost_amplitudes_check.py, pre-registered in Relativity_Principle.md section 6b at commit 0be8cce before any graded run, measures the relative change |W(Lambda p) - W(p)|/|W(p)| of the spin-summed tree amplitude W = |ghat(q)|^2 Tr[(Pi1' x Pi2') Gamma (Pi1 x Pi2) Gamma^dagger] of a two-body contact vertex Gamma under the stage-4a map, for scalar (beta x beta), vector (1x1 - sum alpha x alpha), nearest-neighbour-range scalar, and spin-blind (1x1) vertices, centre-of-momentum elastic kinematics, 12 samples (seed 20261125), same kappa grid and eta; gates: continuum calibration below 1e-12, continuum spin-blind median defect at least 1e-2, every sample finite and non-zero. After review: W must be real and positive with relative imaginary residual at most 1e-12; walk quasi-energy mismatch between in and out legs reported as a diagnostic.",
+    "failure_condition": "Formal: a shell mismatch outside the O(S^2) bound, or an interacting case with no conservative return. Numerical: half-step slope below 1.5 (first-order frame dependence); 1.5 to 1.8 inconclusive.",
+    "execution_status": "prospective_completed"
   },
   "reported_agreement": {
-    "value": "not a numerical comparison",
-    "comparator": "Minkowski shell and the free Dirac-walk dispersion",
-    "uncertainty": "O(S^2) with S approximately (L_P/lambda)^2",
-    "comparison_type": "not_applicable"
+    "value": "Numerical stage 4a only: half-step slope 2.000317 (PASS against >= 1.8); calibration defect 2.99e-16; ungraded raw slope 0.999945 (first order, as expected); negative control defect 0.342 at every kappa. Stage 4b: half-step slopes scalar 2.001, vector 2.000, range 2.001 (PASS against >= 1.8); spin-blind slope 0.000 with worst defect 6.43 at every kappa (predicted O(1) frame dependence, confirmed); calibration 9.1e-16 and 5.1e-16; continuum spin-blind median defect 0.78. Diagnostic (not graded, added after review): worst relative walk quasi-energy mismatch between in and out legs 1.0e-4 at kappa=0.08 to 4.0e-7 at kappa=0.005; W is a vertex proxy, not an energy-conserving S-matrix element.",
+    "comparator": "The continuum Dirac covariance S (pslash + m) S^-1 = (Lambda p)slash + m, for which the defect is zero to rounding; formal part compared against the Minkowski shell.",
+    "uncertainty": "Finite grid only: the slope is evidence on the registered grid, not a uniform asymptotic theorem; no test of the projected/rescaled packet map's composition; stage 4b covers tree level (first order in g) only, no loops. No independent rerun.",
+    "comparison_type": "consistency"
   },
   "evidence": {
-    "F": "Free-shell covariance, census limits, Lorentz-symbol determinant and shared-pair marginal identities are formal and audited. Interacting kinematics: exact conservation at long wavelength, frame-independence of allowed processes, boost-instability of the two elementary umklapp vectors, the per-leg umklapp bound, two-body momentum conservation.",
-    "N": "No numerical boost-covariance benchmark is claimed.",
+    "F": "Free-shell covariance, census limits, Lorentz-symbol determinant and shared-pair marginal identities are formal and audited. Interacting kinematics: exact conservation at long wavelength, frame-independence of allowed processes, boost-instability of the two elementary umklapp vectors, the per-leg umklapp bound, two-body momentum conservation. Stage 4b vertex part: the spin action preserves the scalar density and, by congruence, the scalar two-body vertex beta(x)beta, and a genuine boost does not preserve the spin-blind contact (QLF_BoostAmplitudes). Stage 4c: lattice momentum conservation for a matrix-valued relative-position contact, unitarity of the scalar contact (QLF_SpinorContact), and the half-step slice's parameter-reversal identity halfWalk(-k,-m) = halfWalk(k,m)^H (QLF_HalfStepReversal; simultaneous reversal of momentum and mass, not antiunitary time reversal). The audited fact is the identity. That it makes the generator H = -i Log U odd, and so explains the measured O(kappa^2) slopes, is a structural explanation; the analytic bridge (matrix logarithm with cubic remainder, a non-closing spectral gap, the vertex proxy's normalization) is not formalized. Vertex invariance, coin unitarity and translation conservation are separate facts and do not establish boost covariance of the interacting contact step.",
+    "N": "Stage 4a, recorded separately from the formal shell claim: a pre-registered finite-grid numerical check (boost_states_check.py, data/boost_states_check.json, pre-registration commit d3efbaf) finds the walk's positive band Dirac covariant to second order on the half-step slice (slope 2.000317, PASS), with calibration 2.99e-16, ungraded raw slope 0.999945 and a wrong-sign negative control at 0.342. Scope: evidence on that grid only; not a theorem, not independently reproduced, not a physical result, and silent on the packet map's composition and on interacting amplitudes. Stage 4b, pre-registered at commit 0be8cce (boost_amplitudes_check.py, data/boost_amplitudes_check.json): the two-body tree-level vertex proxy W scales at second order for scalar, vector and nearest-neighbour scalar contacts on the finite grid (slopes 2.001, 2.000, 2.001, PASS); the spin-blind contact of twoBodyStep is frame dependent at O(1) (slope 0.000, worst defect 6.43), as predicted. Same scope limits.",
     "E": "None. No empirical evidence or interacting test is claimed.",
-    "reviewer": "Aria reviewed the PR; the claim record is a post-merge hygiene entry"
+    "reviewer": "Aria (aixaria0) approved PR #243 (review 5915765638, head 82209818) and PR #257 (review 5924938224, head a1e4c279) at source level; CI ran the Lean build and exact-footprint gate on both heads. Earlier entries (#222) were reviewed separately."
   },
   "defeaters": {
     "formal": "A counterexample to the free-shell bound inside the stated hypotheses.",
@@ -142,15 +159,15 @@
     },
     "G2": {
       "status": "INCOMPLETE",
-      "reason": "Interacting kinematics is formal; no interacting amplitude map or physical propagation-law selection is proved."
+      "reason": "Interacting kinematics is formal; tree-level vertex covariance is formal for the scalar contact and numerical for amplitudes; no loop, no proof of the O(kappa^2) bounds, no physical propagation-law or contact selection."
     },
     "G3": {
       "status": "INCOMPLETE",
       "reason": "No operational bridge or conservative return for interacting histories."
     },
     "G4": {
-      "status": "NOT_APPLICABLE",
-      "reason": "No numerical comparator or reproduced data set is part of this claim."
+      "status": "INCOMPLETE",
+      "reason": "A pre-registered numerical check was run and passed on its finite grid, but it is not independently reproduced and carries no numerical_reproduction receipt."
     },
     "G5": {
       "status": "INCOMPLETE",
@@ -163,21 +180,21 @@
   },
   "evidence_status": {
     "formal": "CANDIDATE",
-    "numerical": "NOT_ESTABLISHED",
+    "numerical": "CANDIDATE",
     "empirical": "NOT_ESTABLISHED",
     "bridge": "OPEN"
   },
   "reviewer_independence": {
-    "source_inspection": "Aria reviewed the PR and its formal claims",
+    "source_inspection": "Aria (aixaria0): PR #243 review 5915765638 at 82209818, PR #257 review 5924938224 at a1e4c279; source-level, not an independent build; review URLs: https://github.com/rhovision-org/quantum-logical-framework/pull/243#pullrequestreview-5915765638 and https://github.com/rhovision-org/quantum-logical-framework/pull/257#pullrequestreview-5924938224 (no hashed receipt artifact, so receipt stays null and G6 stays INCOMPLETE)",
     "enumeration": "project CI for the formal anchors",
     "original_lean_kernel": "project CI build and exact-footprint gate",
-    "measurement": "none",
+    "measurement": "self-run pre-registered numerical checks (boost_states_check.py at the PR #311 head; boost_amplitudes_check.py for stage 4b); no independent rerun",
     "independence_tier": "collaborator",
     "receipt": null
   },
   "provenance": {
     "repository": "rhovision-org/quantum-logical-framework",
-    "source_revision": "d575748cb10923257442d7f7b90a7f7a3d7e9320",
+    "source_revision": "00af579e8553d6da78fffed59c2f3bf3082797f0",
     "reference_documents": [
       "Relativity_Principle.md",
       "Open_Problems.md",
@@ -187,8 +204,15 @@
       "lean/QLF_RelativityScale.lean",
       "lean/QLF_LorentzSymbol.lean",
       "lean/QLF_BoostCovariance.lean",
-      "lean/QLF_InteractingKinematics.lean"
+      "lean/QLF_InteractingKinematics.lean",
+      "lean/QLF_BoostStates.lean",
+      "boost_states_check.py",
+      "data/boost_states_check.json",
+      "tests/test_boost_states_check.py",
+      "boost_amplitudes_check.py",
+      "data/boost_amplitudes_check.json",
+      "tests/test_boost_amplitudes_check.py"
     ],
-    "status": "post-merge claim record; no bridge promotion"
+    "status": "post-merge claim record pinned to the #257 merge commit; no bridge promotion"
   }
 }
